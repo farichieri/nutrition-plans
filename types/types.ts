@@ -11,6 +11,7 @@ export interface Post {
   author: string;
   topic: string;
   authorName: string;
+  contentHtml: string;
 }
 
 export interface Posts extends Array<Post> {}

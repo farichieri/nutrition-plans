@@ -8,10 +8,11 @@ const PrimaryButton = ({
   content: string;
 }) => {
   return (
-    <Link href={href}>
-      <button className="bold:border-green-800 rounded-xl border border-green-400 bg-green-500/50 px-3 py-2 font-bold duration-300 hover:shadow-lg hover:shadow-green-400/20">
-        {content}
-      </button>
+    <Link
+      href={href}
+      className="bold:border-green-800 text-shad rounded-3xl border border-green-500 bg-green-500/80 px-3 py-2 font-semibold duration-300 hover:shadow-[0_1px_40px] hover:shadow-green-800/50 dark:hover:shadow-green-400/50"
+    >
+      {content}
     </Link>
   );
 };

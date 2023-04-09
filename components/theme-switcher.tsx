@@ -1,8 +1,6 @@
-"use client";
-
 import { FC, useState } from "react";
 import { SunIcon, MoonIcon } from "@heroicons/react/24/solid";
-import { Theme } from "types/types";
+import { Theme } from "@/types/types";
 
 interface Props {
   theme: Theme;
@@ -12,14 +10,18 @@ const ThemeSwitcher: FC<Props> = ({ theme }) => {
   const [_theme, setTheme] = useState<Theme>(theme);
 
   const toogleTheme = () => {
-    const root = document.getElementsByTagName("html")[0];
-    root.classList.toggle(Theme.dark);
-    if (root.classList.contains(Theme.dark)) {
-      setTheme(Theme.dark);
-      document.cookie = `theme=${Theme.dark}`;
-    } else {
+    if (
+      localStorage.theme === "dark" ||
+      (!("theme" in localStorage) &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+    ) {
+      document.documentElement.classList.remove("dark");
+      localStorage.theme = "light";
       setTheme(Theme.light);
-      document.cookie = `theme=${Theme.light}`;
+    } else {
+      document.documentElement.classList.add("dark");
+      localStorage.theme = "dark";
+      setTheme(Theme.dark);
     }
   };
 
