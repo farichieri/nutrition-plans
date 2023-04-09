@@ -19,7 +19,7 @@ export default function Home() {
             </span>
           </div>
         </div>
-        <PrimaryButton href="/subscribe" content="Start my plan now ->" />
+        <PrimaryButton href="/signup" content="Start my plan now ->" />
       </div>
       <FAQ />
       <CallToAction />

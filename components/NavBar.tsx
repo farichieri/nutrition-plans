@@ -1,5 +1,5 @@
 "use client";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/20/solid";
 import { FC, useState } from "react";
 import { Theme } from "@/types/types";
 import Link from "next/link";
@@ -19,12 +19,12 @@ const NavBar: FC<Props> = ({ theme }) => {
 
   return (
     <nav className="fixed top-0 flex w-full select-none items-center justify-center">
-      <div className="flex h-[var(--nav-h)] w-full max-w-5xl items-center justify-center gap-4 border-b bg-white/80 px-4 backdrop-blur-sm dark:border-cyan-100/20 dark:bg-black/80 ">
+      <div className="flex h-[var(--nav-h)] w-full max-w-5xl items-center justify-between gap-4 border-b bg-white/80 px-4 backdrop-blur-sm dark:border-cyan-100/20 dark:bg-black/80 ">
         <div className="text-md flex w-fit min-w-fit basis-1/3 justify-start font-bold sm:text-2xl">
           <Link href={"/"}>Nutrition Plans</Link>
         </div>
-        <div className="lgw:gap-10 hidden basis-1/3 items-center justify-center gap-4 text-xs font-medium sm:text-xl md:flex">
-          <Link href={"/"}>Home</Link>
+        <div className="hidden basis-1/3 items-center justify-center gap-4 text-xs font-normal sm:text-lg md:flex lg:gap-10">
+          <Link href={"/pricing"}>Pricing</Link>
           <Link href={"/about"}>About</Link>
           <Link href={"/blog"}>Blog</Link>
         </div>
@@ -34,7 +34,7 @@ const NavBar: FC<Props> = ({ theme }) => {
             <button className="font-semibold">Log in</button>
           </Link>
           <div className="flex items-center text-xs">
-            <PrimaryButton href="/subscribe" content="Start my plan" />
+            <PrimaryButton href="/signup" content="Sign up" />
           </div>
           <div className="cursor-pointer md:hidden">
             {!openMenu ? (

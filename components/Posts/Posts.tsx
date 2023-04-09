@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Posts } from "types/types";
+import { Posts } from "@/types/types";
 import Post from "./Post/Post";
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
 
 const Posts: FC<Props> = ({ posts }) => {
   return (
-    <div className="flex w-full flex-col gap-10">
+    <div className="flex w-full flex-col gap-10 ">
       {posts.map((post) => (
         <Post key={post.id} post={post} />
       ))}
