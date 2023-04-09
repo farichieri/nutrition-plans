@@ -81,7 +81,7 @@ const Login = () => {
   return (
     <div className="login">
       <GoogleLoginButton onClick={handleLogInWithGoogle}>
-        Sign in with Google
+        Log in with Google
       </GoogleLoginButton>
       <form onSubmit={handleSubmit}>
         <div className="inputs-container">
@@ -104,7 +104,7 @@ const Login = () => {
           style={null}
           onClick={handleSubmit}
           loadMessage={"Ingresando..."}
-          content="Sign in"
+          content="Log in"
           isLoading={isLoadingForm}
           isDisabled={isDisabled}
         />

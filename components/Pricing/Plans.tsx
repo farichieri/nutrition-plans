@@ -18,7 +18,7 @@ const Plans = () => {
     <div className="flex flex-col gap-10">
       <div className="flex flex-wrap gap-10">
         {PLANS.map((plan) => (
-          <Plan plan={plan} />
+          <Plan plan={plan} key={plan.name} />
         ))}
       </div>
     </div>

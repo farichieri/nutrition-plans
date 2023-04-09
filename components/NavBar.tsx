@@ -50,7 +50,7 @@ const NavBar: FC<Props> = ({ theme }) => {
           } absolute top-[var(--nav-h)] w-screen border-t bg-white/90 px-4 py-4 shadow-md transition-all duration-300 dark:border-t-cyan-100/20 dark:bg-black/80 dark:shadow-cyan-100/20 md:hidden`}
         >
           <div className="flex flex-col items-center justify-center gap-4 text-lg font-semibold">
-            <Link href={"/user"}>
+            <Link href={"/user"} onClick={handleMenu}>
               <button className="font-semibold">Log in</button>
             </Link>
             <Link href={"/"} onClick={handleMenu}>

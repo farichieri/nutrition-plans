@@ -38,8 +38,8 @@ const Plan: FC<Props> = ({ plan }) => {
       </div>
       <span>{plan.checklistTitle}</span>
       <ul className="flex w-full flex-col items-start justify-start gap-2 px-2 pb-10">
-        {plan.checklist.map((c: any) => (
-          <li className="flex items-center gap-1">
+        {plan.checklist.map((c: any, index: number) => (
+          <li key={index} className="flex items-center gap-1">
             <CheckIcon className="h-4 w-4 fill-green-500" />
             <span>{c}</span>
           </li>
