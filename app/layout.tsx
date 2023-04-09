@@ -3,6 +3,7 @@ import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
 import { Inter } from "next/font/google";
 import { cookies } from "next/headers";
+import { Theme } from "types/types";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,12 +17,13 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const theme = cookies().get("theme");
+  const theme =
+    cookies().get("theme")?.value === "dark" ? Theme.dark : Theme.light;
 
   return (
-    <html lang="en" className={theme?.value}>
+    <html lang="en" className={theme}>
       <body className={inter.className}>
-        <NavBar />
+        <NavBar theme={theme} />
         <main className="min-w-screen flex min-h-screen flex-col items-center justify-between pt-[var(--nav-h)]">
           {children}
         </main>
