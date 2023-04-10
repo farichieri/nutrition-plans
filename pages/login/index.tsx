@@ -19,9 +19,8 @@ export default function Page() {
     }
   }, [user, isVerifyingUser]);
   return (
-    <section className="just/ify-center flex h-screen w-screen flex-col items-center p-4">
+    <section className="flex h-screen w-screen flex-col items-center justify-center p-4">
       {isLoading && <Loader />}
-
       <Login />
     </section>
   );

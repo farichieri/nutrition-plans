@@ -1,5 +1,5 @@
 import { auth } from "@/firebase/firebase.config";
-import { Inter } from "next/font/google";
+import { Work_Sans } from "next/font/google";
 import { onAuthStateChanged } from "firebase/auth";
 import { setIsVerifyingUser, setUser } from "@/store/slices/authSlice";
 import { Theme } from "@/types/types";
@@ -7,7 +7,10 @@ import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import Head from "next/head";
 
-const inter = Inter({ subsets: ["latin"] });
+const font = Work_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+});
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const dispatch = useDispatch();
@@ -43,7 +46,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <title>Nutrition Plans</title>
       </Head>
       {theme && (
-        <div className={inter.className}>
+        <div className={font.className}>
           <main className="min-w-screen flex min-h-screen flex-col items-center justify-between ">
             {children}
           </main>

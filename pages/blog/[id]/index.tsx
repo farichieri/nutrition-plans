@@ -11,7 +11,7 @@ interface Props {
 export default function Page({ postData }: Props) {
   return (
     <LandingLayout>
-      <section className="max-w-5xl px-4 py-10">
+      <section className="max-w-5xl py-10">
         <div className="flex flex-col items-center justify-center gap-4">
           <span className="text-5xl font-bold">{postData.title}</span>
           <Date dateString={postData.date} />

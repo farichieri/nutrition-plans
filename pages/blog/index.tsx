@@ -10,7 +10,7 @@ interface Props {
 export default function Blog({ posts }: Props) {
   return (
     <LandingLayout>
-      <section className="flex w-full max-w-5xl flex-col items-center gap-10 px-4 py-24">
+      <section className="flex w-full max-w-5xl flex-col items-center gap-10 py-24">
         <span className="text-5xl font-bold">Blog</span>
         <Posts posts={posts} />
       </section>

@@ -11,7 +11,7 @@ const Plan: FC<Props> = ({ plan }) => {
   return (
     <div
       key={plan.name}
-      className="max-w-80 flex select-none flex-col items-center gap-5 rounded-3xl border px-5 py-14 shadow-lg dark:border-gray-700 dark:shadow-cyan-100/30"
+      className="flex w-full max-w-xs select-none flex-col items-center gap-5 rounded-3xl border px-5 py-14 shadow-lg dark:border-gray-700 dark:shadow-cyan-100/30"
     >
       <span className="text-2xl font-medium">{plan.name}</span>
       {yearly ? (
@@ -47,7 +47,7 @@ const Plan: FC<Props> = ({ plan }) => {
       </ul>
       <Link
         href={plan.checkoutLink}
-        className="sm:text-md rounded-3xl bg-green-900 px-4 py-2 text-xs"
+        className="rounded-3xl border border-green-500 bg-gradient-to-r from-green-500 via-green-500 to-green-500 px-3 py-2 text-xs text-white duration-300 hover:shadow-[0_1px_10px] hover:shadow-green-300 hover:brightness-110 dark:hover:shadow-green-400/50"
       >
         {plan.buttonContent}
       </Link>

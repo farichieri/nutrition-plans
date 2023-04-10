@@ -1,6 +1,6 @@
 import PrimaryButton from "@/components/Buttons/Primary";
 import CallToAction from "@/components/CallToAction";
-import FAQ from "@/components/FAQ";
+import FAQS from "@/components/FAQS/FAQS";
 import LandingLayout from "@/components/Layout/LandingLayout";
 import Image from "next/image";
 
@@ -21,17 +21,18 @@ export default function Home() {
             </span>
           </div>
         </div>
-        <PrimaryButton href="/signup" content="Start my plan now ->" />
+        <div className="h-10">
+          <PrimaryButton href="/signup" content="Start my plan now ->" />
+        </div>
         <Image
           src="/images/general/cooking.jpg"
-          width={400}
-          height={400}
+          width={800}
+          height={800}
           alt="cooking"
-          className="m-auto my-24 flex rounded-3xl shadow-lg dark:shadow-gray-400/20"
+          className="m-auto my-10 flex rounded-3xl shadow-lg dark:shadow-gray-400/20"
         />
       </div>
-
-      <FAQ />
+      <FAQS />
       <CallToAction />
     </LandingLayout>
   );

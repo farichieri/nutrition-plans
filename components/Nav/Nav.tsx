@@ -19,7 +19,7 @@ const NavBar: FC<Props> = ({ theme }) => {
   return (
     <nav className="fixed top-0 flex w-full select-none items-center justify-center">
       <div className="flex h-[var(--nav-h)] w-full max-w-5xl items-center justify-between gap-4 border-b bg-white/80 px-4 backdrop-blur-sm dark:border-cyan-100/20 dark:bg-black/80 ">
-        <div className="text-md flex w-fit min-w-fit basis-1/3 justify-start font-bold sm:text-2xl">
+        <div className="flex w-fit min-w-fit basis-1/3 justify-start text-sm font-bold sm:text-2xl">
           <Link href={"/"}>Nutrition Plans</Link>
         </div>
         <div className="hidden basis-1/3 items-center justify-center gap-4 text-xs font-normal sm:text-lg md:flex lg:gap-10">
@@ -32,7 +32,7 @@ const NavBar: FC<Props> = ({ theme }) => {
           <Link href={"/login"} className="hidden sm:flex">
             <button className="font-medium">Log in</button>
           </Link>
-          <div className="flex items-center text-xs">
+          <div className="flex h-7 items-center text-xs">
             <PrimaryButton href="/signup" content="Sign up" />
           </div>
           <div className="cursor-pointer md:hidden">

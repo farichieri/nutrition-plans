@@ -11,20 +11,6 @@ export default function LandingLayout({
 }) {
   const [theme, setTheme] = useState<Theme>();
 
-  // useEffect(() => {
-  //   dispatch(verifyUser());
-  //   console.log("Verifying User");
-  //   onAuthStateChanged(auth, async (user) => {
-  //     console.log({ user });
-
-  //     dispatch(userVerified(user));
-  //     if (user) {
-  //       const settings = await getUserSettings(user);
-  //       settings && dispatch(setUserSettings(settings));
-  //     }
-  //   });
-  // }, []);
-
   useEffect(() => {
     if (
       localStorage.theme === "dark" ||
@@ -50,7 +36,7 @@ export default function LandingLayout({
       {theme && (
         <>
           <NavBar theme={theme} />
-          <section className="flex flex-col px-4 pt-[var(--nav-h)]">
+          <section className="flex h-full w-full flex-col items-center px-4 pt-[var(--nav-h)]">
             {children}
           </section>
           <Footer />

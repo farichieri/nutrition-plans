@@ -7,6 +7,7 @@ import Logout from "../Auth/Logout";
 import ThemeSwitcher from "../theme-switcher";
 import { useSelector } from "react-redux";
 import { selectAuthSlice } from "@/store/slices/authSlice";
+import SubscribeButton from "../Buttons/Subscribe";
 
 interface Props {
   theme: Theme;
@@ -26,9 +27,7 @@ const PremiumNav: FC<Props> = ({ theme }) => {
         <div className="text-md flex w-fit min-w-fit basis-1/3 justify-start font-bold sm:text-2xl">
           <Link href={"/app"}>Nutrition Plans</Link>
         </div>
-        <div className="hidden basis-1/3 items-center justify-center gap-4 text-xs font-normal sm:text-lg md:flex lg:gap-10">
-          <Link href={"/asd"}>asd</Link>
-        </div>
+        <SubscribeButton />
         <div className="flex w-fit min-w-fit basis-1/3 items-center justify-end gap-4 text-xs sm:gap-10 sm:text-xl">
           <ThemeSwitcher theme={theme} />
           <div className="hidden md:flex">

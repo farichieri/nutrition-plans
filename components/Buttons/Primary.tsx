@@ -10,9 +10,9 @@ const PrimaryButton = ({
   return (
     <Link
       href={href}
-      className="bold:border-green-800 text-shad rounded-3xl border border-green-500 bg-green-500/80 px-3 py-2 font-semibold duration-300 hover:shadow-[0_1px_40px] hover:shadow-green-800/50 dark:hover:shadow-green-400/50"
+      className="bold:border-green-800 group flex h-full items-center justify-center rounded-3xl bg-gradient-to-r from-green-700 via-green-500 to-green-400 px-3 font-semibold text-white duration-300 hover:shadow-[0_1px_40px] hover:shadow-green-300 dark:hover:shadow-green-400/50"
     >
-      {content}
+      <span className="shadow-black group-hover:drop-shadow-md">{content}</span>
     </Link>
   );
 };
