@@ -1,8 +1,8 @@
 import { Theme } from "@/types/types";
 import { useEffect, useState } from "react";
-import Footer from "../Footer";
+import { useRouter } from "next/router";
 import Head from "next/head";
-import NavBar from "../NavBar";
+import PremiumNav from "../Nav/PremiumNav";
 
 export default function PremiumLayout({
   children,
@@ -10,20 +10,6 @@ export default function PremiumLayout({
   children: React.ReactNode;
 }) {
   const [theme, setTheme] = useState<Theme>();
-
-  // useEffect(() => {
-  //   dispatch(verifyUser());
-  //   console.log("Verifying User");
-  //   onAuthStateChanged(auth, async (user) => {
-  //     console.log({ user });
-
-  //     dispatch(userVerified(user));
-  //     if (user) {
-  //       const settings = await getUserSettings(user);
-  //       settings && dispatch(setUserSettings(settings));
-  //     }
-  //   });
-  // }, []);
 
   useEffect(() => {
     if (
@@ -49,11 +35,10 @@ export default function PremiumLayout({
       </Head>
       {theme && (
         <>
-          {/* <NavBar theme={theme} /> */}
+          <PremiumNav theme={theme} />
           <section className="flex flex-col px-4 pt-[var(--nav-h)]">
             {children}
           </section>
-          {/* <Footer /> */}
         </>
       )}
     </>

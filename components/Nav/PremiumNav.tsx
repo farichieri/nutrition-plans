@@ -1,17 +1,20 @@
-"use client";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/20/solid";
 import { FC, useState } from "react";
 import { Theme } from "@/types/types";
+import Avatar from "../Avatar/Avatar";
 import Link from "next/link";
-import PrimaryButton from "./Buttons/Primary";
-import ThemeSwitcher from "./theme-switcher";
+import Logout from "../Auth/Logout";
+import ThemeSwitcher from "../theme-switcher";
+import { useSelector } from "react-redux";
+import { selectAuthSlice } from "@/store/slices/authSlice";
 
 interface Props {
   theme: Theme;
 }
 
-const NavBar: FC<Props> = ({ theme }) => {
+const PremiumNav: FC<Props> = ({ theme }) => {
   const [openMenu, setOpenMenu] = useState(false);
+  const { user } = useSelector(selectAuthSlice);
 
   const handleMenu = () => {
     setOpenMenu(!openMenu);
@@ -21,21 +24,17 @@ const NavBar: FC<Props> = ({ theme }) => {
     <nav className="fixed top-0 flex w-full select-none items-center justify-center">
       <div className="flex h-[var(--nav-h)] w-full max-w-5xl items-center justify-between gap-4 border-b bg-white/80 px-4 backdrop-blur-sm dark:border-cyan-100/20 dark:bg-black/80 ">
         <div className="text-md flex w-fit min-w-fit basis-1/3 justify-start font-bold sm:text-2xl">
-          <Link href={"/"}>Nutrition Plans</Link>
+          <Link href={"/app"}>Nutrition Plans</Link>
         </div>
         <div className="hidden basis-1/3 items-center justify-center gap-4 text-xs font-normal sm:text-lg md:flex lg:gap-10">
-          <Link href={"/pricing"}>Pricing</Link>
-          <Link href={"/about"}>About</Link>
-          <Link href={"/blog"}>Blog</Link>
+          <Link href={"/asd"}>asd</Link>
         </div>
         <div className="flex w-fit min-w-fit basis-1/3 items-center justify-end gap-4 text-xs sm:gap-10 sm:text-xl">
           <ThemeSwitcher theme={theme} />
-          <Link href={"/login"} className="hidden sm:flex">
-            <button className="font-medium">Log in</button>
-          </Link>
-          <div className="flex items-center text-xs">
-            <PrimaryButton href="/signup" content="Sign up" />
+          <div className="hidden md:flex">
+            <Logout />
           </div>
+          <Avatar src={user?.photoURL} width={40} height={40} />
           <div className="cursor-pointer md:hidden">
             {!openMenu ? (
               <Bars3Icon className="h-5 w-5" onClick={handleMenu} />
@@ -50,18 +49,10 @@ const NavBar: FC<Props> = ({ theme }) => {
           } absolute top-[var(--nav-h)] w-screen border-t bg-white/90 px-4 py-4 shadow-md transition-all duration-300 dark:border-t-cyan-100/20 dark:bg-black/80 dark:shadow-cyan-100/20 md:hidden`}
         >
           <div className="flex flex-col items-center justify-center gap-4 text-lg font-semibold">
-            <Link href={"/login"} onClick={handleMenu}>
-              <button className="font-medium">Log in</button>
+            <Link href={"/asd"} onClick={handleMenu}>
+              asd
             </Link>
-            <Link href={"/pricing"} onClick={handleMenu}>
-              Pricing
-            </Link>
-            <Link href={"/about"} onClick={handleMenu}>
-              About
-            </Link>
-            <Link href={"/blog"} onClick={handleMenu}>
-              Blog
-            </Link>
+            <Logout />
           </div>
         </div>
       </div>
@@ -69,4 +60,4 @@ const NavBar: FC<Props> = ({ theme }) => {
   );
 };
 
-export default NavBar;
+export default PremiumNav;

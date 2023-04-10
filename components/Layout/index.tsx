@@ -1,26 +1,24 @@
+import { auth } from "@/firebase/firebase.config";
 import { Inter } from "next/font/google";
+import { onAuthStateChanged } from "firebase/auth";
+import { setIsVerifyingUser, setUser } from "@/store/slices/authSlice";
 import { Theme } from "@/types/types";
+import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+  const dispatch = useDispatch();
   const [theme, setTheme] = useState<Theme>();
 
-  // useEffect(() => {
-  //   dispatch(verifyUser());
-  //   console.log("Verifying User");
-  //   onAuthStateChanged(auth, async (user) => {
-  //     console.log({ user });
-
-  //     dispatch(userVerified(user));
-  //     if (user) {
-  //       const settings = await getUserSettings(user);
-  //       settings && dispatch(setUserSettings(settings));
-  //     }
-  //   });
-  // }, []);
+  useEffect(() => {
+    dispatch(setIsVerifyingUser());
+    onAuthStateChanged(auth, async (user) => {
+      dispatch(setUser(user));
+    });
+  }, []);
 
   useEffect(() => {
     if (

@@ -1,24 +1,27 @@
-import { auth } from "@/firebase/firebase.config";
-import { onAuthStateChanged } from "firebase/auth";
-import { useEffect } from "react";
+import { selectAuthSlice } from "@/store/slices/authSlice";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Signup from "@/components/Signup";
+import { useSelector } from "react-redux";
+import Signup from "@/components/Auth/Signup";
+import Loader from "@/components/Loader/Loader";
 
 export default function Page() {
   const router = useRouter();
+  const { user, isVerifyingUser } = useSelector(selectAuthSlice);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    console.log("Verifying User");
-    onAuthStateChanged(auth, async (user) => {
-      console.log({ user });
-      if (user) {
-        router.push("/app");
-      }
-    });
-  }, []);
+    if (user) {
+      router.push("/app");
+    }
+    if (!user && !isVerifyingUser) {
+      setIsLoading(false);
+    }
+  }, [user, isVerifyingUser]);
 
   return (
     <section className="flex h-screen w-screen flex-col items-center justify-center p-4">
+      {isLoading && <Loader />}
       <Signup />
     </section>
   );

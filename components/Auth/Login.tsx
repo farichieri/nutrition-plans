@@ -5,10 +5,10 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
-import { auth, provider } from "../firebase/firebase.config";
+import { auth, provider } from "../../firebase/firebase.config";
 import { useRouter } from "next/router";
-import GoogleLoginButton from "./Buttons/GoogleLogin";
-import SecondaryButton from "./Buttons/Secondary";
+import GoogleLoginButton from "../Buttons/GoogleLogin";
+import SecondaryButton from "../Buttons/Secondary";
 import Link from "next/link";
 
 const Login = () => {

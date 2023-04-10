@@ -2,7 +2,7 @@ import { Theme } from "@/types/types";
 import { useEffect, useState } from "react";
 import Footer from "../Footer";
 import Head from "next/head";
-import NavBar from "../NavBar";
+import NavBar from "../Nav/Nav";
 
 export default function LandingLayout({
   children,
