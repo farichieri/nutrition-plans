@@ -47,7 +47,7 @@ const Plan: FC<Props> = ({ plan }) => {
       </ul>
       <Link
         href={plan.checkoutLink}
-        className="rounded-3xl bg-green-900 px-4 py-2 text-xs sm:text-base"
+        className="sm:text-md rounded-3xl bg-green-900 px-4 py-2 text-xs"
       >
         {plan.buttonContent}
       </Link>

@@ -24,18 +24,18 @@ const SecondaryButton = ({
           border-radius: 9999px;
           transition: 0.3s;
           width: 100%;
-          background: var(--background-color);
-          border: 1px solid var(--text-color);
+          background: var(--background-start-rgb);
+          border: 1px solid lightgray;
           position: relative;
           min-height: 25px;
           max-width: 125px;
-          color: var(--text-color);
+          color: var(--foreground-rgb);
+          height: 2rem;
         }
         .button-background {
         }
 
         button:hover {
-          filter: brightness(2);
         }
         button:active {
           box-shadow: 0 0 20px 1px var(--box-shadow);

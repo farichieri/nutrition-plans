@@ -1,11 +1,14 @@
-import { Inter } from "next/font/google";
 import { Theme } from "@/types/types";
 import { useEffect, useState } from "react";
+import Footer from "../Footer";
 import Head from "next/head";
+import NavBar from "../NavBar";
 
-const inter = Inter({ subsets: ["latin"] });
-
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function LandingLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [theme, setTheme] = useState<Theme>();
 
   // useEffect(() => {
@@ -45,11 +48,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <title>Nutrition Plans</title>
       </Head>
       {theme && (
-        <div className={inter.className}>
-          <main className="min-w-screen flex min-h-screen flex-col items-center justify-between ">
+        <>
+          <NavBar theme={theme} />
+          <section className="flex flex-col px-4 pt-[var(--nav-h)]">
             {children}
-          </main>
-        </div>
+          </section>
+          <Footer />
+        </>
       )}
     </>
   );

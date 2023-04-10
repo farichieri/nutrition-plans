@@ -1,8 +1,8 @@
+import Login from "@/components/Login";
 import { auth } from "@/firebase/firebase.config";
 import { onAuthStateChanged } from "firebase/auth";
-import { useEffect } from "react";
 import { useRouter } from "next/router";
-import Signup from "@/components/Signup";
+import { useEffect } from "react";
 
 export default function Page() {
   const router = useRouter();
@@ -19,7 +19,7 @@ export default function Page() {
 
   return (
     <section className="flex h-screen w-screen flex-col items-center justify-center p-4">
-      <Signup />
+      <Login />
     </section>
   );
 }

@@ -30,8 +30,8 @@ const NavBar: FC<Props> = ({ theme }) => {
         </div>
         <div className="flex w-fit min-w-fit basis-1/3 items-center justify-end gap-4 text-xs sm:gap-10 sm:text-xl">
           <ThemeSwitcher theme={theme} />
-          <Link href={"/user"} className="hidden sm:flex">
-            <button className="font-semibold">Log in</button>
+          <Link href={"/login"} className="hidden sm:flex">
+            <button className="font-medium">Log in</button>
           </Link>
           <div className="flex items-center text-xs">
             <PrimaryButton href="/signup" content="Sign up" />
@@ -50,11 +50,11 @@ const NavBar: FC<Props> = ({ theme }) => {
           } absolute top-[var(--nav-h)] w-screen border-t bg-white/90 px-4 py-4 shadow-md transition-all duration-300 dark:border-t-cyan-100/20 dark:bg-black/80 dark:shadow-cyan-100/20 md:hidden`}
         >
           <div className="flex flex-col items-center justify-center gap-4 text-lg font-semibold">
-            <Link href={"/user"} onClick={handleMenu}>
-              <button className="font-semibold">Log in</button>
+            <Link href={"/login"} onClick={handleMenu}>
+              <button className="font-medium">Log in</button>
             </Link>
-            <Link href={"/"} onClick={handleMenu}>
-              Home
+            <Link href={"/pricing"} onClick={handleMenu}>
+              Pricing
             </Link>
             <Link href={"/about"} onClick={handleMenu}>
               About

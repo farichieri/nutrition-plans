@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import {
+  createUserWithEmailAndPassword,
   getAdditionalUserInfo,
   GoogleAuthProvider,
-  signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
 import { auth, provider } from "../firebase/firebase.config";
@@ -11,7 +11,7 @@ import GoogleLoginButton from "./Buttons/GoogleLogin";
 import SecondaryButton from "./Buttons/Secondary";
 import Link from "next/link";
 
-const Login = () => {
+const Signup = () => {
   const [input, setInput] = useState({
     email: "",
     password: "",
@@ -43,19 +43,24 @@ const Login = () => {
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    setIsLoadingForm(true);
-    setIsDisabled(true);
-    await signInWithEmailAndPassword(auth, input.email, input.password)
-      .then((result) => {
-        const user = result.user;
-        user && router.push("/app");
-      })
-      .catch((error) => {
-        setErrorMessage(error.message);
-      });
-    setIsLoadingForm(false);
-    setIsDisabled(false);
+    try {
+      event.preventDefault();
+      setIsLoadingForm(true);
+      setIsDisabled(true);
+      await createUserWithEmailAndPassword(auth, input.email, input.password)
+        .then((result) => {
+          const user = result.user;
+          user && router.push("/app");
+        })
+        .catch((error) => {
+          console.log(error.message);
+          setErrorMessage(error.message);
+        });
+      setIsLoadingForm(false);
+      setIsDisabled(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleChange = (
@@ -72,7 +77,7 @@ const Login = () => {
   return (
     <div className="flex w-full max-w-sm flex-col gap-6">
       <GoogleLoginButton onClick={handleLogInWithGoogle}>
-        Log in with Google
+        Sign up with Google
       </GoogleLoginButton>
       <div className="flex items-center py-4">
         <div className="h-px flex-grow bg-gray-400"></div>
@@ -82,7 +87,7 @@ const Login = () => {
         <div className="h-px flex-grow bg-gray-400"></div>
       </div>
       <form
-        className="relative flex flex-col items-center gap-6 rounded-3xl border p-4 shadow-lg dark:border-cyan-300/10 dark:shadow-cyan-300/20"
+        className="relative flex w-full flex-col items-center gap-6 rounded-3xl border p-4 shadow-lg dark:border-cyan-300/10 dark:shadow-cyan-300/20"
         onSubmit={handleSubmit}
       >
         <div className="flex w-full flex-col gap-2">
@@ -92,7 +97,7 @@ const Login = () => {
             value={input.email}
             placeholder="Email"
             type="text"
-            className="border-b border-gray-300 bg-transparent px-4 py-1 outline-none focus:bg-[var(--box-shadow)]"
+            className="w-full border-b border-gray-300 bg-transparent px-4 py-1 outline-none focus:bg-[var(--box-shadow)]"
           />
           <input
             onChange={handleChange}
@@ -100,31 +105,37 @@ const Login = () => {
             value={input.password}
             placeholder="Password"
             type="password"
-            className="border-b border-gray-300 bg-transparent px-4 py-1 outline-none focus:bg-[var(--box-shadow)]"
+            className="w-full border-b border-gray-300 bg-transparent px-4 py-1 outline-none focus:bg-[var(--box-shadow)]"
           />
         </div>
         <SecondaryButton
           style={null}
           onClick={handleSubmit}
-          loadMessage={"Logging in..."}
-          content="Log in"
+          loadMessage={"Signing up..."}
+          content="Sign up"
           isLoading={isLoadingForm}
           isDisabled={isDisabled}
         />
         {errorMessage && (
-          <span className="absolute -bottom-10 w-full text-center text-red-500">
-            Email or password was not correct
+          <span className="absolute -bottom-8 w-full text-center text-red-500">
+            Unexpected error.
           </span>
         )}
       </form>
+      <span className="text-xs opacity-50 sm:text-sm ">
+        By signing up, you agree to the{" "}
+        <Link href={"/terms"} className="hover:underline">
+          Terms of Service.
+        </Link>
+      </span>
       <span className="text-xs opacity-50 sm:text-sm">
-        Don't have an account?{" "}
-        <Link href="/signup" className="text-blue-400 hover:underline">
-          Sign up here
+        Already have an account?{" "}
+        <Link href="/login" className="text-blue-400 hover:underline ">
+          Log in here
         </Link>
       </span>
     </div>
   );
 };
 
-export default Login;
+export default Signup;
