@@ -18,7 +18,7 @@ const FAQ: FC<Props> = ({ content }) => {
       }`}
       onClick={() => setOpen(!open)}
     >
-      <div className="relative z-20 flex w-full items-center justify-between ">
+      <div className="relative  flex w-full items-center justify-between ">
         <span className="text-xl font-semibold">{content.title}</span>
         {!open ? (
           <ChevronDownIcon className="h-7 w-7 opacity-50" />

@@ -11,13 +11,13 @@ const Plan: FC<Props> = ({ plan }) => {
   return (
     <div
       key={plan.name}
-      className="flex w-full max-w-xs select-none flex-col items-center gap-5 rounded-3xl border px-5 py-14 shadow-lg dark:border-gray-700 dark:shadow-cyan-100/30"
+      className="flex w-full max-w-xs select-none flex-col items-center gap-5 rounded-3xl border border-green-400/20 px-5 py-14 shadow-[0_3px_20px] shadow-green-800/40 dark:border-green-700/20 dark:shadow-green-400/30"
     >
       <span className="text-2xl font-medium">{plan.name}</span>
       {yearly ? (
         <div className="flex items-center gap-2">
-          <span>{`$${plan.yearlyPrice} /year`}</span>
-          <span className="flex items-center justify-center rounded-3xl bg-cyan-400/50 px-2 py-1 text-xs">
+          <span>{`$${plan.yearlyPrice} /month`}</span>
+          <span className="flex items-center justify-center rounded-3xl bg-green-500/50 px-2 py-1 text-xs">
             {plan.discount}
           </span>
         </div>
@@ -25,13 +25,13 @@ const Plan: FC<Props> = ({ plan }) => {
         <span>{`$${plan.monthlyPrice} /month`}</span>
       )}
       <div
-        className="relative flex cursor-pointer rounded-3xl border border-cyan-400"
+        className="relative flex cursor-pointer rounded-3xl border border-green-500/50"
         onClick={() => setYearly(!yearly)}
       >
         <div
           className={`${
             yearly ? "right-0 " : "right-[50%] "
-          } absolute h-full w-[50%] rounded-3xl bg-cyan-400/50 transition-all duration-300`}
+          } absolute h-full w-[50%] rounded-3xl bg-green-400/50 transition-all duration-300`}
         ></div>
         <button className="py- z-10 rounded-3xl px-4">Monthly</button>
         <button className="z-10 rounded-3xl px-4 py-0.5">Annually</button>

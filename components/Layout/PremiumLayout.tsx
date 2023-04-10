@@ -1,8 +1,8 @@
 import { Theme } from "@/types/types";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import Head from "next/head";
 import PremiumNav from "../Nav/PremiumNav";
+import Sidebar from "../Sidebar/PremiumSidebar";
 
 export default function PremiumLayout({
   children,
@@ -10,6 +10,7 @@ export default function PremiumLayout({
   children: React.ReactNode;
 }) {
   const [theme, setTheme] = useState<Theme>();
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   useEffect(() => {
     if (
@@ -35,10 +36,22 @@ export default function PremiumLayout({
       </Head>
       {theme && (
         <>
-          <PremiumNav theme={theme} />
-          <section className="flex flex-col px-4 pt-[var(--nav-h)]">
-            {children}
-          </section>
+          <div className="relative flex h-screen w-screen justify-center">
+            <div className="relative flex  w-screen flex-col items-center">
+              <PremiumNav
+                theme={theme}
+                sidebarOpen={sidebarOpen}
+                setSidebarOpen={setSidebarOpen}
+              />
+              <Sidebar
+                sidebarOpen={sidebarOpen}
+                setSidebarOpen={setSidebarOpen}
+              />
+              <div className="flex flex-col px-4 pt-[var(--nav-h)]">
+                {children}
+              </div>
+            </div>
+          </div>
         </>
       )}
     </>

@@ -9,7 +9,6 @@ import Head from "next/head";
 
 const font = Work_Sans({
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
 });
 
 export default function Layout({ children }: { children: React.ReactNode }) {

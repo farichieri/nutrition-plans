@@ -10,7 +10,7 @@ const CallToAction = () => {
         Receive your first nutrition plan today and start your transformation
       </span>
       <div className="my-2 h-10">
-        <PrimaryButton href="/signup" content="Start my plan now ->" />
+        <PrimaryButton href="/signup" content="Start my plan now" />
       </div>
     </div>
   );

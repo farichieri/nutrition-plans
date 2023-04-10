@@ -17,8 +17,8 @@ const NavBar: FC<Props> = ({ theme }) => {
   };
 
   return (
-    <nav className="fixed top-0 flex w-full select-none items-center justify-center">
-      <div className="flex h-[var(--nav-h)] w-full max-w-5xl items-center justify-between gap-4 border-b bg-white/80 px-4 backdrop-blur-sm dark:border-cyan-100/20 dark:bg-black/80 ">
+    <nav className="fixed top-0 z-50 flex w-full select-none items-center justify-center">
+      <div className="z-50 flex h-[var(--nav-h)] w-full max-w-5xl items-center justify-between gap-4 border-b border-gray-500/20 bg-white/50 px-4 backdrop-blur-md dark:border-cyan-100/20 dark:bg-black/50 ">
         <div className="flex w-fit min-w-fit basis-1/3 justify-start text-sm font-bold sm:text-2xl">
           <Link href={"/"}>Nutrition Plans</Link>
         </div>

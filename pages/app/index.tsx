@@ -1,7 +1,7 @@
 import PremiumLayout from "@/components/Layout/PremiumLayout";
 
 const App = () => {
-  return <PremiumLayout>asd</PremiumLayout>;
+  return <PremiumLayout>{}</PremiumLayout>;
 };
 
 export default App;

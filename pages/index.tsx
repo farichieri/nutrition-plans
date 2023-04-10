@@ -1,28 +1,29 @@
-import PrimaryButton from "@/components/Buttons/Primary";
+import { FAQS_INDEX } from "@/utils/content";
 import CallToAction from "@/components/CallToAction";
 import FAQS from "@/components/FAQS/FAQS";
-import LandingLayout from "@/components/Layout/LandingLayout";
 import Image from "next/image";
+import LandingLayout from "@/components/Layout/LandingLayout";
+import PrimaryButton from "@/components/Buttons/Primary";
 
 export default function Home() {
   return (
     <LandingLayout>
       <div className="flex w-full flex-col items-center gap-10 py-24">
         <div className="flex max-w-2xl flex-col items-center justify-center gap-4 text-center text-2xl">
-          <h1 className="text-5xl font-bold">
+          <h1 className="bg-gradient-to-br from-gray-600 to-black bg-clip-text text-5xl font-semibold text-transparent dark:from-white dark:to-gray-500">
             The best nutrition plans on the internet
           </h1>
           <div className="flex flex-col">
-            <span className="text-md opacity-50">
+            <span className="text-base opacity-50 md:text-lg">
               Choose the plan that fits your requirements
             </span>
-            <span className="text-md opacity-50">
+            <span className="md:text-md text-base opacity-50">
               Receive a nutrition plan every week
             </span>
           </div>
         </div>
         <div className="h-10">
-          <PrimaryButton href="/signup" content="Start my plan now ->" />
+          <PrimaryButton href="/signup" content={`Start my plan now`} />
         </div>
         <Image
           src="/images/general/cooking.jpg"
@@ -32,7 +33,7 @@ export default function Home() {
           className="m-auto my-10 flex rounded-3xl shadow-lg dark:shadow-gray-400/20"
         />
       </div>
-      <FAQS />
+      <FAQS content={FAQS_INDEX} />
       <CallToAction />
     </LandingLayout>
   );

@@ -5,7 +5,7 @@ const Plans = () => {
     {
       name: "Standard",
       monthlyPrice: 10,
-      yearlyPrice: 96,
+      yearlyPrice: 8,
       discount: "-20%",
       checklistTitle: "",
       checklist: ["This", "That", "These"],
@@ -15,7 +15,7 @@ const Plans = () => {
   ];
 
   return (
-    <div className="flex w-full flex-col items-center gap-10">
+    <div className="flex h-[75vh] w-full flex-col items-center gap-10 ">
       {PLANS.map((plan) => (
         <Plan plan={plan} key={plan.name} />
       ))}

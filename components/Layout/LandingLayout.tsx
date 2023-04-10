@@ -36,12 +36,21 @@ export default function LandingLayout({
       {theme && (
         <>
           <NavBar theme={theme} />
-          <section className="flex h-full w-full flex-col items-center px-4 pt-[var(--nav-h)]">
+          <div className="flex h-full w-full flex-col items-center px-4 pt-[var(--nav-h)]">
             {children}
-          </section>
+          </div>
           <Footer />
         </>
       )}
+      {/* <style jsx>{`
+        div {
+          background: radial-gradient(
+            ellipse 80% 50% at 50% -20%,
+            rgb(123 198 119 / 0.3),
+            transparent
+          );
+        }
+      `}</style> */}
     </>
   );
 }
