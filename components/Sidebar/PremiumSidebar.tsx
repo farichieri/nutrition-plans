@@ -7,28 +7,28 @@ import {
   ListBulletIcon,
   StarIcon,
 } from "@heroicons/react/20/solid";
-import { FC, useEffect, useState } from "react";
+import { FC, MouseEventHandler } from "react";
 import { selectAuthSlice } from "@/store/slices/authSlice";
+import { selectLayoutSlice, setPlansOpen } from "@/store/slices/layoutSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Avatar from "../Avatar/Avatar";
 import Link from "next/link";
-import { selectLayoutSlice, setAllPlansOpen } from "@/store/slices/layoutSlice";
 
 interface Props {
   sidebarOpen: boolean;
-  setSidebarOpen: Function;
+  handleSidebar: MouseEventHandler;
 }
 
-const PremiumSidebar: FC<Props> = ({ sidebarOpen, setSidebarOpen }) => {
+const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
-  const { allPlansOpen } = useSelector(selectLayoutSlice);
+  const { plansOpen } = useSelector(selectLayoutSlice);
 
   const toggleAllPlans = () => {
-    if (allPlansOpen === true) {
-      dispatch(setAllPlansOpen(false));
+    if (plansOpen === true) {
+      dispatch(setPlansOpen(false));
     } else {
-      dispatch(setAllPlansOpen(true));
+      dispatch(setPlansOpen(true));
     }
   };
 
@@ -37,7 +37,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, setSidebarOpen }) => {
       {sidebarOpen && (
         <div
           className="fixed inset-0 z-10 sm:hidden"
-          onClick={() => setSidebarOpen(false)}
+          onClick={handleSidebar}
         ></div>
       )}
       <div
@@ -56,7 +56,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, setSidebarOpen }) => {
             <ListBulletIcon className="h-4 w-4 fill-green-500" />
             <div className="flex w-full cursor-pointer items-center justify-between">
               <span className="text-lg font-semibold">All plans</span>
-              {allPlansOpen ? (
+              {plansOpen ? (
                 <ChevronUpIcon className="h-4 w-4" />
               ) : (
                 <ChevronDownIcon className="h-4 w-4" />
@@ -65,7 +65,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, setSidebarOpen }) => {
           </div>
           <div
             className={` flex flex-col gap-2 overflow-hidden px-4 pl-2 transition-[max-height] duration-300 ${
-              allPlansOpen ? " max-h-96" : "max-h-0"
+              plansOpen ? " max-h-96" : "max-h-0"
             }`}
           >
             <Link href={"/app/plans"}>All plans</Link>

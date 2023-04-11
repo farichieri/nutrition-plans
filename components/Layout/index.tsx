@@ -1,10 +1,11 @@
 import { auth } from "@/firebase/firebase.config";
-import { Work_Sans } from "next/font/google";
 import { onAuthStateChanged } from "firebase/auth";
+import { selectLayoutSlice, setTheme } from "@/store/slices/layoutSlice";
 import { setIsVerifyingUser, setUser } from "@/store/slices/authSlice";
 import { Theme } from "@/types/types";
-import { useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { Work_Sans } from "next/font/google";
 import Head from "next/head";
 
 const font = Work_Sans({
@@ -13,7 +14,7 @@ const font = Work_Sans({
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const dispatch = useDispatch();
-  const [theme, setTheme] = useState<Theme>();
+  const { theme } = useSelector(selectLayoutSlice);
 
   useEffect(() => {
     dispatch(setIsVerifyingUser());
@@ -24,17 +25,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (
-      localStorage.theme === "dark" ||
-      (!("theme" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
+      theme === "dark" ||
+      (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)
     ) {
       document.documentElement.classList.add("dark");
-      localStorage.theme === "dark";
-      setTheme(Theme.dark);
+      dispatch(setTheme(Theme.dark));
     } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.theme === "light";
-      setTheme(Theme.light);
+      document.documentElement.classList.add("light");
+      dispatch(setTheme(Theme.light));
     }
   }, []);
 

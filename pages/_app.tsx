@@ -5,12 +5,13 @@ import { Provider } from "react-redux";
 import { store } from "@/store/store";
 import Layout from "@/components/Layout";
 import type { AppProps } from "next/app";
+import Loader from "@/components/Loader/Loader";
 
 export default function App({ Component, pageProps }: AppProps) {
   const persistor = persistStore(store);
   return (
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
+      <PersistGate loading={<Loader />} persistor={persistor}>
         <Layout>
           <Component {...pageProps} />
         </Layout>

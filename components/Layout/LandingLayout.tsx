@@ -1,31 +1,15 @@
-import { Theme } from "@/types/types";
-import { useEffect, useState } from "react";
 import Footer from "../Footer";
 import Head from "next/head";
 import NavBar from "../Nav/Nav";
+import { useSelector } from "react-redux";
+import { selectLayoutSlice } from "@/store/slices/layoutSlice";
 
 export default function LandingLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [theme, setTheme] = useState<Theme>();
-
-  useEffect(() => {
-    if (
-      localStorage.theme === "dark" ||
-      (!("theme" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
-      document.documentElement.classList.add("dark");
-      localStorage.theme = "dark";
-      setTheme(Theme.dark);
-    } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.theme = "light";
-      setTheme(Theme.light);
-    }
-  }, []);
+  const { theme } = useSelector(selectLayoutSlice);
 
   return (
     <>

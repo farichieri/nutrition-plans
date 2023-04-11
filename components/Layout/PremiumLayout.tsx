@@ -1,4 +1,6 @@
+import { selectLayoutSlice, setSidebarOpen } from "@/store/slices/layoutSlice";
 import { Theme } from "@/types/types";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import PremiumNav from "../Nav/PremiumNav";
@@ -9,8 +11,13 @@ export default function PremiumLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const dispatch = useDispatch();
   const [theme, setTheme] = useState<Theme>();
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const { sidebarOpen } = useSelector(selectLayoutSlice);
+
+  const handleSidebar = () => {
+    dispatch(setSidebarOpen(!sidebarOpen));
+  };
 
   useEffect(() => {
     if (
@@ -39,9 +46,9 @@ export default function PremiumLayout({
           <PremiumNav
             theme={theme}
             sidebarOpen={sidebarOpen}
-            setSidebarOpen={setSidebarOpen}
+            handleSidebar={handleSidebar}
           />
-          <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+          <Sidebar sidebarOpen={sidebarOpen} handleSidebar={handleSidebar} />
           <div
             className={`flex flex-col pt-[var(--nav-h)] duration-300 ${
               sidebarOpen && "sm:pl-[12rem]"

@@ -4,7 +4,7 @@ import {
   Bars3Icon,
   XMarkIcon,
 } from "@heroicons/react/20/solid";
-import { FC, useState } from "react";
+import { FC, MouseEventHandler, useState } from "react";
 import { Theme } from "@/types/types";
 import Avatar from "../Avatar/Avatar";
 import Link from "next/link";
@@ -17,10 +17,10 @@ import SubscribeButton from "../Buttons/Subscribe";
 interface Props {
   theme: Theme;
   sidebarOpen: boolean;
-  setSidebarOpen: Function;
+  handleSidebar: MouseEventHandler;
 }
 
-const PremiumNav: FC<Props> = ({ theme, sidebarOpen, setSidebarOpen }) => {
+const PremiumNav: FC<Props> = ({ theme, sidebarOpen, handleSidebar }) => {
   const [openMenu, setOpenMenu] = useState(false);
   const { user } = useSelector(selectAuthSlice);
 
@@ -35,12 +35,12 @@ const PremiumNav: FC<Props> = ({ theme, sidebarOpen, setSidebarOpen }) => {
           {sidebarOpen ? (
             <ArrowLeftOnRectangleIcon
               className="h-4 w-4"
-              onClick={() => setSidebarOpen(!sidebarOpen)}
+              onClick={handleSidebar}
             />
           ) : (
             <ArrowRightOnRectangleIcon
               className="h-4 w-4"
-              onClick={() => setSidebarOpen(!sidebarOpen)}
+              onClick={handleSidebar}
             />
           )}
         </div>
