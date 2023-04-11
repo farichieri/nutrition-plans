@@ -1,7 +1,5 @@
 import { selectLayoutSlice, setSidebarOpen } from "@/store/slices/layoutSlice";
-import { Theme } from "@/types/types";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
 import Head from "next/head";
 import PremiumNav from "../Nav/PremiumNav";
 import Sidebar from "../Sidebar/PremiumSidebar";
@@ -12,28 +10,12 @@ export default function PremiumLayout({
   children: React.ReactNode;
 }) {
   const dispatch = useDispatch();
-  const [theme, setTheme] = useState<Theme>();
+  const { theme } = useSelector(selectLayoutSlice);
   const { sidebarOpen } = useSelector(selectLayoutSlice);
 
   const handleSidebar = () => {
     dispatch(setSidebarOpen(!sidebarOpen));
   };
-
-  useEffect(() => {
-    if (
-      localStorage.theme === "dark" ||
-      (!("theme" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
-      document.documentElement.classList.add("dark");
-      localStorage.theme = "dark";
-      setTheme(Theme.dark);
-    } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.theme = "light";
-      setTheme(Theme.light);
-    }
-  }, []);
 
   return (
     <>

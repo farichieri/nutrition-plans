@@ -15,8 +15,6 @@ interface Props {
 }
 
 export default function Page({ planData, restOfPlans }: Props) {
-  console.log({ restOfPlans });
-
   return (
     <LandingLayout>
       <section className="max-w-5xl py-10">
