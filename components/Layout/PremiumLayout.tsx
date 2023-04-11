@@ -37,7 +37,7 @@ export default function PremiumLayout({
       {theme && (
         <>
           <div className="relative flex h-screen w-screen justify-center">
-            <div className="relative flex  w-screen flex-col items-center">
+            <div className="relative flex w-screen flex-col items-center">
               <PremiumNav
                 theme={theme}
                 sidebarOpen={sidebarOpen}

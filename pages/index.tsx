@@ -1,11 +1,18 @@
+import { directories, getSortedData } from "@/utils/mds";
 import { FAQS_INDEX } from "@/utils/content";
 import CallToAction from "@/components/CallToAction";
 import FAQS from "@/components/FAQS/FAQS";
 import Image from "next/image";
 import LandingLayout from "@/components/Layout/LandingLayout";
+import Plans from "@/components/Plans/Plans";
 import PrimaryButton from "@/components/Buttons/Primary";
+import { PlansType } from "@/types/types";
 
-export default function Home() {
+interface Props {
+  plans: PlansType;
+}
+
+export default function Home({ plans }: Props) {
   return (
     <LandingLayout>
       <div className="flex w-full flex-col items-center gap-10 py-24">
@@ -33,8 +40,16 @@ export default function Home() {
           className="m-auto my-10 flex rounded-3xl shadow-lg dark:shadow-gray-400/20"
         />
       </div>
+      <Plans plans={plans} />
       <FAQS content={FAQS_INDEX} />
       <CallToAction />
     </LandingLayout>
   );
 }
+
+export const getStaticProps = async () => {
+  const allPostsData = getSortedData(directories.plansDirectory);
+  return {
+    props: { plans: allPostsData },
+  };
+};

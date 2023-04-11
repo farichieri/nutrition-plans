@@ -1,7 +1,7 @@
 import LandingLayout from "@/components/Layout/LandingLayout";
 import Posts from "@/components/Posts/Posts";
 import { Posts as PostsType } from "@/types/types";
-import { getSortedPostData } from "@/utils/posts";
+import { directories, getSortedData } from "@/utils/mds";
 
 interface Props {
   posts: PostsType;
@@ -19,7 +19,7 @@ export default function Blog({ posts }: Props) {
 }
 
 export const getStaticProps = async () => {
-  const allPostData = getSortedPostData();
+  const allPostData = getSortedData(directories.postsDirectory);
   return {
     props: { posts: allPostData },
   };

@@ -1,7 +1,7 @@
-import Plan from "./Plan";
+import Plan from "./PricingPlan";
 
-const Plans = () => {
-  const PLANS = [
+const PricingPlans = () => {
+  const PRICING_PLANS = [
     {
       name: "Standard",
       monthlyPrice: 10,
@@ -16,11 +16,11 @@ const Plans = () => {
 
   return (
     <div className="flex h-[75vh] w-full flex-col items-center gap-10 ">
-      {PLANS.map((plan) => (
-        <Plan plan={plan} key={plan.name} />
+      {PRICING_PLANS.map((plan) => (
+        <Plan pricingPlan={plan} key={plan.name} />
       ))}
     </div>
   );
 };
 
-export default Plans;
+export default PricingPlans;

@@ -22,3 +22,47 @@ export const FAQS_PRICING = [
     answer: "Our secure Stripe checkout supports all major credit cards.",
   },
 ];
+
+export const MEAL_PLANS = [
+  {
+    name: "Balanced",
+    id: "balanced",
+  },
+  {
+    name: "Weight Loss",
+    id: "weight-loss",
+  },
+  {
+    name: "Gain muscle mass",
+    id: "gain-muscle-mass",
+  },
+  {
+    name: "Paleo",
+    id: "paleo",
+  },
+  {
+    name: "Protein",
+    id: "protein",
+  },
+
+  {
+    name: "Vegetarian",
+    id: "vegetarian",
+  },
+  {
+    name: "Vegan",
+    id: "vegan",
+  },
+  {
+    name: "Low Carb",
+    id: "low-carb",
+  },
+  {
+    name: "Keto",
+    id: "keto",
+  },
+  {
+    name: "Gluten Free",
+    id: "gluten-free",
+  },
+];

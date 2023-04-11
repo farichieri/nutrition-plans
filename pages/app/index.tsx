@@ -1,7 +1,21 @@
 import PremiumLayout from "@/components/Layout/PremiumLayout";
+import { MEAL_PLANS } from "@/utils/content";
 
 const App = () => {
-  return <PremiumLayout>{}</PremiumLayout>;
+  return (
+    <PremiumLayout>
+      <section className="flex flex-col gap-4">
+        <div>Plans</div>
+        <div className="flex w-full gap-10 ">
+          {MEAL_PLANS.map((plan) => (
+            <div className="" key={plan.name}>
+              {plan.name}
+            </div>
+          ))}
+        </div>
+      </section>
+    </PremiumLayout>
+  );
 };
 
 export default App;

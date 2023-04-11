@@ -15,3 +15,11 @@ export interface Post {
 }
 
 export interface Posts extends Array<Post> {}
+
+export interface PlanType {
+  id: string;
+  title: string;
+  contentHtml: string;
+}
+
+export interface PlansType extends Array<PlanType> {}
