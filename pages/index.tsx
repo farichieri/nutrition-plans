@@ -1,12 +1,12 @@
 import { directories, getSortedData } from "@/utils/mds";
 import { FAQS_INDEX } from "@/utils/content";
+import { PlansType } from "@/types/types";
 import CallToAction from "@/components/CallToAction";
 import FAQS from "@/components/FAQS/FAQS";
 import Image from "next/image";
 import LandingLayout from "@/components/Layout/LandingLayout";
 import Plans from "@/components/Plans/Plans";
 import PrimaryButton from "@/components/Buttons/Primary";
-import { PlansType } from "@/types/types";
 
 interface Props {
   plans: PlansType;

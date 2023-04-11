@@ -19,11 +19,11 @@ export default function PremiumLayout({
         window.matchMedia("(prefers-color-scheme: dark)").matches)
     ) {
       document.documentElement.classList.add("dark");
-      localStorage.theme === "dark";
+      localStorage.theme = "dark";
       setTheme(Theme.dark);
     } else {
       document.documentElement.classList.remove("dark");
-      localStorage.theme === "light";
+      localStorage.theme = "light";
       setTheme(Theme.light);
     }
   }, []);
@@ -35,24 +35,21 @@ export default function PremiumLayout({
         <title>Nutrition Plans</title>
       </Head>
       {theme && (
-        <>
-          <div className="relative flex h-screen w-screen justify-center">
-            <div className="relative flex w-screen flex-col items-center">
-              <PremiumNav
-                theme={theme}
-                sidebarOpen={sidebarOpen}
-                setSidebarOpen={setSidebarOpen}
-              />
-              <Sidebar
-                sidebarOpen={sidebarOpen}
-                setSidebarOpen={setSidebarOpen}
-              />
-              <div className="flex flex-col px-4 pt-[var(--nav-h)]">
-                {children}
-              </div>
-            </div>
+        <div className="relative flex w-screen flex-col ">
+          <PremiumNav
+            theme={theme}
+            sidebarOpen={sidebarOpen}
+            setSidebarOpen={setSidebarOpen}
+          />
+          <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+          <div
+            className={`flex flex-col pt-[var(--nav-h)] duration-300 ${
+              sidebarOpen && "sm:pl-[12rem]"
+            }`}
+          >
+            {children}
           </div>
-        </>
+        </div>
       )}
     </>
   );

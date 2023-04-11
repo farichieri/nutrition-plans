@@ -31,7 +31,7 @@ const getSortedData = (directory: string) => {
   });
 };
 
-const getAllPostsIds = (directory: string) => {
+const getAllMDIDS = (directory: string) => {
   const fileNames = fs.readdirSync(directory);
   return fileNames.map((fileName) => {
     return {
@@ -42,7 +42,7 @@ const getAllPostsIds = (directory: string) => {
   });
 };
 
-const getPostData = async (directory: string, id: any) => {
+const getAllMDData = async (directory: string, id: any) => {
   const fullPath = path.join(directory, `${id}.md`);
   const fileContents = fs.readFileSync(fullPath, "utf8");
 
@@ -60,4 +60,4 @@ const getPostData = async (directory: string, id: any) => {
   };
 };
 
-export { getSortedData, getPostData, getAllPostsIds };
+export { getSortedData, getAllMDData, getAllMDIDS };

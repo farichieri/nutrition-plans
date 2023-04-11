@@ -1,7 +1,6 @@
-import { MEAL_PLANS } from "@/utils/content";
-import Link from "next/link";
-import { PlansType } from "@/types/types";
 import { FC } from "react";
+import { PlansType } from "@/types/types";
+import Link from "next/link";
 
 interface Props {
   plans: PlansType;

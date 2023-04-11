@@ -1,4 +1,4 @@
-import { directories, getAllPostsIds, getPostData } from "@/utils/mds";
+import { directories, getAllMDIDS, getAllMDData } from "@/utils/mds";
 import { Post } from "@/types/types";
 import CallToAction from "@/components/CallToAction";
 import Date from "@/components/Posts/Post/Date/Date";
@@ -29,7 +29,7 @@ export default function Page({ postData }: Props) {
 }
 
 export const getStaticPaths = async () => {
-  const paths = getAllPostsIds(directories.postsDirectory);
+  const paths = getAllMDIDS(directories.postsDirectory);
   return {
     paths,
     fallback: false,
@@ -37,7 +37,7 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }: { params: any }) => {
-  const postData = await getPostData(directories.postsDirectory, params.id);
+  const postData = await getAllMDData(directories.postsDirectory, params.id);
   return {
     props: {
       postData,

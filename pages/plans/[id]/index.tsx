@@ -1,7 +1,7 @@
 import {
   directories,
-  getAllPostsIds,
-  getPostData,
+  getAllMDIDS,
+  getAllMDData,
   getSortedData,
 } from "@/utils/mds";
 import { PlanType, PlansType, Post } from "@/types/types";
@@ -38,7 +38,7 @@ export default function Page({ planData, restOfPlans }: Props) {
 }
 
 export const getStaticPaths = async () => {
-  const paths = getAllPostsIds(directories.plansDirectory);
+  const paths = getAllMDIDS(directories.plansDirectory);
   return {
     paths,
     fallback: false,
@@ -46,7 +46,7 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }: { params: any }) => {
-  const planData = await getPostData(directories.plansDirectory, params.id);
+  const planData = await getAllMDData(directories.plansDirectory, params.id);
   const allPlansData = getSortedData(directories.plansDirectory);
   const restOfPlans = allPlansData.filter((plan) => plan.id !== params.id);
 
