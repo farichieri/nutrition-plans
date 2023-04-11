@@ -19,7 +19,7 @@ export default function LandingLayout({
       </Head>
       {theme && (
         <>
-          <NavBar theme={theme} />
+          <NavBar />
           <div className="flex h-full w-full flex-col items-center px-4 pt-[var(--nav-h)]">
             {children}
           </div>

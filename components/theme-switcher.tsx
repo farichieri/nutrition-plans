@@ -1,15 +1,14 @@
 import { FC } from "react";
 import { SunIcon, MoonIcon } from "@heroicons/react/24/solid";
 import { Theme } from "@/types/types";
-import { useDispatch } from "react-redux";
-import { setTheme } from "@/store/slices/layoutSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectLayoutSlice, setTheme } from "@/store/slices/layoutSlice";
 
-interface Props {
-  theme: Theme;
-}
+interface Props {}
 
-const ThemeSwitcher: FC<Props> = ({ theme }) => {
+const ThemeSwitcher: FC<Props> = () => {
   const dispatch = useDispatch();
+  const { theme } = useSelector(selectLayoutSlice);
 
   const toogleTheme = () => {
     if (

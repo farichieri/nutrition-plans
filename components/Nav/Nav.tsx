@@ -1,15 +1,12 @@
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/20/solid";
 import { FC, useState } from "react";
-import { Theme } from "@/types/types";
 import Link from "next/link";
 import PrimaryButton from "../Buttons/Primary";
 import ThemeSwitcher from "../theme-switcher";
 
-interface Props {
-  theme: Theme;
-}
+interface Props {}
 
-const NavBar: FC<Props> = ({ theme }) => {
+const NavBar: FC<Props> = () => {
   const [openMenu, setOpenMenu] = useState(false);
 
   const handleMenu = () => {
@@ -28,7 +25,7 @@ const NavBar: FC<Props> = ({ theme }) => {
           <Link href={"/blog"}>Blog</Link>
         </div>
         <div className="flex w-fit min-w-fit basis-1/3 items-center justify-end gap-4 text-xs sm:gap-10 sm:text-xl">
-          <ThemeSwitcher theme={theme} />
+          <ThemeSwitcher />
           <Link href={"/login"} className="hidden sm:flex">
             <button className="font-medium">Log in</button>
           </Link>

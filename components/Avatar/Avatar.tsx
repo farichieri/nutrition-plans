@@ -1,21 +1,23 @@
+import { selectAuthSlice } from "@/store/slices/authSlice";
 import Image from "next/image";
 import { FC } from "react";
+import { useSelector } from "react-redux";
 
 interface Props {
-  src: string | null | undefined;
   width: number;
   height: number;
 }
 
-const Avatar: FC<Props> = ({ src, width, height }) => {
-  if (typeof src !== "string") {
-    return <div className={`rounded-full border`}>.</div>;
-  }
+const Avatar: FC<Props> = ({ width, height }) => {
+  const { user } = useSelector(selectAuthSlice);
+
+  const userImage = user?.photoURL || "";
+
   return (
     <Image
       className="rounded-full"
       alt="Avatar"
-      src={src}
+      src={userImage}
       height={height}
       width={width}
     />

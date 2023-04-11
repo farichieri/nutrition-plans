@@ -27,11 +27,7 @@ export default function PremiumLayout({
       </Head>
       {theme && (
         <div className="relative flex w-screen flex-col ">
-          <PremiumNav
-            theme={theme}
-            sidebarOpen={sidebarOpen}
-            handleSidebar={handleSidebar}
-          />
+          <PremiumNav sidebarOpen={sidebarOpen} handleSidebar={handleSidebar} />
           <Sidebar sidebarOpen={sidebarOpen} handleSidebar={handleSidebar} />
           <div
             className={`flex flex-col pt-[var(--nav-h)] duration-300 ${

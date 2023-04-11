@@ -92,7 +92,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
         </div>
         <Cog8ToothIcon className="mx-auto mt-auto h-5 w-5" />
         <div className="mx-auto">
-          <Avatar src={user?.photoURL} width={60} height={50} />
+          <Avatar width={50} height={50} />
         </div>
       </div>
     </>
