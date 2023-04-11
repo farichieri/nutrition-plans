@@ -1,5 +1,43 @@
 import PremiumLayout from "@/components/Layout/PremiumLayout";
+import { PlanType } from "@/types/types";
+import {
+  directories,
+  getAllMDData,
+  getAllMDIDS,
+  getSortedData,
+} from "@/utils/mds";
 
-export default function Page() {
-  return <PremiumLayout>Plan page</PremiumLayout>;
+interface Props {
+  planData: PlanType;
 }
+
+export default function Page({ planData }: Props) {
+  return (
+    <PremiumLayout>
+      <div>
+        <span>{planData.title}</span>
+      </div>
+    </PremiumLayout>
+  );
+}
+
+export const getStaticPaths = async () => {
+  const paths = getAllMDIDS(directories.plansDirectory);
+  return {
+    paths,
+    fallback: false,
+  };
+};
+
+export const getStaticProps = async ({ params }: { params: any }) => {
+  const planData = await getAllMDData(directories.plansDirectory, params.id);
+  const allPlansData = getSortedData(directories.plansDirectory);
+  const restOfPlans = allPlansData.filter((plan) => plan.id !== params.id);
+
+  return {
+    props: {
+      planData,
+      restOfPlans,
+    },
+  };
+};

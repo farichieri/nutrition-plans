@@ -24,6 +24,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
+    console.log({ theme });
     if (
       theme === "dark" ||
       (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)
@@ -34,7 +35,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       document.documentElement.classList.add("light");
       dispatch(setTheme(Theme.light));
     }
-  }, []);
+  }, [theme]);
 
   return (
     <>

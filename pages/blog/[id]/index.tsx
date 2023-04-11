@@ -38,6 +38,7 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params }: { params: any }) => {
   const postData = await getAllMDData(directories.postsDirectory, params.id);
+  console.log(params.id);
   return {
     props: {
       postData,

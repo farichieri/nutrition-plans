@@ -17,6 +17,8 @@ export default function PremiumLayout({
     dispatch(setSidebarOpen(!sidebarOpen));
   };
 
+  console.log("asd");
+
   return (
     <>
       <Head>
