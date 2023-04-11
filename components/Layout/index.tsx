@@ -4,7 +4,7 @@ import { selectLayoutSlice, setTheme } from "@/store/slices/layoutSlice";
 import { setIsVerifyingUser, setUser } from "@/store/slices/authSlice";
 import { Theme } from "@/types/types";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Work_Sans } from "next/font/google";
 import Head from "next/head";
 
@@ -15,6 +15,7 @@ const font = Work_Sans({
 export default function Layout({ children }: { children: React.ReactNode }) {
   const dispatch = useDispatch();
   const { theme } = useSelector(selectLayoutSlice);
+  const [_theme, setTheme] = useState<Theme | null>(null);
 
   useEffect(() => {
     dispatch(setIsVerifyingUser());
@@ -24,16 +25,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    console.log({ theme });
     if (
       theme === "dark" ||
       (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)
     ) {
       document.documentElement.classList.add("dark");
-      dispatch(setTheme(Theme.dark));
+      setTheme(Theme.dark);
     } else {
       document.documentElement.classList.add("light");
-      dispatch(setTheme(Theme.light));
+      setTheme(Theme.light);
     }
   }, [theme]);
 

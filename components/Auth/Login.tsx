@@ -8,8 +8,8 @@ import {
 import { auth, provider } from "../../firebase/firebase.config";
 import { useRouter } from "next/router";
 import GoogleLoginButton from "../Buttons/GoogleLogin";
-import SecondaryButton from "../Buttons/Secondary";
 import Link from "next/link";
+import Submit from "../Buttons/Submit";
 
 const Login = () => {
   const [input, setInput] = useState({
@@ -70,7 +70,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex w-full max-w-sm flex-col gap-6">
+    <div className="flex w-full max-w-sm flex-col gap-8">
       <GoogleLoginButton onClick={handleLogInWithGoogle}>
         Log in with Google
       </GoogleLoginButton>
@@ -91,7 +91,8 @@ const Login = () => {
             name="email"
             value={input.email}
             placeholder="Email"
-            type="text"
+            type="email"
+            required
             className="border-b border-gray-300 bg-transparent px-4 py-1 outline-none focus:bg-[var(--box-shadow)]"
           />
           <input
@@ -100,10 +101,11 @@ const Login = () => {
             value={input.password}
             placeholder="Password"
             type="password"
+            required
             className="border-b border-gray-300 bg-transparent px-4 py-1 outline-none focus:bg-[var(--box-shadow)]"
           />
         </div>
-        <SecondaryButton
+        <Submit
           style={null}
           onClick={handleSubmit}
           loadMessage={"Logging in..."}
@@ -112,13 +114,13 @@ const Login = () => {
           isDisabled={isDisabled}
         />
         {errorMessage && (
-          <span className="absolute -bottom-10 w-full text-center text-red-500">
-            Email or password was not correct
+          <span className="absolute -bottom-8 w-full text-center text-red-500">
+            Incorrect email or password.
           </span>
         )}
       </form>
       <span className="text-xs opacity-50 sm:text-sm">
-        Don`&apos;t have an account?{" "}
+        Don&apos;t have an account?{" "}
         <Link href="/signup" className="text-blue-400 hover:underline">
           Sign up here
         </Link>

@@ -17,7 +17,7 @@ interface Props {
 export default function Page({ planData, restOfPlans }: Props) {
   return (
     <LandingLayout>
-      <section className="max-w-5xl py-10">
+      <section className=" flex  max-w-5xl flex-col items-center justify-center py-10">
         <div className="flex flex-col items-center justify-center gap-4">
           <span className="text-5xl font-bold">{planData.title}</span>
           {/* <Date dateString={planData.date} /> */}

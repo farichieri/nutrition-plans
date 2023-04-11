@@ -47,7 +47,10 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
       >
         <div className="flex w-full items-center gap-2 pb-2">
           <StarIcon className="h-4 w-4 fill-green-500" />
-          <Link href={"/app/my-plan"} className="w-full text-lg font-semibold">
+          <Link
+            href={"/app/my-plan"}
+            className="text-md w-full font-semibold sm:text-lg"
+          >
             My Plan
           </Link>
         </div>
@@ -55,7 +58,9 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
           <div className="flex items-center gap-2 " onClick={toggleAllPlans}>
             <ListBulletIcon className="h-4 w-4 fill-green-500" />
             <div className="flex w-full cursor-pointer items-center justify-between">
-              <span className="text-lg font-semibold">All plans</span>
+              <span className="text-md font-semibold sm:text-lg">
+                All plans
+              </span>
               {plansOpen ? (
                 <ChevronUpIcon className="h-4 w-4" />
               ) : (
@@ -64,7 +69,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
             </div>
           </div>
           <div
-            className={` flex flex-col gap-2 overflow-hidden px-4 pl-2 transition-[max-height] duration-300 ${
+            className={`flex flex-col gap-2 overflow-hidden px-4 pl-2 text-sm transition-[max-height] duration-300 sm:text-base ${
               plansOpen ? " max-h-96" : "max-h-0"
             }`}
           >
@@ -80,14 +85,14 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
           <CalculatorIcon className="h-4 w-4 fill-green-500" />
           <Link
             href={"/app/plan-calculator"}
-            className="w-full text-lg font-semibold"
+            className="text-md w-full font-semibold sm:text-lg"
           >
             Plan Calculator
           </Link>
         </div>
         <Cog8ToothIcon className="mx-auto mt-auto h-5 w-5" />
         <div className="mx-auto">
-          <Avatar src={user?.photoURL} width={50} height={50} />
+          <Avatar src={user?.photoURL} width={60} height={50} />
         </div>
       </div>
     </>

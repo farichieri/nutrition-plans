@@ -1,6 +1,6 @@
 import { MouseEventHandler } from "react";
 
-const SecondaryButton = ({
+const Submit = ({
   content,
   isLoading,
   isDisabled,
@@ -55,4 +55,4 @@ const SecondaryButton = ({
   );
 };
 
-export default SecondaryButton;
+export default Submit;

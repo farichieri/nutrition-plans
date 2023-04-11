@@ -6,7 +6,26 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    height: (theme) => ({
+      auto: "auto",
+      ...theme("spacing"),
+      full: "100%",
+      screen: "calc(var(--vh) * 100)",
+    }),
+    minHeight: (theme) => ({
+      0: "0",
+      ...theme("spacing"),
+      full: "100%",
+      screen: "calc(var(--vh) * 100)",
+    }),
     extend: {
+      maxHeight: {
+        0: "0",
+        "25vh": "25vh",
+        "50vh": "50vh",
+        "75vh": "75vh",
+        full: "100vh",
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":

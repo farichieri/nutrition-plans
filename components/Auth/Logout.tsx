@@ -2,7 +2,7 @@ import { auth } from "@/firebase/firebase.config";
 import { signOut } from "firebase/auth";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import SecondaryButton from "../Buttons/Secondary";
+import SecondaryButton from "../Buttons/Submit";
 import { useDispatch } from "react-redux";
 import { setLogoutUser } from "@/store/slices/authSlice";
 

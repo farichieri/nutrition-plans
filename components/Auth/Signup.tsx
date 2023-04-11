@@ -8,8 +8,8 @@ import {
 import { auth, provider } from "../../firebase/firebase.config";
 import { useRouter } from "next/router";
 import GoogleLoginButton from "../Buttons/GoogleLogin";
-import SecondaryButton from "../Buttons/Secondary";
 import Link from "next/link";
+import Submit from "../Buttons/Submit";
 
 const Signup = () => {
   const [input, setInput] = useState({
@@ -75,7 +75,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex w-full max-w-sm flex-col gap-6">
+    <div className="flex w-full max-w-sm flex-col gap-8">
       <GoogleLoginButton onClick={handleLogInWithGoogle}>
         Sign up with Google
       </GoogleLoginButton>
@@ -108,7 +108,7 @@ const Signup = () => {
             className="w-full border-b border-gray-300 bg-transparent px-4 py-1 outline-none focus:bg-[var(--box-shadow)]"
           />
         </div>
-        <SecondaryButton
+        <Submit
           style={null}
           onClick={handleSubmit}
           loadMessage={"Signing up..."}
@@ -122,18 +122,20 @@ const Signup = () => {
           </span>
         )}
       </form>
-      <span className="text-xs opacity-50 sm:text-sm ">
-        By signing up, you agree to the{" "}
-        <Link href={"/terms"} className="hover:underline">
-          Terms of Service.
-        </Link>
-      </span>
-      <span className="text-xs opacity-50 sm:text-sm">
-        Already have an account?{" "}
-        <Link href="/login" className="text-blue-400 hover:underline ">
-          Log in here
-        </Link>
-      </span>
+      <div className="flex flex-col gap-2">
+        <span className="text-xs opacity-50 sm:text-sm ">
+          By signing up, you agree to the{" "}
+          <Link href={"/terms"} className="hover:underline">
+            Terms of Service.
+          </Link>
+        </span>
+        <span className="text-xs opacity-50 sm:text-sm">
+          Already have an account?{" "}
+          <Link href="/login" className="text-blue-400 hover:underline ">
+            Log in here
+          </Link>
+        </span>
+      </div>
     </div>
   );
 };

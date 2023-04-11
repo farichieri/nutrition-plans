@@ -14,9 +14,9 @@ interface Props {
 export default function Page({ planData }: Props) {
   return (
     <PremiumLayout>
-      <div>
+      <section className="p-4">
         <span>{planData.title}</span>
-      </div>
+      </section>
     </PremiumLayout>
   );
 }
