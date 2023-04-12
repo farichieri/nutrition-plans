@@ -1,4 +1,5 @@
 import { auth } from "@/firebase/firebase.config";
+import { generateUserObject } from "@/firebase/helpers/Auth";
 import { onAuthStateChanged } from "firebase/auth";
 import { selectLayoutSlice } from "@/store/slices/layoutSlice";
 import { setIsVerifyingUser, setUser } from "@/store/slices/authSlice";
@@ -20,7 +21,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     dispatch(setIsVerifyingUser());
     onAuthStateChanged(auth, async (user) => {
-      dispatch(setUser(user));
+      const userObject = user && (await generateUserObject(user));
+      dispatch(setUser(userObject));
     });
   }, []);
 
@@ -36,7 +38,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       setTheme(Theme.light);
     }
   }, [theme]);
-  console.log({ _theme });
+
   return (
     <>
       <Head>

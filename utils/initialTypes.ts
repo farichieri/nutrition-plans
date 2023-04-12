@@ -1,8 +1,16 @@
-import { Account } from "@/types/types";
+import { UserAccount } from "@/types/types";
 
-export const newAccount: Account = {
-  email: "",
+export const newAccount: UserAccount = {
+  created_at: "",
+  display_name: "",
+  email_address: "",
+  gender: null,
+  height: null,
   is_premium: false,
-  name: "",
+  lang: "",
+  photo_url: "",
   premium_plan: null,
+  user_id: "",
+  weight_goal: null,
+  weight: null,
 };

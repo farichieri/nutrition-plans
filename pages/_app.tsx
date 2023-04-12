@@ -3,10 +3,10 @@ import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
 import { Provider } from "react-redux";
 import { store } from "@/store/store";
-import Layout from "@/components/Layout";
-import Loader from "@/components/Loader/Loader";
-import type { AppProps } from "next/app";
 import { useEffect } from "react";
+import AppLoader from "@/components/Loader/AppLoader";
+import Layout from "@/components/Layout";
+import type { AppProps } from "next/app";
 
 export default function App({ Component, pageProps }: AppProps) {
   const persistor = persistStore(store);
@@ -25,7 +25,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <Provider store={store}>
-      <PersistGate loading={<Loader />} persistor={persistor}>
+      <PersistGate loading={<AppLoader />} persistor={persistor}>
         <Layout>
           <Component {...pageProps} />
         </Layout>

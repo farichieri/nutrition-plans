@@ -1,7 +1,9 @@
-import { selectAuthSlice } from "@/store/slices/authSlice";
+import { selectAuthSlice, setIsCreatingUser } from "@/store/slices/authSlice";
 import { selectLayoutSlice, setSidebarOpen } from "@/store/slices/layoutSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 import Head from "next/head";
+import Loader from "../Loader/Loader";
 import Login from "../Auth/Login";
 import PremiumNav from "../Nav/PremiumNav";
 import Sidebar from "../Sidebar/PremiumSidebar";
@@ -13,11 +15,15 @@ export default function PremiumLayout({
 }) {
   const dispatch = useDispatch();
   const { sidebarOpen } = useSelector(selectLayoutSlice);
-  const { user } = useSelector(selectAuthSlice);
+  const { user, isCreatingUser, isSigningUser } = useSelector(selectAuthSlice);
 
   const handleSidebar = () => {
     dispatch(setSidebarOpen(!sidebarOpen));
   };
+
+  useEffect(() => {
+    dispatch(setIsCreatingUser(false));
+  }, []);
 
   return (
     <>
@@ -25,6 +31,7 @@ export default function PremiumLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Nutrition Plans</title>
       </Head>
+      {(isCreatingUser || isSigningUser) && <Loader />}
       {user ? (
         <div className="relative flex w-screen flex-col ">
           <PremiumNav sidebarOpen={sidebarOpen} handleSidebar={handleSidebar} />

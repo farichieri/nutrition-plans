@@ -3,17 +3,23 @@ import {
   createUserWithEmailAndPassword,
   getAdditionalUserInfo,
   signInWithPopup,
+  updateProfile,
 } from "firebase/auth";
 import { auth, provider } from "../../firebase/firebase.config";
 import { useRouter } from "next/router";
 import GoogleLoginButton from "../Buttons/GoogleLogin";
 import Link from "next/link";
 import Submit from "../Buttons/Submit";
+import { createNewUser } from "@/firebase/helpers/Auth";
+import { useDispatch } from "react-redux";
+import { setIsCreatingUser, setIsSigningUser } from "@/store/slices/authSlice";
 
 const Signup = () => {
+  const dispatch = useDispatch();
   const [input, setInput] = useState({
     email: "",
     password: "",
+    displayName: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoadingForm, setIsLoadingForm] = useState(false);
@@ -26,38 +32,54 @@ const Signup = () => {
     signInWithPopup(auth, provider)
       .then(async (result) => {
         const additinalInfo = getAdditionalUserInfo(result);
+        dispatch(setIsSigningUser(true));
         if (additinalInfo?.isNewUser) {
-          console.log({ additinalInfo });
-          console.log(result.user);
+          const user = result.user;
+          dispatch(setIsCreatingUser(true));
+          await createNewUser(user);
+          dispatch(setIsCreatingUser(false));
+        }
+      })
+      .then(() => router.push(redirectRoute))
+      .catch((error) => {
+        dispatch(setIsCreatingUser(false));
+        dispatch(setIsSigningUser(false));
+        alert(error.message);
+        console.log({ error });
+      });
+  };
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!input.email || !input.password || !input.displayName) {
+      setErrorMessage("Name, email and password required");
+      return;
+    }
+    setIsLoadingForm(true);
+    setIsDisabled(true);
+    await createUserWithEmailAndPassword(auth, input.email, input.password)
+      .then(async (result) => {
+        const user = result.user;
+        await updateProfile(user, {
+          displayName: input.displayName,
+        });
+        const additinalInfo = getAdditionalUserInfo(result);
+        if (additinalInfo?.isNewUser) {
+          await createNewUser(user);
           router.push(redirectRoute);
         } else {
           router.push(redirectRoute);
         }
       })
       .catch((error) => {
-        console.log({ error });
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log({ errorCode });
+        console.log({ errorMessage });
+        setErrorMessage(error.message);
       });
-  };
-
-  const handleSubmit = async (event: React.FormEvent) => {
-    try {
-      event.preventDefault();
-      setIsLoadingForm(true);
-      setIsDisabled(true);
-      await createUserWithEmailAndPassword(auth, input.email, input.password)
-        .then((result) => {
-          const user = result.user;
-          user && router.push(redirectRoute);
-        })
-        .catch((error) => {
-          console.log(error.message);
-          setErrorMessage(error.message);
-        });
-      setIsLoadingForm(false);
-      setIsDisabled(false);
-    } catch (error) {
-      console.log(error);
-    }
+    setIsLoadingForm(false);
+    setIsDisabled(false);
   };
 
   const handleChange = (
@@ -94,10 +116,20 @@ const Signup = () => {
         <div className="flex w-full flex-col gap-2">
           <input
             onChange={handleChange}
+            name="displayName"
+            value={input.displayName}
+            placeholder="Full Name"
+            type="text"
+            required
+            className="w-full border-b border-gray-300 bg-transparent px-4 py-1 outline-none focus:bg-[var(--box-shadow)]"
+          />
+          <input
+            onChange={handleChange}
             name="email"
             value={input.email}
             placeholder="Email address"
             type="text"
+            required
             className="w-full border-b border-gray-300 bg-transparent px-4 py-1 outline-none focus:bg-[var(--box-shadow)]"
           />
           <input
@@ -106,6 +138,7 @@ const Signup = () => {
             value={input.password}
             placeholder="Password"
             type="password"
+            required
             className="w-full border-b border-gray-300 bg-transparent px-4 py-1 outline-none focus:bg-[var(--box-shadow)]"
           />
         </div>
@@ -119,7 +152,7 @@ const Signup = () => {
         />
         {errorMessage && (
           <span className="absolute -bottom-8 w-full text-center text-red-500">
-            Unexpected error.
+            {errorMessage}
           </span>
         )}
       </form>

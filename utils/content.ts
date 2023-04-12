@@ -76,3 +76,36 @@ export const MEAL_PLANS = [
     id: "gluten-free",
   },
 ];
+
+export const PRICING_PLANS = [
+  {
+    name: "Free",
+    monthlyPrice: 0,
+    yearlyPrice: 0,
+    discount: "",
+    checklistTitle: "",
+    checklist: ["Plan Calculator"],
+    buttonContent: "Get started with Free",
+    checkoutLink: "/app/billing",
+  },
+  {
+    name: "Standard",
+    monthlyPrice: 10,
+    yearlyPrice: 8,
+    discount: "-20%",
+    checklistTitle: "Everything in Free, plus...",
+    checklist: ["This", "That", "These"],
+    buttonContent: "Get started with Standard",
+    checkoutLink: "/app/billing",
+  },
+  {
+    name: "Plus",
+    monthlyPrice: 50,
+    yearlyPrice: 40,
+    discount: "-20%",
+    checklistTitle: "Everything in Standard, plus...",
+    checklist: ["This", "That", "These"],
+    buttonContent: "Get started with Plus",
+    checkoutLink: "/app/billing",
+  },
+];

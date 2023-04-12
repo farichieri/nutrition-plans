@@ -1,12 +1,12 @@
 import { CheckIcon } from "@heroicons/react/20/solid";
-import Link from "next/link";
 import { FC, useState } from "react";
+import Link from "next/link";
 
 interface Props {
   pricingPlan: any;
 }
 
-const PricingPlan: FC<Props> = ({ pricingPlan }) => {
+const PremiumPricingPlan: FC<Props> = ({ pricingPlan }) => {
   const [yearly, setYearly] = useState(false);
   return (
     <div
@@ -57,4 +57,4 @@ const PricingPlan: FC<Props> = ({ pricingPlan }) => {
   );
 };
 
-export default PricingPlan;
+export default PremiumPricingPlan;

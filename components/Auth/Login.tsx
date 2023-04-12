@@ -5,12 +5,16 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { auth, provider } from "../../firebase/firebase.config";
+import { createNewUser } from "@/firebase/helpers/Auth";
+import { setIsCreatingUser } from "@/store/slices/authSlice";
+import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import GoogleLoginButton from "../Buttons/GoogleLogin";
 import Link from "next/link";
 import Submit from "../Buttons/Submit";
 
 const Login = () => {
+  const dispatch = useDispatch();
   const [input, setInput] = useState({
     email: "",
     password: "",
@@ -27,23 +31,32 @@ const Login = () => {
       .then(async (result) => {
         const additinalInfo = getAdditionalUserInfo(result);
         if (additinalInfo?.isNewUser) {
-          router.push(redirectRoute);
-        } else {
-          router.push(redirectRoute);
+          const user = result.user;
+          dispatch(setIsCreatingUser(true));
+          await createNewUser(user);
+          dispatch(setIsCreatingUser(false));
         }
       })
+      .then(() => router.push(redirectRoute))
       .catch((error) => {
+        dispatch(setIsCreatingUser(false));
+        alert(error.message);
         console.log({ error });
       });
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    if (!input.email || !input.password) {
+      setErrorMessage("Email and password required");
+      return;
+    }
     setIsLoadingForm(true);
     setIsDisabled(true);
     await signInWithEmailAndPassword(auth, input.email, input.password)
       .then((result) => {
         const user = result.user;
+        console.log({ user });
         user && router.push(redirectRoute);
       })
       .catch((error) => {
@@ -114,7 +127,7 @@ const Login = () => {
         />
         {errorMessage && (
           <span className="absolute -bottom-8 w-full text-center text-red-500">
-            Incorrect email or password.
+            {errorMessage}
           </span>
         )}
       </form>

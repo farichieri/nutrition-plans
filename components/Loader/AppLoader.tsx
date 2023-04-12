@@ -1,4 +1,4 @@
-const Loader = () => {
+const AppLoader = () => {
   return (
     <div className="loader-container">
       <span className="loader"></span>
@@ -15,14 +15,13 @@ const Loader = () => {
           left: 0;
           bottom: 0;
           right: 0;
-          background: rgb(var(--background-start-rgb));
         }
         .loader {
           width: 48px;
           height: 48px;
           border-radius: 50%;
           display: inline-block;
-          border-top: 3px solid rgb(var(--foreground-rgb));
+          border-top: 3px solid #fff;
           border-right: 3px solid transparent;
           box-sizing: border-box;
           animation: rotation 1s linear infinite;
@@ -41,4 +40,4 @@ const Loader = () => {
   );
 };
 
-export default Loader;
+export default AppLoader;

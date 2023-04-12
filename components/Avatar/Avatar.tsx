@@ -11,13 +11,17 @@ interface Props {
 const Avatar: FC<Props> = ({ width, height }) => {
   const { user } = useSelector(selectAuthSlice);
 
-  // const userImage = "";
-  const userImage = user?.photoURL || "";
+  const userImage = user?.photo_url || "";
+  const fisrtNameWord = user?.display_name[0]?.toLowerCase();
 
   return (
     <>
       {!userImage ? (
-        <div className={`rounded-full bg-black`}></div>
+        <div
+          className={`flex items-center justify-center rounded-full bg-gray-400 dark:bg-gray-700`}
+        >
+          <span className="text-lg opacity-80">{fisrtNameWord}</span>
+        </div>
       ) : (
         <div className={`rounded-full `}>
           <Image
