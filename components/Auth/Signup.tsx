@@ -27,6 +27,8 @@ const Signup = () => {
       .then(async (result) => {
         const additinalInfo = getAdditionalUserInfo(result);
         if (additinalInfo?.isNewUser) {
+          console.log({ additinalInfo });
+          console.log(result.user);
           router.push(redirectRoute);
         } else {
           router.push(redirectRoute);

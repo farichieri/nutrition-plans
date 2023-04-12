@@ -6,14 +6,14 @@ import type { RootState } from "../store";
 interface LayoutState {
   sidebarOpen: boolean;
   plansOpen: boolean;
-  theme: Theme | null;
+  theme: Theme;
 }
 
 // Define the initial state using that type
 const initialState: LayoutState = {
   sidebarOpen: true,
   plansOpen: true,
-  theme: null,
+  theme: Theme.light,
 };
 
 export const layoutSlice = createSlice({

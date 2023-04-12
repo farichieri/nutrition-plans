@@ -1,6 +1,6 @@
 import { auth } from "@/firebase/firebase.config";
 import { onAuthStateChanged } from "firebase/auth";
-import { selectLayoutSlice, setTheme } from "@/store/slices/layoutSlice";
+import { selectLayoutSlice } from "@/store/slices/layoutSlice";
 import { setIsVerifyingUser, setUser } from "@/store/slices/authSlice";
 import { Theme } from "@/types/types";
 import { useDispatch, useSelector } from "react-redux";
@@ -36,14 +36,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       setTheme(Theme.light);
     }
   }, [theme]);
-
+  console.log({ _theme });
   return (
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Nutrition Plans</title>
       </Head>
-      {theme && (
+      {_theme && (
         <div className={font.className}>
           <main className="min-w-screen flex min-h-screen flex-col items-center justify-between ">
             {children}

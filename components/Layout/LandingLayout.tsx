@@ -1,31 +1,25 @@
 import Footer from "../Footer";
 import Head from "next/head";
 import NavBar from "../Nav/Nav";
-import { useSelector } from "react-redux";
-import { selectLayoutSlice } from "@/store/slices/layoutSlice";
 
 export default function LandingLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { theme } = useSelector(selectLayoutSlice);
-
   return (
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Nutrition Plans</title>
       </Head>
-      {theme && (
-        <>
-          <NavBar />
-          <div className="flex h-full w-full flex-col items-center px-4 pt-[var(--nav-h)]">
-            {children}
-          </div>
-          <Footer />
-        </>
-      )}
+      <>
+        <NavBar />
+        <div className="flex h-full w-full flex-col items-center px-4 pt-[var(--nav-h)]">
+          {children}
+        </div>
+        <Footer />
+      </>
       {/* <style jsx>{`
         div {
           background: radial-gradient(
