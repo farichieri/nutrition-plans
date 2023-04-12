@@ -44,6 +44,9 @@ export const authSlice = createSlice({
     setIsSigningUser: (state, action: PayloadAction<boolean>) => {
       state.isSigningUser = action.payload;
     },
+    setUpdateUser: (state, action: PayloadAction<UserAccount>) => {
+      state.user = action.payload;
+    },
   },
 });
 
@@ -53,6 +56,7 @@ export const {
   setLogoutUser,
   setIsCreatingUser,
   setIsSigningUser,
+  setUpdateUser,
 } = authSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

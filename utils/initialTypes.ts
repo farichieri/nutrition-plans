@@ -9,6 +9,7 @@ export const newAccount: UserAccount = {
   is_premium: false,
   lang: "",
   photo_url: "",
+  plan_selected: null,
   premium_plan: null,
   user_id: "",
   weight_goal: null,

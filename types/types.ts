@@ -33,8 +33,14 @@ export interface UserAccount {
   is_premium: boolean;
   lang: string;
   photo_url: string | null;
+  plan_selected: string | null;
   premium_plan: string | null;
   user_id: string;
   weight_goal: string | null;
   weight: string | null;
+}
+
+export interface PremiumPlan {
+  id: string;
+  title: string;
 }

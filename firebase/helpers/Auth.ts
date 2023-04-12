@@ -15,6 +15,7 @@ const createNewUser = async (user: User) => {
       is_premium: false,
       lang: "en",
       photo_url: user.photoURL,
+      plan_selected: null,
       premium_plan: null,
       user_id: user.uid,
       weight_goal: null,
@@ -51,9 +52,10 @@ const generateUserObject = async (user: User) => {
         lang: userData.lang,
         photo_url: userData.photo_url,
         premium_plan: userData.premium_plan,
-        user_id: userData.uid,
+        user_id: userData.user_id,
         weight_goal: userData.weight_goal,
         weight: userData.weight,
+        plan_selected: userData.plan_selected,
       };
       return userAccount || null;
     } else {
