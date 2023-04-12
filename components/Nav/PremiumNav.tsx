@@ -34,7 +34,7 @@ const PremiumNav: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
           )}
           <span className="flex">Nutrition Plans</span>
         </div>
-        <div className="flex w-fit min-w-fit basis-1/3 items-center justify-end gap-4 text-xs sm:gap-10 sm:text-xl">
+        <div className="flex w-fit min-w-fit basis-1/3 items-center justify-end gap-4 pr-2 text-xs sm:gap-10 sm:text-xl">
           <AvatarDropDown />
         </div>
       </div>

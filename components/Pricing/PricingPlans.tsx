@@ -10,7 +10,7 @@ const PricingPlans = () => {
       checklistTitle: "",
       checklist: ["This", "That", "These"],
       buttonContent: "Get started with Standard",
-      checkoutLink: "/checkout/standard",
+      checkoutLink: "/app/billing",
     },
   ];
 

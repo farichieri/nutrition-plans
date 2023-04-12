@@ -35,18 +35,18 @@ const DropDown: FC<Props> = ({
       </div>
       {open && (
         <div className="absolute -bottom-2 right-0 gap-2 ">
-          <div className="absolute right-2 -mt-1 h-2 w-2 rotate-45 bg-[var(--modal)] shadow-inner shadow-[var(--box-shadow-light)]"></div>
+          <div className="absolute right-2 -mt-1 h-2 w-2 rotate-45 bg-gray-300 shadow shadow-gray-500/60 dark:bg-gray-800"></div>
           <div
-            className="drop-menu"
+            className="absolute right-0 top-auto z-20 rounded-md bg-gray-300 text-base shadow-[0_0_6px_1px] shadow-gray-500/80 dark:bg-gray-800 dark:shadow-cyan-200/40"
             onClick={(e) => {
               e.stopPropagation();
               e.preventDefault();
             }}
           >
-            <div className="menu">{children}</div>
+            <div className="h-auto w-auto">{children}</div>
           </div>
           <div
-            className="modal"
+            className="fixed inset-0 h-screen w-screen "
             onClick={(event) => {
               event.preventDefault();
               setOpen(!open);
@@ -54,44 +54,6 @@ const DropDown: FC<Props> = ({
           ></div>
         </div>
       )}
-      <style jsx>{`
-        }
-        .modal {
-          position: fixed;
-          background: transparent;
-          top: 0;
-          left: 0;
-          width: 100vw;
-          height: 100vh;
-          z-index: 10;
-          display: block;
-        }
-        .menu {
-          height: auto;
-          width: 100%;
-          width: auto;
-        }
-        .drop-menu {
-          position: absolute;
-          background: inherit;
-          background: lightgray;
-          box-shadow: 0 0 6px 1px var(--box-shadow-light);
-          border-radius: 6px;
-          top: auto;
-          right: 0;
-          z-index: 12;
-          font-size: 80%;
-          height: auto;
-          min-width: fit-content;
-          width: 6rem;
-          padding: 0.5rem 0rem;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-        .rdp-row {
-        }
-      `}</style>
     </div>
   );
 };

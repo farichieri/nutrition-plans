@@ -11,8 +11,10 @@ import { FC, MouseEventHandler } from "react";
 import { selectAuthSlice } from "@/store/slices/authSlice";
 import { selectLayoutSlice, setPlansOpen } from "@/store/slices/layoutSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
 import Avatar from "../Avatar/Avatar";
 import Link from "next/link";
+import SubscribeButton from "../Buttons/Subscribe";
 
 interface Props {
   sidebarOpen: boolean;
@@ -21,6 +23,7 @@ interface Props {
 
 const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const { user } = useSelector(selectAuthSlice);
   const { plansOpen } = useSelector(selectLayoutSlice);
 
@@ -32,6 +35,8 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
     }
   };
 
+  const planSelected = (id: string) => router.asPath === `/app/plans/${id}`;
+
   return (
     <>
       {sidebarOpen && (
@@ -42,8 +47,8 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
       )}
       <div
         className={`${
-          sidebarOpen ? "left-0" : "left-[-12rem]"
-        } fixed left-0 z-50 flex min-h-screen w-[12rem] select-none flex-col gap-6 border-r px-4 pb-10 pt-16 backdrop-blur-md transition-all duration-300  dark:border-cyan-100/20`}
+          sidebarOpen ? "left-0" : "left-[-13rem]"
+        } fixed left-0 z-50 flex min-h-screen w-[13rem] select-none flex-col gap-6 border-r px-4 pb-10 pt-16 backdrop-blur-md transition-all duration-300  dark:border-cyan-100/20`}
       >
         <div className="flex w-full items-center gap-2 pb-2">
           <StarIcon className="h-4 w-4 fill-green-500" />
@@ -73,9 +78,13 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
               plansOpen ? " max-h-96" : "max-h-0"
             }`}
           >
-            <Link href={"/app/plans"}>All plans</Link>
+            {/* <Link href={"/app/plans"}>All plans</Link> */}
             {MEAL_PLANS.map((plan) => (
-              <Link href={`/app/plans/${plan.id}`} key={plan.id}>
+              <Link
+                href={`/app/plans/${plan.id}`}
+                key={plan.id}
+                className={`${planSelected(plan.id) && " font-semibold"}`}
+              >
                 {plan.name}
               </Link>
             ))}
@@ -90,9 +99,10 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
             Plan Calculator
           </Link>
         </div>
-        <Cog8ToothIcon className="mx-auto mt-auto h-5 w-5" />
-        <div className="mx-auto">
-          <Avatar width={50} height={50} />
+        {/* <Cog8ToothIcon className="mx-auto mt-auto h-5 w-5" /> */}
+        <div className="mx-auto mt-auto">
+          <SubscribeButton />
+          {/* <Avatar width={50} height={50} /> */}
         </div>
       </div>
     </>

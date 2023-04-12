@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   createUserWithEmailAndPassword,
   getAdditionalUserInfo,
-  GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
 import { auth, provider } from "../../firebase/firebase.config";
@@ -20,21 +19,17 @@ const Signup = () => {
   const [isLoadingForm, setIsLoadingForm] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const router = useRouter();
+  const redirectRoute =
+    router.asPath === "/app/billing" ? "/app/billing" : "/app";
 
   const handleLogInWithGoogle = async () => {
     signInWithPopup(auth, provider)
       .then(async (result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential?.accessToken;
-        // The signed-in user info.
-        const user = result.user;
-        // IdP data available using getAdditionalUserInfo(result)
         const additinalInfo = getAdditionalUserInfo(result);
         if (additinalInfo?.isNewUser) {
-          router.push("/app");
+          router.push(redirectRoute);
         } else {
-          router.push("/app");
+          router.push(redirectRoute);
         }
       })
       .catch((error) => {
@@ -50,7 +45,7 @@ const Signup = () => {
       await createUserWithEmailAndPassword(auth, input.email, input.password)
         .then((result) => {
           const user = result.user;
-          user && router.push("/app");
+          user && router.push(redirectRoute);
         })
         .catch((error) => {
           console.log(error.message);
@@ -76,6 +71,10 @@ const Signup = () => {
 
   return (
     <div className="flex w-full max-w-sm flex-col gap-8">
+      <div>
+        <h1 className="text-lg font-bold">Sign up</h1>
+        <p>Create your Nutrition Plans account</p>
+      </div>
       <GoogleLoginButton onClick={handleLogInWithGoogle}>
         Sign up with Google
       </GoogleLoginButton>
@@ -95,7 +94,7 @@ const Signup = () => {
             onChange={handleChange}
             name="email"
             value={input.email}
-            placeholder="Email"
+            placeholder="Email address"
             type="text"
             className="w-full border-b border-gray-300 bg-transparent px-4 py-1 outline-none focus:bg-[var(--box-shadow)]"
           />

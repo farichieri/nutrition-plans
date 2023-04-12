@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   getAdditionalUserInfo,
-  GoogleAuthProvider,
   signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
@@ -20,21 +19,17 @@ const Login = () => {
   const [isLoadingForm, setIsLoadingForm] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const router = useRouter();
+  const redirectRoute =
+    router.asPath === "/app/billing" ? "/app/billing" : "/app";
 
   const handleLogInWithGoogle = async () => {
     signInWithPopup(auth, provider)
       .then(async (result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential?.accessToken;
-        // The signed-in user info.
-        const user = result.user;
-        // IdP data available using getAdditionalUserInfo(result)
         const additinalInfo = getAdditionalUserInfo(result);
         if (additinalInfo?.isNewUser) {
-          router.push("/app");
+          router.push(redirectRoute);
         } else {
-          router.push("/app");
+          router.push(redirectRoute);
         }
       })
       .catch((error) => {
@@ -49,7 +44,7 @@ const Login = () => {
     await signInWithEmailAndPassword(auth, input.email, input.password)
       .then((result) => {
         const user = result.user;
-        user && router.push("/app");
+        user && router.push(redirectRoute);
       })
       .catch((error) => {
         setErrorMessage(error.message);
@@ -70,7 +65,11 @@ const Login = () => {
   };
 
   return (
-    <div className="flex w-full max-w-sm flex-col gap-8">
+    <div className="m-auto flex w-full max-w-sm flex-col gap-8">
+      <div>
+        <h1 className="text-2xl font-bold">Welcome back</h1>
+        <p>Login to continue achieving your nutrition plan</p>
+      </div>
       <GoogleLoginButton onClick={handleLogInWithGoogle}>
         Log in with Google
       </GoogleLoginButton>
@@ -90,7 +89,7 @@ const Login = () => {
             onChange={handleChange}
             name="email"
             value={input.email}
-            placeholder="Email"
+            placeholder="Email address"
             type="email"
             required
             className="border-b border-gray-300 bg-transparent px-4 py-1 outline-none focus:bg-[var(--box-shadow)]"

@@ -9,6 +9,16 @@ export const FAQS_INDEX = [
     answer:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus, hic. Facilis, provident incidunt cumque ducimus officiis dolorem quos quam sint dignissimos asperiores, dicta voluptate, numquam unde? Esse ducimus praesentium atque!",
   },
+  {
+    title: "Another question random?",
+    answer:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus, hic. Facilis, provident incidunt cumque ducimus officiis dolorem quos quam sint dignissimos asperiores, dicta voluptate, numquam unde? Esse ducimus praesentium atque!",
+  },
+  {
+    title: "And another?",
+    answer:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus, hic. Facilis, provident incidunt cumque ducimus officiis dolorem quos quam sint dignissimos asperiores, dicta voluptate, numquam unde? Esse ducimus praesentium atque!",
+  },
 ];
 
 export const FAQS_PRICING = [

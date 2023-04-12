@@ -11,16 +11,31 @@ interface Props {
 const Avatar: FC<Props> = ({ width, height }) => {
   const { user } = useSelector(selectAuthSlice);
 
+  // const userImage = "";
   const userImage = user?.photoURL || "";
 
   return (
-    <Image
-      className="rounded-full"
-      alt="Avatar"
-      src={userImage}
-      height={height}
-      width={width}
-    />
+    <>
+      {!userImage ? (
+        <div className={`rounded-full bg-black`}></div>
+      ) : (
+        <div className={`rounded-full `}>
+          <Image
+            className="rounded-full"
+            alt="Avatar"
+            src={userImage}
+            height={height}
+            width={width}
+          />
+        </div>
+      )}
+      <style jsx>{`
+        div {
+          height: ${height}px;
+          width: ${width}px;
+        }
+      `}</style>
+    </>
   );
 };
 
