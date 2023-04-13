@@ -44,3 +44,15 @@ export interface PremiumPlan {
   id: string;
   title: string;
 }
+
+export interface SubscriptionPlan {
+  buttonContent: string;
+  checklist: string[];
+  checklistTitle: string;
+  checkoutLink: string;
+  discount: string;
+  monthlyPrice: number;
+  name: string;
+  plan_id: string;
+  yearlyPrice: number;
+}

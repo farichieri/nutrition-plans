@@ -16,7 +16,7 @@ const createNewUser = async (user: User) => {
       lang: "en",
       photo_url: user.photoURL,
       plan_selected: null,
-      premium_plan: null,
+      premium_plan: "free",
       user_id: user.uid,
       weight_goal: null,
       weight: null,

@@ -1,3 +1,5 @@
+import { SubscriptionPlan } from "@/types/types";
+
 export const FAQS_INDEX = [
   {
     title: "What plans are available in Nutrition Plans?",
@@ -77,35 +79,38 @@ export const MEAL_PLANS = [
   },
 ];
 
-export const PRICING_PLANS = [
+export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
   {
-    name: "Free",
-    monthlyPrice: 0,
-    yearlyPrice: 0,
-    discount: "",
-    checklistTitle: "",
-    checklist: ["Plan Calculator", "Weekly Newsletter"],
     buttonContent: "Get started with Free",
+    checklist: ["Plan Calculator", "Weekly Newsletter"],
+    checklistTitle: "",
     checkoutLink: "/app/billing",
+    discount: "",
+    monthlyPrice: 0,
+    name: "Free",
+    plan_id: "free",
+    yearlyPrice: 0,
   },
   {
-    name: "Standard",
-    monthlyPrice: 10,
-    yearlyPrice: 8,
-    discount: "-20%",
-    checklistTitle: "Everything in Free, plus...",
-    checklist: ["This", "That", "These"],
     buttonContent: "Get started with Standard",
+    checklist: ["Access to 1 Nutrition plan", "That", "These"],
+    checklistTitle: "Everything in Free, plus...",
     checkoutLink: "/app/billing",
+    discount: "-20%",
+    monthlyPrice: 10,
+    name: "Standard",
+    plan_id: "standard",
+    yearlyPrice: 8,
   },
   {
-    name: "Plus",
-    monthlyPrice: 50,
-    yearlyPrice: 40,
-    discount: "-20%",
-    checklistTitle: "Everything in Standard, plus...",
-    checklist: ["This", "That", "These"],
     buttonContent: "Get started with Plus",
+    checklist: ["Access to All our plans"],
+    checklistTitle: "Everything in Standard, plus...",
     checkoutLink: "/app/billing",
+    discount: "-20%",
+    monthlyPrice: 50,
+    name: "Plus",
+    plan_id: "plus",
+    yearlyPrice: 40,
   },
 ];

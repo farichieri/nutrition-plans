@@ -1,7 +1,6 @@
-import { selectAuthSlice, setIsCreatingUser } from "@/store/slices/authSlice";
+import { selectAuthSlice } from "@/store/slices/authSlice";
 import { selectLayoutSlice, setSidebarOpen } from "@/store/slices/layoutSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
 import Head from "next/head";
 import Loader from "../Loader/Loader";
 import Login from "../Auth/Login";
@@ -20,10 +19,6 @@ export default function PremiumLayout({
   const handleSidebar = () => {
     dispatch(setSidebarOpen(!sidebarOpen));
   };
-
-  useEffect(() => {
-    dispatch(setIsCreatingUser(false));
-  }, []);
 
   return (
     <>

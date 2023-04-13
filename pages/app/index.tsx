@@ -1,19 +1,27 @@
+import { selectAuthSlice } from "@/store/slices/authSlice";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import Loader from "@/components/Loader/Loader";
 import PremiumLayout from "@/components/Layout/PremiumLayout";
-import { MEAL_PLANS } from "@/utils/content";
 
 const App = () => {
+  const { user } = useSelector(selectAuthSlice);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user) {
+      if (user.plan_selected) {
+        router.push(`/app/plans/${user.plan_selected}`);
+      } else {
+        router.push(`/app/plan-calculator`);
+      }
+    }
+  });
+
   return (
     <PremiumLayout>
-      <section className="flex flex-col gap-4 p-4">
-        <div>Plans</div>
-        <div className="flex w-full flex-wrap gap-10 ">
-          {MEAL_PLANS.map((plan) => (
-            <div className="" key={plan.name}>
-              {plan.name}
-            </div>
-          ))}
-        </div>
-      </section>
+      <Loader />
     </PremiumLayout>
   );
 };

@@ -1,12 +1,15 @@
+import { selectAuthSlice } from "@/store/slices/authSlice";
 import { CheckIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import { FC, useState } from "react";
+import { useSelector } from "react-redux";
 
 interface Props {
   pricingPlan: any;
 }
 
 const PricingPlan: FC<Props> = ({ pricingPlan }) => {
+  const { user } = useSelector(selectAuthSlice);
   const [yearly, setYearly] = useState(false);
   return (
     <div
@@ -16,29 +19,37 @@ const PricingPlan: FC<Props> = ({ pricingPlan }) => {
       <span className="text-2xl font-medium">{pricingPlan.name}</span>
       {yearly && pricingPlan.yearlyPrice > 0 ? (
         <div className="flex items-center gap-2">
-          <span>{`$${pricingPlan.yearlyPrice} /month`}</span>
-          <span className="flex items-center justify-center rounded-3xl bg-green-500/50 px-2 py-1 text-xs">
+          <span className="text-xl font-semibold">
+            ${pricingPlan.yearlyPrice}
+          </span>
+          <span> /month</span>
+          <span className="flex items-center justify-center rounded-3xl bg-green-500/50 px-1.5 py-1 text-xs">
             {pricingPlan.discount}
           </span>
         </div>
       ) : (
-        <span>{`$${pricingPlan.monthlyPrice} /month`}</span>
+        <div>
+          <span className="text-xl font-semibold">
+            ${pricingPlan.monthlyPrice}
+          </span>
+          <span> /month</span>
+        </div>
       )}
       {pricingPlan.yearlyPrice > 0 && (
         <div
-          className="relative flex cursor-pointer rounded-3xl border border-green-500/50"
+          className="relative mb-2 flex cursor-pointer rounded-3xl border-green-500 text-sm shadow-[0_0_5px_gray]"
           onClick={() => setYearly(!yearly)}
         >
           <div
             className={`${
               yearly ? "right-0 " : "right-[50%] "
-            } absolute h-full w-[50%] rounded-3xl bg-green-400/50 transition-all duration-300`}
+            } absolute h-full w-[50%] rounded-3xl bg-green-500 transition-all duration-300`}
           ></div>
           <button className="py- z-10 rounded-3xl px-4">Monthly</button>
           <button className="z-10 rounded-3xl px-4 py-0.5">Annually</button>
         </div>
       )}
-      <span>{pricingPlan.checklistTitle}</span>
+      <span className="text-xs">{pricingPlan.checklistTitle}</span>
       <ul className="flex w-full flex-col items-start justify-start gap-2 px-2 pb-10">
         {pricingPlan.checklist.map((c: any, index: number) => (
           <li key={index} className="flex items-center gap-1">
@@ -47,12 +58,18 @@ const PricingPlan: FC<Props> = ({ pricingPlan }) => {
           </li>
         ))}
       </ul>
-      <Link
-        href={pricingPlan.checkoutLink}
-        className="mt-auto flex rounded-3xl border border-green-500 bg-gradient-to-r from-green-500 via-green-500 to-green-500 px-3 py-2 text-xs text-white duration-300 hover:shadow-[0_1px_10px] hover:shadow-green-300 hover:brightness-110 dark:hover:shadow-green-400/50"
-      >
-        {pricingPlan.buttonContent}
-      </Link>
+      {user?.premium_plan === pricingPlan.plan_id ? (
+        <span className="mt-auto flex rounded-md border border-gray-400 px-3 py-2 text-xs dark:border-gray-700">
+          Current plan
+        </span>
+      ) : (
+        <Link
+          href={pricingPlan.checkoutLink}
+          className="mt-auto flex rounded-3xl border border-green-500 bg-gradient-to-r from-green-500 via-green-500 to-green-500 px-3 py-2 text-xs text-white duration-300 hover:shadow-[0_1px_10px] hover:shadow-green-300 hover:brightness-110 dark:hover:shadow-green-400/50"
+        >
+          {pricingPlan.buttonContent}
+        </Link>
+      )}
     </div>
   );
 };

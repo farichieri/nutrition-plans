@@ -6,7 +6,7 @@ import Goal from "@/components/Premium/Calculator/Goal";
 export default function Page() {
   return (
     <PremiumLayout>
-      <section className="flex flex-col items-center gap-10 p-4">
+      <section className="flex flex-col items-center gap-10 px-4 py-14">
         <h1 className="text-3xl font-bold">Calculate your ideal plan</h1>
         <BMRCalculator />
         <FoodPreferences />

@@ -137,6 +137,7 @@ const BMRCalculator: FC<Props> = () => {
               className="flex w-full basis-3/4"
               onChange={handleChange}
               defaultValue="none"
+              value={input.gender}
             >
               <option value="none" disabled hidden>
                 Select
@@ -218,6 +219,8 @@ const BMRCalculator: FC<Props> = () => {
               id="gender"
               onChange={handleChange}
               className="flex w-full basis-3/4"
+              defaultValue="none"
+              value={input.gender}
             >
               <option value="none" selected disabled hidden>
                 Select

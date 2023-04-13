@@ -6,13 +6,13 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth, provider } from "../../firebase/firebase.config";
+import { createNewUser } from "@/firebase/helpers/Auth";
+import { setIsCreatingUser, setIsSigningUser } from "@/store/slices/authSlice";
+import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import GoogleLoginButton from "../Buttons/GoogleLogin";
 import Link from "next/link";
 import Submit from "../Buttons/Submit";
-import { createNewUser } from "@/firebase/helpers/Auth";
-import { useDispatch } from "react-redux";
-import { setIsCreatingUser, setIsSigningUser } from "@/store/slices/authSlice";
 
 const Signup = () => {
   const dispatch = useDispatch();

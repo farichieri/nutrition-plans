@@ -27,7 +27,7 @@ const NavBar: FC<Props> = () => {
         <div className="flex w-fit min-w-fit basis-1/3 items-center justify-end gap-4 text-xs sm:gap-10 sm:text-xl">
           <ThemeSwitcher />
           <Link href={"/login"} className="hidden sm:flex">
-            <button className="font-medium">Log in</button>
+            <button className="text-base font-semibold">Log in</button>
           </Link>
           <div className="flex h-7 items-center text-xs">
             <PrimaryButton href="/signup" content="Sign up" />
@@ -43,19 +43,35 @@ const NavBar: FC<Props> = () => {
         <div
           className={`${
             openMenu ? "left-0" : "left-full"
-          } absolute top-[var(--nav-h)] w-screen border-t bg-white/90 px-4 py-4 shadow-md transition-all duration-300 dark:border-t-cyan-100/20 dark:bg-black/80 dark:shadow-cyan-100/20 md:hidden`}
+          } absolute top-[var(--nav-h)] h-screen w-screen border-t bg-white px-4 shadow-md transition-all duration-300 dark:border-t-cyan-100/20 dark:bg-black dark:shadow-cyan-100/20 md:hidden`}
         >
           <div className="flex flex-col items-center justify-center gap-4 text-lg font-semibold">
-            <Link href={"/login"} onClick={handleMenu}>
-              <button className="font-medium">Log in</button>
+            <Link
+              href={"/login"}
+              onClick={handleMenu}
+              className="w-full border-b border-gray-300 py-2 dark:border-gray-500"
+            >
+              Log in
             </Link>
-            <Link href={"/pricing"} onClick={handleMenu}>
+            <Link
+              href={"/pricing"}
+              onClick={handleMenu}
+              className="w-full border-b border-gray-300 pb-2 dark:border-gray-500"
+            >
               Pricing
             </Link>
-            <Link href={"/about"} onClick={handleMenu}>
+            <Link
+              href={"/about"}
+              onClick={handleMenu}
+              className="w-full border-b border-gray-300 pb-2 dark:border-gray-500"
+            >
               About
             </Link>
-            <Link href={"/blog"} onClick={handleMenu}>
+            <Link
+              href={"/blog"}
+              onClick={handleMenu}
+              className="w-full border-b border-gray-300 pb-2 dark:border-gray-500"
+            >
               Blog
             </Link>
           </div>
