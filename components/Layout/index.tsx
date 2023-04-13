@@ -21,6 +21,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     dispatch(setIsVerifyingUser());
     onAuthStateChanged(auth, async (user) => {
+      console.log(user);
       const userObject = user && (await generateUserObject(user));
       dispatch(setUser(userObject));
     });

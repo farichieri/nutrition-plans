@@ -84,7 +84,7 @@ export const PRICING_PLANS = [
     yearlyPrice: 0,
     discount: "",
     checklistTitle: "",
-    checklist: ["Plan Calculator"],
+    checklist: ["Plan Calculator", "Weekly Newsletter"],
     buttonContent: "Get started with Free",
     checkoutLink: "/app/billing",
   },
