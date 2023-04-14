@@ -13,19 +13,21 @@ const BillingModal: FC<Props> = () => {
 
   return (
     <Modal onClose={() => dispatch(setIsBillingModalOpen(false))}>
-      <section className="absolute flex h-full w-full flex-col items-center gap-10 bg-gray-500 px-4 py-14">
-        <div className="flex flex-col items-center text-center text-xs md:text-base">
-          <span className="text-xl font-semibold">Subscription Plans</span>
-          <span>
-            You are currently on the{" "}
-            <span className="capitalize">{user?.premium_plan}</span> plan.
-          </span>
-          <span>
-            {user?.premium_plan === "free" &&
-              "Upgrade to get access to weekly nutrition plans."}
-          </span>
+      <section className="flex h-screen max-h-75vh w-screen max-w-6xl flex-col items-center justify-center gap-4 overflow-auto">
+        <div className="m-auto flex h-full flex-col items-center overflow-auto  p-10">
+          <div className="flex flex-col items-center text-center text-xs md:text-base">
+            <span className="text-xl font-semibold">Subscription Plans</span>
+            <span>
+              You are currently on the{" "}
+              <span className="capitalize">{user?.premium_plan}</span> plan.
+            </span>
+            <span>
+              {user?.premium_plan === "free" &&
+                "Upgrade to get access to weekly nutrition plans."}
+            </span>
+          </div>
+          {/* <PricingPlans /> */}
         </div>
-        <PricingPlans />
       </section>
     </Modal>
   );

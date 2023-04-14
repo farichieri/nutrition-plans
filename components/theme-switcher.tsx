@@ -4,9 +4,11 @@ import { Theme } from "@/types/types";
 import { useDispatch, useSelector } from "react-redux";
 import { selectLayoutSlice, setTheme } from "@/store/slices/layoutSlice";
 
-interface Props {}
+interface Props {
+  isPremium: boolean;
+}
 
-const ThemeSwitcher: FC<Props> = () => {
+const ThemeSwitcher: FC<Props> = ({ isPremium }) => {
   const dispatch = useDispatch();
   const { theme } = useSelector(selectLayoutSlice);
 
@@ -24,12 +26,16 @@ const ThemeSwitcher: FC<Props> = () => {
   };
 
   return (
-    <button onClick={toogleTheme} className="transition-all ">
+    <button
+      onClick={toogleTheme}
+      className="flex items-center gap-1 transition-all "
+    >
       {theme == Theme.dark ? (
         <SunIcon className="h-4 w-4 text-yellow-500" />
       ) : (
         <MoonIcon className="h-4 w-4" />
       )}
+      {isPremium && <span>Theme</span>}
     </button>
   );
 };

@@ -1,3 +1,4 @@
+import { XCircleIcon } from "@heroicons/react/20/solid";
 import { ReactNode } from "react";
 
 const Modal = ({
@@ -14,12 +15,16 @@ const Modal = ({
   };
 
   return (
-    <div className="min-w-screen max-w-screen fixed inset-0 z-[100] m-0 flex min-h-screen items-center justify-center overflow-auto  backdrop-blur-sm">
+    <div className="min-w-screen max-w-screen fixed inset-0 z-[100] m-0 flex min-h-screen items-center justify-center overflow-auto">
       <div
-        className="min-w-screen fixed inset-0 z-50 m-0 flex min-h-screen items-center justify-center bg-[var(--bg-modal)] bg-blue-500"
+        className="min-w-screen fixed inset-0 z-50 m-0 flex min-h-screen items-center justify-center bg-black/70"
         onClick={handleCloseModal}
       ></div>
-      <div className="z-50 m-auto h-full w-full max-w-6xl bg-red-500 py-10">
+      <div className="relative z-50 m-auto max-w-[95vw] rounded-3xl bg-gray-100 dark:bg-gray-800">
+        <XCircleIcon
+          onClick={handleCloseModal}
+          className="absolute right-3 top-3 h-5 w-5 cursor-pointer fill-gray-500"
+        />
         {children}
       </div>
     </div>

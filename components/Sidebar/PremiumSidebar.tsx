@@ -9,7 +9,11 @@ import {
 } from "@heroicons/react/20/solid";
 import { FC, MouseEventHandler } from "react";
 import { selectAuthSlice } from "@/store/slices/authSlice";
-import { selectLayoutSlice, setPlansOpen } from "@/store/slices/layoutSlice";
+import {
+  selectLayoutSlice,
+  setIsSettingsOpen,
+  setPlansOpen,
+} from "@/store/slices/layoutSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -32,6 +36,11 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
     } else {
       dispatch(setPlansOpen(true));
     }
+  };
+
+  const handleOpenSettings = (event: React.MouseEvent) => {
+    event.preventDefault();
+    dispatch(setIsSettingsOpen(true));
   };
 
   const planVisited = (id: string) => router.asPath === `/app/plans/${id}`;
@@ -119,9 +128,10 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
           </Link>
         </div>
         <div className="mx-auto mt-auto flex flex-col gap-4">
-          <Link href={"/app/settings"}>
-            <Cog6ToothIcon className="mx-auto mt-auto h-5 w-5" />
-          </Link>
+          <Cog6ToothIcon
+            className="mx-auto mt-auto h-5 w-5 cursor-pointer"
+            onClick={handleOpenSettings}
+          />
           <SubscribeButton />
           {/* <Avatar width={50} height={50} /> */}
         </div>

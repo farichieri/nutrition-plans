@@ -25,7 +25,7 @@ const NavBar: FC<Props> = () => {
           <Link href={"/blog"}>Blog</Link>
         </div>
         <div className="flex w-fit min-w-fit basis-1/3 items-center justify-end gap-4 text-xs sm:gap-10 sm:text-xl">
-          <ThemeSwitcher />
+          <ThemeSwitcher isPremium={false} />
           <Link href={"/login"} className="hidden sm:flex">
             <button className="text-base font-semibold">Log in</button>
           </Link>

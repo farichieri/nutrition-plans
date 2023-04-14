@@ -3,7 +3,7 @@ import { FC } from "react";
 interface Props {}
 
 const Subscription: FC<Props> = () => {
-  return <div>asd</div>;
+  return <div>Subscription</div>;
 };
 
 export default Subscription;

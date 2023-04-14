@@ -1,18 +1,51 @@
-import { selectAuthSlice } from "@/store/slices/authSlice";
-import Image from "next/image";
+import { db, storage } from "@/firebase/firebase.config";
+import { doc, updateDoc } from "firebase/firestore";
 import { FC } from "react";
-import { useSelector } from "react-redux";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { selectAuthSlice, setUser } from "@/store/slices/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import Image from "next/image";
 
 interface Props {
   width: number;
   height: number;
+  changeable: boolean;
 }
 
-const Avatar: FC<Props> = ({ width, height }) => {
+const Avatar: FC<Props> = ({ width, height, changeable }) => {
+  const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
-
   const userImage = user?.photo_url || "";
   const fisrtNameWord = user?.display_name[0]?.toLowerCase();
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = (event.target as HTMLInputElement).files;
+    if (files && user) {
+      const file = files[0];
+      if (!file) return;
+      const imageRef = ref(storage, `users/${user?.user_id}/settings/profile`);
+      uploadBytes(imageRef, file)
+        .then(() => {
+          getDownloadURL(imageRef)
+            .then(async (newImageUrl) => {
+              await updateDoc(doc(db, "users", user.user_id), {
+                photo_url: newImageUrl,
+              });
+              const userUpdated = {
+                ...user,
+                photo_url: newImageUrl,
+              };
+              dispatch(setUser(userUpdated));
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
 
   return (
     <>
@@ -21,11 +54,30 @@ const Avatar: FC<Props> = ({ width, height }) => {
           className={`flex items-center justify-center rounded-full bg-gray-400 dark:bg-gray-700`}
         >
           <span className="text-lg opacity-80">{fisrtNameWord}</span>
+          {changeable && (
+            <input
+              title="Upload a new photo"
+              type="file"
+              onChange={handleChange}
+              accept="image/*"
+            />
+          )}
         </div>
       ) : (
-        <div className={`rounded-full `}>
+        <div
+          className={`relative flex items-center justify-center rounded-full`}
+        >
+          {changeable && (
+            <input
+              title="Upload a new photo"
+              type="file"
+              onChange={handleChange}
+              accept="image/*"
+              className="transition-300 absolute h-full w-full cursor-pointer rounded-full opacity-0 file:hidden hover:opacity-100"
+            />
+          )}
           <Image
-            className="rounded-full"
+            className="flex h-full w-full items-center justify-center rounded-full"
             alt="Avatar"
             src={userImage}
             height={height}
@@ -37,6 +89,17 @@ const Avatar: FC<Props> = ({ width, height }) => {
         div {
           height: ${height}px;
           width: ${width}px;
+        }
+        input[type="file"] {
+          cursor: pointer;
+          width: 100%;
+          height: 100%;
+          font-size: 0;
+          position: absolute;
+          background: #00000080;
+          background-image: url("/images/icons/add-image.png");
+          background-repeat: no-repeat;
+          background-position: center center;
         }
       `}</style>
     </>
