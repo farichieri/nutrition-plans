@@ -62,16 +62,16 @@ const Settings: FC<Props> = () => {
 
   return (
     <Modal onClose={handleClose}>
-      <section className="flex h-screen max-h-75vh w-full min-w-[50vw] max-w-4xl overflow-hidden">
-        <div className="flex w-full basis-1/5 flex-col border-r text-center">
+      <section className="flex h-screen max-h-75vh w-[56rem] min-w-full max-w-[95vw] overflow-hidden">
+        <div className="flex w-auto basis-1/5 flex-col border-r text-center">
           <p className="border-b p-2 font-semibold md:text-2xl">Settings</p>
-          <div className="flex flex-col p-2">
+          <div className="flex flex-col p-1 md:p-2">
             {settingOptions.map((option, index) => (
               <button
                 key={index}
                 className={`${
                   settingSelected === option.option && "bg-slate-500/30"
-                } flex w-full items-center gap-1 rounded-lg px-4 py-2 text-xs capitalize md:text-xl`}
+                } flex w-full items-center gap-1 rounded-lg px-1 py-2 text-xs capitalize md:text-base`}
                 value={option.option}
                 onClick={handleClick}
               >
@@ -81,9 +81,7 @@ const Settings: FC<Props> = () => {
             ))}
           </div>
         </div>
-        <div className="flex w-full min-w-[100vw] basis-4/5 p-4">
-          {getOptionSelected()}
-        </div>
+        <div className="flex basis-4/5 p-4">{getOptionSelected()}</div>
       </section>
     </Modal>
   );

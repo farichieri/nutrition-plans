@@ -73,15 +73,13 @@ const Avatar: FC<Props> = ({ width, height, changeable }) => {
               type="file"
               onChange={handleChange}
               accept="image/*"
-              className="transition-300 absolute h-full w-full cursor-pointer rounded-full opacity-0 file:hidden hover:opacity-100"
             />
           )}
           <Image
-            className="flex h-full w-full items-center justify-center rounded-full"
+            className="flex items-center justify-center rounded-full object-fill"
             alt="Avatar"
             src={userImage}
-            height={height}
-            width={width}
+            fill
           />
         </div>
       )}
@@ -100,6 +98,13 @@ const Avatar: FC<Props> = ({ width, height, changeable }) => {
           background-image: url("/images/icons/add-image.png");
           background-repeat: no-repeat;
           background-position: center center;
+          z-index: 999;
+          border-radius: 50%;
+          opacity: 0;
+          transition: 0.3s;
+        }
+        input:hover {
+          opacity: 1;
         }
       `}</style>
     </>
