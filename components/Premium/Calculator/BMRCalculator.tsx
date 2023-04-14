@@ -40,7 +40,7 @@ const BMRCalculator: FC<Props> = () => {
   ];
 
   const [input, setInput] = useState({
-    gender: "",
+    gender: "none",
     centimeters: "",
     feet: "",
     inches: "",
@@ -136,7 +136,6 @@ const BMRCalculator: FC<Props> = () => {
               id="gender"
               className="flex w-full basis-3/4"
               onChange={handleChange}
-              defaultValue="none"
               value={input.gender}
             >
               <option value="none" disabled hidden>
@@ -219,7 +218,6 @@ const BMRCalculator: FC<Props> = () => {
               id="gender"
               onChange={handleChange}
               className="flex w-full basis-3/4"
-              defaultValue="none"
               value={input.gender}
             >
               <option value="none" selected disabled hidden>

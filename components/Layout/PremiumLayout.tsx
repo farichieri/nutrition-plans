@@ -1,6 +1,7 @@
 import { selectAuthSlice } from "@/store/slices/authSlice";
 import { selectLayoutSlice, setSidebarOpen } from "@/store/slices/layoutSlice";
 import { useDispatch, useSelector } from "react-redux";
+import BillingModal from "../Premium/Billing/BillingModal";
 import Head from "next/head";
 import Loader from "../Loader/Loader";
 import Login from "../Auth/Login";
@@ -13,7 +14,7 @@ export default function PremiumLayout({
   children: React.ReactNode;
 }) {
   const dispatch = useDispatch();
-  const { sidebarOpen } = useSelector(selectLayoutSlice);
+  const { sidebarOpen, isBillingModalOpen } = useSelector(selectLayoutSlice);
   const { user, isCreatingUser, isSigningUser } = useSelector(selectAuthSlice);
 
   const handleSidebar = () => {
@@ -29,6 +30,7 @@ export default function PremiumLayout({
       {(isCreatingUser || isSigningUser) && <Loader />}
       {user ? (
         <div className="relative flex w-screen flex-col ">
+          {isBillingModalOpen && <BillingModal />}
           <PremiumNav sidebarOpen={sidebarOpen} handleSidebar={handleSidebar} />
           <Sidebar sidebarOpen={sidebarOpen} handleSidebar={handleSidebar} />
           <div

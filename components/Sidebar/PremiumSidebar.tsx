@@ -3,6 +3,7 @@ import {
   CalculatorIcon,
   ChevronDownIcon,
   ChevronUpIcon,
+  Cog6ToothIcon,
   ListBulletIcon,
   StarIcon,
 } from "@heroicons/react/20/solid";
@@ -117,8 +118,10 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
             Plan Calculator
           </Link>
         </div>
-        {/* <Cog8ToothIcon className="mx-auto mt-auto h-5 w-5" /> */}
-        <div className="mx-auto mt-auto">
+        <div className="mx-auto mt-auto flex flex-col gap-4">
+          <Link href={"/app/settings"}>
+            <Cog6ToothIcon className="mx-auto mt-auto h-5 w-5" />
+          </Link>
           <SubscribeButton />
           {/* <Avatar width={50} height={50} /> */}
         </div>

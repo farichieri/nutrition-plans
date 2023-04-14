@@ -1,8 +1,8 @@
-import { selectAuthSlice } from "@/store/slices/authSlice";
 import { CheckIcon } from "@heroicons/react/20/solid";
-import Link from "next/link";
 import { FC, useState } from "react";
+import { selectAuthSlice } from "@/store/slices/authSlice";
 import { useSelector } from "react-redux";
+import Link from "next/link";
 
 interface Props {
   pricingPlan: any;
@@ -14,7 +14,7 @@ const PricingPlan: FC<Props> = ({ pricingPlan }) => {
   return (
     <div
       key={pricingPlan.name}
-      className="flex h-[30rem] w-full max-w-xs select-none flex-col items-center gap-5 rounded-3xl border border-green-400/20 px-5 py-14 shadow-[0_3px_20px] shadow-green-800/40 dark:border-green-700/20 dark:shadow-green-400/30"
+      className="flex h-[30rem] w-full max-w-xs select-none flex-col items-center gap-5 rounded-3xl border border-green-400/20 bg-white px-5 py-14 shadow-[0_3px_20px] shadow-green-800/40 dark:border-green-700/20 dark:bg-black dark:shadow-green-400/30"
     >
       <span className="text-2xl font-medium">{pricingPlan.name}</span>
       {yearly && pricingPlan.yearlyPrice > 0 ? (

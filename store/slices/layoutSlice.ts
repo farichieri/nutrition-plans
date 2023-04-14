@@ -7,6 +7,7 @@ interface LayoutState {
   sidebarOpen: boolean;
   plansOpen: boolean;
   theme: Theme;
+  isBillingModalOpen: boolean;
 }
 
 // Define the initial state using that type
@@ -14,6 +15,7 @@ const initialState: LayoutState = {
   sidebarOpen: true,
   plansOpen: true,
   theme: Theme.light,
+  isBillingModalOpen: false,
 };
 
 export const layoutSlice = createSlice({
@@ -30,10 +32,14 @@ export const layoutSlice = createSlice({
     setTheme: (state, action: PayloadAction<Theme>) => {
       state.theme = action.payload;
     },
+    setIsBillingModalOpen: (state, action: PayloadAction<boolean>) => {
+      state.isBillingModalOpen = action.payload;
+    },
   },
 });
 
-export const { setSidebarOpen, setPlansOpen, setTheme } = layoutSlice.actions;
+export const { setSidebarOpen, setPlansOpen, setTheme, setIsBillingModalOpen } =
+  layoutSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectLayoutSlice = (state: RootState) => state.layout;
