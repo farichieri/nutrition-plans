@@ -3,23 +3,28 @@ import { useDispatch } from "react-redux";
 import About from "./options/About";
 import General from "./options/General";
 import Modal from "@/components/Modal/Modal";
-import Profile from "./options/Profile";
+import Account from "./options/Account";
 import React, { FC, useState } from "react";
 import Support from "./options/Support";
 import Subscription from "./options/Subscription";
-import { Cog8ToothIcon, UserIcon, WalletIcon } from "@heroicons/react/20/solid";
+import {
+  ChatBubbleOvalLeftEllipsisIcon,
+  Cog8ToothIcon,
+  UserIcon,
+  WalletIcon,
+} from "@heroicons/react/20/solid";
 
 interface Props {}
 
 const Settings: FC<Props> = () => {
   const dispatch = useDispatch();
-  const [settingSelected, setSettingSelected] = useState("profile");
+  const [settingSelected, setSettingSelected] = useState("account");
 
   const settingOptions = [
     {
       icon: <UserIcon className="h-4 w-4" />,
-      option: "profile",
-      component: <Profile setSettingSelected={setSettingSelected} />,
+      option: "account",
+      component: <Account setSettingSelected={setSettingSelected} />,
     },
     {
       icon: <WalletIcon className="h-4 w-4" />,
@@ -31,11 +36,11 @@ const Settings: FC<Props> = () => {
       option: "general",
       component: <General setSettingSelected={setSettingSelected} />,
     },
-    // {
-    //   icon: <UserIcon className="h-4 w-4" />,
-    //   option: "support",
-    //   component: <Support />,
-    // },
+    {
+      icon: <ChatBubbleOvalLeftEllipsisIcon className="h-4 w-4" />,
+      option: "support",
+      component: <Support />,
+    },
     // {
     //   icon: <UserIcon className="h-4 w-4" />,
     //   option: "about",
@@ -62,7 +67,7 @@ const Settings: FC<Props> = () => {
 
   return (
     <Modal onClose={handleClose}>
-      <section className="flex h-screen max-h-75vh w-[56rem] min-w-full max-w-[95vw] overflow-hidden">
+      <section className="flex h-screen max-h-50vh w-[56rem] min-w-full max-w-[95vw] overflow-hidden">
         <div className="flex w-auto basis-1/5 flex-col border-r text-center">
           <p className="border-b p-2 font-semibold md:text-2xl">Settings</p>
           <div className="flex flex-col p-1 md:p-2">

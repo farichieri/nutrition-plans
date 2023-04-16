@@ -132,7 +132,6 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
             className="mx-auto mt-auto h-5 w-5 cursor-pointer"
             onClick={handleOpenSettings}
           />
-          <SubscribeButton />
           {/* <Avatar width={50} height={50} /> */}
         </div>
       </div>

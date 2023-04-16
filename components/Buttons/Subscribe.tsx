@@ -12,7 +12,7 @@ const SubscribeButton = () => {
 
   return (
     <button
-      className="flex items-center justify-center gap-1"
+      className="bold:border-green-800 group flex h-full w-fit items-center justify-center gap-1 rounded-3xl bg-gradient-to-r from-green-700 via-green-500 to-green-400 px-3 py-1 text-base font-semibold text-white duration-300 hover:shadow-[0_1px_40px] hover:shadow-green-300 dark:hover:shadow-green-400/50"
       onClick={handleOpenModal}
     >
       <StarIcon className="h-4 w-4 fill-yellow-400" />

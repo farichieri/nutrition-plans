@@ -43,6 +43,15 @@ export default function Page() {
           looking for in your plan. You&apos;ll also get weekly tips from our
           staff to help you reach your goals.
         </p>
+        <p className="text-xl">
+          Planning healthy meals isn&apos;t difficult, but if you aren&apos;t
+          used to it, planning may take a little practice. The examples we give
+          should get you off to a good start. Don&apos;t be discouraged if you
+          don&apos;t follow the plan exactly; it&apos;s fine if you adapt it to
+          your lifestyle and needs. Do your best to incorporate healthy options
+          into your day: Vegetables, fruits, lean protein, beans and legumes,
+          and whole grains are always good choices.
+        </p>
         <div className="my-10 flex w-full flex-col gap-5">
           <h1 className="text-5xl font-bold">Team</h1>
           <div className="flex gap-10 p-4">

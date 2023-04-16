@@ -1,6 +1,7 @@
 import { Bars3Icon } from "@heroicons/react/20/solid";
 import { FC, MouseEventHandler, useState } from "react";
 import AvatarDropDown from "../DropDown/AvatarDropDown/AvatarDropDown";
+import SubscribeButton from "../Buttons/Subscribe";
 
 interface Props {
   sidebarOpen: boolean;
@@ -25,6 +26,9 @@ const PremiumNav: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
           <span className="flex">Nutrition Plans</span>
         </div>
         <div className="flex w-fit min-w-fit basis-1/3 items-center justify-end gap-4 pr-2 text-xs sm:gap-10 sm:text-xl">
+          <div>
+            <SubscribeButton />
+          </div>
           <AvatarDropDown />
         </div>
       </div>

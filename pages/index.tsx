@@ -5,8 +5,9 @@ import CallToAction from "@/components/CallToAction";
 import FAQS from "@/components/FAQS/FAQS";
 import Image from "next/image";
 import LandingLayout from "@/components/Layout/LandingLayout";
+import Link from "next/link";
 import Plans from "@/components/Plans/Plans";
-import PrimaryButton from "@/components/Buttons/Primary";
+import PrimaryButton from "@/components/Buttons/PrimaryButton";
 
 interface Props {
   plans: PlansType;
@@ -30,7 +31,9 @@ export default function Home({ plans }: Props) {
           </div>
         </div>
         <div className="h-10">
-          <PrimaryButton href="/signup" content={`Start my plan now`} />
+          <Link href="/signup">
+            <PrimaryButton onClick={() => {}} content={`Start my plan now`} />
+          </Link>
         </div>
         <Image
           src="/images/general/cooking.jpg"

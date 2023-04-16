@@ -48,7 +48,7 @@ const AvatarDropDown = () => {
           className={`flex w-full cursor-pointer items-center gap-1 border-none bg-transparent px-2 py-1  hover:bg-slate-500/10`}
         >
           <UserIcon className="h-4 w-4" />
-          Profile
+          Account
         </button>
       </div>
       <div className="flex w-full gap-2 border-b border-slate-500/30 px-2 py-1 hover:bg-slate-500/10 dark:border-slate-500">

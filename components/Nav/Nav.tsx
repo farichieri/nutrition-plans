@@ -1,7 +1,7 @@
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/20/solid";
 import { FC, useState } from "react";
 import Link from "next/link";
-import PrimaryButton from "../Buttons/Primary";
+import PrimaryButton from "../Buttons/PrimaryButton";
 import ThemeSwitcher from "../theme-switcher";
 
 interface Props {}
@@ -30,7 +30,9 @@ const NavBar: FC<Props> = () => {
             <button className="text-base font-semibold">Log in</button>
           </Link>
           <div className="flex h-7 items-center text-xs">
-            <PrimaryButton href="/signup" content="Sign up" />
+            <Link href="/signup">
+              <PrimaryButton onClick={() => {}} content="Sign up" />
+            </Link>
           </div>
           <div className="cursor-pointer md:hidden">
             {!openMenu ? (

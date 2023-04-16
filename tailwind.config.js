@@ -23,7 +23,11 @@ module.exports = {
         0: "0",
         "25vh": "25vh",
         "50vh": "50vh",
+        "60vh": "60vh",
+        "70vh": "70vh",
         "75vh": "75vh",
+        "80vh": "80vh",
+        "90vh": "90vh",
         full: "100vh",
       },
       backgroundImage: {

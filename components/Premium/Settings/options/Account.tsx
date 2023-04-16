@@ -8,7 +8,7 @@ interface Props {
   setSettingSelected: Function;
 }
 
-const Profile: FC<Props> = ({ setSettingSelected }) => {
+const Account: FC<Props> = ({ setSettingSelected }) => {
   const { user } = useSelector(selectAuthSlice);
 
   return (
@@ -54,4 +54,4 @@ const Profile: FC<Props> = ({ setSettingSelected }) => {
   );
 };
 
-export default Profile;
+export default Account;
