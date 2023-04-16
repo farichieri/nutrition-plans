@@ -143,7 +143,7 @@ const Signup = () => {
           />
         </div>
         <Submit
-          style={null}
+          className={""}
           onClick={handleSubmit}
           loadMessage={"Signing up..."}
           content="Sign up"

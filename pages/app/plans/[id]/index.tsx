@@ -44,7 +44,7 @@ export default function Page({ planData }: Props) {
   return (
     <PremiumLayout>
       <section className={`relative flex w-full flex-col p-4`}>
-        <span>{planData.title}</span>
+        <span className="text-3xl font-bold">{planData.title}</span>
         {!(user?.plan_selected === planData.id) ? (
           <button
             className="ml-auto rounded-3xl border px-2 py-1"
@@ -56,12 +56,14 @@ export default function Page({ planData }: Props) {
           <span className="ml-auto">Plan selected</span>
         )}
         {isFree && (
-          <div className="h-50vh z-100 absolute left-[50%] top-[50%] flex -translate-x-1/2 flex-col items-center justify-center bg-white">
-            <span>Become Premium to access to this nutrition plan</span>
+          // <div className="fixed inset-0 z-[60] h-screen w-screen bg-black/10">
+          <div className="h-50vh fixed left-[50%] top-[50%] z-[60] flex w-80 max-w-[95vw] -translate-x-1/2 flex-col items-center justify-center gap-4 rounded-3xl bg-white p-4 shadow-md dark:bg-gray-800">
+            <span>Get premium to access</span>
             <SubscribeButton />
           </div>
+          // </div>
         )}
-        <div className={`${isFree && "z-50 select-none blur-sm"}`}>
+        <div className={`${isFree && "z-50 cursor-auto select-none blur-sm"}`}>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam
             consequuntur, dignissimos impedit id earum fuga in. Possimus quaerat

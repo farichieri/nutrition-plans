@@ -17,7 +17,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import SubscribeButton from "../Buttons/Subscribe";
 
 interface Props {
   sidebarOpen: boolean;
@@ -50,14 +49,14 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
     <>
       {sidebarOpen && (
         <div
-          className="fixed inset-0 z-10 sm:hidden"
+          className="fixed inset-0  z-[70] sm:hidden"
           onClick={handleSidebar}
         ></div>
       )}
       <div
         className={`${
           sidebarOpen ? "left-0" : "left-[-13rem]"
-        } fixed left-0 z-50 flex min-h-screen w-[13rem] select-none flex-col gap-6 border-r px-4 pb-10 pt-16 backdrop-blur-md transition-all duration-300 dark:border-cyan-100/20`}
+        } fixed left-0 z-[70] flex min-h-screen w-[13rem] select-none flex-col gap-6 border-r bg-white/100 px-4 pb-10 pt-16 transition-all duration-300 dark:border-cyan-100/20 dark:bg-black/100`}
       >
         <div className="flex w-full flex-col items-center gap-2 pb-2">
           <div className="flex w-full items-center gap-2">
@@ -74,8 +73,8 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
               <Link
                 href={`/app/plans/${planSelected}`}
                 className={`${
-                  planVisited(planSelected) && " font-semibold"
-                } flex items-center gap-1`}
+                  planVisited(planSelected) && " bg-slate-500/30 font-semibold"
+                } flex w-full items-center gap-1 rounded-lg px-2 py-1 text-base`}
               >
                 {MEAL_PLANS.find((plan) => plan.id === planSelected)?.name}
               </Link>
@@ -97,22 +96,18 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
             </div>
           </div>
           <div
-            className={`flex flex-col gap-2 overflow-hidden px-4 pl-2 text-sm transition-[max-height] duration-300 sm:text-base ${
-              plansOpen ? " max-h-96" : "max-h-0"
+            className={`flex flex-col gap-1 overflow-hidden pl-1 text-sm transition-[max-height] duration-300 sm:text-base ${
+              plansOpen ? " max-h-[30rem]" : "max-h-0"
             }`}
           >
-            {/* <Link href={"/app/plans"}>All plans</Link> */}
             {MEAL_PLANS.map((plan) => (
               <Link
                 href={`/app/plans/${plan.id}`}
                 key={plan.id}
                 className={`${
-                  planVisited(plan.id) && " font-semibold"
-                } flex items-center gap-1`}
+                  planVisited(plan.id) && " bg-slate-500/30 font-semibold"
+                } flex items-center gap-1 rounded-lg px-2 py-1 text-base`}
               >
-                {/* {planSelected === plan.id && (
-                  <StarIcon className="h-3 w-3 fill-green-500" />
-                )} */}
                 {plan.name}
               </Link>
             ))}
@@ -132,7 +127,6 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
             className="mx-auto mt-auto h-5 w-5 cursor-pointer"
             onClick={handleOpenSettings}
           />
-          {/* <Avatar width={50} height={50} /> */}
         </div>
       </div>
     </>

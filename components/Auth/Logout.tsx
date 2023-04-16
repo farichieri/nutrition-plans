@@ -29,7 +29,7 @@ const Logout = () => {
   return (
     <div className="flex w-24 items-center text-sm">
       <SecondaryButton
-        style={null}
+        className={""}
         onClick={handleLogout}
         content="Logout"
         isLoading={isLoading}

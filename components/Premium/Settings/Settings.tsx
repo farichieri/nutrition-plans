@@ -10,6 +10,7 @@ import Subscription from "./options/Subscription";
 import {
   ChatBubbleOvalLeftEllipsisIcon,
   Cog8ToothIcon,
+  LightBulbIcon,
   UserIcon,
   WalletIcon,
 } from "@heroicons/react/20/solid";
@@ -31,13 +32,13 @@ const Settings: FC<Props> = () => {
       option: "subscription",
       component: <Subscription setSettingSelected={setSettingSelected} />,
     },
+    // {
+    //   icon: <Cog8ToothIcon className="h-4 w-4" />,
+    //   option: "general",
+    //   component: <General setSettingSelected={setSettingSelected} />,
+    // },
     {
-      icon: <Cog8ToothIcon className="h-4 w-4" />,
-      option: "general",
-      component: <General setSettingSelected={setSettingSelected} />,
-    },
-    {
-      icon: <ChatBubbleOvalLeftEllipsisIcon className="h-4 w-4" />,
+      icon: <LightBulbIcon className="h-4 w-4" />,
       option: "support",
       component: <Support />,
     },
@@ -67,7 +68,7 @@ const Settings: FC<Props> = () => {
 
   return (
     <Modal onClose={handleClose}>
-      <section className="flex h-screen max-h-50vh w-[56rem] min-w-full max-w-[95vw] overflow-hidden">
+      <section className="flex h-screen max-h-60vh w-[56rem] min-w-full max-w-[95vw] overflow-hidden">
         <div className="flex w-auto basis-1/5 flex-col border-r text-center">
           <p className="border-b p-2 font-semibold md:text-2xl">Settings</p>
           <div className="flex flex-col p-1 md:p-2">
@@ -86,7 +87,7 @@ const Settings: FC<Props> = () => {
             ))}
           </div>
         </div>
-        <div className="flex basis-4/5 p-4">{getOptionSelected()}</div>
+        <div className="flex basis-4/5 p-3">{getOptionSelected()}</div>
       </section>
     </Modal>
   );

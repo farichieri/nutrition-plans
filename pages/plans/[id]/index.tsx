@@ -23,7 +23,7 @@ export default function Page({ planData, restOfPlans }: Props) {
           {/* <Date dateString={planData.date} /> */}
         </div>
         <div
-          className="flex flex-col gap-4  py-10"
+          className="flex flex-col gap-4 py-10"
           dangerouslySetInnerHTML={{
             __html: planData.contentHtml,
           }}

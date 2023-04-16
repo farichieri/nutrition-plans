@@ -14,7 +14,7 @@ const PricingPlan: FC<Props> = ({ pricingPlan }) => {
   return (
     <div
       key={pricingPlan.name}
-      className="flex h-[30rem] w-full max-w-xs select-none flex-col items-center gap-5 rounded-3xl border border-green-400/20 bg-white px-5 py-14 shadow-[0_3px_20px] shadow-green-800/40 dark:border-green-700/20 dark:bg-black dark:shadow-green-400/30"
+      className="flex h-[27rem] w-full max-w-xs select-none flex-col items-center gap-5 rounded-3xl border border-green-400/20 bg-white px-5 py-10 shadow-[0_3px_20px] shadow-green-800/40 dark:border-green-700/20 dark:bg-black dark:shadow-green-400/30"
     >
       <span className="text-2xl font-medium">{pricingPlan.name}</span>
       {yearly && pricingPlan.yearlyPrice > 0 ? (
@@ -50,7 +50,7 @@ const PricingPlan: FC<Props> = ({ pricingPlan }) => {
         </div>
       )}
       <span className="text-xs">{pricingPlan.checklistTitle}</span>
-      <ul className="flex w-full flex-col items-start justify-start gap-2 px-2 pb-10">
+      <ul className="flex w-full flex-col items-start justify-start gap-2 px-2">
         {pricingPlan.checklist.map((c: any, index: number) => (
           <li key={index} className="flex items-center gap-1">
             <CheckIcon className="h-4 w-4 fill-green-500" />

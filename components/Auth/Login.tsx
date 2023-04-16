@@ -118,7 +118,7 @@ const Login = () => {
           />
         </div>
         <Submit
-          style={null}
+          className={""}
           onClick={handleSubmit}
           loadMessage={"Logging in..."}
           content="Log in"

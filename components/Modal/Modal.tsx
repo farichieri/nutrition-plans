@@ -23,7 +23,7 @@ const Modal = ({
       <div className="relative z-50 m-auto max-w-[95vw] rounded-3xl bg-gray-100 dark:bg-gray-800">
         <XCircleIcon
           onClick={handleCloseModal}
-          className="absolute right-3 top-3 h-5 w-5 cursor-pointer fill-gray-500"
+          className="absolute right-2 top-2 h-5 w-5 cursor-pointer fill-gray-500"
         />
         {children}
       </div>
