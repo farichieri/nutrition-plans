@@ -17,7 +17,7 @@ const Submit = ({
 }) => {
   return (
     <button
-      className={`flex justify-center rounded-3xl bg-green-500 px-4 py-1 text-white shadow-inner ${className}`}
+      className={`flex select-none justify-center rounded-3xl bg-green-600 px-4 py-1 text-white shadow-inner duration-300 hover:bg-green-500 active:shadow-lg ${className}`}
       onClick={onClick}
       disabled={isDisabled}
     >

@@ -5,8 +5,8 @@ import matter from "gray-matter";
 import path from "path";
 
 export const directories = {
-  postsDirectory: path.join(process.cwd(), "/posts"),
-  plansDirectory: path.join(process.cwd(), "/plans"),
+  postsDirectory: path.join(process.cwd(), "/content/posts"),
+  plansDirectory: path.join(process.cwd(), "/content/plans"),
 };
 
 const getSortedData = (directory: string) => {

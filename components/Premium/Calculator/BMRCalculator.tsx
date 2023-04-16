@@ -118,7 +118,7 @@ const BMRCalculator: FC<Props> = () => {
           <button
             key={type}
             onClick={() => setCalculatorType(type)}
-            className="z-20 w-24 rounded-3xl border-none px-4 py-1"
+            className="z-20 w-24 rounded-3xl border-none px-4 py-1 font-semibold active:shadow-lg"
           >
             {CALCULATOR_TYPES[type]}
           </button>

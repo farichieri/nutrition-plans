@@ -68,7 +68,7 @@ const Settings: FC<Props> = () => {
 
   return (
     <Modal onClose={handleClose}>
-      <section className="flex h-screen max-h-60vh w-[56rem] min-w-full max-w-[95vw] overflow-hidden">
+      <section className="flex h-screen max-h-60vh w-[40rem] min-w-full max-w-[95vw] overflow-hidden">
         <div className="flex w-auto basis-1/5 flex-col border-r text-center">
           <p className="border-b p-2 font-semibold md:text-2xl">Settings</p>
           <div className="flex flex-col p-1 md:p-2">
@@ -87,7 +87,12 @@ const Settings: FC<Props> = () => {
             ))}
           </div>
         </div>
-        <div className="flex basis-4/5 p-3">{getOptionSelected()}</div>
+        <div className="flex basis-4/5 flex-col p-3">
+          <span className="mb-3 pb-2 text-lg font-semibold capitalize">
+            {settingSelected}
+          </span>
+          {getOptionSelected()}
+        </div>
       </section>
     </Modal>
   );

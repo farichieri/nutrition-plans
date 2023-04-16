@@ -57,8 +57,10 @@ export default function Page({ planData }: Props) {
         )}
         {isFree && (
           // <div className="fixed inset-0 z-[60] h-screen w-screen bg-black/10">
-          <div className="h-50vh fixed left-[50%] top-[50%] z-[60] flex w-80 max-w-[95vw] -translate-x-1/2 flex-col items-center justify-center gap-4 rounded-3xl bg-white p-4 shadow-md dark:bg-gray-800">
-            <span>Get premium to access</span>
+          <div className="h-50vh fixed left-[50%] top-[50%] z-[60] flex w-96 max-w-[95vw] -translate-x-1/2 flex-col items-center justify-center gap-4 rounded-3xl bg-white p-4 shadow-md dark:bg-gray-800">
+            <span className="text-center">
+              Become premium to access to this plan
+            </span>
             <SubscribeButton />
           </div>
           // </div>

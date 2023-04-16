@@ -4,8 +4,10 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
   Cog6ToothIcon,
+  EnvelopeOpenIcon,
   ListBulletIcon,
-  StarIcon,
+  ChartBarIcon,
+  ArchiveBoxIcon,
 } from "@heroicons/react/20/solid";
 import { FC, MouseEventHandler } from "react";
 import { selectAuthSlice } from "@/store/slices/authSlice";
@@ -60,7 +62,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
       >
         <div className="flex w-full flex-col items-center gap-2 pb-2">
           <div className="flex w-full items-center gap-2">
-            <StarIcon className="h-4 w-4 fill-green-500" />
+            <ChartBarIcon className="h-4 w-4 fill-green-500" />
             <Link
               href={"/app/my-plan"}
               className="text-md w-full font-semibold sm:text-lg"
@@ -83,7 +85,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
         </div>
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2 " onClick={toggleAllPlans}>
-            <ListBulletIcon className="h-4 w-4 fill-green-500" />
+            <ArchiveBoxIcon className="h-4 w-4 fill-green-500" />
             <div className="flex w-full cursor-pointer items-center justify-between">
               <span className="text-md font-semibold sm:text-lg">
                 All plans
@@ -120,6 +122,15 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
             className="text-md w-full font-semibold sm:text-lg"
           >
             Plan Calculator
+          </Link>
+        </div>
+        <div className="flex w-full items-center gap-2">
+          <EnvelopeOpenIcon className="h-4 w-4 fill-green-500" />
+          <Link
+            href={"/app/plan-calculator"}
+            className="text-md w-full font-semibold sm:text-lg"
+          >
+            Newsletter
           </Link>
         </div>
         <div className="mx-auto mt-auto flex flex-col gap-4">

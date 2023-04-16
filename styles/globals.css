@@ -2,17 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  min-width: 360px;
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 255, 255, 255;
   --background-end-rgb: 255, 255, 255;
   --nav-h: 3rem;
+  --border-color: lightgray;
 }
 
 :root.dark {
   --foreground-rgb: 255, 255, 255;
   --background-start-rgb: 0, 0, 0;
   --background-end-rgb: 0, 0, 0;
+  --border-color: rgb(58, 58, 58);
 }
 
 body {
@@ -35,6 +41,7 @@ a {
 * {
   scrollbar-width: thin;
   scrollbar-color: rgb(61, 61, 61) rgba(164, 164, 164, 0.402);
+  border-color: var(--border-color);
 }
 
 *::-webkit-scrollbar {
@@ -48,4 +55,33 @@ a {
 
 *::-webkit-scrollbar-thumb {
   background-color: rgb(61, 61, 61);
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+h2 {
+  font-size: 2rem;
+}
+h3 {
+  font-size: 1.75rem;
+}
+h4 {
+  font-size: 1.5rem;
+}
+h5 {
+  font-size: 1.25rem;
+}
+h6 {
+  font-size: 1rem;
+}
+
+ul {
+  padding: 0 2rem;
+}
+
+li {
+  list-style: outside;
+  padding: 0.2rem 0;
 }
