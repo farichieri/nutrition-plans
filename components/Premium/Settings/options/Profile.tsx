@@ -4,9 +4,11 @@ import { selectAuthSlice } from "@/store/slices/authSlice";
 import { FC } from "react";
 import { useSelector } from "react-redux";
 
-interface Props {}
+interface Props {
+  setSettingSelected: Function;
+}
 
-const Profile: FC<Props> = () => {
+const Profile: FC<Props> = ({ setSettingSelected }) => {
   const { user } = useSelector(selectAuthSlice);
 
   return (
@@ -37,7 +39,10 @@ const Profile: FC<Props> = () => {
       </div>
       <div className="flex w-full flex-wrap items-center gap-2">
         <span>Current plan: {user?.premium_plan}</span>
-        <button className="rounded-md bg-slate-400/30 p-1 shadow-md">
+        <button
+          className="rounded-md bg-slate-400/30 p-1 shadow-md"
+          onClick={() => setSettingSelected("subscription")}
+        >
           Manage Subscription
         </button>
       </div>

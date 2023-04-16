@@ -9,39 +9,39 @@ import Support from "./options/Support";
 import Subscription from "./options/Subscription";
 import { Cog8ToothIcon, UserIcon, WalletIcon } from "@heroicons/react/20/solid";
 
-const settingOptions = [
-  {
-    icon: <UserIcon className="h-4 w-4" />,
-    option: "profile",
-    component: <Profile />,
-  },
-  {
-    icon: <WalletIcon className="h-4 w-4" />,
-    option: "subscription",
-    component: <Subscription />,
-  },
-  {
-    icon: <Cog8ToothIcon className="h-4 w-4" />,
-    option: "general",
-    component: <General />,
-  },
-  // {
-  //   icon: <UserIcon className="h-4 w-4" />,
-  //   option: "support",
-  //   component: <Support />,
-  // },
-  // {
-  //   icon: <UserIcon className="h-4 w-4" />,
-  //   option: "about",
-  //   component: <About />,
-  // },
-];
-
 interface Props {}
 
 const Settings: FC<Props> = () => {
   const dispatch = useDispatch();
   const [settingSelected, setSettingSelected] = useState("profile");
+
+  const settingOptions = [
+    {
+      icon: <UserIcon className="h-4 w-4" />,
+      option: "profile",
+      component: <Profile setSettingSelected={setSettingSelected} />,
+    },
+    {
+      icon: <WalletIcon className="h-4 w-4" />,
+      option: "subscription",
+      component: <Subscription setSettingSelected={setSettingSelected} />,
+    },
+    {
+      icon: <Cog8ToothIcon className="h-4 w-4" />,
+      option: "general",
+      component: <General setSettingSelected={setSettingSelected} />,
+    },
+    // {
+    //   icon: <UserIcon className="h-4 w-4" />,
+    //   option: "support",
+    //   component: <Support />,
+    // },
+    // {
+    //   icon: <UserIcon className="h-4 w-4" />,
+    //   option: "about",
+    //   component: <About />,
+    // },
+  ];
 
   const handleClick = (event: React.MouseEvent) => {
     event.preventDefault();
@@ -71,9 +71,9 @@ const Settings: FC<Props> = () => {
                 key={index}
                 className={`${
                   settingSelected === option.option && "bg-slate-500/30"
-                } flex w-full items-center gap-1 rounded-lg px-1 py-2 text-xs capitalize md:text-base`}
+                } flex w-full items-center gap-1 rounded-lg px-1 py-2 text-xs capitalize sm:px-2 md:text-base`}
                 value={option.option}
-                onClick={handleClick}
+                onClick={() => setSettingSelected(option.option)}
               >
                 {option.icon}
                 {option.option}

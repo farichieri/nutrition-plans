@@ -65,7 +65,7 @@ const Avatar: FC<Props> = ({ width, height, changeable }) => {
         </div>
       ) : (
         <div
-          className={`relative flex items-center justify-center rounded-full`}
+          className={`relative flex items-center justify-center rounded-full `}
         >
           {changeable && (
             <input
@@ -76,10 +76,11 @@ const Avatar: FC<Props> = ({ width, height, changeable }) => {
             />
           )}
           <Image
-            className="flex items-center justify-center rounded-full object-fill"
+            className="flex items-center justify-center overflow-auto rounded-full"
             alt="Avatar"
             src={userImage}
-            fill
+            width={width}
+            height={height}
           />
         </div>
       )}
@@ -87,6 +88,9 @@ const Avatar: FC<Props> = ({ width, height, changeable }) => {
         div {
           height: ${height}px;
           width: ${width}px;
+          overflow: hidden;
+          min-height: ${height}px;
+          min-width: ${width}px;
         }
         input[type="file"] {
           cursor: pointer;
