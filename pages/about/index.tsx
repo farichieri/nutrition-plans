@@ -22,20 +22,20 @@ export default function Page() {
     <LandingLayout>
       <div className="flex w-full max-w-5xl flex-col items-center justify-center gap-10 py-24 ">
         <span className="text-5xl font-bold">About</span>
-        <p className="text-xl">
+        <p className="">
           We&apos;re a meal planning platform that allows you to discover
           recipes and calculate your own meal plan that fits your goals and the
           type of food you choose. We know that a meal plan is a great tool to
           help you plan, and meal planning can help you stay on track no matter
           what your nutrition goal is.
         </p>
-        <p className="text-xl">
+        <p className="">
           With a few simple steps - like putting together basic meals, making a
           grocery list, shopping strategically and preparing food methodically -
           meal planning becomes a useful tool to help you keep your energy up,
           meet your nutrition goals, reduce food waste and save money.
         </p>
-        <p className="text-xl">
+        <p className="">
           We help you achieve your goals with the different meal plans you want
           to create and the food choices you eat. We create meal plans that make
           it easy for you to automate the week ahead. With our advanced search
@@ -43,7 +43,7 @@ export default function Page() {
           looking for in your plan. You&apos;ll also get weekly tips from our
           staff to help you reach your goals.
         </p>
-        <p className="text-xl">
+        <p className="">
           Planning healthy meals isn&apos;t difficult, but if you aren&apos;t
           used to it, planning may take a little practice. The examples we give
           should get you off to a good start. Don&apos;t be discouraged if you
@@ -62,12 +62,13 @@ export default function Page() {
                 key={person.name}
                 className="flex items-center gap-2"
               >
-                <span className="relative flex h-12 w-12 items-center justify-center rounded-full">
+                <span className="relative flex h-[48px] min-h-[48px] w-[48px] min-w-[48px] items-center justify-center overflow-hidden rounded-full">
                   <Image
                     src={`/images/general/${person.image}.png`}
                     alt={person.name}
-                    fill
-                    className="flex items-center justify-center rounded-full object-fill"
+                    width={48}
+                    height={48}
+                    className="flex items-center justify-center overflow-auto rounded-full"
                   />
                 </span>
                 <div className="flex h-full flex-col justify-between gap-2 py-2">

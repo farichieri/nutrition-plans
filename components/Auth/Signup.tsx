@@ -96,7 +96,7 @@ const Signup = () => {
   return (
     <div className="flex w-full max-w-sm flex-col gap-8">
       <div>
-        <h1 className="text-lg font-bold">Sign up</h1>
+        <h1 className="text-2xl font-bold">Sign up</h1>
         <p>Create your Nutrition Plans account</p>
       </div>
       <GoogleLoginButton onClick={handleLogInWithGoogle}>

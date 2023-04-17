@@ -17,7 +17,7 @@ const Modal = ({
   return (
     <div className="min-w-screen max-w-screen fixed inset-0 z-[100] m-0 flex min-h-screen items-center justify-center overflow-auto">
       <div
-        className="min-w-screen fixed inset-0 z-50 m-0 flex min-h-screen items-center justify-center bg-black/70"
+        className="min-w-screen fixed inset-0 z-50 m-0 flex min-h-screen items-center justify-center bg-black/60 dark:bg-black/40"
         onClick={handleCloseModal}
       ></div>
       <div className="relative z-50 m-auto max-w-[95vw] rounded-3xl bg-gray-100 dark:bg-gray-800">

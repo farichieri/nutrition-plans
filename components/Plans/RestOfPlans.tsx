@@ -1,7 +1,7 @@
+import { FC } from "react";
 import { PlansType } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
-import { FC } from "react";
 
 interface Props {
   plans: PlansType;
@@ -9,15 +9,22 @@ interface Props {
 
 const RestOfPlans: FC<Props> = ({ plans }) => {
   return (
-    <div className="flex flex-wrap justify-center gap-4">
+    <div className="mx-auto flex flex-wrap justify-center gap-10">
       {plans.map((plan) => (
-        <Link href={`/plans/${plan.id}`} key={plan.id}>
-          <span>{plan.title}</span>
+        <Link
+          href={`/plans/${plan.id}`}
+          key={plan.id}
+          className="relative flex h-[auto] max-h-32 w-[auto] max-w-xs items-center justify-center overflow-hidden rounded-xl"
+        >
+          <span className="absolute flex w-full items-center justify-center bg-white/70 text-center text-xl font-bold text-black">
+            {plan.title}{" "}
+          </span>
           <Image
             src={`/images/plans/${plan.id}.png`}
             alt={plan.title}
-            width={200}
-            height={200}
+            width={150}
+            height={150}
+            className="object-contain"
           />
         </Link>
       ))}

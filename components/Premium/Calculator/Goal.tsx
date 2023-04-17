@@ -4,9 +4,9 @@ interface Props {}
 
 const Goal: FC<Props> = () => {
   const FOOD_PREFERENCES = [
-    { value: "decrease-adipose-tissue", name: "Decrease Adipose Tissue" },
-    { value: "increase-muscle-mass", name: "Increase Muscle Mass" },
-    { value: "maintenance", name: "Maintenance" },
+    { value: "lose-weight", name: "Lose weight" },
+    { value: "Build-muscle", name: "Build Muscle" },
+    { value: "maintain", name: "Maintain" },
   ];
   return (
     <section className="flex w-full flex-col items-center justify-center">

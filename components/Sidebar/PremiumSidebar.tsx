@@ -5,7 +5,6 @@ import {
   ChevronUpIcon,
   Cog6ToothIcon,
   EnvelopeOpenIcon,
-  ListBulletIcon,
   ChartBarIcon,
   ArchiveBoxIcon,
 } from "@heroicons/react/20/solid";
@@ -58,7 +57,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
       <div
         className={`${
           sidebarOpen ? "left-0" : "left-[-13rem]"
-        } fixed left-0 z-[70] flex min-h-screen w-[13rem] select-none flex-col gap-6 border-r bg-white/100 px-4 pb-10 pt-16 transition-all duration-300 dark:border-cyan-100/20 dark:bg-black/100`}
+        } fixed left-0 z-[70] flex min-h-screen w-[13rem] select-none flex-col gap-6 bg-white/100 px-4 pb-10 pt-16 shadow-lg shadow-gray-500/50 transition-all duration-300 dark:bg-black/100 dark:shadow-cyan-100/20`}
       >
         <div className="flex w-full flex-col items-center gap-2 pb-2">
           <div className="flex w-full items-center gap-2">
@@ -124,7 +123,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
             Plan Calculator
           </Link>
         </div>
-        <div className="flex w-full items-center gap-2">
+        {/* <div className="flex w-full items-center gap-2">
           <EnvelopeOpenIcon className="h-4 w-4 fill-green-500" />
           <Link
             href={"/app/plan-calculator"}
@@ -132,7 +131,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
           >
             Newsletter
           </Link>
-        </div>
+        </div> */}
         <div className="mx-auto mt-auto flex flex-col gap-4">
           <Cog6ToothIcon
             className="mx-auto mt-auto h-5 w-5 cursor-pointer"

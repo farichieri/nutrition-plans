@@ -81,7 +81,7 @@ const Login = () => {
     <div className="m-auto flex w-full max-w-sm flex-col gap-8">
       <div>
         <h1 className="text-2xl font-bold">Welcome back</h1>
-        <p>Login to continue achieving your nutrition plan</p>
+        <p>Login to continue achieving your nutrition goals</p>
       </div>
       <GoogleLoginButton onClick={handleLogInWithGoogle}>
         Log in with Google

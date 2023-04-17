@@ -43,18 +43,20 @@ export default function Page({ planData }: Props) {
 
   return (
     <PremiumLayout>
-      <section className={`relative flex w-full flex-col p-4`}>
-        <span className="text-3xl font-bold">{planData.title}</span>
-        {!(user?.plan_selected === planData.id) ? (
-          <button
-            className="ml-auto rounded-3xl border px-2 py-1"
-            onClick={selectPlan}
-          >
-            Select plan
-          </button>
-        ) : (
-          <span className="ml-auto">Plan selected</span>
-        )}
+      <section className={`relative flex w-full flex-col gap-4 p-4`}>
+        <div className="flex">
+          <span className="text-3xl font-bold">{planData.title}</span>
+          {!(user?.plan_selected === planData.id) ? (
+            <button
+              className="ml-auto rounded-3xl border px-2 py-1"
+              onClick={selectPlan}
+            >
+              Select plan
+            </button>
+          ) : (
+            <span className="ml-auto">Plan selected</span>
+          )}
+        </div>
         {isFree && (
           // <div className="fixed inset-0 z-[60] h-screen w-screen bg-black/10">
           <div className="h-50vh fixed left-[50%] top-[50%] z-[60] flex w-96 max-w-[95vw] -translate-x-1/2 flex-col items-center justify-center gap-4 rounded-3xl bg-white p-4 shadow-md dark:bg-gray-800">
