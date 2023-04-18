@@ -14,13 +14,14 @@ const Subscription: FC<Props> = () => {
 
   return (
     <div className="flex w-full flex-col gap-4">
-      <div className="flex gap-1">
+      <div className="flex items-center gap-1">
         <span>Current plan:</span>
-        <span className="capitalize">{user?.premium_plan}</span>
+        <span className="rounded-md bg-slate-300/50 p-1 capitalize">
+          {user?.premium_plan}
+        </span>
       </div>
       <div className="flex">
         <div className="flex flex-col">
-          <span>Standard</span>
           <span>Unlock all nutrition plans, from $8/month</span>
         </div>
       </div>
