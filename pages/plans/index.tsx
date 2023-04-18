@@ -16,8 +16,9 @@ export default function Page({ plans }: Props) {
 }
 
 export const getStaticProps = async () => {
-  const allPostsData = getSortedData(directories.plansDirectory);
+  const allPlansData = getSortedData(directories.plansDirectory);
+  const plansAvailable = allPlansData.filter((plan: any) => plan.isAvailable);
   return {
-    props: { plans: allPostsData },
+    props: { plans: plansAvailable },
   };
 };

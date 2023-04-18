@@ -4,22 +4,7 @@ export const FAQS_INDEX = [
   {
     title: "What plans are available in Nutrition Plans?",
     answer:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus, hic. Facilis, provident incidunt cumque ducimus officiis dolorem quos quam sint dignissimos asperiores, dicta voluptate, numquam unde? Esse ducimus praesentium atque!",
-  },
-  {
-    title: "Question random?",
-    answer:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus, hic. Facilis, provident incidunt cumque ducimus officiis dolorem quos quam sint dignissimos asperiores, dicta voluptate, numquam unde? Esse ducimus praesentium atque!",
-  },
-  {
-    title: "Another question random?",
-    answer:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus, hic. Facilis, provident incidunt cumque ducimus officiis dolorem quos quam sint dignissimos asperiores, dicta voluptate, numquam unde? Esse ducimus praesentium atque!",
-  },
-  {
-    title: "And another?",
-    answer:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus, hic. Facilis, provident incidunt cumque ducimus officiis dolorem quos quam sint dignissimos asperiores, dicta voluptate, numquam unde? Esse ducimus praesentium atque!",
+      "The plans available today are: Weight Loss, Gain Muscle Mass, Balanced and Gluten Free",
   },
 ];
 
@@ -56,7 +41,6 @@ export const MEAL_PLANS = [
     name: "Protein",
     id: "protein",
   },
-
   {
     name: "Vegetarian",
     id: "vegetarian",

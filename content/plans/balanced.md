@@ -1,5 +1,6 @@
 ---
 title: "Balanced"
+isAvailable: true
 ---
 
 It is an eating plan that includes all the macro and micronutrients necessary for daily requirements, in adequate and balanced amounts and in which it will consist of a variety of foods from different groups so that the body obtains enough energy and nutrition to grow and develop properly.

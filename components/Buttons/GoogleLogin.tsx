@@ -34,7 +34,7 @@ const GoogleLoginButton = ({
             cursor: pointer;
             transition: 0.3s;
             border: none;
-            box-shadow: 0 0 10px 1px var(--box-shadow-light);
+            box-shadow: 0 0 10px 1px lightgray;
           }
           .image {
             background: white;
@@ -50,7 +50,7 @@ const GoogleLoginButton = ({
             background: #386ac0;
           }
           button:active {
-            box-shadow: 0 0 10px 1px var(--box-shadow);
+            box-shadow: 0 0 10px 1px gray;
           }
         `}
       </style>

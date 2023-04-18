@@ -46,7 +46,8 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async ({ params }: { params: any }) => {
   const planData = await getAllMDData(directories.plansDirectory, params.id);
   const allPlansData = getSortedData(directories.plansDirectory);
-  const restOfPlans = allPlansData.filter((plan) => plan.id !== params.id);
+  const plansAvailable = allPlansData.filter((plan: any) => plan.isAvailable);
+  const restOfPlans = plansAvailable.filter((plan) => plan.id !== params.id);
 
   return {
     props: {

@@ -20,6 +20,7 @@ const NavBar: FC<Props> = () => {
           <Link href={"/"}>Nutrition Plans</Link>
         </div>
         <div className="hidden basis-1/3 items-center justify-center gap-4 text-xs font-normal sm:text-lg md:flex lg:gap-10">
+          {/* <Link href={"/plans"}>Plans</Link> */}
           <Link href={"/pricing"}>Pricing</Link>
           <Link href={"/about"}>About</Link>
           <Link href={"/blog"}>Blog</Link>
