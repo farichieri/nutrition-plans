@@ -34,33 +34,33 @@ export const MEAL_PLANS = [
     id: "gain-muscle-mass",
   },
   {
-    name: "Paleo",
-    id: "paleo",
-  },
-  {
-    name: "Protein",
-    id: "protein",
-  },
-  {
-    name: "Vegetarian",
-    id: "vegetarian",
-  },
-  {
-    name: "Vegan",
-    id: "vegan",
-  },
-  {
-    name: "Low Carb",
-    id: "low-carb",
-  },
-  {
-    name: "Keto",
-    id: "keto",
-  },
-  {
     name: "Gluten Free",
     id: "gluten-free",
   },
+  // {
+  //   name: "Paleo",
+  //   id: "paleo",
+  // },
+  // {
+  //   name: "Protein",
+  //   id: "protein",
+  // },
+  // {
+  //   name: "Vegetarian",
+  //   id: "vegetarian",
+  // },
+  // {
+  //   name: "Vegan",
+  //   id: "vegan",
+  // },
+  // {
+  //   name: "Low Carb",
+  //   id: "low-carb",
+  // },
+  // {
+  //   name: "Keto",
+  //   id: "keto",
+  // },
 ];
 
 export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
@@ -77,7 +77,7 @@ export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
   },
   {
     buttonContent: "Get started with Premium",
-    checklist: ["All nutrition plans"],
+    checklist: ["All nutrition plans", "Shopping List"],
     checklistTitle: "Everything in Free, plus...",
     checkoutLink: "/app/billing",
     discount: "-20%",

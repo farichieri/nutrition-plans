@@ -19,7 +19,7 @@ export default function Home({ plans }: Props) {
       <div className="flex w-full flex-col items-center gap-10 py-20">
         <div className="flex max-w-2xl flex-col items-center justify-center gap-4 text-center text-2xl">
           <h1 className="bg-gradient-to-br from-gray-600 to-black bg-clip-text text-4xl font-bold text-transparent dark:from-white dark:to-gray-500 md:text-6xl">
-            The best nutrition plans on the internet
+            Nutrition plans that lead to results
           </h1>
           <div className="flex flex-col">
             <span className="text-base opacity-50 md:text-lg">

@@ -4,7 +4,6 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
   Cog6ToothIcon,
-  EnvelopeOpenIcon,
   ChartBarIcon,
   ArchiveBoxIcon,
 } from "@heroicons/react/20/solid";

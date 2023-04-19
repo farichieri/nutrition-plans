@@ -4,7 +4,7 @@ import { signOut } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import SecondaryButton from "../Buttons/Submit";
+import SecondaryButton from "../Buttons/SubmitButton";
 
 const Logout = () => {
   const [isLoading, setIsLoading] = useState(false);

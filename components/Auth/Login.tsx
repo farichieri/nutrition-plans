@@ -11,7 +11,7 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import GoogleLoginButton from "../Buttons/GoogleLogin";
 import Link from "next/link";
-import Submit from "../Buttons/Submit";
+import SubmitButton from "../Buttons/SubmitButton";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -117,7 +117,7 @@ const Login = () => {
             className="border-b border-gray-300 bg-transparent px-4 py-1 outline-none focus:bg-[var(--box-shadow)]"
           />
         </div>
-        <Submit
+        <SubmitButton
           className={""}
           onClick={handleSubmit}
           loadMessage={"Logging in..."}

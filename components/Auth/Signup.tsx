@@ -12,7 +12,7 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import GoogleLoginButton from "../Buttons/GoogleLogin";
 import Link from "next/link";
-import Submit from "../Buttons/Submit";
+import Submit from "../Buttons/SubmitButton";
 
 const Signup = () => {
   const dispatch = useDispatch();

@@ -1,4 +1,4 @@
-import Submit from "@/components/Buttons/Submit";
+import Submit from "@/components/Buttons/SubmitButton";
 import { postFeatureOrReport } from "@/firebase/helpers/Settings";
 import { selectAuthSlice } from "@/store/slices/authSlice";
 import {
@@ -68,7 +68,7 @@ const Support: FC<Props> = () => {
             onClick={() => handleAction(opt.value)}
             className={`${
               opt.value === action && "bg-slate-500/30"
-            } flex items-center gap-1 rounded-xl p-1 text-xs sm:text-base`}
+            } flex items-center gap-1 rounded-xl px-2 py-1 text-xs sm:text-base`}
           >
             {opt.icon}
             <span>{opt.text}</span>
