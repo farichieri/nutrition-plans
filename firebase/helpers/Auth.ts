@@ -9,23 +9,26 @@ const createNewUser = async (user: User) => {
     const newUser: UserAccount = {
       activity: null,
       age: null,
+      BMI: null,
       BMR: null,
       created_at: user.metadata.creationTime,
       display_name: user.displayName || "",
       email_address: user.email,
+      food_preferences: [],
       gender: null,
-      height: null,
+      goal: null,
+      height_in_cm: null,
       is_premium: false,
-      kcals_reccomended: null,
+      is_profile_completed: false,
+      kcals_recommended: null,
       lang: "en",
       measurement_unit: null,
       photo_url: user.photoURL,
       plan_selected: null,
       premium_plan: "free",
-      user_goal: null,
       user_id: user.uid,
-      weight_goal: null,
-      weight: null,
+      weight_goal_in_kg: null,
+      weight_in_kg: null,
     };
     await setDoc(newUserRef, newUser);
   } catch (error) {
@@ -36,7 +39,7 @@ const createNewUser = async (user: User) => {
       .catch((error) => {
         console.log(error.message);
       });
-    throw Error("Error creating user");
+    return { error: error };
   }
 };
 
@@ -51,23 +54,26 @@ const generateUserObject = async (user: User) => {
       const userAccount: UserAccount = {
         activity: userData.activity,
         age: userData.age,
+        BMI: userData.BMI,
         BMR: userData.BMR,
         created_at: userData.created_at,
         display_name: userData.display_name,
         email_address: userData.email_address,
+        food_preferences: userData.food_preferences,
         gender: userData.gender,
-        height: userData.height,
+        goal: userData.goal,
+        height_in_cm: userData.height_in_cm,
         is_premium: userData.is_premium,
-        kcals_reccomended: userData.kcals_reccomended,
+        is_profile_completed: userData.is_profile_completed,
+        kcals_recommended: userData.kcals_recommended,
         lang: userData.lang,
         measurement_unit: userData.measurement_unit,
         photo_url: userData.photo_url,
         plan_selected: userData.plan_selected,
         premium_plan: userData.premium_plan,
-        user_goal: userData.user_goal,
         user_id: userData.user_id,
-        weight_goal: userData.weight_goal,
-        weight: userData.weight,
+        weight_goal_in_kg: userData.weight_goal_in_kg,
+        weight_in_kg: userData.weight_in_kg,
       };
       return userAccount || null;
     } else {
@@ -79,4 +85,14 @@ const generateUserObject = async (user: User) => {
   }
 };
 
-export { createNewUser, generateUserObject };
+const updateUser = async (user: UserAccount) => {
+  try {
+    const userRef = doc(db, "users", user.user_id);
+    console.log('setDoc: doc(db, "users", user.uid)');
+    await setDoc(userRef, user);
+  } catch (error) {
+    return { error: error };
+  }
+};
+
+export { createNewUser, generateUserObject, updateUser };

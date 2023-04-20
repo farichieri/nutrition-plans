@@ -25,8 +25,9 @@ const Signup = () => {
   const [isLoadingForm, setIsLoadingForm] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const router = useRouter();
-  const redirectRoute =
-    router.asPath === "/app/billing" ? "/app/billing" : "/app";
+  const [redirectRoute, setRedirectRoute] = useState(
+    router.asPath === "/app/billing" ? "/app/billing" : "/app"
+  );
 
   const handleLogInWithGoogle = async () => {
     signInWithPopup(auth, provider)
@@ -65,21 +66,20 @@ const Signup = () => {
         });
         const additinalInfo = getAdditionalUserInfo(result);
         if (additinalInfo?.isNewUser) {
+          dispatch(setIsCreatingUser(true));
           await createNewUser(user);
-          router.push(redirectRoute);
-        } else {
-          router.push(redirectRoute);
+          dispatch(setIsCreatingUser(false));
         }
       })
+      .then(() => router.push(redirectRoute))
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log({ errorCode });
-        console.log({ errorMessage });
         setErrorMessage(error.message);
+        setIsLoadingForm(false);
+        setIsDisabled(false);
+        dispatch(setIsCreatingUser(false));
       });
-    setIsLoadingForm(false);
-    setIsDisabled(false);
   };
 
   const handleChange = (

@@ -9,7 +9,10 @@ const GoogleLoginButton = ({
   children: ReactNode;
 }) => {
   return (
-    <button onClick={onClick}>
+    <button
+      onClick={onClick}
+      className="space-between m-auto flex items-center rounded-3xl bg-[#4c8bf5] shadow-[0_1px_10px] shadow-slate-200/50 duration-300 hover:shadow-[0_1px_20px] hover:shadow-slate-200 dark:hover:shadow-slate-200/50"
+    >
       <span className="image">
         <Image
           alt="google-icon"
@@ -19,38 +22,14 @@ const GoogleLoginButton = ({
           style={{ pointerEvents: "none" }}
         />
       </span>
-      <span className="text">{children}</span>
+      <span className="pl-2 pr-3 text-white">{children}</span>
       <style jsx>
         {`
-          button {
-            display: flex;
-            align-items: center;
-            margin: auto;
-            background: gray;
-            border-radius: 3rem;
-            justify-content: space-between;
-            padding: 0;
-            background: #4c8bf5;
-            cursor: pointer;
-            transition: 0.3s;
-            border: none;
-            box-shadow: 0 0 10px 1px lightgray;
-          }
           .image {
             background: white;
             border-radius: 50%;
             padding: 0.5rem;
             display: flex;
-          }
-          .text {
-            padding: 0 0.75rem 0 0.5rem;
-            color: white;
-          }
-          button:hover {
-            background: #386ac0;
-          }
-          button:active {
-            box-shadow: 0 0 10px 1px gray;
           }
         `}
       </style>

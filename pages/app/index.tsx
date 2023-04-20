@@ -11,10 +11,14 @@ const App = () => {
 
   useEffect(() => {
     if (user) {
-      if (user.plan_selected) {
-        router.push(`/app/plans/${user.plan_selected}`);
+      if (!user.is_profile_completed) {
+        router.push("/app/create");
       } else {
-        router.push(`/app/evolution/profile`);
+        if (user.plan_selected) {
+          router.push(`/app/plans/${user.plan_selected}`);
+        } else {
+          router.push(`/app/evolution/profile`);
+        }
       }
     }
   });

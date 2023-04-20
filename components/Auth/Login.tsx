@@ -25,6 +25,7 @@ const Login = () => {
   const router = useRouter();
   const redirectRoute =
     router.asPath === "/app/billing" ? "/app/billing" : "/app";
+  const createProfileRoute = "/app/create";
 
   const handleLogInWithGoogle = async () => {
     signInWithPopup(auth, provider)
@@ -33,11 +34,15 @@ const Login = () => {
         if (additinalInfo?.isNewUser) {
           const user = result.user;
           dispatch(setIsCreatingUser(true));
-          await createNewUser(user);
-          dispatch(setIsCreatingUser(false));
+          const res = await createNewUser(user);
+          if (!res?.error) {
+            router.push(createProfileRoute);
+          }
+        } else {
+          router.push(redirectRoute);
         }
       })
-      .then(() => router.push(redirectRoute))
+      .then(() => dispatch(setIsCreatingUser(false)))
       .catch((error) => {
         dispatch(setIsCreatingUser(false));
         alert(error.message);

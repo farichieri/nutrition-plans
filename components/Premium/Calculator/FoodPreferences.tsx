@@ -1,47 +1,84 @@
-import { FC } from "react";
+import { FC, useState } from "react";
+import { FOOD_PREFERENCES } from "@/utils/formContents";
+import { selectAuthSlice, setUpdateUser } from "@/store/slices/authSlice";
+import { updateUser } from "@/firebase/helpers/Auth";
+import { useDispatch, useSelector } from "react-redux";
+import { UserAccount } from "@/types/types";
+import { useRouter } from "next/router";
+import SubmitButton from "@/components/Buttons/SubmitButton";
 
-interface Props {}
+interface Props {
+  handleSubmit: Function;
+}
 
-const FoodPreferences: FC<Props> = () => {
-  const FOOD_PREFERENCES = [
-    { value: "anything", name: "Anything" },
-    { value: "gluten-free", name: "Gluten Free" },
-    { value: "vegetarian", name: "Vegetarian" },
-    { value: "flexitarian", name: "Flexitarian" },
-    { value: "ketogenic", name: "Ketogenic" },
-    { value: "mediterranean", name: "Mediterranean" },
-    { value: "low-carb", name: "Low Carb" },
-  ];
+const FoodPreferences: FC<Props> = ({ handleSubmit }) => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const { user } = useSelector(selectAuthSlice);
+  const [selecteds, setSelecteds] = useState<string[]>(
+    user?.food_preferences || []
+  );
+  const [isLoading, setIsLoading] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
+  const isCreatingRoute = router.asPath === "/app/create";
+
+  console.log(selecteds);
+
+  const handleSelect = (event: React.MouseEvent) => {
+    event.preventDefault();
+    const value = (event.target as HTMLButtonElement).value;
+    const labelExists = selecteds.indexOf(value) !== -1;
+    const newLabelsSelected = [...selecteds];
+    labelExists
+      ? newLabelsSelected.splice(selecteds.indexOf(value), 1)
+      : newLabelsSelected.push(value);
+    setSelecteds(newLabelsSelected);
+  };
+
+  const onSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!user) return;
+    setIsLoading(true);
+    const userUpdated: UserAccount = {
+      ...user,
+      food_preferences: selecteds,
+    };
+    const res = await updateUser(userUpdated);
+    if (!res?.error) {
+      dispatch(setUpdateUser(userUpdated));
+      handleSubmit();
+    }
+  };
 
   // Que pueda seleccionar varios a la vez (podrian ser botones)
   return (
     <section className="flex w-full flex-col items-center justify-center">
-      <span className="text-3xl font-bold">Nutrition preferences</span>
-      <form action="" className="w-full max-w-[30rem]">
-        <select
-          name=""
-          id=""
-          defaultValue="none"
-          className="w-full rounded-md border bg-transparent px-2 py-1"
-        >
-          <option
-            value="none"
-            className="bg-gray-300 text-black"
-            disabled
-            hidden
-          >
-            Select
-          </option>
+      {/* <span className="text-3xl font-bold">Nutrition preferences</span> */}
+      <form action="" className="flex w-full max-w-[30rem] flex-col gap-10">
+        <div className="flex w-full flex-col flex-wrap gap-2">
           {FOOD_PREFERENCES.map((opt) => (
-            <option
-              className="bg-gray-300 text-black"
+            <button
+              onClick={handleSelect}
+              className={`basis-1 rounded-xl bg-gray-300 p-2 font-medium text-black shadow-[0_1px_3px] shadow-slate-500/50 hover:shadow-[0_1px_5px] ${
+                selecteds.includes(opt.value)
+                  ? "bg-green-500 text-white"
+                  : "bg-slate-300"
+              }`}
               key={opt.value}
               value={opt.value}
             >
               {opt.name}
-            </option>
+            </button>
           ))}
-        </select>
+        </div>
+        <SubmitButton
+          className={"m-auto w-fit"}
+          onClick={onSubmit}
+          loadMessage={"Loading..."}
+          content={`${isCreatingRoute ? "Continue" : "Save"}`}
+          isLoading={isLoading}
+          isDisabled={isDisabled}
+        />
       </form>
     </section>
   );

@@ -30,25 +30,28 @@ export interface PlanType {
 export interface PlansType extends Array<PlanType> {}
 
 export interface UserAccount {
-  activity: string | null;
+  activity: number | null;
   age: number | null;
+  BMI: number | null;
+  BMR: number | null;
   created_at: string | undefined;
   display_name: string;
   email_address: string | null;
+  food_preferences: string[];
   gender: string | null;
-  height: string | null;
+  goal: string | null;
+  height_in_cm: number | null;
   is_premium: boolean;
+  is_profile_completed: boolean;
+  kcals_recommended: number | null;
   lang: string;
   measurement_unit: string | null;
   photo_url: string | null;
   plan_selected: string | null;
   premium_plan: string | null;
-  user_goal: string | null;
   user_id: string;
-  weight_goal: string | null;
-  weight: string | null;
-  BMR: number | null;
-  kcals_reccomended: number | null;
+  weight_goal_in_kg: number | null;
+  weight_in_kg: number | null;
 }
 
 export interface PremiumPlan {
