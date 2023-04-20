@@ -8,6 +8,7 @@ import LandingLayout from "@/components/Layout/LandingLayout";
 import Link from "next/link";
 import Plans from "@/components/Plans/Plans";
 import PrimaryButton from "@/components/Buttons/PrimaryButton";
+import Goals from "@/components/Goals/Goals";
 
 interface Props {
   plans: PlansType;
@@ -22,11 +23,14 @@ export default function Home({ plans }: Props) {
             Nutrition plans that lead to results
           </h1>
           <div className="flex flex-col">
-            <span className="text-base opacity-50 md:text-lg">
-              Choose the plan that fits your requirements
+            <span className="text-base font-semibold opacity-50 md:text-lg">
+              Choose your nutrition goals
             </span>
-            <span className="md:text-md text-base opacity-50">
-              Receive a nutrition plan every week
+            <span className="text-base font-semibold opacity-50 md:text-lg">
+              Adapt your diet
+            </span>
+            <span className="text-base font-semibold opacity-50 md:text-lg">
+              Follow your progress
             </span>
           </div>
         </div>
@@ -43,6 +47,7 @@ export default function Home({ plans }: Props) {
           className="m-auto my-10 flex rounded-3xl shadow-lg dark:shadow-gray-400/20"
         />
       </div>
+      <Goals />
       <Plans plans={plans} />
       <FAQS content={FAQS_INDEX} />
       <CallToAction />

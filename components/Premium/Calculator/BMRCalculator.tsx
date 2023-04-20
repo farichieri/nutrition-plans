@@ -143,11 +143,19 @@ const BMRCalculator: FC<Props> = () => {
   const result = Number(calculate());
   const isMetricUnits = calculatorType === CALCULATOR_TYPES.metric;
 
+  const BMI =
+    Number(input.kilograms) /
+    (Number(input.centimeters) * Number(input.centimeters));
+  // BMI con el resultado (que significa)
+  console.log(BMI);
+
+  // Agregar el calculador de tiempo en llegar al objetivo de peso si es que lo quiere agregar.
+
   const handleSubmit = () => {};
 
   return (
     <div className="flex w-full flex-col items-center justify-center gap-3 text-xs s:text-sm sm:text-base">
-      <span className="text-3xl font-bold">Profile</span>
+      <span className="text-3xl font-bold">Body features</span>
       <div className="flex w-full max-w-[30rem] flex-wrap">
         <label className="basis-1/5 font-semibold">Goal</label>
         <div className="mx-auto flex w-full basis-4/5 items-center justify-center gap-2">
@@ -315,7 +323,10 @@ const BMRCalculator: FC<Props> = () => {
           </select>
         </div>
       </form>
-
+      <div className="flex gap-2">
+        <span>BMI</span>
+        <span>{BMI && BMI}</span>
+      </div>
       <div className="m-2 flex w-full max-w-[30rem] justify-center rounded-md border text-lg">
         <span>
           Calories recommended:

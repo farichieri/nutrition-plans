@@ -57,7 +57,7 @@ export default function Page({ planData }: Props) {
             <span className="ml-auto">Plan selected</span>
           )}
         </div>
-        {isFree && (
+        {/* {isFree && (
           // <div className="fixed inset-0 z-[60] h-screen w-screen bg-black/10">
           <div className="h-50vh fixed left-[50%] top-[50%] z-[60] flex w-96 max-w-[95vw] -translate-x-1/2 flex-col items-center justify-center gap-4 rounded-3xl bg-white p-4 shadow-md dark:bg-gray-800">
             <span className="text-center">
@@ -66,8 +66,9 @@ export default function Page({ planData }: Props) {
             <SubscribeButton />
           </div>
           // </div>
-        )}
-        <div className={`${isFree && "z-50 cursor-auto select-none blur-sm"}`}>
+        )} */}
+        {/* <div className={`${isFree && "z-50 cursor-auto select-none blur-sm"}`}> */}
+        <div className={`${isFree && "z-50 cursor-auto select-none "}`}>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam
             consequuntur, dignissimos impedit id earum fuga in. Possimus quaerat

@@ -14,7 +14,7 @@ const App = () => {
       if (user.plan_selected) {
         router.push(`/app/plans/${user.plan_selected}`);
       } else {
-        router.push(`/app/plan-calculator`);
+        router.push(`/app/evolution/profile`);
       }
     }
   });

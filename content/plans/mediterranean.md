@@ -1,5 +1,5 @@
 ---
-title: "Vegetarian"
+title: "Mediterranean"
 isAvailable: true
 ---
 

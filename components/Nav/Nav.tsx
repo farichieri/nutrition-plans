@@ -19,8 +19,8 @@ const NavBar: FC<Props> = () => {
         <div className="flex w-fit min-w-fit basis-1/3 justify-start text-sm font-bold sm:text-2xl">
           <Link href={"/"}>Nutrition Plans</Link>
         </div>
-        <div className="hidden basis-1/3 items-center justify-center gap-4 text-xs font-normal sm:text-lg md:flex lg:gap-10">
-          {/* <Link href={"/plans"}>Plans</Link> */}
+        <div className="hidden basis-1/3 items-center justify-center gap-4 text-xs font-medium sm:text-lg md:flex lg:gap-10">
+          <Link href={"/plans"}>Plans</Link>
           <Link href={"/pricing"}>Pricing</Link>
           <Link href={"/about"}>About</Link>
           <Link href={"/blog"}>Blog</Link>
@@ -48,13 +48,20 @@ const NavBar: FC<Props> = () => {
             openMenu ? "left-0" : "left-full"
           } absolute top-[var(--nav-h)] h-screen w-screen border-t bg-white px-4 shadow-md transition-all duration-300 dark:border-t-cyan-100/20 dark:bg-black dark:shadow-cyan-100/20 md:hidden`}
         >
-          <div className="flex flex-col items-center justify-center gap-4 text-lg font-semibold">
+          <div className="flex flex-col items-center justify-center gap-2 text-lg font-semibold">
             <Link
               href={"/login"}
               onClick={handleMenu}
               className="w-full border-b border-gray-300 py-2 dark:border-gray-500"
             >
               Log in
+            </Link>
+            <Link
+              href={"/plans"}
+              onClick={handleMenu}
+              className="w-full border-b border-gray-300 pb-2 dark:border-gray-500"
+            >
+              Plans
             </Link>
             <Link
               href={"/pricing"}

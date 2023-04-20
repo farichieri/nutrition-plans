@@ -1,11 +1,11 @@
 import { MEAL_PLANS } from "@/utils/content";
 import {
-  CalculatorIcon,
   ChevronDownIcon,
   ChevronUpIcon,
   Cog6ToothIcon,
   ChartBarIcon,
   ArchiveBoxIcon,
+  DocumentCheckIcon,
 } from "@heroicons/react/20/solid";
 import { FC, MouseEventHandler } from "react";
 import { selectAuthSlice } from "@/store/slices/authSlice";
@@ -56,11 +56,11 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
       <div
         className={`${
           sidebarOpen ? "left-0" : "left-[-13rem]"
-        } fixed left-0 z-[70] flex min-h-screen w-[13rem] select-none flex-col gap-6 bg-white/100 px-4 pb-10 pt-16 shadow-lg shadow-gray-500/50 transition-all duration-300 dark:bg-black/100 dark:shadow-cyan-100/20`}
+        } fixed left-0 z-[70] flex min-h-screen w-[13rem] select-none flex-col gap-6 bg-white/100 px-5 pb-10 pt-16 shadow-lg shadow-gray-500/50 transition-all duration-300 dark:bg-black/100 dark:shadow-cyan-100/20`}
       >
         <div className="flex w-full flex-col items-center gap-2 pb-2">
           <div className="flex w-full items-center gap-2">
-            <ChartBarIcon className="h-4 w-4 fill-green-500" />
+            <DocumentCheckIcon className="h-5 w-5 fill-green-500" />
             <Link
               href={"/app/my-plan"}
               className="text-md w-full font-semibold sm:text-lg"
@@ -83,15 +83,15 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
         </div>
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2 " onClick={toggleAllPlans}>
-            <ArchiveBoxIcon className="h-4 w-4 fill-green-500" />
+            <ArchiveBoxIcon className="h-5 w-5 fill-green-500" />
             <div className="flex w-full cursor-pointer items-center justify-between">
               <span className="text-md font-semibold sm:text-lg">
                 All plans
               </span>
               {plansOpen ? (
-                <ChevronUpIcon className="h-4 w-4" />
+                <ChevronUpIcon className="h-5 w-5" />
               ) : (
-                <ChevronDownIcon className="h-4 w-4" />
+                <ChevronDownIcon className="h-5 w-5" />
               )}
             </div>
           </div>
@@ -114,24 +114,15 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
           </div>
         </div>
         <div className="flex w-full items-center gap-2">
-          <CalculatorIcon className="h-4 w-4 fill-green-500" />
+          <ChartBarIcon className="h-5 w-5 fill-green-500" />
           <Link
-            href={"/app/plan-calculator"}
+            href={"/app/evolution/progress"}
             className="text-md w-full font-semibold sm:text-lg"
           >
-            Plan Calculator
+            Evolution
           </Link>
         </div>
-        {/* <div className="flex w-full items-center gap-2">
-          <EnvelopeOpenIcon className="h-4 w-4 fill-green-500" />
-          <Link
-            href={"/app/plan-calculator"}
-            className="text-md w-full font-semibold sm:text-lg"
-          >
-            Newsletter
-          </Link>
-        </div> */}
-        <div className="mx-auto mt-auto flex flex-col gap-4">
+        <div className="mx-auto mt-auto flex flex-col gap-5">
           <Cog6ToothIcon
             className="mx-auto mt-auto h-5 w-5 cursor-pointer"
             onClick={handleOpenSettings}

@@ -26,17 +26,26 @@ export const MEAL_PLANS = [
     id: "balanced",
   },
   {
-    name: "Weight Loss",
-    id: "weight-loss",
-  },
-  {
-    name: "Gain muscle mass",
-    id: "gain-muscle-mass",
-  },
-  {
     name: "Gluten Free",
     id: "gluten-free",
   },
+  {
+    name: "Mediterranean",
+    id: "mediterranean",
+  },
+  {
+    name: "Keto",
+    id: "keto",
+  },
+  {
+    name: "Vegetarian",
+    id: "vegetarian",
+  },
+  {
+    name: "Low Carb",
+    id: "low-carb",
+  },
+
   // {
   //   name: "Paleo",
   //   id: "paleo",
@@ -46,22 +55,12 @@ export const MEAL_PLANS = [
   //   id: "protein",
   // },
   // {
-  //   name: "Vegetarian",
-  //   id: "vegetarian",
-  // },
-  // {
   //   name: "Vegan",
   //   id: "vegan",
   // },
-  // {
-  //   name: "Low Carb",
-  //   id: "low-carb",
-  // },
-  // {
-  //   name: "Keto",
-  //   id: "keto",
-  // },
 ];
+
+// Orders 1.Balanced, 2.Mediterranean, 3.Keto, 4.Low Carb, 5. Vegetarian, 6.Gluten-foree
 
 export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
   {

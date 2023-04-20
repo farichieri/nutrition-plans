@@ -4,14 +4,19 @@ interface Props {}
 
 const FoodPreferences: FC<Props> = () => {
   const FOOD_PREFERENCES = [
-    { value: "omnivore", name: "Omnivore" },
+    { value: "anything", name: "Anything" },
     { value: "gluten-free", name: "Gluten Free" },
-    { value: "vegan", name: "Vegan" },
-    { value: "vegeterian", name: "Vegeterian" },
+    { value: "vegetarian", name: "Vegetarian" },
+    { value: "flexitarian", name: "Flexitarian" },
+    { value: "ketogenic", name: "Ketogenic" },
+    { value: "mediterranean", name: "Mediterranean" },
+    { value: "low-carb", name: "Low Carb" },
   ];
+
+  // Que pueda seleccionar varios a la vez (podrian ser botones)
   return (
     <section className="flex w-full flex-col items-center justify-center">
-      <span>Food preferences</span>
+      <span className="text-3xl font-bold">Nutrition preferences</span>
       <form action="" className="w-full max-w-[30rem]">
         <select
           name=""
