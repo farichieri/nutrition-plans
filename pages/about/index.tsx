@@ -72,7 +72,9 @@ export default function Page() {
                   />
                 </span>
                 <div className="flex h-full flex-col justify-between gap-2 py-2">
-                  <h1 className="text-xl font-semibold">{person.name}</h1>
+                  <h1 className="text-xl font-semibold capitalize">
+                    {person.name}
+                  </h1>
                   <span className="text-sm opacity-70">{person.charge}</span>
                 </div>
               </Link>

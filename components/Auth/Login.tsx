@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import GoogleLoginButton from "../Buttons/GoogleLogin";
 import Link from "next/link";
 import SubmitButton from "../Buttons/SubmitButton";
+import { AUTH_ERRORS } from "@/firebase/errors";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -45,8 +46,8 @@ const Login = () => {
       .then(() => dispatch(setIsCreatingUser(false)))
       .catch((error) => {
         dispatch(setIsCreatingUser(false));
-        alert(error.message);
-        console.log({ error });
+        const errorCode = error.code;
+        setErrorMessage(AUTH_ERRORS[errorCode]);
       });
   };
 
@@ -65,7 +66,8 @@ const Login = () => {
         user && router.push(redirectRoute);
       })
       .catch((error) => {
-        setErrorMessage(error.message);
+        const errorCode = error.code;
+        setErrorMessage(AUTH_ERRORS[errorCode]);
       });
     setIsLoadingForm(false);
     setIsDisabled(false);
@@ -98,50 +100,52 @@ const Login = () => {
         </span>
         <div className="h-px flex-grow bg-gray-400"></div>
       </div>
-      <form
-        className="relative flex flex-col items-center gap-6 rounded-3xl border p-4 shadow-lg dark:border-cyan-300/10 dark:shadow-cyan-300/20"
-        onSubmit={handleSubmit}
-      >
-        <div className="flex w-full flex-col gap-2">
-          <input
-            onChange={handleChange}
-            name="email"
-            value={input.email}
-            placeholder="Email address"
-            type="email"
-            required
-            className="border-b border-gray-300 bg-transparent px-4 py-1 outline-none focus:bg-[var(--box-shadow)]"
+      <div className="flex w-full flex-col gap-2">
+        <form
+          className="relative flex flex-col items-center gap-6 rounded-3xl border p-4 shadow-lg dark:border-cyan-300/10 dark:shadow-cyan-300/20"
+          onSubmit={handleSubmit}
+        >
+          <div className="flex w-full flex-col gap-2">
+            <input
+              onChange={handleChange}
+              name="email"
+              value={input.email}
+              placeholder="Email address"
+              type="email"
+              required
+              className="border-b border-gray-300 bg-transparent px-4 py-1 outline-none focus:bg-[var(--box-shadow)]"
+            />
+            <input
+              onChange={handleChange}
+              name="password"
+              value={input.password}
+              placeholder="Password"
+              type="password"
+              required
+              className="border-b border-gray-300 bg-transparent px-4 py-1 outline-none focus:bg-[var(--box-shadow)]"
+            />
+          </div>
+          <SubmitButton
+            className={""}
+            onClick={handleSubmit}
+            loadMessage={"Logging in..."}
+            content="Log in"
+            isLoading={isLoadingForm}
+            isDisabled={isDisabled}
           />
-          <input
-            onChange={handleChange}
-            name="password"
-            value={input.password}
-            placeholder="Password"
-            type="password"
-            required
-            className="border-b border-gray-300 bg-transparent px-4 py-1 outline-none focus:bg-[var(--box-shadow)]"
-          />
-        </div>
-        <SubmitButton
-          className={""}
-          onClick={handleSubmit}
-          loadMessage={"Logging in..."}
-          content="Log in"
-          isLoading={isLoadingForm}
-          isDisabled={isDisabled}
-        />
+        </form>
         {errorMessage && (
-          <span className="absolute -bottom-8 w-full text-center text-red-500">
+          <span className="w-full text-center text-red-500">
             {errorMessage}
           </span>
         )}
-      </form>
-      <span className="text-xs opacity-50 sm:text-sm">
-        Don&apos;t have an account?{" "}
-        <Link href="/signup" className="text-blue-400 hover:underline">
-          Sign up here
-        </Link>
-      </span>
+        <span className="text-xs opacity-50 sm:text-sm">
+          Don&apos;t have an account?{" "}
+          <Link href="/signup" className="text-blue-400 hover:underline">
+            Sign up here
+          </Link>
+        </span>
+      </div>
     </div>
   );
 };

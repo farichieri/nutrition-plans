@@ -230,7 +230,7 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
                 calculatorType === CALCULATOR_TYPES.metric
                   ? "right-[50%]"
                   : "right-0"
-              } absolute h-full w-[50%] rounded-3xl bg-green-500 transition-all duration-300`}
+              } absolute h-full w-[50%] select-none rounded-3xl bg-green-500 transition-all duration-300`}
             ></div>
             {Object.keys(CALCULATOR_TYPES).map((type) => (
               <button
@@ -270,13 +270,14 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
           </div>
           {isMetricUnits ? (
             <>
-              <div className="flex items-center justify-between gap-1">
+              <div className="relative flex items-center justify-between gap-1">
                 <label
                   className="basis-1/5 font-semibold"
                   htmlFor="centimeters"
                 >
                   Height
                 </label>
+                <span className="absolute right-2 select-none">cm</span>
                 <input
                   type="text"
                   name="centimeters"
@@ -287,10 +288,11 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
                   className="flex w-full basis-4/5"
                 />
               </div>
-              <div className="flex items-center justify-between gap-1">
+              <div className="relative flex items-center justify-between gap-1">
                 <label className="basis-1/5 font-semibold" htmlFor="kilograms">
                   Weight
                 </label>
+                <span className="absolute right-2 select-none">kg</span>
                 <input
                   type="text"
                   name="kilograms"
@@ -308,29 +310,36 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
                   Height
                 </label>
                 <div className="flex basis-4/5 items-center gap-1">
-                  <input
-                    type="text"
-                    name="feet"
-                    id="feet"
-                    placeholder="Feet"
-                    onChange={handleChange}
-                    value={input.feet}
-                    className="flex w-full"
-                  />
-                  <input
-                    type="text"
-                    name="inches"
-                    placeholder="Inches"
-                    onChange={handleChange}
-                    value={input.inches}
-                    className="flex w-full"
-                  />
+                  <div className="relative flex w-full items-center">
+                    <span className="absolute right-2 select-none">ft</span>
+                    <input
+                      type="text"
+                      name="feet"
+                      id="feet"
+                      placeholder="Feet"
+                      onChange={handleChange}
+                      value={input.feet}
+                      className="flex w-full"
+                    />
+                  </div>
+                  <div className="relative flex w-full items-center ">
+                    <span className="absolute right-2 select-none">in</span>
+                    <input
+                      type="text"
+                      name="inches"
+                      placeholder="Inches"
+                      onChange={handleChange}
+                      value={input.inches}
+                      className="flex w-full"
+                    />
+                  </div>
                 </div>
               </div>
-              <div className="flex items-center justify-between gap-1">
+              <div className="relative flex items-center justify-between gap-1">
                 <label htmlFor="pounds" className="basis-1/5 font-semibold">
                   Weight
                 </label>
+                <span className="absolute right-2 select-none">kg</span>
                 <input
                   type="text"
                   name="pounds"
@@ -343,10 +352,11 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
               </div>
             </>
           )}
-          <div className="flex items-center justify-between gap-1">
+          <div className="relative flex items-center justify-between gap-1">
             <label className="basis-1/5 font-semibold" htmlFor="age">
               Age
             </label>
+            <span className="absolute right-2 select-none">years</span>
             <input
               type="text"
               name="age"
