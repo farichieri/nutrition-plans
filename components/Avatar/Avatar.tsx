@@ -96,6 +96,8 @@ const Avatar: FC<Props> = ({ width, height, changeable }) => {
           cursor: pointer;
           width: 100%;
           height: 100%;
+          max-height: ${height}px;
+          max-width: ${width}px;
           font-size: 0;
           position: absolute;
           background: #00000080;

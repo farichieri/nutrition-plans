@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import BodyFeatures from "@/components/Premium/Calculator/BodyFeatures";
 import FoodPreferences from "@/components/Premium/Calculator/FoodPreferences";
 import NewUserSteps from "@/components/Premium/Create/NewUserSteps";
+import Results from "@/components/Premium/Calculator/Results";
 
 export default function Page() {
   const { user } = useSelector(selectAuthSlice);
@@ -14,11 +15,15 @@ export default function Page() {
     if (!user) {
       router.push("/signup");
     }
+    if (user?.is_profile_completed) {
+      router.push("/app");
+    }
   }, [user]);
 
   const STEPS = [
     { step: 1, name: "Body Features" },
     { step: 2, name: "Food Preferences" },
+    { step: 3, name: "Finish" },
   ];
   const [stepSelected, setStepSelected] = useState(1);
 
@@ -35,8 +40,6 @@ export default function Page() {
     }
   };
 
-  console.log({ stepSelected });
-
   return (
     <section className="min-w-screen flex min-h-screen w-full flex-col items-center gap-10 px-4 py-14">
       <span className="text-2xl font-bold">Nutrition Plans</span>
@@ -52,7 +55,7 @@ export default function Page() {
               <span className="text-3xl font-semibold">Body features</span>
               <BodyFeatures handleSubmit={handleContinue} />
             </div>
-          ) : STEPS[1].step ? (
+          ) : stepSelected === STEPS[1].step ? (
             <div className="flex w-full flex-col items-center gap-10">
               <button
                 className="mr-auto rounded-3xl bg-green-500 px-2 py-1 text-white shadow hover:bg-green-600"
@@ -65,7 +68,18 @@ export default function Page() {
               </span>
               <FoodPreferences handleSubmit={handleContinue} />
             </div>
-          ) : null}
+          ) : (
+            <div className="flex w-full flex-col items-center gap-10">
+              <button
+                className="mr-auto rounded-3xl bg-green-500 px-2 py-1 text-white shadow hover:bg-green-600"
+                onClick={handleBack}
+              >
+                Back
+              </button>
+              <span className="text-3xl font-semibold">Finish</span>
+              <Results handleSubmit={handleContinue} />
+            </div>
+          )}
         </div>
       </div>
     </section>

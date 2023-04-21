@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { FOOD_PREFERENCES } from "@/utils/formContents";
 import { selectAuthSlice, setUpdateUser } from "@/store/slices/authSlice";
 import { updateUser } from "@/firebase/helpers/Auth";
@@ -19,10 +19,8 @@ const FoodPreferences: FC<Props> = ({ handleSubmit }) => {
     user?.food_preferences || []
   );
   const [isLoading, setIsLoading] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
   const isCreatingRoute = router.asPath === "/app/create";
-
-  console.log(selecteds);
 
   const handleSelect = (event: React.MouseEvent) => {
     event.preventDefault();
@@ -48,13 +46,22 @@ const FoodPreferences: FC<Props> = ({ handleSubmit }) => {
       dispatch(setUpdateUser(userUpdated));
       handleSubmit();
     }
+    setIsLoading(false);
   };
+
+  useEffect(() => {
+    if (JSON.stringify(selecteds) !== JSON.stringify(user?.food_preferences)) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [selecteds]);
 
   // Que pueda seleccionar varios a la vez (podrian ser botones)
   return (
     <section className="flex w-full flex-col items-center justify-center">
       {/* <span className="text-3xl font-bold">Nutrition preferences</span> */}
-      <form action="" className="flex w-full max-w-[30rem] flex-col gap-10">
+      <form action="" className="flex w-full max-w-[30rem] flex-col gap-5">
         <div className="flex w-full flex-col flex-wrap gap-2">
           {FOOD_PREFERENCES.map((opt) => (
             <button

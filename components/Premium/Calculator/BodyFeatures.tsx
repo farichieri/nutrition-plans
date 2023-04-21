@@ -102,6 +102,32 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
     }
   }, [input.pounds, input.feet, input.inches]);
 
+  useEffect(() => {
+    const userValues = {
+      gender: user?.gender,
+      centimeters: user?.height_in_cm,
+      kilograms: user?.weight_in_kg,
+      age: user?.age,
+      activity: user?.activity,
+      goal: user?.goal,
+    };
+    const formValues = {
+      gender: input.gender,
+      centimeters: Number(input.centimeters),
+      kilograms: Number(input.kilograms),
+      age: input.age,
+      activity: input.activity,
+      goal: input.goal,
+    };
+    console.log({ userValues });
+    console.log({ formValues });
+    if (JSON.stringify(userValues) !== JSON.stringify(formValues)) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [input]);
+
   const isFormIncomplete =
     !input.age ||
     !input.centimeters ||
@@ -221,7 +247,7 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
       <form
         action=""
         onSubmit={onSubmit}
-        className="flex w-full max-w-[30rem] flex-col gap-10"
+        className="flex w-full max-w-[30rem] flex-col gap-5"
       >
         <div className="flex flex-col gap-3">
           <div className="flex w-full max-w-[30rem] flex-wrap">
@@ -359,22 +385,12 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
           loadMessage={"Loading..."}
           content={`${isCreatingRoute ? "Continue" : "Save"}`}
           isLoading={isLoading}
-          isDisabled={isFormIncomplete}
+          isDisabled={isFormIncomplete || isDisabled}
         />
         {error && (
           <span className="text-center font-medium text-red-400">{error}</span>
         )}
       </form>
-      {/* <div className="flex gap-2">
-        <span>BMI</span>
-        <span>{BMI && BMI}</span>
-      </div> */}
-      {/* <div className="m-2 flex w-full max-w-[30rem] justify-center rounded-md border text-lg">
-        <span>
-          Calories recommended:
-          <span className="text-green-500"> {result > 0 ? result : "-"}</span>
-        </span>
-      </div> */}
       <style jsx>
         {`
           input,

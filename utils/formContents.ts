@@ -30,9 +30,9 @@ const GENDER_OPTIONS = [
   { value: "female", name: "Female" },
 ];
 const GOAL_OPTIONS = [
-  { value: "lose-weight", name: "Lose weight" },
-  { value: "maintain", name: "Maintain" },
-  { value: "Build-muscle", name: "Build Muscle" },
+  { value: "Lose Weight", name: "Lose weight" },
+  { value: "Maintain", name: "Maintain" },
+  { value: "Build Muscle", name: "Build Muscle" },
 ];
 
 const FOOD_PREFERENCES = [
