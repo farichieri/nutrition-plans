@@ -30,29 +30,52 @@ export interface PlanType {
 export interface PlansType extends Array<PlanType> {}
 
 export interface UserAccount {
+  body_data: UserBodyData;
+  created_at: string | undefined;
+  display_name: string;
+  email_address: string | null;
+  first_data: UserCreatedData;
+  food_data: UserFoodData;
+  is_premium: boolean;
+  is_profile_completed: boolean;
+  lang: string;
+  photo_url: string | null;
+  plan_selected: string | null;
+  premium_plan: string | null;
+  progress: UserProgress;
+  user_id: string;
+  weight_goal_in_kg: number | null;
+}
+
+export interface UserCreatedData {
+  body_data: UserBodyData;
+  food_data: UserFoodData;
+}
+
+export interface UserBodyData {
   activity: number | null;
   age: number | null;
   BMI: number | null;
   BMR: number | null;
-  created_at: string | undefined;
-  display_name: string;
-  email_address: string | null;
-  food_preferences: string[];
   gender: string | null;
   goal: string | null;
   height_in_cm: number | null;
-  is_premium: boolean;
-  is_profile_completed: boolean;
   kcals_recommended: number | null;
-  lang: string;
   measurement_unit: string | null;
-  photo_url: string | null;
-  plan_selected: string | null;
-  premium_plan: string | null;
-  user_id: string;
-  weight_goal_in_kg: number | null;
   weight_in_kg: number | null;
 }
+
+export interface UserFoodData {
+  food_preferences: string[];
+}
+
+export interface ProgressItem {
+  created_at: string;
+  date: string;
+  weight: number;
+}
+
+export interface UserProgress extends Array<ProgressItem> {}
 
 export interface PremiumPlan {
   id: string;

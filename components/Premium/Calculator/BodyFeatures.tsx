@@ -7,6 +7,7 @@ import {
   GENDER_OPTIONS,
   GOAL_OPTIONS,
 } from "@/utils/formContents";
+import { newBodyData } from "@/utils/initialTypes";
 import { useRouter } from "next/router";
 import { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,9 +19,10 @@ interface Props {
 const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
+  const body_data = user?.body_data || newBodyData;
+
   const router = useRouter();
   const isCreatingRoute = router.asPath === "/app/create";
-
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const [error, setError] = useState("");
@@ -37,15 +39,15 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
   const isMetricUnits = calculatorType === CALCULATOR_TYPES.metric;
 
   const [input, setInput] = useState({
-    gender: user?.gender,
-    centimeters: user?.height_in_cm || "",
+    gender: body_data.gender,
+    centimeters: body_data.height_in_cm || "",
     feet: "",
     inches: "",
-    kilograms: user?.weight_in_kg || "",
+    kilograms: body_data.weight_in_kg || "",
     pounds: "",
-    age: user?.age || "",
-    activity: user?.activity || "",
-    goal: user?.goal || "",
+    age: body_data.age || "",
+    activity: body_data.activity || "",
+    goal: body_data.goal || "",
   });
 
   const handleChange = (
@@ -104,12 +106,12 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
 
   useEffect(() => {
     const userValues = {
-      gender: user?.gender,
-      centimeters: user?.height_in_cm,
-      kilograms: user?.weight_in_kg,
-      age: user?.age,
-      activity: user?.activity,
-      goal: user?.goal,
+      gender: body_data.gender,
+      centimeters: body_data.height_in_cm,
+      kilograms: body_data.weight_in_kg,
+      age: body_data.age,
+      activity: body_data.activity,
+      goal: body_data.goal,
     };
     const formValues = {
       gender: input.gender,
@@ -178,16 +180,20 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
       setIsLoading(true);
       const userUpdated: UserAccount = {
         ...user,
-        activity: Number(input.activity),
-        age: Number(input.age),
-        gender: String(input.gender),
-        goal: String(input.goal),
-        height_in_cm: Number(input.centimeters),
-        weight_in_kg: Number(input.kilograms),
-        kcals_recommended: kcals_recommended,
-        BMI: BMI,
-        BMR: BMR,
+        body_data: {
+          activity: Number(input.activity),
+          age: Number(input.age),
+          BMI: BMI,
+          BMR: BMR,
+          gender: String(input.gender),
+          goal: String(input.goal),
+          height_in_cm: Number(input.centimeters),
+          kcals_recommended: kcals_recommended,
+          measurement_unit: calculatorType,
+          weight_in_kg: Number(input.kilograms),
+        },
       };
+      console.log({ userUpdated });
       const res = await updateUser(userUpdated);
       console.log({ res });
       if (!res?.error) {
@@ -202,7 +208,7 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
 
   return (
     <div className="flex w-full flex-col items-center justify-center gap-3 text-xs s:text-sm sm:text-base">
-      {/* <span className="text-3xl font-bold">Body features</span> */}
+      <span className="text-3xl font-semibold">Body features</span>
       <div className="flex w-full max-w-[30rem] flex-wrap">
         <label className="basis-1/5 font-semibold">Goal</label>
         <div className="mx-auto flex w-full basis-4/5 items-center justify-center gap-2">

@@ -1,5 +1,6 @@
 import { FC, useState } from "react";
 import { FOOD_PREFERENCES } from "@/utils/formContents";
+import { newBodyData } from "@/utils/initialTypes";
 import { selectAuthSlice, setUpdateUser } from "@/store/slices/authSlice";
 import { updateUser } from "@/firebase/helpers/Auth";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +16,7 @@ const Results: FC<Props> = ({ handleSubmit }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { user } = useSelector(selectAuthSlice);
+  const body_data = user?.body_data || newBodyData;
 
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -28,6 +30,10 @@ const Results: FC<Props> = ({ handleSubmit }) => {
     setIsLoading(true);
     const userUpdated: UserAccount = {
       ...user,
+      first_data: {
+        body_data: user.body_data,
+        food_data: user.food_data,
+      },
       is_profile_completed: true,
     };
     const res = await updateUser(userUpdated);
@@ -57,24 +63,26 @@ const Results: FC<Props> = ({ handleSubmit }) => {
           <div>
             <span>
               In order to accomplish your goal of{" "}
-              <span className="text-green-500">{user?.goal}</span> we have
+              <span className="text-green-500">{body_data.goal}</span> we have
               calculated the next daily calories for your nutrition plan:{" "}
             </span>
-            <span className="text-green-500">{user?.kcals_recommended}</span>
+            <span className="text-green-500">
+              {body_data.kcals_recommended}
+            </span>
           </div>
           <div>
             <span>Your BMR (Basal Metabolic Rate) is: </span>
-            <span className="text-green-500">{user?.BMR}</span>
+            <span className="text-green-500">{body_data.BMR}</span>
           </div>
           <div className="flex flex-col">
             <div>
               <span>Your BMI (Body Mass Index) is: </span>
-              <span className="text-green-500">{user?.BMI}</span>
+              <span className="text-green-500">{body_data.BMI}</span>
             </div>
             <div>
-              <span>A BMI of {user?.BMI} is stipulated to be: </span>
+              <span>A BMI of {body_data.BMI} is stipulated to be: </span>
               <span className="text-green-500">
-                {BMISignificance(Number(user?.BMI))}
+                {BMISignificance(Number(body_data.BMI))}
               </span>
             </div>
           </div>

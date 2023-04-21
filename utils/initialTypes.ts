@@ -1,26 +1,39 @@
-import { MeasurementUnits, UserAccount } from "@/types/types";
+import { UserAccount, UserBodyData, UserFoodData } from "@/types/types";
 
-export const newAccount: UserAccount = {
+export const newBodyData: UserBodyData = {
   activity: null,
   age: null,
   BMI: null,
   BMR: null,
-  created_at: "",
-  display_name: "",
-  email_address: "",
-  food_preferences: [],
   gender: null,
   goal: null,
   height_in_cm: null,
+  kcals_recommended: null,
+  measurement_unit: null,
+  weight_in_kg: null,
+};
+
+export const newFoodData: UserFoodData = {
+  food_preferences: [],
+};
+
+export const newAccount: UserAccount = {
+  body_data: newBodyData,
+  created_at: "",
+  display_name: "",
+  email_address: "",
+  food_data: newFoodData,
   is_premium: false,
   is_profile_completed: false,
-  kcals_recommended: null,
   lang: "",
-  measurement_unit: null,
   photo_url: "",
   plan_selected: null,
   premium_plan: null,
   user_id: "",
   weight_goal_in_kg: null,
-  weight_in_kg: null,
+  progress: [],
+  first_data: {
+    body_data: newBodyData,
+    food_data: newFoodData,
+  },
 };

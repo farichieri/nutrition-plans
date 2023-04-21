@@ -52,7 +52,7 @@ export default function Page() {
         <div className="w-full max-w-lg rounded-3xl px-4 py-10 shadow-[0_3px_10px] shadow-slate-500/50">
           {stepSelected === STEPS[0].step ? (
             <div className="flex w-full flex-col items-center gap-10">
-              <span className="text-3xl font-semibold">Body features</span>
+              {/* <span className="text-3xl font-semibold">Body features</span> */}
               <BodyFeatures handleSubmit={handleContinue} />
             </div>
           ) : stepSelected === STEPS[1].step ? (
@@ -63,9 +63,9 @@ export default function Page() {
               >
                 Back
               </button>
-              <span className="text-3xl font-semibold">
+              {/* <span className="text-3xl font-semibold">
                 My Food preferences
-              </span>
+              </span> */}
               <FoodPreferences handleSubmit={handleContinue} />
             </div>
           ) : (

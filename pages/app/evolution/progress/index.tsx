@@ -1,7 +1,12 @@
+import Graphic from "@/components/Graphic/Graphic";
 import PremiumLayout from "@/components/Layout/PremiumLayout";
 import EvolutionNav from "@/components/Premium/EvolutionNav/EvolutionNav";
+import { selectAuthSlice } from "@/store/slices/authSlice";
+import { useSelector } from "react-redux";
 
 export default function Page() {
+  const { user } = useSelector(selectAuthSlice);
+
   return (
     <PremiumLayout>
       <EvolutionNav />
@@ -12,6 +17,7 @@ export default function Page() {
           Y al momento de agregar por 1era vez, automaticamente se guarda aca su
           primera vez
         </span>
+        <Graphic />
       </section>
     </PremiumLayout>
   );

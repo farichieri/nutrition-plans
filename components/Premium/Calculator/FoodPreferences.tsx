@@ -15,9 +15,10 @@ const FoodPreferences: FC<Props> = ({ handleSubmit }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { user } = useSelector(selectAuthSlice);
-  const [selecteds, setSelecteds] = useState<string[]>(
-    user?.food_preferences || []
-  );
+  const food_preferences = user?.food_data.food_preferences;
+  const [selecteds, setSelecteds] = useState<string[]>(food_preferences || []);
+  console.log({ food_preferences });
+  console.log({ selecteds });
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
   const isCreatingRoute = router.asPath === "/app/create";
@@ -39,7 +40,9 @@ const FoodPreferences: FC<Props> = ({ handleSubmit }) => {
     setIsLoading(true);
     const userUpdated: UserAccount = {
       ...user,
-      food_preferences: selecteds,
+      food_data: {
+        food_preferences: selecteds,
+      },
     };
     const res = await updateUser(userUpdated);
     if (!res?.error) {
@@ -50,17 +53,17 @@ const FoodPreferences: FC<Props> = ({ handleSubmit }) => {
   };
 
   useEffect(() => {
-    if (JSON.stringify(selecteds) !== JSON.stringify(user?.food_preferences)) {
+    if (JSON.stringify(selecteds) !== JSON.stringify(food_preferences)) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
     }
-  }, [selecteds]);
+  }, [selecteds, food_preferences]);
 
   // Que pueda seleccionar varios a la vez (podrian ser botones)
   return (
-    <section className="flex w-full flex-col items-center justify-center">
-      {/* <span className="text-3xl font-bold">Nutrition preferences</span> */}
+    <section className="flex w-full flex-col items-center justify-center gap-5">
+      <span className="text-3xl font-semibold">My food preferences</span>
       <form action="" className="flex w-full max-w-[30rem] flex-col gap-5">
         <div className="flex w-full flex-col flex-wrap gap-2">
           {FOOD_PREFERENCES.map((opt) => (
