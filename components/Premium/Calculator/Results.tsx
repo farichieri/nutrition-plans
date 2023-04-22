@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { UserAccount } from "@/types/types";
 import { useRouter } from "next/router";
 import SubmitButton from "@/components/Buttons/SubmitButton";
+import { formatISO } from "date-fns";
 
 interface Props {
   handleSubmit: Function;
@@ -24,7 +25,7 @@ const Results: FC<Props> = ({ handleSubmit }) => {
 
   console.log({ user });
 
-  const onSubmit = async (event: React.FormEvent) => {
+  const handleCreateUser = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!user) return;
     setIsLoading(true);
@@ -89,7 +90,7 @@ const Results: FC<Props> = ({ handleSubmit }) => {
         </div>
         <SubmitButton
           className={"m-auto w-fit"}
-          onClick={onSubmit}
+          onClick={handleCreateUser}
           loadMessage={"Loading..."}
           content={`${isCreatingRoute ? "Start my plan" : "Save"}`}
           isLoading={isLoading}

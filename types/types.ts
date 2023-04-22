@@ -72,7 +72,7 @@ export interface UserFoodData {
 export interface ProgressItem {
   created_at: string;
   date: string;
-  weight: number;
+  weight: number | null;
 }
 
 export interface UserProgress extends Array<ProgressItem> {}

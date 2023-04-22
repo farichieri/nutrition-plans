@@ -1,5 +1,5 @@
 import { selectAuthSlice } from "@/store/slices/authSlice";
-import { addMonths, format, formatISO, parse, parseISO } from "date-fns";
+import { addMonths, format, formatISO, parse } from "date-fns";
 import React, { FC } from "react";
 import { useSelector } from "react-redux";
 import {
@@ -11,9 +11,6 @@ import {
   Tooltip,
   ResponsiveContainer,
   Line,
-  Cross,
-  Customized,
-  Dot,
   ReferenceLine,
 } from "recharts";
 
@@ -21,90 +18,50 @@ interface Props {}
 
 const Graphic: FC<Props> = () => {
   const { user } = useSelector(selectAuthSlice);
+  const progress = user?.progress;
+  const startDate =
+    user?.created_at && format(new Date(user.created_at), "MM-dd-yyyy");
+  const startDateF = startDate && format(new Date(startDate), "MM-yyyy");
 
-  console.log({ user });
+  const createData = () => {
+    if (!user || !startDate || !progress) return;
+    const { body_data } = user.first_data;
+    const userStartWeight = body_data.weight_in_kg;
+    const data = [
+      {
+        date: startDateF,
+        weight: userStartWeight,
+      },
+    ];
+    let date = new Date(startDate);
+    for (let i = 0; i <= 12; i++) {
+      let newDdate = format(addMonths(date, 1), "MM-dd-yyyy");
+      data.push({
+        date: format(new Date(newDdate), "MM-yyyy"),
+        weight: null,
+      });
+      date = new Date(newDdate);
+    }
+    progress.map((p) => {
+      const finded = data.find((d) => d.date === p.date);
+      if (finded) {
+        finded.weight = p.weight;
+      } else {
+        data.push({
+          date: p.date,
+          weight: p.weight,
+        });
+      }
+    });
+    return data.sort((a, b) => {
+      const first = formatISO(parse(String(a.date), "MM-yyyy", new Date()));
+      const second = formatISO(parse(String(b.date), "MM-yyyy", new Date()));
+      return first.localeCompare(second);
+    });
+  };
 
-  // const createData = () => {
-  //   if (!user) return;
-  //   const userStartWeight = user.weight_in_kg;
-  //   const startDate = format(new Date(user.created_at), "MM-dd-yyyy");
-  //   const data = [
-  //     {
-  //       date: startDate,
-  //       weight: userStartWeight,
-  //     },
-  //   ];
-  //   let date = new Date(startDate);
-  //   let weight = userStartWeight;
-  //   for (let i = 0; i <= 12; i++) {
-  //     let newDdate = format(addMonths(date, 1), "MM-dd-yyyy");
-  //     let newWeight = weight + 1;
-  //     data.push({
-  //       date: newDdate,
-  //       weight: newWeight,
-  //     });
-  //     date = new Date(newDdate);
-  //     weight = newWeight;
-  //   }
-  //   return data;
-  // };
-
-  // console.log(createData());
-
-  const data = [
-    {
-      name: "04/2022",
-      uv: 80,
-    },
-    {
-      name: "05",
-      uv: 79,
-    },
-    {
-      name: "06",
-      uv: 78,
-    },
-    {
-      name: "07",
-      uv: 77,
-    },
-    {
-      name: "08",
-      uv: 76,
-    },
-    {
-      name: "09",
-      uv: 75,
-    },
-    {
-      name: "10",
-      uv: 74,
-    },
-    {
-      name: "11",
-      uv: null,
-    },
-    {
-      name: "12",
-      uv: 70,
-    },
-    {
-      name: "01/2024",
-      uv: null,
-    },
-    {
-      name: "02",
-      uv: null,
-    },
-    {
-      name: "03",
-      uv: null,
-    },
-    {
-      name: "04",
-      uv: null,
-    },
-  ];
+  const data = createData();
+  console.log({ data });
 
   // const CustomizedCross = (props) => {
   //   const { width, height, stroke, fill, formattedGraphicalItems } = props;
@@ -146,6 +103,14 @@ const Graphic: FC<Props> = () => {
     );
   };
 
+  const formatXAxis = (value: any) => {
+    if (value === startDateF || value.slice(0, 2) === "01") {
+      return value;
+    } else {
+      return value.slice(0, 2);
+    }
+  };
+
   return (
     <div className="flex h-96 w-full max-w-5xl overflow-hidden">
       <ResponsiveContainer width="100%" height="100%">
@@ -157,17 +122,19 @@ const Graphic: FC<Props> = () => {
             top: 10,
             right: 10,
             left: 10,
-            bottom: 10,
+            bottom: 15,
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
-            dataKey="name"
-            label={{ value: "Date", position: "insideBottom", offset: -5 }}
+            dataKey="date"
+            label={{ value: "Date", position: "insideBottom", offset: -10 }}
+            tickFormatter={formatXAxis}
+            tickSize={12}
           />
           <YAxis
             unit="kg"
-            domain={[50, "auto"]}
+            domain={[50, 100]}
             label={{
               value: "Weight",
               angle: -90,
@@ -179,7 +146,7 @@ const Graphic: FC<Props> = () => {
           <Tooltip />
           <Area
             type="monotone"
-            dataKey="uv"
+            dataKey="weight"
             stroke="#44a10569"
             fill="#61eb0569"
           />
