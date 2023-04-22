@@ -1,4 +1,9 @@
-import { UserAccount, UserBodyData, UserFoodData } from "@/types/types";
+import {
+  Progress,
+  UserAccount,
+  UserBodyData,
+  UserFoodData,
+} from "@/types/types";
 
 export const newBodyData: UserBodyData = {
   activity: null,
@@ -31,9 +36,10 @@ export const newAccount: UserAccount = {
   premium_plan: null,
   user_id: "",
   weight_goal_in_kg: null,
-  progress: [],
   first_data: {
     body_data: newBodyData,
     food_data: newFoodData,
   },
 };
+
+export const newProgress: Progress = {};

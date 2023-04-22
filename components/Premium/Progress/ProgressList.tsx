@@ -1,37 +1,51 @@
 import { FC } from "react";
-import { format, formatISO, parse } from "date-fns";
+import { format } from "date-fns";
 import { selectAuthSlice } from "@/store/slices/authSlice";
+import {
+  selectProgressSlice,
+  setProgressOpen,
+} from "@/store/slices/progressSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { PencilIcon } from "@heroicons/react/24/outline";
+import { ProgressItem } from "@/types/types";
+import ProgressItemModal from "./ProgressItemModal";
 
 interface Props {}
 const ProgressList: FC<Props> = () => {
-  const { user } = useSelector(selectAuthSlice);
-  const firstBodyData = user?.first_data.body_data;
   const dispatch = useDispatch();
-  const progress = user?.progress;
-  const progressSorted =
-    progress &&
-    [...progress]?.sort((a, b) => {
-      const first = formatISO(parse(String(a.date), "MM-yyyy", new Date()));
-      const second = formatISO(parse(String(b.date), "MM-yyyy", new Date()));
-      return first.localeCompare(second);
-    });
+  const { user } = useSelector(selectAuthSlice);
+  const { progress, progressOpen } = useSelector(selectProgressSlice);
+  const firstBodyData = user?.first_data.body_data;
+
   const createdData =
     user?.created_at && format(new Date(user?.created_at), "MM-yyyy");
 
+  const handleOpen = (progress: ProgressItem) => {
+    dispatch(setProgressOpen(progress));
+  };
+
   return (
     <div className="flex w-full max-w-4xl flex-col items-center justify-center gap-1">
-      <div className="flex w-full justify-between gap-2 rounded-sm bg-gray-300/80 px-2 py-0.5">
-        <span>{createdData}</span>
-        <span>{firstBodyData?.weight_in_kg}</span>
+      {progressOpen && <ProgressItemModal progressItem={progressOpen} />}
+      <div className="flex w-full justify-between rounded-sm border border-slate-300 px-2 py-1">
+        <span>Date</span>
+        <span>Weight</span>
+        <span></span>
       </div>
-      {progressSorted?.map((p) => (
+      {Object.keys(progress).map((p) => (
         <div
           className="flex w-full justify-between gap-2 rounded-sm bg-gray-300/50 px-2 py-0.5"
-          key={p.date}
+          key={progress[p].date}
+          onClick={() => handleOpen(progress[p])}
         >
-          <span>{p.date}</span>
-          <span>{p.weight}</span>
+          <span>{progress[p].date}</span>
+          <span>{progress[p].weight}</span>
+          <span>
+            <PencilIcon
+              className="h-4 w-4"
+              onClick={() => handleOpen(progress[p])}
+            />
+          </span>
         </div>
       ))}
     </div>

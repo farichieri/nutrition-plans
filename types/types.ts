@@ -2,12 +2,11 @@ export enum Theme {
   dark = "dark",
   light = "light",
 }
-
-export enum MeasurementUnits {
-  metric = "metric",
-  imperial = "imperial",
+export enum ButtonAction {
+  save = "save",
+  delete = "delete",
 }
-
+// Posts
 export interface Post {
   author: string;
   authorName: string;
@@ -18,17 +17,15 @@ export interface Post {
   title: string;
   topic: string;
 }
-
 export interface Posts extends Array<Post> {}
-
 export interface PlanType {
   contentHtml: string;
   id: string;
   title: string;
 }
-
 export interface PlansType extends Array<PlanType> {}
 
+// User
 export interface UserAccount {
   body_data: UserBodyData;
   created_at: string | undefined;
@@ -42,16 +39,13 @@ export interface UserAccount {
   photo_url: string | null;
   plan_selected: string | null;
   premium_plan: string | null;
-  progress: UserProgress;
   user_id: string;
   weight_goal_in_kg: number | null;
 }
-
 export interface UserCreatedData {
   body_data: UserBodyData;
   food_data: UserFoodData;
 }
-
 export interface UserBodyData {
   activity: number | null;
   age: number | null;
@@ -64,24 +58,24 @@ export interface UserBodyData {
   measurement_unit: string | null;
   weight_in_kg: number | null;
 }
-
 export interface UserFoodData {
   food_preferences: string[];
 }
-
+// User Progress
 export interface ProgressItem {
   created_at: string;
   date: string;
   weight: number | null;
 }
+export interface Progress {
+  [date: string]: ProgressItem;
+}
 
-export interface UserProgress extends Array<ProgressItem> {}
-
+// Plan
 export interface PremiumPlan {
   id: string;
   title: string;
 }
-
 export interface SubscriptionPlan {
   buttonContent: string;
   checklist: string[];

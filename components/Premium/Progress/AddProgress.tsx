@@ -1,15 +1,22 @@
+import { addProgress } from "@/firebase/helpers/Progress";
 import { FC, useState } from "react";
 import { format, formatISO, parse } from "date-fns";
-import { selectAuthSlice, setUpdateUser } from "@/store/slices/authSlice";
-import { updateUser } from "@/firebase/helpers/Auth";
+import { selectAuthSlice } from "@/store/slices/authSlice";
+import {
+  selectProgressSlice,
+  setAddProgress,
+} from "@/store/slices/progressSlice";
 import { useDispatch, useSelector } from "react-redux";
+import ActionButton from "@/components/Buttons/ActionButton";
+import { ButtonAction } from "@/types/types";
 
 interface Props {}
 
 const AddProgress: FC<Props> = () => {
   const { user } = useSelector(selectAuthSlice);
+  const { progress } = useSelector(selectProgressSlice);
+  const [isAdding, setIsAdding] = useState(false);
   const dispatch = useDispatch();
-  const progress = user?.progress;
 
   const [input, setInput] = useState({
     date: "",
@@ -34,19 +41,17 @@ const AddProgress: FC<Props> = () => {
       weight: Number(input.weight),
       created_at: formatISO(new Date()),
     };
-    if (progress?.find((p) => p.date === date)) {
+    if (progress[date]) {
       alert("Progress already exists");
       return;
     } else {
-      const userUpdated = {
-        ...user,
-        progress: [...user.progress, newProgress],
-      };
-      const res = await updateUser(userUpdated);
+      setIsAdding(true);
+      const res = await addProgress(user, newProgress);
       if (!res?.error) {
-        dispatch(setUpdateUser(userUpdated));
+        dispatch(setAddProgress(newProgress));
       }
     }
+    setIsAdding(false);
   };
 
   return (
@@ -69,7 +74,15 @@ const AddProgress: FC<Props> = () => {
         placeholder="Weight"
         className="py-0. w-full rounded-md border bg-transparent px-2"
       />
-      <button className=" w-40 rounded-3xl bg-green-500 py-1 ">Add</button>
+      <ActionButton
+        loadMessage="Adding..."
+        content="Add"
+        isLoading={isAdding}
+        isDisabled={false}
+        action={ButtonAction.save}
+        className="w-40"
+        onClick={handleSubmit}
+      />
     </form>
   );
 };

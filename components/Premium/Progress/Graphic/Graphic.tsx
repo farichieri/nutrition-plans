@@ -1,4 +1,5 @@
 import { selectAuthSlice } from "@/store/slices/authSlice";
+import { selectProgressSlice } from "@/store/slices/progressSlice";
 import { addMonths, format, formatISO, parse } from "date-fns";
 import React, { FC } from "react";
 import { useSelector } from "react-redux";
@@ -18,7 +19,7 @@ interface Props {}
 
 const Graphic: FC<Props> = () => {
   const { user } = useSelector(selectAuthSlice);
-  const progress = user?.progress;
+  const { progress } = useSelector(selectProgressSlice);
   const startDate =
     user?.created_at && format(new Date(user.created_at), "MM-dd-yyyy");
   const startDateF = startDate && format(new Date(startDate), "MM-yyyy");
@@ -42,14 +43,14 @@ const Graphic: FC<Props> = () => {
       });
       date = new Date(newDdate);
     }
-    progress.map((p) => {
-      const finded = data.find((d) => d.date === p.date);
+    Object.keys(progress).map((p) => {
+      const finded = data.find((d) => d.date === progress[p].date);
       if (finded) {
-        finded.weight = p.weight;
+        finded.weight = progress[p].weight;
       } else {
         data.push({
-          date: p.date,
-          weight: p.weight,
+          date: progress[p].date,
+          weight: progress[p].weight,
         });
       }
     });
@@ -61,28 +62,6 @@ const Graphic: FC<Props> = () => {
   };
 
   const data = createData();
-  console.log({ data });
-
-  // const CustomizedCross = (props) => {
-  //   const { width, height, stroke, fill, formattedGraphicalItems } = props;
-  //   // get first series in chart
-  //   const firstSeries = formattedGraphicalItems[0];
-  //   // get any point at any index in chart
-  //   const secondPoint = firstSeries?.props?.points[8];
-
-  //   // render custom content using points from the graph
-  //   return (
-  //     <Cross
-  //       y={secondPoint?.y}
-  //       x={secondPoint?.x}
-  //       r={3}
-  //       height={0}
-  //       width={width}
-  //       stroke={stroke ?? "red"}
-  //       fill={fill ?? "red"}
-  //     />
-  //   );
-  // };
 
   const CustomLabel = (props: any) => {
     return (
@@ -91,7 +70,6 @@ const Graphic: FC<Props> = () => {
           x={"50%"}
           y={props.viewBox.y}
           fill="gray"
-          dx={"auto"}
           textAnchor="start"
           fontWeight={500}
           dominantBaseline="central"

@@ -31,12 +31,14 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
   const LIB_TO_KG = 0.45359237;
   const KCALS_TO_GAIN = 500;
   const KCALS_TO_LOSE = -500;
-  const CALCULATOR_TYPES: any = {
+  const MEASUREMENT_UNITS: any = {
     metric: "metric",
     imperial: "imperial",
   };
-  const [calculatorType, setCalculatorType] = useState(CALCULATOR_TYPES.metric);
-  const isMetricUnits = calculatorType === CALCULATOR_TYPES.metric;
+  const [measurementUnit, setMeasurementUnit] = useState(
+    MEASUREMENT_UNITS.metric
+  );
+  const isMetricUnits = measurementUnit === MEASUREMENT_UNITS.metric;
 
   const [input, setInput] = useState({
     gender: body_data.gender,
@@ -76,7 +78,7 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
   };
 
   useEffect(() => {
-    if (calculatorType === CALCULATOR_TYPES.metric) {
+    if (measurementUnit === MEASUREMENT_UNITS.metric) {
       let pounds = Math.floor(Number(input.kilograms) / LIB_TO_KG);
       let totalInches = Number(input.centimeters) / INCHES_TO_CM;
       let feet = Math.floor(Number(totalInches) / 12);
@@ -91,7 +93,7 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
   }, [input.centimeters, input.kilograms]);
 
   useEffect(() => {
-    if (calculatorType === CALCULATOR_TYPES.imperial) {
+    if (measurementUnit === MEASUREMENT_UNITS.imperial) {
       let kilograms = Math.floor(Number(input.pounds) * LIB_TO_KG);
       let centimeters =
         Number(input.feet) * FEET_TO_CM + Number(input.inches) * INCHES_TO_CM;
@@ -189,7 +191,7 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
           goal: String(input.goal),
           height_in_cm: Number(input.centimeters),
           kcals_recommended: kcals_recommended,
-          measurement_unit: calculatorType,
+          measurement_unit: measurementUnit,
           weight_in_kg: Number(input.kilograms),
         },
       };
@@ -233,18 +235,18 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
           <div className="relative flex cursor-pointer rounded-3xl border-green-500 text-xs shadow-[0_0_5px_gray] sm:text-base">
             <div
               className={`${
-                calculatorType === CALCULATOR_TYPES.metric
+                measurementUnit === MEASUREMENT_UNITS.metric
                   ? "right-[50%]"
                   : "right-0"
               } absolute h-full w-[50%] select-none rounded-3xl bg-green-500 transition-all duration-300`}
             ></div>
-            {Object.keys(CALCULATOR_TYPES).map((type) => (
+            {Object.keys(MEASUREMENT_UNITS).map((type) => (
               <button
                 key={type}
-                onClick={() => setCalculatorType(type)}
+                onClick={() => setMeasurementUnit(type)}
                 className="z-20 w-28 rounded-3xl border-none px-4 py-1 text-xs font-semibold active:shadow-lg sm:text-base"
               >
-                {CALCULATOR_TYPES[type]}
+                {MEASUREMENT_UNITS[type]}
               </button>
             ))}
           </div>

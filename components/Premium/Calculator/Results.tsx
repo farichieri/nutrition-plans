@@ -1,13 +1,14 @@
 import { FC, useState } from "react";
-import { FOOD_PREFERENCES } from "@/utils/formContents";
 import { newBodyData } from "@/utils/initialTypes";
 import { selectAuthSlice, setUpdateUser } from "@/store/slices/authSlice";
 import { updateUser } from "@/firebase/helpers/Auth";
 import { useDispatch, useSelector } from "react-redux";
-import { UserAccount } from "@/types/types";
+import { ProgressItem, UserAccount } from "@/types/types";
 import { useRouter } from "next/router";
 import SubmitButton from "@/components/Buttons/SubmitButton";
-import { formatISO } from "date-fns";
+import { format, formatISO } from "date-fns";
+import { addProgress } from "@/firebase/helpers/Progress";
+import { setAddProgress } from "@/store/slices/progressSlice";
 
 interface Props {
   handleSubmit: Function;
@@ -25,6 +26,20 @@ const Results: FC<Props> = ({ handleSubmit }) => {
 
   console.log({ user });
 
+  const addFirstProgress = async () => {
+    if (!user) return;
+    const newProgress: ProgressItem = {
+      created_at: formatISO(new Date()),
+      date: format(new Date(), "MM-yyyy"),
+      weight: user.body_data.weight_in_kg,
+    };
+    const res = await addProgress(user, newProgress);
+    if (!res?.error) {
+      dispatch(setAddProgress(newProgress));
+    }
+    return res;
+  };
+
   const handleCreateUser = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!user) return;
@@ -37,8 +52,9 @@ const Results: FC<Props> = ({ handleSubmit }) => {
       },
       is_profile_completed: true,
     };
-    const res = await updateUser(userUpdated);
-    if (!res?.error) {
+    const updateUserRes = await updateUser(userUpdated);
+    const addProgressRes = await addFirstProgress();
+    if (!updateUserRes?.error && !addProgressRes?.error) {
       dispatch(setUpdateUser(userUpdated));
       handleSubmit();
     }

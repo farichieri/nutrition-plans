@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { Work_Sans } from "next/font/google";
 import Head from "next/head";
+import { fetchProgress } from "@/firebase/helpers/Progress";
+import { setProgress } from "@/store/slices/progressSlice";
 
 const font = Work_Sans({
   subsets: ["latin"],
@@ -22,8 +24,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     dispatch(setIsVerifyingUser());
     onAuthStateChanged(auth, async (user) => {
       console.log(user);
-      const userObject = user && (await generateUserObject(user));
-      dispatch(setUser(userObject));
+      if (!user) return;
+      const [userData, progressData] = await Promise.all([
+        generateUserObject(user),
+        fetchProgress(user),
+      ]);
+      console.log({ userData });
+      console.log({ progressData });
+      dispatch(setUser(userData));
+      dispatch(setProgress(progressData));
     });
   }, []);
 

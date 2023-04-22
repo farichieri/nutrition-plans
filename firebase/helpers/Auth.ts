@@ -49,7 +49,6 @@ const generateUserObject = async (user: User) => {
         photo_url: userData.photo_url,
         plan_selected: userData.plan_selected,
         premium_plan: userData.premium_plan,
-        progress: userData.progress,
         user_id: userData.user_id,
         weight_goal_in_kg: userData.weight_goal_in_kg,
       };

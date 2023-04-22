@@ -8,7 +8,7 @@ export default function Page() {
   return (
     <PremiumLayout>
       <EvolutionNav />
-      <section className="overfloy-auto flex h-screen flex-col items-center gap-5 px-4 py-4">
+      <section className="flex flex-col items-center gap-2 px-4 pb-10 pt-20">
         <h1 className="text-3xl font-bold">Profile</h1>
         <BMRCalculator handleSubmit={handleSubmit} />
         <FoodPreferences handleSubmit={handleSubmit} />

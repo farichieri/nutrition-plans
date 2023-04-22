@@ -6,6 +6,7 @@ import { WebStorage } from "redux-persist/lib/types";
 import authSlice from "./slices/authSlice";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import layoutSlice from "./slices/layoutSlice";
+import progressSlice from "./slices/progressSlice";
 
 export function createPersistStorage(): WebStorage {
   const isServer = typeof window === "undefined";
@@ -37,12 +38,13 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  whitelist: ["auth", "layout"],
+  whitelist: ["auth", "layout", "progress"],
 };
 
 const rootReducer = combineReducers({
   auth: authSlice,
   layout: layoutSlice,
+  progress: progressSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

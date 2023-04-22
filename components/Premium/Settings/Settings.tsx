@@ -1,6 +1,5 @@
 import { setIsSettingsOpen } from "@/store/slices/layoutSlice";
 import { useDispatch } from "react-redux";
-import About from "./options/About";
 import General from "./options/General";
 import Modal from "@/components/Modal/Modal";
 import Account from "./options/Account";
@@ -8,7 +7,6 @@ import React, { FC, useState } from "react";
 import Support from "./options/Support";
 import Subscription from "./options/Subscription";
 import {
-  ChatBubbleOvalLeftEllipsisIcon,
   Cog8ToothIcon,
   LightBulbIcon,
   UserIcon,
@@ -32,11 +30,11 @@ const Settings: FC<Props> = () => {
       option: "subscription",
       component: <Subscription setSettingSelected={setSettingSelected} />,
     },
-    // {
-    //   icon: <Cog8ToothIcon className="h-4 w-4" />,
-    //   option: "general",
-    //   component: <General setSettingSelected={setSettingSelected} />,
-    // },
+    {
+      icon: <Cog8ToothIcon className="h-4 w-4" />,
+      option: "general",
+      component: <General setSettingSelected={setSettingSelected} />,
+    },
     {
       icon: <LightBulbIcon className="h-4 w-4" />,
       option: "support",
