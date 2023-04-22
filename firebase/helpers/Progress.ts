@@ -47,7 +47,7 @@ const deleteProgress = async (user: UserAccount, progress: ProgressItem) => {
 
 const updateProgress = async (user: UserAccount, progress: ProgressItem) => {
   try {
-    console.log(progress)
+    console.log(progress);
     const docRef = doc(db, "users", user.user_id, "progress", progress.date);
     await setDoc(docRef, progress);
   } catch (error) {

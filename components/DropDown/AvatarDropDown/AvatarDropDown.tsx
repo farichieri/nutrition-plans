@@ -9,6 +9,7 @@ import { useState } from "react";
 import Avatar from "@/components/Avatar/Avatar";
 import DropDown from "../DropDown";
 import ThemeSwitcher from "@/components/theme-switcher";
+import { setProgress } from "@/store/slices/progressSlice";
 
 const AvatarDropDown = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,7 @@ const AvatarDropDown = () => {
       await signOut(auth)
         .then(() => {
           dispatch(setLogoutUser());
+          dispatch(setProgress({}));
         })
         .catch((error) => {
           console.error(error);

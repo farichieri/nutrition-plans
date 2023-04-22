@@ -5,7 +5,13 @@ export enum Theme {
 export enum ButtonAction {
   save = "save",
   delete = "delete",
+  discard = "discard",
 }
+export enum MeasurementUnits {
+  metric = "metric",
+  imperial = "imperial",
+}
+
 // Posts
 export interface Post {
   author: string;
@@ -40,7 +46,7 @@ export interface UserAccount {
   plan_selected: string | null;
   premium_plan: string | null;
   user_id: string;
-  weight_goal_in_kg: number | null;
+  weight_goal: WeightGoal;
 }
 export interface UserCreatedData {
   body_data: UserBodyData;
@@ -61,6 +67,13 @@ export interface UserBodyData {
 export interface UserFoodData {
   food_preferences: string[];
 }
+
+export interface WeightGoal {
+  weight_goal_in_kg: number | null;
+  created_at: string | null;
+  due_date: string | null;
+}
+
 // User Progress
 export interface ProgressItem {
   created_at: string;

@@ -11,7 +11,7 @@ const EvolutionNav = () => {
   ];
 
   return (
-    <div className="fixed top-[var(--nav-h)] flex h-[var(--nav-h)] w-full items-center justify-center gap-4 bg-white/100 px-4 shadow-md backdrop-blur-sm dark:border-cyan-100/20 dark:bg-black/100 dark:shadow-cyan-100/10 ">
+    <div className=" top-[var(--nav-h)] flex h-[var(--nav-h)] w-full items-center justify-center gap-4 bg-white/100 px-4 shadow-md backdrop-blur-sm dark:border-cyan-100/20 dark:bg-black/100 dark:shadow-cyan-100/10 ">
       {pages.map((page) => (
         <Link
           key={page.name}

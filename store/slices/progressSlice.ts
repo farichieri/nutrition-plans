@@ -5,12 +5,16 @@ import type { RootState } from "../store";
 interface ProgressState {
   progress: Progress;
   progressOpen: ProgressItem | null;
+  weightGoalOpen: any;
+  addWeightGoalOpen: boolean;
 }
 
 // Define the initial state using that type
 const initialState: ProgressState = {
   progress: {},
   progressOpen: null,
+  weightGoalOpen: null,
+  addWeightGoalOpen: false,
 };
 
 export const authSlice = createSlice({
@@ -33,6 +37,12 @@ export const authSlice = createSlice({
     setProgressOpen: (state, action: PayloadAction<ProgressItem | null>) => {
       state.progressOpen = action.payload;
     },
+    setRestartProgress: (state) => {
+      state = initialState;
+    },
+    setAddWeightGoalOpen: (state, action: PayloadAction<boolean>) => {
+      state.addWeightGoalOpen = action.payload;
+    },
   },
 });
 
@@ -42,6 +52,8 @@ export const {
   setDeleteProgress,
   setUpdateProgress,
   setProgressOpen,
+  setRestartProgress,
+  setAddWeightGoalOpen,
 } = authSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

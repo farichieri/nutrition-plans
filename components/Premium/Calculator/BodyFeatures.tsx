@@ -1,7 +1,7 @@
 import SubmitButton from "@/components/Buttons/SubmitButton";
 import { updateUser } from "@/firebase/helpers/Auth";
 import { selectAuthSlice, setUpdateUser } from "@/store/slices/authSlice";
-import { UserAccount } from "@/types/types";
+import { MeasurementUnits, UserAccount } from "@/types/types";
 import {
   ACTIVITY_OPTIONS,
   GENDER_OPTIONS,
@@ -28,29 +28,40 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
   const [error, setError] = useState("");
   const FEET_TO_CM = 30.48;
   const INCHES_TO_CM = 2.54;
-  const LIB_TO_KG = 0.45359237;
   const KCALS_TO_GAIN = 500;
   const KCALS_TO_LOSE = -500;
-  const MEASUREMENT_UNITS: any = {
-    metric: "metric",
-    imperial: "imperial",
+  const LIB_TO_KG = 0.45359237;
+
+  const cmsToFeet = (cm: number | null) => {
+    let totalInches = Number(cm) / INCHES_TO_CM;
+    let feet = Math.floor(Number(totalInches) / 12);
+    return feet;
   };
-  const [measurementUnit, setMeasurementUnit] = useState(
-    MEASUREMENT_UNITS.metric
-  );
-  const isMetricUnits = measurementUnit === MEASUREMENT_UNITS.metric;
+  const cmsToInches = (cm: number | null) => {
+    let totalInches = Number(cm) / INCHES_TO_CM;
+    let feet = Math.floor(Number(totalInches) / 12);
+    let inches = Math.round(totalInches - 12 * feet);
+    return inches;
+  };
+  const kgsToLbs = (kgs: number | null) => {
+    let pounds = Math.floor(Number(kgs) / LIB_TO_KG);
+    return pounds;
+  };
 
   const [input, setInput] = useState({
-    gender: body_data.gender,
-    centimeters: body_data.height_in_cm || "",
-    feet: "",
-    inches: "",
-    kilograms: body_data.weight_in_kg || "",
-    pounds: "",
-    age: body_data.age || "",
     activity: body_data.activity || "",
+    age: body_data.age || "",
+    centimeters: body_data.height_in_cm || "",
+    feet: cmsToFeet(body_data.height_in_cm) || "",
+    gender: body_data.gender || "",
     goal: body_data.goal || "",
+    inches: cmsToInches(body_data.height_in_cm) || "",
+    kilograms: body_data.weight_in_kg || "",
+    measurement_unit: body_data.measurement_unit || "",
+    pounds: kgsToLbs(body_data.weight_in_kg) || "",
   });
+
+  const isMetricUnits = input.measurement_unit === MeasurementUnits.metric;
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -78,11 +89,10 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
   };
 
   useEffect(() => {
-    if (measurementUnit === MEASUREMENT_UNITS.metric) {
-      let pounds = Math.floor(Number(input.kilograms) / LIB_TO_KG);
-      let totalInches = Number(input.centimeters) / INCHES_TO_CM;
-      let feet = Math.floor(Number(totalInches) / 12);
-      let inches = Math.round(totalInches - 12 * feet);
+    if (input.measurement_unit === MeasurementUnits.metric) {
+      let pounds = kgsToLbs(Number(input.kilograms));
+      let feet = cmsToFeet(Number(input.centimeters));
+      let inches = cmsToInches(Number(input.centimeters));
       setInput({
         ...input,
         pounds: String(pounds),
@@ -93,7 +103,7 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
   }, [input.centimeters, input.kilograms]);
 
   useEffect(() => {
-    if (measurementUnit === MEASUREMENT_UNITS.imperial) {
+    if (input.measurement_unit === MeasurementUnits.imperial) {
       let kilograms = Math.floor(Number(input.pounds) * LIB_TO_KG);
       let centimeters =
         Number(input.feet) * FEET_TO_CM + Number(input.inches) * INCHES_TO_CM;
@@ -114,6 +124,7 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
       age: body_data.age,
       activity: body_data.activity,
       goal: body_data.goal,
+      measurement_unit: body_data.measurement_unit,
     };
     const formValues = {
       gender: input.gender,
@@ -122,15 +133,14 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
       age: input.age,
       activity: input.activity,
       goal: input.goal,
+      measurement_unit: input.measurement_unit,
     };
-    console.log({ userValues });
-    console.log({ formValues });
     if (JSON.stringify(userValues) !== JSON.stringify(formValues)) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
     }
-  }, [input]);
+  }, [input, body_data]);
 
   const isFormIncomplete =
     !input.age ||
@@ -138,7 +148,8 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
     !input.gender ||
     !input.kilograms ||
     !input.activity ||
-    !input.goal;
+    !input.goal ||
+    !input.measurement_unit;
 
   const calculateBMR = () => {
     const standard =
@@ -169,10 +180,6 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
   const BMI = Number(calculateBMI());
   const BMR = Number(calculateBMR());
 
-  // BMI con el resultado (que significa)
-
-  // Agregar el calculador de tiempo en llegar al objetivo de peso si es que lo quiere agregar.
-
   const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!user) return;
@@ -191,13 +198,11 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
           goal: String(input.goal),
           height_in_cm: Number(input.centimeters),
           kcals_recommended: kcals_recommended,
-          measurement_unit: measurementUnit,
+          measurement_unit: input.measurement_unit,
           weight_in_kg: Number(input.kilograms),
         },
       };
-      console.log({ userUpdated });
       const res = await updateUser(userUpdated);
-      console.log({ res });
       if (!res?.error) {
         dispatch(setUpdateUser(userUpdated));
         handleSubmit();
@@ -205,8 +210,6 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
       setIsLoading(false);
     }
   };
-
-  console.log({ input });
 
   return (
     <div className="flex w-full flex-col items-center justify-center gap-3 text-xs s:text-sm sm:text-base">
@@ -235,18 +238,20 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
           <div className="relative flex cursor-pointer rounded-3xl border-green-500 text-xs shadow-[0_0_5px_gray] sm:text-base">
             <div
               className={`${
-                measurementUnit === MEASUREMENT_UNITS.metric
+                input.measurement_unit === MeasurementUnits.metric
                   ? "right-[50%]"
                   : "right-0"
               } absolute h-full w-[50%] select-none rounded-3xl bg-green-500 transition-all duration-300`}
             ></div>
-            {Object.keys(MEASUREMENT_UNITS).map((type) => (
+            {Object.keys(MeasurementUnits).map((type) => (
               <button
                 key={type}
-                onClick={() => setMeasurementUnit(type)}
+                name="measurement_unit"
+                value={type}
+                onClick={handleClick}
                 className="z-20 w-28 rounded-3xl border-none px-4 py-1 text-xs font-semibold active:shadow-lg sm:text-base"
               >
-                {MEASUREMENT_UNITS[type]}
+                {type}
               </button>
             ))}
           </div>

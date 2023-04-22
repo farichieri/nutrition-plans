@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import SecondaryButton from "../Buttons/SubmitButton";
+import { setProgress } from "@/store/slices/progressSlice";
 
 const Logout = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -18,7 +19,10 @@ const Logout = () => {
     setIsDisabled(true);
     router.push("/");
     await signOut(auth)
-      .then(() => dispatch(setLogoutUser()))
+      .then(() => {
+        dispatch(setLogoutUser());
+        dispatch(setProgress({}));
+      })
       .catch((error) => {
         console.error(error);
       });

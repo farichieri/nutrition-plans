@@ -3,6 +3,7 @@ import {
   UserAccount,
   UserBodyData,
   UserFoodData,
+  WeightGoal,
 } from "@/types/types";
 
 export const newBodyData: UserBodyData = {
@@ -16,6 +17,12 @@ export const newBodyData: UserBodyData = {
   kcals_recommended: null,
   measurement_unit: null,
   weight_in_kg: null,
+};
+
+export const newWeightGoal: WeightGoal = {
+  weight_goal_in_kg: null,
+  created_at: null,
+  due_date: null,
 };
 
 export const newFoodData: UserFoodData = {
@@ -35,7 +42,7 @@ export const newAccount: UserAccount = {
   plan_selected: null,
   premium_plan: null,
   user_id: "",
-  weight_goal_in_kg: null,
+  weight_goal: newWeightGoal,
   first_data: {
     body_data: newBodyData,
     food_data: newFoodData,

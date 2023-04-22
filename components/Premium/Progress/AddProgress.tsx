@@ -37,9 +37,9 @@ const AddProgress: FC<Props> = () => {
     const dateParsed = parse(input.date, "yyyy-MM", new Date());
     const date = format(dateParsed, "MM-yyyy");
     const newProgress = {
+      created_at: formatISO(new Date()),
       date: date,
       weight: Number(input.weight),
-      created_at: formatISO(new Date()),
     };
     if (progress[date]) {
       alert("Progress already exists");

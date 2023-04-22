@@ -17,8 +17,6 @@ const FoodPreferences: FC<Props> = ({ handleSubmit }) => {
   const { user } = useSelector(selectAuthSlice);
   const food_preferences = user?.food_data.food_preferences;
   const [selecteds, setSelecteds] = useState<string[]>(food_preferences || []);
-  console.log({ food_preferences });
-  console.log({ selecteds });
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
   const isCreatingRoute = router.asPath === "/app/create";
@@ -53,7 +51,10 @@ const FoodPreferences: FC<Props> = ({ handleSubmit }) => {
   };
 
   useEffect(() => {
-    if (JSON.stringify(selecteds) !== JSON.stringify(food_preferences)) {
+    if (
+      JSON.stringify(selecteds) !== JSON.stringify(food_preferences) ||
+      isCreatingRoute
+    ) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
