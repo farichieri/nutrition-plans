@@ -1,11 +1,13 @@
+import { ButtonAction, WeightGoal } from "@/types/types";
 import { FC, useEffect, useState } from "react";
+import { formatISO } from "date-fns";
+import { initialWeightGoal } from "@/utils/initialTypes";
 import { selectAuthSlice, setUpdateUser } from "@/store/slices/authSlice";
 import { setAddWeightGoalOpen } from "@/store/slices/progressSlice";
-import { ButtonAction, WeightGoal } from "@/types/types";
-import { useDispatch, useSelector } from "react-redux";
-import Modal from "@/components/Modal/Modal";
-import ActionButton from "@/components/Buttons/ActionButton";
 import { updateUser } from "@/firebase/helpers/Auth";
+import { useDispatch, useSelector } from "react-redux";
+import ActionButton from "@/components/Buttons/ActionButton";
+import Modal from "@/components/Modal/Modal";
 
 interface Props {
   weightGoal: WeightGoal | undefined;
@@ -17,7 +19,7 @@ const WeightGoalModal: FC<Props> = ({ weightGoal }) => {
   const [isDisabled, setIsDisabled] = useState(false);
   const { user } = useSelector(selectAuthSlice);
   const dispatch = useDispatch();
-  const [weightGoalState, setWeightGoalState] = useState<WeightGoal | null>({
+  const [weightGoalState, setWeightGoalState] = useState<WeightGoal>({
     created_at: weightGoal?.created_at || null,
     due_date: weightGoal?.due_date || null,
     weight_goal_in_kg: weightGoal?.weight_goal_in_kg || null,
@@ -27,11 +29,11 @@ const WeightGoalModal: FC<Props> = ({ weightGoal }) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const name = event.target.name;
     const value = event.target.value;
-    const valueF = name === "weight_in_kg" ? Number(value) : value;
-    // setWeightGoalState({
-    //   ...weightGoalState,
-    //   [name]: valueF,
-    // });
+    const valueF = name === "weight_goal_in_kg" ? Number(value) : value;
+    setWeightGoalState({
+      ...weightGoalState,
+      [name]: valueF,
+    });
   };
 
   const handleClose = () => {
@@ -43,7 +45,10 @@ const WeightGoalModal: FC<Props> = ({ weightGoal }) => {
     setIsSaving(true);
     const userUpdated = {
       ...user,
-      weightGoal: weightGoalState,
+      weight_goal: {
+        ...weightGoalState,
+        created_at: formatISO(new Date()),
+      },
     };
     const res = await updateUser(userUpdated);
     if (!res?.error) {
@@ -56,11 +61,15 @@ const WeightGoalModal: FC<Props> = ({ weightGoal }) => {
   const handleDelete = async () => {
     if (!user) return;
     setIsDeleting(true);
-    // const res = await deleteProgress(user, weightGoal);
-    // if (!res?.error) {
-    //   dispatch(setDeleteProgress(weightGoal.due_date));
-    //   dispatch(setAddWeightGoalOpen(false));
-    // }
+    const userUpdated = {
+      ...user,
+      weight_goal: initialWeightGoal,
+    };
+    const res = await updateUser(userUpdated);
+    if (!res?.error) {
+      dispatch(setUpdateUser(userUpdated));
+      dispatch(setAddWeightGoalOpen(false));
+    }
     setIsDeleting(false);
   };
 
@@ -79,15 +88,21 @@ const WeightGoalModal: FC<Props> = ({ weightGoal }) => {
           {addGoal ? "Add Goal" : "Edit Goal"}
         </span>
         <div className="flex items-center gap-1">
-          <span>Due Date:</span>
-          <span>{weightGoalState?.due_date}</span>
+          <span className="basis-1/3">Due Date:</span>
+          <input
+            value={String(weightGoalState?.due_date)}
+            onChange={handleChange}
+            name="due_date"
+            type="month"
+            className="w-full basis-3/4 rounded-md border bg-transparent px-2 py-0.5"
+          />
         </div>
         <div className="flex items-center gap-1">
-          <span>Weight:</span>
+          <span className="basis-1/3">Weight:</span>
           <input
-            className="flex w-full rounded-md border bg-transparent px-2"
+            className="flex w-full basis-3/4 rounded-md border bg-transparent px-2"
             type="number"
-            name="weight_in_kg"
+            name="weight_goal_in_kg"
             placeholder="Weight"
             value={String(weightGoalState?.weight_goal_in_kg)}
             onChange={handleChange}
@@ -98,7 +113,7 @@ const WeightGoalModal: FC<Props> = ({ weightGoal }) => {
             loadMessage="Deleting..."
             content={addGoal ? "Discard" : "Delete"}
             isLoading={isDeleting}
-            isDisabled={isDisabled}
+            isDisabled={false}
             action={ButtonAction.delete}
             className="w-full"
             onClick={handleDelete}

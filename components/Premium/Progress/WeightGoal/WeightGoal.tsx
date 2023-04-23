@@ -3,7 +3,7 @@ import {
   setAddWeightGoalOpen,
   selectProgressSlice,
 } from "@/store/slices/progressSlice";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import WeightGoalModal from "./WeightGoalModal";
 
@@ -19,13 +19,10 @@ const WeightGoal: FC<Props> = () => {
     dispatch(setAddWeightGoalOpen(true));
   };
 
-  console.log({ addWeightGoalOpen });
-  console.log({ goal });
-
   return (
     <div>
       {addWeightGoalOpen && <WeightGoalModal weightGoal={goal} />}
-      {!goal ? (
+      {!goal?.weight_goal_in_kg ? (
         <div>
           <button
             className="rounded-md bg-green-500 px-2 py-1 text-white shadow-md"
@@ -35,7 +32,20 @@ const WeightGoal: FC<Props> = () => {
           </button>
         </div>
       ) : (
-        <div>{goal.weight_goal_in_kg}</div>
+        <button
+          className="rounded-xl border p-5 shadow-md"
+          onClick={handleOpen}
+        >
+          <span className="text-2xl font-semibold">Weight Goal</span>
+          <div className="flex gap-1">
+            <span>Due date:</span>
+            <span>{goal.due_date}</span>
+          </div>
+          <div className="flex gap-1">
+            <span>Weight goal:</span>
+            <span>{goal.weight_goal_in_kg}</span>
+          </div>
+        </button>
       )}
     </div>
   );

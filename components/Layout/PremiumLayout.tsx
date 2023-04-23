@@ -32,7 +32,7 @@ export default function PremiumLayout({
       {(isCreatingUser || isSigningUser) && <Loader />}
       {isSettingsOpen && <Settings />}
       {user ? (
-        <div className="relative flex min-h-screen w-screen flex-col bg-gray-100 dark:bg-[#171717]">
+        <div className="flex min-h-screen w-screen flex-col bg-gray-100 dark:bg-[#171717]">
           {isBillingModalOpen && <BillingModal />}
           <PremiumNav sidebarOpen={sidebarOpen} handleSidebar={handleSidebar} />
           <Sidebar sidebarOpen={sidebarOpen} handleSidebar={handleSidebar} />

@@ -12,7 +12,8 @@ import { selectAuthSlice } from "@/store/slices/authSlice";
 import {
   selectLayoutSlice,
   setIsSettingsOpen,
-  setPlansOpen,
+  setSidebarEvolutionOpen,
+  setSidebarPlansOpen,
 } from "@/store/slices/layoutSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
@@ -27,13 +28,21 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { user } = useSelector(selectAuthSlice);
-  const { plansOpen } = useSelector(selectLayoutSlice);
+  const { sidebarPlansOpen, sidebarEvolutionOpen } =
+    useSelector(selectLayoutSlice);
 
   const toggleAllPlans = () => {
-    if (plansOpen === true) {
-      dispatch(setPlansOpen(false));
+    if (sidebarPlansOpen === true) {
+      dispatch(setSidebarPlansOpen(false));
     } else {
-      dispatch(setPlansOpen(true));
+      dispatch(setSidebarPlansOpen(true));
+    }
+  };
+  const toggleEvolution = () => {
+    if (sidebarEvolutionOpen === true) {
+      dispatch(setSidebarEvolutionOpen(false));
+    } else {
+      dispatch(setSidebarEvolutionOpen(true));
     }
   };
 
@@ -88,7 +97,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
               <span className="text-md font-semibold sm:text-lg">
                 All plans
               </span>
-              {plansOpen ? (
+              {sidebarPlansOpen ? (
                 <ChevronUpIcon className="h-5 w-5" />
               ) : (
                 <ChevronDownIcon className="h-5 w-5" />
@@ -97,7 +106,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
           </div>
           <div
             className={`flex flex-col gap-1 overflow-hidden pl-1 text-sm transition-[max-height] duration-300 sm:text-base ${
-              plansOpen ? " max-h-[30rem]" : "max-h-0"
+              sidebarPlansOpen ? " max-h-[30rem]" : "max-h-0"
             }`}
           >
             {MEAL_PLANS.map((plan) => (
@@ -113,14 +122,44 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
             ))}
           </div>
         </div>
-        <div className="flex w-full items-center gap-2">
-          <ChartBarIcon className="h-5 w-5 fill-green-500" />
-          <Link
-            href={"/app/evolution/progress"}
-            className="text-md w-full font-semibold sm:text-lg"
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-2 " onClick={toggleEvolution}>
+            <ChartBarIcon className="h-5 w-5 fill-green-500" />
+            <div className="flex w-full cursor-pointer items-center justify-between">
+              <span className="text-md font-semibold sm:text-lg">
+                Evolution{" "}
+              </span>
+              {sidebarEvolutionOpen ? (
+                <ChevronUpIcon className="h-5 w-5" />
+              ) : (
+                <ChevronDownIcon className="h-5 w-5" />
+              )}
+            </div>
+          </div>
+          <div
+            className={`flex flex-col gap-1 overflow-hidden pl-1 text-sm transition-[max-height] duration-300 sm:text-base ${
+              sidebarEvolutionOpen ? " max-h-[30rem]" : "max-h-0"
+            }`}
           >
-            Evolution
-          </Link>
+            <Link
+              href={`/app/evolution/progress`}
+              className={`${
+                router.asPath === "/app/evolution/progress" &&
+                " bg-slate-500/30 font-semibold"
+              } flex items-center gap-1 rounded-lg px-2 py-1 text-base`}
+            >
+              Progress
+            </Link>
+            <Link
+              href={`/app/evolution/profile`}
+              className={`${
+                router.asPath === "/app/evolution/profile" &&
+                " bg-slate-500/30 font-semibold"
+              } flex items-center gap-1 rounded-lg px-2 py-1 text-base`}
+            >
+              Profile
+            </Link>
+          </div>
         </div>
         <div className="mx-auto mt-auto flex flex-col gap-5">
           <Cog6ToothIcon

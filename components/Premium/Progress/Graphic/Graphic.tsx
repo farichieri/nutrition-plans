@@ -1,8 +1,8 @@
+import { addMonths, format, formatISO, parse } from "date-fns";
 import { selectAuthSlice } from "@/store/slices/authSlice";
 import { selectProgressSlice } from "@/store/slices/progressSlice";
-import { addMonths, format, formatISO, parse } from "date-fns";
-import React, { FC } from "react";
 import { useSelector } from "react-redux";
+import React, { FC } from "react";
 import {
   AreaChart,
   Area,
@@ -19,6 +19,7 @@ interface Props {}
 
 const Graphic: FC<Props> = () => {
   const { user } = useSelector(selectAuthSlice);
+  const weight_goal = user?.weight_goal;
   const { progress } = useSelector(selectProgressSlice);
   const startDate =
     user?.created_at && format(new Date(user.created_at), "MM-dd-yyyy");
@@ -75,7 +76,7 @@ const Graphic: FC<Props> = () => {
           dominantBaseline="central"
           fontSize={12}
         >
-          Goal {70} kg
+          Goal {weight_goal?.weight_goal_in_kg} kg
         </text>
       </g>
     );
@@ -129,13 +130,14 @@ const Graphic: FC<Props> = () => {
             fill="#61eb0569"
           />
           <Line type="monotone" dataKey="value" stroke="red" dot={false} />
-          <ReferenceLine
-            y={70}
-            label={CustomLabel}
-            // label="Goal: 70 kg"
-            stroke="red"
-            strokeWidth={1}
-          />
+          {weight_goal?.weight_goal_in_kg && (
+            <ReferenceLine
+              y={weight_goal?.weight_goal_in_kg}
+              label={CustomLabel}
+              stroke="red"
+              strokeWidth={1}
+            />
+          )}
           {/* <Customized component={CustomizedCross} /> */}
         </AreaChart>
       </ResponsiveContainer>

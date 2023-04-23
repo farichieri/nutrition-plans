@@ -25,7 +25,7 @@ const ProgressList: FC<Props> = () => {
   };
 
   return (
-    <div className="flex w-full max-w-4xl flex-col items-center justify-center gap-1">
+    <div className="flex w-full max-w-4xl flex-col items-center justify-center gap-1 ">
       {progressOpen && <ProgressItemModal progressItem={progressOpen} />}
       <div className="flex w-full justify-between rounded-sm border border-slate-300 px-2 py-1">
         <span>Date</span>
@@ -34,7 +34,7 @@ const ProgressList: FC<Props> = () => {
       </div>
       {Object.keys(progress).map((p) => (
         <div
-          className="flex w-full justify-between gap-2 rounded-sm bg-gray-300/50 px-2 py-0.5"
+          className="flex w-full items-center justify-between gap-2 rounded-sm bg-gray-300/50 px-2 py-0.5"
           key={progress[p].date}
           onClick={() => handleOpen(progress[p])}
         >

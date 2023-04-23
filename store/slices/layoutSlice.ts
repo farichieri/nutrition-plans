@@ -5,7 +5,8 @@ import type { RootState } from "../store";
 // Define a type for the slice state
 interface LayoutState {
   sidebarOpen: boolean;
-  plansOpen: boolean;
+  sidebarPlansOpen: boolean;
+  sidebarEvolutionOpen: boolean;
   theme: Theme;
   isSettingsOpen: boolean;
   isBillingModalOpen: boolean;
@@ -14,7 +15,8 @@ interface LayoutState {
 // Define the initial state using that type
 const initialState: LayoutState = {
   sidebarOpen: true,
-  plansOpen: true,
+  sidebarPlansOpen: true,
+  sidebarEvolutionOpen: true,
   theme: Theme.light,
   isSettingsOpen: false,
   isBillingModalOpen: false,
@@ -28,8 +30,11 @@ export const layoutSlice = createSlice({
     setSidebarOpen: (state, action: PayloadAction<boolean>) => {
       state.sidebarOpen = action.payload;
     },
-    setPlansOpen: (state, action: PayloadAction<boolean>) => {
-      state.plansOpen = action.payload;
+    setSidebarPlansOpen: (state, action: PayloadAction<boolean>) => {
+      state.sidebarPlansOpen = action.payload;
+    },
+    setSidebarEvolutionOpen: (state, action: PayloadAction<boolean>) => {
+      state.sidebarEvolutionOpen = action.payload;
     },
     setTheme: (state, action: PayloadAction<Theme>) => {
       state.theme = action.payload;
@@ -45,7 +50,8 @@ export const layoutSlice = createSlice({
 
 export const {
   setSidebarOpen,
-  setPlansOpen,
+  setSidebarPlansOpen,
+  setSidebarEvolutionOpen,
   setTheme,
   setIsBillingModalOpen,
   setIsSettingsOpen,
