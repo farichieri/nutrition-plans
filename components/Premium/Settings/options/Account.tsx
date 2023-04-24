@@ -1,9 +1,7 @@
-import Avatar from "@/components/Avatar/Avatar";
-import SubscribeButton from "@/components/Buttons/Subscribe";
-import { selectAuthSlice } from "@/store/slices/authSlice";
 import { FC } from "react";
+import { selectAuthSlice } from "@/store/slices/authSlice";
 import { useSelector } from "react-redux";
-
+import Avatar from "@/components/Avatar/Avatar";
 interface Props {
   setSettingSelected: Function;
 }
@@ -13,7 +11,7 @@ const Account: FC<Props> = ({ setSettingSelected }) => {
 
   return (
     <div className="flex h-full w-full flex-col items-start gap-5">
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 text-3xl">
         <span className="text-3xl font-semibold">Photo</span>
         <Avatar width={80} height={80} changeable={true} />
       </div>

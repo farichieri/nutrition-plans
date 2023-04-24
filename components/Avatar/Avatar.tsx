@@ -53,7 +53,9 @@ const Avatar: FC<Props> = ({ width, height, changeable }) => {
         <div
           className={`flex items-center justify-center rounded-full bg-gray-400 dark:bg-gray-700`}
         >
-          <span className="text-lg opacity-80">{fisrtNameWord}</span>
+          <span className="flex h-full w-full items-center justify-center opacity-80">
+            {fisrtNameWord}
+          </span>
           {changeable && (
             <input
               title="Upload a new photo"

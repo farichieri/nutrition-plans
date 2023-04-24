@@ -1,6 +1,10 @@
 import { FC, useState } from "react";
 import { newBodyData } from "@/utils/initialTypes";
-import { selectAuthSlice, setUpdateUser } from "@/store/slices/authSlice";
+import {
+  selectAuthSlice,
+  setIsCreatingUser,
+  setUpdateUser,
+} from "@/store/slices/authSlice";
 import { updateUser } from "@/firebase/helpers/Auth";
 import { useDispatch, useSelector } from "react-redux";
 import { ProgressItem, UserAccount } from "@/types/types";
@@ -57,6 +61,7 @@ const Results: FC<Props> = ({ handleSubmit }) => {
     if (!updateUserRes?.error && !addProgressRes?.error) {
       dispatch(setUpdateUser(userUpdated));
       handleSubmit();
+      dispatch(setIsCreatingUser(false));
     }
   };
 
@@ -73,45 +78,53 @@ const Results: FC<Props> = ({ handleSubmit }) => {
   };
 
   return (
-    <section className="flex w-full flex-col items-center justify-center">
-      {/* <span className="text-3xl font-bold">Nutrition preferences</span> */}
-      <form action="" className="flex w-full max-w-[30rem] flex-col gap-10">
-        <div className="flex flex-col gap-4 font-medium">
-          <div>
-            <span>
-              In order to accomplish your goal of{" "}
-              <span className="text-green-500">{body_data.goal}</span> we have
-              calculated the next daily calories for your nutrition plan:{" "}
-            </span>
-            <span className="text-green-500">
-              {body_data.kcals_recommended}
-            </span>
-          </div>
-          <div>
-            <span>Your BMR (Basal Metabolic Rate) is: </span>
-            <span className="text-green-500">{body_data.BMR}</span>
-          </div>
-          <div className="flex flex-col">
+    <section className="flex w-full max-w-xl flex-col items-center justify-center gap-5 rounded-md border">
+      <form action="" className="flex w-full flex-col gap-5">
+        <div className="flex flex-col gap-3 p-5">
+          <span className="w-full p-5 text-left text-3xl font-semibold">
+            {isCreatingRoute ? "Finish" : "Suggestion"}
+          </span>
+          <div className="flex flex-col gap-4 font-medium">
             <div>
-              <span>Your BMI (Body Mass Index) is: </span>
-              <span className="text-green-500">{body_data.BMI}</span>
-            </div>
-            <div>
-              <span>A BMI of {body_data.BMI} is stipulated to be: </span>
-              <span className="text-green-500">
-                {BMISignificance(Number(body_data.BMI))}
+              <span>
+                In order to accomplish your goal of{" "}
+                <span className="text-green-500">{body_data.goal}</span> we have
+                calculated the next daily calories for your nutrition plan:{" "}
               </span>
+              <span className="text-green-500">
+                {body_data.kcals_recommended}
+              </span>
+            </div>
+            <div className="flex flex-col">
+              <div>
+                <span>Your BMR (Basal Metabolic Rate) is: </span>
+                <span className="text-green-500">{body_data.BMR}</span>
+              </div>
+              <div>
+                <span>Your BMI (Body Mass Index) is: </span>
+                <span className="text-green-500">{body_data.BMI}</span>
+              </div>
+              <div>
+                <span>A BMI of {body_data.BMI} is stipulated to be: </span>
+                <span className="text-green-500">
+                  {BMISignificance(Number(body_data.BMI))}
+                </span>
+              </div>
             </div>
           </div>
         </div>
-        <SubmitButton
-          className={"m-auto w-fit"}
-          onClick={handleCreateUser}
-          loadMessage={"Loading..."}
-          content={`${isCreatingRoute ? "Start my plan" : "Save"}`}
-          isLoading={isLoading}
-          isDisabled={isDisabled}
-        />
+        {isCreatingRoute && (
+          <div className="flex items-center justify-center border-t p-5">
+            <SubmitButton
+              className={"m-auto w-fit"}
+              onClick={handleCreateUser}
+              loadMessage={"Loading..."}
+              content={`${isCreatingRoute ? "Start my plan" : "Save"}`}
+              isLoading={isLoading}
+              isDisabled={isDisabled}
+            />
+          </div>
+        )}
       </form>
     </section>
   );

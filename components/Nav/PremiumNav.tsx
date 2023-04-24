@@ -17,7 +17,7 @@ const PremiumNav: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
 
   return (
     <nav className="fixed top-0 z-[80] flex w-full select-none items-center justify-center">
-      <div className="flex h-[var(--nav-h)] w-full items-center justify-between gap-4 bg-white/100 px-4 shadow-md backdrop-blur-sm dark:border-cyan-100/20 dark:bg-black/100 dark:shadow-cyan-100/10 ">
+      <div className="flex h-[var(--nav-h)] w-full items-center justify-between gap-4 border-b bg-white/100 px-4 shadow-sm backdrop-blur-sm dark:border-slate-400/20 dark:bg-black/100 dark:shadow-cyan-100/10 ">
         <div className="text-md flex w-fit min-w-fit basis-1/3 items-center justify-start gap-4 font-semibold sm:text-2xl">
           <Bars3Icon
             className="h-4 w-4 cursor-pointer"

@@ -51,7 +51,9 @@ const FoodPreferences: FC<Props> = ({ handleSubmit }) => {
   };
 
   useEffect(() => {
-    if (
+    if (isCreatingRoute && selecteds.length === 0) {
+      setIsDisabled(true);
+    } else if (
       JSON.stringify(selecteds) !== JSON.stringify(food_preferences) ||
       isCreatingRoute
     ) {
@@ -61,35 +63,40 @@ const FoodPreferences: FC<Props> = ({ handleSubmit }) => {
     }
   }, [selecteds, food_preferences]);
 
-  // Que pueda seleccionar varios a la vez (podrian ser botones)
   return (
-    <section className="flex w-full flex-col items-center justify-center gap-5">
-      <span className="text-3xl font-semibold">My food preferences</span>
-      <form action="" className="flex w-full max-w-[30rem] flex-col gap-5">
-        <div className="flex w-full flex-col flex-wrap gap-2">
-          {FOOD_PREFERENCES.map((opt) => (
-            <button
-              onClick={handleSelect}
-              className={`basis-1 rounded-xl bg-gray-300 p-2 font-medium text-black shadow-[0_1px_3px] shadow-slate-500/50 hover:shadow-[0_1px_5px] ${
-                selecteds.includes(opt.value)
-                  ? "bg-green-500 text-white"
-                  : "bg-slate-300"
-              }`}
-              key={opt.value}
-              value={opt.value}
-            >
-              {opt.name}
-            </button>
-          ))}
+    <section className="flex w-full max-w-xl flex-col items-center justify-center gap-5 rounded-md border">
+      <form action="" className="flex w-full flex-col gap-5">
+        <div className="flex flex-col gap-3 p-5">
+          <span className="w-full p-5 text-left text-3xl font-semibold">
+            My food preferences
+          </span>
+          <div className="flex w-full flex-col flex-wrap gap-2">
+            {FOOD_PREFERENCES.map((opt) => (
+              <button
+                onClick={handleSelect}
+                className={`basis-1 rounded-xl bg-gray-300 p-1.5 font-medium text-black shadow-[0_1px_3px] shadow-slate-500/50 hover:shadow-[0_1px_5px] ${
+                  selecteds.includes(opt.value)
+                    ? "bg-green-500 text-white"
+                    : "bg-slate-300"
+                }`}
+                key={opt.value}
+                value={opt.value}
+              >
+                {opt.name}
+              </button>
+            ))}
+          </div>
         </div>
-        <SubmitButton
-          className={"m-auto w-fit"}
-          onClick={onSubmit}
-          loadMessage={"Loading..."}
-          content={`${isCreatingRoute ? "Continue" : "Save"}`}
-          isLoading={isLoading}
-          isDisabled={isDisabled}
-        />
+        <div className="flex items-center justify-center border-t p-5">
+          <SubmitButton
+            className={"m-auto w-fit"}
+            onClick={onSubmit}
+            loadMessage={"Loading..."}
+            content={`${isCreatingRoute ? "Continue" : "Save"}`}
+            isLoading={isLoading}
+            isDisabled={isDisabled}
+          />
+        </div>
       </form>
     </section>
   );

@@ -135,7 +135,10 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
       goal: input.goal,
       measurement_unit: input.measurement_unit,
     };
-    if (JSON.stringify(userValues) !== JSON.stringify(formValues)) {
+    if (
+      JSON.stringify(userValues) !== JSON.stringify(formValues) ||
+      (isCreatingRoute && !isFormIncomplete)
+    ) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
@@ -212,68 +215,27 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
   };
 
   return (
-    <div className="flex w-full flex-col items-center justify-center gap-3 text-xs s:text-sm sm:text-base">
-      <span className="text-3xl font-semibold">Body features</span>
-      <div className="flex w-full max-w-[30rem] flex-wrap">
-        <label className="basis-1/5 font-semibold">Goal</label>
-        <div className="mx-auto flex w-full basis-4/5 items-center justify-center gap-2">
-          {GOAL_OPTIONS.map((opt) => (
-            <button
-              onClick={handleClick}
-              className={`w-full min-w-max rounded-lg bg-gray-300 px-2 py-1 text-xs font-semibold text-black shadow-[0_0_5px_gray] sm:text-base ${
-                input.goal === opt.value && "bg-green-500 text-white"
-              }`}
-              name="goal"
-              key={opt.value}
-              value={opt.value}
-            >
-              {opt.name}
-            </button>
-          ))}
-        </div>
-      </div>
-      <div className="flex w-full max-w-[30rem]">
-        <label className="basis-1/5 font-semibold">Units</label>
-        <div className="flex w-full basis-4/5 justify-center">
-          <div className="relative flex cursor-pointer rounded-3xl border-green-500 text-xs shadow-[0_0_5px_gray] sm:text-base">
-            <div
-              className={`${
-                input.measurement_unit === MeasurementUnits.metric
-                  ? "right-[50%]"
-                  : "right-0"
-              } absolute h-full w-[50%] select-none rounded-3xl bg-green-500 transition-all duration-300`}
-            ></div>
-            {Object.keys(MeasurementUnits).map((type) => (
-              <button
-                key={type}
-                name="measurement_unit"
-                value={type}
-                onClick={handleClick}
-                className="z-20 w-28 rounded-3xl border-none px-4 py-1 text-xs font-semibold active:shadow-lg sm:text-base"
-              >
-                {type}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
+    <div className="flex w-full max-w-xl flex-col items-center justify-center gap-3 rounded-md border text-xs s:text-sm sm:text-base">
       <form
         action=""
         onSubmit={onSubmit}
-        className="flex w-full max-w-[30rem] flex-col gap-5"
+        className="flex w-full max-w-xl flex-col gap-5"
       >
-        <div className="flex flex-col gap-3">
-          <div className="flex w-full max-w-[30rem] flex-wrap">
-            <label className="basis-1/5 font-semibold">Gender</label>
+        <div className="flex flex-col gap-3 p-5">
+          <span className="w-full p-5 text-left text-3xl font-semibold">
+            My Body features
+          </span>
+          <div className="flex w-full max-w-xl flex-wrap">
+            <label className="basis-1/5 font-semibold">Goal</label>
             <div className="mx-auto flex w-full basis-4/5 items-center justify-center gap-2">
-              {GENDER_OPTIONS.map((opt) => (
+              {GOAL_OPTIONS.map((opt) => (
                 <button
                   onClick={handleClick}
-                  className={`w-full rounded-lg bg-gray-300 px-2 py-1 text-xs font-semibold text-black shadow-[0_0_5px_gray] sm:text-base ${
-                    input.gender === opt.value && "bg-green-500 text-white"
+                  className={`w-full min-w-max rounded-lg bg-gray-300 px-2 py-1 text-xs font-semibold text-black shadow-[0_0_5px_gray] sm:text-base ${
+                    input.goal === opt.value && "bg-green-500 text-white"
                   }`}
+                  name="goal"
                   key={opt.value}
-                  name="gender"
                   value={opt.value}
                 >
                   {opt.name}
@@ -281,138 +243,190 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
               ))}
             </div>
           </div>
-          {isMetricUnits ? (
-            <>
-              <div className="relative flex max-w-[30rem] items-center justify-between gap-1">
-                <label
-                  className="basis-1/5 font-semibold"
-                  htmlFor="centimeters"
-                >
-                  Height
-                </label>
-                <span className="absolute right-2 select-none">cm</span>
-                <input
-                  type="text"
-                  name="centimeters"
-                  id="centimeters"
-                  placeholder="Centimeters"
-                  onChange={handleChange}
-                  value={input.centimeters}
-                  className="flex w-full basis-4/5"
-                />
+          <div className="flex w-full max-w-xl">
+            <label className="basis-1/5 font-semibold">Units</label>
+            <div className="flex w-full basis-4/5 justify-center">
+              <div className="relative flex cursor-pointer rounded-3xl border-green-500 text-xs shadow-[0_0_5px_gray] sm:text-base">
+                <div
+                  className={`${
+                    input.measurement_unit === MeasurementUnits.metric
+                      ? "right-[50%]"
+                      : "right-0"
+                  } absolute h-full w-[50%] select-none rounded-3xl bg-green-500 transition-all duration-300`}
+                ></div>
+                {Object.keys(MeasurementUnits).map((type) => (
+                  <button
+                    key={type}
+                    name="measurement_unit"
+                    value={type}
+                    onClick={handleClick}
+                    className="z-20 w-28 rounded-3xl border-none px-4 py-1 text-xs font-semibold active:shadow-lg sm:text-base"
+                  >
+                    {type}
+                  </button>
+                ))}
               </div>
-              <div className="relative flex max-w-[30rem] items-center justify-between gap-1 ">
-                <label className="basis-1/5 font-semibold" htmlFor="kilograms">
-                  Weight
-                </label>
-                <span className="absolute right-2 select-none">kg</span>
-                <input
-                  type="text"
-                  name="kilograms"
-                  placeholder="Kilograms"
-                  onChange={handleChange}
-                  value={input.kilograms}
-                  className="flex w-full basis-4/5"
-                />
+            </div>
+          </div>
+          <div className="flex flex-col gap-3">
+            <div className="flex w-full max-w-xl flex-wrap">
+              <label className="basis-1/5 font-semibold">Gender</label>
+              <div className="mx-auto flex w-full basis-4/5 items-center justify-center gap-2">
+                {GENDER_OPTIONS.map((opt) => (
+                  <button
+                    onClick={handleClick}
+                    className={`w-full rounded-lg bg-gray-300 px-2 py-1 text-xs font-semibold text-black shadow-[0_0_5px_gray] sm:text-base ${
+                      input.gender === opt.value && "bg-green-500 text-white"
+                    }`}
+                    key={opt.value}
+                    name="gender"
+                    value={opt.value}
+                  >
+                    {opt.name}
+                  </button>
+                ))}
               </div>
-            </>
-          ) : (
-            <>
-              <div className="relative flex max-w-[30rem] items-center justify-between gap-1 ">
-                <label htmlFor="feet" className="basis-1/5 font-semibold">
-                  Height
-                </label>
-                <div className="flex w-min basis-4/5 items-center gap-1">
-                  <div className="relative flex w-full items-center">
-                    <span className="absolute right-2 select-none">ft</span>
-                    <input
-                      type="text"
-                      name="feet"
-                      id="feet"
-                      placeholder="Feet"
-                      onChange={handleChange}
-                      value={input.feet}
-                      className="flex w-full"
-                    />
-                  </div>
-                  <div className="relative flex w-full items-center ">
-                    <span className="absolute right-2 select-none">in</span>
-                    <input
-                      type="text"
-                      name="inches"
-                      placeholder="Inches"
-                      onChange={handleChange}
-                      value={input.inches}
-                      className="flex w-full"
-                    />
+            </div>
+            {isMetricUnits ? (
+              <>
+                <div className="relative flex max-w-xl items-center justify-between gap-1">
+                  <label
+                    className="basis-1/5 font-semibold"
+                    htmlFor="centimeters"
+                  >
+                    Height
+                  </label>
+                  <span className="absolute right-2 select-none">cm</span>
+                  <input
+                    type="text"
+                    name="centimeters"
+                    id="centimeters"
+                    placeholder="Centimeters"
+                    onChange={handleChange}
+                    value={input.centimeters}
+                    className="flex w-full basis-4/5"
+                  />
+                </div>
+                <div className="relative flex max-w-xl items-center justify-between gap-1 ">
+                  <label
+                    className="basis-1/5 font-semibold"
+                    htmlFor="kilograms"
+                  >
+                    Weight
+                  </label>
+                  <span className="absolute right-2 select-none">kg</span>
+                  <input
+                    type="text"
+                    name="kilograms"
+                    placeholder="Kilograms"
+                    onChange={handleChange}
+                    value={input.kilograms}
+                    className="flex w-full basis-4/5"
+                  />
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="relative flex max-w-xl items-center justify-between gap-1 ">
+                  <label htmlFor="feet" className="basis-1/5 font-semibold">
+                    Height
+                  </label>
+                  <div className="flex w-min basis-4/5 items-center gap-1">
+                    <div className="relative flex w-full items-center">
+                      <span className="absolute right-2 select-none">ft</span>
+                      <input
+                        type="text"
+                        name="feet"
+                        id="feet"
+                        placeholder="Feet"
+                        onChange={handleChange}
+                        value={input.feet}
+                        className="flex w-full"
+                      />
+                    </div>
+                    <div className="relative flex w-full items-center ">
+                      <span className="absolute right-2 select-none">in</span>
+                      <input
+                        type="text"
+                        name="inches"
+                        placeholder="Inches"
+                        onChange={handleChange}
+                        value={input.inches}
+                        className="flex w-full"
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="relative flex max-w-[30rem] items-center justify-between gap-1 ">
-                <label htmlFor="pounds" className="basis-1/5 font-semibold">
-                  Weight
-                </label>
-                <span className="absolute right-2 select-none">kg</span>
-                <input
-                  type="text"
-                  name="pounds"
-                  id="pounds"
-                  placeholder="Pounds"
-                  onChange={handleChange}
-                  value={input.pounds}
-                  className="flex w-full basis-4/5"
-                />
-              </div>
-            </>
-          )}
-          <div className="relative flex items-center justify-between gap-1">
-            <label className="basis-1/5 font-semibold" htmlFor="age">
-              Age
-            </label>
-            <span className="absolute right-2 select-none">years</span>
-            <input
-              type="text"
-              name="age"
-              required
-              placeholder="Years"
-              onChange={handleChange}
-              value={input.age}
-              className="flex w-full basis-4/5"
-            />
-          </div>
-          <div className="flex items-center justify-between gap-1">
-            <label className="basis-1/5 font-semibold" htmlFor="activity">
-              Activity
-            </label>
-            <select
-              name="activity"
-              id="activity"
-              className="flex w-full basis-4/5"
-              onChange={handleChange}
-              defaultValue={input.activity}
-            >
-              <option value="none" disabled hidden>
-                Select
-              </option>
-              {ACTIVITY_OPTIONS.map((act) => (
-                <option key={act.value} value={act.value}>
-                  {act.name}
+                <div className="relative flex max-w-xl items-center justify-between gap-1 ">
+                  <label htmlFor="pounds" className="basis-1/5 font-semibold">
+                    Weight
+                  </label>
+                  <span className="absolute right-2 select-none">kg</span>
+                  <input
+                    type="text"
+                    name="pounds"
+                    id="pounds"
+                    placeholder="Pounds"
+                    onChange={handleChange}
+                    value={input.pounds}
+                    className="flex w-full basis-4/5"
+                  />
+                </div>
+              </>
+            )}
+            <div className="relative flex items-center justify-between gap-1">
+              <label className="basis-1/5 font-semibold" htmlFor="age">
+                Age
+              </label>
+              <span className="absolute right-2 select-none">years</span>
+              <input
+                type="text"
+                name="age"
+                required
+                placeholder="Years"
+                onChange={handleChange}
+                value={input.age}
+                className="flex w-full basis-4/5"
+              />
+            </div>
+            <div className="flex items-center justify-between gap-1">
+              <label className="basis-1/5 font-semibold" htmlFor="activity">
+                Activity
+              </label>
+              <select
+                name="activity"
+                id="activity"
+                className="flex w-full basis-4/5"
+                onChange={handleChange}
+                defaultValue={input.activity}
+              >
+                <option value="none" disabled hidden>
+                  Select
                 </option>
-              ))}
-            </select>
+                {ACTIVITY_OPTIONS.map((act) => (
+                  <option key={act.value} value={act.value}>
+                    {act.name}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         </div>
-        <SubmitButton
-          className={"m-auto w-fit"}
-          onClick={onSubmit}
-          loadMessage={"Loading..."}
-          content={`${isCreatingRoute ? "Continue" : "Save"}`}
-          isLoading={isLoading}
-          isDisabled={isFormIncomplete || isDisabled}
-        />
-        {error && (
-          <span className="text-center font-medium text-red-400">{error}</span>
-        )}
+        <div className="flex items-center justify-center border-t p-5">
+          <SubmitButton
+            className={"m-auto w-fit"}
+            onClick={onSubmit}
+            loadMessage={"Loading..."}
+            content={`${isCreatingRoute ? "Continue" : "Save"}`}
+            isLoading={isLoading}
+            isDisabled={isFormIncomplete || isDisabled}
+          />
+          {error && (
+            <span className="text-center font-medium text-red-400">
+              {error}
+            </span>
+          )}
+        </div>
       </form>
       <style jsx>
         {`

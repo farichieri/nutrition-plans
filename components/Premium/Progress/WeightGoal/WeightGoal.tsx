@@ -20,34 +20,34 @@ const WeightGoal: FC<Props> = () => {
   };
 
   return (
-    <div>
+    <section className="flex w-full max-w-xl flex-col items-center justify-center gap-5 rounded-md border">
       {addWeightGoalOpen && <WeightGoalModal weightGoal={goal} />}
-      {!goal?.weight_goal_in_kg ? (
-        <div>
-          <button
-            className="rounded-md bg-green-500 px-2 py-1 text-white shadow-md"
-            onClick={handleOpen}
-          >
-            Add Weight Goal
-          </button>
-        </div>
-      ) : (
+      <div className="flex w-full flex-col gap-3 p-5">
+        <span className="w-full p-5 text-left text-3xl font-semibold">
+          Weight Goal
+        </span>
+        {goal?.weight_goal_in_kg && (
+          <div>
+            <div className="flex gap-1">
+              <span>Due date:</span>
+              <span className="text-green-500">{goal.due_date}</span>
+            </div>
+            <div className="flex gap-1">
+              <span>Weight goal:</span>
+              <span className="text-green-500">{goal.weight_goal_in_kg}</span>
+            </div>
+          </div>
+        )}
+      </div>
+      <div className="flex w-full items-center justify-center border-t p-5">
         <button
-          className="rounded-xl border p-5 shadow-md"
+          className="rounded-md bg-green-500 px-2 py-1 text-white shadow-md"
           onClick={handleOpen}
         >
-          <span className="text-2xl font-semibold">Weight Goal</span>
-          <div className="flex gap-1">
-            <span>Due date:</span>
-            <span>{goal.due_date}</span>
-          </div>
-          <div className="flex gap-1">
-            <span>Weight goal:</span>
-            <span>{goal.weight_goal_in_kg}</span>
-          </div>
+          {goal?.weight_goal_in_kg ? "Edit Weight Goal" : "Add Weight Goal"}
         </button>
-      )}
-    </div>
+      </div>
+    </section>
   );
 };
 export default WeightGoal;

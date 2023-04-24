@@ -11,7 +11,7 @@ export default function Page() {
   return (
     <PremiumLayout>
       <section className="flex flex-col items-center gap-2 px-4 py-10">
-        <div className="w-full border-b pb-10">
+        <div className="mb-5 w-full border-b pb-10">
           <h1 className="mx-auto w-full max-w-5xl text-3xl font-semibold">
             Progress
           </h1>

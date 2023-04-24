@@ -16,7 +16,7 @@ interface Props {
 const WeightGoalModal: FC<Props> = ({ weightGoal }) => {
   const [isSaving, setIsSaving] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
   const { user } = useSelector(selectAuthSlice);
   const dispatch = useDispatch();
   const [weightGoalState, setWeightGoalState] = useState<WeightGoal>({

@@ -43,13 +43,13 @@ export default function Page() {
   return (
     <section className="min-w-screen flex min-h-screen w-full flex-col items-center gap-10 px-4 py-14">
       <span className="text-2xl font-bold">Nutrition Plans</span>
-      <div className="flex w-full flex-col items-center justify-center gap-10">
+      <div className="flex w-full flex-col items-center justify-center ">
         <NewUserSteps
           steps={STEPS}
           stepSelected={stepSelected}
           setStepSelected={setStepSelected}
         />
-        <div className="w-full max-w-lg rounded-3xl px-4 py-10 shadow-[0_3px_10px] shadow-slate-500/50">
+        <div className="w-full max-w-lg rounded-3xl px-4 py-10 ">
           {stepSelected === STEPS[0].step ? (
             <div className="flex w-full flex-col items-center gap-10">
               {/* <span className="text-3xl font-semibold">Body features</span> */}
@@ -58,7 +58,7 @@ export default function Page() {
           ) : stepSelected === STEPS[1].step ? (
             <div className="flex w-full flex-col items-center gap-10">
               <button
-                className="mr-auto rounded-3xl bg-green-500 px-2 py-1 text-white shadow hover:bg-green-600"
+                className="mr-auto rounded-md border border-green-500 bg-green-500/50 px-2 py-0.5 text-white hover:bg-green-600"
                 onClick={handleBack}
               >
                 Back
@@ -71,12 +71,11 @@ export default function Page() {
           ) : (
             <div className="flex w-full flex-col items-center gap-10">
               <button
-                className="mr-auto rounded-3xl bg-green-500 px-2 py-1 text-white shadow hover:bg-green-600"
+                className="mr-auto rounded-md border border-green-500 bg-green-500/50 px-2 py-0.5 text-white hover:bg-green-600"
                 onClick={handleBack}
               >
                 Back
               </button>
-              <span className="text-3xl font-semibold">Finish</span>
               <Results handleSubmit={handleContinue} />
             </div>
           )}

@@ -34,7 +34,7 @@ const ProgressList: FC<Props> = () => {
       </div>
       {Object.keys(progress).map((p) => (
         <div
-          className="flex w-full items-center justify-between gap-2 rounded-sm bg-gray-300/50 px-2 py-0.5"
+          className="flex w-full cursor-pointer items-center justify-between gap-2 rounded-sm bg-gray-300/50 px-2 py-0.5"
           key={progress[p].date}
           onClick={() => handleOpen(progress[p])}
         >

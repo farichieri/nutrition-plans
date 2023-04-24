@@ -5,7 +5,7 @@ import {
   BugAntIcon,
   ChatBubbleOvalLeftEllipsisIcon,
 } from "@heroicons/react/20/solid";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 interface Props {}
@@ -13,7 +13,7 @@ interface Props {}
 const Support: FC<Props> = () => {
   const [action, setAction] = useState("feature");
   const [response, setResponse] = useState("");
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
   const { user } = useSelector(selectAuthSlice);
@@ -58,6 +58,14 @@ const Support: FC<Props> = () => {
       icon: <BugAntIcon className="h-4 w-4" />,
     },
   ];
+
+  useEffect(() => {
+    if (message.length > 0) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [message]);
 
   return (
     <div className="flex h-full w-full flex-col flex-wrap items-start justify-start gap-2">

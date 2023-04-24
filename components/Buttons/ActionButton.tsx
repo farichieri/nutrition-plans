@@ -21,10 +21,10 @@ const ActionButton = ({
   if (action === ButtonAction.save) {
     return (
       <button
-        className={`flex select-none justify-center rounded-3xl px-4 py-1 font-semibold text-white shadow-[0_1px_5px_gray] duration-300  ${className} ${
+        className={`flex select-none justify-center rounded-md  border px-4 py-1 text-sm font-medium shadow-[0_1px_5px_gray] duration-300  ${className} ${
           isDisabled
-            ? "bg-gray-500/50 hover:bg-gray-600/50"
-            : "bg-green-500 hover:bg-green-600 active:shadow-[0_0_10px_gray]"
+            ? "cursor-not-allowed border-transparent bg-transparent opacity-70"
+            : " border-green-500 bg-green-500/70 opacity-100 hover:bg-green-600 active:shadow-[0_0_10px_gray]"
         }`}
         onClick={onClick}
         disabled={isDisabled}
@@ -35,10 +35,10 @@ const ActionButton = ({
   } else if (action === ButtonAction.delete) {
     return (
       <button
-        className={`flex select-none justify-center rounded-3xl px-4 py-1 font-semibold text-white shadow-[0_1px_5px_gray] duration-300  ${className} ${
+        className={`flex select-none justify-center rounded-md border px-4 py-1 text-sm font-medium shadow-[0_1px_5px_gray] duration-300  ${className} ${
           isDisabled
-            ? "bg-gray-500/50 hover:bg-gray-600/50"
-            : "bg-red-400 hover:bg-red-500 active:shadow-[0_0_10px_gray]"
+            ? "cursor-not-allowed border-transparent bg-transparent opacity-70"
+            : " border-red-500 bg-red-500/70 opacity-100 hover:bg-red-600 active:shadow-[0_0_10px_gray]"
         }`}
         onClick={onClick}
         disabled={isDisabled}
@@ -49,10 +49,10 @@ const ActionButton = ({
   } else if (action === ButtonAction.discard) {
     return (
       <button
-        className={`flex select-none justify-center rounded-3xl px-4 py-1 font-semibold text-white shadow-[0_1px_5px_gray] duration-300  ${className} ${
+        className={`flex select-none justify-center  rounded-md border px-4 py-1 text-sm font-medium shadow-[0_1px_5px_gray] duration-300  ${className} ${
           isDisabled
-            ? "bg-gray-500/50 hover:bg-gray-600/50"
-            : "bg-red-200 hover:bg-red-300 active:shadow-[0_0_10px_gray]"
+            ? "cursor-not-allowed border-transparent bg-transparent opacity-70"
+            : " border-red-500 bg-red-500/70 opacity-100 hover:bg-red-600 active:shadow-[0_0_10px_gray]"
         }`}
         onClick={onClick}
         disabled={isDisabled}

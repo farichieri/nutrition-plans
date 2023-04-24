@@ -16,9 +16,10 @@ const NewUserSteps: FC<Props> = ({ steps, stepSelected, setStepSelected }) => {
         >
           <span>Step {step.step}</span>
           <button
-            // onClick={() => setStepSelected(step.step)}
-            className={`shadow-g rounded-lg px-1 py-1 text-xs capitalize text-white shadow-xl xs:px-2 xs:text-sm sm:px-3 sm:text-base ${
-              stepSelected === step.step ? "bg-green-500" : "bg-gray-500"
+            className={`shadow-g rounded-lg border px-1 py-1 text-xs capitalize text-white shadow-xl xs:px-2 xs:text-sm sm:px-3 sm:text-base ${
+              stepSelected === step.step
+                ? "border-green-500 bg-green-500/50"
+                : "bg-gray-500/50"
             }`}
           >
             {step.name}

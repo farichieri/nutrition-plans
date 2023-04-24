@@ -68,14 +68,6 @@ const ProgressItemModal: FC<Props> = ({ progressItem }) => {
     setIsDeleting(false);
   };
 
-  useEffect(() => {
-    if (JSON.stringify(progressItem) !== JSON.stringify(progressState)) {
-      setIsDisabled(false);
-    } else {
-      setIsDisabled(true);
-    }
-  }, [progressItem, progressState]);
-
   return (
     <Modal onClose={handleClose}>
       <div className="flex flex-col gap-3 p-10">

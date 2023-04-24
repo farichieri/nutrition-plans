@@ -17,10 +17,10 @@ const SubmitButton = ({
 }) => {
   return (
     <button
-      className={`flex select-none justify-center rounded-3xl px-4 py-1 font-semibold text-white shadow-[0_1px_5px_gray] duration-300 active:shadow-[0_0_10px_gray] ${className} ${
+      className={`flex select-none justify-center rounded-md px-4 py-1 text-sm font-medium shadow-[0_1px_5px_gray] duration-300  ${className} ${
         isDisabled
-          ? "bg-gray-500/50 hover:bg-gray-600/50"
-          : "bg-green-500 hover:bg-green-600"
+          ? "cursor-not-allowed border border-transparent bg-transparent opacity-70"
+          : "border border-green-500 bg-green-500/70 opacity-100 hover:bg-green-600 active:shadow-[0_0_10px_gray]"
       }`}
       onClick={onClick}
       disabled={isDisabled}

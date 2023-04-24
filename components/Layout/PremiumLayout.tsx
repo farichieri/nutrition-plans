@@ -22,7 +22,6 @@ export default function PremiumLayout({
   const handleSidebar = () => {
     dispatch(setSidebarOpen(!sidebarOpen));
   };
-
   return (
     <>
       <Head>

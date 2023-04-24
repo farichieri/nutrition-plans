@@ -1,4 +1,4 @@
-import { Bars2Icon, Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
+import { Bars2Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import { FC, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -7,7 +7,7 @@ import ThemeSwitcher from "../theme-switcher";
 
 interface Props {}
 
-const NavBar: FC<Props> = () => {
+const SignBar: FC<Props> = () => {
   const router = useRouter();
   const [openMenu, setOpenMenu] = useState(false);
 
@@ -15,44 +15,26 @@ const NavBar: FC<Props> = () => {
     setOpenMenu(!openMenu);
   };
 
-  const PAGES = [
-    { name: "Plans", url: "/plans" },
-    { name: "Pricing", url: "/pricing" },
-    { name: "About", url: "/about" },
-    { name: "Blog", url: "/blog" },
-  ];
-
   return (
     <nav className="fixed top-0 z-50 flex w-full select-none items-center justify-center">
       <div className="z-50 flex h-[var(--nav-h)] w-full max-w-5xl items-center justify-between gap-4 border-b border-gray-500/20 bg-white/50 px-4 backdrop-blur-md dark:border-cyan-100/20 dark:bg-black/50 ">
         <div className="flex w-fit min-w-fit basis-1/3 justify-start text-sm font-bold sm:text-2xl">
           <Link href={"/"}>Nutrition Plans</Link>
         </div>
-        <div className="hidden basis-1/3 items-center justify-center gap-4 text-xs font-medium sm:text-base lg:flex lg:gap-10">
-          {PAGES.map((page) => (
-            <Link
-              href={page.url}
-              key={page.name}
-              className={`rounded-3xl px-3 py-0.5 duration-300 hover:opacity-100 ${
-                router.asPath === page.url
-                  ? "bg-slate-400/20 opacity-100"
-                  : "opacity-50"
-              }`}
-            >
-              {page.name}
-            </Link>
-          ))}
-        </div>
         <div className="flex w-fit min-w-fit basis-1/3 items-center justify-end gap-4 text-xs sm:gap-10 sm:text-xl">
           <ThemeSwitcher isPremium={false} />
-          <Link href={"/login"} className="hidden lg:flex">
-            <button className="text-base font-semibold">Log in</button>
-          </Link>
-          <div className="flex h-7 items-center text-xs">
-            <Link href="/signup">
-              <PrimaryButton onClick={() => {}} content="Sign up" />
+          {router.asPath !== "/login" && (
+            <Link href={"/login"} className="hidden lg:flex">
+              <button className="text-base font-semibold">Log in</button>
             </Link>
-          </div>
+          )}
+          {router.asPath !== "/signup" && (
+            <div className="flex h-7 items-center text-xs">
+              <Link href="/signup">
+                <PrimaryButton onClick={() => {}} content="Sign up" />
+              </Link>
+            </div>
+          )}
           <div className="cursor-pointer lg:hidden">
             {!openMenu ? (
               <Bars2Icon className="h-6 w-6" onClick={handleMenu} />
@@ -109,4 +91,4 @@ const NavBar: FC<Props> = () => {
   );
 };
 
-export default NavBar;
+export default SignBar;

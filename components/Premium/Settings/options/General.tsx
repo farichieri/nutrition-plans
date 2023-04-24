@@ -12,7 +12,7 @@ interface Props {
 const General: FC<Props> = () => {
   const dispatch = useDispatch();
   const [isSaving, setIsSaving] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
   const { user } = useSelector(selectAuthSlice);
   const userMU = user?.body_data.measurement_unit;
   const [MU, setMU] = useState(user?.body_data.measurement_unit);
@@ -36,7 +36,10 @@ const General: FC<Props> = () => {
     setIsSaving(false);
   };
 
-  const handleCancel = () => {};
+  const handleCancel = (event: React.MouseEvent) => {
+    event.preventDefault();
+    setMU(userMU);
+  };
 
   useEffect(() => {
     if (JSON.stringify(MU) === JSON.stringify(userMU)) {

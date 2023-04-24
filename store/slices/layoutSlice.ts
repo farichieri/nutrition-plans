@@ -4,22 +4,22 @@ import type { RootState } from "../store";
 
 // Define a type for the slice state
 interface LayoutState {
+  isBillingModalOpen: boolean;
+  isSettingsOpen: boolean;
+  sidebarEvolutionOpen: boolean;
   sidebarOpen: boolean;
   sidebarPlansOpen: boolean;
-  sidebarEvolutionOpen: boolean;
   theme: Theme;
-  isSettingsOpen: boolean;
-  isBillingModalOpen: boolean;
 }
 
 // Define the initial state using that type
 const initialState: LayoutState = {
+  isBillingModalOpen: false,
+  isSettingsOpen: false,
+  sidebarEvolutionOpen: true,
   sidebarOpen: true,
   sidebarPlansOpen: true,
-  sidebarEvolutionOpen: true,
   theme: Theme.light,
-  isSettingsOpen: false,
-  isBillingModalOpen: false,
 };
 
 export const layoutSlice = createSlice({
@@ -49,12 +49,12 @@ export const layoutSlice = createSlice({
 });
 
 export const {
-  setSidebarOpen,
-  setSidebarPlansOpen,
-  setSidebarEvolutionOpen,
-  setTheme,
   setIsBillingModalOpen,
   setIsSettingsOpen,
+  setSidebarEvolutionOpen,
+  setSidebarOpen,
+  setSidebarPlansOpen,
+  setTheme,
 } = layoutSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
