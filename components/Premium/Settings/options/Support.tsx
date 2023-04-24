@@ -68,7 +68,7 @@ const Support: FC<Props> = () => {
   }, [message]);
 
   return (
-    <div className="flex h-full w-full flex-col flex-wrap items-start justify-start gap-2">
+    <div className="flex h-full w-full flex-col flex-wrap items-start justify-start gap-2 p-3">
       <div className="flex w-full flex-wrap gap-1">
         {OPTIONS.map((opt) => (
           <button

@@ -10,7 +10,7 @@ const Account: FC<Props> = ({ setSettingSelected }) => {
   const { user } = useSelector(selectAuthSlice);
 
   return (
-    <div className="flex h-full w-full flex-col items-start gap-5">
+    <div className="flex h-full w-full flex-col flex-wrap items-start justify-start gap-2 p-3">
       <div className="flex flex-col gap-2 text-3xl">
         <span className="text-3xl font-semibold">Photo</span>
         <Avatar width={80} height={80} changeable={true} />

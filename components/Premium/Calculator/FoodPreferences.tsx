@@ -64,7 +64,7 @@ const FoodPreferences: FC<Props> = ({ handleSubmit }) => {
   }, [selecteds, food_preferences]);
 
   return (
-    <section className="flex w-full max-w-xl flex-col items-center justify-center gap-5 rounded-md border">
+    <section className="flex w-full max-w-xl flex-col items-center justify-center gap-3 rounded-md border text-xs s:text-sm sm:text-base">
       <form action="" className="flex w-full flex-col gap-5">
         <div className="flex flex-col gap-3 p-5">
           <span className="w-full p-5 text-left text-3xl font-semibold">
@@ -74,10 +74,10 @@ const FoodPreferences: FC<Props> = ({ handleSubmit }) => {
             {FOOD_PREFERENCES.map((opt) => (
               <button
                 onClick={handleSelect}
-                className={`basis-1 rounded-xl bg-gray-300 p-1.5 font-medium text-black shadow-[0_1px_3px] shadow-slate-500/50 hover:shadow-[0_1px_5px] ${
+                className={`basis-1 rounded-md border bg-gray-300 p-1.5 font-medium text-black shadow-[0_1px_3px] shadow-slate-500/50 hover:shadow-[0_1px_5px] ${
                   selecteds.includes(opt.value)
-                    ? "bg-green-500 text-white"
-                    : "bg-slate-300"
+                    ? "border-green-500 bg-green-500/70 text-white"
+                    : "border-slate-400 bg-slate-300/50"
                 }`}
                 key={opt.value}
                 value={opt.value}

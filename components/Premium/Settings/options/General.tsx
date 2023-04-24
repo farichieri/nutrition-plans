@@ -50,48 +50,53 @@ const General: FC<Props> = () => {
   }, [user, MU]);
 
   return (
-    <div className="flex h-full flex-col gap-5">
-      <span className="text-xl font-semibold underline">
-        Measurement units:
-      </span>
-      <div className="flex flex-wrap gap-2">
-        {Object.keys(MeasurementUnits).map((type) => (
-          <button
-            className={`rounded-md px-2 py-0.5 font-medium shadow-lg ${
-              MU === type ? "bg-green-500" : "bg-slate-300"
-            }`}
-            key={type}
-            value={type}
-            onClick={() => setMU(type)}
-          >
-            <span className="text-xl font-semibold capitalize">{type}</span>
-            {type === MeasurementUnits.metric ? (
-              <div className="flex flex-col">
-                <div className="flex gap-1">
-                  <span>Height:</span>
-                  <span>Centimeter - cm</span>
+    <section className="flex h-full flex-col gap-5 overflow-hidden">
+      <div className="flex h-full flex-col gap-5 overflow-auto p-3">
+        <span className="text-md font-semibold  underline md:text-xl">
+          Measurement units:
+        </span>
+        <div className="flex flex-wrap gap-2">
+          {Object.keys(MeasurementUnits).map((type) => (
+            <button
+              className={`rounded-md border px-2 py-0.5 font-medium shadow-lg ${
+                MU === type
+                  ? "border-green-500 bg-green-500/70 text-white shadow-inner"
+                  : "border-slate-400 bg-slate-300/50 text-black"
+              }`}
+              key={type}
+              value={type}
+              onClick={() => setMU(type)}
+            >
+              <span className="text-xl font-semibold capitalize">{type}</span>
+              {type === MeasurementUnits.metric ? (
+                <div className="flex flex-col">
+                  <div className="flex gap-1">
+                    <span>Height:</span>
+                    <span>Centimeter - cm</span>
+                  </div>
+                  <div className="flex gap-1">
+                    <span>Weight:</span>
+                    <span>Kilograms - kg</span>
+                  </div>
                 </div>
-                <div className="flex gap-1">
-                  <span>Weight:</span>
-                  <span>Kilograms - kg</span>
+              ) : (
+                <div className="flex flex-col">
+                  <div className="flex gap-1">
+                    <span>Height:</span>
+                    <span>Inches and feets</span>
+                  </div>
+                  <div className="flex gap-1">
+                    <span>Weight:</span>
+                    <span>Pounds - lbs</span>
+                  </div>
                 </div>
-              </div>
-            ) : (
-              <div className="flex flex-col">
-                <div className="flex gap-1">
-                  <span>Height:</span>
-                  <span>Inches and feets</span>
-                </div>
-                <div className="flex gap-1">
-                  <span>Weight:</span>
-                  <span>Pounds - lbs</span>
-                </div>
-              </div>
-            )}
-          </button>
-        ))}
+              )}
+            </button>
+          ))}
+        </div>
       </div>
-      <div className="mt-auto flex w-full items-center justify-center gap-2">
+
+      <div className="mt-auto flex w-full items-center justify-center gap-2 border-t p-3">
         <ActionButton
           loadMessage="Discarding..."
           content="Discard"
@@ -111,7 +116,7 @@ const General: FC<Props> = () => {
           onClick={handleSave}
         />
       </div>
-    </div>
+    </section>
   );
 };
 

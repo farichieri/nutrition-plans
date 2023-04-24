@@ -215,7 +215,7 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
   };
 
   return (
-    <div className="flex w-full max-w-xl flex-col items-center justify-center gap-3 rounded-md border text-xs s:text-sm sm:text-base">
+    <div className="flex h-full w-full max-w-xl flex-col items-center justify-center gap-3 rounded-md border text-xs s:text-sm sm:text-base">
       <form
         action=""
         onSubmit={onSubmit}
@@ -231,8 +231,10 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
               {GOAL_OPTIONS.map((opt) => (
                 <button
                   onClick={handleClick}
-                  className={`w-full min-w-max rounded-lg bg-gray-300 px-2 py-1 text-xs font-semibold text-black shadow-[0_0_5px_gray] sm:text-base ${
-                    input.goal === opt.value && "bg-green-500 text-white"
+                  className={`w-full min-w-max rounded-lg border bg-gray-300 px-2 py-1 text-xs font-semibold text-black shadow-[0_0_5px_gray] sm:text-base ${
+                    input.goal === opt.value
+                      ? "border-green-500 bg-green-500/70 text-white shadow-inner"
+                      : "border-slate-400 bg-slate-300/50 text-black"
                   }`}
                   name="goal"
                   key={opt.value}
@@ -275,8 +277,10 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
                 {GENDER_OPTIONS.map((opt) => (
                   <button
                     onClick={handleClick}
-                    className={`w-full rounded-lg bg-gray-300 px-2 py-1 text-xs font-semibold text-black shadow-[0_0_5px_gray] sm:text-base ${
-                      input.gender === opt.value && "bg-green-500 text-white"
+                    className={`w-full rounded-lg border px-2 py-1 text-xs font-semibold shadow-[0_0_5px_gray] sm:text-base ${
+                      input.gender === opt.value
+                        ? "border-green-500 bg-green-500/70 text-white"
+                        : "border-slate-400 bg-slate-300/50 text-black"
                     }`}
                     key={opt.value}
                     name="gender"

@@ -85,8 +85,8 @@ const Settings: FC<Props> = () => {
             ))}
           </div>
         </div>
-        <div className="flex basis-4/5 flex-col p-3">
-          <span className="mb-3 pb-2 text-lg font-semibold capitalize">
+        <div className="flex basis-4/5 flex-col">
+          <span className="p-3 text-lg font-semibold capitalize">
             {settingSelected}
           </span>
           {getOptionSelected()}

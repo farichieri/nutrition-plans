@@ -14,7 +14,7 @@ const Subscription: FC<Props> = () => {
   console.log({ user });
 
   return (
-    <div className="flex w-full flex-col gap-4">
+    <div className="flex w-full flex-col gap-4 p-3">
       <div className="flex items-center gap-1">
         <span>Current plan:</span>
         <span className="rounded-md bg-slate-300/50 p-1 capitalize">
