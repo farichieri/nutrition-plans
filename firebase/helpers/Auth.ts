@@ -14,6 +14,7 @@ const createNewUser = async (user: User) => {
       email_address: user.email,
       photo_url: user.photoURL,
       user_id: user.uid,
+      premium_plan: "free",
     };
     await setDoc(newUserRef, newUser);
   } catch (error) {

@@ -9,7 +9,11 @@ export default function Page() {
   return (
     <PremiumLayout>
       <section className="flex flex-col items-center gap-10 px-4 py-10">
-        <h1 className="text-3xl font-bold">Profile</h1>
+        <div className="w-full border-b pb-10">
+          <h1 className="mx-auto w-full max-w-5xl text-3xl font-semibold">
+            Profile
+          </h1>
+        </div>
         <div className="flex w-full flex-wrap justify-center gap-10">
           <div>
             <BMRCalculator handleSubmit={handleSubmit} />

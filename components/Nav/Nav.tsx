@@ -1,5 +1,6 @@
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/20/solid";
 import { FC, useState } from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import PrimaryButton from "../Buttons/PrimaryButton";
 import ThemeSwitcher from "../theme-switcher";
@@ -7,11 +8,19 @@ import ThemeSwitcher from "../theme-switcher";
 interface Props {}
 
 const NavBar: FC<Props> = () => {
+  const router = useRouter();
   const [openMenu, setOpenMenu] = useState(false);
 
   const handleMenu = () => {
     setOpenMenu(!openMenu);
   };
+
+  const PAGES = [
+    { name: "Plans", url: "/plans" },
+    { name: "Pricing", url: "/pricing" },
+    { name: "About", url: "/about" },
+    { name: "Blog", url: "/plans" },
+  ];
 
   return (
     <nav className="fixed top-0 z-50 flex w-full select-none items-center justify-center">
@@ -19,11 +28,20 @@ const NavBar: FC<Props> = () => {
         <div className="flex w-fit min-w-fit basis-1/3 justify-start text-sm font-bold sm:text-2xl">
           <Link href={"/"}>Nutrition Plans</Link>
         </div>
-        <div className="hidden basis-1/3 items-center justify-center gap-4 text-xs font-medium sm:text-lg md:flex lg:gap-10">
-          <Link href={"/plans"}>Plans</Link>
-          <Link href={"/pricing"}>Pricing</Link>
-          <Link href={"/about"}>About</Link>
-          <Link href={"/blog"}>Blog</Link>
+        <div className="hidden basis-1/3 items-center justify-center gap-4 text-xs font-medium sm:text-base md:flex lg:gap-10">
+          {PAGES.map((page) => (
+            <Link
+              href={page.url}
+              key={page.name}
+              className={`rounded-3xl px-2 py-0.5 duration-300 hover:opacity-100 ${
+                router.asPath === page.url
+                  ? "bg-slate-400/20 opacity-100"
+                  : "opacity-50"
+              }`}
+            >
+              {page.name}
+            </Link>
+          ))}
         </div>
         <div className="flex w-fit min-w-fit basis-1/3 items-center justify-end gap-4 text-xs sm:gap-10 sm:text-xl">
           <ThemeSwitcher isPremium={false} />

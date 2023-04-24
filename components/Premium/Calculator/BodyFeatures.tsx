@@ -283,7 +283,7 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
           </div>
           {isMetricUnits ? (
             <>
-              <div className="relative flex items-center justify-between gap-1">
+              <div className="relative flex max-w-[30rem] items-center justify-between gap-1">
                 <label
                   className="basis-1/5 font-semibold"
                   htmlFor="centimeters"
@@ -301,7 +301,7 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
                   className="flex w-full basis-4/5"
                 />
               </div>
-              <div className="relative flex items-center justify-between gap-1">
+              <div className="relative flex max-w-[30rem] items-center justify-between gap-1 ">
                 <label className="basis-1/5 font-semibold" htmlFor="kilograms">
                   Weight
                 </label>
@@ -318,11 +318,11 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
             </>
           ) : (
             <>
-              <div className="flex items-center justify-between gap-1">
+              <div className="relative flex max-w-[30rem] items-center justify-between gap-1 ">
                 <label htmlFor="feet" className="basis-1/5 font-semibold">
                   Height
                 </label>
-                <div className="flex basis-4/5 items-center gap-1">
+                <div className="flex w-min basis-4/5 items-center gap-1">
                   <div className="relative flex w-full items-center">
                     <span className="absolute right-2 select-none">ft</span>
                     <input
@@ -348,7 +348,7 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
                   </div>
                 </div>
               </div>
-              <div className="relative flex items-center justify-between gap-1">
+              <div className="relative flex max-w-[30rem] items-center justify-between gap-1 ">
                 <label htmlFor="pounds" className="basis-1/5 font-semibold">
                   Weight
                 </label>

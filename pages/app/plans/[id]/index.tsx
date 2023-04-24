@@ -43,19 +43,25 @@ export default function Page({ planData }: Props) {
 
   return (
     <PremiumLayout>
-      <section className={`relative flex w-full flex-col gap-4 p-4`}>
-        <div className="flex">
-          <span className="text-3xl font-bold">{planData.title}</span>
-          {!(user?.plan_selected === planData.id) ? (
-            <button
-              className="ml-auto rounded-3xl border px-2 py-1"
-              onClick={selectPlan}
-            >
-              Select plan
-            </button>
-          ) : (
-            <span className="ml-auto">Plan selected</span>
-          )}
+      <section
+        className={`relative flex w-full flex-col items-center gap-4 px-4 py-10`}
+      >
+        <div className="flex w-full border-b pb-10">
+          <div className="mx-auto flex w-full max-w-5xl">
+            <h1 className="mx-auto w-full max-w-5xl text-3xl font-semibold">
+              {planData.title}
+            </h1>
+            {!(user?.plan_selected === planData.id) ? (
+              <button
+                className="ml-auto   min-w-fit rounded-3xl border px-2 py-1"
+                onClick={selectPlan}
+              >
+                Select plan
+              </button>
+            ) : (
+              <span className="ml-auto">Plan selected</span>
+            )}
+          </div>
         </div>
         {/* {isFree && (
           // <div className="fixed inset-0 z-[60] h-screen w-screen bg-black/10">
@@ -68,7 +74,11 @@ export default function Page({ planData }: Props) {
           // </div>
         )} */}
         {/* <div className={`${isFree && "z-50 cursor-auto select-none blur-sm"}`}> */}
-        <div className={`${isFree && "z-50 cursor-auto select-none "}`}>
+        <div
+          className={`${
+            isFree && "z-50 max-w-5xl cursor-auto select-none"
+          } max-w-5xl`}
+        >
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam
             consequuntur, dignissimos impedit id earum fuga in. Possimus quaerat
