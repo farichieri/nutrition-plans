@@ -72,14 +72,14 @@ const ProgressItemModal: FC<Props> = ({ progressItem }) => {
     <Modal onClose={handleClose}>
       <div className="flex flex-col gap-3 p-10">
         <span className="text-center text-xl font-semibold">Edit Progress</span>
-        <div className="flex items-center gap-1">
-          <span>Date:</span>
-          <span>{progressItem.date}</span>
+        <div className="flex w-full items-center gap-1">
+          <span className="basis-1/3">Date:</span>
+          <span className="basis-2/3">{progressItem.date}</span>
         </div>
-        <div className="flex items-center gap-1">
-          <span>Weight:</span>
+        <div className="flex w-full items-center gap-1">
+          <span className="basis-1/3">Weight:</span>
           <input
-            className="flex w-full rounded-md border bg-transparent px-2"
+            className="flex w-full basis-2/3 rounded-md border bg-transparent px-2"
             type="number"
             name="weight"
             placeholder="Weight"

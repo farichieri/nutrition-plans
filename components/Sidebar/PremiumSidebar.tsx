@@ -6,6 +6,7 @@ import {
   ChartBarIcon,
   ArchiveBoxIcon,
   DocumentCheckIcon,
+  NewspaperIcon,
 } from "@heroicons/react/20/solid";
 import { FC, MouseEventHandler } from "react";
 import { selectAuthSlice } from "@/store/slices/authSlice";
@@ -65,9 +66,9 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
       <div
         className={`${
           sidebarOpen ? "left-0" : "left-[-13rem]"
-        } fixed left-0 z-[70] flex min-h-screen w-[13rem] select-none flex-col gap-6 border-r bg-white/100 px-5 pb-10 pt-16 shadow-sm shadow-gray-500/50 transition-all duration-300 dark:border-slate-400/20 dark:bg-black/100 dark:shadow-cyan-100/20`}
+        } fixed left-0 z-[70] flex min-h-screen w-[13rem] select-none flex-col gap-6 border-r bg-white/100 px-5 pb-10 pt-16 transition-all duration-300 dark:border-slate-400/20 dark:bg-black/100`}
       >
-        <div className="flex w-full flex-col items-center gap-2 pb-2">
+        <div className="flex w-full flex-col items-center gap-2">
           <div className="flex w-full items-center gap-2">
             <DocumentCheckIcon className="h-5 w-5 fill-green-500" />
             <Link
@@ -97,15 +98,15 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
               <span className="text-md font-semibold sm:text-lg">
                 All plans
               </span>
-              {sidebarPlansOpen ? (
-                <ChevronUpIcon className="h-5 w-5" />
-              ) : (
-                <ChevronDownIcon className="h-5 w-5" />
-              )}
+              <ChevronDownIcon
+                className={`h-5 w-5 duration-300 ease-in-out ${
+                  sidebarPlansOpen && "-rotate-180 transform fill-green-500"
+                }`}
+              />
             </div>
           </div>
           <div
-            className={`flex flex-col gap-1 overflow-hidden pl-1 text-sm transition-[max-height] duration-300 sm:text-base ${
+            className={`flex flex-col gap-1 overflow-hidden pl-1 text-sm transition-[max-height] duration-300 ease-linear sm:text-base ${
               sidebarPlansOpen ? " max-h-[30rem]" : "max-h-0"
             }`}
           >
@@ -122,6 +123,18 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
             ))}
           </div>
         </div>
+        <div className="flex w-full flex-col items-center gap-2">
+          <div className="flex w-full items-center gap-2">
+            <NewspaperIcon className="h-5 w-5 fill-green-500" />
+            <Link
+              href={"/app/recipes"}
+              className="text-md w-full font-semibold sm:text-lg"
+            >
+              Recipes
+            </Link>
+          </div>
+        </div>
+
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2 " onClick={toggleEvolution}>
             <ChartBarIcon className="h-5 w-5 fill-green-500" />
@@ -129,15 +142,15 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
               <span className="text-md font-semibold sm:text-lg">
                 Evolution{" "}
               </span>
-              {sidebarEvolutionOpen ? (
-                <ChevronUpIcon className="h-5 w-5" />
-              ) : (
-                <ChevronDownIcon className="h-5 w-5" />
-              )}
+              <ChevronDownIcon
+                className={`h-5 w-5 duration-300 ease-in-out ${
+                  sidebarEvolutionOpen && "-rotate-180 transform fill-green-500"
+                }`}
+              />
             </div>
           </div>
           <div
-            className={`flex flex-col gap-1 overflow-hidden pl-1 text-sm transition-[max-height] duration-300 sm:text-base ${
+            className={`flex flex-col gap-1 overflow-hidden pl-1 text-sm transition-[max-height] duration-300 ease-linear sm:text-base ${
               sidebarEvolutionOpen ? " max-h-[30rem]" : "max-h-0"
             }`}
           >

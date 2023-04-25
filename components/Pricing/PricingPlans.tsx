@@ -3,7 +3,7 @@ import Plan from "./PricingPlan";
 
 const PricingPlans = () => {
   return (
-    <div className="flex w-full flex-wrap items-center justify-center gap-5 ">
+    <div className="flex w-full flex-wrap justify-center gap-5 ">
       {SUBSCRIPTION_PLANS.map((plan) => (
         <Plan pricingPlan={plan} key={plan.name} />
       ))}

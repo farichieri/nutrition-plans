@@ -76,7 +76,13 @@ export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
   },
   {
     buttonContent: "Get started with Premium",
-    checklist: ["All nutrition plans", "Shopping List"],
+    checklist: [
+      "All nutrition plans",
+      "Shopping List",
+      "Recipes",
+      "Progress tools",
+      "Print and email your plans",
+    ],
     checklistTitle: "Everything in Free, plus...",
     checkoutLink: "/app/billing",
     discount: "-20%",

@@ -3,6 +3,7 @@ import { FC, useState } from "react";
 import { selectAuthSlice } from "@/store/slices/authSlice";
 import { useSelector } from "react-redux";
 import Link from "next/link";
+import { CheckCircleIcon } from "@heroicons/react/24/solid";
 
 interface Props {
   pricingPlan: any;
@@ -14,7 +15,7 @@ const PricingPlan: FC<Props> = ({ pricingPlan }) => {
   return (
     <div
       key={pricingPlan.name}
-      className="flex h-[27rem] w-full max-w-xs select-none flex-col items-center gap-5 rounded-3xl border border-green-400/20 bg-white px-5 py-10 shadow-[0_3px_20px] shadow-green-800/40 dark:border-green-700/20 dark:bg-black dark:shadow-green-400/30"
+      className="flex min-h-[27rem] w-full max-w-xs select-none flex-col items-center gap-5 rounded-3xl border border-green-400/20 bg-white px-5 py-10 shadow-[0_3px_20px] shadow-green-800/40 dark:border-green-700/20 dark:bg-black dark:shadow-green-400/30"
     >
       <span className="text-2xl font-medium">{pricingPlan.name}</span>
       {yearly && pricingPlan.yearlyPrice > 0 ? (
@@ -53,7 +54,7 @@ const PricingPlan: FC<Props> = ({ pricingPlan }) => {
       <ul className="flex w-full flex-col items-start justify-start gap-2 px-2">
         {pricingPlan.checklist.map((c: any, index: number) => (
           <li key={index} className="flex items-center gap-1">
-            <CheckIcon className="h-4 w-4 fill-green-500" />
+            <CheckCircleIcon className="h-5 w-5 fill-green-500" />
             <span>{c}</span>
           </li>
         ))}
