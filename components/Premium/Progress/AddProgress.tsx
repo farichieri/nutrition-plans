@@ -87,7 +87,7 @@ const AddProgress: FC<Props> = () => {
     <>
       {formOpened ? (
         <form
-          className="relative flex w-full max-w-xs flex-col items-center gap-2 rounded-xl bg-slate-300/50 p-6"
+          className="relative m-auto flex w-full max-w-xs flex-col items-center gap-2 rounded-xl bg-slate-300/50 p-6"
           onSubmit={handleSubmit}
         >
           <XCircleIcon

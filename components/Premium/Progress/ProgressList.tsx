@@ -25,7 +25,7 @@ const ProgressList: FC<Props> = () => {
   };
 
   return (
-    <div className="flex w-full max-w-4xl flex-col items-center justify-center gap-1 rounded-md border p-5 shadow">
+    <div className="flex w-full max-w-5xl flex-col items-center justify-center gap-1 rounded-md border p-5 shadow">
       {progressOpen && <ProgressItemModal progressItem={progressOpen} />}
       <div className="flex w-full justify-between rounded-sm border border-slate-300 px-2 py-1">
         <span>Date</span>
