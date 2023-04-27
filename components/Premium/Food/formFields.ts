@@ -1,3 +1,4 @@
+import { FoodCategoriesEnum, NutrientsEnum } from "@/types/foodTypes";
 import { NewFood } from "@/types/initialTypes";
 
 let foodKeys: any = {};
@@ -5,17 +6,25 @@ Object.keys(NewFood).forEach((key) => {
   foodKeys[key] = key;
 });
 
+let nutrientKeys: any = {};
+Object.keys(NutrientsEnum).forEach((key) => {
+  nutrientKeys[key] = key;
+});
+
+let foodCategoriesKeys: any = Object.keys(FoodCategoriesEnum);
+
+const calories = nutrientKeys.calories;
+const carbohydrates = nutrientKeys.carbohydrates;
+const fats = nutrientKeys.fats;
 const food_description = foodKeys.food_description;
 const food_name = foodKeys.food_name;
-const nut_calories = foodKeys.nut_calories;
-const nut_carbohydrates = foodKeys.nut_carbohydrates;
-const nut_fats = foodKeys.nut_fats;
 const price = foodKeys.price;
-const proteins = foodKeys.nut_proteins;
+const proteins = nutrientKeys.proteins;
 const serving_amount = foodKeys.serving_amount;
 const serving_amount_per_package = foodKeys.serving_amount_per_package;
 const serving_grams = foodKeys.serving_grams;
 const serving_name = foodKeys.serving_name;
+const food_category = foodKeys.food_category;
 
 const nameDescFields = [
   {
@@ -53,9 +62,9 @@ const nameDescFields = [
 const servingSizeFields = [
   {
     labelText: "Calories",
-    labelFor: nut_calories,
-    id: nut_calories,
-    name: nut_calories,
+    labelFor: calories,
+    id: calories,
+    name: "nutrient",
     type: "number",
     autoComplete: "off",
     isRequired: true,
@@ -65,12 +74,13 @@ const servingSizeFields = [
     step: "",
     title: "",
     pattern: "",
+    unit: null,
   },
   {
     labelText: "Carbohydrates",
-    labelFor: nut_carbohydrates,
-    id: nut_carbohydrates,
-    name: nut_carbohydrates,
+    labelFor: carbohydrates,
+    id: carbohydrates,
+    name: "nutrient",
     type: "number",
     autoComplete: "off",
     isRequired: true,
@@ -80,12 +90,13 @@ const servingSizeFields = [
     step: "",
     title: "",
     pattern: "",
+    unit: null,
   },
   {
     labelText: "Fats",
-    labelFor: nut_fats,
-    id: nut_fats,
-    name: nut_fats,
+    labelFor: fats,
+    id: fats,
+    name: "nutrient",
     type: "number",
     autoComplete: "off",
     isRequired: true,
@@ -94,13 +105,14 @@ const servingSizeFields = [
     min: "0",
     step: "",
     title: "",
+    unit: null,
     pattern: "",
   },
   {
     labelText: "Proteins",
     labelFor: proteins,
     id: proteins,
-    name: proteins,
+    name: "nutrient",
     type: "number",
     autoComplete: "off",
     isRequired: true,
@@ -110,6 +122,7 @@ const servingSizeFields = [
     step: "",
     title: "",
     pattern: "",
+    unit: null,
   },
   {
     labelText: "Description for one serving",
@@ -125,6 +138,7 @@ const servingSizeFields = [
     step: "",
     title: "",
     pattern: undefined,
+    unit: null,
   },
   {
     labelText: "Serving amount",
@@ -140,6 +154,7 @@ const servingSizeFields = [
     step: "",
     title: "",
     pattern: "",
+    unit: null,
   },
   {
     labelText: "Equivalent weight in grams",
@@ -155,6 +170,7 @@ const servingSizeFields = [
     step: "",
     title: "",
     pattern: "",
+    unit: "g",
   },
 ];
 
@@ -173,45 +189,213 @@ const servingsPerPackage = [
     step: "",
     title: "",
     pattern: "",
+    unit: null,
   },
   {
-    labelText: "Price (optional)",
-    labelFor: price,
-    id: price,
-    name: price,
-    type: "number",
     autoComplete: "off",
-    isRequired: true,
-    placeholder: "",
+    id: price,
+    isRequired: false,
+    labelFor: price,
+    labelText: "Price (optional)",
     max: "",
     min: "0",
+    name: price,
+    pattern: "",
+    placeholder: "",
     step: "0.1",
     title: "",
-    pattern: "",
+    type: "number",
+    unit: "U$D",
   },
 ];
 
-const optionalNutritionFields = Object.keys(NewFood.nutrients).map(
-  (key: string) => ({
-    labelText: key,
-    labelFor: key,
-    id: key,
-    name: key,
-    type: "number",
-    autoComplete: "off",
-    isRequired: false,
-    placeholder: "",
-    max: "",
-    min: "0",
-    step: "0.1",
-    title: "",
-    pattern: "",
-  })
-);
+const cholesterol = nutrientKeys.cholesterol;
+const fiber = nutrientKeys.fiber;
+const potassium = nutrientKeys.potassium;
+const sodium = nutrientKeys.sodium;
+
+const firstOptionalTypes = [cholesterol, fiber, potassium, sodium];
+
+const firstOptionalFields = firstOptionalTypes.map((key: string) => ({
+  labelText: key,
+  labelFor: key,
+  id: key,
+  name: "nutrient",
+  type: "number",
+  autoComplete: "off",
+  isRequired: false,
+  placeholder: "",
+  max: "",
+  min: "0",
+  step: "0.1",
+  title: "",
+  pattern: "",
+  unit: null,
+}));
+
+const sugar = nutrientKeys.sugar;
+const fructose = nutrientKeys.fructose;
+const galactose = nutrientKeys.galactose;
+const glucose = nutrientKeys.glucose;
+const lactose = nutrientKeys.lactose;
+const maltose = nutrientKeys.maltose;
+const sucrose = nutrientKeys.sucrose;
+
+const sugarTypes = [
+  sugar,
+  fructose,
+  galactose,
+  glucose,
+  lactose,
+  maltose,
+  sucrose,
+];
+
+const sugarFields = sugarTypes.map((key: string) => ({
+  labelText: key,
+  labelFor: key,
+  id: key,
+  name: "nutrient",
+  type: "number",
+  autoComplete: "off",
+  isRequired: false,
+  placeholder: "",
+  max: "",
+  min: "0",
+  step: "0.1",
+  title: "",
+  pattern: "",
+  unit: null,
+}));
+
+const saturated_fats = nutrientKeys.saturated_fats;
+const monounsaturated_fats = nutrientKeys.monounsaturated_fats;
+const polyunsaturated_fats = nutrientKeys.polyunsaturated_fats;
+const total_omega_3 = nutrientKeys.total_omega_3;
+const total_omega_6 = nutrientKeys.total_omega_6;
+const trans_fats = nutrientKeys.trans_fats;
+
+const fatsTypes = [
+  saturated_fats,
+  monounsaturated_fats,
+  polyunsaturated_fats,
+  total_omega_3,
+  total_omega_6,
+  maltose,
+  trans_fats,
+];
+
+const fatsFields = fatsTypes.map((key: string) => ({
+  labelText: key,
+  labelFor: key,
+  id: key,
+  name: "nutrient",
+  type: "number",
+  autoComplete: "off",
+  isRequired: false,
+  placeholder: "",
+  max: "",
+  min: "0",
+  step: "0.1",
+  title: "",
+  pattern: "",
+  unit: null,
+}));
+
+const betaine = nutrientKeys.betaine;
+const caffeine = nutrientKeys.caffeine;
+const calcium = nutrientKeys.calcium;
+const choline = nutrientKeys.choline;
+const copper = nutrientKeys.copper;
+const fluoride = nutrientKeys.fluoride;
+const folate = nutrientKeys.folate;
+const iron = nutrientKeys.iron;
+const lycopene = nutrientKeys.lycopene;
+const magnesium = nutrientKeys.magnesium;
+const manganese = nutrientKeys.manganese;
+const niacin = nutrientKeys.niacin;
+const phosphorus = nutrientKeys.phosphorus;
+const retinol = nutrientKeys.retinol;
+const selenium = nutrientKeys.selenium;
+const thiamine = nutrientKeys.thiamine;
+const vitamin_a = nutrientKeys.vitamin_a;
+const vitamin_b12 = nutrientKeys.vitamin_b12;
+const vitamin_b6 = nutrientKeys.vitamin_b6;
+const vitamin_c = nutrientKeys.vitamin_c;
+const vitamin_d = nutrientKeys.vitamin_d;
+const vitamin_d2 = nutrientKeys.vitamin_d2;
+const vitamin_d3 = nutrientKeys.vitamin_d3;
+const vitamin_e = nutrientKeys.vitamin_e;
+const vitamin_k = nutrientKeys.vitamin_k;
+const zinc = nutrientKeys.zinc;
+
+const vitsAndMinsTypes = [
+  betaine,
+  caffeine,
+  calcium,
+  choline,
+  copper,
+  fluoride,
+  folate,
+  iron,
+  lycopene,
+  magnesium,
+  manganese,
+  niacin,
+  phosphorus,
+  retinol,
+  selenium,
+  thiamine,
+  vitamin_a,
+  vitamin_b12,
+  vitamin_b6,
+  vitamin_c,
+  vitamin_d,
+  vitamin_d2,
+  vitamin_d3,
+  vitamin_e,
+  vitamin_k,
+  zinc,
+];
+
+const vitsAndMinsFields = vitsAndMinsTypes.map((key: string) => ({
+  labelText: key,
+  labelFor: key,
+  id: key,
+  name: "nutrient",
+  type: "number",
+  autoComplete: "off",
+  isRequired: false,
+  placeholder: "",
+  max: "",
+  min: "0",
+  step: "0.1",
+  title: "",
+  pattern: "",
+  unit: null,
+}));
+
+const foodCategoryOptions = foodCategoriesKeys;
+
+const foodCategorySelect = {
+  autoComplete: "off",
+  id: food_category,
+  isRequired: false,
+  labelFor: food_category,
+  labelText: food_category,
+  name: "food_category",
+  options: foodCategoryOptions,
+  placeholder: "",
+  title: "",
+};
 
 export {
   nameDescFields,
   servingSizeFields,
   servingsPerPackage,
-  optionalNutritionFields,
+  firstOptionalFields,
+  sugarFields,
+  fatsFields,
+  vitsAndMinsFields,
+  foodCategorySelect,
 };

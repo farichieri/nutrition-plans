@@ -181,6 +181,36 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
             </Link>
           </div>
         </div>
+        <div className="flex w-full flex-col items-center gap-2">
+          <div
+            className={`${
+              router.asPath === "/app/create-food" &&
+              " bg-slate-500/30 font-semibold"
+            } text-md flex w-full items-center gap-1 rounded-lg px-2 py-1 text-base font-semibold sm:text-lg`}
+          >
+            <Link
+              href={"/app/create-food"}
+              className="text-md w-full font-semibold sm:text-lg"
+            >
+              Create Food
+            </Link>
+          </div>
+        </div>
+        <div className="flex w-full flex-col items-center gap-2">
+          <div
+            className={`${
+              router.asPath === "/app/search-food" &&
+              " bg-slate-500/30 font-semibold"
+            } text-md flex w-full items-center gap-1 rounded-lg px-2 py-1 text-base font-semibold sm:text-lg`}
+          >
+            <Link
+              href={"/app/search-food"}
+              className="text-md w-full font-semibold sm:text-lg"
+            >
+              Search Food
+            </Link>
+          </div>
+        </div>
         <div className="mx-auto mt-auto flex flex-col gap-5">
           <Cog6ToothIcon
             className="mx-auto mt-auto h-5 w-5 cursor-pointer"

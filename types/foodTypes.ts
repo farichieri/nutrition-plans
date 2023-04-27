@@ -2,8 +2,9 @@ export interface Food {
   [id: string]: any;
   allow_public: boolean;
   cook_time: number | null;
-  date_created: string | null;
+  date_created: any | null;
   date_updated: string | null;
+  food_category: string | null;
   food_description: string | null;
   food_id: string | null;
   food_name: string | null;
@@ -13,13 +14,6 @@ export interface Food {
   manufactured_by: string | null;
   num_favorites: number;
   num_ingredient_usages: number;
-  nut_calories: number | null;
-  nut_carbohydrates: number | null;
-  nut_cholesterol: number | null;
-  nut_fats: number | null;
-  nut_fiber: number | null;
-  nut_net_carbs: number | null;
-  nut_proteins: number | null;
   nutrients: FoodNutrients;
   price: number | null;
   serving_amount_per_package: number | null;
@@ -75,6 +69,7 @@ export enum NutrientsEnum {
   galactose = "galactose",
   glucose = "glucose",
   iron = "iron",
+  lactose = "lactose",
   lycopene = "lycopene",
   magnesium = "magnesium",
   maltose = "maltose",
@@ -114,7 +109,29 @@ export type FoodNutrients = {
 };
 
 export enum NutritionMeasurements {
+  g = "g",
+  kcal = "kcal",
   mcg = "μg",
   mg = "mg",
-  g = "g",
+}
+
+export enum FoodCategoriesEnum {
+  baked_products = "Baked Products",
+  beef_products = "Beef Products",
+  beverages = "beverages",
+  cereal_grains_and_pasta = "Cereal Grains and Pasta",
+  dairy_and_eggs_products = "Dairy and Eggs Products",
+  fats_and_oils = "Fats and Oils",
+  finfish_and_shellfish_products = "Finfish and Shellfish Products",
+  fruits_and_fruit_juices = "Fruits and Fruit Juices",
+  legumes_and_legume_products = "Legumes and Legume Products",
+  nut_and_seed_products = "Nut and Seed Products",
+  pork_products = "Pork Products",
+  poultry_products = "Poultry Products",
+  restaurant_foods = "	Restaurant Foods",
+  sausages_and_luncheon_meats = "Sausages and Luncheon Meats",
+  soups_sauces_and_gravies = "Soups, Sauces, and Gravies",
+  spices_and_herbs = "	Spices and Herbs",
+  sweets = "sweets",
+  vegetables_and_vegetable_products = "Vegetables and Vegetable Products",
 }
