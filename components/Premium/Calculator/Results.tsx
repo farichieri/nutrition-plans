@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { newBodyData } from "@/utils/initialTypes";
+import { newBodyData } from "@/types/initialTypes";
 import {
   selectAuthSlice,
   setIsCreatingUser,

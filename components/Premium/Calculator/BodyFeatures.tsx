@@ -7,7 +7,7 @@ import {
   GENDER_OPTIONS,
   GOAL_OPTIONS,
 } from "@/utils/formContents";
-import { newBodyData } from "@/utils/initialTypes";
+import { newBodyData } from "@/types/initialTypes";
 import { useRouter } from "next/router";
 import { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";

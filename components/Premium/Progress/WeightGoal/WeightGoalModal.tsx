@@ -1,7 +1,7 @@
 import { ButtonAction, WeightGoal } from "@/types/types";
 import { FC, useEffect, useState } from "react";
 import { formatISO } from "date-fns";
-import { initialWeightGoal } from "@/utils/initialTypes";
+import { initialWeightGoal } from "@/types/initialTypes";
 import { selectAuthSlice, setUpdateUser } from "@/store/slices/authSlice";
 import { setAddWeightGoalOpen } from "@/store/slices/progressSlice";
 import { updateUser } from "@/firebase/helpers/Auth";

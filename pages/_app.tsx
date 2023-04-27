@@ -28,7 +28,10 @@ export default function App({ Component, pageProps }: AppProps) {
   }, []);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (
+      typeof window !== "undefined" &&
+      process.env.NODE_ENV === "production"
+    ) {
       const user = auth.currentUser;
       const title = document.title;
       const analytics = getAnalytics();

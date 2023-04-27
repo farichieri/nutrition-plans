@@ -1,6 +1,6 @@
 import { db } from "../firebase.config";
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import { newAccount } from "@/utils/initialTypes";
+import { newAccount } from "@/types/initialTypes";
 import { User, deleteUser } from "firebase/auth";
 import { UserAccount } from "@/types/types";
 
