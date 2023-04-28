@@ -8,7 +8,7 @@ import {
 } from "@/store/slices/progressSlice";
 import { useDispatch, useSelector } from "react-redux";
 import ActionButton from "@/components/Buttons/ActionButton";
-import { ButtonAction } from "@/types/types";
+import { ButtonType } from "@/types/types";
 import { XCircleIcon } from "@heroicons/react/24/solid";
 
 interface Props {}
@@ -124,9 +124,10 @@ const AddProgress: FC<Props> = () => {
             content="Add"
             isLoading={isAdding}
             isDisabled={isDisabled}
-            action={ButtonAction.save}
+            type={ButtonType.save}
             className="w-40"
             onClick={handleSubmit}
+            action={undefined}
           />
         </form>
       ) : (
@@ -136,9 +137,10 @@ const AddProgress: FC<Props> = () => {
             content="Add Progress"
             isLoading={false}
             isDisabled={false}
-            action={ButtonAction.save}
+            type={ButtonType.save}
             className="w-40"
             onClick={handleOpen}
+            action={undefined}
           />
         </div>
       )}

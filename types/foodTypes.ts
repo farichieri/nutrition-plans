@@ -8,7 +8,10 @@ export interface Food {
   food_description: string | null;
   food_id: string | null;
   food_name: string | null;
-  images: FoodImages[];
+  food_name_lowercase: string | null;
+  food_preferences: FoodPreferences;
+  food_type: FoodType;
+  image: string;
   is_deleted: boolean;
   major_ingredients: string | null;
   manufactured_by: string | null;
@@ -21,10 +24,13 @@ export interface Food {
   serving_grams: number | null;
   serving_name: string | null;
   source: string | null;
-  type: FoodType;
   uploader: string | null;
   user_id: string | null;
   weights: FoodWeights[];
+}
+
+export interface FoodGroup {
+  [id: string]: Food;
 }
 
 export interface FoodWeights {
@@ -33,15 +39,14 @@ export interface FoodWeights {
   grams: number;
 }
 
-export interface FoodImages {
-  curated: boolean;
-  food_id: string;
-  image_id: string;
-  image: string;
-  is_primary_image: boolean;
-  source: string;
-  uploader: string;
-}
+// export interface FoodImage {
+//   curated: boolean;
+//   food_id: string | null;
+//   image_id: string | null;
+//   image: string | null;
+//   is_primary_image: boolean;
+//   uploader_id: string | null;
+// }
 
 export interface FoodType {
   is_basic_food: boolean;
@@ -50,6 +55,15 @@ export interface FoodType {
   is_lunch: boolean;
   is_recipe: boolean;
   is_snack: boolean;
+}
+
+export interface FoodPreferences {
+  is_balanced: boolean;
+  is_gluten_free: boolean;
+  is_mediterranean: boolean;
+  is_ketogenic: boolean;
+  is_vegetarian: boolean;
+  is_low_carb: boolean;
 }
 
 export enum NutrientsEnum {

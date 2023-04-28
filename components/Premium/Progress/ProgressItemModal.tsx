@@ -6,7 +6,7 @@ import {
   setUpdateProgress,
 } from "@/store/slices/progressSlice";
 import { deleteProgress, updateProgress } from "@/firebase/helpers/Progress";
-import { ButtonAction, ProgressItem } from "@/types/types";
+import { ButtonType, ProgressItem } from "@/types/types";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "@/components/Modal/Modal";
 import ActionButton from "@/components/Buttons/ActionButton";
@@ -93,18 +93,20 @@ const ProgressItemModal: FC<Props> = ({ progressItem }) => {
             content="Delete"
             isLoading={isDeleting}
             isDisabled={isDisabled}
-            action={ButtonAction.delete}
+            type={ButtonType.delete}
             className="w-full"
             onClick={handleDelete}
+            action="submit"
           />
           <ActionButton
             loadMessage="Saving..."
             content="Save"
             isLoading={isSaving}
             isDisabled={isDisabled}
-            action={ButtonAction.save}
+            type={ButtonType.save}
             className="w-full"
             onClick={handleSave}
+            action="submit"
           />
         </div>
       </div>

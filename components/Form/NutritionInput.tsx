@@ -73,15 +73,15 @@ const NutritionInput: FC<Props> = ({
   };
 
   return (
-    <div className="my-2 flex flex-wrap items-center justify-between gap-0.5 sm:flex-nowrap">
+    <div className="my-2 flex flex-wrap items-center justify-between gap-1 md:flex-nowrap">
       <label
         htmlFor={labelFor}
-        className="w-full min-w-fit text-base capitalize"
+        className="w-full min-w-fit basis-1/2 text-base capitalize"
       >
         {labelText.replaceAll("_", " ")}
       </label>
-      <div className="flex w-full  items-center justify-start gap-2 ">
-        <div className="flex w-full basis-1/3 items-center justify-start gap-2">
+      <div className="flex w-full items-center justify-between md:basis-1/2 ">
+        <div className="flex w-full basis-1/2 items-center justify-start gap-2">
           <input
             className={fixedInputClass + customClass}
             id={id}
@@ -97,14 +97,16 @@ const NutritionInput: FC<Props> = ({
             type={type}
             value={value || ""}
           />
-          <label htmlFor={labelFor} className="basis-1/2">
+          <label htmlFor={labelFor} className="">
             {measurementUnit || unit}
           </label>
         </div>
         {requirement && (
           <>
-            <span className="mx-5 opacity-50">or</span>
-            <div className="flex w-full items-center justify-end gap-2">
+            <span className="flex w-full basis-1/3 items-center justify-center opacity-50">
+              or
+            </span>
+            <div className="flex w-full basis-1/3 items-center justify-end gap-2">
               <input
                 className={fixedInputClass + customClass}
                 id={id}

@@ -1,7 +1,7 @@
 import {
   Food,
-  FoodImages,
   FoodNutrients,
+  FoodPreferences,
   FoodType,
   FoodWeights,
 } from "@/types/foodTypes";
@@ -12,6 +12,8 @@ import {
   UserFoodData,
   WeightGoal,
 } from "@/types/types";
+
+export const DEFAULT_IMAGE = "/images/foods/default_food.png";
 
 export const newBodyData: UserBodyData = {
   activity: null,
@@ -67,15 +69,22 @@ export const NewFoodType: FoodType = {
   is_recipe: false,
   is_snack: false,
 };
-export const NewFoodImages: FoodImages = {
-  curated: false,
-  food_id: "",
-  image_id: "",
-  image: "",
-  is_primary_image: false,
-  source: "",
-  uploader: "",
+export const NewFoodPreferences: FoodPreferences = {
+  is_balanced: false,
+  is_gluten_free: false,
+  is_ketogenic: false,
+  is_low_carb: false,
+  is_mediterranean: false,
+  is_vegetarian: false,
 };
+// export const NewFoodImage: FoodImage = {
+//   curated: false,
+//   food_id: null,
+//   image_id: null,
+//   image: null,
+//   is_primary_image: false,
+//   uploader_id: null,
+// };
 export const NewFoodWeights: FoodWeights = {
   amount: 0,
   description: "",
@@ -143,7 +152,10 @@ export const NewFood: Food = {
   food_description: null,
   food_id: null,
   food_name: null,
-  images: [],
+  food_name_lowercase: null,
+  food_preferences: NewFoodPreferences,
+  food_type: NewFoodType,
+  image: DEFAULT_IMAGE,
   is_deleted: false,
   major_ingredients: null,
   manufactured_by: null,
@@ -156,7 +168,6 @@ export const NewFood: Food = {
   serving_grams: null,
   serving_name: "serving",
   source: null,
-  type: NewFoodType,
   uploader: null,
   user_id: null,
   weights: [],

@@ -2,7 +2,7 @@ export enum Theme {
   dark = "dark",
   light = "light",
 }
-export enum ButtonAction {
+export enum ButtonType {
   save = "save",
   delete = "delete",
   discard = "discard",

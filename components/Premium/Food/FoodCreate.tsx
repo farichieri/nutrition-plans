@@ -1,4 +1,9 @@
-import { Food, FoodNutrients } from "@/types/foodTypes";
+import {
+  Food,
+  FoodNutrients,
+  FoodPreferences,
+  FoodType,
+} from "@/types/foodTypes";
 import {
   fatsFields,
   firstOptionalFields,
@@ -9,52 +14,96 @@ import {
   sugarFields,
   vitsAndMinsFields,
 } from "./formFields";
+import { addFood } from "@/firebase/helpers/Food";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { NewFood } from "@/types/initialTypes";
+import { selectAuthSlice } from "@/store/slices/authSlice";
+import { useSelector } from "react-redux";
+import Checkbox from "@/components/Form/Checkbox";
 import FormAction from "@/components/Form/FormAction";
+import Image from "next/image";
 import Input from "@/components/Form/Input";
 import NutritionInput from "@/components/Form/NutritionInput";
 import React, { FC, useState } from "react";
 import Select from "@/components/Form/Select";
-import { addFood } from "@/firebase/helpers/Food";
-import { useSelector } from "react-redux";
-import { selectAuthSlice } from "@/store/slices/authSlice";
 
 interface Props {}
 
 const FoodCreate: FC<Props> = () => {
+  const { user } = useSelector(selectAuthSlice);
   const [foodState, setFoodState] = useState<Food>(NewFood);
   const [optionalsOpen, setOptionalsOpen] = useState<boolean>(false);
   const foodCategory = foodCategorySelect;
-  const { user } = useSelector(selectAuthSlice);
+
+  console.log({ foodState });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const type = event.target.type;
+    const name = event.target.name;
     const id = event.target.id;
     const value = event.target.value;
-    const name = event.target.name;
-    if (name === "nutrient") {
+    const valueF = type === "number" ? Number(value) : value;
+
+    if (name === "food_type") {
+      let foodTypes = { ...foodState.food_type };
+      let foodTypesUpdated = {
+        ...foodTypes,
+        [id]: !foodTypes[id as keyof FoodType],
+      };
+      setFoodState({ ...foodState, food_type: foodTypesUpdated });
+    } else if (name === "food_preferences") {
+      let foodTypes = { ...foodState.food_preferences };
+      let foodTypesUpdated = {
+        ...foodTypes,
+        [id]: !foodTypes[id as keyof FoodPreferences],
+      };
+      setFoodState({ ...foodState, food_preferences: foodTypesUpdated });
+    } else if (name === "nutrient") {
       let nutrients = { ...foodState.nutrients };
       let nutrientsUpdated = {
         ...nutrients,
-        [id]: Number(value) > 0 ? Number(value) : null,
+        [id]: Number(valueF) > 0 ? Number(valueF) : null,
       };
       setFoodState({ ...foodState, nutrients: nutrientsUpdated });
     } else {
-      setFoodState({ ...foodState, [id]: value });
+      setFoodState({ ...foodState, [id]: valueF });
     }
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!user) return;
-    const res = await addFood(user, foodState);
+    const res = await addFood(user, foodState, newImageFile);
     console.log({ res });
     if (!res?.error) {
       setFoodState(NewFood);
+      setNewImageFile(undefined);
       alert("Food created successfully");
     } else {
       alert("Error creating food");
     }
+  };
+
+  const [newImageFile, setNewImageFile] = useState<File | undefined>(undefined);
+
+  const handleUploadImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = (event.target as HTMLInputElement).files;
+    if (files && user) {
+      const file = files[0];
+      if (!file) return;
+      const blob = URL.createObjectURL(file);
+      setFoodState({
+        ...foodState,
+        image: blob,
+      });
+      setNewImageFile(file);
+    }
+  };
+
+  const handleCancel = async (event: React.FormEvent) => {
+    event.preventDefault();
+    setFoodState(NewFood);
+    setNewImageFile(undefined);
   };
 
   return (
@@ -85,6 +134,23 @@ const FoodCreate: FC<Props> = () => {
           />
         ))}
       </div>
+      <div className="flex flex-col gap-2">
+        <h1 className="text-xl">Image</h1>
+        <Image
+          src={foodState.image}
+          width={200}
+          height={200}
+          alt="Food Image"
+          className="rounded-lg"
+        />
+        <input
+          title="Upload a new photo"
+          type="file"
+          onChange={handleUploadImage}
+          accept="image/*"
+        />
+      </div>
+
       <div className="">
         <h1 className="text-xl">Serving size info</h1>
         <div className="">
@@ -172,10 +238,48 @@ const FoodCreate: FC<Props> = () => {
                 placeholder={foodCategory.placeholder}
                 title={foodCategory.title}
                 options={foodCategory.options}
-                value={
-                  foodState["nutrients" as keyof FoodNutrients][foodCategory.id]
-                }
+                value={foodState[foodCategory.id]}
               />
+            </div>
+          </div>
+          <div className="">
+            <h1 className="text-xl">Food Type</h1>
+            <div className="">
+              {Object.keys(foodState.food_type).map((type) => (
+                <Checkbox
+                  key={type}
+                  customClass={""}
+                  handleChange={handleChange}
+                  id={type}
+                  isRequired={false}
+                  labelFor={type}
+                  labelText={type}
+                  name={"food_type"}
+                  title={type}
+                  value={foodState["food_type" as keyof FoodNutrients][type]}
+                />
+              ))}
+            </div>
+          </div>
+          <div className="">
+            <h1 className="text-xl">Food Preferences</h1>
+            <div className="">
+              {Object.keys(foodState.food_preferences).map((type) => (
+                <Checkbox
+                  key={type}
+                  customClass={""}
+                  handleChange={handleChange}
+                  id={type}
+                  isRequired={false}
+                  labelFor={type}
+                  labelText={type}
+                  name={"food_preferences"}
+                  title={type}
+                  value={
+                    foodState["food_preferences" as keyof FoodNutrients][type]
+                  }
+                />
+              ))}
             </div>
           </div>
           <div className="">
@@ -292,12 +396,20 @@ const FoodCreate: FC<Props> = () => {
           </div>
         </div>
       </div>
-      <FormAction
-        handleSubmit={handleSubmit}
-        text="Create"
-        action="submit"
-        type="Button"
-      />
+      <div className="flex gap-2">
+        <FormAction
+          handleSubmit={handleCancel}
+          text="Cancel"
+          action="submit"
+          type="Cancel"
+        />
+        <FormAction
+          handleSubmit={handleSubmit}
+          text="Create"
+          action="submit"
+          type="Submit"
+        />
+      </div>
     </form>
   );
 };

@@ -5,6 +5,7 @@ import { persistReducer } from "redux-persist";
 import { WebStorage } from "redux-persist/lib/types";
 import authSlice from "./slices/authSlice";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
+import foodsSlice from "./slices/foodsSlice";
 import layoutSlice from "./slices/layoutSlice";
 import progressSlice from "./slices/progressSlice";
 
@@ -38,13 +39,14 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  whitelist: ["auth", "layout", "progress"],
+  whitelist: ["auth", "layout", "progress", "foods"],
 };
 
 const rootReducer = combineReducers({
   auth: authSlice,
   layout: layoutSlice,
   progress: progressSlice,
+  foods: foodsSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -1,26 +1,29 @@
-import { ButtonAction } from "@/types/types";
+import { ButtonType } from "@/types/types";
 import { MouseEventHandler } from "react";
 
 const ActionButton = ({
   action,
+  className,
   content,
-  isLoading,
   isDisabled,
+  isLoading,
   loadMessage,
   onClick,
-  className,
+  type,
 }: {
-  action: ButtonAction;
-  onClick: MouseEventHandler;
-  content: string;
-  isLoading: boolean;
-  isDisabled: boolean;
-  loadMessage: string;
+  action: "button" | "submit" | "reset" | undefined;
   className: string;
+  content: string;
+  isDisabled: boolean;
+  isLoading: boolean;
+  loadMessage: string;
+  onClick: MouseEventHandler;
+  type: ButtonType;
 }) => {
-  if (action === ButtonAction.save) {
+  if (type === ButtonType.save) {
     return (
       <button
+        type={action}
         className={`flex select-none justify-center rounded-md  border px-4 py-1 text-sm font-medium shadow-[0_1px_5px_gray] duration-300  ${className} ${
           isDisabled
             ? "cursor-not-allowed border-transparent bg-transparent opacity-70"
@@ -32,9 +35,10 @@ const ActionButton = ({
         {isLoading ? <span>{loadMessage}</span> : <span>{content}</span>}
       </button>
     );
-  } else if (action === ButtonAction.delete) {
+  } else if (type === ButtonType.delete) {
     return (
       <button
+        type={action}
         className={`flex select-none justify-center rounded-md border px-4 py-1 text-sm font-medium shadow-[0_1px_5px_gray] duration-300  ${className} ${
           isDisabled
             ? "cursor-not-allowed border-transparent bg-transparent opacity-70"
@@ -46,9 +50,10 @@ const ActionButton = ({
         {isLoading ? <span>{loadMessage}</span> : <span>{content}</span>}
       </button>
     );
-  } else if (action === ButtonAction.discard) {
+  } else if (type === ButtonType.discard) {
     return (
       <button
+        type={action}
         className={`flex select-none justify-center  rounded-md border px-4 py-1 text-sm font-medium shadow-[0_1px_5px_gray] duration-300  ${className} ${
           isDisabled
             ? "cursor-not-allowed border-transparent bg-transparent opacity-70"

@@ -1,7 +1,7 @@
 import ActionButton from "@/components/Buttons/ActionButton";
 import { updateUser } from "@/firebase/helpers/Auth";
 import { selectAuthSlice, setUpdateUser } from "@/store/slices/authSlice";
-import { ButtonAction, MeasurementUnits } from "@/types/types";
+import { ButtonType, MeasurementUnits } from "@/types/types";
 import { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -102,18 +102,20 @@ const General: FC<Props> = () => {
           content="Discard"
           isLoading={false}
           isDisabled={isDisabled}
-          action={ButtonAction.discard}
+          type={ButtonType.discard}
           className="w-full"
           onClick={handleCancel}
+          action="submit"
         />
         <ActionButton
           loadMessage="Saving..."
           content="Save"
           isLoading={isSaving}
           isDisabled={isDisabled}
-          action={ButtonAction.save}
+          type={ButtonType.save}
           className="w-full"
           onClick={handleSave}
+          action="submit"
         />
       </div>
     </section>

@@ -1,4 +1,4 @@
-import { ButtonAction, WeightGoal } from "@/types/types";
+import { ButtonType, WeightGoal } from "@/types/types";
 import { FC, useEffect, useState } from "react";
 import { formatISO } from "date-fns";
 import { initialWeightGoal } from "@/types/initialTypes";
@@ -114,18 +114,20 @@ const WeightGoalModal: FC<Props> = ({ weightGoal }) => {
             content={addGoal ? "Discard" : "Delete"}
             isLoading={isDeleting}
             isDisabled={false}
-            action={ButtonAction.delete}
+            type={ButtonType.delete}
             className="w-full"
             onClick={handleDelete}
+            action="submit"
           />
           <ActionButton
             loadMessage="Saving..."
             content={addGoal ? "Add" : "Save"}
             isLoading={isSaving}
             isDisabled={isDisabled}
-            action={ButtonAction.save}
+            type={ButtonType.save}
             className="w-full"
             onClick={handleSave}
+            action="submit"
           />
         </div>
       </div>

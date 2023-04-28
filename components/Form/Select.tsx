@@ -1,7 +1,7 @@
 import { ChangeEventHandler, FC } from "react";
 
 const fixedInputClass =
-  "rounded-md capitalize font-semibold appearance-none dark:bg-slate-500/90 dark:text-white bg-slate-500/20 relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 caret-green-500  focus:outline-none  focus:ring--500 focus:border-green-500 focus:z-10 sm:text-sm";
+  "rounded-md capitalize w-full font-semibold appearance-none dark:bg-slate-500/90 dark:text-white bg-slate-500/20 relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 caret-green-500  focus:outline-none  focus:ring--500 focus:border-green-500 focus:z-10 sm:text-sm";
 
 interface Props {
   customClass: string;
@@ -31,8 +31,8 @@ const Select: FC<Props> = ({
   options,
 }) => {
   return (
-    <div className="my-3 flex items-center justify-between gap-2 ">
-      <label htmlFor={labelFor} className="not-sr-only basis-2/4 capitalize">
+    <div className="my-3 flex flex-wrap items-center gap-2 sm:flex-nowrap">
+      <label htmlFor={labelFor} className="not-sr-only w-full capitalize">
         {labelText.replaceAll("_", " ")}
       </label>
       <select
