@@ -95,7 +95,7 @@ const NutritionInput: FC<Props> = ({
             step={step}
             title={title}
             type={type}
-            value={value || ""}
+            value={value}
           />
           <label htmlFor={labelFor} className="">
             {measurementUnit || unit}

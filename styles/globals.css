@@ -12,6 +12,9 @@ html {
   --background-end-rgb: 255, 255, 255;
   --nav-h: 3rem;
   --border-color: lightgray;
+  --carbs-color: #8d4d00d9;
+  --fats-color: #2fa800e0;
+  --prots-color: #3e3ed79c;
 }
 
 :root.dark {

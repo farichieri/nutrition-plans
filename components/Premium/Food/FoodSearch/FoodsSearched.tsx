@@ -30,9 +30,9 @@ const FoodsSearched: FC<Props> = () => {
               alt={`${food.food_name}`}
               width={200}
               height={200}
-              className="w-50"
+              className="w-[15rem]"
             />
-            <div className="flex flex-col p-5">
+            <div className="flex w-full max-w-[15rem] flex-col break-words p-5">
               <span className="text-center text-xl font-semibold">
                 {food.food_name}
               </span>

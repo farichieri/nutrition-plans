@@ -61,7 +61,7 @@ const FoodCreate: FC<Props> = () => {
       let nutrients = { ...foodState.nutrients };
       let nutrientsUpdated = {
         ...nutrients,
-        [id]: Number(valueF) > 0 ? Number(valueF) : null,
+        [id]: Number(valueF) > 0 ? Number(valueF) : 0,
       };
       setFoodState({ ...foodState, nutrients: nutrientsUpdated });
     } else {
