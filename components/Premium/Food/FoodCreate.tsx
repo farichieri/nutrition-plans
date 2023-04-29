@@ -11,6 +11,7 @@ import {
   nameDescFields,
   servingSizeFields,
   servingsPerPackage,
+  sourceField,
   sugarFields,
   vitsAndMinsFields,
 } from "./formFields";
@@ -34,8 +35,6 @@ const FoodCreate: FC<Props> = () => {
   const [foodState, setFoodState] = useState<Food>(NewFood);
   const [optionalsOpen, setOptionalsOpen] = useState<boolean>(false);
   const foodCategory = foodCategorySelect;
-
-  console.log({ foodState });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const type = event.target.type;
@@ -224,6 +223,24 @@ const FoodCreate: FC<Props> = () => {
             optionalsOpen ? " max-h-[800vh]" : "max-h-0"
           }`}
         >
+          <Input
+            customClass={""}
+            handleChange={handleChange}
+            id={sourceField.id}
+            isRequired={sourceField.isRequired}
+            key={sourceField.id}
+            labelFor={sourceField.labelFor}
+            labelText={sourceField.labelText}
+            max={sourceField.max}
+            min={sourceField.min}
+            name={sourceField.name}
+            pattern={sourceField.pattern}
+            placeholder={sourceField.placeholder}
+            step={sourceField.step}
+            title={sourceField.title}
+            type={sourceField.type}
+            value={foodState[sourceField.id]}
+          />
           <div className="">
             <h1 className="text-xl"></h1>
             <div className="">

@@ -15,7 +15,7 @@ const SearchBar: FC<Props> = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    const res: FoodGroup = await fetchFoods(searchInput);
+    const res: FoodGroup = await fetchFoods(searchInput.toLowerCase());
     if (!res?.error) {
       !res.error && dispatch(setFoodsSearched(res));
     }

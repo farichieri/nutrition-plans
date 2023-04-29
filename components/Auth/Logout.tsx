@@ -1,11 +1,11 @@
 import { auth } from "@/firebase/firebase.config";
-import { setLogoutUser } from "@/store/slices/authSlice";
 import { signOut } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import SecondaryButton from "../Buttons/SubmitButton";
 import { setProgress } from "@/store/slices/progressSlice";
+import { persistor } from "@/store/store";
 
 const Logout = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -20,8 +20,8 @@ const Logout = () => {
     router.push("/");
     await signOut(auth)
       .then(() => {
-        dispatch(setLogoutUser());
         dispatch(setProgress({}));
+        persistor.purge();
       })
       .catch((error) => {
         console.error(error);

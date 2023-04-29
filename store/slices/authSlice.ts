@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { PURGE } from "redux-persist";
 import { UserAccount } from "@/types/types";
 import type { RootState } from "../store";
 
@@ -14,7 +15,7 @@ interface AuthState {
 // Define the initial state using that type
 const initialState: AuthState = {
   user: null,
-  isVerifyingUser: true,
+  isVerifyingUser: false,
   isCreatingUser: false,
   error: null,
   isSigningUser: false,
@@ -33,10 +34,6 @@ export const authSlice = createSlice({
       state.isVerifyingUser = false;
       state.isSigningUser = false;
     },
-    setLogoutUser: (state) => {
-      state.isVerifyingUser = false;
-      state.user = null;
-    },
     setIsCreatingUser: (state, action: PayloadAction<boolean>) => {
       state.isCreatingUser = action.payload;
     },
@@ -47,12 +44,16 @@ export const authSlice = createSlice({
       state.user = action.payload;
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(PURGE, () => {
+      return initialState;
+    });
+  },
 });
 
 export const {
   setIsVerifyingUser,
   setUser,
-  setLogoutUser,
   setIsCreatingUser,
   setIsSigningUser,
   setUpdateUser,

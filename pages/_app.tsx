@@ -2,9 +2,8 @@ import "@/styles/globals.css";
 import { auth } from "@/firebase/firebase.config";
 import { getAnalytics, logEvent, setUserId } from "firebase/analytics";
 import { PersistGate } from "redux-persist/integration/react";
-import { persistStore } from "redux-persist";
+import { persistor, store } from "@/store/store";
 import { Provider } from "react-redux";
-import { store } from "@/store/store";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import AppLoader from "@/components/Loader/AppLoader";
@@ -12,7 +11,6 @@ import Layout from "@/components/Layout";
 import type { AppProps } from "next/app";
 
 export default function App({ Component, pageProps }: AppProps) {
-  const persistor = persistStore(store);
   const router = useRouter();
 
   useEffect(() => {

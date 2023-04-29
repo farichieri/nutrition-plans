@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Progress, ProgressItem } from "@/types/types";
+import { PURGE } from "redux-persist";
 import type { RootState } from "../store";
 
 interface ProgressState {
@@ -43,6 +44,11 @@ export const authSlice = createSlice({
     setAddWeightGoalOpen: (state, action: PayloadAction<boolean>) => {
       state.addWeightGoalOpen = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(PURGE, () => {
+      return initialState;
+    });
   },
 });
 

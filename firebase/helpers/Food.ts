@@ -26,6 +26,7 @@ const addFood = async (
       newImage && (await uploadImage(newImage, docRef.id));
     let img =
       newImage && typeof imageURL === "string" ? imageURL : DEFAULT_IMAGE;
+
     const newFood: Food = {
       ...food,
       date_created: serverTimestamp(),

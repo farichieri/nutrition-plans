@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { FoodGroup } from "@/types/foodTypes";
+import { PURGE } from "redux-persist";
 import type { RootState } from "../store";
 
 // Define a type for the slice state
@@ -20,6 +21,11 @@ export const foodsSlice = createSlice({
     setFoodsSearched: (state, action: PayloadAction<FoodGroup>) => {
       state.foodsSearched = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(PURGE, () => {
+      return initialState;
+    });
   },
 });
 

@@ -209,6 +209,24 @@ const servingsPerPackage = [
   },
 ];
 
+const source = foodKeys.source;
+
+const sourceField = {
+  labelText: "Source",
+  labelFor: source,
+  id: source,
+  name: source,
+  type: "text",
+  autoComplete: "off",
+  isRequired: true,
+  placeholder: "",
+  max: "",
+  min: "",
+  step: "",
+  title: "",
+  pattern: undefined,
+};
+
 const cholesterol = nutrientKeys.cholesterol;
 const fiber = nutrientKeys.fiber;
 const potassium = nutrientKeys.potassium;
@@ -390,12 +408,13 @@ const foodCategorySelect = {
 };
 
 export {
+  fatsFields,
+  firstOptionalFields,
+  foodCategorySelect,
   nameDescFields,
   servingSizeFields,
   servingsPerPackage,
-  firstOptionalFields,
+  sourceField,
   sugarFields,
-  fatsFields,
   vitsAndMinsFields,
-  foodCategorySelect,
 };

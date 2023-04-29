@@ -12,7 +12,7 @@ const FoodsSearched: FC<Props> = () => {
   useEffect(() => {}, []);
   console.log({ foodsSearched });
   if (!foodsSearched) {
-    return <div>No data</div>;
+    return <div>No Foods found with that name</div>;
   }
 
   return (
@@ -23,7 +23,7 @@ const FoodsSearched: FC<Props> = () => {
           <Link
             href={`/app/food/${food.food_id}`}
             key={food.food_id}
-            className="flex flex-col gap-1 overflow-auto rounded-lg bg-slate-500/20 shadow-lg shadow-[#00000028]"
+            className="flex flex-col gap-1 overflow-auto rounded-lg bg-slate-500/20 shadow-sm shadow-[#00000028] duration-300 hover:shadow-lg"
           >
             <Image
               src={food.image}

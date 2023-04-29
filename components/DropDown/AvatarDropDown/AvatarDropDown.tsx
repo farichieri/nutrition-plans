@@ -1,7 +1,6 @@
 import { ArrowRightOnRectangleIcon, UserIcon } from "@heroicons/react/20/solid";
 import { auth } from "@/firebase/firebase.config";
 import { setIsSettingsOpen } from "@/store/slices/layoutSlice";
-import { setLogoutUser } from "@/store/slices/authSlice";
 import { signOut } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
@@ -10,6 +9,7 @@ import Avatar from "@/components/Avatar/Avatar";
 import DropDown from "../DropDown";
 import ThemeSwitcher from "@/components/theme-switcher";
 import { setProgress } from "@/store/slices/progressSlice";
+import { persistor } from "@/store/store";
 
 const AvatarDropDown = () => {
   const dispatch = useDispatch();
@@ -21,8 +21,8 @@ const AvatarDropDown = () => {
     router.push("/").then(async () => {
       await signOut(auth)
         .then(() => {
-          dispatch(setLogoutUser());
           dispatch(setProgress({}));
+          persistor.purge();
         })
         .catch((error) => {
           console.error(error);

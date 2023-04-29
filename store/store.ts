@@ -2,6 +2,7 @@
 import { combineReducers } from "@reduxjs/toolkit";
 import { configureStore } from "@reduxjs/toolkit";
 import { persistReducer } from "redux-persist";
+import { persistStore } from "redux-persist";
 import { WebStorage } from "redux-persist/lib/types";
 import authSlice from "./slices/authSlice";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
@@ -64,3 +65,5 @@ export const store = configureStore({
 export type RootState = ReturnType<typeof store.getState>;
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch;
+
+export const persistor = persistStore(store);
