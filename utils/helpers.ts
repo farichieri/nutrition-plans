@@ -1,4 +1,9 @@
-import { NutrientsEnum, NutritionMeasurements } from "@/types/foodTypes";
+import {
+  FoodNutrients,
+  NutrientsClasified,
+  NutrientsEnum,
+  NutritionMeasurements,
+} from "@/types/foodTypes";
 
 const g = NutritionMeasurements.g;
 const kcal = NutritionMeasurements.kcal;
@@ -211,4 +216,90 @@ const getNutrientMeasurementUnit = (nutrient: string) => {
   return nutrients[nutrient as keyof Measurements];
 };
 
-export { getNutrientMeasurementUnit };
+const getNutrientsClasified = (nutrients: FoodNutrients) => {
+  let principals: NutrientsClasified = {};
+  let sugars: NutrientsClasified = {};
+  let fats: NutrientsClasified = {};
+  let fatty_acids: NutrientsClasified = {};
+  let vitsAndMin: NutrientsClasified = {};
+
+  const clasify = (nutrient: any) => {
+    switch (nutrient) {
+      case NutrientsEnum.calories:
+      case NutrientsEnum.carbohydrates:
+      case NutrientsEnum.proteins:
+      case NutrientsEnum.fiber:
+      case NutrientsEnum.potassium:
+      case NutrientsEnum.cholesterol:
+      case NutrientsEnum.sodium:
+        principals[nutrient as keyof NutrientsClasified] =
+          nutrients[nutrient as keyof FoodNutrients];
+        break;
+
+      case NutrientsEnum.sugar:
+      case NutrientsEnum.sucrose:
+      case NutrientsEnum.glucose:
+      case NutrientsEnum.fructose:
+      case NutrientsEnum.lactose:
+      case NutrientsEnum.maltose:
+      case NutrientsEnum.galactose:
+        sugars[nutrient as keyof NutrientsClasified] =
+          nutrients[nutrient as keyof FoodNutrients];
+        break;
+      case NutrientsEnum.saturated_fats:
+      case NutrientsEnum.monounsaturated_fats:
+      case NutrientsEnum.polyunsaturated_fats:
+      case NutrientsEnum.trans_fats:
+        fats[nutrient as keyof NutrientsClasified] =
+          nutrients[nutrient as keyof FoodNutrients];
+        break;
+      case NutrientsEnum.total_omega_3:
+      case NutrientsEnum.total_omega_6:
+        fatty_acids[nutrient as keyof NutrientsClasified] =
+          nutrients[nutrient as keyof FoodNutrients];
+        break;
+      case NutrientsEnum.caffeine:
+      case NutrientsEnum.calcium:
+      case NutrientsEnum.choline:
+      case NutrientsEnum.copper:
+      case NutrientsEnum.fluoride:
+      case NutrientsEnum.folate:
+      case NutrientsEnum.iron:
+      case NutrientsEnum.lycopene:
+      case NutrientsEnum.magnesium:
+      case NutrientsEnum.manganese:
+      case NutrientsEnum.niacin:
+      case NutrientsEnum.phosphorus:
+      case NutrientsEnum.retinol:
+      case NutrientsEnum.selenium:
+      case NutrientsEnum.thiamine:
+      case NutrientsEnum.vitamin_a:
+      case NutrientsEnum.vitamin_b6:
+      case NutrientsEnum.vitamin_b12:
+      case NutrientsEnum.vitamin_b2:
+      case NutrientsEnum.vitamin_c:
+      case NutrientsEnum.vitamin_d2:
+      case NutrientsEnum.vitamin_d3:
+      case NutrientsEnum.vitamin_e:
+      case NutrientsEnum.vitamin_k:
+        vitsAndMin[nutrient as keyof NutrientsClasified] =
+          nutrients[nutrient as keyof FoodNutrients];
+        break;
+      default:
+        break;
+    }
+  };
+  Object.keys(nutrients).map((nutrient) => {
+    clasify(nutrient);
+  });
+
+  return {
+    principals,
+    sugars,
+    fats,
+    fatty_acids,
+    vitsAndMin,
+  };
+};
+
+export { getNutrientMeasurementUnit, getNutrientsClasified };

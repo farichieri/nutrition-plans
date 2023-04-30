@@ -8,6 +8,7 @@ import {
   fatsFields,
   firstOptionalFields,
   foodCategorySelect,
+  foodGlucemicStatusSelect,
   nameDescFields,
   servingSizeFields,
   servingsPerPackage,
@@ -35,6 +36,7 @@ const FoodCreate: FC<Props> = () => {
   const [foodState, setFoodState] = useState<Food>(NewFood);
   const [optionalsOpen, setOptionalsOpen] = useState<boolean>(false);
   const foodCategory = foodCategorySelect;
+  const glucemicStatus = foodGlucemicStatusSelect
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const type = event.target.type;
@@ -256,6 +258,24 @@ const FoodCreate: FC<Props> = () => {
                 title={foodCategory.title}
                 options={foodCategory.options}
                 value={foodState[foodCategory.id]}
+              />
+            </div>
+          </div>
+          <div className="">
+            <h1 className="text-xl"></h1>
+            <div className="">
+              <Select
+                customClass={""}
+                handleChange={handleChange}
+                id={glucemicStatus.id}
+                isRequired={glucemicStatus.isRequired}
+                labelFor={glucemicStatus.labelFor}
+                labelText={glucemicStatus.labelText}
+                name={glucemicStatus.name}
+                placeholder={glucemicStatus.placeholder}
+                title={glucemicStatus.title}
+                options={glucemicStatus.options}
+                value={foodState[glucemicStatus.id]}
               />
             </div>
           </div>

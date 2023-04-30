@@ -4,6 +4,7 @@ import {
   FoodPreferences,
   FoodType,
   FoodWeights,
+  GlucemicStatusEnum,
 } from "@/types/foodTypes";
 import {
   Progress,
@@ -151,10 +152,11 @@ export const NewFood: Food = {
   food_category: null,
   food_description: null,
   food_id: null,
-  food_name: null,
   food_name_lowercase: null,
+  food_name: null,
   food_preferences: NewFoodPreferences,
   food_type: NewFoodType,
+  glucemic_status: null,
   image: DEFAULT_IMAGE,
   is_deleted: false,
   major_ingredients: null,

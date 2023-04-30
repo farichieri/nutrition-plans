@@ -1,4 +1,8 @@
-import { FoodCategoriesEnum, NutrientsEnum } from "@/types/foodTypes";
+import {
+  FoodCategoriesEnum,
+  GlucemicStatusEnum,
+  NutrientsEnum,
+} from "@/types/foodTypes";
 import { NewFood } from "@/types/initialTypes";
 
 let foodKeys: any = {};
@@ -12,6 +16,7 @@ Object.keys(NutrientsEnum).forEach((key) => {
 });
 
 let foodCategoriesKeys: any = Object.keys(FoodCategoriesEnum);
+let foodGlucemicStatusKeys: any = Object.keys(GlucemicStatusEnum);
 
 const calories = nutrientKeys.calories;
 const carbohydrates = nutrientKeys.carbohydrates;
@@ -25,6 +30,7 @@ const serving_amount_per_package = foodKeys.serving_amount_per_package;
 const serving_grams = foodKeys.serving_grams;
 const serving_name = foodKeys.serving_name;
 const food_category = foodKeys.food_category;
+const glucemic_status = foodKeys.glucemic_status;
 
 const nameDescFields = [
   {
@@ -407,6 +413,20 @@ const foodCategorySelect = {
   title: "",
 };
 
+const GlucemicStatusEnumOptions = foodGlucemicStatusKeys;
+
+const foodGlucemicStatusSelect = {
+  autoComplete: "off",
+  id: glucemic_status,
+  isRequired: false,
+  labelFor: glucemic_status,
+  labelText: glucemic_status,
+  name: "glucemic_status",
+  options: GlucemicStatusEnumOptions,
+  placeholder: "",
+  title: "",
+};
+
 export {
   fatsFields,
   firstOptionalFields,
@@ -417,4 +437,5 @@ export {
   sourceField,
   sugarFields,
   vitsAndMinsFields,
+  foodGlucemicStatusSelect,
 };

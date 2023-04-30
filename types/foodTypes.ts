@@ -27,6 +27,7 @@ export interface Food {
   uploader: string | null;
   user_id: string | null;
   weights: FoodWeights[];
+  glucemic_status: GlucemicStatusEnum | null;
 }
 
 export interface FoodGroup {
@@ -149,3 +150,13 @@ export enum FoodCategoriesEnum {
   sweets = "sweets",
   vegetables_and_vegetable_products = "Vegetables and Vegetable Products",
 }
+
+export enum GlucemicStatusEnum {
+  low = "low",
+  medium = "medium",
+  high = "high",
+}
+
+export type NutrientsClasified = {
+  [key in NutrientsEnum]?: number | null;
+};
