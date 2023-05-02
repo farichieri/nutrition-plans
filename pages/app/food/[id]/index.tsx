@@ -1,11 +1,14 @@
-import { FoodGroup, FoodNutrients } from "@/types/foodTypes";
+import { fetchFoodByID } from "@/firebase/helpers/Food";
+import { Food, FoodGroup, FoodNutrients } from "@/types/foodTypes";
 import { formatToFixed } from "@/utils/format";
 import { GRAMS_IN_ONE_OZ } from "@/utils/constants";
+import { NewFood } from "@/types/initialTypes";
 import { selectFoodsSlice } from "@/store/slices/foodsSlice";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import BackButton from "@/components/Back/BackButton";
+import FoodActions from "@/components/Premium/Food/FoodActions/FoodActions";
 import FoodNutritionDetail from "@/components/Premium/Food/FoodNutritionDetail";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,23 +16,35 @@ import NutritionInput from "@/components/Form/NutritionInput";
 import PieGraph from "@/components/PieGraph/PieGraph";
 import PremiumLayout from "@/components/Layout/PremiumLayout";
 import Select from "@/components/Form/Select";
-import FoodActions from "@/components/Premium/Food/FoodActions/FoodActions";
 
 export default function Page() {
   const router = useRouter();
   const { id } = router.query;
   const { foodsSearched } = useSelector(selectFoodsSlice);
-  const food = foodsSearched[id as keyof FoodGroup];
-  const options = [food.serving_name || "", "grams", "oz"];
-  const [nutrients, setNutrients] = useState(food.nutrients);
+  const foodS = foodsSearched[id as keyof FoodGroup];
+  const [food, setFood] = useState(foodS || NewFood);
+  const [nutrients, setNutrients] = useState(food?.nutrients);
   const [openDetails, setOpenDetails] = useState(false);
   const [amountSelected, setAmountSelected] = useState<number>(
-    food.serving_amount || 1
+    food?.serving_amount || 1
   );
   const [weightSelected, setWeightSelected] = useState<string>(
-    food.serving_name || ""
+    food?.serving_name || ""
   );
   const [isNotOriginal, setIsNotOriginal] = useState(false);
+
+  useEffect(() => {
+    if (!food.food_id && typeof id === "string") {
+      const fetchFoodID = async () => {
+        const foodFetched: Food | null = await fetchFoodByID(id);
+        foodFetched && setFood(foodFetched);
+        foodFetched && setNutrients(foodFetched.nutrients);
+      };
+      fetchFoodID();
+    }
+  }, []);
+
+  const options = [food?.serving_name || "", "grams", "oz"];
 
   const updateValues = async () => {
     let nutrientsUpdated = { ...nutrients };
@@ -168,7 +183,7 @@ export default function Page() {
         <FoodNutritionDetail nutrients={nutrients} handleClose={handleClose} />
       )}
       {food && (
-        <section className="flex w-full flex-col gap-14 pb-24 pt-4">
+        <section className="flex w-full select-none flex-col gap-14 pb-24 pt-4">
           <div className="flex max-w-lg flex-col gap-10 ">
             <div className="fixed left-auto top-[var(--nav-h)] z-[60] flex w-full items-center gap-10 px-2 py-2 backdrop-blur-lg">
               <BackButton />

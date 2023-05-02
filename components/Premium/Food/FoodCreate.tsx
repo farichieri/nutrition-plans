@@ -28,15 +28,18 @@ import Input from "@/components/Form/Input";
 import NutritionInput from "@/components/Form/NutritionInput";
 import React, { FC, useState } from "react";
 import Select from "@/components/Form/Select";
+import { useRouter } from "next/router";
 
 interface Props {}
 
 const FoodCreate: FC<Props> = () => {
+  const router = useRouter();
   const { user } = useSelector(selectAuthSlice);
   const [foodState, setFoodState] = useState<Food>(NewFood);
   const [optionalsOpen, setOptionalsOpen] = useState<boolean>(false);
   const foodCategory = foodCategorySelect;
-  const glucemicStatus = foodGlucemicStatusSelect
+  const glucemicStatus = foodGlucemicStatusSelect;
+  const [isCreating, setIsCreating] = useState(false);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const type = event.target.type;
@@ -74,15 +77,17 @@ const FoodCreate: FC<Props> = () => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!user) return;
+    if (isCreating) return;
+    setIsCreating(true);
     const res = await addFood(user, foodState, newImageFile);
-    console.log({ res });
-    if (!res?.error) {
-      setFoodState(NewFood);
+    if (!res?.error && res?.food_id) {
       setNewImageFile(undefined);
       alert("Food created successfully");
+      router.push(`/app/food/${res.food_id}`);
     } else {
       alert("Error creating food");
     }
+    setIsCreating(false);
   };
 
   const [newImageFile, setNewImageFile] = useState<File | undefined>(undefined);
@@ -439,12 +444,14 @@ const FoodCreate: FC<Props> = () => {
           text="Cancel"
           action="submit"
           type="Cancel"
+          isLoading={false}
         />
         <FormAction
           handleSubmit={handleSubmit}
           text="Create"
           action="submit"
           type="Submit"
+          isLoading={isCreating}
         />
       </div>
     </form>

@@ -305,7 +305,6 @@ const fatsTypes = [
   polyunsaturated_fats,
   total_omega_3,
   total_omega_6,
-  maltose,
   trans_fats,
 ];
 

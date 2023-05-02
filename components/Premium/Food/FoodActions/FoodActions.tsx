@@ -1,15 +1,184 @@
-import { FC } from "react";
+import Spinner from "@/components/Loader/Spinner";
+import { updateUser } from "@/firebase/helpers/Auth";
+import { updateFoodAction } from "@/firebase/helpers/Food";
+import { selectAuthSlice, setUpdateUser } from "@/store/slices/authSlice";
+import { FoodRating } from "@/types/types";
+import {
+  HandThumbUpIcon,
+  NoSymbolIcon,
+  StarIcon,
+} from "@heroicons/react/24/solid";
+import { FC, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 interface Props {
   foodID: string;
 }
 
 const FoodActions: FC<Props> = ({ foodID }) => {
+  const dispatch = useDispatch();
+  const { user } = useSelector(selectAuthSlice);
+  const [isLiking, setIsLiking] = useState(false);
+  const [isDisliking, setIsDisliking] = useState(false);
+  const [isFavoriting, setIsFavoriting] = useState(false);
+  if (!user) return <></>;
+
+  const food_rating: FoodRating = user.ratings.food_rating;
+  const isFavorite = food_rating?.favorites.includes(foodID);
+  const isLiked = food_rating?.likes.includes(foodID);
+  const isDisliked = food_rating?.dislikes.includes(foodID);
+
+  const handleRating = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    try {
+      const id = (event.target as HTMLButtonElement).id;
+      if (!food_rating) return;
+      if (isLiking || isFavoriting || isDisliking) return;
+
+      id === "favorites"
+        ? setIsFavoriting(true)
+        : id === "likes"
+        ? setIsLiking(true)
+        : setIsDisliking(true);
+
+      let favorites = [...food_rating["favorites"]];
+      let likes = [...food_rating["likes"]];
+      let dislikes = [...food_rating["dislikes"]];
+      let userUpdated = { ...user };
+
+      const favIndex = favorites.indexOf(foodID);
+      const likeIndex = likes.indexOf(foodID);
+      const dislikeIndex = dislikes.indexOf(foodID);
+
+      const updateAction = async (field: string, action: string) => {
+        const res = await updateFoodAction(foodID, field, action);
+        if (res?.error) {
+          return Error;
+        }
+      };
+
+      switch (id) {
+        case "favorites":
+          if (favIndex > -1) {
+            await updateAction("num_favorites", "decrement");
+            favorites.splice(favIndex, 1);
+          } else {
+            await updateAction("num_favorites", "increment");
+            favorites = [...favorites, foodID];
+          }
+          break;
+        case "likes":
+          if (likeIndex > -1) {
+            await updateAction("num_likes", "decrement");
+            likes.splice(likeIndex, 1);
+          } else {
+            likes = [...likes, foodID];
+            await updateAction("num_likes", "increment");
+            if (dislikeIndex > -1) {
+              await updateAction("num_dislikes", "decrement");
+              dislikes.splice(dislikeIndex, 1);
+            }
+          }
+          break;
+        case "dislikes":
+          if (dislikeIndex > -1) {
+            dislikes.splice(dislikeIndex, 1);
+            await updateAction("num_dislikes", "decrement");
+          } else {
+            dislikes = [...dislikes, foodID];
+            await updateAction("num_dislikes", "increment");
+            if (likeIndex > -1) {
+              await updateAction("num_likes", "decrement");
+              likes.splice(likeIndex, 1);
+            }
+          }
+          break;
+        default:
+          break;
+      }
+
+      userUpdated = {
+        ...userUpdated,
+        ratings: {
+          food_rating: {
+            ...food_rating,
+            favorites: favorites,
+            likes: likes,
+            dislikes: dislikes,
+          },
+        },
+      };
+      if (JSON.stringify(userUpdated) !== JSON.stringify(user)) {
+        const res = await updateUser(userUpdated);
+        if (!res?.error) {
+          dispatch(setUpdateUser(userUpdated));
+        }
+      }
+    } catch (error) {
+      console.log({ error });
+    }
+    setIsFavoriting(false);
+    setIsLiking(false);
+    setIsDisliking(false);
+  };
+
   return (
-    <div className="flex justify-between">
-      <span>Like</span>
-      <span>Fav</span>
-      <span>Block</span>
+    <div className="flex justify-center gap-2">
+      <button
+        onClick={handleRating}
+        id="favorites"
+        className={`rounded-full border p-2 duration-300 hover:bg-slate-500/20 active:scale-90 ${
+          isFavorite && "border-green-500"
+        }`}
+      >
+        {isFavoriting ? (
+          <Spinner
+            customClass={` h-5 w-5  ${isFavorite && "text-green-500"}`}
+          />
+        ) : (
+          <StarIcon
+            className={` pointer-events-none h-5 w-5 ${
+              isFavorite && "fill-green-500"
+            }`}
+          />
+        )}
+      </button>
+      <button
+        onClick={handleRating}
+        id="likes"
+        className={`rounded-full border p-2 duration-300 hover:bg-slate-500/20 active:scale-90 ${
+          isLiked && "border-green-500"
+        }`}
+      >
+        {isLiking ? (
+          <Spinner customClass={` h-5 w-5  ${isLiked && "text-green-500"}`} />
+        ) : (
+          <HandThumbUpIcon
+            className={` pointer-events-none h-5 w-5 ${
+              isLiked && "fill-green-500"
+            }`}
+          />
+        )}
+      </button>
+      <button
+        onClick={handleRating}
+        id="dislikes"
+        className={`rounded-full border p-2 duration-300 hover:bg-slate-500/20 active:scale-90 ${
+          isDisliked && "border-green-500"
+        }`}
+      >
+        {isDisliking ? (
+          <Spinner
+            customClass={` h-5 w-5  ${isDisliked && "text-green-500"}`}
+          />
+        ) : (
+          <NoSymbolIcon
+            className={` pointer-events-none h-5 w-5 ${
+              isDisliked && "fill-green-500"
+            }`}
+          />
+        )}
+      </button>
     </div>
   );
 };

@@ -4,10 +4,10 @@ import {
   FoodPreferences,
   FoodType,
   FoodWeights,
-  GlucemicStatusEnum,
 } from "@/types/foodTypes";
 import {
   Progress,
+  Ratings,
   UserAccount,
   UserBodyData,
   UserFoodData,
@@ -39,18 +39,28 @@ export const newFoodData: UserFoodData = {
   food_preferences: [],
 };
 
+export const newRagins: Ratings = {
+  food_rating: {
+    favorites: [],
+    likes: [],
+    dislikes: [],
+  },
+};
+
 export const newAccount: UserAccount = {
   body_data: newBodyData,
   created_at: "",
   display_name: "",
   email_address: "",
   food_data: newFoodData,
+  is_admin: false,
   is_premium: false,
   is_profile_completed: false,
   lang: "",
   photo_url: "",
   plan_selected: null,
   premium_plan: null,
+  ratings: newRagins,
   user_id: "",
   weight_goal: initialWeightGoal,
   first_data: {
@@ -161,8 +171,10 @@ export const NewFood: Food = {
   is_deleted: false,
   major_ingredients: null,
   manufactured_by: null,
+  num_dislikes: 0,
   num_favorites: 0,
   num_ingredient_usages: 0,
+  num_likes: 0,
   nutrients: NewFoodNutrients,
   price: null,
   serving_amount_per_package: 1,

@@ -6,6 +6,8 @@ import {
   ArchiveBoxIcon,
   DocumentCheckIcon,
   NewspaperIcon,
+  MagnifyingGlassIcon,
+  PlusIcon,
 } from "@heroicons/react/20/solid";
 import { FC, MouseEventHandler } from "react";
 import { selectAuthSlice } from "@/store/slices/authSlice";
@@ -72,7 +74,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
       <div
         className={`${
           sidebarOpen ? "left-0" : "left-[-13rem]"
-        } fixed left-0 z-[70] flex min-h-screen w-[13rem] select-none flex-col gap-6 border-r bg-white/100 px-2 pb-10 pt-16 transition-all duration-300 dark:border-slate-400/20 dark:bg-black/100`}
+        } fixed left-0 z-[70] flex min-h-screen w-[13rem] select-none flex-col gap-6 rounded-r-3xl border-r bg-white/100 px-2 pb-10 pt-16 transition-all duration-300 dark:border-slate-400/20 dark:bg-black/100`}
       >
         <div className="flex flex-col gap-2">
           <div
@@ -181,21 +183,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
             </Link>
           </div>
         </div>
-        <div className="flex w-full flex-col items-center gap-2">
-          <div
-            className={`${
-              router.asPath === "/app/create-food" &&
-              " bg-slate-500/30 font-semibold"
-            } text-md flex w-full items-center gap-1 rounded-lg px-2 py-1 text-base font-semibold sm:text-lg`}
-          >
-            <Link
-              href={"/app/create-food"}
-              className="text-md w-full font-semibold sm:text-lg"
-            >
-              Create Food
-            </Link>
-          </div>
-        </div>
+
         <div className="flex w-full flex-col items-center gap-2">
           <div
             className={`${
@@ -203,6 +191,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
               " bg-slate-500/30 font-semibold"
             } text-md flex w-full items-center gap-1 rounded-lg px-2 py-1 text-base font-semibold sm:text-lg`}
           >
+            <MagnifyingGlassIcon className="h-6 w-6 fill-green-500" />
             <Link
               href={"/app/search-food"}
               className="text-md w-full font-semibold sm:text-lg"
@@ -211,6 +200,42 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
             </Link>
           </div>
         </div>
+        {user?.is_admin && (
+          <div className="flex w-full flex-col items-center gap-2">
+            <div
+              className={`${
+                router.asPath === "/app/create-food" &&
+                " bg-slate-500/30 font-semibold"
+              } text-md flex w-full items-center gap-1 rounded-lg px-2 py-1 text-base font-semibold sm:text-lg`}
+            >
+              <PlusIcon className="h-6 w-6 fill-red-500" />
+              <Link
+                href={"/app/create-food"}
+                className="text-md w-full font-semibold sm:text-lg"
+              >
+                Create Food
+              </Link>
+            </div>
+          </div>
+        )}
+        {user?.is_admin && (
+          <div className="flex w-full flex-col items-center gap-2">
+            <div
+              className={`${
+                router.asPath === "/app/create-recipe" &&
+                " bg-slate-500/30 font-semibold"
+              } text-md flex w-full items-center gap-1 rounded-lg px-2 py-1 text-base font-semibold sm:text-lg`}
+            >
+              <PlusIcon className="h-6 w-6 fill-red-500" />
+              <Link
+                href={"/app/create-recipe"}
+                className="text-md w-full font-semibold sm:text-lg"
+              >
+                Create Recipe
+              </Link>
+            </div>
+          </div>
+        )}
         <div className="mx-auto mt-auto flex flex-col gap-5">
           <Cog6ToothIcon
             className="mx-auto mt-auto h-5 w-5 cursor-pointer"

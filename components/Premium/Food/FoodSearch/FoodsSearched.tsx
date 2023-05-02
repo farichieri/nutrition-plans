@@ -1,8 +1,8 @@
+import { FC } from "react";
 import { selectFoodsSlice } from "@/store/slices/foodsSlice";
 import { useSelector } from "react-redux";
 import Image from "next/image";
 import Link from "next/link";
-import React, { FC, useEffect } from "react";
 
 interface Props {}
 
@@ -15,14 +15,14 @@ const FoodsSearched: FC<Props> = () => {
   }
 
   return (
-    <div className="flex flex-wrap justify-center gap-5 sm:justify-start">
+    <div className="flex select-none flex-wrap justify-center gap-5 sm:justify-start">
       {Object.keys(foodsSearched).map((key) => {
         const food = foodsSearched[key];
         return (
           <Link
             href={`/app/food/${food.food_id}`}
             key={food.food_id}
-            className="flex flex-col gap-1 overflow-auto rounded-lg border shadow-sm shadow-[#00000028] duration-300 hover:scale-105 hover:shadow-xl dark:bg-slate-400/10"
+            className=" flex flex-col items-center gap-1 overflow-auto rounded-lg border shadow-sm shadow-[#00000028] duration-300 hover:scale-105 hover:shadow-xl dark:bg-slate-400/10"
           >
             <Image
               src={food.image}

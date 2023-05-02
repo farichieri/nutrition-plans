@@ -54,7 +54,7 @@ export default function Page() {
         </p>
         <div className="my-10 flex w-full flex-col gap-5">
           <h1 className="text-5xl font-bold">Team</h1>
-          <div className="flex gap-10 p-4">
+          <div className="flex flex-wrap gap-10 p-4">
             {TEAM.map((person) => (
               <Link
                 href={person.url}
@@ -62,13 +62,12 @@ export default function Page() {
                 key={person.name}
                 className="flex items-center gap-2"
               >
-                <span className="relative flex h-[48px] min-h-[48px] w-[48px] min-w-[48px] items-center justify-center overflow-hidden rounded-full">
+                <span className="relative flex h-[60px] min-h-[60px] w-[60px] min-w-[60px] items-center justify-center overflow-hidden rounded-full">
                   <Image
                     src={`/images/general/${person.image}.png`}
                     alt={person.name}
-                    width={48}
-                    height={48}
-                    className="flex items-center justify-center overflow-auto rounded-full"
+                    fill
+                    className="flex items-center justify-center rounded-full "
                   />
                 </span>
                 <div className="flex h-full flex-col justify-between gap-2 py-2">

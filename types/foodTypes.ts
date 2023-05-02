@@ -7,16 +7,19 @@ export interface Food {
   food_category: string | null;
   food_description: string | null;
   food_id: string | null;
-  food_name: string | null;
   food_name_lowercase: string | null;
+  food_name: string | null;
   food_preferences: FoodPreferences;
   food_type: FoodType;
+  glucemic_status: GlucemicStatusEnum | null;
   image: string;
   is_deleted: boolean;
   major_ingredients: string | null;
   manufactured_by: string | null;
+  num_dislikes: number;
   num_favorites: number;
   num_ingredient_usages: number;
+  num_likes: number;
   nutrients: FoodNutrients;
   price: number | null;
   serving_amount_per_package: number | null;
@@ -27,7 +30,6 @@ export interface Food {
   uploader: string | null;
   user_id: string | null;
   weights: FoodWeights[];
-  glucemic_status: GlucemicStatusEnum | null;
 }
 
 export interface FoodGroup {

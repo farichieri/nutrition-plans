@@ -39,12 +39,14 @@ export interface UserAccount {
   email_address: string | null;
   first_data: UserCreatedData;
   food_data: UserFoodData;
+  is_admin: boolean;
   is_premium: boolean;
   is_profile_completed: boolean;
   lang: string;
   photo_url: string | null;
   plan_selected: string | null;
   premium_plan: string | null;
+  ratings: Ratings;
   user_id: string;
   weight_goal: WeightGoal;
 }
@@ -99,4 +101,15 @@ export interface SubscriptionPlan {
   name: string;
   plan_id: string;
   yearlyPrice: number;
+}
+
+// Rating
+export interface Ratings {
+  food_rating: FoodRating;
+}
+
+export interface FoodRating {
+  favorites: string[];
+  likes: string[];
+  dislikes: string[];
 }

@@ -42,7 +42,7 @@ const SearchBar: FC<Props> = () => {
       <form
         action=""
         onSubmit={handleSubmit}
-        className="flex w-fit items-center gap-2 overflow-auto rounded-3xl bg-slate-400/50 py-0.5 pl-4 dark:bg-slate-500/50"
+        className="flex h-10 w-fit items-center gap-2 overflow-auto rounded-3xl border bg-slate-400/20 pl-4 shadow-sm focus-within:border-[darkgray] dark:bg-slate-500/50 dark:focus-within:border-white"
       >
         <MagnifyingGlassIcon className="h-6 w-6" />
         <input
@@ -50,11 +50,11 @@ const SearchBar: FC<Props> = () => {
           value={searchInput}
           type="text"
           placeholder="Search Food"
-          className=" w-full bg-transparent p-2 outline-none"
+          className=" w-full bg-transparent px-2 outline-none"
         />
         <button
           onClick={handleSubmit}
-          className="rounded-r-3xl border-l py-2 pl-3 pr-4 font-semibold active:shadow-inner dark:border-slate-500 dark:shadow-slate-500/50"
+          className="flex h-full items-center rounded-r-3xl border-l pl-3 pr-4 font-semibold active:shadow-inner dark:border-slate-500 dark:shadow-slate-500/50"
         >
           Search
         </button>
