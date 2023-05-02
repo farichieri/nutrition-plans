@@ -23,7 +23,7 @@ export default function Page() {
   const STEPS = [
     { step: 1, name: "Body Features" },
     { step: 2, name: "Food Preferences" },
-    { step: 3, name: "Finish" },
+    { step: 3, name: "Start" },
   ];
   const [stepSelected, setStepSelected] = useState(1);
 
@@ -41,7 +41,7 @@ export default function Page() {
   };
 
   return (
-    <section className="min-w-screen flex min-h-screen w-full flex-col items-center gap-10 px-4 py-14">
+    <section className="min-w-screen flex min-h-screen w-full flex-col items-center gap-10 py-8">
       <span className="text-2xl font-bold">Nutrition Plans</span>
       <div className="flex w-full flex-col items-center justify-center ">
         <NewUserSteps
@@ -49,14 +49,14 @@ export default function Page() {
           stepSelected={stepSelected}
           setStepSelected={setStepSelected}
         />
-        <div className="w-full max-w-lg rounded-3xl px-4 py-10 ">
+        <div className="w-full max-w-5xl rounded-3xl px-4 py-4">
           {stepSelected === STEPS[0].step ? (
             <div className="flex w-full flex-col items-center gap-10">
               {/* <span className="text-3xl font-semibold">Body features</span> */}
               <BodyFeatures handleSubmit={handleContinue} />
             </div>
           ) : stepSelected === STEPS[1].step ? (
-            <div className="flex w-full flex-col items-center gap-10">
+            <div className="flex w-full flex-col items-center gap-5">
               <button
                 className="mr-auto rounded-md border border-green-500 bg-green-500/50 px-2 py-0.5 text-white hover:bg-green-600"
                 onClick={handleBack}

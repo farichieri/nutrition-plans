@@ -416,15 +416,17 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
             </div>
           </div>
         </div>
-        <div className="flex items-center justify-center border-t p-5">
-          <SubmitButton
-            className={"m-auto w-fit"}
-            onClick={onSubmit}
-            loadMessage={"Loading..."}
-            content={`${isCreatingRoute ? "Continue" : "Save"}`}
-            isLoading={isLoading}
-            isDisabled={isFormIncomplete || isDisabled}
-          />
+        <div className="flex justify-center border-t p-5">
+          <div className="ml-auto flex">
+            <SubmitButton
+              className={"m-auto w-fit"}
+              onClick={onSubmit}
+              loadMessage={"Loading..."}
+              content={`${isCreatingRoute ? "Continue" : "Save"}`}
+              isLoading={isLoading}
+              isDisabled={isFormIncomplete || isDisabled}
+            />
+          </div>
           {error && (
             <span className="text-center font-medium text-red-400">
               {error}

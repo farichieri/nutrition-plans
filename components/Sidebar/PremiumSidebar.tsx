@@ -74,7 +74,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
       <div
         className={`${
           sidebarOpen ? "left-0" : "left-[-13rem]"
-        } fixed left-0 z-[70] flex min-h-screen w-[13rem] select-none flex-col gap-6 rounded-r-3xl border-r bg-white/100 px-2 pb-10 pt-16 transition-all duration-300 dark:border-slate-400/20 dark:bg-black/100`}
+        } fixed left-0 z-[70] flex h-screen min-h-screen w-[13rem] select-none flex-col gap-2 overflow-auto rounded-r-3xl border-r bg-white/100 px-2 pb-10 pt-16 transition-all duration-300 dark:border-slate-400/20 dark:bg-black/100 sm:gap-4`}
       >
         <div className="flex flex-col gap-2">
           <div

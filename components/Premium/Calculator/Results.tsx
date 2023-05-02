@@ -78,11 +78,11 @@ const Results: FC<Props> = ({ handleSubmit }) => {
   };
 
   return (
-    <section className="flex w-full max-w-xl flex-col items-center justify-center gap-5 rounded-md border">
+    <section className="flex w-full max-w-5xl flex-col items-center justify-center gap-5 rounded-md border">
       <form action="" className="flex w-full flex-col gap-5">
         <div className="flex flex-col gap-3 p-5">
           <span className="w-full p-5 text-left text-3xl font-semibold">
-            {isCreatingRoute ? "Finish" : "Suggestion"}
+            {isCreatingRoute ? "Suggestion" : "Suggestion"}
           </span>
           <div className="flex flex-col gap-4 font-medium">
             <div>
@@ -115,14 +115,16 @@ const Results: FC<Props> = ({ handleSubmit }) => {
         </div>
         {isCreatingRoute && (
           <div className="flex items-center justify-center border-t p-5">
-            <SubmitButton
-              className={"m-auto w-fit"}
-              onClick={handleCreateUser}
-              loadMessage={"Loading..."}
-              content={`${isCreatingRoute ? "Start my plan" : "Save"}`}
-              isLoading={isLoading}
-              isDisabled={isDisabled}
-            />
+            <div className="ml-auto flex">
+              <SubmitButton
+                className={"m-auto w-fit"}
+                onClick={handleCreateUser}
+                loadMessage={"Loading..."}
+                content={`${isCreatingRoute ? "Start" : "Save"}`}
+                isLoading={isLoading}
+                isDisabled={isDisabled}
+              />
+            </div>
           </div>
         )}
       </form>

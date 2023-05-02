@@ -53,7 +53,8 @@ a {
 }
 
 *::-webkit-scrollbar-track {
-  background: rgb(95, 95, 95);
+  background: lightgray;
+  border-radius: 10px;
 }
 
 *::-webkit-scrollbar-thumb {

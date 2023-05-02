@@ -64,7 +64,7 @@ const FoodPreferences: FC<Props> = ({ handleSubmit }) => {
   }, [selecteds, food_preferences]);
 
   return (
-    <section className="flex w-full max-w-xl flex-col items-center justify-center gap-3 rounded-md border text-xs s:text-sm sm:text-base">
+    <section className="flex w-full max-w-5xl select-none flex-col items-center justify-center gap-3 rounded-md border text-xs s:text-sm sm:text-base">
       <form action="" className="flex w-full flex-col gap-5">
         <div className="flex flex-col gap-3 p-5">
           <span className="w-full p-5 text-left text-3xl font-semibold">
@@ -74,7 +74,7 @@ const FoodPreferences: FC<Props> = ({ handleSubmit }) => {
             {FOOD_PREFERENCES.map((opt) => (
               <button
                 onClick={handleSelect}
-                className={`basis-1 rounded-md border bg-gray-300 p-1.5 font-medium text-black shadow-[0_1px_3px] shadow-slate-500/50 hover:shadow-[0_1px_5px] ${
+                className={`flex basis-1 flex-col gap-1 rounded-md border bg-gray-300 p-0 font-medium text-black shadow-[0_1px_3px] shadow-slate-500/50 hover:shadow-[0_1px_5px] ${
                   selecteds.includes(opt.value)
                     ? "border-green-500 bg-green-500/70 text-white"
                     : "border-slate-400 bg-slate-300/50"
@@ -82,20 +82,36 @@ const FoodPreferences: FC<Props> = ({ handleSubmit }) => {
                 key={opt.value}
                 value={opt.value}
               >
-                {opt.name}
+                <div className="pointer-events-none flex w-full flex-col items-start px-2 py-1 text-left">
+                  <span className="m-auto text-xl font-bold">{opt.name}</span>
+                  {opt.includes && (
+                    <div>
+                      <span className="font-semibold">Includes: </span>
+                      <span>{opt.includes}</span>
+                    </div>
+                  )}
+                  {opt.excludes && (
+                    <div>
+                      <span className="font-semibold">Excludes: </span>
+                      <span>{opt.excludes}</span>
+                    </div>
+                  )}
+                </div>
               </button>
             ))}
           </div>
         </div>
         <div className="flex items-center justify-center border-t p-5">
-          <SubmitButton
-            className={"m-auto w-fit"}
-            onClick={onSubmit}
-            loadMessage={"Loading..."}
-            content={`${isCreatingRoute ? "Continue" : "Save"}`}
-            isLoading={isLoading}
-            isDisabled={isDisabled}
-          />
+          <div className="ml-auto flex">
+            <SubmitButton
+              className={"m-auto w-fit"}
+              onClick={onSubmit}
+              loadMessage={"Loading..."}
+              content={`${isCreatingRoute ? "Continue" : "Save"}`}
+              isLoading={isLoading}
+              isDisabled={isDisabled}
+            />
+          </div>
         </div>
       </form>
     </section>

@@ -1,4 +1,5 @@
 import { MouseEventHandler } from "react";
+import Spinner from "../Loader/Spinner";
 
 const SubmitButton = ({
   content,
@@ -17,15 +18,15 @@ const SubmitButton = ({
 }) => {
   return (
     <button
-      className={`flex select-none justify-center rounded-md px-4 py-1 text-sm font-medium shadow-[0_1px_5px_gray] duration-300  ${className} ${
+      className={`flex h-8 min-w-[6rem] select-none items-center justify-center rounded-md border px-4 text-sm font-medium duration-100  ${className} ${
         isDisabled
-          ? "cursor-not-allowed border border-transparent bg-transparent opacity-70"
-          : "border border-green-500 bg-green-500/70 opacity-100 hover:bg-green-600 active:shadow-[0_0_10px_gray]"
+          ? "cursor-not-allowed border bg-transparent opacity-70"
+          : "border border-green-500 bg-green-500/70 opacity-100 hover:bg-green-600 active:scale-95 active:shadow-[0_0_10px_gray]"
       }`}
       onClick={onClick}
       disabled={isDisabled}
     >
-      {isLoading ? <span>{loadMessage}</span> : <span>{content}</span>}
+      {isLoading ? <Spinner customClass="h-5 w-5" /> : <span>{content}</span>}
     </button>
   );
 };
