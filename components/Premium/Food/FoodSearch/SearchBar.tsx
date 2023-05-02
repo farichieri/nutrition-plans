@@ -1,8 +1,8 @@
 import { fetchFoods } from "@/firebase/helpers/Food";
 import { FoodGroup } from "@/types/foodTypes";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
-import { setFoodsSearched } from "@/store/slices/foodsSlice";
-import { useDispatch } from "react-redux";
+import { selectFoodsSlice, setFoodsSearched } from "@/store/slices/foodsSlice";
+import { useDispatch, useSelector } from "react-redux";
 import React, { FC, useEffect, useState } from "react";
 
 interface Props {}
@@ -10,15 +10,25 @@ interface Props {}
 const SearchBar: FC<Props> = () => {
   const dispatch = useDispatch();
   const [searchInput, setSearchInput] = useState<string>("");
+  const { foodsSearched } = useSelector(selectFoodsSlice);
+  const noData = Object.values(foodsSearched).length === 0;
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (noData) {
+      fetchData("");
+    }
+  }, []);
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    const res: FoodGroup = await fetchFoods(searchInput.toLowerCase());
+  const fetchData = async (input: string) => {
+    const res: FoodGroup = await fetchFoods(input);
     if (!res?.error) {
       !res.error && dispatch(setFoodsSearched(res));
     }
+  };
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    fetchData(searchInput.toLowerCase());
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

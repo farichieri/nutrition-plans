@@ -1,17 +1,16 @@
 import { selectFoodsSlice } from "@/store/slices/foodsSlice";
 import { useSelector } from "react-redux";
 import Image from "next/image";
-import React, { FC, useEffect } from "react";
 import Link from "next/link";
+import React, { FC, useEffect } from "react";
 
 interface Props {}
 
 const FoodsSearched: FC<Props> = () => {
   const { foodsSearched } = useSelector(selectFoodsSlice);
+  const noData = Object.values(foodsSearched).length === 0;
 
-  useEffect(() => {}, []);
-  console.log({ foodsSearched });
-  if (!foodsSearched) {
+  if (noData) {
     return <div>No Foods found with that name</div>;
   }
 
@@ -23,17 +22,17 @@ const FoodsSearched: FC<Props> = () => {
           <Link
             href={`/app/food/${food.food_id}`}
             key={food.food_id}
-            className="flex flex-col gap-1 overflow-auto rounded-lg bg-slate-500/20 shadow-sm shadow-[#00000028] duration-300 hover:shadow-lg"
+            className="flex flex-col gap-1 overflow-auto rounded-lg border shadow-sm shadow-[#00000028] duration-300 hover:scale-105 hover:shadow-xl dark:bg-slate-400/10"
           >
             <Image
               src={food.image}
               alt={`${food.food_name}`}
               width={200}
               height={200}
-              className="w-[15rem]"
+              className="h-[15rem] w-[15rem] object-cover"
             />
             <div className="flex w-full max-w-[15rem] flex-col break-words p-5">
-              <span className="text-center text-xl font-semibold">
+              <span className="text-center text-lg font-semibold">
                 {food.food_name}
               </span>
               <div className="flex w-full justify-between">

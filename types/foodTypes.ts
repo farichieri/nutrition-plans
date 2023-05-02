@@ -128,6 +128,7 @@ export enum NutritionMeasurements {
   kcal = "kcal",
   mcg = "μg",
   mg = "mg",
+  oz = "oz",
 }
 
 export enum FoodCategoriesEnum {

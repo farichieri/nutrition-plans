@@ -9,14 +9,11 @@ import { useDispatch, useSelector } from "react-redux";
 import Modal from "@/components/Modal/Modal";
 
 interface Props {
-  food: Food;
+  nutrients: FoodNutrients;
   handleClose: Function;
 }
 
-const FoodNutritionDetail: FC<Props> = ({ food, handleClose }) => {
-  const dispatch = useDispatch();
-  const { user } = useSelector(selectAuthSlice);
-  const nutrients: FoodNutrients = food.nutrients;
+const FoodNutritionDetail: FC<Props> = ({ nutrients, handleClose }) => {
   const nutrientsClacified = getNutrientsClasified(nutrients);
 
   return (
