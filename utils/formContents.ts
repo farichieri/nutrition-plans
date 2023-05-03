@@ -58,7 +58,7 @@ const FOOD_PREFERENCES = [
       "plant foods (fruits, vegetables, whole grains, nuts, seeds) but, unlike vegetarians",
     excludes: "does not exclude meat and fish entirely.",
   },
-  { value: "ketogenic", name: "Ketogenic", includes: "", excludes: "" },
+  // { value: "ketogenic", name: "Ketogenic", includes: "", excludes: "" },
   {
     value: "mediterranean",
     name: "Mediterranean",

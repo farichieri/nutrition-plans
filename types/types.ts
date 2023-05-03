@@ -43,6 +43,7 @@ export interface UserAccount {
   is_premium: boolean;
   is_profile_completed: boolean;
   lang: string;
+  nutrition_targets: NutritionTargets;
   photo_url: string | null;
   plan_selected: string | null;
   premium_plan: string | null;
@@ -74,6 +75,21 @@ export interface WeightGoal {
   weight_goal_in_kg: number | null;
   created_at: string | null;
   due_date: string | null;
+}
+
+export interface NutritionTargets {
+  carbohydrates: {
+    min: number | null;
+    max: number | null;
+  };
+  proteins: {
+    min: number | null;
+    max: number | null;
+  };
+  fats: {
+    min: number | null;
+    max: number | null;
+  };
 }
 
 // User Progress

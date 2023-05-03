@@ -24,43 +24,98 @@ export const MEAL_PLANS = [
   {
     name: "Balanced",
     id: "balanced",
+    excludes: "nothing",
+    macros: {
+      carbs: {
+        min: 55,
+        max: 65,
+      },
+      proteins: {
+        min: 15,
+        max: 20,
+      },
+      fats: {
+        min: 30,
+        max: 35,
+      },
+    },
   },
   {
     name: "Gluten Free",
     id: "gluten-free",
+    excludes: "any foods that contain gluten",
+    macros: {
+      carbs: {
+        min: 55,
+        max: 65,
+      },
+      proteins: {
+        min: 15,
+        max: 20,
+      },
+      fats: {
+        min: 30,
+        max: 35,
+      },
+    },
   },
   {
     name: "Mediterranean",
     id: "mediterranean",
-  },
-  {
-    name: "Keto",
-    id: "keto",
+    macros: {
+      carbs: {
+        min: 20,
+        max: 35,
+      },
+      proteins: {
+        min: 15,
+        max: 20,
+      },
+      fats: {
+        min: 45,
+        max: 60,
+      },
+    },
   },
   {
     name: "Vegetarian",
     id: "vegetarian",
+    excludes:
+      "animal foods such as red beef, white meat such as chicken, pork, turkey and fish.",
+    macros: {
+      carbs: {
+        min: 50,
+        max: 55,
+      },
+      proteins: {
+        min: 15,
+        max: 20,
+      },
+      fats: {
+        min: 30,
+        max: 35,
+      },
+    },
   },
   {
     name: "Low Carb",
     id: "low-carb",
+    macros: {
+      carbs: {
+        min: 10,
+        max: 40,
+      },
+      proteins: {
+        min: 20,
+        max: 25,
+      },
+      fats: {
+        min: 50,
+        max: 60,
+      },
+    },
   },
-
-  // {
-  //   name: "Paleo",
-  //   id: "paleo",
-  // },
-  // {
-  //   name: "Protein",
-  //   id: "protein",
-  // },
-  // {
-  //   name: "Vegan",
-  //   id: "vegan",
-  // },
 ];
-
-// Orders 1.Balanced, 2.Mediterranean, 3.Keto, 4.Low Carb, 5. Vegetarian, 6.Gluten-foree
 
 export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
   {
@@ -91,17 +146,6 @@ export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
     plan_id: "premium",
     yearlyPrice: 8,
   },
-  // {
-  //   buttonContent: "Get started with Plus",
-  //   checklist: ["Access to All our plans"],
-  //   checklistTitle: "Everything in Standard, plus...",
-  //   checkoutLink: "/app/billing",
-  //   discount: "-20%",
-  //   monthlyPrice: 50,
-  //   name: "Plus",
-  //   plan_id: "plus",
-  //   yearlyPrice: 40,
-  // },
 ];
 
 export const CONTACT_EMAIL = "frichieri.dev@gmail.com";

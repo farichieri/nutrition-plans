@@ -14,7 +14,7 @@ html {
   --border-color: lightgray;
   --carbs-color: #8d4d00d9;
   --fats-color: #2fa800e0;
-  --prots-color: #3e3ed79c;
+  --prots-color: #6767dd;
 }
 
 :root.dark {

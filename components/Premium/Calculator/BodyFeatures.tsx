@@ -209,6 +209,8 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
       if (!res?.error) {
         dispatch(setUpdateUser(userUpdated));
         handleSubmit();
+      } else {
+        setError("Ups, something happened, please try again");
       }
       setIsLoading(false);
     }
@@ -416,7 +418,12 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
             </div>
           </div>
         </div>
-        <div className="flex justify-center border-t p-5">
+        <div className="flex items-center justify-center border-t p-5">
+          {error && (
+            <span className="text-center font-medium text-red-400">
+              {error}
+            </span>
+          )}
           <div className="ml-auto flex">
             <SubmitButton
               className={"m-auto w-fit"}
@@ -427,11 +434,6 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
               isDisabled={isFormIncomplete || isDisabled}
             />
           </div>
-          {error && (
-            <span className="text-center font-medium text-red-400">
-              {error}
-            </span>
-          )}
         </div>
       </form>
       <style jsx>

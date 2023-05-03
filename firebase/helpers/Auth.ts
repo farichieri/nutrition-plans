@@ -48,6 +48,7 @@ const generateUserObject = async (user: User) => {
         is_premium: userData.is_premium,
         is_profile_completed: userData.is_profile_completed,
         lang: userData.lang,
+        nutrition_targets: userData.nutrition_targets,
         photo_url: userData.photo_url,
         plan_selected: userData.plan_selected,
         premium_plan: userData.premium_plan,

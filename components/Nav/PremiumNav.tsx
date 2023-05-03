@@ -11,10 +11,6 @@ interface Props {
 const PremiumNav: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
   const [openMenu, setOpenMenu] = useState(false);
 
-  const handleMenu = () => {
-    setOpenMenu(!openMenu);
-  };
-
   return (
     <nav className="fixed top-0 z-[80] flex w-full select-none items-center justify-center">
       <div className="flex h-[var(--nav-h)] w-full items-center justify-between gap-4 border-b bg-white/100 px-4 backdrop-blur-sm dark:border-slate-400/20 dark:bg-black/100 dark:shadow-cyan-100/10 ">

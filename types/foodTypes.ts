@@ -163,3 +163,9 @@ export enum GlucemicStatusEnum {
 export type NutrientsClasified = {
   [key in NutrientsEnum]?: number | null;
 };
+
+export enum Macronutrients {
+  carbohydrates = "carbohydrates",
+  proteins = "proteins",
+  fats = "fats",
+}

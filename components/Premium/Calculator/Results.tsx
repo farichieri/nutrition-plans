@@ -1,18 +1,19 @@
 import { FC, useState } from "react";
-import { newBodyData } from "@/types/initialTypes";
+import { newBodyData, newNutritionTargets } from "@/types/initialTypes";
 import {
   selectAuthSlice,
   setIsCreatingUser,
   setUpdateUser,
 } from "@/store/slices/authSlice";
+import { addProgress } from "@/firebase/helpers/Progress";
+import { format, formatISO } from "date-fns";
+import { NutritionTargets, ProgressItem, UserAccount } from "@/types/types";
+import { setAddProgress } from "@/store/slices/progressSlice";
 import { updateUser } from "@/firebase/helpers/Auth";
 import { useDispatch, useSelector } from "react-redux";
-import { ProgressItem, UserAccount } from "@/types/types";
 import { useRouter } from "next/router";
+import NutritionTarget from "./NutritionTarget";
 import SubmitButton from "@/components/Buttons/SubmitButton";
-import { format, formatISO } from "date-fns";
-import { addProgress } from "@/firebase/helpers/Progress";
-import { setAddProgress } from "@/store/slices/progressSlice";
 
 interface Props {
   handleSubmit: Function;
@@ -23,12 +24,14 @@ const Results: FC<Props> = ({ handleSubmit }) => {
   const router = useRouter();
   const { user } = useSelector(selectAuthSlice);
   const body_data = user?.body_data || newBodyData;
+  const [nutritionTargets, setNutritionTargets] =
+    useState<NutritionTargets>(newNutritionTargets);
+
+  console.log({ nutritionTargets });
 
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const isCreatingRoute = router.asPath === "/app/create";
-
-  console.log({ user });
 
   const addFirstProgress = async () => {
     if (!user) return;
@@ -48,6 +51,7 @@ const Results: FC<Props> = ({ handleSubmit }) => {
     event.preventDefault();
     if (!user) return;
     setIsLoading(true);
+    setIsDisabled(true);
     const userUpdated: UserAccount = {
       ...user,
       first_data: {
@@ -55,6 +59,7 @@ const Results: FC<Props> = ({ handleSubmit }) => {
         food_data: user.food_data,
       },
       is_profile_completed: true,
+      nutrition_targets: nutritionTargets,
     };
     const updateUserRes = await updateUser(userUpdated);
     const addProgressRes = await addFirstProgress();
@@ -63,6 +68,8 @@ const Results: FC<Props> = ({ handleSubmit }) => {
       handleSubmit();
       dispatch(setIsCreatingUser(false));
     }
+    setIsLoading(false);
+    setIsDisabled(false);
   };
 
   const BMISignificance = (BMI: number) => {
@@ -111,6 +118,9 @@ const Results: FC<Props> = ({ handleSubmit }) => {
                 </span>
               </div>
             </div>
+          </div>
+          <div className="py-5">
+            <NutritionTarget setNutritionTargets={setNutritionTargets} />
           </div>
         </div>
         {isCreatingRoute && (

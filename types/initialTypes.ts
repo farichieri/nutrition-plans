@@ -6,6 +6,7 @@ import {
   FoodWeights,
 } from "@/types/foodTypes";
 import {
+  NutritionTargets,
   Progress,
   Ratings,
   UserAccount,
@@ -47,6 +48,21 @@ export const newRagins: Ratings = {
   },
 };
 
+export const newNutritionTargets: NutritionTargets = {
+  carbohydrates: {
+    min: null,
+    max: null,
+  },
+  proteins: {
+    min: null,
+    max: null,
+  },
+  fats: {
+    min: null,
+    max: null,
+  },
+};
+
 export const newAccount: UserAccount = {
   body_data: newBodyData,
   created_at: "",
@@ -57,6 +73,7 @@ export const newAccount: UserAccount = {
   is_premium: false,
   is_profile_completed: false,
   lang: "",
+  nutrition_targets: newNutritionTargets,
   photo_url: "",
   plan_selected: null,
   premium_plan: null,
@@ -88,14 +105,7 @@ export const NewFoodPreferences: FoodPreferences = {
   is_mediterranean: false,
   is_vegetarian: false,
 };
-// export const NewFoodImage: FoodImage = {
-//   curated: false,
-//   food_id: null,
-//   image_id: null,
-//   image: null,
-//   is_primary_image: false,
-//   uploader_id: null,
-// };
+
 export const NewFoodWeights: FoodWeights = {
   amount: 0,
   description: "",
