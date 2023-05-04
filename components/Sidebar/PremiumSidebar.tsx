@@ -20,6 +20,8 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import Feedback from "../Premium/Feedback";
+import SubscribeButton from "../Buttons/Subscribe";
 
 interface Props {
   sidebarOpen: boolean;
@@ -74,7 +76,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
       <div
         className={`${
           sidebarOpen ? "left-0" : "left-[-13rem]"
-        } fixed left-0 z-[70] flex h-screen min-h-screen w-[13rem] select-none flex-col gap-2 overflow-auto rounded-r-3xl border-r bg-white/100 px-2 pb-10 pt-16 transition-all duration-300 dark:border-slate-400/20 dark:bg-black/100 sm:gap-4`}
+        } fixed left-0 z-[70] flex h-screen min-h-screen w-[13rem] select-none flex-col gap-2 overflow-auto rounded-r-3xl border-r bg-white/80 px-2 pb-10 pt-16 backdrop-blur-sm transition-all duration-300 dark:border-slate-400/20 dark:bg-black/80 sm:gap-4`}
       >
         <div className="flex flex-col gap-2">
           <div
@@ -85,14 +87,14 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
             <div className="flex w-full cursor-pointer items-center justify-between">
               <span className="text-md font-semibold sm:text-lg">Profile</span>
               <ChevronDownIcon
-                className={`h-5 w-5 duration-300 ease-in-out ${
+                className={`h-5 w-5 duration-200 ease-in-out ${
                   sidebarEvolutionOpen && "-rotate-180 transform fill-green-500"
                 }`}
               />
             </div>
           </div>
           <div
-            className={`flex flex-col gap-1 overflow-hidden pl-1 text-sm transition-[max-height] duration-300 ease-linear sm:text-base ${
+            className={`flex flex-col gap-1 overflow-hidden pl-1 text-sm transition-[max-height] duration-200 ease-linear sm:text-base ${
               sidebarEvolutionOpen ? " max-h-[30rem]" : "max-h-0"
             }`}
           >
@@ -125,7 +127,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
                 href={`/app/plans/${planSelected}`}
                 className={`${
                   planVisited(planSelected) && "bg-slate-500/30 font-semibold"
-                } flex items-center gap-1 rounded-lg py-1 pl-4 pr-2 text-base`}
+                } flex w-full items-center gap-1 rounded-lg py-1 pl-4 pr-2 text-base`}
               >
                 {MEAL_PLANS.find((plan) => plan.id === planSelected)?.name}
               </Link>
@@ -143,14 +145,14 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
                 All plans
               </span>
               <ChevronDownIcon
-                className={`h-5 w-5 duration-300 ease-in-out ${
+                className={`h-5 w-5 duration-200 ease-in-out ${
                   sidebarPlansOpen && "-rotate-180 transform fill-green-500"
                 }`}
               />
             </div>
           </div>
           <div
-            className={`flex flex-col gap-1 overflow-hidden pl-1 text-sm transition-[max-height] duration-300 ease-linear sm:text-base ${
+            className={`flex flex-col gap-1 overflow-hidden pl-1 text-sm transition-[max-height] duration-200 ease-linear sm:text-base ${
               sidebarPlansOpen ? " max-h-[30rem]" : "max-h-0"
             }`}
           >
@@ -236,11 +238,15 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
             </div>
           </div>
         )}
+
         <div className="mx-auto mt-auto flex flex-col gap-5">
           <Cog6ToothIcon
             className="mx-auto mt-auto h-5 w-5 cursor-pointer"
             onClick={handleOpenSettings}
           />
+          <div>
+            <SubscribeButton />
+          </div>
         </div>
       </div>
     </>

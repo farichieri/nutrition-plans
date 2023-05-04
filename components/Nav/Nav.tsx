@@ -1,4 +1,4 @@
-import { Bars2Icon, Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
+import { Bars2Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import { FC, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";

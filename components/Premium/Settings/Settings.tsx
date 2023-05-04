@@ -4,7 +4,6 @@ import General from "./options/General";
 import Modal from "@/components/Modal/Modal";
 import Account from "./options/Account";
 import React, { FC, useState } from "react";
-import Support from "./options/Support";
 import Subscription from "./options/Subscription";
 import {
   Cog8ToothIcon,
@@ -34,11 +33,6 @@ const Settings: FC<Props> = () => {
       icon: <Cog8ToothIcon className="h-4 w-4" />,
       option: "general",
       component: <General setSettingSelected={setSettingSelected} />,
-    },
-    {
-      icon: <LightBulbIcon className="h-4 w-4" />,
-      option: "support",
-      component: <Support />,
     },
     // {
     //   icon: <UserIcon className="h-4 w-4" />,

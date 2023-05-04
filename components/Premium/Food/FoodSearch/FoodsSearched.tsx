@@ -39,15 +39,15 @@ const FoodsSearched: FC<Props> = () => {
                 <span>Calories:</span>
                 <span>{food.nutrients.calories}</span>
               </div>
-              <div className="flex w-full justify-between">
+              <div className="flex w-full justify-between text-[var(--carbs-color)]">
                 <span>Carbs:</span>
                 <span>{food.nutrients.carbohydrates}</span>
               </div>
-              <div className="flex w-full justify-between">
+              <div className="flex w-full justify-between text-[var(--fats-color)]">
                 <span>Fats:</span>
                 <span>{food.nutrients.fats}</span>
               </div>
-              <div className="flex w-full justify-between">
+              <div className="flex w-full justify-between text-[var(--prots-color)]">
                 <span>Proteins:</span>
                 <span>{food.nutrients.proteins}</span>
               </div>

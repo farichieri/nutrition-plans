@@ -42,23 +42,15 @@ a {
 }
 
 * {
-  scrollbar-width: thin;
-  scrollbar-color: rgb(61, 61, 61) rgba(164, 164, 164, 0.402);
   border-color: var(--border-color);
 }
 
-*::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+.dark {
+  color-scheme: dark;
 }
 
 *::-webkit-scrollbar-track {
-  background: lightgray;
   border-radius: 10px;
-}
-
-*::-webkit-scrollbar-thumb {
-  background-color: rgb(61, 61, 61);
 }
 
 h1 {

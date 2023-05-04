@@ -47,20 +47,22 @@ export default function Page({ planData }: Props) {
         className={`relative flex w-full flex-col items-center gap-4 px-4 py-10`}
       >
         <div className="flex w-full border-b pb-10">
-          <div className="mx-auto flex w-full max-w-5xl">
+          <div className="mx-auto flex w-full max-w-5xl flex-col items-center justify-center sm:flex-row">
             <h1 className="mx-auto w-full max-w-5xl text-3xl font-semibold">
               {planData.title}
             </h1>
-            {!(user?.plan_selected === planData.id) ? (
-              <button
-                className="ml-auto   min-w-fit rounded-3xl border px-2 py-1"
-                onClick={selectPlan}
-              >
-                Select plan
-              </button>
-            ) : (
-              <span className="ml-auto">Plan selected</span>
-            )}
+            <div className="mr-auto w-fit min-w-fit">
+              {!(user?.plan_selected === planData.id) ? (
+                <button
+                  className="min-w-fit rounded-3xl border px-2 py-1"
+                  onClick={selectPlan}
+                >
+                  Select plan
+                </button>
+              ) : (
+                <span className="min-w-fit">Plan selected</span>
+              )}
+            </div>
           </div>
         </div>
         {/* {isFree && (

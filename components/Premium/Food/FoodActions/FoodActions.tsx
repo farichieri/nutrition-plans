@@ -4,9 +4,9 @@ import { updateFoodAction } from "@/firebase/helpers/Food";
 import { selectAuthSlice, setUpdateUser } from "@/store/slices/authSlice";
 import { FoodRating } from "@/types/types";
 import {
+  HandThumbDownIcon,
   HandThumbUpIcon,
-  NoSymbolIcon,
-  StarIcon,
+  HeartIcon,
 } from "@heroicons/react/24/solid";
 import { FC, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -136,7 +136,7 @@ const FoodActions: FC<Props> = ({ foodID }) => {
             customClass={` h-5 w-5  ${isFavorite && "text-green-500"}`}
           />
         ) : (
-          <StarIcon
+          <HeartIcon
             className={` pointer-events-none h-5 w-5 ${
               isFavorite && "fill-green-500"
             }`}
@@ -172,7 +172,7 @@ const FoodActions: FC<Props> = ({ foodID }) => {
             customClass={` h-5 w-5  ${isDisliked && "text-green-500"}`}
           />
         ) : (
-          <NoSymbolIcon
+          <HandThumbDownIcon
             className={` pointer-events-none h-5 w-5 ${
               isDisliked && "fill-green-500"
             }`}
