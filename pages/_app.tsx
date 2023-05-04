@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import AppLoader from "@/components/Loader/AppLoader";
 import Layout from "@/components/Layout";
 import type { AppProps } from "next/app";
+import "material-icons/iconfont/material-icons.css";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();

@@ -2,7 +2,6 @@ import { FC } from "react";
 import { selectAuthSlice } from "@/store/slices/authSlice";
 import { setIsBillingModalOpen } from "@/store/slices/layoutSlice";
 import { useDispatch, useSelector } from "react-redux";
-import PrimaryButton from "@/components/Buttons/PrimaryButton";
 
 interface Props {
   setSettingSelected: Function;

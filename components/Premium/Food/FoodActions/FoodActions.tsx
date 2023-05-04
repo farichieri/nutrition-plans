@@ -127,7 +127,7 @@ const FoodActions: FC<Props> = ({ foodID }) => {
       <button
         onClick={handleRating}
         id="favorites"
-        className={`rounded-full border p-2 duration-300 hover:bg-slate-500/20 active:scale-90 ${
+        className={`flex h-10 w-10 items-center justify-center rounded-full border  duration-300 hover:bg-slate-500/20 active:scale-90 ${
           isFavorite && "border-green-500"
         }`}
       >
@@ -136,34 +136,43 @@ const FoodActions: FC<Props> = ({ foodID }) => {
             customClass={` h-5 w-5  ${isFavorite && "text-green-500"}`}
           />
         ) : (
-          <HeartIcon
-            className={` pointer-events-none h-5 w-5 ${
-              isFavorite && "fill-green-500"
+          <span
+            className={`material-icons md-18 pointer-events-none m-auto ${
+              isFavorite && "text-green-500"
             }`}
-          />
+          >
+            favorite
+          </span>
         )}
       </button>
       <button
         onClick={handleRating}
         id="likes"
-        className={`rounded-full border p-2 duration-300 hover:bg-slate-500/20 active:scale-90 ${
+        className={`flex h-10 w-10 items-center justify-center rounded-full border  duration-300 hover:bg-slate-500/20 active:scale-90 ${
           isLiked && "border-green-500"
         }`}
       >
         {isLiking ? (
           <Spinner customClass={` h-5 w-5  ${isLiked && "text-green-500"}`} />
         ) : (
-          <HandThumbUpIcon
-            className={` pointer-events-none h-5 w-5 ${
-              isLiked && "fill-green-500"
+          <span
+            className={`material-icons md-18 pointer-events-none m-auto ${
+              isLiked && "text-green-500"
             }`}
-          />
+          >
+            thumb_up
+          </span>
+          // <HandThumbUpIcon
+          //   className={` pointer-events-none h-5 w-5 ${
+          //     isLiked && "fill-green-500"
+          //   }`}
+          // />
         )}
       </button>
       <button
         onClick={handleRating}
         id="dislikes"
-        className={`rounded-full border p-2 duration-300 hover:bg-slate-500/20 active:scale-90 ${
+        className={`flex h-10 w-10 items-center justify-center rounded-full border  duration-300 hover:bg-slate-500/20 active:scale-90 ${
           isDisliked && "border-green-500"
         }`}
       >
@@ -172,11 +181,13 @@ const FoodActions: FC<Props> = ({ foodID }) => {
             customClass={` h-5 w-5  ${isDisliked && "text-green-500"}`}
           />
         ) : (
-          <HandThumbDownIcon
-            className={` pointer-events-none h-5 w-5 ${
-              isDisliked && "fill-green-500"
+          <span
+            className={`material-icons md-18 pointer-events-none m-auto ${
+              isDisliked && "text-green-500"
             }`}
-          />
+          >
+            thumb_down
+          </span>
         )}
       </button>
     </div>

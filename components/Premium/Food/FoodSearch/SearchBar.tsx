@@ -1,10 +1,6 @@
 import { fetchFoods } from "@/firebase/helpers/Food";
 import { FoodGroup } from "@/types/foodTypes";
-import {
-  AdjustmentsHorizontalIcon,
-  FunnelIcon,
-  MagnifyingGlassIcon,
-} from "@heroicons/react/24/solid";
+import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/solid";
 import { selectFoodsSlice, setFoodsSearched } from "@/store/slices/foodsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import React, { FC, useEffect, useState } from "react";
@@ -54,7 +50,7 @@ const SearchBar: FC<Props> = () => {
         onSubmit={handleSubmit}
         className="flex h-10 w-fit items-center gap-2 overflow-auto rounded-3xl border bg-slate-400/20 pl-4 shadow-sm focus-within:border-[darkgray] dark:bg-slate-500/10 dark:focus-within:border-white"
       >
-        <MagnifyingGlassIcon className="h-6 w-6" />
+        <span className="material-icons md-18">search</span>
         <input
           onChange={handleChange}
           value={searchInput}

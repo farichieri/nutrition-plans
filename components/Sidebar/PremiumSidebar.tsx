@@ -1,14 +1,4 @@
 import { MEAL_PLANS } from "@/utils/content";
-import {
-  ChevronDownIcon,
-  Cog6ToothIcon,
-  ChartBarIcon,
-  ArchiveBoxIcon,
-  DocumentCheckIcon,
-  NewspaperIcon,
-  MagnifyingGlassIcon,
-  PlusIcon,
-} from "@heroicons/react/20/solid";
 import { FC, MouseEventHandler } from "react";
 import { selectAuthSlice } from "@/store/slices/authSlice";
 import {
@@ -20,7 +10,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import Feedback from "../Premium/Feedback";
 import SubscribeButton from "../Buttons/Subscribe";
 
 interface Props {
@@ -83,14 +72,18 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
             className="text-md flex w-full items-center gap-1 rounded-lg px-2 py-1 text-base font-semibold sm:text-lg "
             onClick={toggleEvolution}
           >
-            <ChartBarIcon className="h-5 w-5 fill-green-500" />
+            <span className="material-icons md-24 text-green-500">
+              auto_graph
+            </span>
             <div className="flex w-full cursor-pointer items-center justify-between">
               <span className="text-md font-semibold sm:text-lg">Profile</span>
-              <ChevronDownIcon
-                className={`h-5 w-5 duration-200 ease-in-out ${
-                  sidebarEvolutionOpen && "-rotate-180 transform fill-green-500"
+              <span
+                className={`material-icons md-24 duration-200 ease-in-out ${
+                  sidebarEvolutionOpen && "-rotate-180 transform text-green-500"
                 }`}
-              />
+              >
+                expand_more
+              </span>
             </div>
           </div>
           <div
@@ -118,7 +111,9 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
               " bg-slate-500/30 font-semibold"
             } text-md flex w-full items-center gap-1 rounded-lg px-2 py-1 text-base font-semibold sm:text-lg`}
           >
-            <DocumentCheckIcon className="h-5 w-5 fill-green-500" />
+            <span className="material-icons md-24 text-green-500">
+              description
+            </span>
             <Link href={"/app/my-plan"}>My Plan</Link>
           </div>
           <div className="flex w-full">
@@ -139,16 +134,20 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
             className="text-md flex w-full items-center gap-1 rounded-lg px-2 py-1 text-base font-semibold sm:text-lg "
             onClick={toggleAllPlans}
           >
-            <ArchiveBoxIcon className="h-5 w-5 fill-green-500" />
+            <span className="material-icons md-24 text-green-500">
+              format_list_bulleted
+            </span>
             <div className="flex w-full cursor-pointer items-center justify-between">
               <span className="text-md font-semibold sm:text-lg">
                 All plans
               </span>
-              <ChevronDownIcon
-                className={`h-5 w-5 duration-200 ease-in-out ${
-                  sidebarPlansOpen && "-rotate-180 transform fill-green-500"
+              <span
+                className={`material-icons md-24 duration-200 ease-in-out ${
+                  sidebarPlansOpen && "-rotate-180 transform text-green-500"
                 }`}
-              />
+              >
+                expand_more
+              </span>
             </div>
           </div>
           <div
@@ -176,7 +175,9 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
               " bg-slate-500/30 font-semibold"
             } text-md flex w-full items-center gap-1 rounded-lg px-2 py-1 text-base font-semibold sm:text-lg`}
           >
-            <NewspaperIcon className="h-5 w-5 fill-green-500" />
+            <span className="material-icons md-24 text-green-500">
+              menu_book
+            </span>
             <Link
               href={"/app/recipes"}
               className="text-md w-full font-semibold sm:text-lg"
@@ -193,7 +194,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
               " bg-slate-500/30 font-semibold"
             } text-md flex w-full items-center gap-1 rounded-lg px-2 py-1 text-base font-semibold sm:text-lg`}
           >
-            <MagnifyingGlassIcon className="h-6 w-6 fill-green-500" />
+            <span className="material-icons md-24 text-green-500">search</span>
             <Link
               href={"/app/search-food"}
               className="text-md w-full font-semibold sm:text-lg"
@@ -210,7 +211,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
                 " bg-slate-500/30 font-semibold"
               } text-md flex w-full items-center gap-1 rounded-lg px-2 py-1 text-base font-semibold sm:text-lg`}
             >
-              <PlusIcon className="h-6 w-6 fill-red-500" />
+              <span className="material-icons md-24 text-red-500">add</span>{" "}
               <Link
                 href={"/app/create-food"}
                 className="text-md w-full font-semibold sm:text-lg"
@@ -228,7 +229,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
                 " bg-slate-500/30 font-semibold"
               } text-md flex w-full items-center gap-1 rounded-lg px-2 py-1 text-base font-semibold sm:text-lg`}
             >
-              <PlusIcon className="h-6 w-6 fill-red-500" />
+              <span className="material-icons md-24 text-red-500">add</span>{" "}
               <Link
                 href={"/app/create-recipe"}
                 className="text-md w-full font-semibold sm:text-lg"
@@ -240,10 +241,12 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
         )}
 
         <div className="mx-auto mt-auto flex flex-col gap-5">
-          <Cog6ToothIcon
-            className="mx-auto mt-auto h-5 w-5 cursor-pointer"
+          <span
+            className="material-icons md-24 mx-auto mt-auto h-5 w-5 cursor-pointer text-green-500"
             onClick={handleOpenSettings}
-          />
+          >
+            settings
+          </span>
           <div>
             <SubscribeButton />
           </div>
