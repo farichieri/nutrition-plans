@@ -5,22 +5,22 @@ const fixedInputClass =
   "rounded-md font-semibold appearance-none dark:bg-slate-500/50 dark:text-white bg-slate-500/20 relative block w-20 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 caret-green-500  focus:outline-none  focus:ring--500 focus:border-green-500 focus:z-10 sm:text-sm";
 
 interface Props {
-  customClass: string;
+  customClass?: string;
   handleChange: ChangeEventHandler;
   id: string;
   isRequired: boolean;
   labelFor: string;
   labelText: string;
-  max: string;
-  min: string;
+  max?: string;
+  min?: string;
   name: string;
-  pattern: string | undefined;
-  placeholder: string;
-  step: string;
+  pattern?: string | undefined;
+  placeholder?: string;
+  step?: string;
   title: string;
   type: string;
-  value: number;
-  unit: string | null;
+  value: number | null;
+  unit?: string | null;
 }
 
 const NutritionInput: FC<Props> = ({

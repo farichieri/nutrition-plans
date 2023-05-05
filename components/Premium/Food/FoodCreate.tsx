@@ -40,6 +40,7 @@ const FoodCreate: FC<Props> = () => {
   const foodCategory = foodCategorySelect;
   const glucemicStatus = foodGlucemicStatusSelect;
   const [isCreating, setIsCreating] = useState(false);
+  console.log({ foodState });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const type = event.target.type;
@@ -298,7 +299,7 @@ const FoodCreate: FC<Props> = () => {
                   labelText={type}
                   name={"food_type"}
                   title={type}
-                  value={foodState["food_type" as keyof FoodNutrients][type]}
+                  value={foodState["food_type" as keyof FoodType][type]}
                 />
               ))}
             </div>
@@ -318,7 +319,7 @@ const FoodCreate: FC<Props> = () => {
                   name={"food_preferences"}
                   title={type}
                   value={
-                    foodState["food_preferences" as keyof FoodNutrients][type]
+                    foodState["food_preferences" as keyof FoodPreferences][type]
                   }
                 />
               ))}

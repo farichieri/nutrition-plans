@@ -4,18 +4,18 @@ const fixedInputClass =
   "rounded-md capitalize w-full font-semibold appearance-none dark:bg-slate-500/90 dark:text-white bg-slate-500/20 relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 caret-green-500  focus:outline-none  focus:ring--500 focus:border-green-500 focus:z-10 sm:text-sm";
 
 interface Props {
-  customClass: string;
+  customClass?: string;
   handleChange: ChangeEventHandler;
   id: string;
   isRequired: boolean;
   labelFor: string;
   labelText: string;
-  max: string;
-  min: string;
+  max?: string;
+  min?: string;
   name: string;
-  pattern: string | undefined;
-  placeholder: string;
-  step: string;
+  pattern?: string;
+  placeholder?: string;
+  step?: string;
   title: string;
   type: string;
   value: string;

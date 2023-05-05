@@ -4,7 +4,9 @@ export interface Food {
   cook_time: number | null;
   date_created: any | null;
   date_updated: string | null;
-  food_category: string | null;
+  dish_type: DishTypesEnum | null;
+  easily_single_serving: boolean;
+  food_category: FoodCategoriesEnum | null;
   food_description: string | null;
   food_id: string | null;
   food_name_lowercase: string | null;
@@ -13,15 +15,21 @@ export interface Food {
   food_type: FoodType;
   glucemic_status: GlucemicStatusEnum | null;
   image: string;
+  ingredients: Ingredient[];
+  instructions: Instruction[];
   is_deleted: boolean;
+  kind: FoodTypesEnum | null;
   major_ingredients: string | null;
+  makes_leftovers: boolean;
   manufactured_by: string | null;
   num_dislikes: number;
   num_favorites: number;
   num_ingredient_usages: number;
   num_likes: number;
   nutrients: FoodNutrients;
+  prep_time: number | null;
   price: number | null;
+  recipe_category: RecipeCategoriesEnum | null;
   serving_amount_per_package: number | null;
   serving_amount: number | null;
   serving_grams: number | null;
@@ -29,34 +37,29 @@ export interface Food {
   source: string | null;
   uploader: string | null;
   user_id: string | null;
-  weights: FoodWeights[];
+}
+
+export interface Ingredient {
+  amount: number;
+  food_id: string;
+  order: number;
+  units: number;
+}
+
+export interface Instruction {
+  order: number;
+  recipe_id: string;
+  text: string;
 }
 
 export interface FoodGroup {
   [id: string]: Food;
 }
 
-export interface FoodWeights {
-  amount: number;
-  description: string;
-  grams: number;
-}
-
-// export interface FoodImage {
-//   curated: boolean;
-//   food_id: string | null;
-//   image_id: string | null;
-//   image: string | null;
-//   is_primary_image: boolean;
-//   uploader_id: string | null;
-// }
-
 export interface FoodType {
-  is_basic_food: boolean;
   is_breakfast: boolean;
   is_dinner: boolean;
   is_lunch: boolean;
-  is_recipe: boolean;
   is_snack: boolean;
 }
 
@@ -146,12 +149,35 @@ export enum FoodCategoriesEnum {
   nut_and_seed_products = "Nut and Seed Products",
   pork_products = "Pork Products",
   poultry_products = "Poultry Products",
-  restaurant_foods = "	Restaurant Foods",
+  restaurant_foods = "Restaurant Foods",
   sausages_and_luncheon_meats = "Sausages and Luncheon Meats",
   soups_sauces_and_gravies = "Soups, Sauces, and Gravies",
-  spices_and_herbs = "	Spices and Herbs",
+  spices_and_herbs = "Spices and Herbs",
   sweets = "sweets",
   vegetables_and_vegetable_products = "Vegetables and Vegetable Products",
+}
+
+export enum RecipeCategoriesEnum {
+  appetizers = "Appetizers",
+  breakfast_foods = "Breakfast foods",
+  desserts = "Desserts",
+  drinks = "Drinks",
+  mostly_meat = "Mostly meat",
+  protein_shakes = "Protein Shakes",
+  salads = "Salads",
+  sandwiches = "Sandwiches",
+  pasta = "Pasta",
+  soups = "Soups",
+  other = "Other",
+}
+
+export enum DishTypesEnum {
+  "main_dish" = "Main Dish",
+  "side_dish" = "Side Dish",
+}
+export enum FoodTypesEnum {
+  "recipe" = "Recipe",
+  "basic_food" = "Basic Food",
 }
 
 export enum GlucemicStatusEnum {

@@ -85,7 +85,7 @@ const Results: FC<Props> = ({ handleSubmit }) => {
   };
 
   return (
-    <section className="flex w-full max-w-5xl flex-col items-center justify-center gap-5 rounded-md border">
+    <section className="flex w-full max-w-5xl flex-col items-center justify-center gap-5 rounded-md border bg-white dark:bg-black">
       <form action="" className="flex w-full flex-col gap-5">
         <div className="flex flex-col gap-3 p-5">
           <span className="w-full p-5 text-left text-3xl font-semibold">

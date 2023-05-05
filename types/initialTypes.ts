@@ -3,7 +3,6 @@ import {
   FoodNutrients,
   FoodPreferences,
   FoodType,
-  FoodWeights,
 } from "@/types/foodTypes";
 import {
   NutritionTargets,
@@ -90,11 +89,9 @@ export const newProgress: Progress = {};
 
 // Food
 export const NewFoodType: FoodType = {
-  is_basic_food: false,
   is_breakfast: false,
   is_dinner: false,
   is_lunch: false,
-  is_recipe: false,
   is_snack: false,
 };
 export const NewFoodPreferences: FoodPreferences = {
@@ -104,12 +101,6 @@ export const NewFoodPreferences: FoodPreferences = {
   is_low_carb: false,
   is_mediterranean: false,
   is_vegetarian: false,
-};
-
-export const NewFoodWeights: FoodWeights = {
-  amount: 0,
-  description: "",
-  grams: 0,
 };
 
 export const NewFoodNutrients: FoodNutrients = {
@@ -169,6 +160,8 @@ export const NewFood: Food = {
   cook_time: null,
   date_created: null,
   date_updated: null,
+  dish_type: null,
+  easily_single_serving: false,
   food_category: null,
   food_description: null,
   food_id: null,
@@ -178,15 +171,21 @@ export const NewFood: Food = {
   food_type: NewFoodType,
   glucemic_status: null,
   image: DEFAULT_IMAGE,
+  ingredients: [],
+  instructions: [],
   is_deleted: false,
+  kind: null,
   major_ingredients: null,
+  makes_leftovers: false,
   manufactured_by: null,
   num_dislikes: 0,
   num_favorites: 0,
   num_ingredient_usages: 0,
   num_likes: 0,
   nutrients: NewFoodNutrients,
+  prep_time: null,
   price: null,
+  recipe_category: null,
   serving_amount_per_package: 1,
   serving_amount: 1,
   serving_grams: null,
@@ -194,5 +193,4 @@ export const NewFood: Food = {
   source: null,
   uploader: null,
   user_id: null,
-  weights: [],
 };

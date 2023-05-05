@@ -14,7 +14,7 @@ const BillingModal: FC<Props> = () => {
   const OPTIONS = [
     {
       discount: null,
-      monthlyPrice: 10,
+      monthlyPrice: 20,
       title: "1 month",
       totalPrice: 10,
       id: "standard-month",
@@ -22,9 +22,9 @@ const BillingModal: FC<Props> = () => {
     },
     {
       discount: "20%",
-      monthlyPrice: 8,
+      monthlyPrice: 16,
       title: "12 months",
-      totalPrice: 96,
+      totalPrice: 192,
       id: "standard-year",
       popular: true,
     },

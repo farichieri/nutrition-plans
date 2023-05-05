@@ -217,7 +217,7 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
   };
 
   return (
-    <div className="flex h-full w-full max-w-xl flex-col items-center justify-center gap-3 rounded-md border text-xs s:text-sm sm:text-base">
+    <div className="flex h-full w-full max-w-xl flex-col items-center justify-center gap-3 rounded-md border bg-white text-xs dark:bg-black s:text-sm sm:text-base">
       <form
         action=""
         onSubmit={onSubmit}

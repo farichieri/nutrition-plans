@@ -64,7 +64,7 @@ const FoodPreferences: FC<Props> = ({ handleSubmit }) => {
   }, [selecteds, food_preferences]);
 
   return (
-    <section className="flex w-full max-w-5xl select-none flex-col items-center justify-center gap-3 rounded-md border text-xs s:text-sm sm:text-base">
+    <section className="flex w-full max-w-5xl select-none flex-col items-center justify-center gap-3 rounded-md border bg-white text-xs dark:bg-black s:text-sm sm:text-base">
       <form action="" className="flex w-full flex-col gap-5">
         <div className="flex flex-col gap-3 p-5">
           <span className="w-full p-5 text-left text-3xl font-semibold">

@@ -11,9 +11,9 @@ interface Props {
   labelFor: string;
   labelText: string;
   name: string;
-  placeholder: string;
+  placeholder?: string;
   title: string;
-  value: string;
+  value: string | null;
   options: string[];
 }
 
