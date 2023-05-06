@@ -1,8 +1,3 @@
-import Checkbox from "@/components/Form/Checkbox";
-import Input from "@/components/Form/Input";
-import NutritionInput from "@/components/Form/NutritionInput";
-import Select from "@/components/Form/Select";
-import { selectFoodsSlice } from "@/store/slices/foodsSlice";
 import {
   DishTypesEnum,
   Food,
@@ -10,16 +5,28 @@ import {
   FoodType,
   RecipeCategoriesEnum,
 } from "@/types/foodTypes";
-import { NewFood } from "@/types/initialTypes";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Checkbox from "@/components/Form/Checkbox";
 import IngredientsSelector from "./IngredientsSelector";
+import Input from "@/components/Form/Input";
+import NutritionInput from "@/components/Form/NutritionInput";
+import Select from "@/components/Form/Select";
+import {
+  selectCreateRecipeSlice,
+  setRecipeState,
+} from "@/store/slices/createRecipeSlice";
+import Ingredients from "./Ingredients";
 
 interface Props {}
 
 const RecipeCreate: FC<Props> = () => {
-  const [recipeState, setRecipeState] = useState<Food>(NewFood);
+  // const [recipeState, setRecipeState] = useState<Food>(NewFood);
+  const dispatch = useDispatch();
+  const { recipeState } = useSelector(selectCreateRecipeSlice);
+
   console.log({ recipeState });
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const type = event.target.type;
     const name = event.target.name;
@@ -27,38 +34,42 @@ const RecipeCreate: FC<Props> = () => {
     const value = event.target.value;
     const valueF = type === "number" ? Number(value) : value;
     if (name === "easily_single_serving" || name === "makes_leftovers") {
-      setRecipeState({
-        ...recipeState,
-        [id]: !recipeState[id],
-      });
+      dispatch(
+        setRecipeState({
+          ...recipeState,
+          [id]: !recipeState[id],
+        })
+      );
     } else if (name === "food_type") {
       let foodTypes = { ...recipeState.food_type };
       let foodTypesUpdated = {
         ...foodTypes,
         [id]: !foodTypes[id as keyof FoodType],
       };
-      setRecipeState({ ...recipeState, food_type: foodTypesUpdated });
+      dispatch(setRecipeState({ ...recipeState, food_type: foodTypesUpdated }));
     } else if (name === "food_preferences") {
       let foodTypes = { ...recipeState.food_preferences };
       let foodTypesUpdated = {
         ...foodTypes,
         [id]: !foodTypes[id as keyof FoodPreferences],
       };
-      setRecipeState({ ...recipeState, food_preferences: foodTypesUpdated });
+      dispatch(
+        setRecipeState({ ...recipeState, food_preferences: foodTypesUpdated })
+      );
     } else if (name === "nutrient") {
       let nutrients = { ...recipeState.nutrients };
       let nutrientsUpdated = {
         ...nutrients,
         [id]: Number(valueF) > 0 ? Number(valueF) : 0,
       };
-      setRecipeState({ ...recipeState, nutrients: nutrientsUpdated });
+      dispatch(setRecipeState({ ...recipeState, nutrients: nutrientsUpdated }));
     } else {
-      setRecipeState({ ...recipeState, [id]: valueF });
+      dispatch(setRecipeState({ ...recipeState, [id]: valueF }));
     }
   };
 
   return (
-    <form className="mt-8 flex max-w-xl flex-col gap-2">
+    <form className="mb-[100vh] mt-8 flex max-w-xl flex-col gap-2">
       <div>
         <span className="text-3xl font-semibold">Create Recipe</span>
       </div>
@@ -205,7 +216,12 @@ const RecipeCreate: FC<Props> = () => {
           value={recipeState["makes_leftovers" as keyof FoodType]}
         />
       </div>
-      <IngredientsSelector />
+
+      <div className="flex max-w-xl flex-col gap-2 rounded-md border p-2">
+        <span className="text-3xl">Ingredients</span>
+        <Ingredients />
+        <IngredientsSelector />
+      </div>
 
       <div className="flex flex-col">
         <span>Nutrition info</span>

@@ -41,9 +41,9 @@ export interface Food {
 
 export interface Ingredient {
   amount: number;
+  weight_name: string;
   food_id: string;
   order: number;
-  units: number;
 }
 
 export interface Instruction {

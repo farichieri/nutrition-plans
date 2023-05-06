@@ -1,11 +1,9 @@
 import { FC } from "react";
-import { Food, FoodNutrients, NutrientsClasified } from "@/types/foodTypes";
+import { FoodNutrients, NutrientsClasified } from "@/types/foodTypes";
 import {
   getNutrientMeasurementUnit,
   getNutrientsClasified,
 } from "@/utils/helpers";
-import { selectAuthSlice } from "@/store/slices/authSlice";
-import { useDispatch, useSelector } from "react-redux";
 import Modal from "@/components/Modal/Modal";
 
 interface Props {
@@ -18,7 +16,7 @@ const FoodNutritionDetail: FC<Props> = ({ nutrients, handleClose }) => {
 
   return (
     <Modal onClose={handleClose}>
-      <section className="flex h-auto max-h-90vh w-auto min-w-full max-w-[95vw] flex-col overflow-hidden px-2 py-4">
+      <section className="flex h-auto max-h-[90vh] w-auto min-w-full max-w-[95vw] flex-col overflow-hidden px-2 py-4">
         <span className="px-2 text-3xl font-medium">Detailed Nutrition</span>
         <div className="flex w-full justify-between px-2 pb-2 pt-4 text-xs font-medium s:text-sm sm:text-lg">
           <span className="flex basis-1/3 justify-start">Nutrient</span>

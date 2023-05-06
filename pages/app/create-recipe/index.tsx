@@ -1,4 +1,4 @@
-import RecipeCreate from "@/components/Premium/Recipe/RecipeCreate";
+import RecipeCreate from "@/components/Premium/Recipe/CreateRecipe/RecipeCreate";
 import PremiumLayout from "@/components/Layout/PremiumLayout";
 
 export default function Page() {

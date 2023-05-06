@@ -16,7 +16,7 @@ const initialState: FoodsSlice = {
 };
 
 export const foodsSlice = createSlice({
-  name: "auth",
+  name: "foods",
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {

@@ -2,7 +2,7 @@ import { ChangeEventHandler, FC, useMemo, useState } from "react";
 import { getNutrientMeasurementUnit } from "@/utils/helpers";
 
 const fixedInputClass =
-  "rounded-md font-semibold appearance-none dark:bg-slate-500/50 dark:text-white bg-slate-500/20 relative block w-20 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 caret-green-500  focus:outline-none  focus:ring--500 focus:border-green-500 focus:z-10 sm:text-sm";
+  "rounded-md h-[2.5rem] my-1 font-semibold appearance-none dark:bg-slate-500/50 dark:text-white bg-slate-500/20 relative block w-20 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 caret-green-500 focus:outline-none focus:ring--500 focus:border-green-500 focus:z-10 sm:text-sm";
 
 interface Props {
   customClass?: string;
@@ -73,13 +73,15 @@ const NutritionInput: FC<Props> = ({
   };
 
   return (
-    <div className="my-2 flex flex-wrap items-center justify-between gap-1 md:flex-nowrap">
-      <label
-        htmlFor={labelFor}
-        className="w-full min-w-fit basis-1/2 text-base capitalize"
-      >
-        {labelText.replaceAll("_", " ")}
-      </label>
+    <div className="flex flex-wrap items-center justify-between gap-1 md:flex-nowrap">
+      {labelText && (
+        <label
+          htmlFor={labelFor}
+          className="w-full min-w-fit basis-1/2 text-base capitalize"
+        >
+          {labelText.replaceAll("_", " ")}
+        </label>
+      )}
       <div className="flex w-full items-center justify-between md:basis-1/2 ">
         <div className="flex w-full basis-1/2 items-center justify-start gap-2">
           <input
@@ -97,9 +99,12 @@ const NutritionInput: FC<Props> = ({
             type={type}
             value={value || ""}
           />
-          <label htmlFor={labelFor} className="">
-            {measurementUnit || unit}
-          </label>
+          {measurementUnit ||
+            (unit && (
+              <label htmlFor={labelFor} className="">
+                {measurementUnit || unit}
+              </label>
+            ))}
         </div>
         {requirement && (
           <>

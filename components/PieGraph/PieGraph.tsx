@@ -1,20 +1,21 @@
 import { ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 import React, { FC } from "react";
+import { FoodNutrients } from "@/types/foodTypes";
 
 interface Props {
-  calories: number | null;
-  carbohydrates: number | null;
-  fats: number | null;
-  proteins: number | null;
+  nutrients: FoodNutrients;
 }
 
-const PieGraph: FC<Props> = ({ calories, carbohydrates, fats, proteins }) => {
+const PieGraph: FC<Props> = ({ nutrients }) => {
   // 4 9 4 rule
 
   const createData = () => {
-    const carbsPercentage = (Number(carbohydrates) * 4) / Number(calories);
-    const fatsPercentage = (Number(fats) * 9) / Number(calories);
-    const protsPercentage = (Number(proteins) * 4) / Number(calories);
+    const carbsPercentage =
+      (Number(nutrients.carbohydrates) * 4) / Number(nutrients.calories);
+    const fatsPercentage =
+      (Number(nutrients.fats) * 9) / Number(nutrients.calories);
+    const protsPercentage =
+      (Number(nutrients.proteins) * 4) / Number(nutrients.calories);
     return [
       { name: "Carbs", value: carbsPercentage },
       { name: "Fats", value: protsPercentage },
@@ -68,17 +69,17 @@ const PieGraph: FC<Props> = ({ calories, carbohydrates, fats, proteins }) => {
   };
 
   return (
-    <div className="flex h-64 w-full overflow-hidden">
+    <div className="m-auto flex h-48 w-80 overflow-hidden ">
       <ResponsiveContainer width="100%" height="100%">
-        <PieChart width={400} height={400}>
+        <PieChart>
           <Pie
             data={data}
             cx="50%"
             cy="50%"
             labelLine={true}
             label={renderCustomizedLabel}
-            outerRadius={80}
-            innerRadius={60}
+            outerRadius={50}
+            innerRadius={30}
             fill="#8884d8"
             dataKey="value"
             className="outline-none"
