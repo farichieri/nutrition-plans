@@ -5,7 +5,7 @@ import {
   FoodType,
   RecipeCategoriesEnum,
 } from "@/types/foodTypes";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Checkbox from "@/components/Form/Checkbox";
 import IngredientsSelector from "./IngredientsSelector";
@@ -17,13 +17,19 @@ import {
   setRecipeState,
 } from "@/store/slices/createRecipeSlice";
 import Ingredients from "./Ingredients";
+import Instructions from "./Instructions";
+import AddInstruction from "./AddInstruction";
+import FormAction from "@/components/Form/FormAction";
+import { NewFood } from "@/types/initialTypes";
+import { selectAuthSlice } from "@/store/slices/authSlice";
 
 interface Props {}
 
 const RecipeCreate: FC<Props> = () => {
-  // const [recipeState, setRecipeState] = useState<Food>(NewFood);
   const dispatch = useDispatch();
   const { recipeState } = useSelector(selectCreateRecipeSlice);
+  const [isCreating, setIsCreating] = useState(false);
+  const { user } = useSelector(selectAuthSlice);
 
   console.log({ recipeState });
 
@@ -66,6 +72,28 @@ const RecipeCreate: FC<Props> = () => {
     } else {
       dispatch(setRecipeState({ ...recipeState, [id]: valueF }));
     }
+  };
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!user) return;
+    if (isCreating) return;
+    setIsCreating(true);
+    // const res = await addFood(user, foodState, newImageFile);
+    // if (!res?.error && res?.food_id) {
+    //   setNewImageFile(undefined);
+    //   alert("Food created successfully");
+    //   router.push(`/app/food/${res.food_id}`);
+    // } else {
+    //   alert("Error creating food");
+    // }
+    setIsCreating(false);
+  };
+
+  const handleCancel = async (event: React.FormEvent) => {
+    event.preventDefault();
+    dispatch(setRecipeState(NewFood));
+    // setNewImageFile(undefined);
   };
 
   return (
@@ -225,11 +253,28 @@ const RecipeCreate: FC<Props> = () => {
 
       <div className="flex flex-col">
         <span>Nutrition info</span>
+        {/* <FoodNutrition /> */}
       </div>
-      <div className="flex flex-col">
-        <span>Directions:</span>
-        <span>Direction 1, Direction 2...</span>
-        <span>Add Direction</span>
+      <div className="flex max-w-xl flex-col gap-2 rounded-md border p-2">
+        <span className="text-3xl">Recipe Instructions</span>
+        <Instructions />
+        <AddInstruction />
+      </div>
+      <div className="flex gap-2">
+        <FormAction
+          handleSubmit={handleCancel}
+          text="Discard"
+          action="submit"
+          type="Cancel"
+          isLoading={false}
+        />
+        <FormAction
+          handleSubmit={handleSubmit}
+          text="Create"
+          action="submit"
+          type="Submit"
+          isLoading={isCreating}
+        />
       </div>
     </form>
   );

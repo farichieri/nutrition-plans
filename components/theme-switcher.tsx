@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { SunIcon, MoonIcon } from "@heroicons/react/24/solid";
 import { Theme } from "@/types/types";
 import { useDispatch, useSelector } from "react-redux";
 import { selectLayoutSlice, setTheme } from "@/store/slices/layoutSlice";
@@ -31,9 +30,11 @@ const ThemeSwitcher: FC<Props> = ({ isPremium }) => {
       className="flex items-center gap-1 transition-all "
     >
       {theme == Theme.dark ? (
-        <SunIcon className="h-4 w-4 text-yellow-500" />
+        <span className="material-icons-sharp md-18 text-yellow-500">
+          light_mode
+        </span>
       ) : (
-        <MoonIcon className="h-4 w-4" />
+        <span className="material-icons-sharp md-18">dark_mode</span>
       )}
       {isPremium && <span>Theme</span>}
     </button>

@@ -40,13 +40,16 @@ export interface Food {
 }
 
 export interface Ingredient {
+  [id: string]: any;
   amount: number;
-  weight_name: string;
   food_id: string;
   order: number;
+  text: string;
+  weight_name: string;
 }
 
 export interface Instruction {
+  instruction_id: string;
   order: number;
   recipe_id: string;
   text: string;

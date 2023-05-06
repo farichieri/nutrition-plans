@@ -45,10 +45,22 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
   };
 
   const PROFILE_PAGES = [
-    { name: "Progress", url: "/app/profile/progress" },
-    { name: "Body Features", url: "/app/profile/body-features" },
-    { name: "Food Preferences", url: "/app/profile/food-preferences" },
-    { name: "Nutrition Values", url: "/app/profile/nutrition-values" },
+    { name: "Progress", url: "/app/profile/progress", icon: "auto_graph" },
+    {
+      name: "Body Features",
+      url: "/app/profile/body-features",
+      icon: "settings_accessibility",
+    },
+    {
+      name: "Food Preferences",
+      url: "/app/profile/food-preferences",
+      icon: "restaurant",
+    },
+    {
+      name: "Nutrition Values",
+      url: "/app/profile/nutrition-values",
+      icon: "data_saver_off",
+    },
   ];
 
   const planVisited = (id: string) => router.asPath === `/app/plans/${id}`;
@@ -64,17 +76,15 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
       )}
       <div
         className={`${
-          sidebarOpen ? "left-0" : "left-[-13rem]"
-        } fixed left-0 z-[70] flex h-screen min-h-screen w-[13rem] select-none flex-col gap-2 overflow-auto rounded-r-3xl border-r bg-white/80 px-2 pb-10 pt-16 backdrop-blur-sm transition-all duration-300 dark:border-slate-400/20 dark:bg-black/80 sm:gap-4`}
+          sidebarOpen ? "left-0" : "left-[-14rem]"
+        } fixed left-0 z-[70] flex h-screen min-h-screen w-[14rem] select-none flex-col gap-2 overflow-auto rounded-r-3xl border-r bg-white/80 px-2 pb-10 pt-16 backdrop-blur-sm transition-all duration-300 dark:border-slate-400/20 dark:bg-black/80 sm:gap-4`}
       >
         <div className="flex flex-col gap-2">
           <div
             className="text-md flex w-full items-center gap-1 rounded-lg px-2 py-1 text-base font-semibold sm:text-lg "
             onClick={toggleEvolution}
           >
-            <span className="material-icons md-24 text-green-500">
-              auto_graph
-            </span>
+            <span className="material-icons md-24 text-green-500">person</span>
             <div className="flex w-full cursor-pointer items-center justify-between">
               <span className="text-md font-semibold sm:text-lg">Profile</span>
               <span
@@ -97,8 +107,12 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
                 href={page.url}
                 className={`${
                   router.asPath === page.url && " bg-slate-500/30 font-semibold"
-                } flex items-center gap-1 rounded-lg py-1 pl-4 pr-2 text-base`}
+                } flex items-center gap-1.5 rounded-lg py-1 pl-4 pr-2 text-base`}
               >
+                <span className="material-icons md-24 text-green-500">
+                  {page.icon}
+                </span>
+
                 {page.name}
               </Link>
             ))}

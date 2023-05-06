@@ -148,9 +148,10 @@ const FoodNutrition: FC<Props> = ({ foodProp, isIngredient }) => {
     event.preventDefault();
     const newIngredient: Ingredient = {
       amount: amount,
-      weight_name: weightName,
       food_id: food.food_id || "",
       order: 0,
+      text: "",
+      weight_name: weightName,
     };
     dispatch(
       setRecipeState({

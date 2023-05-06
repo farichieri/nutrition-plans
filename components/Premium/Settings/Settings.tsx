@@ -20,17 +20,17 @@ const Settings: FC<Props> = () => {
 
   const settingOptions = [
     {
-      icon: <UserIcon className="h-4 w-4" />,
+      icon: <span className="material-icons-sharp">account_circle</span>,
       option: "account",
       component: <Account setSettingSelected={setSettingSelected} />,
     },
     {
-      icon: <WalletIcon className="h-4 w-4" />,
+      icon: <span className="material-icons">loyalty</span>,
       option: "subscription",
       component: <Subscription setSettingSelected={setSettingSelected} />,
     },
     {
-      icon: <Cog8ToothIcon className="h-4 w-4" />,
+      icon: <span className="material-icons">settings</span>,
       option: "general",
       component: <General setSettingSelected={setSettingSelected} />,
     },

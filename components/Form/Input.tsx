@@ -1,7 +1,7 @@
 import { ChangeEventHandler, FC } from "react";
 
 const fixedInputClass =
-  "rounded-md capitalize w-full font-semibold appearance-none dark:bg-slate-500/90 dark:text-white bg-slate-500/20 relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 caret-green-500  focus:outline-none  focus:ring--500 focus:border-green-500 focus:z-10 sm:text-sm";
+  "rounded-md capitalize w-full dark:border-gray-500 h-[2.5rem] font-semibold appearance-none dark:bg-slate-500/20 dark:text-white bg-slate-500/20 relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 caret-green-500  focus:outline-none  focus:ring--500 focus:border-green-500 focus:z-10 sm:text-sm";
 
 interface Props {
   customClass?: string;
@@ -9,7 +9,7 @@ interface Props {
   id: string;
   isRequired: boolean;
   labelFor: string;
-  labelText: string;
+  labelText?: string;
   max?: string;
   min?: string;
   name: string;
@@ -40,9 +40,11 @@ const Input: FC<Props> = ({
 }) => {
   return (
     <div className="my-3 flex flex-wrap items-center gap-2 sm:flex-nowrap ">
-      <label htmlFor={labelFor} className="not-sr-only w-full">
-        {labelText}
-      </label>
+      {labelText && (
+        <label htmlFor={labelFor} className="not-sr-only w-full">
+          {labelText}
+        </label>
+      )}
       <input
         className={fixedInputClass + customClass}
         id={id}

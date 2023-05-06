@@ -1,102 +1,144 @@
-import NutritionInput from "@/components/Form/NutritionInput";
-import Select from "@/components/Form/Select";
-import { fetchFoodByID } from "@/firebase/helpers/Food";
 import {
   selectCreateRecipeSlice,
   setRecipeState,
 } from "@/store/slices/createRecipeSlice";
-import { Food, Ingredient } from "@/types/foodTypes";
-import Image from "next/image";
+import { fetchFoodByID } from "@/firebase/helpers/Food";
 import { FC, useEffect, useState } from "react";
+import { Food, Ingredient } from "@/types/foodTypes";
 import { useDispatch, useSelector } from "react-redux";
+import Input from "@/components/Form/Input";
+import NutritionInput from "@/components/Form/NutritionInput";
+import Select from "@/components/Form/Select";
+import Image from "next/image";
 
-const Ingredient = ({ ing }: { ing: Ingredient }) => {
+const Ingredient = ({ ingredient }: { ingredient: Ingredient }) => {
   const dispatch = useDispatch();
   const { recipeState } = useSelector(selectCreateRecipeSlice);
-  const [ingredient, setIngredient] = useState<Food | null>(null);
-  const options = [ing.weight_name || "", "grams", "oz"];
+  const [foodIngredient, setFoodIngredient] = useState<Food | null>(null);
 
   const handleRemove = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const id = (event.target as HTMLButtonElement).id;
-    const newIngredients = [...recipeState.ingredients];
-    const ingredientExists = newIngredients.find((ing) => ing.food_id === id);
+    const ingredients = [...recipeState.ingredients];
+    const ingredientExists = ingredients.find((ing) => ing.food_id === id);
 
     if (ingredientExists) {
-      newIngredients.splice(newIngredients.indexOf(ingredientExists), 1);
+      ingredients.splice(ingredients.indexOf(ingredientExists), 1);
       dispatch(
         setRecipeState({
           ...recipeState,
-          ingredients: newIngredients,
+          ingredients: ingredients,
         })
       );
     }
   };
 
-  const handleChange = () => {};
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const type = event.target.type;
+    const name = event.target.name;
+    const id = event.target.id;
+    const value = event.target.value;
+    const valueF = type === "number" ? Number(value) : value;
+
+    const ingredients = [...recipeState.ingredients];
+    const ingredientExists = ingredients.find((ing) => ing.food_id === id);
+
+    const ingredientUpdated: Ingredient = {
+      ...ingredient,
+      [name]: valueF,
+    };
+
+    if (ingredientExists) {
+      ingredients[ingredients.indexOf(ingredientExists)] = ingredientUpdated;
+      dispatch(
+        setRecipeState({
+          ...recipeState,
+          ingredients: ingredients,
+        })
+      );
+    }
+  };
 
   useEffect(() => {
     const getFoodData = async (id: string) => {
       const foodFetched: Food = await fetchFoodByID(id);
-      setIngredient(foodFetched);
+      setFoodIngredient(foodFetched);
     };
-    getFoodData(ing.food_id);
+    getFoodData(ingredient.food_id);
   }, []);
 
-  if (!ingredient) {
+  if (!foodIngredient) {
     return <></>;
   }
 
   return (
-    <div key={ing.food_id} className="flex items-center rounded-md border">
+    <div className="flex items-center rounded-md border">
       <Image
-        src={ingredient.image}
+        src={foodIngredient.image}
         height={150}
         width={150}
-        alt={ingredient.food_name || ""}
+        alt={foodIngredient.food_name || ""}
         className="rounded-md"
       />
       <div className="flex w-full p-2">
         <div className="w-full">
           <div className="flex flex-col">
             <span className="text-base font-semibold capitalize">
-              {ingredient.food_name}
+              {foodIngredient.food_name}
             </span>
             <span className="text-sm opacity-50">
-              {ingredient.food_description}
+              {foodIngredient.food_description}
             </span>
           </div>
 
-          <div className="flex w-full items-center gap-2">
-            <NutritionInput
+          <div className="flex flex-col">
+            <div className="flex w-full items-center gap-2">
+              <NutritionInput
+                handleChange={handleChange}
+                id={ingredient.food_id}
+                isRequired={false}
+                key={"amount"}
+                labelFor={"amount"}
+                labelText={""}
+                min={"0"}
+                name={"amount"}
+                step={"1"}
+                title={""}
+                type={"number"}
+                value={ingredient.amount}
+              />
+              <Select
+                customClass={"h-full"}
+                handleChange={handleChange}
+                id={ingredient.food_id}
+                isRequired={false}
+                labelFor={"Amount"}
+                labelText={""}
+                name={"weight_name"}
+                title={"Scale Type"}
+                options={[foodIngredient.serving_name || "", "grams", "oz"]}
+                value={ingredient.weight_name}
+              />
+            </div>
+            <Input
               handleChange={handleChange}
-              id={"serving_amount"}
-              isRequired={false}
-              key={"serving_amount"}
-              labelFor={"serving_amount"}
+              id={ingredient.food_id}
+              isRequired={true}
+              labelFor={"text"}
               labelText={""}
-              min={"0"}
-              name={"serving_amount"}
-              step={"1"}
-              title={""}
-              type={"number"}
-              value={ing.amount}
-            />
-            <Select
-              customClass={"h-full"}
-              handleChange={handleChange}
-              id={"weight_amount"}
-              isRequired={false}
-              labelFor={"Amount"}
-              labelText={""}
-              name={"amount"}
-              title={"Scale Type"}
-              options={options}
-              value={ing.weight_name}
+              name={"text"}
+              title={"Food Name"}
+              type={"text"}
+              value={ingredient.text}
+              placeholder="Aditional Note"
             />
           </div>
         </div>
-        <button onClick={handleRemove} id={ing.food_id} className="ml-auto">
+        <button
+          onClick={handleRemove}
+          id={ingredient.food_id}
+          className="ml-auto"
+        >
           <span className="material-icons pointer-events-none">cancel</span>
         </button>
       </div>
@@ -111,9 +153,9 @@ const Ingredients: FC<Props> = () => {
   const ingredients = recipeState.ingredients;
 
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col">
       {ingredients.map((ing) => (
-        <Ingredient ing={ing} key={ing.food_id} />
+        <Ingredient ingredient={ing} key={ing.food_id} />
       ))}
     </div>
   );

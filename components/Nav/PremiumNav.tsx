@@ -19,9 +19,11 @@ const PremiumNav: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
           ) : (
             <XMarkIcon className="h-6 w-6" onClick={handleSidebar} />
           )}
-          <span className="flex">Nutrition Plans</span>
+          <span onClick={handleSidebar} className="flex">
+            Nutrition Plans
+          </span>
         </div>
-        <div className="flex w-fit min-w-fit basis-1/3 items-center justify-end gap-4 pr-2 text-xs sm:gap-10 sm:text-xl">
+        <div className="flex w-fit min-w-fit basis-1/3 items-center justify-end gap-4 pr-2 text-xs sm:gap-10 sm:text-xl xl:pr-10">
           <Feedback />
           <AvatarDropDown />
         </div>
