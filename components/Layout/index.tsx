@@ -54,7 +54,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </Head>
       {_theme && (
         <div className={font.className}>
-          <main className="min-w-screen flex min-h-screen flex-col items-center justify-between overflow-hidden">
+          <main
+            translate="no"
+            className="min-w-screen flex min-h-screen flex-col items-center justify-between overflow-hidden"
+          >
             {children}
           </main>
         </div>

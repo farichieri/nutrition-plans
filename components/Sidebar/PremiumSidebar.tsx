@@ -109,7 +109,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
                   router.asPath === page.url && " bg-slate-500/30 font-semibold"
                 } flex items-center gap-1.5 rounded-lg py-1 pl-4 pr-2 text-base`}
               >
-                <span className="material-icons md-24 text-green-500">
+                <span className="material-icons md-24 notraslate text-green-500">
                   {page.icon}
                 </span>
 

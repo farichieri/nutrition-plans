@@ -135,8 +135,7 @@ const RecipeCreate: FC<Props> = () => {
           foodIngredients[foodFetched.food_id as keyof Food] = foodFetched;
         }
       });
-      console.log({ foodIngredients });
-      if (Object.keys(foodIngredients).length > 0) {
+      if (foodIngredients) {
         setFoodIngredients(foodIngredients);
       }
     };
@@ -144,6 +143,8 @@ const RecipeCreate: FC<Props> = () => {
   }, [recipeState.ingredients.length]);
 
   useEffect(() => {
+    console.log("oa");
+    console.log(foodIngredients);
     if (foodIngredients) {
       console.log("ee");
       getMergedNutritionData(recipeState.ingredients, foodIngredients);
