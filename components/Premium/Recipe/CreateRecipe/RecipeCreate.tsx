@@ -1,30 +1,40 @@
 import {
   DishTypesEnum,
   Food,
+  FoodGroup,
   FoodPreferences,
   FoodType,
   RecipeCategoriesEnum,
+  Ingredient,
+  FoodNutrients,
 } from "@/types/foodTypes";
-import { FC, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Checkbox from "@/components/Form/Checkbox";
-import IngredientsSelector from "./IngredientsSelector";
-import Input from "@/components/Form/Input";
-import NutritionInput from "@/components/Form/NutritionInput";
-import Select from "@/components/Form/Select";
 import {
   selectCreateRecipeSlice,
   setRecipeState,
 } from "@/store/slices/createRecipeSlice";
-import Ingredients from "./Ingredients";
-import Instructions from "./Instructions";
-import AddInstruction from "./AddInstruction";
-import FormAction from "@/components/Form/FormAction";
-import { NewFood } from "@/types/initialTypes";
+import { FC, useEffect, useMemo, useState } from "react";
+import { fetchFoodByID } from "@/firebase/helpers/Food";
+import { NewFood, NewFoodNutrients } from "@/types/initialTypes";
 import { selectAuthSlice } from "@/store/slices/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import AddInstruction from "./AddInstruction";
+import Checkbox from "@/components/Form/Checkbox";
+import FormAction from "@/components/Form/FormAction";
+import Ingredients from "./Ingredients";
+import IngredientsSelector from "./IngredientsSelector";
+import Input from "@/components/Form/Input";
+import Instructions from "./Instructions";
+import NutritionInput from "@/components/Form/NutritionInput";
+import RecipeNutrition from "./RecipeNutrition";
+import Select from "@/components/Form/Select";
+import {
+  getNutritionMerged,
+  getNutritionValues,
+} from "../../Food/useNutrition";
 
 interface Props {}
-
+// Si yo tengo 5 ingredientes con respectivos Amount and Weight_name
+// Como hago para juntar los valores nutricionales y hadcer 1 valor nutricional total de la receta?
 const RecipeCreate: FC<Props> = () => {
   const dispatch = useDispatch();
   const { recipeState } = useSelector(selectCreateRecipeSlice);
@@ -95,6 +105,50 @@ const RecipeCreate: FC<Props> = () => {
     dispatch(setRecipeState(NewFood));
     // setNewImageFile(undefined);
   };
+
+  const [foodIngredients, setFoodIngredients] = useState<FoodGroup | null>(
+    null
+  );
+
+  const getMergedNutritionData = async (
+    ingredients: Ingredient[],
+    foodIngredients: FoodGroup
+  ) => {
+    if (foodIngredients && ingredients) {
+      console.log("asd");
+      const nutritionMerged = await getNutritionMerged(
+        ingredients,
+        foodIngredients
+      );
+      console.log({ nutritionMerged });
+      dispatch(setRecipeState({ ...recipeState, nutrients: nutritionMerged }));
+    }
+  };
+
+  useEffect(() => {
+    const getFoodIngredients = async (ingredients: Ingredient[]) => {
+      const foodIngredients: any = {};
+
+      ingredients.map(async (ingredient) => {
+        const foodFetched: Food = await fetchFoodByID(ingredient.food_id);
+        if (foodFetched.food_id) {
+          foodIngredients[foodFetched.food_id as keyof Food] = foodFetched;
+        }
+      });
+      console.log({ foodIngredients });
+      if (Object.keys(foodIngredients).length > 0) {
+        setFoodIngredients(foodIngredients);
+      }
+    };
+    getFoodIngredients(recipeState.ingredients);
+  }, [recipeState.ingredients.length]);
+
+  useEffect(() => {
+    if (foodIngredients) {
+      console.log("ee");
+      getMergedNutritionData(recipeState.ingredients, foodIngredients);
+    }
+  }, [recipeState.ingredients, foodIngredients]);
 
   return (
     <form className="mb-[100vh] mt-8 flex max-w-xl flex-col gap-2">
@@ -251,9 +305,17 @@ const RecipeCreate: FC<Props> = () => {
         <IngredientsSelector />
       </div>
 
-      <div className="flex flex-col">
-        <span>Nutrition info</span>
-        {/* <FoodNutrition /> */}
+      <div className="flex max-w-xl flex-col gap-2 rounded-md border p-2">
+        <div className="flex items-center gap-1">
+          <span className="material-icons-outlined text-green-500">
+            data_usage
+          </span>
+          <span className="text-2xl font-semibold">Nutrition Values</span>
+        </div>
+        {recipeState.nutrients &&
+          Object.keys(recipeState.nutrients).length > 0 && (
+            <RecipeNutrition nutrients={recipeState.nutrients} />
+          )}
       </div>
       <div className="flex max-w-xl flex-col gap-2 rounded-md border p-2">
         <span className="text-3xl">Recipe Instructions</span>

@@ -75,12 +75,12 @@ const Ingredient = ({ ingredient }: { ingredient: Ingredient }) => {
     <div className="flex items-center rounded-md border">
       <Image
         src={foodIngredient.image}
-        height={150}
-        width={150}
+        height={125}
+        width={125}
         alt={foodIngredient.food_name || ""}
         className="rounded-md"
       />
-      <div className="flex w-full p-2">
+      <div className="flex w-full px-2">
         <div className="w-full">
           <div className="flex flex-col">
             <span className="text-base font-semibold capitalize">
@@ -139,7 +139,9 @@ const Ingredient = ({ ingredient }: { ingredient: Ingredient }) => {
           id={ingredient.food_id}
           className="ml-auto"
         >
-          <span className="material-icons pointer-events-none">cancel</span>
+          <span className="material-icons pointer-events-none w-6">
+            delete_outlined
+          </span>
         </button>
       </div>
     </div>
@@ -153,7 +155,7 @@ const Ingredients: FC<Props> = () => {
   const ingredients = recipeState.ingredients;
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col gap-1">
       {ingredients.map((ing) => (
         <Ingredient ingredient={ing} key={ing.food_id} />
       ))}

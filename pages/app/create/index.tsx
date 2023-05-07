@@ -41,7 +41,7 @@ export default function Page() {
   return (
     <section className="min-w-screen flex min-h-screen w-full flex-col items-center gap-10 px-4 py-4">
       <div className="ml-auto mr-4">
-        <ThemeSwitcher isPremium={false} />
+        <ThemeSwitcher withText={false} />
       </div>
       <span className="text-2xl font-bold">Nutrition Plans</span>
       <div className="flex w-full flex-col items-center justify-center ">

@@ -123,7 +123,9 @@ const IngredientsSelector: FC<Props> = () => {
                 alt={searchResult[food].food_name || ""}
               />
               <div className="flex h-full w-full flex-col p-2">
-                <span>{searchResult[food].food_name}</span>
+                <span className="text-lg font-semibold capitalize">
+                  {searchResult[food].food_name}
+                </span>
                 <span className="text-xs opacity-50">
                   {searchResult[food].food_description}
                 </span>

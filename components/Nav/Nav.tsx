@@ -44,7 +44,9 @@ const NavBar: FC<Props> = () => {
           ))}
         </div>
         <div className="flex w-fit min-w-fit basis-1/3 items-center justify-end gap-4 text-xs sm:gap-10 sm:text-xl">
-          <ThemeSwitcher isPremium={false} />
+          <div className="hidden text-xs lg:flex">
+            <ThemeSwitcher withText={false} />
+          </div>
           <Link href={"/login"} className="hidden lg:flex">
             <button className="text-base font-semibold">Log in</button>
           </Link>
@@ -64,7 +66,7 @@ const NavBar: FC<Props> = () => {
         <div
           className={`${
             openMenu ? "left-0" : "left-full"
-          } absolute top-[var(--nav-h)] h-screen w-screen border-t bg-white px-4 shadow-sm transition-all duration-300 dark:border-t-cyan-100/20 dark:bg-black dark:shadow-cyan-100/20 lg:hidden`}
+          } absolute top-[var(--nav-h)] h-screen w-screen border-t bg-white px-5 shadow-sm transition-all duration-300 dark:border-t-cyan-100/20 dark:bg-black dark:shadow-cyan-100/20 lg:hidden`}
         >
           <div className="flex flex-col items-center justify-center gap-2 text-lg font-semibold">
             <Link
@@ -102,6 +104,9 @@ const NavBar: FC<Props> = () => {
             >
               Blog
             </Link>
+            <div className="flex w-full items-center justify-center gap-2 border-b border-gray-300 pb-2 dark:border-gray-500">
+              <ThemeSwitcher withText={true} />
+            </div>
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@ import { FC } from "react";
 const fixedClass = "animate-spin pointer-events-none";
 
 interface Props {
-  customClass: string;
+  customClass?: string;
 }
 
 const Spinner: FC<Props> = ({ customClass }) => {

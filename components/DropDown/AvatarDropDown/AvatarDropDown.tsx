@@ -46,17 +46,17 @@ const AvatarDropDown = () => {
         onClick={handleOpenProfile}
       >
         <button
-          className={`flex w-full cursor-pointer items-center gap-1 border-none bg-transparent px-2 py-1  `}
+          className={`flex w-full cursor-pointer items-center gap-2 border-none bg-transparent px-4 py-2  `}
         >
           <span className="material-icons">account_circle</span> Account
         </button>
       </div>
-      <div className="flex w-full gap-2 border-b border-slate-500/30 px-2 py-1 hover:bg-slate-500/40 dark:border-slate-500">
-        <ThemeSwitcher isPremium={true} />
+      <div className="flex w-full gap-2 border-b border-slate-500/30 px-4 py-2 hover:bg-slate-500/40 dark:border-slate-500">
+        <ThemeSwitcher withText={true} />
       </div>
       <div className="flex hover:bg-slate-500/40">
         <button
-          className={`flex w-full cursor-pointer items-center gap-1 border-none bg-transparent px-2 py-1 `}
+          className={`flex w-full cursor-pointer items-center gap-2 border-none bg-transparent px-4 py-2 `}
           onClick={handleLogout}
         >
           <span className="material-icons">logout</span> Logout

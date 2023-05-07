@@ -22,7 +22,7 @@ const SignBar: FC<Props> = () => {
           <Link href={"/"}>Nutrition Plans</Link>
         </div>
         <div className="flex w-fit min-w-fit basis-1/3 items-center justify-end gap-4 text-xs sm:gap-10 sm:text-xl">
-          <ThemeSwitcher isPremium={false} />
+          <ThemeSwitcher withText={false} />
           {router.asPath !== "/login" && (
             <Link href={"/login"} className="hidden lg:flex">
               <button className="text-base font-semibold">Log in</button>

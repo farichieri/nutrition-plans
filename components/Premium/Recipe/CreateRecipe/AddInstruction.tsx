@@ -58,11 +58,7 @@ const AddInstruction: FC<Props> = () => {
   };
 
   return (
-    <form
-      action=""
-      className="flex w-full items-center gap-1 rounded-md"
-      onSubmit={handleAddInstruction}
-    >
+    <div className="flex w-full items-center gap-1 rounded-md">
       <textarea
         autoCorrect="off"
         autoComplete="off"
@@ -77,7 +73,7 @@ const AddInstruction: FC<Props> = () => {
       <button onClick={handleAddInstruction} className="flex items-center">
         <span className="material-icons pointer-events-none">add</span>
       </button>
-    </form>
+    </div>
   );
 };
 

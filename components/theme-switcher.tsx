@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectLayoutSlice, setTheme } from "@/store/slices/layoutSlice";
 
 interface Props {
-  isPremium: boolean;
+  withText: boolean;
 }
 
-const ThemeSwitcher: FC<Props> = ({ isPremium }) => {
+const ThemeSwitcher: FC<Props> = ({ withText }) => {
   const dispatch = useDispatch();
   const { theme } = useSelector(selectLayoutSlice);
 
@@ -27,16 +27,24 @@ const ThemeSwitcher: FC<Props> = ({ isPremium }) => {
   return (
     <button
       onClick={toogleTheme}
-      className="flex items-center gap-1 transition-all "
+      className="flex w-full items-center justify-between gap-1 transition-all"
     >
+      {withText && <span>Theme</span>}
       {theme == Theme.dark ? (
-        <span className="material-icons-sharp md-18 text-yellow-500">
-          light_mode
-        </span>
+        <div className="flex items-center gap-2">
+          {withText && <span>Dark</span>}
+          <span className="material-icons-sharp md-18 text-yellow-500">
+            dark_mode
+          </span>
+        </div>
       ) : (
-        <span className="material-icons-sharp md-18">dark_mode</span>
+        <div className="flex items-center gap-2">
+          {withText && <span>Light</span>}
+          <span className="material-icons-sharp md-18 text-yellow-500">
+            light_mode
+          </span>
+        </div>
       )}
-      {isPremium && <span>Theme</span>}
     </button>
   );
 };
