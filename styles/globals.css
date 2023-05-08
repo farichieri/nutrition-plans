@@ -49,10 +49,6 @@ a {
   color-scheme: dark;
 }
 
-*::-webkit-scrollbar-track {
-  border-radius: 10px;
-}
-
 h1 {
   font-size: 2.5rem;
   font-weight: 600;
@@ -92,7 +88,8 @@ li {
 .material-icons.md-14,
 .material-icons-outlined.md-14,
 .material-icons-rounded.md-14,
-.material-icons-sharp.md-14 .material-icons-two-tone.md-14 {
+.material-icons-sharp.md-14,
+.material-icons-two-tone.md-14 {
   font-size: 14px;
 }
 .material-icons.md-18,

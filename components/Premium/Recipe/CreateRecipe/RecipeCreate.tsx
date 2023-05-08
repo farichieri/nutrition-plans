@@ -27,18 +27,15 @@ import Instructions from "./Instructions";
 import NutritionInput from "@/components/Form/NutritionInput";
 import RecipeNutrition from "./RecipeNutrition";
 import Select from "@/components/Form/Select";
-import {
-  getNutritionMerged,
-  getNutritionValues,
-} from "../../Food/useNutrition";
+import { getNutritionMerged } from "../../Food/useNutrition";
 
 interface Props {}
 // Si yo tengo 5 ingredientes con respectivos Amount and Weight_name
 // Como hago para juntar los valores nutricionales y hadcer 1 valor nutricional total de la receta?
 const RecipeCreate: FC<Props> = () => {
   const dispatch = useDispatch();
-  const { recipeState } = useSelector(selectCreateRecipeSlice);
   const [isCreating, setIsCreating] = useState(false);
+  const { recipeState } = useSelector(selectCreateRecipeSlice);
   const { user } = useSelector(selectAuthSlice);
 
   console.log({ recipeState });
@@ -106,50 +103,27 @@ const RecipeCreate: FC<Props> = () => {
     // setNewImageFile(undefined);
   };
 
-  const [foodIngredients, setFoodIngredients] = useState<FoodGroup | null>(
-    null
-  );
+  const getFoodIngredients = (ingredients: Ingredient[]) => {
+    let result: FoodGroup = Object.create({});
 
-  const getMergedNutritionData = async (
-    ingredients: Ingredient[],
-    foodIngredients: FoodGroup
-  ) => {
-    if (foodIngredients && ingredients) {
-      console.log("asd");
-      const nutritionMerged = await getNutritionMerged(
-        ingredients,
-        foodIngredients
-      );
-      console.log({ nutritionMerged });
-      dispatch(setRecipeState({ ...recipeState, nutrients: nutritionMerged }));
-    }
+    ingredients.forEach(async (ingredient) => {
+      const id = ingredient.food_id;
+      if (id) {
+        const foodFetched: Food = await fetchFoodByID(id);
+        if (foodFetched) {
+          result[id] = foodFetched;
+        }
+      }
+    });
+    return result;
   };
 
-  useEffect(() => {
-    const getFoodIngredients = async (ingredients: Ingredient[]) => {
-      const foodIngredients: any = {};
+  const foodIngredients = useMemo(
+    () => getFoodIngredients(recipeState.ingredients),
+    [recipeState.ingredients.length]
+  );
 
-      ingredients.map(async (ingredient) => {
-        const foodFetched: Food = await fetchFoodByID(ingredient.food_id);
-        if (foodFetched.food_id) {
-          foodIngredients[foodFetched.food_id as keyof Food] = foodFetched;
-        }
-      });
-      if (foodIngredients) {
-        setFoodIngredients(foodIngredients);
-      }
-    };
-    getFoodIngredients(recipeState.ingredients);
-  }, [recipeState.ingredients.length]);
-
-  useEffect(() => {
-    console.log("oa");
-    console.log(foodIngredients);
-    if (foodIngredients) {
-      console.log("ee");
-      getMergedNutritionData(recipeState.ingredients, foodIngredients);
-    }
-  }, [recipeState.ingredients, foodIngredients]);
+  console.log({ foodIngredients });
 
   return (
     <form className="mb-[100vh] mt-8 flex max-w-xl flex-col gap-2">
@@ -302,7 +276,7 @@ const RecipeCreate: FC<Props> = () => {
 
       <div className="flex max-w-xl flex-col gap-2 rounded-md border p-2">
         <span className="text-3xl">Ingredients</span>
-        <Ingredients />
+        <Ingredients foodIngredients={foodIngredients} />
         <IngredientsSelector />
       </div>
 
@@ -313,10 +287,12 @@ const RecipeCreate: FC<Props> = () => {
           </span>
           <span className="text-2xl font-semibold">Nutrition Values</span>
         </div>
-        {recipeState.nutrients &&
-          Object.keys(recipeState.nutrients).length > 0 && (
-            <RecipeNutrition nutrients={recipeState.nutrients} />
-          )}
+        {Object.keys(recipeState.nutrients).length > 0 && (
+          <RecipeNutrition
+            recipe={recipeState}
+            foodIngredients={foodIngredients}
+          />
+        )}
       </div>
       <div className="flex max-w-xl flex-col gap-2 rounded-md border p-2">
         <span className="text-3xl">Recipe Instructions</span>

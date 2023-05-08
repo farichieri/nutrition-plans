@@ -2,19 +2,23 @@ import {
   selectCreateRecipeSlice,
   setRecipeState,
 } from "@/store/slices/createRecipeSlice";
-import { fetchFoodByID } from "@/firebase/helpers/Food";
-import { FC, useEffect, useState } from "react";
-import { Food, Ingredient } from "@/types/foodTypes";
+import { FC } from "react";
+import { Food, FoodGroup, Ingredient } from "@/types/foodTypes";
 import { useDispatch, useSelector } from "react-redux";
+import Image from "next/image";
 import Input from "@/components/Form/Input";
 import NutritionInput from "@/components/Form/NutritionInput";
 import Select from "@/components/Form/Select";
-import Image from "next/image";
 
-const Ingredient = ({ ingredient }: { ingredient: Ingredient }) => {
+const Ingredient = ({
+  ingredient,
+  foodIngredient,
+}: {
+  ingredient: Ingredient;
+  foodIngredient: Food;
+}) => {
   const dispatch = useDispatch();
   const { recipeState } = useSelector(selectCreateRecipeSlice);
-  const [foodIngredient, setFoodIngredient] = useState<Food | null>(null);
 
   const handleRemove = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -34,6 +38,7 @@ const Ingredient = ({ ingredient }: { ingredient: Ingredient }) => {
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
     const type = event.target.type;
     const name = event.target.name;
     const id = event.target.id;
@@ -58,14 +63,6 @@ const Ingredient = ({ ingredient }: { ingredient: Ingredient }) => {
       );
     }
   };
-
-  useEffect(() => {
-    const getFoodData = async (id: string) => {
-      const foodFetched: Food = await fetchFoodByID(id);
-      setFoodIngredient(foodFetched);
-    };
-    getFoodData(ingredient.food_id);
-  }, []);
 
   if (!foodIngredient) {
     return <></>;
@@ -148,16 +145,22 @@ const Ingredient = ({ ingredient }: { ingredient: Ingredient }) => {
   );
 };
 
-interface Props {}
+interface Props {
+  foodIngredients: FoodGroup;
+}
 
-const Ingredients: FC<Props> = () => {
+const Ingredients: FC<Props> = ({ foodIngredients }) => {
   const { recipeState } = useSelector(selectCreateRecipeSlice);
   const ingredients = recipeState.ingredients;
 
   return (
     <div className="flex flex-col gap-1">
       {ingredients.map((ing) => (
-        <Ingredient ingredient={ing} key={ing.food_id} />
+        <Ingredient
+          foodIngredient={foodIngredients[ing.food_id]}
+          ingredient={ing}
+          key={ing.food_id}
+        />
       ))}
     </div>
   );

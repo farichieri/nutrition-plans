@@ -1,8 +1,7 @@
+import { Bars2Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import { FC, MouseEventHandler, useState } from "react";
 import AvatarDropDown from "../DropDown/AvatarDropDown/AvatarDropDown";
-import SubscribeButton from "../Buttons/Subscribe";
 import Feedback from "../Premium/Feedback";
-import { Bars2Icon, XMarkIcon } from "@heroicons/react/24/solid";
 
 interface Props {
   sidebarOpen: boolean;

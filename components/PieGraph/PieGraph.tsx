@@ -68,6 +68,14 @@ const PieGraph: FC<Props> = ({ nutrients }) => {
     );
   };
 
+  if (!nutrients.calories && !nutrients.proteins && !nutrients.carbohydrates) {
+    return (
+      <div className="flex h-full w-full items-center justify-center">
+        No Nutrition values provided
+      </div>
+    );
+  }
+
   return (
     <div className="m-auto flex h-48 w-80 overflow-hidden ">
       <ResponsiveContainer width="100%" height="100%">

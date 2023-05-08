@@ -92,6 +92,23 @@ const fetchFoodByID = async (food_id: string) => {
   }
 };
 
+const fetchFoodIngredients = async (food_id: string) => {
+  console.log(`Fetching Food ${food_id}`);
+  try {
+    const foodRef = doc(db, "foods", food_id);
+    const querySnapshot = await getDoc(foodRef);
+    const data: any = querySnapshot.data();
+    if (data) {
+      return data;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.log({ error: `Error fetching Food: ${error}` });
+    return null;
+  }
+};
+
 const uploadImage = async (file: Blob, food_id: string) => {
   try {
     const storageRef = ref(storage, `foods/${food_id}/default_image`);

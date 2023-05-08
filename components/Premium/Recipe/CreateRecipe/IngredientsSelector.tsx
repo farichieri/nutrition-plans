@@ -1,19 +1,19 @@
-import Spinner from "@/components/Loader/Spinner";
-import { fetchFoods } from "@/firebase/helpers/Food";
 import {
   selectFoodsSlice,
   setBasicFoodsSearched,
 } from "@/store/slices/foodsSlice";
+import {
+  selectCreateRecipeSlice,
+  setIngredientOpened,
+} from "@/store/slices/createRecipeSlice";
+import { fetchFoods } from "@/firebase/helpers/Food";
 import { FC, useEffect, useState } from "react";
 import { filterObject } from "@/utils/filter";
 import { Food, FoodGroup } from "@/types/foodTypes";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import IngredientData from "./IngredientData";
-import {
-  selectCreateRecipeSlice,
-  setIngredientOpened,
-} from "@/store/slices/createRecipeSlice";
+import Spinner from "@/components/Loader/Spinner";
 
 interface Props {}
 

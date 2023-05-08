@@ -247,19 +247,19 @@ const FoodNutrition: FC<Props> = ({ foodProp, isIngredient }) => {
           <div className="flex flex-col">
             <div className="flex w-full justify-between">
               <span>Calories:</span>
-              <span>{nutrients.calories}</span>
+              <span>{nutrients.calories || "-"}</span>
             </div>
             <div className="flex w-full justify-between">
               <span>Carbs:</span>
-              <span>{nutrients.carbohydrates}</span>
+              <span>{nutrients.carbohydrates || "-"}</span>
             </div>
             <div className="flex w-full justify-between">
               <span>Fats:</span>
-              <span>{nutrients.fats}</span>
+              <span>{nutrients.fats || "-"}</span>
             </div>
             <div className="flex w-full justify-between">
               <span>Proteins:</span>
-              <span>{nutrients.proteins}</span>
+              <span>{nutrients.proteins || "-"}</span>
             </div>
           </div>
         </div>
@@ -272,7 +272,7 @@ const FoodNutrition: FC<Props> = ({ foodProp, isIngredient }) => {
           <div className="flex w-full justify-between">
             <span>Net carbs:</span>
             <span>
-              {Number(nutrients.carbohydrates) - Number(nutrients.fiber)}
+              {Number(nutrients.carbohydrates) - Number(nutrients.fiber) || "-"}
             </span>
           </div>
         </div>

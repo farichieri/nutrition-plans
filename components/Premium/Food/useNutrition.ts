@@ -1,4 +1,5 @@
 import { Food, FoodGroup, FoodNutrients, Ingredient } from "@/types/foodTypes";
+import { NewFoodNutrients } from "@/types/initialTypes";
 import { GRAMS_IN_ONE_OZ } from "@/utils/constants";
 import { formatToFixed } from "@/utils/format";
 
@@ -35,47 +36,58 @@ const getNutritionValues = (
   return nutrientsUpdated;
 };
 
+const getIngredientNutrition = (
+  foodIngredient: Food,
+  ingredient: Ingredient
+) => {
+  if (foodIngredient.nutrients) {
+    const foodNutrition: FoodNutrients = getNutritionValues(
+      foodIngredient,
+      ingredient.amount,
+      ingredient.weight_name
+    );
+    return foodNutrition;
+  } else {
+    return NewFoodNutrients;
+  }
+};
+
 const getNutritionMerged = (
   ingredients: Ingredient[],
-  foodIngredients: FoodGroup
-) => {
-  let result: any = {};
+  foodIngredients: FoodGroup | null
+): FoodNutrients => {
+  if (
+    !foodIngredients ||
+    Object.keys(foodIngredients).length < 1 ||
+    ingredients.length < 1
+  ) {
+    return NewFoodNutrients;
+  }
 
-  const getIngredientNutrition = (
-    foodIngredient: Food,
-    ingredient: Ingredient
-  ) => {
-    if (foodIngredient.nutrients) {
-      const foodNutrition = getNutritionValues(
-        foodIngredient,
-        ingredient.amount,
-        ingredient.weight_name
-      );
-      return foodNutrition;
-    }
-  };
+  let result: any = Object.create({});
 
-  console.log(ingredients.length);
-  console.log(Object.keys(foodIngredients).length);
-
-  ingredients.map((ingredient) => {
+  ingredients.forEach((ingredient) => {
     const id = ingredient.food_id;
     if (id && foodIngredients) {
       const food = foodIngredients[id];
       if (food) {
-        const ingredientNutrition = getIngredientNutrition(food, ingredient);
+        const ingredientNutrition: FoodNutrients = getIngredientNutrition(
+          food,
+          ingredient
+        );
         for (let key in ingredientNutrition) {
           if (key in result) {
-            result[key] =
-              result[key] + ingredientNutrition[key as keyof FoodNutrients];
+            result[key as keyof FoodNutrients] =
+              result[key as keyof FoodNutrients] +
+              ingredientNutrition[key as keyof FoodNutrients];
           } else {
-            result[key] = ingredientNutrition[key as keyof FoodNutrients];
+            result[key as keyof FoodNutrients] =
+              ingredientNutrition[key as keyof FoodNutrients];
           }
         }
       }
     }
   });
-
   return result;
 };
 

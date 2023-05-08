@@ -1,20 +1,35 @@
-import { FoodNutrients } from "@/types/foodTypes";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
+import { Food, FoodGroup, FoodNutrients } from "@/types/foodTypes";
+import { getNutritionMerged } from "../../Food/useNutrition";
+import { setRecipeState } from "@/store/slices/createRecipeSlice";
+import { useDispatch } from "react-redux";
 import FoodNutritionDetail from "../../Food/FoodNutritionDetail";
 import PieGraph from "@/components/PieGraph/PieGraph";
 import Spinner from "@/components/Loader/Spinner";
 
 interface Props {
-  nutrients: FoodNutrients;
+  recipe: Food;
+  foodIngredients: FoodGroup | null;
 }
 
-const RecipeNutrition: FC<Props> = ({ nutrients }) => {
+const RecipeNutrition: FC<Props> = ({ recipe, foodIngredients }) => {
+  const dispatch = useDispatch();
   const [openDetails, setOpenDetails] = useState(false);
+  const { nutrients, ingredients } = recipe;
+
+  console.log({ recipe });
+
+  useEffect(() => {
+    const nutritionMerged = getNutritionMerged(ingredients, foodIngredients);
+    if (Object.keys(nutritionMerged).length > 0) {
+      dispatch(setRecipeState({ ...recipe, nutrients: nutritionMerged }));
+    }
+  }, [foodIngredients, ingredients]);
 
   if (!nutrients) {
     return (
       <div>
-        <Spinner />
+        <Spinner customClass="h-4 w-4" />
       </div>
     );
   }
@@ -40,19 +55,19 @@ const RecipeNutrition: FC<Props> = ({ nutrients }) => {
           <div className="flex flex-col">
             <div className="flex w-full justify-between">
               <span>Calories:</span>
-              <span>{nutrients.calories}</span>
+              <span>{nutrients.calories || "-"}</span>
             </div>
             <div className="flex w-full justify-between">
               <span>Carbs:</span>
-              <span>{nutrients.carbohydrates}</span>
+              <span>{nutrients.carbohydrates || "-"}</span>
             </div>
             <div className="flex w-full justify-between">
               <span>Fats:</span>
-              <span>{nutrients.fats}</span>
+              <span>{nutrients.fats || "-"}</span>
             </div>
             <div className="flex w-full justify-between">
               <span>Proteins:</span>
-              <span>{nutrients.proteins}</span>
+              <span>{nutrients.proteins || "-"}</span>
             </div>
           </div>
         </div>
@@ -65,7 +80,7 @@ const RecipeNutrition: FC<Props> = ({ nutrients }) => {
           <div className="flex w-full justify-between">
             <span>Net carbs:</span>
             <span>
-              {Number(nutrients.carbohydrates) - Number(nutrients.fiber)}
+              {Number(nutrients.carbohydrates) - Number(nutrients.fiber) || "-"}
             </span>
           </div>
         </div>
