@@ -120,3 +120,7 @@ li {
 .material-icons-two-tone.md-48 {
   font-size: 48px;
 }
+
+#nprogress .bar {
+  background: rgb(34 197 94);
+}
