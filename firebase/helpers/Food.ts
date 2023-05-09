@@ -2,6 +2,7 @@ import { db, storage } from "../firebase.config";
 import {
   collection,
   doc,
+  documentId,
   getDoc,
   getDocs,
   increment,
@@ -39,10 +40,12 @@ const addFood = async (
       food_name_lowercase: food.food_name.toLowerCase(),
       image: img,
     };
-    console.log("Food created: ", newFood);
+    console.log({ newFood });
     await setDoc(docRef, newFood);
+    console.log("Food created: ", newFood);
     return { food_id: docRef.id };
   } catch (error) {
+    console.log({ error });
     return { error: `Error creating Food: ${error}` };
   }
 };
@@ -70,11 +73,6 @@ const fetchFoods = async (foodQuery: string) => {
   }
 };
 
-// const userRef = doc(db, "users", user.uid);
-// console.log('getDoc: doc(db, "users", user.uid)');
-// const querySnapshot = await getDoc(userRef);
-// const userData = querySnapshot.data();
-
 const fetchFoodByID = async (food_id: string) => {
   console.log(`Fetching Food ${food_id}`);
   try {
@@ -92,12 +90,16 @@ const fetchFoodByID = async (food_id: string) => {
   }
 };
 
-const fetchFoodIngredients = async (food_id: string) => {
-  console.log(`Fetching Food ${food_id}`);
+const fetchFoodIngredients = async (food_ids: string[]) => {
+  console.log(`Fetching Food ${food_ids}`);
   try {
-    const foodRef = doc(db, "foods", food_id);
-    const querySnapshot = await getDoc(foodRef);
-    const data: any = querySnapshot.data();
+    let data: FoodGroup = {};
+    const foodRef = collection(db, "foods");
+    const q = query(foodRef, where(documentId(), "in", food_ids));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((food: any) => {
+      data[food.id] = food.data();
+    });
     if (data) {
       return data;
     } else {
@@ -155,4 +157,10 @@ const updateFoodAction = async (
   }
 };
 
-export { addFood, fetchFoods, updateFoodAction, fetchFoodByID };
+export {
+  addFood,
+  fetchFoods,
+  updateFoodAction,
+  fetchFoodByID,
+  fetchFoodIngredients,
+};

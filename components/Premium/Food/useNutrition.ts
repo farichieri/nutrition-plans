@@ -76,13 +76,13 @@ const getNutritionMerged = (
           ingredient
         );
         for (let key in ingredientNutrition) {
+          const value = result[key as keyof FoodNutrients];
+          const newValue = ingredientNutrition[key as keyof FoodNutrients];
           if (key in result) {
             result[key as keyof FoodNutrients] =
-              result[key as keyof FoodNutrients] +
-              ingredientNutrition[key as keyof FoodNutrients];
+              value + newValue > 0 ? value + newValue : null;
           } else {
-            result[key as keyof FoodNutrients] =
-              ingredientNutrition[key as keyof FoodNutrients];
+            result[key as keyof FoodNutrients] = newValue;
           }
         }
       }

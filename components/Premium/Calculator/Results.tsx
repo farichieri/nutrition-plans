@@ -89,7 +89,7 @@ const Results: FC<Props> = ({ handleSubmit }) => {
       <form action="" className="flex w-full flex-col gap-5">
         <div className="flex flex-col gap-3 p-5">
           <span className="w-full p-5 text-left text-3xl font-semibold">
-            {isCreatingRoute ? "Suggestion" : "Suggestion"}
+            {isCreatingRoute ? "Nutrition Values" : "Nutrition Values"}
           </span>
           <div className="flex flex-col gap-4 font-medium">
             <div>

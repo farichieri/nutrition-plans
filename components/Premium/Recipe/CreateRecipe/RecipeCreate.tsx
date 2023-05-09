@@ -6,15 +6,14 @@ import {
   FoodType,
   RecipeCategoriesEnum,
   Ingredient,
-  FoodNutrients,
 } from "@/types/foodTypes";
 import {
   selectCreateRecipeSlice,
   setRecipeState,
 } from "@/store/slices/createRecipeSlice";
-import { FC, useEffect, useMemo, useState } from "react";
-import { fetchFoodByID } from "@/firebase/helpers/Food";
-import { NewFood, NewFoodNutrients } from "@/types/initialTypes";
+import { FC, useEffect, useState } from "react";
+import { addFood, fetchFoodIngredients } from "@/firebase/helpers/Food";
+import { NewFood } from "@/types/initialTypes";
 import { selectAuthSlice } from "@/store/slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import AddInstruction from "./AddInstruction";
@@ -27,7 +26,7 @@ import Instructions from "./Instructions";
 import NutritionInput from "@/components/Form/NutritionInput";
 import RecipeNutrition from "./RecipeNutrition";
 import Select from "@/components/Form/Select";
-import { getNutritionMerged } from "../../Food/useNutrition";
+import Image from "next/image";
 
 interface Props {}
 // Si yo tengo 5 ingredientes con respectivos Amount and Weight_name
@@ -81,19 +80,34 @@ const RecipeCreate: FC<Props> = () => {
     }
   };
 
+  const [newImageFile, setNewImageFile] = useState<File | undefined>(undefined);
+
+  const handleUploadImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = (event.target as HTMLInputElement).files;
+    if (files && user) {
+      const file = files[0];
+      if (!file) return;
+      const blob = URL.createObjectURL(file);
+      dispatch(setRecipeState({ ...recipeState, image: blob }));
+      setNewImageFile(file);
+    }
+  };
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!user) return;
     if (isCreating) return;
     setIsCreating(true);
-    // const res = await addFood(user, foodState, newImageFile);
-    // if (!res?.error && res?.food_id) {
-    //   setNewImageFile(undefined);
-    //   alert("Food created successfully");
-    //   router.push(`/app/food/${res.food_id}`);
-    // } else {
-    //   alert("Error creating food");
-    // }
+    const res = await addFood(user, recipeState, newImageFile);
+    console.log({ res });
+    if (!res?.error && res?.food_id) {
+      setNewImageFile(undefined);
+      dispatch(setRecipeState(NewFood));
+      alert("Recipe created successfully");
+      // router.push(`/app/food/${res.food_id}`);
+    } else {
+      alert("Error creating recipe");
+    }
     setIsCreating(false);
   };
 
@@ -103,30 +117,29 @@ const RecipeCreate: FC<Props> = () => {
     // setNewImageFile(undefined);
   };
 
-  const getFoodIngredients = (ingredients: Ingredient[]) => {
-    let result: FoodGroup = Object.create({});
-
-    ingredients.forEach(async (ingredient) => {
-      const id = ingredient.food_id;
-      if (id) {
-        const foodFetched: Food = await fetchFoodByID(id);
-        if (foodFetched) {
-          result[id] = foodFetched;
-        }
-      }
-    });
+  const fetchFoods = async (ingredients: Ingredient[]) => {
+    const ids = ingredients.map((ing) => ing.food_id);
+    const result = await fetchFoodIngredients(ids);
     return result;
   };
 
-  const foodIngredients = useMemo(
-    () => getFoodIngredients(recipeState.ingredients),
-    [recipeState.ingredients.length]
+  const [foodIngredients, setFoodIngredients] = useState<FoodGroup | null>(
+    null
   );
 
-  console.log({ foodIngredients });
+  useEffect(() => {
+    const getFoods = async () => {
+      const foods = await fetchFoods(recipeState.ingredients);
+      setFoodIngredients(foods);
+    };
+    getFoods();
+  }, [recipeState.ingredients.length]);
 
   return (
-    <form className="mb-[100vh] mt-8 flex max-w-xl flex-col gap-2">
+    <form
+      className="mb-[100vh] mt-8 flex max-w-xl flex-col gap-2"
+      onSubmit={handleSubmit}
+    >
       <div>
         <span className="text-3xl font-semibold">Create Recipe</span>
       </div>
@@ -154,7 +167,22 @@ const RecipeCreate: FC<Props> = () => {
           value={recipeState["food_description"] || ""}
         />
       </div>
-      <span>Image</span>
+      <div className="flex flex-col gap-2">
+        <h1 className="text-xl">Image</h1>
+        <Image
+          src={recipeState.image}
+          width={200}
+          height={200}
+          alt="Food Image"
+          className="rounded-lg"
+        />
+        <input
+          title="Upload a new photo"
+          type="file"
+          onChange={handleUploadImage}
+          accept="image/*"
+        />
+      </div>{" "}
       <div className="flex flex-col gap-5">
         <span className="text-3xl font-normal">Recipe Properties:</span>
         <NutritionInput
@@ -172,16 +200,16 @@ const RecipeCreate: FC<Props> = () => {
         />
         <NutritionInput
           handleChange={handleChange}
-          id={"cook_type"}
+          id={"cook_time"}
           isRequired={true}
-          labelFor={"cook_type"}
+          labelFor={"cook_time"}
           labelText={"Cook Time"}
-          name={"cook_type"}
+          name={"cook_time"}
           title={"Cook Time"}
           type={"number"}
           min="0"
           unit={"minutes"}
-          value={recipeState["cook_type"]}
+          value={recipeState["cook_time"]}
         />
         <NutritionInput
           handleChange={handleChange}
@@ -254,17 +282,6 @@ const RecipeCreate: FC<Props> = () => {
           customClass={""}
           handleChange={handleChange}
           isRequired={false}
-          id={"easily_single_serving"}
-          labelFor={"easily_single_serving"}
-          labelText={"Easily Single Serving"}
-          name={"easily_single_serving"}
-          title={"Easily Single Serving"}
-          value={recipeState["easily_single_serving" as keyof FoodType]}
-        />
-        <Checkbox
-          customClass={""}
-          handleChange={handleChange}
-          isRequired={false}
           id={"makes_leftovers"}
           labelFor={"makes_leftovers"}
           labelText={"Makes good leftovers"}
@@ -273,13 +290,16 @@ const RecipeCreate: FC<Props> = () => {
           value={recipeState["makes_leftovers" as keyof FoodType]}
         />
       </div>
-
       <div className="flex max-w-xl flex-col gap-2 rounded-md border p-2">
         <span className="text-3xl">Ingredients</span>
-        <Ingredients foodIngredients={foodIngredients} />
+        {foodIngredients && (
+          <Ingredients
+            ingredients={recipeState.ingredients}
+            foodIngredients={foodIngredients}
+          />
+        )}
         <IngredientsSelector />
       </div>
-
       <div className="flex max-w-xl flex-col gap-2 rounded-md border p-2">
         <div className="flex items-center gap-1">
           <span className="material-icons-outlined text-green-500">

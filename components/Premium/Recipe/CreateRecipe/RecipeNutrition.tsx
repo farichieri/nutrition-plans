@@ -17,8 +17,6 @@ const RecipeNutrition: FC<Props> = ({ recipe, foodIngredients }) => {
   const [openDetails, setOpenDetails] = useState(false);
   const { nutrients, ingredients } = recipe;
 
-  console.log({ recipe });
-
   useEffect(() => {
     const nutritionMerged = getNutritionMerged(ingredients, foodIngredients);
     if (Object.keys(nutritionMerged).length > 0) {

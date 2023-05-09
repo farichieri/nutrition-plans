@@ -1,6 +1,6 @@
 import { ChangeEventHandler, FC } from "react";
 
-const fixedCheckboxClass = "cursor-pointer  h-4 w-4 accent-green-500 ";
+const fixedCheckboxClass = "cursor-pointer w-4 accent-green-500 ";
 
 interface Props {
   customClass: string;
@@ -11,7 +11,7 @@ interface Props {
   labelText: string;
   name: string;
   title: string;
-  value: string;
+  value: boolean;
 }
 
 const Checkbox: FC<Props> = ({
@@ -26,7 +26,7 @@ const Checkbox: FC<Props> = ({
   value,
 }) => {
   return (
-    <div className="focus:ring--500 relative my-2 flex w-full appearance-none items-center justify-between rounded-md border border-gray-300 bg-slate-500/20 px-3 py-2 font-semibold text-gray-900 placeholder-gray-500 caret-green-500 focus:z-10 focus:border-green-500  focus:outline-none  dark:border-gray-500 dark:bg-slate-500/20 dark:text-white sm:text-sm">
+    <div className="focus:ring--500 relative my-2 flex h-[2rem] w-full appearance-none items-center justify-between rounded-md border border-gray-300 bg-slate-500/20 px-3 py-1 font-semibold text-gray-900  placeholder-gray-500 caret-green-500 focus:z-10 focus:border-green-500 focus:outline-none dark:border-gray-500  dark:bg-slate-500/20  dark:text-white sm:h-[2.5rem] sm:py-2 sm:text-sm">
       <label
         htmlFor={labelFor}
         className="not-sr-only w-full basis-1/2 capitalize"
@@ -41,7 +41,7 @@ const Checkbox: FC<Props> = ({
         required={isRequired}
         title={title}
         type="checkbox"
-        value={value}
+        checked={value}
       />
     </div>
   );

@@ -1,7 +1,7 @@
 import { ChangeEventHandler, FC } from "react";
 
 const fixedInputClass =
-  "rounded-md capitalize w-full dark:border-gray-500 h-[2.5rem] font-semibold appearance-none dark:bg-slate-500/20 dark:text-white bg-slate-500/20 relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 caret-green-500  focus:outline-none  focus:ring--500 focus:border-green-500 focus:z-10 sm:text-sm";
+  "rounded-md capitalize h-[2rem] sm:h-[2.5rem] w-full dark:border-gray-500  font-semibold appearance-none dark:bg-slate-500/20 dark:text-white bg-slate-500/20 relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 caret-green-500  focus:outline-none  focus:ring--500 focus:border-green-500 focus:z-10 sm:text-sm";
 
 interface Props {
   customClass?: string;

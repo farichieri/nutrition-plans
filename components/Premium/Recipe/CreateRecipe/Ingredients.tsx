@@ -9,6 +9,7 @@ import Image from "next/image";
 import Input from "@/components/Form/Input";
 import NutritionInput from "@/components/Form/NutritionInput";
 import Select from "@/components/Form/Select";
+import Spinner from "@/components/Loader/Spinner";
 
 const Ingredient = ({
   ingredient,
@@ -65,7 +66,11 @@ const Ingredient = ({
   };
 
   if (!foodIngredient) {
-    return <></>;
+    return (
+      <div className="m-auto">
+        <Spinner customClass="h-5 w-5" />
+      </div>
+    );
   }
 
   return (
@@ -147,11 +152,13 @@ const Ingredient = ({
 
 interface Props {
   foodIngredients: FoodGroup;
+  ingredients: Ingredient[];
 }
 
-const Ingredients: FC<Props> = ({ foodIngredients }) => {
-  const { recipeState } = useSelector(selectCreateRecipeSlice);
-  const ingredients = recipeState.ingredients;
+const Ingredients: FC<Props> = ({ foodIngredients, ingredients }) => {
+  if (Object.keys(foodIngredients).length < 1) {
+    return <Spinner customClass="h-5 w-5" />;
+  }
 
   return (
     <div className="flex flex-col gap-1">
