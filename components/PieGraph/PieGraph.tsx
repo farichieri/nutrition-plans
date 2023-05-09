@@ -77,7 +77,7 @@ const PieGraph: FC<Props> = ({ nutrients }) => {
   }
 
   return (
-    <div className="m-auto flex h-48 w-80 overflow-hidden ">
+    <div className="m-auto flex h-48 w-72 overflow-hidden sm:w-full ">
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
           <Pie

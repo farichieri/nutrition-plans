@@ -13,15 +13,16 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
-import { UserAccount } from "@/types/types";
+import { DEFAULT_IMAGE } from "@/types/initialTypes";
 import { Food, FoodGroup, FoodTypesEnum } from "@/types/foodTypes";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { DEFAULT_IMAGE } from "@/types/initialTypes";
+import { UserAccount } from "@/types/types";
 
 const addFood = async (
-  user: UserAccount,
   food: Food,
-  newImage: File | undefined
+  kind: FoodTypesEnum,
+  newImage: File | undefined,
+  user: UserAccount
 ) => {
   try {
     if (!food.food_name) return;
@@ -34,11 +35,12 @@ const addFood = async (
     const newFood: Food = {
       ...food,
       date_created: serverTimestamp(),
-      kind: FoodTypesEnum.basic_food,
       food_id: docRef.id,
-      user_id: user.user_id,
       food_name_lowercase: food.food_name.toLowerCase(),
       image: img,
+      kind: kind,
+      user_id: user.user_id,
+      nutrients: { ...food.nutrients },
     };
     console.log({ newFood });
     await setDoc(docRef, newFood);

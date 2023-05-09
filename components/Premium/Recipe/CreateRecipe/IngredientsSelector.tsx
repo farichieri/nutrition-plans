@@ -100,14 +100,16 @@ const IngredientsSelector: FC<Props> = () => {
       {openIngredients && (
         <div className="relative flex flex-col gap-1 rounded-md">
           {ingredientOpened && (
-            <div className="absolute z-50 flex h-auto w-full flex-col gap-1 rounded-md bg-white p-2 dark:bg-black">
-              <span
-                onClick={handleCloseIngredient}
-                className="material-icons ml-auto cursor-pointer"
-              >
-                close
-              </span>
-              <IngredientData ingredient={ingredientOpened} />
+            <div className="absolute z-50 flex h-auto w-full flex-col gap-1 rounded-md bg-gray-200 dark:bg-black">
+              <div className="relative flex h-full flex-col gap-1 overflow-auto rounded-md border p-1">
+                <span
+                  onClick={handleCloseIngredient}
+                  className="material-icons ml-auto cursor-pointer"
+                >
+                  close
+                </span>
+                <IngredientData ingredient={ingredientOpened} />
+              </div>
             </div>
           )}
           {Object.keys(searchResult).map((food) => (

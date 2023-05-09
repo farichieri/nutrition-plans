@@ -125,7 +125,7 @@ const Ingredient = ({
             <Input
               handleChange={handleChange}
               id={ingredient.food_id}
-              isRequired={true}
+              isRequired={false}
               labelFor={"text"}
               labelText={""}
               name={"text"}

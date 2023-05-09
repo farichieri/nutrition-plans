@@ -15,7 +15,7 @@ const FoodsSearched: FC<Props> = () => {
   }
 
   return (
-    <div className="flex select-none flex-wrap justify-center gap-5 sm:justify-start">
+    <div className="flex select-none flex-wrap justify-center gap-4 sm:justify-start">
       {Object.keys(foodsSearched).map((key) => {
         const food = foodsSearched[key];
         return (

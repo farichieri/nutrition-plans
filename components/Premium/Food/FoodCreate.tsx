@@ -3,6 +3,7 @@ import {
   FoodNutrients,
   FoodPreferences,
   FoodType,
+  FoodTypesEnum,
 } from "@/types/foodTypes";
 import {
   fatsFields,
@@ -80,7 +81,12 @@ const FoodCreate: FC<Props> = () => {
     if (!user) return;
     if (isCreating) return;
     setIsCreating(true);
-    const res = await addFood(user, foodState, newImageFile);
+    const res = await addFood(
+      foodState,
+      FoodTypesEnum.basic_food,
+      newImageFile,
+      user
+    );
     if (!res?.error && res?.food_id) {
       setNewImageFile(undefined);
       alert("Food created successfully");

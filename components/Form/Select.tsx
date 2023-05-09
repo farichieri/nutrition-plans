@@ -43,7 +43,6 @@ const Select: FC<Props> = ({
       <select
         placeholder={placeholder}
         title={title}
-        defaultValue={value || "none"}
         name={name}
         id={id}
         required={isRequired}

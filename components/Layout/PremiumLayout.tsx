@@ -6,8 +6,9 @@ import Head from "next/head";
 import Loader from "../Loader/Loader";
 import Login from "../Auth/Login";
 import PremiumNav from "../Nav/PremiumNav";
-import Sidebar from "../Sidebar/PremiumSidebar";
 import Settings from "../Premium/Settings/Settings";
+import Sidebar from "../Sidebar/PremiumSidebar";
+import LoaderWithText from "../Loader/LoaderWithText";
 
 export default function PremiumLayout({
   children,
@@ -15,7 +16,7 @@ export default function PremiumLayout({
   children: React.ReactNode;
 }) {
   const dispatch = useDispatch();
-  const { sidebarOpen, isBillingModalOpen, isSettingsOpen } =
+  const { sidebarOpen, isBillingModalOpen, isSettingsOpen, loadingWithText } =
     useSelector(selectLayoutSlice);
   const { user, isCreatingUser, isSigningUser } = useSelector(selectAuthSlice);
 
@@ -29,6 +30,7 @@ export default function PremiumLayout({
         <title>Nutrition Plans</title>
       </Head>
       {(isCreatingUser || isSigningUser) && <Loader />}
+      {loadingWithText && <LoaderWithText />}
       {isSettingsOpen && <Settings />}
       {user ? (
         <div className="flex min-h-screen w-screen flex-col bg-gray-100 dark:bg-[#50525043]">

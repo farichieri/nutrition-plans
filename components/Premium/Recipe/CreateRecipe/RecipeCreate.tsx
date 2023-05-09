@@ -6,6 +6,7 @@ import {
   FoodType,
   RecipeCategoriesEnum,
   Ingredient,
+  FoodTypesEnum,
 } from "@/types/foodTypes";
 import {
   selectCreateRecipeSlice,
@@ -98,7 +99,12 @@ const RecipeCreate: FC<Props> = () => {
     if (!user) return;
     if (isCreating) return;
     setIsCreating(true);
-    const res = await addFood(user, recipeState, newImageFile);
+    const res = await addFood(
+      recipeState,
+      FoodTypesEnum.recipe,
+      newImageFile,
+      user
+    );
     console.log({ res });
     if (!res?.error && res?.food_id) {
       setNewImageFile(undefined);
@@ -114,7 +120,7 @@ const RecipeCreate: FC<Props> = () => {
   const handleCancel = async (event: React.FormEvent) => {
     event.preventDefault();
     dispatch(setRecipeState(NewFood));
-    // setNewImageFile(undefined);
+    setNewImageFile(undefined);
   };
 
   const fetchFoods = async (ingredients: Ingredient[]) => {
@@ -128,11 +134,13 @@ const RecipeCreate: FC<Props> = () => {
   );
 
   useEffect(() => {
-    const getFoods = async () => {
-      const foods = await fetchFoods(recipeState.ingredients);
-      setFoodIngredients(foods);
-    };
-    getFoods();
+    if (recipeState.ingredients.length > 0) {
+      const getFoods = async () => {
+        const foods = await fetchFoods(recipeState.ingredients);
+        setFoodIngredients(foods);
+      };
+      getFoods();
+    }
   }, [recipeState.ingredients.length]);
 
   return (

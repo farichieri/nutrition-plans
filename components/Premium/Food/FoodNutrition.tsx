@@ -39,7 +39,6 @@ const FoodNutrition: FC<Props> = ({ foodProp, isIngredient }) => {
     food?.serving_name || ""
   );
   const [isNotOriginal, setIsNotOriginal] = useState(false);
-
   const getNewAmount = (
     prevWeightName: string,
     newWeightName: string,
@@ -163,7 +162,7 @@ const FoodNutrition: FC<Props> = ({ foodProp, isIngredient }) => {
   };
 
   return (
-    <div className="flex w-full flex-wrap items-start p-4 sm:px-10">
+    <div className="flex w-full max-w-xl flex-wrap items-start p-4 sm:px-10">
       {openDetails && (
         <FoodNutritionDetail
           nutrients={nutrients}
