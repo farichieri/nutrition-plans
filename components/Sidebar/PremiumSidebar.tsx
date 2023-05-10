@@ -70,7 +70,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
     <>
       {sidebarOpen && (
         <div
-          className="fixed inset-0  z-[70] sm:hidden"
+          className="fixed inset-0 z-[70] sm:hidden"
           onClick={handleSidebar}
         ></div>
       )}

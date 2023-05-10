@@ -55,12 +55,12 @@ const RecipeStep = ({ step }: { step: Instruction }) => {
   };
 
   return (
-    <div className="flex items-center gap-1">
+    <div className="flex w-full items-center gap-1">
       <textarea
         autoCapitalize="off"
         autoComplete="off"
         autoCorrect="off"
-        className="h-full max-h-32 min-h-20 w-full rounded-lg border bg-transparent p-2 text-sm outline-none  placeholder:opacity-50 focus-within:border-black dark:focus-within:border-white"
+        className="min-h-20 h-full max-h-32 w-full rounded-lg border bg-transparent p-2 text-sm outline-none  placeholder:opacity-50 focus-within:border-black dark:focus-within:border-white"
         id={step.instruction_id}
         name="text"
         onChange={handleChange}
@@ -89,10 +89,13 @@ const Instructions: FC<Props> = () => {
     <div className="flex flex-col gap-1">
       {recipeState.instructions.map(
         (instruction: Instruction, index: number) => (
-          <>
-            {index}
+          <div
+            className="flex w-full items-center gap-1"
+            key={instruction.instruction_id}
+          >
+            <span className="w-5 text-xs opacity-50">{index + 1}</span>
             <RecipeStep step={instruction} key={instruction.instruction_id} />
-          </>
+          </div>
         )
       )}
     </div>

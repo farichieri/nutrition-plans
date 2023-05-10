@@ -98,10 +98,10 @@ const Graphic: FC<Props> = () => {
           height={400}
           data={data}
           margin={{
-            top: 10,
-            right: 10,
-            left: 10,
-            bottom: 15,
+            top: 20,
+            right: 20,
+            left: 20,
+            bottom: 20,
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />

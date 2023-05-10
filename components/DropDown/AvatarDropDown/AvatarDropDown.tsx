@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import Avatar from "@/components/Avatar/Avatar";
 import DropDown from "../DropDown";
+import Link from "next/link";
 import ThemeSwitcher from "@/components/theme-switcher";
 
 const AvatarDropDown = () => {
@@ -35,6 +36,10 @@ const AvatarDropDown = () => {
     setCloseDrop(true);
   };
 
+  const goHome = () => {
+    window.open("/", "_blank", "noreferrer");
+  };
+
   return (
     <DropDown
       closeDrop={closeDrop}
@@ -54,6 +59,13 @@ const AvatarDropDown = () => {
       <div className="flex w-full gap-2 border-b border-slate-500/30 px-4 py-2 hover:bg-slate-500/40 dark:border-slate-500">
         <ThemeSwitcher withText={true} />
       </div>
+      <button
+        onClick={goHome}
+        className={`pointer-events-auto hidden w-full items-center gap-2 border-none bg-transparent px-4 py-2 hover:bg-slate-500/40 sm:flex `}
+      >
+        <span className="material-icons">open_in_new</span>
+        <span>Homepage</span>
+      </button>
       <div className="flex hover:bg-slate-500/40">
         <button
           className={`flex w-full cursor-pointer items-center gap-2 border-none bg-transparent px-4 py-2 `}

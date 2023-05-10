@@ -17,18 +17,19 @@ export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
   NProgress.configure({ showSpinner: false });
+  NProgress.configure({ trickle: false });
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const handleResize = () => {
-        let vh = window.innerHeight * 0.01;
-        document.documentElement.style.setProperty("--vh", `${vh}px`);
-      };
-      window.addEventListener("resize", handleResize);
-      handleResize();
-      return () => window.removeEventListener("resize", handleResize);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (typeof window !== "undefined") {
+  //     const handleResize = () => {
+  //       let vh = window.innerHeight * 0.01;
+  //       document.documentElement.style.setProperty("--vh", `${vh}px`);
+  //     };
+  //     window.addEventListener("resize", handleResize);
+  //     handleResize();
+  //     return () => window.removeEventListener("resize", handleResize);
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (

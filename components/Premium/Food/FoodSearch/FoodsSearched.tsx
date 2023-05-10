@@ -22,7 +22,7 @@ const FoodsSearched: FC<Props> = () => {
           <Link
             href={`/app/food/${food.food_id}`}
             key={food.food_id}
-            className=" flex flex-col items-center gap-1 overflow-auto rounded-lg border shadow-sm shadow-[#00000028] duration-300 hover:scale-105 hover:shadow-xl dark:bg-slate-400/10"
+            className=" flex flex-col items-center gap-1 overflow-auto rounded-lg border bg-white shadow-sm shadow-[#00000028] duration-300 hover:scale-105 hover:shadow-xl dark:bg-slate-400/10"
           >
             <Image
               src={food.image}

@@ -11,6 +11,7 @@ html {
   --background-start-rgb: 255, 255, 255;
   --background-end-rgb: 255, 255, 255;
   --nav-h: 3rem;
+  --subnav-h: 3rem;
   --border-color: lightgray;
   --carbs-color: #8d4d00d9;
   --fats-color: #2fa800e0;
