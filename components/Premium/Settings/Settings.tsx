@@ -5,12 +5,6 @@ import Modal from "@/components/Modal/Modal";
 import Account from "./options/Account";
 import React, { FC, useState } from "react";
 import Subscription from "./options/Subscription";
-import {
-  Cog8ToothIcon,
-  LightBulbIcon,
-  UserIcon,
-  WalletIcon,
-} from "@heroicons/react/20/solid";
 
 interface Props {}
 
@@ -34,11 +28,6 @@ const Settings: FC<Props> = () => {
       option: "general",
       component: <General setSettingSelected={setSettingSelected} />,
     },
-    // {
-    //   icon: <UserIcon className="h-4 w-4" />,
-    //   option: "about",
-    //   component: <About />,
-    // },
   ];
 
   const handleClick = (event: React.MouseEvent) => {

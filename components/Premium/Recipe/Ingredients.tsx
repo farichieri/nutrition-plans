@@ -62,6 +62,8 @@ const Ingredients: FC<Props> = ({ foodIngredients, ingredients }) => {
 
   return (
     <div className="flex w-full flex-col gap-1">
+      <span className="text-3xl font-semibold">Ingredients:</span>
+
       {ingredients.map((ing) => (
         <Ingredient
           foodIngredient={foodIngredients[ing.food_id]}

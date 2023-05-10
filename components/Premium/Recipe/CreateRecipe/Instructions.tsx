@@ -87,9 +87,14 @@ const Instructions: FC<Props> = () => {
   const { recipeState } = useSelector(selectCreateRecipeSlice);
   return (
     <div className="flex flex-col gap-1">
-      {recipeState.instructions.map((instruction: Instruction) => (
-        <RecipeStep step={instruction} key={instruction.instruction_id} />
-      ))}
+      {recipeState.instructions.map(
+        (instruction: Instruction, index: number) => (
+          <>
+            {index}
+            <RecipeStep step={instruction} key={instruction.instruction_id} />
+          </>
+        )
+      )}
     </div>
   );
 };

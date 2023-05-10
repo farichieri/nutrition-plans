@@ -52,24 +52,29 @@ const Results: FC<Props> = ({ handleSubmit }) => {
     if (!user) return;
     setIsLoading(true);
     setIsDisabled(true);
-    const userUpdated: UserAccount = {
-      ...user,
-      first_data: {
-        body_data: user.body_data,
-        food_data: user.food_data,
-      },
-      is_profile_completed: true,
-      nutrition_targets: nutritionTargets,
-    };
-    const updateUserRes = await updateUser(userUpdated);
-    const addProgressRes = await addFirstProgress();
-    if (!updateUserRes?.error && !addProgressRes?.error) {
-      dispatch(setUpdateUser(userUpdated));
-      handleSubmit();
-      dispatch(setIsCreatingUser(false));
+    try {
+      const userUpdated: UserAccount = {
+        ...user,
+        first_data: {
+          body_data: user.body_data,
+          food_data: user.food_data,
+        },
+        is_profile_completed: true,
+        nutrition_targets: nutritionTargets,
+      };
+      const updateUserRes = await updateUser(userUpdated);
+      const addProgressRes = await addFirstProgress();
+      if (!updateUserRes?.error && !addProgressRes?.error) {
+        dispatch(setUpdateUser(userUpdated));
+        handleSubmit();
+        dispatch(setIsCreatingUser(false));
+        setIsLoading(false);
+        setIsDisabled(false);
+      }
+    } catch (error) {
+      setIsLoading(false);
+      setIsDisabled(false);
     }
-    setIsLoading(false);
-    setIsDisabled(false);
   };
 
   const BMISignificance = (BMI: number) => {

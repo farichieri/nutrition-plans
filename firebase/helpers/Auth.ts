@@ -14,7 +14,6 @@ const createNewUser = async (user: User) => {
       email_address: user.email,
       photo_url: user.photoURL,
       user_id: user.uid,
-      premium_plan: "free",
     };
     await setDoc(newUserRef, newUser);
   } catch (error) {
@@ -54,6 +53,7 @@ const generateUserObject = async (user: User) => {
         premium_plan: userData.premium_plan,
         ratings: userData.ratings,
         user_id: userData.user_id,
+        user_step: userData.user_step,
         weight_goal: userData.weight_goal,
       };
       return userAccount || null;

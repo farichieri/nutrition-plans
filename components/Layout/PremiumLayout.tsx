@@ -4,11 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import BillingModal from "../Premium/Billing/BillingModal";
 import Head from "next/head";
 import Loader from "../Loader/Loader";
+import LoaderWithText from "../Loader/LoaderWithText";
 import Login from "../Auth/Login";
 import PremiumNav from "../Nav/PremiumNav";
 import Settings from "../Premium/Settings/Settings";
 import Sidebar from "../Sidebar/PremiumSidebar";
-import LoaderWithText from "../Loader/LoaderWithText";
+import WelcomeSteps from "../WelcomeSteps/WelcomeSteps";
 
 export default function PremiumLayout({
   children,
@@ -19,6 +20,8 @@ export default function PremiumLayout({
   const { sidebarOpen, isBillingModalOpen, isSettingsOpen, loadingWithText } =
     useSelector(selectLayoutSlice);
   const { user, isCreatingUser, isSigningUser } = useSelector(selectAuthSlice);
+
+  console.log({ user });
 
   const handleSidebar = () => {
     dispatch(setSidebarOpen(!sidebarOpen));
@@ -32,6 +35,7 @@ export default function PremiumLayout({
       {(isCreatingUser || isSigningUser) && <Loader />}
       {loadingWithText && <LoaderWithText />}
       {isSettingsOpen && <Settings />}
+      {user && <WelcomeSteps />}
       {user ? (
         <div className="flex min-h-screen w-screen flex-col bg-gray-100 dark:bg-[#50525043]">
           {isBillingModalOpen && <BillingModal />}

@@ -8,9 +8,11 @@ import {
   NutritionTargets,
   Progress,
   Ratings,
+  SubscriptionState,
   UserAccount,
   UserBodyData,
   UserFoodData,
+  UserSteps,
   WeightGoal,
 } from "@/types/types";
 
@@ -75,9 +77,10 @@ export const newAccount: UserAccount = {
   nutrition_targets: newNutritionTargets,
   photo_url: "",
   plan_selected: null,
-  premium_plan: null,
+  premium_plan: SubscriptionState.free,
   ratings: newRagins,
   user_id: "",
+  user_step: UserSteps.step_1,
   weight_goal: initialWeightGoal,
   first_data: {
     body_data: newBodyData,

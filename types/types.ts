@@ -7,9 +7,18 @@ export enum ButtonType {
   delete = "delete",
   discard = "discard",
 }
+export enum SubscriptionState {
+  free = "free",
+  premium = "premium",
+}
 export enum MeasurementUnits {
   metric = "metric",
   imperial = "imperial",
+}
+export enum UserSteps {
+  step_1 = "step_1",
+  step_2 = "step_2",
+  step_3 = "step_3",
 }
 
 // Posts
@@ -50,6 +59,7 @@ export interface UserAccount {
   ratings: Ratings;
   user_id: string;
   weight_goal: WeightGoal;
+  user_step: UserSteps;
 }
 export interface UserCreatedData {
   body_data: UserBodyData;

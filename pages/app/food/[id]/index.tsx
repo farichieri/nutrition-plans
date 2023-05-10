@@ -11,6 +11,7 @@ import Image from "next/image";
 import PremiumLayout from "@/components/Layout/PremiumLayout";
 import FoodNutrition from "@/components/Premium/Food/FoodNutrition";
 import Ingredients from "@/components/Premium/Recipe/Ingredients";
+import Instructions from "@/components/Premium/Recipe/Instructions";
 
 export default function Page() {
   const router = useRouter();
@@ -58,27 +59,36 @@ export default function Page() {
             </div>
           </div>
           <div className="flex w-full flex-wrap items-start justify-start gap-10 p-4 sm:px-10">
-            <div className="flex w-full max-w-md flex-col gap-5">
-              <Image
-                src={food.image}
-                alt={`${food.food_name}`}
-                width={250}
-                height={250}
-                className="w-50 pt-[var(--nav-h) m-auto mb-5 rounded-lg"
-              />
-              {food.food_id && <FoodActions foodID={food.food_id} />}
-            </div>
-            <div className="flex flex-wrap">
-              <FoodNutrition isIngredient={false} foodProp={food} />
-            </div>
-            {foodIngredients && food.ingredients.length > 0 && (
-              <div className="w-full max-w-xl">
-                <Ingredients
-                  foodIngredients={foodIngredients}
-                  ingredients={food.ingredients}
+            <div className="flex flex-col gap-10">
+              <div className="flex w-full max-w-xl flex-col gap-5">
+                <Image
+                  src={food.image}
+                  alt={`${food.food_name}`}
+                  width={250}
+                  height={250}
+                  className="w-50 pt-[var(--nav-h) m-auto mb-5 rounded-lg"
                 />
+                {food.food_id && <FoodActions foodID={food.food_id} />}
               </div>
-            )}
+              <div className="flex w-full max-w-xl">
+                <FoodNutrition isIngredient={false} foodProp={food} />
+              </div>
+            </div>
+            <div className="flex w-full max-w-xl flex-col gap-5">
+              {foodIngredients && food.ingredients.length > 0 && (
+                <div className="w-full max-w-xl">
+                  <Ingredients
+                    foodIngredients={foodIngredients}
+                    ingredients={food.ingredients}
+                  />
+                </div>
+              )}
+              {food.instructions.length > 0 && (
+                <div className="w-full max-w-xl">
+                  <Instructions instructions={food.instructions} />
+                </div>
+              )}
+            </div>
           </div>
         </section>
       )}
