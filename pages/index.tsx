@@ -9,6 +9,7 @@ import LandingLayout from "@/components/Layout/LandingLayout";
 import Link from "next/link";
 import Plans from "@/components/Plans/Plans";
 import PrimaryButton from "@/components/Buttons/PrimaryButton";
+import { blurDataURL } from "@/components/Layout/BlurDataImage";
 
 interface Props {
   plans: PlansType;
@@ -39,15 +40,20 @@ export default function Home({ plans }: Props) {
             <PrimaryButton onClick={() => {}} content={`Start my plan now`} />
           </Link>
         </div>
-        <Image
-          src="/images/general/cooking.jpg"
-          width={800}
-          height={800}
-          alt="cooking"
-          className="m-auto my-10 flex rounded-3xl shadow-lg dark:shadow-gray-400/20"
-        />
+        <div className="my-10 ">
+          <Image
+            src="/images/general/cooking.jpg"
+            width={800}
+            height={1200}
+            placeholder="blur"
+            blurDataURL={blurDataURL(800, 1200)}
+            alt="cooking"
+            className="flex rounded-3xl shadow-lg dark:shadow-gray-400/20"
+          />
+        </div>
       </div>
       <Goals />
+      <span className="text-4xl font-bold">Plans Available</span>
       <Plans plans={plans} />
       <FAQS content={FAQS_INDEX} />
       <CallToAction />

@@ -9,6 +9,7 @@ import CallToAction from "@/components/CallToAction";
 import LandingLayout from "@/components/Layout/LandingLayout";
 import RestOfPlans from "@/components/Plans/RestOfPlans";
 import Image from "next/image";
+import { blurDataURL } from "@/components/Layout/BlurDataImage";
 
 interface Props {
   planData: PlanType;
@@ -26,6 +27,8 @@ export default function Page({ planData, restOfPlans }: Props) {
             alt={planData.title}
             width={1024}
             height={1024}
+            placeholder="blur"
+            blurDataURL={blurDataURL(1024, 1024)}
             priority
             className="m-2 rounded-3xl shadow-[0_1px_5px_gray] dark:shadow-[0px_1px_5px_#4040408c]"
           />
