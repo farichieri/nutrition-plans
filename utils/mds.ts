@@ -1,4 +1,5 @@
 import { remark } from "remark";
+import remarkGfm from 'remark-gfm'
 import fs from "fs";
 import html from "remark-html";
 import matter from "gray-matter";
@@ -50,6 +51,7 @@ const getAllMDData = async (directory: string, id: any) => {
 
   const processedContent = await remark()
     .use(html)
+    .use(remarkGfm)
     .process(matterResult.content);
   const contentHtml = processedContent.toString();
 

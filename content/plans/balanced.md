@@ -1,11 +1,12 @@
 ---
 title: "Balanced"
 isAvailable: true
+image: "/images/plans/balanced.jpg"
 ---
 
 It is an eating plan that includes all the macro and micronutrients necessary for daily requirements, in adequate and balanced amounts and in which it will consist of a variety of foods from different groups so that the body obtains enough energy and nutrition to grow and develop properly.
 
-For us here at NUTRITION PLANS, the key to healthy eating is sustainability and longevity. Traditionally, a "diet" in every sense of the word is designed to be short-term.
+For us here at **NUTRITION PLANS**, the key to healthy eating is sustainability and longevity. Traditionally, a "diet" in every sense of the word is designed to be short-term.
 
 This type of diet is recommended for those people of all ages who want to choose a healthy, varied, accessible diet with all the food groups in a single day, without any restriction, following globally standardized serving recommendations for each food group. It may even be suitable for those people with pathologies or chronic non-communicable diseases, for the prevention of these or even for people who do physical exercise or athletes.
 
@@ -28,10 +29,10 @@ Fiber to regulate intestinal transit and take care of the bacterial flora. In ad
 
 All these nutrients must come from the consumption of healthy foods: Vegetables, fruits, vegetables, tubers, legumes, whole grains, eggs, fish, nuts, white meat and to a lesser extent red meat. And we must avoid or sporadically consume processed products such as pre-cooked foods, smoothies, packaged juices, alcoholic beverages, sausages, snacks, ice cream, chips, cookies, crepes, pastries, chocolates, soft drinks, breakfast cereals, fried and salted nuts, etc.
 
-### Example of a balanced menu for one day
+## Example of a balanced menu for one day
 
-- Breakfast: Whole wheat bread with tomato and avocado, a banana and an infusion with unsweetened milk.
-- Mid-morning: A natural yogurt with a handful of nuts.
-- Lunch: Complete salad of peppers, tomato, onion, chickpeas, hard-boiled egg and olives with loin meat. An orange for dessert.
-- Snack: Oatmeal omelette, egg and pears and an infusion without sugar.
-- Dinner: Arugula, tomato and cheese salad with olive oil. Grilled sole.
+- **Breakfast:** Whole wheat bread with tomato and avocado, a banana and an infusion with unsweetened milk.
+- **Mid-morning:** A natural yogurt with a handful of nuts.
+- **Lunch:** Complete salad of peppers, tomato, onion, chickpeas, hard-boiled egg and olives with loin meat. An orange for dessert.
+- **Snack:** Oatmeal omelette, egg and pears and an infusion without sugar.
+- **Dinner:** Arugula, tomato and cheese salad with olive oil. Grilled sole.

@@ -8,6 +8,7 @@ import { PlanType, PlansType, Post } from "@/types/types";
 import CallToAction from "@/components/CallToAction";
 import LandingLayout from "@/components/Layout/LandingLayout";
 import RestOfPlans from "@/components/Plans/RestOfPlans";
+import Image from "next/image";
 
 interface Props {
   planData: PlanType;
@@ -17,10 +18,17 @@ interface Props {
 export default function Page({ planData, restOfPlans }: Props) {
   return (
     <LandingLayout>
-      <section className=" flex  max-w-5xl flex-col items-center justify-center py-10">
+      <section className="flex max-w-5xl flex-col items-center justify-center py-10">
         <div className="flex flex-col items-center justify-center gap-4">
           <span className="text-5xl font-bold">{planData.title}</span>
-          {/* <Date dateString={planData.date} /> */}
+          <Image
+            src={planData.image}
+            alt={planData.title}
+            width={1024}
+            height={1024}
+            priority
+            className="m-2 rounded-3xl shadow-[0_1px_5px_gray] dark:shadow-[0px_1px_5px_#4040408c]"
+          />
         </div>
         <div
           className="flex flex-col gap-4 py-10"

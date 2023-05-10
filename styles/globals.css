@@ -124,3 +124,26 @@ li {
 #nprogress .bar {
   background: rgb(34 197 94);
 }
+
+table {
+  width: 100%;
+  overflow: scroll;
+  max-width: 100vw;
+}
+
+td,
+th {
+  border: 1px solid #777;
+  padding: 1rem;
+  vertical-align: top;
+}
+
+@media screen and (max-width: 680px) {
+  table {
+    font-size: 10px;
+  }
+  td,
+  th {
+    padding: 0.25rem;
+  }
+}

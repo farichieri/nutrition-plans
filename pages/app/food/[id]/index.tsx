@@ -51,14 +51,14 @@ export default function Page() {
   return (
     <PremiumLayout>
       {food && (
-        <section className="flex w-full select-none flex-col gap-14 pb-24 pt-4">
+        <section className="flex w-full select-none flex-col gap-14">
           <div className="flex max-w-lg flex-col gap-10 ">
-            <div className="fixed left-auto top-[var(--nav-h)] z-[60] flex w-screen items-center gap-10 border-b px-4 py-2 backdrop-blur-lg">
+            <div className="fixed left-auto top-[var(--nav-h)] z-[60] flex w-screen items-center gap-10 border-b bg-white/80 px-4 py-2 backdrop-blur-lg dark:bg-black/80">
               <BackButton />
               <span className="text-3xl font-semibold">{food.food_name}</span>
             </div>
           </div>
-          <div className="flex w-full flex-wrap items-start justify-start gap-10 p-4 sm:px-10">
+          <div className="flex flex-wrap items-start justify-start gap-10 rounded-lg bg-white p-4 shadow-[0_1px_5px_lightgray] dark:bg-black dark:shadow-[0_1px_6px_#292929] sm:m-6 sm:px-10">
             <div className="flex flex-col gap-10">
               <div className="flex w-full max-w-xl flex-col gap-5">
                 <Image

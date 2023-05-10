@@ -37,6 +37,7 @@ export interface PlanType {
   contentHtml: string;
   id: string;
   title: string;
+  image: string;
 }
 export interface PlansType extends Array<PlanType> {}
 

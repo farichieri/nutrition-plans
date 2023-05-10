@@ -62,7 +62,7 @@ export default function Page() {
                 key={person.name}
                 className="flex items-center gap-2"
               >
-                <span className="relative flex h-[60px] min-h-[60px] w-[60px] min-w-[60px] items-center justify-center overflow-hidden rounded-full">
+                <span className="relative flex h-[80px] min-h-[80px] w-[80px] min-w-[80px] items-center justify-center overflow-hidden rounded-full">
                   <Image
                     src={`/images/general/${person.image}.png`}
                     alt={person.name}

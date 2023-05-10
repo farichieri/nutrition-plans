@@ -4,7 +4,7 @@ export const FAQS_INDEX = [
   {
     title: "What plans are available in Nutrition Plans?",
     answer:
-      "The plans available today are: Weight Loss, Gain Muscle Mass, Balanced and Gluten Free",
+      "The plans available today are: Vegetarian, Mediterranean, Low Carb, Gluten Free and Balanced",
   },
 ];
 
