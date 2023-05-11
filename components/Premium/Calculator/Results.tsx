@@ -113,12 +113,12 @@ const Results: FC<Props> = ({ handleSubmit }) => {
             </div>
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-1">
-              <span className="material-icons text-blue-400">info</span>
-              <div>
-                <span>Your BMR (Basal Metabolic Rate) is: </span>
-                <span className="text-green-500">{body_data.BMR}</span>
-                calories
-              </div>
+                <span className="material-icons text-blue-400">info</span>
+                <div>
+                  <span>Your BMR (Basal Metabolic Rate) is: </span>
+                  <span className="text-green-500">{body_data.BMR} </span>
+                  <span>calories</span>
+                </div>
               </div>
               <div className="flex items-center gap-1">
                 <span className="material-icons text-blue-400">info</span>
@@ -130,10 +130,10 @@ const Results: FC<Props> = ({ handleSubmit }) => {
               <div className="flex items-center gap-1">
                 <span className="material-icons text-blue-400">info</span>
                 <div>
-                <span>A BMI of {body_data.BMI} is stipulated to be: </span>
-                <span className="text-green-500">
-                  {BMISignificance(Number(body_data.BMI))}
-                </span>
+                  <span>A BMI of {body_data.BMI} is stipulated to be: </span>
+                  <span className="text-green-500">
+                    {BMISignificance(Number(body_data.BMI))}
+                  </span>
                 </div>
                 {/* <span>BMI (body mass index), which is based on the height and weight of a person, is an inaccurate measure of body fat content and does not take into account muscle mass, bone density, overall body composition, and racial and sex differences,</span> */}
               </div>

@@ -374,7 +374,7 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
                   <label htmlFor="pounds" className="basis-1/5 font-semibold">
                     Weight
                   </label>
-                  <span className="absolute right-2 select-none">kg</span>
+                  <span className="absolute right-2 select-none">lbs</span>
                   <input
                     type="text"
                     name="pounds"

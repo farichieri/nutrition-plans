@@ -54,25 +54,14 @@ const NutritionTarget: FC<Props> = ({ setNutritionTargets }) => {
   }, [carbsMin, carbsMax, protsMin, protsMax, fatsMin, fatsMax]);
 
   return (
-    <div className="flex flex-col gap-2">
-      <div className="flex flex-col items-start justify-center gap-1">
-        <span className="text-lg font-semibold">Plan Selected:</span>
-        <div className="flex flex-col items-center justify-center">
-          <span className="flex w-full items-center justify-center text-center text-xl font-bold text-green-500">
-            {planData?.name}
-          </span>
-          <Image
-            src={`/images/plans/${plan_selected}.jpg`}
-            alt={plan_selected || ""}
-            width={150}
-            height={150}
-            className="pointer-events-none m-2 rounded-3xl shadow-[0_1px_5px_gray] dark:shadow-[0px_1px_5px_#4040408c]"
-          />
-        </div>
-      </div>
+    <div className="flex flex-col gap-5">
       <div>
         <span className="text-lg font-semibold">
-          Macronutrients distribution:
+          Macronutrients distribution in your{" "}
+          <span className="text-xl font-bold text-green-500">
+            {planData?.name}{" "}
+          </span>
+          plan:
         </span>
         <div className="max-w-md px-2 xs:text-[10px] s:text-xs sm:text-base">
           <div className="flex justify-between font-semibold text-[var(--carbs-color)]">
@@ -114,6 +103,21 @@ const NutritionTarget: FC<Props> = ({ setNutritionTargets }) => {
           </div>
         </div>
       </div>
+      {/* <div className="flex flex-col items-start justify-center gap-1">
+        <span className="text-lg font-semibold">Plan Selected:</span>
+        <div className="flex flex-col items-center justify-center">
+          <span className="flex w-full items-center justify-center text-center text-xl font-bold text-green-500">
+            {planData?.name}
+          </span>
+          <Image
+            src={`/images/plans/${plan_selected}.jpg`}
+            alt={plan_selected || ""}
+            width={150}
+            height={150}
+            className="pointer-events-none m-2 rounded-3xl shadow-[0_1px_5px_gray] dark:shadow-[0px_1px_5px_#4040408c]"
+          />
+        </div>
+      </div> */}
     </div>
   );
 };

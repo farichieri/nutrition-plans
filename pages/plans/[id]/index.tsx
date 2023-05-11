@@ -25,10 +25,10 @@ export default function Page({ planData, restOfPlans }: Props) {
           <Image
             src={planData.image}
             alt={planData.title}
-            width={1024}
-            height={1024}
+            width={500}
+            height={500}
             placeholder="blur"
-            blurDataURL={blurDataURL(1024, 1024)}
+            blurDataURL={blurDataURL(500, 500)}
             priority
             className="m-2 rounded-3xl shadow-[0_1px_5px_gray] dark:shadow-[0px_1px_5px_#4040408c]"
           />

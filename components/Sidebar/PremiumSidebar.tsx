@@ -1,12 +1,12 @@
-import { MEAL_PLANS } from "@/utils/content";
-import { FC, MouseEventHandler } from "react";
-import { selectAuthSlice } from "@/store/slices/authSlice";
 import {
   selectLayoutSlice,
   setIsSettingsOpen,
   setSidebarEvolutionOpen,
   setSidebarPlansOpen,
 } from "@/store/slices/layoutSlice";
+import { FC, MouseEventHandler } from "react";
+import { MEAL_PLANS } from "@/utils/content";
+import { selectAuthSlice } from "@/store/slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -182,25 +182,6 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
             ))}
           </div>
         </div>
-        {/* <div className="flex w-full flex-col items-center gap-2">
-          <div
-            className={`${
-              router.asPath === "/app/recipes" &&
-              " bg-slate-500/30 font-semibold"
-            } text-md flex w-full items-center gap-1 rounded-lg px-2 py-1 text-base font-semibold sm:text-lg`}
-          >
-            <span className="material-icons md-24 text-green-500">
-              menu_book
-            </span>
-            <Link
-              href={"/app/recipes"}
-              className="text-md w-full font-semibold sm:text-lg"
-            >
-              Recipes
-            </Link>
-          </div>
-        </div> */}
-
         <div className="flex w-full flex-col items-center gap-2">
           <div
             className={`${
