@@ -76,7 +76,7 @@ export default function Page({ planData }: Props) {
         )} */}
         {/* <div className={`${isFree && "z-50 cursor-auto select-none blur-sm"}`}> */}
 
-        <div className="flex max-w-5xl flex-wrap items-start justify-center gap-10 rounded-lg bg-white p-4 shadow-[0_1px_5px_lightgray] dark:bg-black dark:shadow-[0_1px_6px_#292929] sm:m-4 sm:px-10">
+        <div className="flex max-w-5xl flex-wrap items-start justify-center gap-10 rounded-lg bg-white p-4 shadow-[0_1px_5px_lightgray] dark:bg-black dark:shadow-[0_1px_6px_#292929] sm:m-[1vw] sm:px-10">
           <div
             className={`${
               isFree &&

@@ -13,14 +13,15 @@ import {
   selectCreateRecipeSlice,
   setRecipeState,
 } from "@/store/slices/createRecipeSlice";
-import { FC, useEffect, useState } from "react";
 import { addFood, fetchFoodIngredients } from "@/firebase/helpers/Food";
+import { FC, useEffect, useState } from "react";
 import { NewFood } from "@/types/initialTypes";
 import { selectAuthSlice } from "@/store/slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import AddInstruction from "./AddInstruction";
 import Checkbox from "@/components/Form/Checkbox";
 import FormAction from "@/components/Form/FormAction";
+import Image from "next/image";
 import Ingredients from "./Ingredients";
 import IngredientsSelector from "./IngredientsSelector";
 import Input from "@/components/Form/Input";
@@ -28,11 +29,8 @@ import Instructions from "./Instructions";
 import NutritionInput from "@/components/Form/NutritionInput";
 import RecipeNutrition from "./RecipeNutrition";
 import Select from "@/components/Form/Select";
-import Image from "next/image";
 
 interface Props {}
-// Si yo tengo 5 ingredientes con respectivos Amount and Weight_name
-// Como hago para juntar los valores nutricionales y hadcer 1 valor nutricional total de la receta?
 const RecipeCreate: FC<Props> = () => {
   const dispatch = useDispatch();
   const [isCreating, setIsCreating] = useState(false);

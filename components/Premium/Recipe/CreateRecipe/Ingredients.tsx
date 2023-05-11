@@ -4,6 +4,7 @@ import {
 } from "@/store/slices/createRecipeSlice";
 import { FC } from "react";
 import { Food, FoodGroup, Ingredient } from "@/types/foodTypes";
+import { getNewAmount } from "../../Food/useNutrition";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import Input from "@/components/Form/Input";
@@ -48,11 +49,26 @@ const Ingredient = ({
 
     const ingredients = [...recipeState.ingredients];
     const ingredientExists = ingredients.find((ing) => ing.food_id === id);
+    let ingredientUpdated: Ingredient = { ...ingredient };
 
-    const ingredientUpdated: Ingredient = {
-      ...ingredient,
-      [name]: valueF,
-    };
+    if (name === "weight_name") {
+      const newAmount = getNewAmount(
+        foodIngredient,
+        ingredient.weight_name,
+        value,
+        ingredient.amount
+      );
+      ingredientUpdated = {
+        ...ingredient,
+        weight_name: value,
+        amount: newAmount || ingredient.amount,
+      };
+    } else {
+      ingredientUpdated = {
+        ...ingredient,
+        [name]: valueF,
+      };
+    }
 
     if (ingredientExists) {
       ingredients[ingredients.indexOf(ingredientExists)] = ingredientUpdated;

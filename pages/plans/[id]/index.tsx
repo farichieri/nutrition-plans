@@ -29,7 +29,7 @@ export default function Page({ planData, restOfPlans }: Props) {
             height={500}
             placeholder="blur"
             blurDataURL={blurDataURL(500, 500)}
-            priority
+            loading="lazy"
             className="m-2 rounded-3xl shadow-[0_1px_5px_gray] dark:shadow-[0px_1px_5px_#4040408c]"
           />
         </div>

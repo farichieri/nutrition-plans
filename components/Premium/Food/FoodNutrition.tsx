@@ -1,139 +1,115 @@
-import { fetchFoodByID } from "@/firebase/helpers/Food";
+import {
+  selectCreateRecipeSlice,
+  setIngredientOpened,
+  setRecipeState,
+} from "@/store/slices/createRecipeSlice";
 import { Food, Ingredient } from "@/types/foodTypes";
 import { formatToFixed } from "@/utils/format";
-import { getNutritionValues } from "./useNutrition";
-import { GRAMS_IN_ONE_OZ } from "@/utils/constants";
-import { NewFood } from "@/types/initialTypes";
-import { useRouter } from "next/router";
+import { getNewAmount, getNutritionValues } from "./useNutrition";
+import { selectFoodsSlice, setScale } from "@/store/slices/foodsSlice";
+import { useDispatch, useSelector } from "react-redux";
 import FoodNutritionDetail from "./FoodNutritionDetail";
 import Link from "next/link";
 import NutritionInput from "@/components/Form/NutritionInput";
 import PieGraph from "@/components/PieGraph/PieGraph";
 import React, { FC, useEffect, useState } from "react";
 import Select from "@/components/Form/Select";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  selectCreateRecipeSlice,
-  setIngredientOpened,
-  setRecipeState,
-} from "@/store/slices/createRecipeSlice";
 
 interface Props {
   foodProp: Food;
   isIngredient: boolean;
 }
 
-// Yo tengo q hacer una funcion en la cual al pasarle el Food, el amount y el scale me devuelva el foodUpdated
-
-const FoodNutrition: FC<Props> = ({ foodProp, isIngredient }) => {
-  const router = useRouter();
-  const { recipeState } = useSelector(selectCreateRecipeSlice);
+const FoodNutrition: FC<Props> = ({ isIngredient }) => {
   const dispatch = useDispatch();
-  const { id } = router.query;
-  const [food, setFood] = useState(foodProp || NewFood);
-  const options = [food?.serving_name || "", "grams", "oz"];
-  const [nutrients, setNutrients] = useState(food?.nutrients);
+  const { recipeState } = useSelector(selectCreateRecipeSlice);
+  const { food } = useSelector(selectFoodsSlice);
+  const foodData = food?.data;
+  const amount = food?.scale?.amount;
+  const weightName = food?.scale?.weightName;
+
+  const options = [foodData?.serving_name || "", "grams", "oz"];
   const [openDetails, setOpenDetails] = useState(false);
-  const [amount, setAmount] = useState<number>(food?.serving_amount || 1);
-  const [weightName, setWeightName] = useState<string>(
-    food?.serving_name || ""
-  );
   const [isNotOriginal, setIsNotOriginal] = useState(false);
-  const getNewAmount = (
-    prevWeightName: string,
-    newWeightName: string,
-    weight: number
-  ): number | undefined => {
-    switch (prevWeightName) {
-      case "grams":
-        if (newWeightName === "oz") {
-          return weight / GRAMS_IN_ONE_OZ;
-        } else if (newWeightName === food.serving_name) {
-          return (
-            (weight * Number(food.serving_amount)) / Number(food.serving_grams)
-          );
-        }
-        break;
-      case "oz":
-        if (newWeightName === "grams") {
-          return weight * GRAMS_IN_ONE_OZ;
-        } else if (newWeightName === food.serving_name) {
-          return (
-            (weight * GRAMS_IN_ONE_OZ * Number(food.serving_amount)) /
-            Number(food.serving_grams)
-          );
-        }
-        break;
-      case food.serving_name:
-        if (newWeightName === "grams") {
-          return (
-            (weight * Number(food.serving_grams)) / Number(food.serving_amount)
-          );
-        } else if (newWeightName === "oz") {
-          return (
-            (weight * Number(food.serving_grams)) /
-            Number(food.serving_amount) /
-            GRAMS_IN_ONE_OZ
-          );
-        }
-      default:
-        break;
-    }
-  };
+
+  const [nutrients, setNutrients] = useState(foodData?.nutrients);
+  // const [amount, setAmount] = useState<number>(foodData?.serving_amount || 1);
+  // const [weightName, setWeightName] = useState<string>(
+  //   foodData?.serving_name || ""
+  // );
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
+    if (!foodData) return;
     const id = event.target.id;
     const value = event.target.value;
     if (id === "serving_amount") {
-      setAmount(Number(value));
+      dispatch(setScale({ amount: Number(value), weightName: weightName }));
     } else if (id === "weight_amount") {
-      const newAmountSelected = getNewAmount(weightName, value, amount);
-      newAmountSelected && setAmount(newAmountSelected);
-      setWeightName(value);
+      const newAmountSelected = getNewAmount(
+        foodData,
+        weightName,
+        value,
+        amount
+      );
+      newAmountSelected &&
+        dispatch(setScale({ amount: newAmountSelected, weightName: value }));
     }
   };
 
   const setOriginal = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
+    if (!foodData) return;
     let originalValue = getNewAmount(
+      foodData,
       "grams",
       weightName,
-      Number(food.serving_grams)
+      Number(foodData.serving_grams)
     );
     if (weightName === "grams") {
-      originalValue = Number(food.serving_grams);
+      originalValue = Number(foodData.serving_grams);
     }
-    setAmount(Number(originalValue));
+    dispatch(
+      setScale({ amount: Number(originalValue), weightName: weightName })
+    );
     setIsNotOriginal(false);
   };
 
   useEffect(() => {
-    if (!food.food_id && typeof id === "string") {
-      const fetchFoodID = async () => {
-        const foodFetched: Food | null = await fetchFoodByID(id);
-        foodFetched && setFood(foodFetched);
-        foodFetched && setNutrients(foodFetched.nutrients);
-      };
-      fetchFoodID();
-    }
+    if (!foodData) return;
+    dispatch(
+      setScale({
+        amount: foodData.serving_amount || 1,
+        weightName: foodData.serving_name || "",
+      })
+    );
+    setNutrients(foodData.nutrients);
   }, []);
 
   useEffect(() => {
-    const nutrientsUpdated = getNutritionValues(food, amount, weightName);
+    if (!foodData) return;
+    const nutrientsUpdated = getNutritionValues(foodData, amount, weightName);
     setNutrients(nutrientsUpdated);
 
-    const OzAndServingToGrams = getNewAmount(weightName, "grams", amount);
+    const OzAndServingToGrams = getNewAmount(
+      foodData,
+      weightName,
+      "grams",
+      amount
+    );
 
     if (weightName === "grams") {
-      if (amount !== food.serving_grams) {
+      if (amount !== foodData.serving_grams) {
         setIsNotOriginal(true);
       }
     } else {
       setIsNotOriginal(false);
     }
 
-    if (weightName !== "grams" && OzAndServingToGrams !== food.serving_grams) {
+    if (
+      weightName !== "grams" &&
+      OzAndServingToGrams !== foodData.serving_grams
+    ) {
       setIsNotOriginal(true);
     }
   }, [amount, weightName]);
@@ -144,10 +120,11 @@ const FoodNutrition: FC<Props> = ({ foodProp, isIngredient }) => {
   };
 
   const handleIngredient = (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (!foodData) return;
     event.preventDefault();
     const newIngredient: Ingredient = {
       amount: amount,
-      food_id: food.food_id || "",
+      food_id: foodData.food_id || "",
       order: 0,
       text: "",
       weight_name: weightName,
@@ -161,8 +138,12 @@ const FoodNutrition: FC<Props> = ({ foodProp, isIngredient }) => {
     dispatch(setIngredientOpened(null));
   };
 
+  if (!foodData || !nutrients || !amount || !weightName) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <div className="flex w-full max-w-xl flex-wrap items-start gap-10 p-4 sm:px-10">
+    <div className="flex w-full max-w-xl flex-wrap items-start gap-10">
       {openDetails && (
         <FoodNutritionDetail
           nutrients={nutrients}
@@ -225,7 +206,7 @@ const FoodNutrition: FC<Props> = ({ foodProp, isIngredient }) => {
             data_usage
           </span>
           <span className="text-2xl font-semibold">Nutrition Values</span>
-          {food.source && (
+          {foodData.source && (
             <div className="flex items-center gap-1">
               <span>Source:</span>
               <Link
@@ -233,7 +214,7 @@ const FoodNutrition: FC<Props> = ({ foodProp, isIngredient }) => {
                 target="_blank"
                 className="text-green-500 opacity-50 duration-300 hover:opacity-100"
               >
-                {food.source}
+                {foodData.source}
               </Link>
             </div>
           )}

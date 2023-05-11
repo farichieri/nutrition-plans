@@ -43,7 +43,7 @@ export default function PremiumLayout({
           <Sidebar sidebarOpen={sidebarOpen} handleSidebar={handleSidebar} />
           <div
             className={`flex flex-col pt-[var(--nav-h)] duration-300 ${
-              sidebarOpen && "sm:pl-[14rem]"
+              sidebarOpen && "md:pl-[14rem]"
             }`}
           >
             {children}

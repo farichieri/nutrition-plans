@@ -48,6 +48,7 @@ export default function Home({ plans }: Props) {
             placeholder="blur"
             blurDataURL={blurDataURL(800, 1200)}
             alt="cooking"
+            loading="lazy"
             className="flex rounded-3xl shadow-lg dark:shadow-gray-400/20"
           />
         </div>

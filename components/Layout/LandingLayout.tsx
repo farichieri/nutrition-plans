@@ -15,7 +15,7 @@ export default function LandingLayout({
       </Head>
       <>
         <NavBar />
-        <div className="flex h-full w-full max-w-5xl flex-col items-center px-4 pt-[var(--nav-h)]">
+        <div className="flex h-full min-h-screen w-full max-w-5xl flex-col items-center px-4 pt-[var(--nav-h)]">
           {children}
         </div>
         <Footer />

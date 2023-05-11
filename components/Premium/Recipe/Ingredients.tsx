@@ -1,8 +1,10 @@
 import { FC } from "react";
 import { Food, FoodGroup, Ingredient } from "@/types/foodTypes";
 import Image from "next/image";
-import Spinner from "@/components/Loader/Spinner";
 import Link from "next/link";
+import Spinner from "@/components/Loader/Spinner";
+import { useSelector } from "react-redux";
+import { selectFoodsSlice } from "@/store/slices/foodsSlice";
 
 const Ingredient = ({
   ingredient,
@@ -11,6 +13,17 @@ const Ingredient = ({
   ingredient: Ingredient;
   foodIngredient: Food;
 }) => {
+  const { food } = useSelector(selectFoodsSlice);
+  const { data: foodData } = food;
+  const { amount, weightName } = food.scale;
+
+  console.log({ foodData });
+  console.log({ amount });
+  console.log({ weightName });
+
+  console.log({ foodIngredient });
+  console.log({ ingredient });
+
   if (!foodIngredient) {
     return (
       <div className="m-auto">
@@ -26,24 +39,27 @@ const Ingredient = ({
     >
       <Image
         src={foodIngredient.image}
-        height={125}
-        width={125}
+        height={100}
+        width={100}
         alt={foodIngredient.food_name || ""}
         className="rounded-md"
       />
-      <div className="flex h-full w-full flex-col px-2">
-        <div className="flex flex-col">
+      <div className="flex h-full w-full flex-col gap-0.5 p-2">
+        <div className="flex flex-col gap-0.5">
           <span className="text-base font-semibold capitalize">
             {foodIngredient.food_name}
           </span>
           <span className="text-sm opacity-50">
             {foodIngredient.food_description}
           </span>
-          <span className="">{ingredient.text}</span>
+          <span className="text-sm">{ingredient.text}</span>
         </div>
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-0.5">
           <span>{ingredient.amount}</span>
           <span>{ingredient.weight_name}</span>
+          <span className="ml-5 text-sm opacity-50">
+            or {foodIngredient.serving_grams}g
+          </span>
         </div>
       </div>
     </Link>
@@ -61,7 +77,7 @@ const Ingredients: FC<Props> = ({ foodIngredients, ingredients }) => {
   }
 
   return (
-    <div className="flex w-full flex-col gap-1">
+    <div className="flex w-full flex-col gap-2">
       <span className="text-3xl font-semibold">Ingredients:</span>
 
       {ingredients.map((ing) => (

@@ -1,91 +1,95 @@
 import { fetchFoodByID, fetchFoodIngredients } from "@/firebase/helpers/Food";
 import { Food, FoodGroup, Ingredient } from "@/types/foodTypes";
-import { NewFood } from "@/types/initialTypes";
-import { selectFoodsSlice } from "@/store/slices/foodsSlice";
+import { selectFoodsSlice, setFood, setScale } from "@/store/slices/foodsSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
 import BackButton from "@/components/Back/BackButton";
 import FoodActions from "@/components/Premium/Food/FoodActions/FoodActions";
-import Image from "next/image";
-import PremiumLayout from "@/components/Layout/PremiumLayout";
 import FoodNutrition from "@/components/Premium/Food/FoodNutrition";
+import Image from "next/image";
 import Ingredients from "@/components/Premium/Recipe/Ingredients";
 import Instructions from "@/components/Premium/Recipe/Instructions";
+import PremiumLayout from "@/components/Layout/PremiumLayout";
 
 export default function Page() {
   const router = useRouter();
+  const dispatch = useDispatch();
   const { id } = router.query;
-  const { foodsSearched } = useSelector(selectFoodsSlice);
-  const foodS = foodsSearched[id as keyof FoodGroup];
-  const [food, setFood] = useState(foodS || NewFood);
+  const { food, foodsSearched } = useSelector(selectFoodsSlice);
+  const foodData = food.data;
+  const [ingsData, setIngsData] = useState<FoodGroup | null>(null);
 
   useEffect(() => {
     if (typeof id === "string") {
-      const fetchFoodID = async () => {
-        const foodFetched: Food | null = await fetchFoodByID(id);
-        foodFetched && setFood(foodFetched);
-      };
-      fetchFoodID();
+      if (!foodsSearched[id]) {
+        const fetchFoodID = async () => {
+          const foodFetched: Food | null = await fetchFoodByID(id);
+          foodFetched && dispatch(setFood(foodFetched));
+        };
+        fetchFoodID();
+      } else {
+        dispatch(setFood(foodsSearched[id]));
+      }
     }
   }, [id]);
 
-  const fetchFoods = async (ingredients: Ingredient[]) => {
+  const fetchIngredientsData = async (ingredients: Ingredient[]) => {
     const ids = ingredients.map((ing) => ing.food_id);
     const result = await fetchFoodIngredients(ids);
     return result;
   };
 
-  const [foodIngredients, setFoodIngredients] = useState<FoodGroup | null>(
-    null
-  );
-
   useEffect(() => {
-    const getFoods = async () => {
-      const foods = await fetchFoods(food.ingredients);
-      setFoodIngredients(foods);
-    };
-    food.ingredients.length > 0 && getFoods();
-  }, [food]);
+    if (foodData) {
+      const getFoods = async () => {
+        const foods = await fetchIngredientsData(foodData.ingredients);
+        setIngsData(foods);
+      };
+      foodData.ingredients.length > 0 && getFoods();
+    }
+  }, [foodData]);
 
   return (
     <PremiumLayout>
-      {food && (
+      {foodData && (
         <section className="flex w-full select-none flex-col gap-[var(--nav-h)]">
           <div className="flex max-w-lg flex-col gap-10 ">
             <div className="fixed left-auto top-[var(--nav-h)] z-[60] flex h-[var(--subnav-h)] w-screen items-center gap-10 border-b bg-white/80 px-4 backdrop-blur-lg dark:bg-black/80">
               <BackButton />
-              <span className="text-3xl font-semibold">{food.food_name}</span>
+              <span className="font-semibold sm:text-3xl">
+                {foodData.food_name}
+              </span>
             </div>
           </div>
-          <div className="flex flex-wrap items-start justify-start gap-10 rounded-lg bg-white p-4 shadow-[0_1px_5px_lightgray] dark:bg-black dark:shadow-[0_1px_6px_#292929] sm:m-4 sm:px-10">
-            <div className="flex flex-col gap-10">
+          <div className="flex flex-wrap items-start justify-start gap-10 rounded-lg bg-white p-4 py-10 shadow-[0_1px_5px_lightgray] dark:bg-black dark:shadow-[0_1px_6px_#292929] sm:m-[1vw] sm:px-10">
+            <div className="flex w-full max-w-xl flex-col gap-5">
               <div className="flex w-full max-w-xl flex-col gap-5">
                 <Image
-                  src={food.image}
-                  alt={`${food.food_name}`}
+                  src={foodData.image}
+                  alt={`${foodData.food_name}`}
                   width={250}
                   height={250}
                   className="w-50 pt-[var(--nav-h) m-auto mb-5 rounded-lg"
                 />
-                {food.food_id && <FoodActions foodID={food.food_id} />}
+                {foodData.food_id && <FoodActions foodID={foodData.food_id} />}
               </div>
               <div className="flex w-full max-w-xl">
-                <FoodNutrition isIngredient={false} foodProp={food} />
+                <FoodNutrition isIngredient={false} foodProp={foodData} />
               </div>
             </div>
             <div className="flex w-full max-w-xl flex-col gap-5">
-              {foodIngredients && food.ingredients.length > 0 && (
+              {ingsData && foodData.ingredients.length > 0 && (
                 <div className="w-full max-w-xl">
                   <Ingredients
-                    foodIngredients={foodIngredients}
-                    ingredients={food.ingredients}
+                    foodIngredients={ingsData}
+                    ingredients={foodData.ingredients}
                   />
                 </div>
               )}
-              {food.instructions.length > 0 && (
+              {foodData.instructions.length > 0 && (
                 <div className="w-full max-w-xl">
-                  <Instructions instructions={food.instructions} />
+                  <Instructions instructions={foodData.instructions} />
                 </div>
               )}
             </div>

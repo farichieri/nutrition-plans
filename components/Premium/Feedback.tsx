@@ -103,7 +103,7 @@ const Feedback: FC<Props> = () => {
 
           <div
             onClick={handleFeedback}
-            className="absolute inset-0 h-screen w-screen bg-black/50 dark:bg-black/80"
+            className="absolute inset-0 h-screen w-screen"
           ></div>
         </>
       )}

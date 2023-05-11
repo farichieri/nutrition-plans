@@ -51,11 +51,11 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
       url: "/app/profile/body-features",
       icon: "settings_accessibility",
     },
-    {
-      name: "Food Preferences",
-      url: "/app/profile/food-preferences",
-      icon: "restaurant",
-    },
+    // {
+    //   name: "Food Preferences",
+    //   url: "/app/profile/food-preferences",
+    //   icon: "restaurant",
+    // },
     {
       name: "Nutrition Values",
       url: "/app/profile/nutrition-values",
@@ -70,14 +70,14 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
     <>
       {sidebarOpen && (
         <div
-          className="fixed inset-0 z-[70] sm:hidden"
+          className="fixed inset-0 z-[70] md:hidden"
           onClick={handleSidebar}
         ></div>
       )}
       <div
         className={`${
           sidebarOpen ? "left-0" : "left-[-14rem]"
-        } fixed left-0 z-[70] flex h-screen min-h-screen w-[14rem] select-none flex-col gap-2 overflow-auto border-r bg-white/80 px-2 pb-10 pt-16 backdrop-blur-sm transition-all duration-300 dark:border-slate-400/20 dark:bg-black/80 sm:gap-4`}
+        } fixed left-0 z-[70] flex h-screen min-h-screen w-[14rem] select-none flex-col gap-2 overflow-auto border-r bg-white/80 px-2 pb-5 pt-16 backdrop-blur-sm transition-all duration-300 dark:border-slate-400/20 dark:bg-black/80 sm:gap-4`}
       >
         <div className="flex flex-col gap-2">
           <div

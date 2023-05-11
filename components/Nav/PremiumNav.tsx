@@ -1,5 +1,5 @@
 import { Bars2Icon, XMarkIcon } from "@heroicons/react/24/solid";
-import { FC, MouseEventHandler, useState } from "react";
+import { FC, MouseEventHandler } from "react";
 import AvatarDropDown from "../DropDown/AvatarDropDown/AvatarDropDown";
 import Feedback from "../Premium/Feedback";
 

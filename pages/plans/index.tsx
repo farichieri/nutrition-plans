@@ -10,10 +10,10 @@ interface Props {
 export default function Page({ plans }: Props) {
   return (
     <LandingLayout>
-      <div className="flex w-full max-w-5xl flex-col items-center justify-center gap-10 py-24 ">
+      <section className="flex w-full max-w-5xl flex-col items-center justify-start gap-10 py-24">
         <span className="text-5xl font-bold">Plans</span>
         <Plans plans={plans} />
-      </div>
+      </section>
     </LandingLayout>
   );
 }
