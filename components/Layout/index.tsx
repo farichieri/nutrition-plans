@@ -8,7 +8,7 @@ import { setProgress } from "@/store/slices/progressSlice";
 import { Theme } from "@/types/types";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { Inter, Work_Sans } from "next/font/google";
+import { Inter } from "next/font/google";
 import Head from "next/head";
 
 const font = Inter({

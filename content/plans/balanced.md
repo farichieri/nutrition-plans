@@ -29,7 +29,7 @@ Fiber to regulate intestinal transit and take care of the bacterial flora. In ad
 
 All these nutrients must come from the consumption of healthy foods: Vegetables, fruits, vegetables, tubers, legumes, whole grains, eggs, fish, nuts, white meat and to a lesser extent red meat. And we must avoid or sporadically consume processed products such as pre-cooked foods, smoothies, packaged juices, alcoholic beverages, sausages, snacks, ice cream, chips, cookies, crepes, pastries, chocolates, soft drinks, breakfast cereals, fried and salted nuts, etc.
 
-## Example of a balanced menu for one day
+#### **Example of a balanced menu for one day**
 
 - **Breakfast:** Whole wheat bread with tomato and avocado, a banana and an infusion with unsweetened milk.
 - **Mid-morning:** A natural yogurt with a handful of nuts.

@@ -1,3 +1,4 @@
+import { CheckBadgeIcon } from "@heroicons/react/24/solid";
 import { FC, useEffect, useState } from "react";
 import { MEAL_PLANS } from "@/utils/content";
 import { selectAuthSlice, setUpdateUser } from "@/store/slices/authSlice";
@@ -6,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { UserAccount } from "@/types/types";
 import { useRouter } from "next/router";
 import SubmitButton from "@/components/Buttons/SubmitButton";
-import { CheckBadgeIcon } from "@heroicons/react/24/solid";
+import Image from "next/image";
 
 interface Props {
   handleSubmit: Function;
@@ -63,27 +64,43 @@ const PlanSelector: FC<Props> = ({ handleSubmit }) => {
     <section className="flex w-full max-w-5xl select-none flex-col items-center justify-center gap-3 rounded-md border text-xs s:text-sm sm:text-base">
       <form action="" className="flex w-full flex-col gap-5">
         <div className="flex flex-col gap-3 p-5">
-          <span className="w-full p-5 text-left text-3xl font-semibold">
-            Select my Nutrition Plan
-          </span>
-          <div className="flex w-full flex-col flex-wrap gap-2">
+          <div className="flex items-center">
+            <span className="material-icons text-green-500">restaurant</span>
+            <span className="w-full p-5 text-left text-3xl font-semibold">
+              Select my Nutrition Plan
+            </span>
+          </div>
+          <div className="flex w-full flex-wrap justify-center gap-2">
             {MEAL_PLANS.map((opt) => (
               <button
                 onClick={handleSelect}
-                className={`flex basis-1 flex-col gap-1 rounded-md border bg-gray-300 p-0 font-medium text-black ${
+                className={`relative flex h-[auto] w-[auto] max-w-xs flex-col items-center justify-center overflow-hidden rounded-lg duration-300 hover:scale-105 ${
                   planSelected === opt.id
-                    ? "border-green-500 bg-green-500/50 text-white"
-                    : "border-slate-400 bg-slate-300/50"
+                    ? "border-green-500/0 bg-green-500/0 text-green-500"
+                    : "border-slate-400 bg-slate-300/0"
                 }`}
                 key={opt.id}
                 id={opt.id}
               >
-                <div className="pointer-events-none flex w-full items-center px-10 py-1 text-left">
-                  {planSelected === opt.id && (
-                    <CheckBadgeIcon className="h-4 w-4" />
-                  )}
-                  <span className="m-auto text-xl font-bold">{opt.name}</span>
-                </div>
+                <span
+                  className={`material-icons ${
+                    planSelected === opt.id
+                      ? "text-green-500"
+                      : "text-transparent"
+                  }`}
+                >
+                  verified
+                </span>
+                <span className="flex w-full items-center justify-center text-center text-xl font-bold">
+                  {opt.name}
+                </span>
+                <Image
+                  src={`/images/plans/${opt.id}.jpg`}
+                  alt={opt.name}
+                  width={150}
+                  height={150}
+                  className="pointer-events-none m-2 rounded-3xl shadow-[0_1px_5px_gray] dark:shadow-[0px_1px_5px_#4040408c]"
+                />
               </button>
             ))}
           </div>

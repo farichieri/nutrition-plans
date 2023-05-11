@@ -9,6 +9,7 @@ import {
   fatsFields,
   firstOptionalFields,
   foodCategorySelect,
+  foodDigestionStatusSelect,
   foodGlucemicStatusSelect,
   nameDescFields,
   servingSizeFields,
@@ -21,6 +22,7 @@ import { addFood } from "@/firebase/helpers/Food";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { NewFood } from "@/types/initialTypes";
 import { selectAuthSlice } from "@/store/slices/authSlice";
+import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import Checkbox from "@/components/Form/Checkbox";
 import FormAction from "@/components/Form/FormAction";
@@ -29,7 +31,6 @@ import Input from "@/components/Form/Input";
 import NutritionInput from "@/components/Form/NutritionInput";
 import React, { FC, useState } from "react";
 import Select from "@/components/Form/Select";
-import { useRouter } from "next/router";
 
 interface Props {}
 
@@ -40,6 +41,7 @@ const FoodCreate: FC<Props> = () => {
   const [optionalsOpen, setOptionalsOpen] = useState<boolean>(false);
   const foodCategory = foodCategorySelect;
   const glucemicStatus = foodGlucemicStatusSelect;
+  const digestionStatus = foodDigestionStatusSelect;
   const [isCreating, setIsCreating] = useState(false);
   console.log({ foodState });
 
@@ -288,6 +290,24 @@ const FoodCreate: FC<Props> = () => {
                 title={glucemicStatus.title}
                 options={glucemicStatus.options}
                 value={foodState[glucemicStatus.id]}
+              />
+            </div>
+          </div>
+          <div className="">
+            <h1 className="text-xl"></h1>
+            <div className="">
+              <Select
+                customClass={""}
+                handleChange={handleChange}
+                id={digestionStatus.id}
+                isRequired={digestionStatus.isRequired}
+                labelFor={digestionStatus.labelFor}
+                labelText={digestionStatus.labelText}
+                name={digestionStatus.name}
+                placeholder={digestionStatus.placeholder}
+                title={digestionStatus.title}
+                options={digestionStatus.options}
+                value={foodState[digestionStatus.id]}
               />
             </div>
           </div>

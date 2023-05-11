@@ -59,6 +59,9 @@ const Input: FC<Props> = ({
         title={title}
         type={type}
         value={value || ""}
+        autoCorrect="off"
+        autoComplete="off"
+        autoCapitalize="off"
       />
     </div>
   );

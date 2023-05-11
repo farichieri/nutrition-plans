@@ -13,7 +13,7 @@ Reducing carbohydrates will help us regain the ability to use our fat reserves b
 
 Among other benefits found in this diet, we find the reduction of anxiety for food due to the existence of reduced appetite by consuming more foods high in protein and good quality fats.
 
-**Allowed foods**
+#### **Allowed foods**
 
 The foods allowed on the Low Carb diet are:
 
@@ -31,7 +31,7 @@ The foods allowed on the Low Carb diet are:
 
 In the case of cheese, milk and yogurt, they can be included by controlling the quantities. Milk could be replaced by coconut or almond milk, for example, whose carbohydrate content is much lower. It is important to accompany the Low carb diet to ingest between 2 to 3 liters of water daily.
 
-**Moderately Allowed**
+#### **Moderately Allowed**
 
 - Fruits with a medium glycemic index (oranges, tangerines, apples, pears, etc.)
 - Tubers (in a VERY restricted way potato, sweet potato, cassava, corn.)
@@ -39,7 +39,7 @@ In the case of cheese, milk and yogurt, they can be included by controlling the 
 - Low-processed dairy: goat cheeses
 - Dark chocolate: without sugar and with a percentage greater than 70%.
 
-**Forbidden food**
+#### **Forbidden food**
 
 In this diet it is important to avoid all foods that have a high amount of carbohydrates. For this reason, the nutritional label of the food should be consulted before consuming it. Some examples of foods to avoid are:
 
@@ -53,7 +53,7 @@ In this diet it is important to avoid all foods that have a high amount of carbo
 
 An important piece of advice is to try to avoid all types of industrialized products, since they normally contain a high concentration of carbohydrates, giving preference to natural foods that are as little processed as possible.
 
-**Breakfasts**
+#### **Breakfasts**
 
 - Scrambled eggs, tomato and spring onion
 - Vegetable skewers
@@ -66,7 +66,7 @@ An important piece of advice is to try to avoid all types of industrialized prod
 - Avocado with smoked salmon
 - Egg, tuna and avocado salad
 
-**Launches**
+#### **Launches**
 
 - Sausages with apple and kale
 - Turkey sausage with peppers and zucchini
@@ -97,7 +97,7 @@ An important piece of advice is to try to avoid all types of industrialized prod
 - Seafood salad
 - Tudela hearts with anchovies
 
-**Dinners**
+#### **Dinners**
 
 - Sautéed chicken strips with vegetables and cashews
 - Tomatoes with tuna belly
@@ -107,7 +107,7 @@ An important piece of advice is to try to avoid all types of industrialized prod
 - Tuna tartare
 - Sautéed artichokes with egg and smoked salmon
 
-**Low carb diet menu**
+<!-- **Low carb diet menu**
 
 The table below shows an example of 3 days of a low carbohydrate diet and the amount of this macronutrient it provides:
 
@@ -118,4 +118,4 @@ The table below shows an example of 3 days of a low carbohydrate diet and the am
 | Lunch                   | 100 g of Zucchini Spaghetti with 120 g of ground meat + Raw salad of lettuce (1 cup), carrot (25 g) and onion (10 g), dressed with 1 teaspoon of olive oil | 120 g of Salmon accompanied by 2 tablespoons of brown rice + 1 cup of stir-fried vegetables (paprika, onion, zucchini, aubergine, carrot and broccoli) + 1 tablespoon of olive oil | 120g chicken breast + 1/2 cup pumpkin puree + Raw Lettuce Salad (1 cup) + 1 medium tomato + 10g onion + 1/3 diced avocado, garnished with 1 tsp olive oil and vinegar |
 | Afternoon Snack         | 1 cup of jelly with strawberries                                                                                                                           | Smoothie of 100 g of avocado with 1 tablespoon of chia seeds and 200 mL of coconut milk                                                                                            | 1 glass of green juice prepared with 1 cabbage leaf, 1/2 lemon, 1/3 cucumber, 100 mL of coconut water, and 1 teaspoon of chia                                         |
 | Dinner                  | Spinach omelet prepared with: 2 eggs, 20g onion, 1 teaspoon olive oil, 125g spinach, salt and pepper to taste                                              | 1 Eggplant (180 g) stuffed with 100 g of tuna + 1 tablespoon of Parmesan cheese. Gratinate in the oven                                                                             | 1 small red paprika (100g) stuffed with 120g of ground beef with 1 tablespoon of Parmesan cheese. Gratinate in the oven                                               |
-| Amount of Carbohydrates | 60 grams                                                                                                                                                   | 54 grams                                                                                                                                                                           | 68 grams                                                                                                                                                              |
+| Amount of Carbohydrates | 60 grams                                                                                                                                                   | 54 grams                                                                                                                                                                           | 68 grams                                                                                                                                                              | -->

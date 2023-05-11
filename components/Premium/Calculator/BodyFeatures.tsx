@@ -1,16 +1,16 @@
-import SubmitButton from "@/components/Buttons/SubmitButton";
-import { updateUser } from "@/firebase/helpers/Auth";
-import { selectAuthSlice, setUpdateUser } from "@/store/slices/authSlice";
-import { MeasurementUnits, UserAccount } from "@/types/types";
 import {
   ACTIVITY_OPTIONS,
   GENDER_OPTIONS,
   GOAL_OPTIONS,
 } from "@/utils/formContents";
-import { newBodyData } from "@/types/initialTypes";
-import { useRouter } from "next/router";
 import { FC, useEffect, useState } from "react";
+import { MeasurementUnits, UserAccount } from "@/types/types";
+import { newBodyData } from "@/types/initialTypes";
+import { selectAuthSlice, setUpdateUser } from "@/store/slices/authSlice";
+import { updateUser } from "@/firebase/helpers/Auth";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
+import SubmitButton from "@/components/Buttons/SubmitButton";
 
 interface Props {
   handleSubmit: Function;
@@ -57,9 +57,11 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
     goal: body_data.goal || "",
     inches: cmsToInches(body_data.height_in_cm) || "",
     kilograms: body_data.weight_in_kg || "",
-    measurement_unit: body_data.measurement_unit || "",
+    measurement_unit: MeasurementUnits.imperial,
     pounds: kgsToLbs(body_data.weight_in_kg) || "",
   });
+
+  console.log({ input });
 
   const isMetricUnits = input.measurement_unit === MeasurementUnits.metric;
 
@@ -224,9 +226,14 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
         className="flex w-full max-w-xl flex-col gap-5"
       >
         <div className="flex flex-col gap-3 p-5">
-          <span className="w-full p-5 text-left text-3xl font-semibold">
-            My Body features
-          </span>
+          <div className="flex items-center">
+            <span className="material-icons text-green-500">
+              settings_accessibility
+            </span>
+            <span className="w-full p-5 text-left text-3xl font-semibold">
+              My Body features
+            </span>
+          </div>
           <div className="flex w-full max-w-xl flex-wrap">
             <label className="basis-1/5 font-semibold">Goal</label>
             <div className="mx-auto flex w-full basis-4/5 items-center justify-center gap-2">
@@ -399,18 +406,24 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
               <label className="basis-1/5 font-semibold" htmlFor="activity">
                 Activity
               </label>
+
               <select
-                name="activity"
-                id="activity"
+                name={"activity"}
+                id={"activity"}
+                required={true}
                 className="flex w-full basis-4/5"
                 onChange={handleChange}
-                defaultValue={input.activity}
+                value={input.activity ? input.activity : "none"}
               >
                 <option value="none" disabled hidden>
                   Select
                 </option>
                 {ACTIVITY_OPTIONS.map((act) => (
-                  <option key={act.value} value={act.value}>
+                  <option
+                    key={act.value}
+                    value={act.value}
+                    className=" dark:bg-slate-500"
+                  >
                     {act.name}
                   </option>
                 ))}

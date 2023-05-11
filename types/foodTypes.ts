@@ -4,6 +4,7 @@ export interface Food {
   cook_time: number | null;
   date_created: any | null;
   date_updated: string | null;
+  digestion_status: DigestionStatusEnum | null;
   dish_type: DishTypesEnum | null;
   easily_single_serving: boolean;
   food_category: FoodCategoriesEnum | null;
@@ -187,6 +188,12 @@ export enum GlucemicStatusEnum {
   low = "low",
   medium = "medium",
   high = "high",
+}
+
+export enum DigestionStatusEnum {
+  easy = "easy",
+  medium = "medium",
+  hard = "hard",
 }
 
 export type NutrientsClasified = {

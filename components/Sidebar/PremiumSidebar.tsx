@@ -182,7 +182,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
             ))}
           </div>
         </div>
-        <div className="flex w-full flex-col items-center gap-2">
+        {/* <div className="flex w-full flex-col items-center gap-2">
           <div
             className={`${
               router.asPath === "/app/recipes" &&
@@ -199,21 +199,23 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
               Recipes
             </Link>
           </div>
-        </div>
+        </div> */}
 
         <div className="flex w-full flex-col items-center gap-2">
           <div
             className={`${
               router.asPath === "/app/search-food" &&
               " bg-slate-500/30 font-semibold"
-            } text-md flex w-full items-center gap-1 rounded-lg px-2 py-1 text-base font-semibold sm:text-lg`}
+            } text-md flex w-full items-center gap-2 rounded-lg px-2 py-1 text-base font-semibold sm:text-lg`}
           >
-            <span className="material-icons md-24 text-green-500">search</span>
+            <span className="material-icons md-24 text-green-500">
+              menu_book
+            </span>
             <Link
               href={"/app/search-food"}
               className="text-md w-full font-semibold sm:text-lg"
             >
-              Search Food
+              Recipes
             </Link>
           </div>
         </div>

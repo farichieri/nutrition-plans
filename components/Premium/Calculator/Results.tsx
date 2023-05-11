@@ -93,9 +93,13 @@ const Results: FC<Props> = ({ handleSubmit }) => {
     <section className="flex w-full max-w-5xl flex-col items-center justify-center gap-5 rounded-md border bg-white dark:bg-black">
       <form action="" className="flex w-full flex-col gap-5">
         <div className="flex flex-col gap-3 p-5">
-          <span className="w-full p-5 text-left text-3xl font-semibold">
-            {isCreatingRoute ? "Nutrition Values" : "Nutrition Values"}
-          </span>
+          <div className="flex items-center">
+            <span className="material-icons text-green-500">data_usage</span>
+            <span className="w-full p-5 text-left text-3xl font-semibold">
+              {isCreatingRoute ? "Nutrition Values" : "Nutrition Values"}
+            </span>
+          </div>
+
           <div className="flex flex-col gap-4 font-medium">
             <div>
               <span>
@@ -107,20 +111,31 @@ const Results: FC<Props> = ({ handleSubmit }) => {
                 {body_data.kcals_recommended}
               </span>
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-1">
+              <span className="material-icons text-blue-400">info</span>
               <div>
                 <span>Your BMR (Basal Metabolic Rate) is: </span>
                 <span className="text-green-500">{body_data.BMR}</span>
+                calories
               </div>
-              <div>
-                <span>Your BMI (Body Mass Index) is: </span>
-                <span className="text-green-500">{body_data.BMI}</span>
               </div>
-              <div>
+              <div className="flex items-center gap-1">
+                <span className="material-icons text-blue-400">info</span>
+                <div>
+                  <span>Your BMI (Body Mass Index) is: </span>
+                  <span className="text-green-500">{body_data.BMI}</span>
+                </div>
+              </div>
+              <div className="flex items-center gap-1">
+                <span className="material-icons text-blue-400">info</span>
+                <div>
                 <span>A BMI of {body_data.BMI} is stipulated to be: </span>
                 <span className="text-green-500">
                   {BMISignificance(Number(body_data.BMI))}
                 </span>
+                </div>
+                {/* <span>BMI (body mass index), which is based on the height and weight of a person, is an inaccurate measure of body fat content and does not take into account muscle mass, bone density, overall body composition, and racial and sex differences,</span> */}
               </div>
             </div>
           </div>

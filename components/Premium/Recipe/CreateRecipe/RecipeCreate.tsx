@@ -7,6 +7,7 @@ import {
   RecipeCategoriesEnum,
   Ingredient,
   FoodTypesEnum,
+  DigestionStatusEnum,
 } from "@/types/foodTypes";
 import {
   selectCreateRecipeSlice,
@@ -255,6 +256,18 @@ const RecipeCreate: FC<Props> = () => {
           title={"Dish Type"}
           options={Object.keys(DishTypesEnum)}
           value={recipeState["dish_type" as keyof Food]}
+        />
+        <Select
+          customClass={""}
+          handleChange={handleChange}
+          id={"digestion_status"}
+          isRequired={true}
+          labelFor={"digestion_status"}
+          labelText={"Digestion Status"}
+          name={"digestion_status"}
+          title={"Digestion Status"}
+          options={Object.keys(DigestionStatusEnum)}
+          value={recipeState["digestion_status" as keyof Food]}
         />
         <div className="">
           <h1 className="text-xl">Food Type</h1>

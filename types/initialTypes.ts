@@ -163,6 +163,7 @@ export const NewFood: Food = {
   cook_time: null,
   date_created: null,
   date_updated: null,
+  digestion_status: null,
   dish_type: null,
   easily_single_serving: false,
   food_category: null,

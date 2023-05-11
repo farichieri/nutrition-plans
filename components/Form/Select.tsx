@@ -13,7 +13,7 @@ interface Props {
   name: string;
   placeholder?: string;
   title: string;
-  value: string | null;
+  value: string | number | null;
   options: string[];
 }
 

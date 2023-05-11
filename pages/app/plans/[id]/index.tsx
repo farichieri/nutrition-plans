@@ -50,7 +50,7 @@ export default function Page({ planData }: Props) {
             <span className="text-lg font-semibold sm:text-3xl">
               {planData.title}
             </span>
-            <div className="ml-auto w-fit min-w-fit">
+            <div className="w-fit min-w-fit">
               {!(user?.plan_selected === planData.id) ? (
                 <button
                   className="min-w-fit rounded-3xl border px-2 py-1"
@@ -79,75 +79,30 @@ export default function Page({ planData }: Props) {
         <div className="flex max-w-5xl flex-wrap items-start justify-center gap-10 rounded-lg bg-white p-4 shadow-[0_1px_5px_lightgray] dark:bg-black dark:shadow-[0_1px_6px_#292929] sm:m-4 sm:px-10">
           <div
             className={`${
-              isFree && "z-50 h-full max-w-5xl cursor-auto select-none"
+              isFree &&
+              "z-50 flex h-full w-full max-w-5xl cursor-auto select-none flex-col gap-5"
             } max-w-5xl`}
           >
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam
-              consequuntur, dignissimos impedit id earum fuga in. Possimus
-              quaerat nulla ut, fugit officia iusto? Animi maxime ducimus at
-              repellat vero quasi? Lorem ipsum dolor sit amet consectetur
-              adipisicing elit. Totam consequuntur, dignissimos impedit id earum
-              fuga in. Possimus quaerat nulla ut, fugit officia iusto? Animi
-              maxime ducimus at repellat vero quasi? Lorem ipsum dolor sit amet
-              consectetur adipisicing elit. Totam consequuntur, dignissimos
-              impedit id earum fuga in. Possimus quaerat nulla ut, fugit officia
-              iusto? Animi maxime ducimus at repellat vero quasi? Lorem ipsum
-              dolor sit amet consectetur adipisicing elit. Totam consequuntur,
-              dignissimos impedit id earum fuga in. Possimus quaerat nulla ut,
-              fugit officia iusto? Animi maxime ducimus at repellat vero quasi?
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam
-              consequuntur, dignissimos impedit id earum fuga in. Possimus
-              quaerat nulla ut, fugit officia iusto? Animi maxime ducimus at
-              repellat vero quasi? Lorem ipsum dolor sit amet consectetur
-              adipisicing elit. Totam consequuntur, dignissimos impedit id earum
-              fuga in. Possimus quaerat nulla ut, fugit officia iusto? Animi
-              maxime ducimus at repellat vero quasi?
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam
-              consequuntur, dignissimos impedit id earum fuga in. Possimus
-              quaerat nulla ut, fugit officia iusto? Animi maxime ducimus at
-              repellat vero quasi? Lorem ipsum dolor sit amet consectetur
-              adipisicing elit. Totam consequuntur, dignissimos impedit id earum
-              fuga in. Possimus quaerat nulla ut, fugit officia iusto? Animi
-              maxime ducimus at repellat vero quasi? Lorem ipsum dolor sit amet
-              consectetur adipisicing elit. Totam consequuntur, dignissimos
-              impedit id earum fuga in. Possimus quaerat nulla ut, fugit officia
-              iusto? Animi maxime ducimus at repellat vero quasi? Lorem ipsum
-              dolor sit amet consectetur adipisicing elit. Totam consequuntur,
-              dignissimos impedit id earum fuga in. Possimus quaerat nulla ut,
-              fugit officia iusto? Animi maxime ducimus at repellat vero quasi?
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam
-              consequuntur, dignissimos impedit id earum fuga in. Possimus
-              quaerat nulla ut, fugit officia iusto? Animi maxime ducimus at
-              repellat vero quasi? Lorem ipsum dolor sit amet consectetur
-              adipisicing elit. Totam consequuntur, dignissimos impedit id earum
-              fuga in. Possimus quaerat nulla ut, fugit officia iusto? Animi
-              maxime ducimus at repellat vero quasi?
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam
-              consequuntur, dignissimos impedit id earum fuga in. Possimus
-              quaerat nulla ut, fugit officia iusto? Animi maxime ducimus at
-              repellat vero quasi? Lorem ipsum dolor sit amet consectetur
-              adipisicing elit. Totam consequuntur, dignissimos impedit id earum
-              fuga in. Possimus quaerat nulla ut, fugit officia iusto? Animi
-              maxime ducimus at repellat vero quasi? Lorem ipsum dolor sit amet
-              consectetur adipisicing elit. Totam consequuntur, dignissimos
-              impedit id earum fuga in. Possimus quaerat nulla ut, fugit officia
-              iusto? Animi maxime ducimus at repellat vero quasi? Lorem ipsum
-              dolor sit amet consectetur adipisicing elit. Totam consequuntur,
-              dignissimos impedit id earum fuga in. Possimus quaerat nulla ut,
-              fugit officia iusto? Animi maxime ducimus at repellat vero quasi?
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam
-              consequuntur, dignissimos impedit id earum fuga in. Possimus
-              quaerat nulla ut, fugit officia iusto? Animi maxime ducimus at
-              repellat vero quasi? Lorem ipsum dolor sit amet consectetur
-              adipisicing elit. Totam consequuntur, dignissimos impedit id earum
-              fuga in. Possimus quaerat nulla ut, fugit officia iusto? Animi
-              maxime ducimus at repellat vero quasi?
-            </p>
+            <div className="min-h-20 flex w-full flex-col gap-2 rounded-md border p-4">
+              <span>Breakfast</span>
+              <div className="h-20 w-full rounded-md border">.</div>
+              <div className="h-20 w-full rounded-md border">.</div>
+            </div>
+            <div className="min-h-20 flex w-full flex-col gap-2 rounded-md border p-4">
+              <span>Lunch</span>
+              <div className="h-20 w-full rounded-md border">.</div>
+              <div className="h-20 w-full rounded-md border">.</div>
+            </div>
+            <div className="min-h-20 flex w-full flex-col gap-2 rounded-md border p-4">
+              <span>Dinner</span>
+              <div className="h-20 w-full rounded-md border">.</div>
+              <div className="h-20 w-full rounded-md border">.</div>
+            </div>
+            <div className="min-h-20 flex w-full flex-col gap-2 rounded-md border p-4">
+              <span>Snack</span>
+              <div className="h-20 w-full rounded-md border">.</div>
+              <div className="h-20 w-full rounded-md border">.</div>
+            </div>
           </div>
         </div>
       </section>

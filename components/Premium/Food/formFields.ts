@@ -1,4 +1,5 @@
 import {
+  DigestionStatusEnum,
   FoodCategoriesEnum,
   GlucemicStatusEnum,
   NutrientsEnum,
@@ -17,6 +18,7 @@ Object.keys(NutrientsEnum).forEach((key) => {
 
 let foodCategoriesKeys: any = Object.keys(FoodCategoriesEnum);
 let foodGlucemicStatusKeys: any = Object.keys(GlucemicStatusEnum);
+let foodDigestionStatusKeys: any = Object.keys(DigestionStatusEnum);
 
 const calories = nutrientKeys.calories;
 const carbohydrates = nutrientKeys.carbohydrates;
@@ -31,6 +33,7 @@ const serving_grams = foodKeys.serving_grams;
 const serving_name = foodKeys.serving_name;
 const food_category = foodKeys.food_category;
 const glucemic_status = foodKeys.glucemic_status;
+const digestion_status = foodKeys.digestion_status;
 
 const nameDescFields = [
   {
@@ -426,6 +429,20 @@ const foodGlucemicStatusSelect = {
   title: "",
 };
 
+const DigestionStatusEnumOptions = foodDigestionStatusKeys;
+
+const foodDigestionStatusSelect = {
+  autoComplete: "off",
+  id: digestion_status,
+  isRequired: false,
+  labelFor: digestion_status,
+  labelText: digestion_status,
+  name: "digestion_status",
+  options: DigestionStatusEnumOptions,
+  placeholder: "",
+  title: "",
+};
+
 export {
   fatsFields,
   firstOptionalFields,
@@ -437,4 +454,5 @@ export {
   sugarFields,
   vitsAndMinsFields,
   foodGlucemicStatusSelect,
+  foodDigestionStatusSelect,
 };
