@@ -141,10 +141,10 @@ export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
     checklistTitle: "Everything in Free, plus...",
     checkoutLink: "/app/billing",
     discount: "-20%",
-    monthlyPrice: 20,
+    monthlyPrice: 10,
     name: "Premium",
     plan_id: "premium",
-    yearlyPrice: 16,
+    yearlyPrice: 8,
   },
 ];
 

@@ -134,6 +134,7 @@ export type FoodNutrients = {
 
 export enum NutritionMeasurements {
   g = "g",
+  grams = "grams",
   kcal = "kcal",
   mcg = "μg",
   mg = "mg",

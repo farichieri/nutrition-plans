@@ -3,7 +3,7 @@ import {
   setIngredientOpened,
   setRecipeState,
 } from "@/store/slices/createRecipeSlice";
-import { Food, Ingredient } from "@/types/foodTypes";
+import { Food, Ingredient, NutritionMeasurements } from "@/types/foodTypes";
 import { formatToFixed } from "@/utils/format";
 import { getNewAmount, getNutritionValues } from "./useNutrition";
 import { selectFoodsSlice, setScale } from "@/store/slices/foodsSlice";
@@ -20,23 +20,21 @@ interface Props {
   isIngredient: boolean;
 }
 
-const FoodNutrition: FC<Props> = ({ isIngredient }) => {
+const FoodNutrition: FC<Props> = ({ isIngredient, foodProp }) => {
   const dispatch = useDispatch();
   const { recipeState } = useSelector(selectCreateRecipeSlice);
   const { food } = useSelector(selectFoodsSlice);
   const foodData = food?.data;
   const amount = food?.scale?.amount;
   const weightName = food?.scale?.weightName;
+  const GRAMS = NutritionMeasurements.grams;
+  const OZ = NutritionMeasurements.oz;
 
-  const options = [foodData?.serving_name || "", "grams", "oz"];
+  const options = [foodData?.serving_name || "", GRAMS, OZ];
   const [openDetails, setOpenDetails] = useState(false);
   const [isNotOriginal, setIsNotOriginal] = useState(false);
 
   const [nutrients, setNutrients] = useState(foodData?.nutrients);
-  // const [amount, setAmount] = useState<number>(foodData?.serving_amount || 1);
-  // const [weightName, setWeightName] = useState<string>(
-  //   foodData?.serving_name || ""
-  // );
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -46,6 +44,7 @@ const FoodNutrition: FC<Props> = ({ isIngredient }) => {
     if (id === "serving_amount") {
       dispatch(setScale({ amount: Number(value), weightName: weightName }));
     } else if (id === "weight_amount") {
+      console.log({ value });
       const newAmountSelected = getNewAmount(
         foodData,
         weightName,
@@ -60,15 +59,17 @@ const FoodNutrition: FC<Props> = ({ isIngredient }) => {
   const setOriginal = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (!foodData) return;
+
     let originalValue = getNewAmount(
       foodData,
-      "grams",
+      GRAMS,
       weightName,
       Number(foodData.serving_grams)
     );
-    if (weightName === "grams") {
+    if (weightName === GRAMS) {
       originalValue = Number(foodData.serving_grams);
     }
+    console.log({ originalValue });
     dispatch(
       setScale({ amount: Number(originalValue), weightName: weightName })
     );
@@ -79,12 +80,12 @@ const FoodNutrition: FC<Props> = ({ isIngredient }) => {
     if (!foodData) return;
     dispatch(
       setScale({
-        amount: foodData.serving_amount || 1,
-        weightName: foodData.serving_name || "",
+        amount: foodData?.serving_amount || 1,
+        weightName: foodData?.serving_name || "",
       })
     );
     setNutrients(foodData.nutrients);
-  }, []);
+  }, [foodData]);
 
   useEffect(() => {
     if (!foodData) return;
@@ -94,11 +95,11 @@ const FoodNutrition: FC<Props> = ({ isIngredient }) => {
     const OzAndServingToGrams = getNewAmount(
       foodData,
       weightName,
-      "grams",
+      GRAMS,
       amount
     );
 
-    if (weightName === "grams") {
+    if (weightName === GRAMS) {
       if (amount !== foodData.serving_grams) {
         setIsNotOriginal(true);
       }
@@ -107,7 +108,7 @@ const FoodNutrition: FC<Props> = ({ isIngredient }) => {
     }
 
     if (
-      weightName !== "grams" &&
+      weightName !== GRAMS &&
       OzAndServingToGrams !== foodData.serving_grams
     ) {
       setIsNotOriginal(true);
@@ -122,9 +123,10 @@ const FoodNutrition: FC<Props> = ({ isIngredient }) => {
   const handleIngredient = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (!foodData) return;
     event.preventDefault();
+    console.log(event.target);
     const newIngredient: Ingredient = {
       amount: amount,
-      food_id: foodData.food_id || "",
+      food_id: foodProp.food_id || "",
       order: 0,
       text: "",
       weight_name: weightName,
@@ -184,8 +186,8 @@ const FoodNutrition: FC<Props> = ({ isIngredient }) => {
             onClick={handleIngredient}
             className="m-auto flex w-fit items-center gap-1 rounded-3xl border bg-green-600 py-1.5 pl-2 pr-4 duration-300 hover:bg-green-500 active:scale-95"
           >
-            <span className="material-icons">add</span>
-            <span>Add</span>
+            <span className="material-icons pointer-events-none">add</span>
+            <span className="pointer-events-none">Add</span>
           </button>
         )}
 

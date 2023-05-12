@@ -53,7 +53,7 @@ In this diet it is important to avoid all foods that have a high amount of carbo
 
 An important piece of advice is to try to avoid all types of industrialized products, since they normally contain a high concentration of carbohydrates, giving preference to natural foods that are as little processed as possible.
 
-#### **Breakfasts**
+<!-- #### **Breakfasts**
 
 - Scrambled eggs, tomato and spring onion
 - Vegetable skewers
@@ -105,7 +105,7 @@ An important piece of advice is to try to avoid all types of industrialized prod
 - Stuffed avocados
 - Rabbit with onion
 - Tuna tartare
-- Sautéed artichokes with egg and smoked salmon
+- Sautéed artichokes with egg and smoked salmon -->
 
 <!-- **Low carb diet menu**
 

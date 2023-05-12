@@ -98,8 +98,12 @@ const RecipeCreate: FC<Props> = () => {
     if (!user) return;
     if (isCreating) return;
     setIsCreating(true);
+    const newFood = {
+      ...recipeState,
+      service_grams: "",
+    };
     const res = await addFood(
-      recipeState,
+      newFood,
       FoodTypesEnum.recipe,
       newImageFile,
       user

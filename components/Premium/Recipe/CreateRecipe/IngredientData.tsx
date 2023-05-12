@@ -1,7 +1,13 @@
 import { FC } from "react";
-import { Food } from "@/types/foodTypes";
+import { Food, Ingredient } from "@/types/foodTypes";
 import Image from "next/image";
 import FoodNutrition from "../../Food/FoodNutrition";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectCreateRecipeSlice,
+  setIngredientOpened,
+  setRecipeState,
+} from "@/store/slices/createRecipeSlice";
 
 interface Props {
   ingredient: Food;
