@@ -108,7 +108,7 @@ const PlanSelector: FC<Props> = ({ handleSubmit }) => {
         <div className="flex items-center justify-center border-t p-5">
           <div className="ml-auto flex">
             <SubmitButton
-              className={"m-auto w-fit"}
+              className={"m-auto h-9 w-24"}
               onClick={onSubmit}
               loadMessage={"Loading..."}
               content={`${isCreatingRoute ? "Continue" : "Save"}`}

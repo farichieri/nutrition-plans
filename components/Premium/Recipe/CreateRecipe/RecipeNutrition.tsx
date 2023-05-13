@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
-import { Food, FoodGroup, FoodNutrients } from "@/types/foodTypes";
-import { getNutritionMerged } from "../../Food/useNutrition";
+import { Food, FoodGroup } from "@/types/foodTypes";
+import { getNutritionMerged } from "../../Food/nutritionHelpers";
 import { setRecipeState } from "@/store/slices/createRecipeSlice";
 import { useDispatch } from "react-redux";
 import FoodNutritionDetail from "../../Food/FoodNutritionDetail";
@@ -18,6 +18,8 @@ const RecipeNutrition: FC<Props> = ({ recipe, foodIngredients }) => {
   const { nutrients, ingredients } = recipe;
 
   useEffect(() => {
+    console.log({ foodIngredients });
+    console.log({ ingredients });
     const nutritionMerged = getNutritionMerged(ingredients, foodIngredients);
     if (Object.keys(nutritionMerged).length > 0) {
       dispatch(setRecipeState({ ...recipe, nutrients: nutritionMerged }));

@@ -1,13 +1,7 @@
 import { FC } from "react";
-import { Food, Ingredient } from "@/types/foodTypes";
-import Image from "next/image";
+import { Food } from "@/types/foodTypes";
 import FoodNutrition from "../../Food/FoodNutrition";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  selectCreateRecipeSlice,
-  setIngredientOpened,
-  setRecipeState,
-} from "@/store/slices/createRecipeSlice";
+import Image from "next/image";
 
 interface Props {
   ingredient: Food;
@@ -15,8 +9,7 @@ interface Props {
 
 const IngredientData: FC<Props> = ({ ingredient }) => {
   return (
-    <div>
-      {/* // <div className="relative flex h-full flex-col gap-1 overflow-auto rounded-md border p-1"> */}
+    <div className="sm:-4 flex flex-col gap-5 p-2">
       <div className="flex">
         <div className="relative m-auto flex h-40 w-full basis-1/2 sm:h-60 ">
           <Image

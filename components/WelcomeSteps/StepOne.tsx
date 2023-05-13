@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
-import { setUpdateUser } from "@/store/slices/authSlice";
+import { selectAuthSlice, setUpdateUser } from "@/store/slices/authSlice";
 import { updateUser } from "@/firebase/helpers/Auth";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { UserAccount } from "@/types/types";
 import { UserSteps } from "@/types/types";
 import Confetti from "../Confetti";
@@ -42,17 +42,15 @@ const StepOne: FC<Props> = ({ user }) => {
       <Confetti />
       <div className="m-4 flex w-full max-w-xl flex-col items-center justify-center rounded-md border bg-white dark:bg-black">
         <div className="flex flex-col gap-3 p-5">
-          <span className="text-center text-3xl">
-            We are happy to welcome you to
-          </span>
+          <span className="text-center text-3xl">Welcome to</span>
           <span className="text-center text-4xl font-semibold">
-            Nutrition Plans! 🎉
+            Nutrition Plans, {user.display_name}! 🎉
           </span>
         </div>
         <div className="flex w-full items-center justify-center border-t p-5">
           <div className="m-auto flex">
             <SubmitButton
-              className={"m-auto w-fit"}
+              className={"m-auto h-9 w-24"}
               onClick={handleCreateUser}
               loadMessage={"Loading..."}
               content={`${"Continue"}`}

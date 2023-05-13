@@ -1,18 +1,17 @@
-import React, { useState } from "react";
 import {
   getAdditionalUserInfo,
   signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
+import { AUTH_ERRORS } from "@/firebase/errors";
 import { auth, provider } from "../../firebase/firebase.config";
 import { createNewUser } from "@/firebase/helpers/Auth";
-import { setIsCreatingUser } from "@/store/slices/authSlice";
+import { setIsCreatingUser, setIsSigningUser } from "@/store/slices/authSlice";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import GoogleLoginButton from "../Buttons/GoogleLogin";
-import Link from "next/link";
 import SubmitButton from "../Buttons/SubmitButton";
-import { AUTH_ERRORS } from "@/firebase/errors";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -21,6 +20,7 @@ const Login = () => {
     password: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
+  const [emailOpen, setEmailOpen] = useState(false);
   const [isLoadingForm, setIsLoadingForm] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const router = useRouter();
@@ -40,12 +40,14 @@ const Login = () => {
             router.push(createProfileRoute);
           }
         } else {
+          dispatch(setIsSigningUser(true));
           router.push(redirectRoute);
         }
       })
       .then(() => dispatch(setIsCreatingUser(false)))
       .catch((error) => {
         dispatch(setIsCreatingUser(false));
+        dispatch(setIsSigningUser(true));
         const errorCode = error.code;
         setErrorMessage(AUTH_ERRORS[errorCode]);
       });
@@ -62,12 +64,15 @@ const Login = () => {
     await signInWithEmailAndPassword(auth, input.email, input.password)
       .then((result) => {
         const user = result.user;
-        console.log({ user });
-        user && router.push(redirectRoute);
+        if (user) {
+          dispatch(setIsSigningUser(true));
+          router.push(redirectRoute);
+        }
       })
       .catch((error) => {
         const errorCode = error.code;
         setErrorMessage(AUTH_ERRORS[errorCode]);
+        dispatch(setIsSigningUser(false));
       });
     setIsLoadingForm(false);
     setIsDisabled(false);
@@ -85,67 +90,90 @@ const Login = () => {
   };
 
   return (
-    <div className="m-auto flex w-full max-w-sm flex-col gap-8">
+    <div className="m-auto flex w-full max-w-xs select-none flex-col items-center justify-center gap-4 p-4">
       <div>
-        <h1 className="text-2xl font-bold">Welcome back</h1>
-        <p>Login to continue achieving your nutrition goals</p>
+        <h1 className="mb-4 text-center text-4xl font-bold">
+          Log in to Nutrition&nbsp;Plans
+        </h1>
       </div>
-      <GoogleLoginButton onClick={handleLogInWithGoogle}>
-        Log in with Google
-      </GoogleLoginButton>
-      <div className="flex items-center py-4">
-        <div className="h-px flex-grow bg-gray-400"></div>
-        <span className="px-4 text-sm font-light opacity-50">
-          Or continue with
-        </span>
-        <div className="h-px flex-grow bg-gray-400"></div>
-      </div>
-      <div className="flex w-full flex-col gap-2">
-        <form
-          className="relative flex flex-col items-center gap-6 rounded-3xl border p-4 shadow-lg dark:border-cyan-300/10 dark:shadow-cyan-300/20"
-          onSubmit={handleSubmit}
-        >
-          <div className="flex w-full flex-col gap-2">
-            <input
-              onChange={handleChange}
-              name="email"
-              value={input.email}
-              placeholder="Email address"
-              type="email"
-              required
-              className="border-b border-gray-300 bg-transparent px-4 py-1 outline-none focus:bg-[var(--box-shadow)]"
+      {!emailOpen && (
+        <GoogleLoginButton onClick={handleLogInWithGoogle}>
+          Continue with Google
+        </GoogleLoginButton>
+      )}
+      {!emailOpen && (
+        <div className="flex w-full items-center justify-center border-t pt-4">
+          <button
+            onClick={() => setEmailOpen(true)}
+            className="flex cursor-pointer items-center gap-0.5 border-b border-transparent text-blue-500 hover:border-blue-500"
+          >
+            <span className="">Continue with Email</span>
+            <span className="material-icons-outlined md-14 ">
+              trending_flat
+            </span>
+          </button>
+        </div>
+      )}
+      {emailOpen && (
+        <div className="flex w-full flex-col gap-3">
+          <form
+            className="relative flex flex-col items-center gap-3 rounded-md"
+            onSubmit={handleSubmit}
+          >
+            <div className="flex w-full flex-col gap-2">
+              <input
+                onChange={handleChange}
+                name="email"
+                value={input.email}
+                placeholder="Email Address"
+                type="email"
+                required
+                autoFocus
+                className="rounded-md border border-gray-500/50 bg-transparent p-2 outline-none focus-within:border-black focus:bg-[var(--box-shadow)] dark:focus-within:border-white"
+              />
+              <input
+                onChange={handleChange}
+                name="password"
+                value={input.password}
+                placeholder="Password"
+                type="password"
+                required
+                className="rounded-md border border-gray-500/50 bg-transparent p-2 outline-none focus-within:border-black focus:bg-[var(--box-shadow)] dark:focus-within:border-white"
+              />
+            </div>
+            <SubmitButton
+              type="submit"
+              className={"h-11 w-full text-lg"}
+              onSubmit={handleSubmit}
+              loadMessage={"Logging in..."}
+              content={`Continue with Email`}
+              isLoading={isLoadingForm}
+              isDisabled={isDisabled}
+              icon={
+                <span className="material-icons-outlined md-24 pr-2">
+                  email
+                </span>
+              }
             />
-            <input
-              onChange={handleChange}
-              name="password"
-              value={input.password}
-              placeholder="Password"
-              type="password"
-              required
-              className="border-b border-gray-300 bg-transparent px-4 py-1 outline-none focus:bg-[var(--box-shadow)]"
-            />
-          </div>
-          <SubmitButton
-            className={""}
-            onClick={handleSubmit}
-            loadMessage={"Logging in..."}
-            content="Log in"
-            isLoading={isLoadingForm}
-            isDisabled={isDisabled}
-          />
-        </form>
-        {errorMessage && (
-          <span className="w-full text-center text-red-500">
-            {errorMessage}
-          </span>
-        )}
-        <span className="text-xs opacity-50 sm:text-sm">
-          Don&apos;t have an account?{" "}
-          <Link href="/signup" className="text-blue-400 hover:underline">
-            Sign up here
-          </Link>
-        </span>
-      </div>
+          </form>
+        </div>
+      )}
+      {errorMessage && (
+        <span className="w-full text-center text-red-600">{errorMessage}</span>
+      )}
+      {emailOpen && (
+        <div className="tems-center mt-4 flex w-full justify-center">
+          <button
+            onClick={() => setEmailOpen(false)}
+            className="flex cursor-pointer items-center gap-0.5 border-b border-transparent text-blue-500 hover:border-blue-500"
+          >
+            <span className="material-icons-outlined md-14 -rotate-180 transform">
+              trending_flat
+            </span>
+            <span className="">Other login options</span>
+          </button>
+        </div>
+      )}
     </div>
   );
 };

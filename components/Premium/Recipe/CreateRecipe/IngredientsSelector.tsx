@@ -9,7 +9,7 @@ import {
 import { fetchFoods } from "@/firebase/helpers/Food";
 import { FC, useEffect, useState } from "react";
 import { filterObject } from "@/utils/filter";
-import { Food, FoodGroup } from "@/types/foodTypes";
+import { Food, FoodGroup, FoodKind } from "@/types/foodTypes";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import IngredientData from "./IngredientData";
@@ -34,9 +34,13 @@ const IngredientsSelector: FC<Props> = () => {
 
   const fetchData = async (input: string) => {
     setIsSearching(true);
-    const res: FoodGroup = await fetchFoods(input);
+    const res: FoodGroup = await fetchFoods({
+      food_name_lowercase: input,
+      kind: FoodKind.basic_food,
+    });
     if (!res?.error) {
-      !res.error && dispatch(setBasicFoodsSearched(res));
+      const basicFoods = filterObject(res, 'kind', FoodKind.basic_food)
+      !res.error && dispatch(setBasicFoodsSearched(basicFoods));
     }
     setIsSearching(false);
   };

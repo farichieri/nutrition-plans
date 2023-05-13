@@ -21,8 +21,6 @@ export default function PremiumLayout({
     useSelector(selectLayoutSlice);
   const { user, isCreatingUser, isSigningUser } = useSelector(selectAuthSlice);
 
-  console.log({ user });
-
   const handleSidebar = () => {
     dispatch(setSidebarOpen(!sidebarOpen));
   };

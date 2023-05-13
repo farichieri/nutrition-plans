@@ -1,6 +1,6 @@
 import { fetchFoodByID, fetchFoodIngredients } from "@/firebase/helpers/Food";
 import { Food, FoodGroup, Ingredient } from "@/types/foodTypes";
-import { selectFoodsSlice, setFood, setScale } from "@/store/slices/foodsSlice";
+import { selectFoodsSlice, setFood } from "@/store/slices/foodsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -11,6 +11,7 @@ import Image from "next/image";
 import Ingredients from "@/components/Premium/Recipe/Ingredients";
 import Instructions from "@/components/Premium/Recipe/Instructions";
 import PremiumLayout from "@/components/Layout/PremiumLayout";
+import Spinner from "@/components/Loader/Spinner";
 
 export default function Page() {
   const router = useRouter();
@@ -50,6 +51,16 @@ export default function Page() {
     }
   }, [foodData]);
 
+  if (foodData?.food_id !== id) {
+    return (
+      <PremiumLayout>
+        <div className="fixed inset-0 flex h-screen w-screen items-center justify-center">
+          <Spinner customClass="w-10 h-10 m-auto" />
+        </div>
+      </PremiumLayout>
+    );
+  }
+
   return (
     <PremiumLayout>
       {foodData && (
@@ -57,21 +68,26 @@ export default function Page() {
           <div className="flex max-w-lg flex-col gap-10 ">
             <div className="fixed left-auto top-[var(--nav-h)] z-[60] flex h-[var(--subnav-h)] w-screen items-center gap-10 border-b bg-white/80 px-4 backdrop-blur-lg dark:bg-black/80">
               <BackButton />
-              <span className="font-semibold sm:text-3xl">
+              <span className="font-semibold sm:text-xl">
                 {foodData.food_name}
               </span>
             </div>
           </div>
-          <div className="flex flex-wrap items-start justify-start gap-10 rounded-lg bg-white p-4 py-10 shadow-[0_1px_5px_lightgray] dark:bg-black dark:shadow-[0_1px_6px_#292929] sm:m-[1vw] sm:px-10">
+          <div className="flex flex-wrap items-start justify-start gap-20 rounded-lg bg-white p-4 py-10 shadow-[0_1px_5px_lightgray] dark:bg-black dark:shadow-[0_1px_6px_#292929] sm:m-[1vw] sm:px-10">
             <div className="flex w-full max-w-xl flex-col gap-5">
               <div className="flex w-full max-w-xl flex-col gap-5">
                 <Image
                   src={foodData.image}
                   alt={`${foodData.food_name}`}
-                  width={250}
-                  height={250}
-                  className="w-50 pt-[var(--nav-h) m-auto mb-5 rounded-lg"
+                  width={500}
+                  height={500}
+                  className="m-auto h-[300px] w-[300px] rounded-lg object-cover"
+
+                  // className="w-50 pt-[var(--nav-h) m-auto rounded-lg"
                 />
+                <span className="text-center opacity-50">
+                  {foodData.food_description}
+                </span>
                 {foodData.food_id && <FoodActions foodID={foodData.food_id} />}
               </div>
               <div className="flex w-full max-w-xl">

@@ -1,32 +1,47 @@
-import { MouseEventHandler } from "react";
+import { MouseEventHandler, ReactNode } from "react";
 import Spinner from "../Loader/Spinner";
 
 const SubmitButton = ({
+  className,
   content,
-  isLoading,
+  icon,
   isDisabled,
+  isLoading,
   loadMessage,
   onClick,
-  className,
+  onSubmit,
+  type,
 }: {
-  onClick: MouseEventHandler;
-  content: string;
-  isLoading: boolean;
-  isDisabled: boolean;
-  loadMessage: string;
   className: string;
+  content: string;
+  icon?: ReactNode;
+  isDisabled: boolean;
+  isLoading: boolean;
+  loadMessage: string;
+  onClick?: MouseEventHandler;
+  onSubmit?: React.FormEventHandler;
+  type?: "button" | "submit" | "reset" | undefined;
 }) => {
   return (
     <button
-      className={`flex h-8 min-w-[4rem] select-none items-center justify-center rounded-md border px-4 text-sm font-medium duration-100  ${className} ${
+      className={`flex min-w-[4rem] select-none items-center justify-center rounded-md border px-4 duration-100  ${className} ${
         isDisabled
           ? "cursor-not-allowed border bg-transparent opacity-70"
-          : "border border-green-500 bg-green-500/70 opacity-100 hover:bg-green-600 active:scale-95 active:shadow-[0_0_10px_gray]"
+          : "border border-green-500 bg-green-500 opacity-100 hover:bg-green-600 active:scale-95 active:shadow-[0_0_10px_gray]"
       }`}
+      type={type}
+      onSubmit={onSubmit}
       onClick={onClick}
       disabled={isDisabled}
     >
-      {isLoading ? <Spinner customClass="h-5 w-5" /> : <span>{content}</span>}
+      {isLoading ? (
+        <Spinner customClass="h-5 w-5" />
+      ) : (
+        <div className="flex w-full items-center justify-center text-white">
+          {icon && icon}
+          <span>{content}</span>
+        </div>
+      )}
     </button>
   );
 };

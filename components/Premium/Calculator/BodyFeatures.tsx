@@ -61,8 +61,6 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
     pounds: kgsToLbs(body_data.weight_in_kg) || "",
   });
 
-  console.log({ input });
-
   const isMetricUnits = input.measurement_unit === MeasurementUnits.metric;
 
   const handleChange = (
@@ -439,8 +437,8 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
           )}
           <div className="ml-auto flex">
             <SubmitButton
-              className={"m-auto w-fit"}
-              onClick={onSubmit}
+              className={"m-auto h-9 w-24"}
+              onSubmit={onSubmit}
               loadMessage={"Loading..."}
               content={`${isCreatingRoute ? "Continue" : "Save"}`}
               isLoading={isLoading}

@@ -59,13 +59,13 @@ const AvatarDropDown = () => {
       <div className="flex w-full gap-2 border-b border-slate-500/30 px-4 py-2 hover:bg-slate-500/40 dark:border-slate-500">
         <ThemeSwitcher withText={true} />
       </div>
-      <button
-        onClick={goHome}
-        className={`pointer-events-auto hidden w-full items-center gap-2 border-none bg-transparent px-4 py-2 hover:bg-slate-500/40 sm:flex `}
+      <Link
+        href={"/"}
+        className={`pointer-events-auto flex w-full items-center gap-2 border-none bg-transparent px-4 py-2 hover:bg-slate-500/40 `}
       >
         <span className="material-icons">open_in_new</span>
         <span>Homepage</span>
-      </button>
+      </Link>
       <div className="flex hover:bg-slate-500/40">
         <button
           className={`flex w-full cursor-pointer items-center gap-2 border-none bg-transparent px-4 py-2 `}

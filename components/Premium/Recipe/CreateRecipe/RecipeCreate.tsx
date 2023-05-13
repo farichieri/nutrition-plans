@@ -6,7 +6,7 @@ import {
   FoodType,
   RecipeCategoriesEnum,
   Ingredient,
-  FoodTypesEnum,
+  FoodKind,
   DigestionStatusEnum,
 } from "@/types/foodTypes";
 import {
@@ -18,6 +18,7 @@ import { FC, useEffect, useState } from "react";
 import { NewFood } from "@/types/initialTypes";
 import { selectAuthSlice } from "@/store/slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
 import AddInstruction from "./AddInstruction";
 import Checkbox from "@/components/Form/Checkbox";
 import FormAction from "@/components/Form/FormAction";
@@ -29,6 +30,7 @@ import Instructions from "./Instructions";
 import NutritionInput from "@/components/Form/NutritionInput";
 import RecipeNutrition from "./RecipeNutrition";
 import Select from "@/components/Form/Select";
+import { getRecipeSize } from "../../Food/nutritionHelpers";
 
 interface Props {}
 const RecipeCreate: FC<Props> = () => {
@@ -36,8 +38,7 @@ const RecipeCreate: FC<Props> = () => {
   const [isCreating, setIsCreating] = useState(false);
   const { recipeState } = useSelector(selectCreateRecipeSlice);
   const { user } = useSelector(selectAuthSlice);
-
-  console.log({ recipeState });
+  const router = useRouter();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const type = event.target.type;
@@ -98,22 +99,17 @@ const RecipeCreate: FC<Props> = () => {
     if (!user) return;
     if (isCreating) return;
     setIsCreating(true);
-    const newFood = {
+    const recipeGrams = getRecipeSize(recipeState.ingredients, foodIngredients);
+    const newFood: Food = {
       ...recipeState,
-      service_grams: "",
+      serving_grams: recipeGrams,
     };
-    const res = await addFood(
-      newFood,
-      FoodTypesEnum.recipe,
-      newImageFile,
-      user
-    );
-    console.log({ res });
+    const res = await addFood(newFood, FoodKind.recipe, newImageFile, user);
     if (!res?.error && res?.food_id) {
       setNewImageFile(undefined);
       dispatch(setRecipeState(NewFood));
       alert("Recipe created successfully");
-      // router.push(`/app/food/${res.food_id}`);
+      router.push(`/app/food/${res.food_id}`);
     } else {
       alert("Error creating recipe");
     }
@@ -185,7 +181,7 @@ const RecipeCreate: FC<Props> = () => {
           width={200}
           height={200}
           alt="Food Image"
-          className="rounded-lg"
+          className="m-auto h-[300px] w-[300px] rounded-lg object-cover sm:m-0"
         />
         <input
           title="Upload a new photo"
@@ -193,7 +189,7 @@ const RecipeCreate: FC<Props> = () => {
           onChange={handleUploadImage}
           accept="image/*"
         />
-      </div>{" "}
+      </div>
       <div className="flex flex-col gap-5">
         <span className="text-3xl font-normal">Recipe Properties:</span>
         <NutritionInput

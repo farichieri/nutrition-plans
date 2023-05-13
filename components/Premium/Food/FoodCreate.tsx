@@ -3,7 +3,7 @@ import {
   FoodNutrients,
   FoodPreferences,
   FoodType,
-  FoodTypesEnum,
+  FoodKind,
 } from "@/types/foodTypes";
 import {
   fatsFields,
@@ -43,7 +43,6 @@ const FoodCreate: FC<Props> = () => {
   const glucemicStatus = foodGlucemicStatusSelect;
   const digestionStatus = foodDigestionStatusSelect;
   const [isCreating, setIsCreating] = useState(false);
-  console.log({ foodState });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const type = event.target.type;
@@ -85,7 +84,7 @@ const FoodCreate: FC<Props> = () => {
     setIsCreating(true);
     const res = await addFood(
       foodState,
-      FoodTypesEnum.basic_food,
+      FoodKind.basic_food,
       newImageFile,
       user
     );
@@ -156,7 +155,7 @@ const FoodCreate: FC<Props> = () => {
           width={200}
           height={200}
           alt="Food Image"
-          className="rounded-lg"
+          className="m-auto h-[300px] w-[300px] rounded-lg object-cover sm:m-0"
         />
         <input
           title="Upload a new photo"

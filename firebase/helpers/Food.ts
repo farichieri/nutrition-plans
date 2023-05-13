@@ -7,6 +7,7 @@ import {
   getDocs,
   increment,
   limit,
+  or,
   query,
   serverTimestamp,
   setDoc,
@@ -14,13 +15,13 @@ import {
   where,
 } from "firebase/firestore";
 import { DEFAULT_IMAGE } from "@/types/initialTypes";
-import { Food, FoodGroup, FoodTypesEnum } from "@/types/foodTypes";
+import { Food, FoodGroup, FoodKind } from "@/types/foodTypes";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { UserAccount } from "@/types/types";
 
 const addFood = async (
   food: Food,
-  kind: FoodTypesEnum,
+  kind: FoodKind,
   newImage: File | undefined,
   user: UserAccount
 ) => {
@@ -52,17 +53,32 @@ const addFood = async (
   }
 };
 
-const fetchFoods = async (foodQuery: string) => {
-  console.log(`Fetching Food ${foodQuery}`);
+const fetchFoods = async ({
+  food_name_lowercase,
+  kind,
+}: {
+  food_name_lowercase: string;
+  kind: FoodKind | undefined;
+}) => {
+  console.log(`Fetching Food ${food_name_lowercase}`);
   try {
     let data: FoodGroup = {};
     const foodsRef = collection(db, "foods");
-    const q = query(
+    let q = query(
       foodsRef,
-      where("food_name_lowercase", ">=", `${foodQuery}`),
-      where("food_name_lowercase", "<=", `${foodQuery}z`),
+      where("food_name_lowercase", ">=", `${food_name_lowercase}`),
+      where("food_name_lowercase", "<=", `${food_name_lowercase}z`),
       limit(40)
     );
+    if (kind) {
+      q = query(
+        foodsRef,
+        where("food_name_lowercase", ">=", `${food_name_lowercase}`),
+        where("food_name_lowercase", "<=", `${food_name_lowercase}z`),
+        limit(40)
+        // where("kind", "==", `${kind}`),
+      );
+    }
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((food: any) => {
       data[food.id] = food.data();

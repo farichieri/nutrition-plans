@@ -1,7 +1,16 @@
-import { Food, FoodGroup, FoodNutrients, Ingredient } from "@/types/foodTypes";
+import {
+  Food,
+  FoodGroup,
+  FoodNutrients,
+  Ingredient,
+  NutritionMeasurements,
+} from "@/types/foodTypes";
 import { NewFoodNutrients } from "@/types/initialTypes";
 import { GRAMS_IN_ONE_OZ } from "@/utils/constants";
 import { formatToFixed } from "@/utils/format";
+
+const GRAMS = NutritionMeasurements.grams;
+const OZ = NutritionMeasurements.oz;
 
 const getNutritionValues = (
   food: Food,
@@ -16,16 +25,16 @@ const getNutritionValues = (
     const updateByServing = (servings: number) => {
       nutrientsUpdated[keyEv] =
         nutrientsUpdated[keyEv] !== null
-          ? Number(food.nutrients[keyEv]) * servings
+          ? formatToFixed(Number(food.nutrients[keyEv]) * servings)
           : null;
     };
     if (weightName === food.serving_name) {
       updateByServing(amount);
-    } else if (weightName === "grams") {
+    } else if (weightName === GRAMS) {
       const servings =
         (amount * Number(food.serving_amount)) / Number(food.serving_grams);
       updateByServing(servings);
-    } else if (weightName === "oz") {
+    } else if (weightName === OZ) {
       const servings =
         (amount * GRAMS_IN_ONE_OZ * Number(food.serving_amount)) /
         Number(food.serving_grams);
@@ -80,7 +89,7 @@ const getNutritionMerged = (
           const newValue = ingredientNutrition[key as keyof FoodNutrients];
           if (key in result) {
             result[key as keyof FoodNutrients] =
-              value + newValue > 0 ? formatToFixed(value + newValue) : null;
+              value + newValue > 0 ? value + newValue : null;
           } else {
             result[key as keyof FoodNutrients] = newValue;
           }
@@ -98,17 +107,19 @@ const getNewAmount = (
   weight: number
 ): number | undefined => {
   switch (prevWeightName) {
-    case "grams":
-      if (newWeightName === "oz") {
+    case GRAMS:
+      if (newWeightName === OZ) {
         return weight / GRAMS_IN_ONE_OZ;
       } else if (newWeightName === food.serving_name) {
         return (
           (weight * Number(food.serving_amount)) / Number(food.serving_grams)
         );
+      } else if (newWeightName === GRAMS) {
+        return weight;
       }
       break;
-    case "oz":
-      if (newWeightName === "grams") {
+    case OZ:
+      if (newWeightName === GRAMS) {
         return weight * GRAMS_IN_ONE_OZ;
       } else if (newWeightName === food.serving_name) {
         return (
@@ -118,11 +129,11 @@ const getNewAmount = (
       }
       break;
     case food.serving_name:
-      if (newWeightName === "grams") {
+      if (newWeightName === GRAMS) {
         return (
           (weight * Number(food.serving_grams)) / Number(food.serving_amount)
         );
-      } else if (newWeightName === "oz") {
+      } else if (newWeightName === OZ) {
         return (
           (weight * Number(food.serving_grams)) /
           Number(food.serving_amount) /
@@ -134,4 +145,22 @@ const getNewAmount = (
   }
 };
 
-export { getNutritionValues, getNutritionMerged, getNewAmount };
+const getRecipeSize = (
+  ingredients: Ingredient[],
+  foodIngredients: FoodGroup | null
+): number | null => {
+  if (!foodIngredients) return null;
+  let size = 0;
+  ingredients.map((ing) => {
+    const equivalentInGrams = getNewAmount(
+      foodIngredients[ing.food_id],
+      ing.weight_name,
+      NutritionMeasurements.grams,
+      ing.amount
+    );
+    size += equivalentInGrams || 0;
+  });
+  return size;
+};
+
+export { getNutritionValues, getNutritionMerged, getNewAmount, getRecipeSize };

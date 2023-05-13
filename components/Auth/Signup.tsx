@@ -14,6 +14,7 @@ import GoogleLoginButton from "../Buttons/GoogleLogin";
 import Link from "next/link";
 import Submit from "../Buttons/SubmitButton";
 import { AUTH_ERRORS } from "@/firebase/errors";
+import SubmitButton from "../Buttons/SubmitButton";
 
 const Signup = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,8 @@ const Signup = () => {
     password: "",
     displayName: "",
   });
+  const [nameAdded, setNameAdded] = useState(false);
+  const [emailOpen, setEmailOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoadingForm, setIsLoadingForm] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -93,85 +96,138 @@ const Signup = () => {
     setErrorMessage("");
   };
 
+  const handleContinue = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (input.displayName) {
+      setNameAdded(true);
+    }
+  };
+
   return (
-    <div className="flex w-full max-w-sm flex-col gap-8">
+    <div className="m-auto flex w-full max-w-sm select-none flex-col items-center justify-center gap-8 rounded-md p-4 py-10 sm:border sm:px-10">
       <div>
-        <h1 className="text-2xl font-bold">Sign up</h1>
-        <p>Create your Nutrition Plans account</p>
+        <h1 className="text-center text-4xl font-bold">
+          Create Your Nutrition&nbsp;Plans Account
+        </h1>
       </div>
-      <GoogleLoginButton onClick={handleLogInWithGoogle}>
-        Sign up with Google
-      </GoogleLoginButton>
-      <div className="flex items-center py-4">
-        <div className="h-px flex-grow bg-gray-400"></div>
-        <span className="px-4 text-sm font-light opacity-50">
-          Or continue with
-        </span>
-        <div className="h-px flex-grow bg-gray-400"></div>
-      </div>
-      <div className="flex w-full flex-col gap-2">
-        <form
-          className="relative flex w-full flex-col items-center gap-6 rounded-3xl border p-4 shadow-lg dark:border-cyan-300/10 dark:shadow-cyan-300/20"
-          onSubmit={handleSubmit}
-        >
-          <div className="flex w-full flex-col gap-2">
+      {!nameAdded && (
+        <form onSubmit={handleContinue} className="flex w-full flex-col gap-4">
+          <div className="flex w-full flex-col gap-1.5">
+            <label htmlFor="displayName" className="text-xs opacity-60">
+              Your Name
+            </label>
             <input
               onChange={handleChange}
               name="displayName"
               value={input.displayName}
-              placeholder="Full Name"
+              placeholder="Your Name"
               type="text"
+              autoFocus
               required
-              className="w-full border-b border-gray-300 bg-transparent px-4 py-1 outline-none focus:bg-[var(--box-shadow)]"
-            />
-            <input
-              onChange={handleChange}
-              name="email"
-              value={input.email}
-              placeholder="Email address"
-              type="text"
-              required
-              className="w-full border-b border-gray-300 bg-transparent px-4 py-1 outline-none focus:bg-[var(--box-shadow)]"
-            />
-            <input
-              onChange={handleChange}
-              name="password"
-              value={input.password}
-              placeholder="Password"
-              type="password"
-              required
-              className="w-full border-b border-gray-300 bg-transparent px-4 py-1 outline-none focus:bg-[var(--box-shadow)]"
+              className="rounded-md border border-gray-500/50 bg-transparent p-2 outline-none placeholder:text-sm focus-within:border-black focus:bg-[var(--box-shadow)] dark:focus-within:border-white"
             />
           </div>
-          <Submit
-            className={""}
-            onClick={handleSubmit}
-            loadMessage={"Signing up..."}
-            content="Sign up"
+          <SubmitButton
+            className={"h-10 w-full text-base"}
+            onSubmit={handleContinue}
+            loadMessage={"Logging in..."}
+            content={`Continue`}
             isLoading={isLoadingForm}
             isDisabled={isDisabled}
+            type="submit"
           />
+          <div className="pt-5 text-center text-sm">
+            <span>Already have an Account? </span>
+            <Link href={"/login"} className="text-blue-500 hover:underline">
+              Log in
+            </Link>
+          </div>
         </form>
-        {errorMessage && (
-          <span className="w-full text-center text-red-500">
-            {errorMessage}
-          </span>
-        )}
-        <div className="flex flex-col gap-2">
-          <span className="text-xs opacity-50 sm:text-sm ">
-            By signing up, you agree to the{" "}
-            <Link href={"/terms"} className="hover:underline">
-              Terms of Service.
-            </Link>
-          </span>
-          <span className="text-xs opacity-50 sm:text-sm">
-            Already have an account?{" "}
-            <Link href="/login" className="text-blue-400 hover:underline ">
-              Log in here
-            </Link>
-          </span>
-        </div>
-      </div>
+      )}
+      {nameAdded && (
+        <>
+          {!emailOpen && (
+            <GoogleLoginButton onClick={handleLogInWithGoogle}>
+              Continue with Google
+            </GoogleLoginButton>
+          )}
+          {!emailOpen && (
+            <div className="flex w-full items-center justify-center border-t pt-4">
+              <button
+                onClick={() => setEmailOpen(true)}
+                className="flex cursor-pointer items-center gap-0.5 border-b border-transparent text-blue-500 hover:border-blue-500"
+              >
+                <span className="">Continue with Email</span>
+                <span className="material-icons-outlined md-14 ">
+                  trending_flat
+                </span>
+              </button>
+            </div>
+          )}
+          {emailOpen && (
+            <>
+              <div className="flex w-full flex-col gap-2">
+                <form
+                  className="relative flex flex-col items-center gap-3 rounded-md"
+                  onSubmit={handleSubmit}
+                >
+                  <div className="flex w-full flex-col gap-2">
+                    <input
+                      onChange={handleChange}
+                      name="email"
+                      value={input.email}
+                      placeholder="Email address"
+                      type="text"
+                      required
+                      className="rounded-md border border-gray-500/50 bg-transparent p-2 outline-none focus-within:border-black focus:bg-[var(--box-shadow)] dark:focus-within:border-white"
+                    />
+                    <input
+                      onChange={handleChange}
+                      name="password"
+                      value={input.password}
+                      placeholder="Password"
+                      type="password"
+                      required
+                      className="rounded-md border border-gray-500/50 bg-transparent p-2 outline-none focus-within:border-black focus:bg-[var(--box-shadow)] dark:focus-within:border-white"
+                    />
+                  </div>
+                  <SubmitButton
+                    className={"h-12 w-full text-base"}
+                    onClick={handleSubmit}
+                    loadMessage={"Creating account..."}
+                    content={`Continue with Email`}
+                    isLoading={isLoadingForm}
+                    isDisabled={isDisabled}
+                    icon={
+                      <span className="material-icons-outlined md-24 pr-2">
+                        email
+                      </span>
+                    }
+                  />
+                </form>
+                {errorMessage && (
+                  <span className="w-full text-center text-red-600">
+                    {errorMessage}
+                  </span>
+                )}
+              </div>
+              {emailOpen && (
+                <div className="tems-center flex w-full justify-center ">
+                  <button
+                    onClick={() => setEmailOpen(false)}
+                    className="flex cursor-pointer items-center gap-0.5 border-b border-transparent text-blue-500 hover:border-blue-500"
+                  >
+                    <span className="material-icons-outlined md-14 -rotate-180 transform">
+                      trending_flat
+                    </span>
+                    <span className="">Other login options</span>
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+        </>
+      )}
     </div>
   );
 };

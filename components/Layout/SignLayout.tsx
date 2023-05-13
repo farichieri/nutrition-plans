@@ -1,12 +1,14 @@
 import Footer from "../Footer";
 import Head from "next/head";
 import SignBar from "../Nav/SignBar";
+import { useRouter } from "next/router";
 
 export default function SignLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const router = useRouter();
   return (
     <>
       <Head>
@@ -15,7 +17,7 @@ export default function SignLayout({
       </Head>
       <>
         <SignBar />
-        <div className="flex h-full w-full max-w-5xl flex-col items-center px-4 pt-[var(--nav-h)]">
+        <div className="flex h-full min-h-screen w-full max-w-5xl flex-col items-center px-4 ">
           {children}
         </div>
         <Footer />

@@ -24,7 +24,10 @@ const SearchBar: FC<Props> = () => {
 
   const fetchData = async (input: string) => {
     setIsSearching(true);
-    const res: FoodGroup = await fetchFoods(input);
+    const res: FoodGroup = await fetchFoods({
+      food_name_lowercase: input,
+      kind: undefined,
+    });
     if (!res?.error) {
       !res.error && dispatch(setFoodsSearched(res));
     }

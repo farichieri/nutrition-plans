@@ -5,7 +5,7 @@ import {
 } from "@/store/slices/createRecipeSlice";
 import { Food, Ingredient, NutritionMeasurements } from "@/types/foodTypes";
 import { formatToFixed } from "@/utils/format";
-import { getNewAmount, getNutritionValues } from "./useNutrition";
+import { getNewAmount, getNutritionValues } from "./nutritionHelpers";
 import { selectFoodsSlice, setScale } from "@/store/slices/foodsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import FoodNutritionDetail from "./FoodNutritionDetail";
@@ -44,7 +44,6 @@ const FoodNutrition: FC<Props> = ({ isIngredient, foodProp }) => {
     if (id === "serving_amount") {
       dispatch(setScale({ amount: Number(value), weightName: weightName }));
     } else if (id === "weight_amount") {
-      console.log({ value });
       const newAmountSelected = getNewAmount(
         foodData,
         weightName,
@@ -69,7 +68,6 @@ const FoodNutrition: FC<Props> = ({ isIngredient, foodProp }) => {
     if (weightName === GRAMS) {
       originalValue = Number(foodData.serving_grams);
     }
-    console.log({ originalValue });
     dispatch(
       setScale({ amount: Number(originalValue), weightName: weightName })
     );
@@ -123,7 +121,6 @@ const FoodNutrition: FC<Props> = ({ isIngredient, foodProp }) => {
   const handleIngredient = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (!foodData) return;
     event.preventDefault();
-    console.log(event.target);
     const newIngredient: Ingredient = {
       amount: amount,
       food_id: foodProp.food_id || "",
@@ -140,12 +137,12 @@ const FoodNutrition: FC<Props> = ({ isIngredient, foodProp }) => {
     dispatch(setIngredientOpened(null));
   };
 
-  if (!foodData || !nutrients || !amount || !weightName) {
+  if (!foodData || !nutrients || !weightName) {
     return <div>Loading...</div>;
   }
 
   return (
-    <div className="flex w-full max-w-xl flex-wrap items-start gap-10">
+    <div className="flex w-full max-w-xl flex-wrap items-center justify-center gap-10">
       {openDetails && (
         <FoodNutritionDetail
           nutrients={nutrients}
@@ -153,7 +150,7 @@ const FoodNutrition: FC<Props> = ({ isIngredient, foodProp }) => {
         />
       )}
       <div className="flex w-full flex-col gap-2">
-        <div className="flex w-full max-w-md items-center justify-between gap-2">
+        <div className="flex w-full items-center justify-between gap-2">
           <NutritionInput
             handleChange={handleChange}
             id={"serving_amount"}
@@ -254,7 +251,9 @@ const FoodNutrition: FC<Props> = ({ isIngredient, foodProp }) => {
           <div className="flex w-full justify-between">
             <span>Net carbs:</span>
             <span>
-              {Number(nutrients.carbohydrates) - Number(nutrients.fiber) || "-"}
+              {formatToFixed(
+                Number(nutrients.carbohydrates) - Number(nutrients.fiber)
+              ) || "-"}
             </span>
           </div>
         </div>

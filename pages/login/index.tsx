@@ -21,10 +21,8 @@ export default function Page() {
   }, [user, isVerifyingUser]);
   return (
     <SignLayout>
-      <section className="flex h-screen w-screen flex-col items-center justify-center p-4">
-        {isLoading && <Loader />}
-        <Login />
-      </section>
+      {isLoading && <Loader />}
+      <Login />
     </SignLayout>
   );
 }

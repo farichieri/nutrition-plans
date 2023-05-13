@@ -27,8 +27,6 @@ const Results: FC<Props> = ({ handleSubmit }) => {
   const [nutritionTargets, setNutritionTargets] =
     useState<NutritionTargets>(newNutritionTargets);
 
-  console.log({ nutritionTargets });
-
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const isCreatingRoute = router.asPath === "/app/create";
@@ -147,7 +145,7 @@ const Results: FC<Props> = ({ handleSubmit }) => {
           <div className="flex items-center justify-center border-t p-5">
             <div className="ml-auto flex">
               <SubmitButton
-                className={"m-auto w-fit"}
+                className={"m-auto h-9 w-20"}
                 onClick={handleCreateUser}
                 loadMessage={"Loading..."}
                 content={`${isCreatingRoute ? "Start" : "Save"}`}

@@ -27,7 +27,6 @@ const General: FC<Props> = () => {
         measurement_unit: MU,
       },
     };
-    console.log({ userUpdated });
     setIsSaving(true);
     const res = await updateUser(userUpdated);
     if (!res?.error) {

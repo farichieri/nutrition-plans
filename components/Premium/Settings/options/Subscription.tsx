@@ -10,7 +10,6 @@ interface Props {
 const Subscription: FC<Props> = () => {
   const { user } = useSelector(selectAuthSlice);
   const dispatch = useDispatch();
-  console.log({ user });
 
   return (
     <div className="flex w-full flex-col gap-4 p-3">

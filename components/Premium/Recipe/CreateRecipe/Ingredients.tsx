@@ -4,7 +4,7 @@ import {
 } from "@/store/slices/createRecipeSlice";
 import { FC } from "react";
 import { Food, FoodGroup, Ingredient } from "@/types/foodTypes";
-import { getNewAmount } from "../../Food/useNutrition";
+import { getNewAmount } from "../../Food/nutritionHelpers";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import Input from "@/components/Form/Input";

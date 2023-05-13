@@ -19,7 +19,7 @@ export interface Food {
   ingredients: Ingredient[];
   instructions: Instruction[];
   is_deleted: boolean;
-  kind: FoodTypesEnum | null;
+  kind: FoodKind | null;
   major_ingredients: string | null;
   makes_leftovers: boolean;
   manufactured_by: string | null;
@@ -180,9 +180,9 @@ export enum DishTypesEnum {
   "main_dish" = "Main Dish",
   "side_dish" = "Side Dish",
 }
-export enum FoodTypesEnum {
-  "recipe" = "Recipe",
-  "basic_food" = "Basic Food",
+export enum FoodKind {
+  "recipe" = "recipe",
+  "basic_food" = "basic_food",
 }
 
 export enum GlucemicStatusEnum {

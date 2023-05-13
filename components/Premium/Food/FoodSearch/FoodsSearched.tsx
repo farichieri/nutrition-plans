@@ -27,8 +27,8 @@ const FoodsSearched: FC<Props> = () => {
             <Image
               src={food.image}
               alt={`${food.food_name}`}
-              width={200}
-              height={200}
+              width={500}
+              height={500}
               className="h-[15rem] w-[15rem] object-cover"
             />
             <div className="flex w-full max-w-[15rem] flex-col break-words p-5">

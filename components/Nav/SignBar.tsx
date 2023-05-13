@@ -16,22 +16,21 @@ const SignBar: FC<Props> = () => {
   };
 
   return (
-    <nav className="fixed top-0 z-50 flex w-full select-none items-center justify-center">
-      <div className="z-50 flex h-[var(--nav-h)] w-full max-w-5xl items-center justify-between gap-4 border-b border-gray-500/20 bg-white/50 px-4 backdrop-blur-md dark:border-cyan-100/20 dark:bg-black/50 ">
+    <nav className="fixed top-0 z-50 flex w-full select-none items-center justify-center bg-white/50 px-4 backdrop-blur-md dark:bg-black/50 ">
+      <div className="z-50 flex h-[var(--nav-h)] w-full max-w-5xl items-center justify-between gap-4 border-b border-gray-500/20 px-2 dark:border-cyan-100/20">
         <div className="flex w-fit min-w-fit basis-1/3 justify-start text-sm font-bold sm:text-2xl">
           <Link href={"/"}>Nutrition Plans</Link>
         </div>
         <div className="flex w-fit min-w-fit basis-1/3 items-center justify-end gap-4 text-xs sm:gap-10 sm:text-xl">
-          <div className="hidden text-xs lg:flex">
-            <ThemeSwitcher withText={false} />
-          </div>
           {router.asPath !== "/login" && (
-            <Link href={"/login"} className="hidden lg:flex">
-              <button className="text-base font-semibold">Log in</button>
+            <Link href={"/login"} className="">
+              <button className="px-3 font-semibold xs:text-sm sm:text-base">
+                Log in
+              </button>
             </Link>
           )}
           {router.asPath !== "/signup" && (
-            <div className="flex h-7 items-center text-xs">
+            <div className="flex h-7 items-center text-xs xs:text-sm">
               <Link href="/signup">
                 <PrimaryButton onClick={() => {}} content="Sign up" />
               </Link>
@@ -48,20 +47,13 @@ const SignBar: FC<Props> = () => {
         <div
           className={`${
             openMenu ? "left-0" : "left-full"
-          } absolute top-[var(--nav-h)] h-screen w-screen border-t bg-white px-5 shadow-sm transition-all duration-300 dark:border-t-cyan-100/20 dark:bg-black dark:shadow-cyan-100/20 lg:hidden`}
+          } absolute top-[var(--nav-h)] h-screen w-screen  bg-white px-4 shadow-sm transition-all duration-300 dark:bg-black dark:shadow-cyan-100/20 lg:hidden`}
         >
           <div className="flex flex-col items-center justify-center gap-2 text-lg font-semibold">
             <Link
-              href={"/login"}
-              onClick={handleMenu}
-              className="w-full border-b border-gray-300 py-2 dark:border-gray-500"
-            >
-              Log in
-            </Link>
-            <Link
               href={"/plans"}
               onClick={handleMenu}
-              className="w-full border-b border-gray-300 pb-2 dark:border-gray-500"
+              className="w-full border-b border-gray-300 py-2 dark:border-gray-500"
             >
               Plans
             </Link>
