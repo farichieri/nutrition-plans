@@ -15,6 +15,7 @@ import {
 } from "@/store/slices/createRecipeSlice";
 import { addFood, fetchFoodIngredients } from "@/firebase/helpers/Food";
 import { FC, useEffect, useState } from "react";
+import { getRecipeSize } from "../../Food/nutritionHelpers";
 import { NewFood } from "@/types/initialTypes";
 import { selectAuthSlice } from "@/store/slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,7 +31,6 @@ import Instructions from "./Instructions";
 import NutritionInput from "@/components/Form/NutritionInput";
 import RecipeNutrition from "./RecipeNutrition";
 import Select from "@/components/Form/Select";
-import { getRecipeSize } from "../../Food/nutritionHelpers";
 
 interface Props {}
 const RecipeCreate: FC<Props> = () => {

@@ -121,16 +121,16 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
         <div className="flex w-full flex-col items-center gap-2">
           <div
             className={`${
-              router.asPath === "/app/my-plan" &&
+              router.asPath === `/app/plans/${planSelected}` &&
               " bg-slate-500/30 font-semibold"
             } text-md flex w-full items-center gap-1 rounded-lg px-2 py-1 text-base font-semibold sm:text-lg`}
           >
             <span className="material-icons md-24 text-green-500">
               description
             </span>
-            <Link href={"/app/my-plan"}>My Plan</Link>
+            <Link href={`/app/plans/${planSelected}`}>My Plan</Link>
           </div>
-          <div className="flex w-full">
+          {/* <div className="flex w-full">
             {planSelected && (
               <Link
                 href={`/app/plans/${planSelected}`}
@@ -141,7 +141,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
                 {MEAL_PLANS.find((plan) => plan.id === planSelected)?.name}
               </Link>
             )}
-          </div>
+          </div> */}
         </div>
         <div className="flex flex-col gap-2">
           <div
@@ -238,12 +238,6 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
         )}
 
         <div className="mx-auto mt-auto flex flex-col gap-5">
-          <span
-            className="material-icons md-24 mx-auto mt-auto h-5 w-5 cursor-pointer text-green-500"
-            onClick={handleOpenSettings}
-          >
-            settings
-          </span>
           <div>
             <SubscribeButton />
           </div>

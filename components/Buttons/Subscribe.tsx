@@ -11,7 +11,7 @@ const SubscribeButton = () => {
 
   return (
     <button
-      className="bold:border-green-800 group flex h-full w-fit items-center justify-center gap-1 rounded-3xl bg-gradient-to-r from-green-700 via-green-500 to-green-400 px-3 py-1 text-xs font-semibold text-white duration-300 hover:shadow-[0_1px_40px] hover:shadow-green-300 dark:hover:shadow-green-400/50 xs:text-base"
+      className="bold:border-green-800 group flex h-full w-fit items-center justify-center gap-1 rounded-3xl bg-gradient-to-r from-green-700 via-green-500 to-green-400 px-3 py-1.5 text-xs font-semibold text-white duration-300 hover:shadow-[0_1px_40px] hover:shadow-green-300 dark:hover:shadow-green-400/50 xs:text-base"
       onClick={handleOpenModal}
     >
       <span className="material-icons md-18 text-yellow-400">star</span>

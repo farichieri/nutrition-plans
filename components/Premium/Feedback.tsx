@@ -89,7 +89,7 @@ const Feedback: FC<Props> = () => {
                 <div className="mt-auto flex w-full items-center justify-between border-t p-2">
                   <span className="text-sm">Help us improve!</span>
                   <SubmitButton
-                    className={""}
+                    className={"h-8 w-16 text-sm"}
                     onClick={handleSubmit}
                     loadMessage={""}
                     content="Send"

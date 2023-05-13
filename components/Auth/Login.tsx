@@ -90,7 +90,7 @@ const Login = () => {
   };
 
   return (
-    <div className="m-auto flex w-full max-w-xs select-none flex-col items-center justify-center gap-4 p-4">
+    <div className="m-auto flex w-full max-w-sm select-none flex-col items-center justify-center gap-8 rounded-md p-4 py-10 sm:px-10">
       <div>
         <h1 className="mb-4 text-center text-4xl font-bold">
           Log in to Nutrition&nbsp;Plans
