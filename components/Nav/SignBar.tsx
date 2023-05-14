@@ -18,10 +18,10 @@ const SignBar: FC<Props> = () => {
   return (
     <nav className="fixed top-0 z-50 flex w-full select-none items-center justify-center bg-white/50 px-4 backdrop-blur-md dark:bg-black/50 ">
       <div className="z-50 flex h-[var(--nav-h)] w-full max-w-5xl items-center justify-between gap-4 border-b border-gray-500/20 px-2 dark:border-cyan-100/20">
-        <div className="flex w-fit min-w-fit basis-1/3 justify-start text-sm font-bold sm:text-2xl">
+        <div className="flex w-fit min-w-fit basis-1/3 justify-start font-bold xxs:text-sm xs:text-base sm:text-2xl">
           <Link href={"/"}>Nutrition Plans</Link>
         </div>
-        <div className="flex w-fit min-w-fit basis-1/3 items-center justify-end gap-4 text-xs sm:gap-10 sm:text-xl">
+        <div className="flex w-fit min-w-fit basis-1/3 items-center justify-end gap-4 text-xs xs:gap-5 sm:gap-10 sm:text-xl">
           {/* {router.asPath !== "/login" && (
             <Link href={"/login"} className="">
               <button className="px-3 font-semibold xs:text-sm sm:text-base">

@@ -56,6 +56,9 @@ module.exports = {
       animation: {
         flash: "flash 1.4s infinite linear",
       },
+      gridTemplateColumns: {
+        fluid: "repeat(auto-fit, minmax(15rem, 1fr))",
+      },
     },
   },
   darkMode: "class",

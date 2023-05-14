@@ -15,23 +15,24 @@ const FoodsSearched: FC<Props> = () => {
   }
 
   return (
-    <div className="flex select-none flex-wrap justify-center gap-4 sm:justify-start">
+    <div className="grid select-none grid-cols-fluid gap-4 px-4 sm:px-0">
       {Object.keys(foodsSearched).map((key) => {
         const food = foodsSearched[key];
         return (
           <Link
             href={`/app/food/${food.food_id}`}
             key={food.food_id}
-            className=" flex flex-col items-center gap-1 overflow-auto rounded-lg border bg-white shadow-sm shadow-[#00000028] duration-300 hover:scale-105 hover:shadow-xl dark:bg-slate-400/10"
+            className="flex flex-col items-center overflow-auto rounded-lg border bg-white shadow-sm shadow-[#00000028] duration-300 hover:border-black/20 hover:shadow-xl dark:bg-slate-400/10 dark:hover:border-white/50 sm:max-w-xs"
           >
-            <Image
-              src={food.image}
-              alt={`${food.food_name}`}
-              width={500}
-              height={500}
-              className="h-[15rem] w-[15rem] object-cover"
-            />
-            <div className="flex w-full max-w-[15rem] flex-col break-words p-5">
+            <span className="relative h-64 w-full">
+              <Image
+                src={food.image}
+                alt={`${food.food_name}`}
+                fill
+                className="object-cover"
+              />
+            </span>
+            <div className="flex w-full flex-col break-words p-2">
               <span className="text-center text-lg font-semibold">
                 {food.food_name}
               </span>

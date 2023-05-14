@@ -2,10 +2,10 @@ import { selectAuthSlice } from "@/store/slices/authSlice";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import Signup from "@/components/Auth/Signup";
+import Link from "next/link";
 import Loader from "@/components/Loader/Loader";
 import SignLayout from "@/components/Layout/SignLayout";
-import Link from "next/link";
+import Signup from "@/components/Auth/Signup";
 
 export default function Page() {
   const router = useRouter();
