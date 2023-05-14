@@ -104,7 +104,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="m-auto flex w-full max-w-sm select-none flex-col items-center justify-center gap-8 rounded-md p-4 py-10 sm:border sm:px-10">
+    <div className="m-auto flex w-full max-w-sm select-none flex-col items-center justify-center gap-4 rounded-md p-4 py-10 sm:border sm:px-10">
       <div>
         <h1 className="text-center text-4xl font-bold">
           Create Your Nutrition&nbsp;Plans Account
@@ -136,7 +136,7 @@ const Signup = () => {
             isDisabled={isDisabled}
             type="submit"
           />
-          <div className="pt-5 text-center text-sm">
+          <div className="pt-1 text-center text-sm">
             <span>Already have an Account? </span>
             <Link href={"/login"} className="text-blue-500 hover:underline">
               Log in

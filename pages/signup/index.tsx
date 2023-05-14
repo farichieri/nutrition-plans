@@ -24,6 +24,9 @@ export default function Page() {
   return (
     <SignLayout>
       {isLoading && <Loader />}
+      {/* <div className="flex w-fit min-w-fit justify-start pt-3 font-bold xxs:text-sm xs:text-base sm:text-2xl">
+        <Link href={"/"}>Nutrition Plans</Link>
+      </div> */}
       <Signup />
       <div className="mt- mb-5 text-center text-base">
         <p>

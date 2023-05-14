@@ -50,12 +50,12 @@ const AvatarDropDown = () => {
           <span className="opacity-100">{user?.display_name}</span>
           <span className="opacity-70">{user?.email_address}</span>
         </div>
-        <div className="mx-4 my-2 h-0 border-b border-slate-500/30 duration-300 dark:border-gray-700"></div>
+        <div className="mx-4 my-2 h-0 border-b border-slate-500/30 duration-300"></div>
 
         <div className="flex w-full gap-2 px-4 py-2 opacity-60 hover:bg-slate-500/40 hover:opacity-100">
           <ThemeSwitcher withText={true} />
         </div>
-        <div className="mx-4 my-2 h-0 border-b border-slate-500/30 duration-300 dark:border-gray-700"></div>
+        <div className="mx-4 my-2 h-0 border-b border-slate-500/30 duration-300"></div>
 
         <div className="flex" onClick={handleOpenProfile}>
           <button
@@ -65,7 +65,7 @@ const AvatarDropDown = () => {
             <span className="material-icons ml-auto">settings</span>
           </button>
         </div>
-        <div className="mx-4 my-2 h-0 border-b border-slate-500/30 duration-300 dark:border-gray-700"></div>
+        <div className="mx-4 my-2 h-0 border-b border-slate-500/30 duration-300"></div>
         <Link
           href={"/"}
           className={`pointer-events-auto flex w-full items-center gap-2 border-none bg-transparent px-4 py-2 opacity-60 hover:bg-slate-500/40 hover:opacity-100 `}
@@ -82,8 +82,8 @@ const AvatarDropDown = () => {
             <span className="material-icons ml-auto">logout</span>
           </button>
         </div>
-        <div className="mx-4 my-2 h-0 border-b border-slate-500/30 duration-300 dark:border-gray-700"></div>
-        <div className="flex items-center justify-center py-2">
+        <div className="mx-4 my-2 h-0 border-b border-slate-500/30 duration-300"></div>
+        <div className="flex items-center justify-center px-4 py-2 ">
           <SubscribeButton />
         </div>
       </div>

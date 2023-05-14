@@ -7,18 +7,18 @@ module.exports = {
     "./content/**/*.mdx",
   ],
   theme: {
-    height: (theme) => ({
-      auto: "auto",
-      ...theme("spacing"),
-      full: "100%",
-      screen: "calc(var(--vh) * 100)",
-    }),
-    minHeight: (theme) => ({
-      0: "0",
-      ...theme("spacing"),
-      full: "100%",
-      screen: "calc(var(--vh) * 100)",
-    }),
+    // height: (theme) => ({
+    //   auto: "auto",
+    //   ...theme("spacing"),
+    //   full: "100%",
+    //   screen: "calc(var(--vh) * 100)",
+    // }),
+    // minHeight: (theme) => ({
+    //   0: "0",
+    //   ...theme("spacing"),
+    //   full: "100%",
+    //   screen: "calc(var(--vh) * 100)",
+    // }),
     extend: {
       maxHeight: {
         0: "0",
@@ -46,6 +46,11 @@ module.exports = {
           "0%": { opacity: "0.2" },
           "20%": { opacity: "1" },
           "100%": { opacity: "0.2" },
+        },
+        shimmer: {
+          "100%": {
+            transform: "translateX(100%)",
+          },
         },
       },
       animation: {

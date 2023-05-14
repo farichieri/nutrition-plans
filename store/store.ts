@@ -10,6 +10,7 @@ import foodsSlice from "./slices/foodsSlice";
 import layoutSlice from "./slices/layoutSlice";
 import progressSlice from "./slices/progressSlice";
 import createRecipeSlice from "./slices/createRecipeSlice";
+import createFoodSlice from "./slices/createFoodSlice";
 
 export function createPersistStorage(): WebStorage {
   const isServer = typeof window === "undefined";
@@ -41,7 +42,14 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  whitelist: ["auth", "layout", "progress", "foods", "createRecipe"],
+  whitelist: [
+    "auth",
+    "layout",
+    "progress",
+    "foods",
+    "createRecipe",
+    "createFood",
+  ],
 };
 
 const rootReducer = combineReducers({
@@ -50,6 +58,7 @@ const rootReducer = combineReducers({
   progress: progressSlice,
   foods: foodsSlice,
   createRecipe: createRecipeSlice,
+  createFood: createFoodSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

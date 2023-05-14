@@ -90,7 +90,7 @@ const Login = () => {
   };
 
   return (
-    <div className="m-auto flex w-full max-w-sm select-none flex-col items-center justify-center gap-8 rounded-md p-4 py-10 sm:px-10">
+    <div className="m-auto flex w-full max-w-sm select-none flex-col items-center justify-center gap-4 rounded-md p-4 py-10 sm:px-10">
       <div>
         <h1 className="mb-4 text-center text-4xl font-bold">
           Log in to Nutrition&nbsp;Plans
@@ -102,7 +102,7 @@ const Login = () => {
         </GoogleLoginButton>
       )}
       {!emailOpen && (
-        <div className="flex w-full items-center justify-center border-t pt-4">
+        <div className="mt-4 flex w-full items-center justify-center border-t pt-4">
           <button
             onClick={() => setEmailOpen(true)}
             className="flex cursor-pointer items-center gap-0.5 border-b border-transparent text-blue-500 hover:border-blue-500"
@@ -162,7 +162,7 @@ const Login = () => {
         <span className="w-full text-center text-red-600">{errorMessage}</span>
       )}
       {emailOpen && (
-        <div className="tems-center mt-4 flex w-full justify-center">
+        <div className="tems-center flex w-full justify-center">
           <button
             onClick={() => setEmailOpen(false)}
             className="flex cursor-pointer items-center gap-0.5 border-b border-transparent text-blue-500 hover:border-blue-500"

@@ -77,9 +77,9 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
       <div
         className={`${
           sidebarOpen ? "left-0" : "left-[-14rem]"
-        } fixed left-0 z-[70] flex h-screen min-h-screen w-[14rem] select-none flex-col gap-2 overflow-auto border-r bg-white/80 px-2 pb-5 pt-16 backdrop-blur-sm transition-all duration-300 dark:border-slate-400/20 dark:bg-black/80 sm:gap-4`}
+        } fixed left-0 z-[70] flex h-screen min-h-screen w-[13rem] select-none flex-col gap-2 overflow-auto border-r bg-white/80 px-2 pb-5 pt-16 backdrop-blur-sm transition-all duration-300 dark:border-slate-400/20 dark:bg-black/80 sm:gap-4`}
       >
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-1">
           <div
             className="text-md flex w-full items-center gap-1 rounded-lg px-2 py-1 text-base font-semibold sm:text-lg "
             onClick={toggleEvolution}
@@ -143,7 +143,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
             )}
           </div> */}
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-1">
           <div
             className="text-md flex w-full items-center gap-1 rounded-lg px-2 py-1 text-base font-semibold sm:text-lg "
             onClick={toggleAllPlans}
@@ -236,11 +236,8 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
             </div>
           </div>
         )}
-
-        <div className="mx-auto mt-auto flex flex-col gap-5">
-          <div>
-            <SubscribeButton />
-          </div>
+        <div className="mx-auto mt-auto flex w-full items-center justify-center px-2 py-1">
+          <SubscribeButton />
         </div>
       </div>
     </>

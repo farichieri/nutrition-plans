@@ -23,7 +23,7 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { NewFood } from "@/types/initialTypes";
 import { selectAuthSlice } from "@/store/slices/authSlice";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Checkbox from "@/components/Form/Checkbox";
 import FormAction from "@/components/Form/FormAction";
 import Image from "next/image";
@@ -31,13 +31,19 @@ import Input from "@/components/Form/Input";
 import NutritionInput from "@/components/Form/NutritionInput";
 import React, { FC, useState } from "react";
 import Select from "@/components/Form/Select";
+import {
+  selectCreateFoodSlice,
+  setFoodState,
+} from "@/store/slices/createFoodSlice";
 
 interface Props {}
 
 const FoodCreate: FC<Props> = () => {
+  const dispatch = useDispatch();
   const router = useRouter();
   const { user } = useSelector(selectAuthSlice);
-  const [foodState, setFoodState] = useState<Food>(NewFood);
+  // const [foodState, setFoodState] = useState<Food>(NewFood);
+  const { foodState } = useSelector(selectCreateFoodSlice);
   const [optionalsOpen, setOptionalsOpen] = useState<boolean>(false);
   const foodCategory = foodCategorySelect;
   const glucemicStatus = foodGlucemicStatusSelect;
@@ -57,23 +63,25 @@ const FoodCreate: FC<Props> = () => {
         ...foodTypes,
         [id]: !foodTypes[id as keyof FoodType],
       };
-      setFoodState({ ...foodState, food_type: foodTypesUpdated });
+      dispatch(setFoodState({ ...foodState, food_type: foodTypesUpdated }));
     } else if (name === "food_preferences") {
       let foodTypes = { ...foodState.food_preferences };
       let foodTypesUpdated = {
         ...foodTypes,
         [id]: !foodTypes[id as keyof FoodPreferences],
       };
-      setFoodState({ ...foodState, food_preferences: foodTypesUpdated });
+      dispatch(
+        setFoodState({ ...foodState, food_preferences: foodTypesUpdated })
+      );
     } else if (name === "nutrient") {
       let nutrients = { ...foodState.nutrients };
       let nutrientsUpdated = {
         ...nutrients,
         [id]: Number(valueF) > 0 ? Number(valueF) : 0,
       };
-      setFoodState({ ...foodState, nutrients: nutrientsUpdated });
+      dispatch(setFoodState({ ...foodState, nutrients: nutrientsUpdated }));
     } else {
-      setFoodState({ ...foodState, [id]: valueF });
+      dispatch(setFoodState({ ...foodState, [id]: valueF }));
     }
   };
 
@@ -90,6 +98,7 @@ const FoodCreate: FC<Props> = () => {
     );
     if (!res?.error && res?.food_id) {
       setNewImageFile(undefined);
+      dispatch(setFoodState(NewFood));
       alert("Food created successfully");
       router.push(`/app/food/${res.food_id}`);
     } else {
@@ -106,17 +115,19 @@ const FoodCreate: FC<Props> = () => {
       const file = files[0];
       if (!file) return;
       const blob = URL.createObjectURL(file);
-      setFoodState({
-        ...foodState,
-        image: blob,
-      });
+      dispatch(
+        setFoodState({
+          ...foodState,
+          image: blob,
+        })
+      );
       setNewImageFile(file);
     }
   };
 
   const handleCancel = async (event: React.FormEvent) => {
     event.preventDefault();
-    setFoodState(NewFood);
+    dispatch(setFoodState(NewFood));
     setNewImageFile(undefined);
   };
 
@@ -467,7 +478,7 @@ const FoodCreate: FC<Props> = () => {
       <div className="flex gap-2">
         <FormAction
           handleSubmit={handleCancel}
-          text="Cancel"
+          text="Discard"
           action="submit"
           type="Cancel"
           isLoading={false}

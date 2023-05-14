@@ -22,13 +22,13 @@ const SignBar: FC<Props> = () => {
           <Link href={"/"}>Nutrition Plans</Link>
         </div>
         <div className="flex w-fit min-w-fit basis-1/3 items-center justify-end gap-4 text-xs sm:gap-10 sm:text-xl">
-          {router.asPath !== "/login" && (
+          {/* {router.asPath !== "/login" && (
             <Link href={"/login"} className="">
               <button className="px-3 font-semibold xs:text-sm sm:text-base">
                 Log in
               </button>
             </Link>
-          )}
+          )} */}
           {router.asPath !== "/signup" && (
             <div className="flex h-7 items-center text-xs xs:text-sm">
               <Link href="/signup">
@@ -36,53 +36,57 @@ const SignBar: FC<Props> = () => {
               </Link>
             </div>
           )}
-          <div className="cursor-pointer lg:hidden">
-            {!openMenu ? (
-              <Bars2Icon className="h-6 w-6" onClick={handleMenu} />
-            ) : (
-              <XMarkIcon className="h-6 w-6" onClick={handleMenu} />
-            )}
-          </div>
+          {router.asPath !== "/signup" && (
+            <div className="cursor-pointer lg:hidden">
+              {!openMenu ? (
+                <Bars2Icon className="h-6 w-6" onClick={handleMenu} />
+              ) : (
+                <XMarkIcon className="h-6 w-6" onClick={handleMenu} />
+              )}
+            </div>
+          )}
         </div>
-        <div
-          className={`${
-            openMenu ? "left-0" : "left-full"
-          } absolute top-[var(--nav-h)] h-screen w-screen  bg-white px-4 shadow-sm transition-all duration-300 dark:bg-black dark:shadow-cyan-100/20 lg:hidden`}
-        >
-          <div className="flex flex-col items-center justify-center gap-2 text-lg font-semibold">
-            <Link
-              href={"/plans"}
-              onClick={handleMenu}
-              className="w-full border-b border-gray-300 py-2 dark:border-gray-500"
-            >
-              Plans
-            </Link>
-            <Link
-              href={"/pricing"}
-              onClick={handleMenu}
-              className="w-full border-b border-gray-300 pb-2 dark:border-gray-500"
-            >
-              Pricing
-            </Link>
-            <Link
-              href={"/about"}
-              onClick={handleMenu}
-              className="w-full border-b border-gray-300 pb-2 dark:border-gray-500"
-            >
-              About
-            </Link>
-            <Link
-              href={"/blog"}
-              onClick={handleMenu}
-              className="w-full border-b border-gray-300 pb-2 dark:border-gray-500"
-            >
-              Blog
-            </Link>
-            <div className="flex w-full items-center justify-center gap-2 border-b border-gray-300 pb-2 dark:border-gray-500">
-              <ThemeSwitcher withText={true} />
+        {router.asPath !== "/signup" && (
+          <div
+            className={`${
+              openMenu ? "left-0" : "left-full"
+            } absolute top-[var(--nav-h)] h-screen w-screen  bg-white px-4 shadow-sm transition-all duration-300 dark:bg-black dark:shadow-cyan-100/20 lg:hidden`}
+          >
+            <div className="flex flex-col items-center justify-center gap-2 text-lg font-semibold">
+              <Link
+                href={"/plans"}
+                onClick={handleMenu}
+                className="w-full border-b border-gray-300 py-2 dark:border-gray-500"
+              >
+                Plans
+              </Link>
+              <Link
+                href={"/pricing"}
+                onClick={handleMenu}
+                className="w-full border-b border-gray-300 pb-2 dark:border-gray-500"
+              >
+                Pricing
+              </Link>
+              <Link
+                href={"/about"}
+                onClick={handleMenu}
+                className="w-full border-b border-gray-300 pb-2 dark:border-gray-500"
+              >
+                About
+              </Link>
+              <Link
+                href={"/blog"}
+                onClick={handleMenu}
+                className="w-full border-b border-gray-300 pb-2 dark:border-gray-500"
+              >
+                Blog
+              </Link>
+              <div className="flex w-full items-center justify-center gap-2 border-b border-gray-300 pb-2 dark:border-gray-500">
+                <ThemeSwitcher withText={true} />
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </nav>
   );

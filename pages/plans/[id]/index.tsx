@@ -4,12 +4,12 @@ import {
   getAllMDData,
   getSortedData,
 } from "@/utils/mds";
-import { PlanType, PlansType, Post } from "@/types/types";
+import { blurDataURL } from "@/components/Layout/BlurDataImage";
+import { PlanType, PlansType } from "@/types/types";
 import CallToAction from "@/components/CallToAction";
+import Image from "next/image";
 import LandingLayout from "@/components/Layout/LandingLayout";
 import RestOfPlans from "@/components/Plans/RestOfPlans";
-import Image from "next/image";
-import { blurDataURL } from "@/components/Layout/BlurDataImage";
 
 interface Props {
   planData: PlanType;

@@ -77,28 +77,30 @@ export default function Page({ planData }: Props) {
         {/* <div className={`${isFree && "z-50 cursor-auto select-none blur-sm"}`}> */}
 
         <div className="flex max-w-5xl flex-wrap items-start justify-center gap-10 rounded-lg bg-white p-4 shadow-[0_1px_5px_lightgray] dark:bg-black dark:shadow-[0_1px_6px_#292929] sm:m-[1vw] sm:px-10">
+          <span>Today</span>
+          <span>Week</span>
           <div
             className={`${
               isFree &&
               "z-50 flex h-full w-full max-w-5xl cursor-auto select-none flex-col gap-5"
             } max-w-5xl`}
           >
-            <div className="min-h-20 flex w-full flex-col gap-2 rounded-md border p-4">
+            <div className="flex min-h-20 w-full flex-col gap-2 rounded-md border p-4">
               <span>Breakfast</span>
               <div className="h-20 w-full rounded-md border">.</div>
               <div className="h-20 w-full rounded-md border">.</div>
             </div>
-            <div className="min-h-20 flex w-full flex-col gap-2 rounded-md border p-4">
+            <div className="flex min-h-20 w-full flex-col gap-2 rounded-md border p-4">
               <span>Lunch</span>
               <div className="h-20 w-full rounded-md border">.</div>
               <div className="h-20 w-full rounded-md border">.</div>
             </div>
-            <div className="min-h-20 flex w-full flex-col gap-2 rounded-md border p-4">
+            <div className="flex min-h-20 w-full flex-col gap-2 rounded-md border p-4">
               <span>Dinner</span>
               <div className="h-20 w-full rounded-md border">.</div>
               <div className="h-20 w-full rounded-md border">.</div>
             </div>
-            <div className="min-h-20 flex w-full flex-col gap-2 rounded-md border p-4">
+            <div className="flex min-h-20 w-full flex-col gap-2 rounded-md border p-4">
               <span>Snack</span>
               <div className="h-20 w-full rounded-md border">.</div>
               <div className="h-20 w-full rounded-md border">.</div>

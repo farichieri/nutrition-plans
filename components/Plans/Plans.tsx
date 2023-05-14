@@ -1,3 +1,4 @@
+import { blurDataURL } from "../Layout/BlurDataImage";
 import { FC } from "react";
 import { PlansType } from "@/types/types";
 import Image from "next/image";
@@ -23,6 +24,8 @@ const Plans: FC<Props> = ({ plans }) => {
             <Image
               src={`/images/plans/${plan.id}.jpg`}
               alt={plan.title}
+              placeholder="blur"
+              blurDataURL={blurDataURL(150, 150)}
               width={150}
               height={150}
               className="m-2 rounded-3xl shadow-[0_1px_5px_gray] dark:shadow-[0px_1px_5px_#4040408c]"

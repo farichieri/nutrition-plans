@@ -1,6 +1,6 @@
+import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/solid";
 import { fetchFoods } from "@/firebase/helpers/Food";
 import { FoodGroup } from "@/types/foodTypes";
-import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/solid";
 import { selectFoodsSlice, setFoodsSearched } from "@/store/slices/foodsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import React, { FC, useEffect, useState } from "react";
