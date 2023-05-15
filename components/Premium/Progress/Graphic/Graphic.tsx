@@ -104,7 +104,7 @@ const Graphic: FC<Props> = () => {
             bottom: 20,
           }}
         >
-          <CartesianGrid strokeDasharray="3 3" />
+          <CartesianGrid stroke="none" />
           <XAxis
             dataKey="date"
             label={{ value: "Date", position: "insideBottom", offset: -10 }}

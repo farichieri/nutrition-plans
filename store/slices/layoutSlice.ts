@@ -6,7 +6,6 @@ import type { RootState } from "../store";
 interface LayoutState {
   isBillingModalOpen: boolean;
   isSettingsOpen: boolean;
-  loadingWithText: string | null;
   sidebarEvolutionOpen: boolean;
   sidebarOpen: boolean;
   sidebarPlansOpen: boolean;
@@ -17,7 +16,6 @@ interface LayoutState {
 const initialState: LayoutState = {
   isBillingModalOpen: false,
   isSettingsOpen: false,
-  loadingWithText: null,
   sidebarEvolutionOpen: true,
   sidebarOpen: true,
   sidebarPlansOpen: true,
@@ -47,16 +45,12 @@ export const layoutSlice = createSlice({
     setIsBillingModalOpen: (state, action: PayloadAction<boolean>) => {
       state.isBillingModalOpen = action.payload;
     },
-    setLoadingWithText: (state, action: PayloadAction<string | null>) => {
-      state.loadingWithText = action.payload;
-    },
   },
 });
 
 export const {
   setIsBillingModalOpen,
   setIsSettingsOpen,
-  setLoadingWithText,
   setSidebarEvolutionOpen,
   setSidebarOpen,
   setSidebarPlansOpen,

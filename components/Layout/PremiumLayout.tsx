@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import BillingModal from "../Premium/Billing/BillingModal";
 import Head from "next/head";
 import Loader from "../Loader/Loader";
-import LoaderWithText from "../Loader/LoaderWithText";
 import Login from "../Auth/Login";
 import PremiumNav from "../Nav/PremiumNav";
 import Settings from "../Premium/Settings/Settings";
@@ -17,7 +16,7 @@ export default function PremiumLayout({
   children: React.ReactNode;
 }) {
   const dispatch = useDispatch();
-  const { sidebarOpen, isBillingModalOpen, isSettingsOpen, loadingWithText } =
+  const { sidebarOpen, isBillingModalOpen, isSettingsOpen } =
     useSelector(selectLayoutSlice);
   const { user, isCreatingUser, isSigningUser } = useSelector(selectAuthSlice);
 
@@ -31,7 +30,6 @@ export default function PremiumLayout({
         <title>Nutrition Plans</title>
       </Head>
       {(isCreatingUser || isSigningUser) && <Loader />}
-      {loadingWithText && <LoaderWithText />}
       {isSettingsOpen && <Settings />}
       {user && <WelcomeSteps />}
       {user ? (

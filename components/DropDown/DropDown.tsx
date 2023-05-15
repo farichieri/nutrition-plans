@@ -25,7 +25,7 @@ const DropDown: FC<Props> = ({
   return (
     <div className="relative flex items-center justify-center">
       <div
-        className="flex cursor-pointer rounded-full shadow-[0_0_4px] shadow-green-400/50 duration-300 hover:shadow-[0_0_5px] hover:shadow-green-800 dark:shadow-green-500/10 hover:dark:shadow-green-400/30"
+        className=" flex cursor-pointer rounded-full duration-300 hover:shadow-[0_0_5px] active:shadow-[0_0_10px] dark:hover:shadow-white"
         onClick={(event) => {
           event.preventDefault();
           setOpen(!open);

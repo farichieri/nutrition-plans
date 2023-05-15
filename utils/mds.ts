@@ -1,9 +1,9 @@
 import { remark } from "remark";
-import remarkGfm from 'remark-gfm'
 import fs from "fs";
 import html from "remark-html";
 import matter from "gray-matter";
 import path from "path";
+import remarkGfm from "remark-gfm";
 
 export const directories = {
   postsDirectory: path.join(process.cwd(), "/content/posts"),

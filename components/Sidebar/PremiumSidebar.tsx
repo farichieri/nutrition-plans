@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import SubscribeButton from "../Buttons/Subscribe";
+import { BaseDatesEnum } from "@/types/datesTypes";
 
 interface Props {
   sidebarOpen: boolean;
@@ -63,6 +64,11 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
       name: "Nutrition Values",
       url: "/app/profile/nutrition-values",
       icon: "data_saver_off",
+    },
+    {
+      name: "Meal settings",
+      url: "/app/profile/meal-settings",
+      icon: "restaurant_menu",
     },
   ];
 
@@ -156,7 +162,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
           >
             {MEAL_PLANS.map((plan) => (
               <Link
-                href={`/app/plans/${plan.id}`}
+                href={`/app/plans/${plan.id}/${BaseDatesEnum.today}`}
                 key={plan.id}
                 className={`${
                   planVisited(plan.id) && " bg-slate-500/30 font-semibold"
