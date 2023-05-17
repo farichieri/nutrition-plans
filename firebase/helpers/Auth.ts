@@ -35,7 +35,6 @@ const generateUserObject = async (user: User) => {
     const querySnapshot = await getDoc(userRef);
     const userData = querySnapshot.data();
     if (userData) {
-      // If I need to add something else from the User (google) object, I can add it here.
       const userAccount: UserAccount = {
         body_data: userData.body_data,
         created_at: userData.created_at,
@@ -47,12 +46,14 @@ const generateUserObject = async (user: User) => {
         is_premium: userData.is_premium,
         is_profile_completed: userData.is_profile_completed,
         lang: userData.lang,
+        num_meals: userData.num_meals,
         nutrition_targets: userData.nutrition_targets,
         photo_url: userData.photo_url,
         plan_selected: userData.plan_selected,
         premium_plan: userData.premium_plan,
         ratings: userData.ratings,
         user_id: userData.user_id,
+        user_meals: userData.user_meals,
         user_step: userData.user_step,
         weight_goal: userData.weight_goal,
       };

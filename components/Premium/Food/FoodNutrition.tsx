@@ -1,13 +1,10 @@
-import {
-  selectCreateRecipeSlice,
-  setIngredientOpened,
-  setRecipeState,
-} from "@/store/slices/createRecipeSlice";
-import { Food, Ingredient, NutritionMeasurements } from "@/types/foodTypes";
+import { Food, NutritionMeasurements } from "@/types/foodTypes";
 import { formatToFixed } from "@/utils/format";
 import { getNewAmount, getNutritionValues } from "./nutritionHelpers";
+import { selectCreateFoodSlice } from "@/store/slices/createFoodSlice";
 import { selectFoodsSlice, setScale } from "@/store/slices/foodsSlice";
 import { useDispatch, useSelector } from "react-redux";
+import AddFoodIngredient from "./AddFood/AddFoodIngredient";
 import FoodNutritionDetail from "./FoodNutritionDetail";
 import Link from "next/link";
 import NutritionInput from "@/components/Form/NutritionInput";
@@ -22,7 +19,7 @@ interface Props {
 
 const FoodNutrition: FC<Props> = ({ isIngredient, foodProp }) => {
   const dispatch = useDispatch();
-  const { recipeState } = useSelector(selectCreateRecipeSlice);
+  const { recipeState } = useSelector(selectCreateFoodSlice);
   const { food } = useSelector(selectFoodsSlice);
   const foodData = food?.data;
   const amount = food?.scale?.amount;
@@ -118,28 +115,14 @@ const FoodNutrition: FC<Props> = ({ isIngredient, foodProp }) => {
     setOpenDetails(true);
   };
 
-  const handleIngredient = (event: React.MouseEvent<HTMLButtonElement>) => {
-    if (!foodData) return;
-    event.preventDefault();
-    const newIngredient: Ingredient = {
-      amount: amount,
-      food_id: foodProp.food_id || "",
-      order: 0,
-      text: "",
-      weight_name: weightName,
-    };
-    dispatch(
-      setRecipeState({
-        ...recipeState,
-        ingredients: [...recipeState.ingredients, newIngredient],
-      })
-    );
-    dispatch(setIngredientOpened(null));
-  };
-
+  console.log({ foodData, nutrients, weightName });
   if (!foodData || !nutrients || !weightName) {
     return <div>Loading...</div>;
   }
+
+  console.log({ amount });
+  console.log({ weightName });
+  console.log({ foodData });
 
   return (
     <div className="flex w-full max-w-xl flex-wrap items-center justify-center gap-10">
@@ -179,15 +162,12 @@ const FoodNutrition: FC<Props> = ({ isIngredient, foodProp }) => {
           />
         </div>
         {isIngredient && (
-          <button
-            onClick={handleIngredient}
-            className="m-auto flex w-fit items-center gap-1 rounded-3xl border bg-green-600 py-1.5 pl-2 pr-4 duration-300 hover:bg-green-500 active:scale-95"
-          >
-            <span className="material-icons pointer-events-none">add</span>
-            <span className="pointer-events-none">Add</span>
-          </button>
+          <AddFoodIngredient
+            amount={amount}
+            weight_name={weightName}
+            food={foodData}
+          />
         )}
-
         <div className="flex h-10 justify-center">
           {isNotOriginal && (
             <button

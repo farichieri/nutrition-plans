@@ -1,10 +1,12 @@
 import {
   Food,
   FoodNutrients,
-  FoodPreferences,
+  CompatiblePlans,
   FoodType,
+  Ingredient,
 } from "@/types/foodTypes";
 import {
+  MealsEnum,
   NutritionTargets,
   Progress,
   Ratings,
@@ -38,7 +40,7 @@ export const initialWeightGoal: WeightGoal = {
 };
 
 export const newFoodData: UserFoodData = {
-  food_preferences: [],
+  compatible_plans: [],
 };
 
 export const newRagins: Ratings = {
@@ -72,6 +74,13 @@ export const newAccount: UserAccount = {
   food_data: newFoodData,
   is_admin: false,
   is_premium: false,
+  num_meals: 4,
+  user_meals: [
+    MealsEnum.breakfast,
+    MealsEnum.lunch,
+    MealsEnum.dinner,
+    MealsEnum.snack,
+  ],
   is_profile_completed: false,
   lang: "",
   nutrition_targets: newNutritionTargets,
@@ -97,7 +106,7 @@ export const NewFoodType: FoodType = {
   is_lunch: false,
   is_snack: false,
 };
-export const NewFoodPreferences: FoodPreferences = {
+export const NewFoodCompatiblePlans: CompatiblePlans = {
   is_balanced: false,
   is_gluten_free: false,
   is_ketogenic: false,
@@ -160,6 +169,7 @@ export const NewFoodNutrients: FoodNutrients = {
 
 export const NewFood: Food = {
   allow_public: true,
+  compatible_plans: NewFoodCompatiblePlans,
   cook_time: null,
   date_created: null,
   date_updated: null,
@@ -171,11 +181,10 @@ export const NewFood: Food = {
   food_id: null,
   food_name_lowercase: null,
   food_name: null,
-  food_preferences: NewFoodPreferences,
   food_type: NewFoodType,
   glucemic_status: null,
   image: DEFAULT_IMAGE,
-  ingredients: [],
+  ingredients: {},
   instructions: [],
   is_deleted: false,
   kind: null,
@@ -190,6 +199,8 @@ export const NewFood: Food = {
   prep_time: null,
   price: null,
   recipe_category: null,
+  scale_amount: null,
+  scale_name: null,
   serving_amount_per_package: 1,
   serving_amount: 1,
   serving_grams: null,
@@ -197,4 +208,11 @@ export const NewFood: Food = {
   source: null,
   uploader: null,
   user_id: null,
+};
+
+export const NewIngredient: Ingredient = {
+  food_id: "",
+  food: NewFood,
+  order: 0,
+  text: "",
 };

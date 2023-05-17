@@ -1,8 +1,8 @@
-import { fetchFoodByID, fetchFoodIngredients } from "@/firebase/helpers/Food";
-import { Food, FoodGroup, Ingredient } from "@/types/foodTypes";
+import { fetchFoodByID } from "@/firebase/helpers/Food";
+import { Food } from "@/types/foodTypes";
 import { selectFoodsSlice, setFood } from "@/store/slices/foodsSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
 import BackButton from "@/components/Back/BackButton";
 import FoodActions from "@/components/Premium/Food/FoodActions/FoodActions";
@@ -19,7 +19,6 @@ export default function Page() {
   const { id } = router.query;
   const { food, foodsSearched } = useSelector(selectFoodsSlice);
   const foodData = food.data;
-  const [ingsData, setIngsData] = useState<FoodGroup | null>(null);
 
   useEffect(() => {
     if (typeof id === "string") {
@@ -34,22 +33,6 @@ export default function Page() {
       }
     }
   }, [id]);
-
-  const fetchIngredientsData = async (ingredients: Ingredient[]) => {
-    const ids = ingredients.map((ing) => ing.food_id);
-    const result = await fetchFoodIngredients(ids);
-    return result;
-  };
-
-  useEffect(() => {
-    if (foodData) {
-      const getFoods = async () => {
-        const foods = await fetchIngredientsData(foodData.ingredients);
-        setIngsData(foods);
-      };
-      foodData.ingredients.length > 0 && getFoods();
-    }
-  }, [foodData]);
 
   if (foodData?.food_id !== id) {
     return (
@@ -95,14 +78,9 @@ export default function Page() {
               </div>
             </div>
             <div className="flex w-full max-w-xl flex-col gap-5">
-              {ingsData && foodData.ingredients.length > 0 && (
-                <div className="w-full max-w-xl">
-                  <Ingredients
-                    foodIngredients={ingsData}
-                    ingredients={foodData.ingredients}
-                  />
-                </div>
-              )}
+              <div className="w-full max-w-xl">
+                <Ingredients ingredients={foodData.ingredients} />
+              </div>
               {foodData.instructions.length > 0 && (
                 <div className="w-full max-w-xl">
                   <Instructions instructions={foodData.instructions} />

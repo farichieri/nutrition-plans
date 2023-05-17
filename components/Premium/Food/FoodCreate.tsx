@@ -1,7 +1,7 @@
 import {
   Food,
   FoodNutrients,
-  FoodPreferences,
+  CompatiblePlans,
   FoodType,
   FoodKind,
 } from "@/types/foodTypes";
@@ -64,14 +64,14 @@ const FoodCreate: FC<Props> = () => {
         [id]: !foodTypes[id as keyof FoodType],
       };
       dispatch(setFoodState({ ...foodState, food_type: foodTypesUpdated }));
-    } else if (name === "food_preferences") {
-      let foodTypes = { ...foodState.food_preferences };
+    } else if (name === "compatible_plans") {
+      let foodTypes = { ...foodState.compatible_plans };
       let foodTypesUpdated = {
         ...foodTypes,
-        [id]: !foodTypes[id as keyof FoodPreferences],
+        [id]: !foodTypes[id as keyof CompatiblePlans],
       };
       dispatch(
-        setFoodState({ ...foodState, food_preferences: foodTypesUpdated })
+        setFoodState({ ...foodState, compatible_plans: foodTypesUpdated })
       );
     } else if (name === "nutrient") {
       let nutrients = { ...foodState.nutrients };
@@ -133,11 +133,11 @@ const FoodCreate: FC<Props> = () => {
 
   return (
     <form
-      className="mt-8 flex max-w-xl flex-col gap-10"
+      className="mb-8 mt-8 flex max-w-xl flex-col gap-2"
       onSubmit={handleSubmit}
     >
       <div className="">
-        <h1 className="text-xl">Create Custom Food</h1>
+        <span className="text-3xl font-semibold">Create Food</span>
         {nameDescFields.map((field) => (
           <Input
             customClass={""}
@@ -341,9 +341,9 @@ const FoodCreate: FC<Props> = () => {
             </div>
           </div>
           <div className="">
-            <h1 className="text-xl">Food Preferences</h1>
+            <h1 className="text-xl">Compatible Plans</h1>
             <div className="">
-              {Object.keys(foodState.food_preferences).map((type) => (
+              {Object.keys(foodState.compatible_plans).map((type) => (
                 <Checkbox
                   key={type}
                   customClass={""}
@@ -352,10 +352,10 @@ const FoodCreate: FC<Props> = () => {
                   isRequired={false}
                   labelFor={type}
                   labelText={type}
-                  name={"food_preferences"}
+                  name={"compatible_plans"}
                   title={type}
                   value={
-                    foodState["food_preferences" as keyof FoodPreferences][type]
+                    foodState["compatible_plans" as keyof CompatiblePlans][type]
                   }
                 />
               ))}

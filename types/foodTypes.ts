@@ -1,6 +1,7 @@
 export interface Food {
   [id: string]: any;
   allow_public: boolean;
+  compatible_plans: CompatiblePlans;
   cook_time: number | null;
   date_created: any | null;
   date_updated: string | null;
@@ -12,11 +13,10 @@ export interface Food {
   food_id: string | null;
   food_name_lowercase: string | null;
   food_name: string | null;
-  food_preferences: FoodPreferences;
   food_type: FoodType;
   glucemic_status: GlucemicStatusEnum | null;
   image: string;
-  ingredients: Ingredient[];
+  ingredients: IngredientGroup;
   instructions: Instruction[];
   is_deleted: boolean;
   kind: FoodKind | null;
@@ -31,6 +31,8 @@ export interface Food {
   prep_time: number | null;
   price: number | null;
   recipe_category: RecipeCategoriesEnum | null;
+  scale_amount: number | null;
+  scale_name: string | null;
   serving_amount_per_package: number | null;
   serving_amount: number | null;
   serving_grams: number | null;
@@ -42,11 +44,14 @@ export interface Food {
 
 export interface Ingredient {
   [id: string]: any;
-  amount: number;
-  food_id: string;
+  food: Food;
+  food_id: string | null;
   order: number;
   text: string;
-  weight_name: string;
+}
+
+export interface IngredientGroup {
+  [id: string]: Ingredient;
 }
 
 export interface Instruction {
@@ -67,7 +72,7 @@ export interface FoodType {
   is_snack: boolean;
 }
 
-export interface FoodPreferences {
+export interface CompatiblePlans {
   is_balanced: boolean;
   is_gluten_free: boolean;
   is_mediterranean: boolean;

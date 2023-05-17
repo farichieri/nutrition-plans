@@ -1,9 +1,11 @@
 import {
   selectLayoutSlice,
   setIsSettingsOpen,
+  setSidebarAdminOpen,
   setSidebarEvolutionOpen,
   setSidebarPlansOpen,
 } from "@/store/slices/layoutSlice";
+import { BaseDatesEnum } from "@/types/datesTypes";
 import { FC, MouseEventHandler } from "react";
 import { MEAL_PLANS } from "@/utils/content";
 import { selectAuthSlice } from "@/store/slices/authSlice";
@@ -11,7 +13,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import SubscribeButton from "../Buttons/Subscribe";
-import { BaseDatesEnum } from "@/types/datesTypes";
 
 interface Props {
   sidebarOpen: boolean;
@@ -22,7 +23,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { user } = useSelector(selectAuthSlice);
-  const { sidebarPlansOpen, sidebarEvolutionOpen } =
+  const { sidebarPlansOpen, sidebarEvolutionOpen, sidebarAdminOpen } =
     useSelector(selectLayoutSlice);
 
   const toggleAllPlans = () => {
@@ -39,13 +40,15 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
       dispatch(setSidebarEvolutionOpen(true));
     }
   };
-
-  const handleOpenSettings = (event: React.MouseEvent) => {
-    event.preventDefault();
-    dispatch(setIsSettingsOpen(true));
+  const toggleAdmin = () => {
+    if (sidebarAdminOpen === true) {
+      dispatch(setSidebarAdminOpen(false));
+    } else {
+      dispatch(setSidebarAdminOpen(true));
+    }
   };
 
-  const planVisited = (id: string) => router.asPath === `/app/plans/${id}`;
+  const planVisited = (id: string) => router.asPath.split("/")[3] === `${id}`;
   const planSelected = user?.plan_selected;
 
   const PROFILE_PAGES = [
@@ -55,11 +58,6 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
       url: "/app/profile/body-features",
       icon: "settings_accessibility",
     },
-    // {
-    //   name: "Food Preferences",
-    //   url: "/app/profile/food-preferences",
-    //   icon: "restaurant",
-    // },
     {
       name: "Nutrition Values",
       url: "/app/profile/nutrition-values",
@@ -71,17 +69,42 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
       icon: "restaurant_menu",
     },
   ];
+  const ADMIN_PAGES = [
+    { name: "Create Food", url: "/app/admin/create/food", icon: "add" },
+    {
+      name: "Create Recipe",
+      url: "/app/admin/create/recipe",
+      icon: "add",
+    },
+    {
+      name: "Create Meal",
+      url: "/app/admin/create/meal",
+      icon: "add",
+    },
+    {
+      name: "Create Diet Plan",
+      url: "/app/admin/create/diet",
+      icon: "add",
+    },
+  ];
 
   const COLLAPSED_PAGES = [
-    { name: "My Plan", url: `/app/plans/${planSelected}`, icon: "description" },
     {
-      name: "Recipes",
+      name: "My Plan",
+      url: `/app/plans/${planSelected}/today`,
+      pathname: "/app/plans/[id]/[date]",
+      icon: "description",
+    },
+    {
+      name: "Recipes & Foods",
       url: "/app/search-food",
+      pathname: "/app/search-food",
       icon: "menu_book",
     },
     {
       name: "Progress",
       url: "/app/profile/progress",
+      pathname: "/app/profile/progress",
       icon: "auto_graph",
     },
   ];
@@ -104,8 +127,9 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
             key={page.name}
             href={page.url}
             className={`${
-              router.asPath === page.url && "bg-slate-500/30 font-semibold "
-            } text-md hover:opacity-7 flex w-full flex-col items-center gap-1  rounded-lg px-2 py-1 text-base font-semibold duration-300 hover:bg-slate-500/30 sm:text-lg`}
+              router.pathname === page.pathname &&
+              "bg-slate-500/30 font-semibold "
+            } text-md hover:opacity-7 flex w-full flex-col items-center gap-1  rounded-lg px-2 py-1 text-base duration-300 hover:bg-slate-500/30 sm:text-lg`}
           >
             <span className="material-icons md-24 notraslate text-green-500">
               {page.icon}
@@ -122,11 +146,12 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
       >
         <div className="flex w-full flex-col items-center gap-2">
           <Link
-            href={`/app/plans/${planSelected}`}
+            href={`/app/plans/${planSelected}/today`}
             className={`${
-              router.asPath === `/app/plans/${planSelected}` &&
+              planSelected &&
+              planVisited(planSelected) &&
               " bg-slate-500/30 font-semibold"
-            } text-md flex w-full items-center gap-1 rounded-lg px-2 py-1 text-base font-semibold duration-300 hover:bg-slate-500/30  sm:text-lg`}
+            } text-md flex w-full items-center gap-1 rounded-lg px-2 py-1 text-base duration-300 hover:bg-slate-500/30  sm:text-lg`}
           >
             <span className="material-icons md-24 text-green-500">
               description
@@ -136,16 +161,14 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
         </div>
         <div className="flex flex-col gap-1">
           <div
-            className="text-md flex w-full items-center gap-1 rounded-lg px-2 py-1 text-base font-semibold sm:text-lg "
+            className="text-md flex w-full items-center gap-1 rounded-lg px-2 py-1 text-base sm:text-lg "
             onClick={toggleAllPlans}
           >
             <span className="material-icons md-24 text-green-500">
               format_list_bulleted
             </span>
             <div className="flex w-full cursor-pointer items-center justify-between">
-              <span className="text-md font-semibold sm:text-lg">
-                All plans
-              </span>
+              <span className="text-md  sm:text-lg">All plans</span>
               <span
                 className={`material-icons md-24 duration-200 ease-in-out ${
                   sidebarPlansOpen && "-rotate-180 transform text-green-500"
@@ -184,22 +207,22 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
             className={`${
               router.asPath === "/app/search-food" &&
               " bg-slate-500/30 font-semibold"
-            } text-md hover:opacity-7 flex w-full items-center gap-2 rounded-lg px-2 py-1 text-base font-semibold duration-300 hover:bg-slate-500/30 sm:text-lg`}
+            } text-md hover:opacity-7 flex w-full items-center gap-2 rounded-lg px-2 py-1 text-base  duration-300 hover:bg-slate-500/30 sm:text-lg`}
           >
             <span className="material-icons md-24 text-green-500">
               menu_book
             </span>
-            <span>Recipes</span>
+            <span>Recipes & Foods</span>
           </Link>
         </div>
         <div className="flex flex-col gap-1">
           <div
-            className="text-md flex w-full items-center gap-1 rounded-lg px-2 py-1 text-base font-semibold sm:text-lg "
+            className="text-md flex w-full items-center gap-1 rounded-lg px-2 py-1 text-base  sm:text-lg "
             onClick={toggleEvolution}
           >
             <span className="material-icons md-24 text-green-500">person</span>
             <div className="flex w-full cursor-pointer items-center justify-between">
-              <span className="text-md font-semibold sm:text-lg">Profile</span>
+              <span className="text-md  sm:text-lg">Profile</span>
               <span
                 className={`material-icons md-24 duration-200 ease-in-out ${
                   sidebarEvolutionOpen && "-rotate-180 transform text-green-500"
@@ -231,32 +254,49 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
             ))}
           </div>
         </div>
+
         {user?.is_admin && (
-          <div className="flex w-full flex-col items-center gap-2">
-            <Link
-              href={"/app/create-food"}
-              className={`${
-                router.asPath === "/app/create-food" &&
-                " bg-slate-500/30 font-semibold"
-              } text-md flex w-full items-center gap-1 rounded-lg px-2 py-1 text-base font-semibold duration-300 hover:bg-slate-500/30  sm:text-lg `}
+          <div className="flex flex-col gap-1">
+            <div
+              className="text-md flex w-full items-center gap-1 rounded-lg px-2 py-1 text-base  sm:text-lg "
+              onClick={toggleAdmin}
             >
-              <span className="material-icons md-24 text-red-500">add</span>{" "}
-              <span>Create Food</span>
-            </Link>
-          </div>
-        )}
-        {user?.is_admin && (
-          <div className="flex w-full flex-col items-center gap-2">
-            <Link
-              href={"/app/create-recipe"}
-              className={`${
-                router.asPath === "/app/create-recipe" &&
-                " bg-slate-500/30 font-semibold"
-              } text-md flex w-full items-center gap-1 rounded-lg px-2 py-1 text-base font-semibold duration-300 hover:bg-slate-500/30  sm:text-lg `}
+              <span className="material-icons md-24 text-red-500">
+                manage_accounts
+              </span>
+              <div className="flex w-full cursor-pointer items-center justify-between">
+                <span className="text-md  sm:text-lg">Admin</span>
+                <span
+                  className={`material-icons md-24 duration-200 ease-in-out ${
+                    sidebarAdminOpen && "-rotate-180 transform text-red-500"
+                  }`}
+                >
+                  expand_more
+                </span>
+              </div>
+            </div>
+            <div
+              className={`flex flex-col gap-1 overflow-hidden pl-1 text-sm transition-[max-height] duration-200 ease-linear sm:text-base ${
+                sidebarAdminOpen ? " max-h-[30rem]" : "max-h-0"
+              }`}
             >
-              <span className="material-icons md-24 text-red-500">add</span>{" "}
-              <span>Create Recipe</span>
-            </Link>
+              {ADMIN_PAGES.map((page) => (
+                <Link
+                  key={page.name}
+                  href={page.url}
+                  className={`${
+                    router.asPath === page.url &&
+                    " bg-slate-500/30 font-semibold"
+                  } hover:opacity-7 flex items-center gap-1.5 rounded-lg py-1 pl-4 pr-2 text-base duration-300 hover:bg-slate-500/30`}
+                >
+                  <span className="material-icons md-24 notraslate text-red-500">
+                    {page.icon}
+                  </span>
+
+                  {page.name}
+                </Link>
+              ))}
+            </div>
           </div>
         )}
         <div className="mx-auto flex w-full items-center justify-center px-2 py-1">

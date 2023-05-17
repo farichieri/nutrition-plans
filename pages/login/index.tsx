@@ -19,6 +19,7 @@ export default function Page() {
       setIsLoading(false);
     }
   }, [user, isVerifyingUser]);
+
   return (
     <SignLayout>
       {isLoading && <Loader />}

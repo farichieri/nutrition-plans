@@ -6,14 +6,18 @@ import { setProgress } from "@/store/slices/progressSlice";
 import { signOut } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { FC, useState } from "react";
 import Avatar from "@/components/Avatar/Avatar";
 import DropDown from "../DropDown";
 import Link from "next/link";
 import SubscribeButton from "@/components/Buttons/Subscribe";
 import ThemeSwitcher from "@/components/theme-switcher";
 
-const AvatarDropDown = () => {
+interface Props {
+  isApp: boolean;
+}
+
+const AvatarDropDown: FC<Props> = ({ isApp }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const [closeDrop, setCloseDrop] = useState(false);
@@ -67,10 +71,10 @@ const AvatarDropDown = () => {
         </div>
         <div className="mx-4 my-2 h-0 border-b border-slate-500/30 duration-300"></div>
         <Link
-          href={"/"}
+          href={!isApp ? "/app" : "/"}
           className={`pointer-events-auto flex w-full items-center gap-2 border-none bg-transparent px-4 py-2 opacity-60 hover:bg-slate-500/40 hover:opacity-100 `}
         >
-          <span>Homepage</span>
+          <span>{!isApp ? "My Plan" : "Homepage"}</span>
           <span className="material-icons ml-auto">open_in_new</span>
         </Link>
         <div className="flex hover:bg-slate-500/40">

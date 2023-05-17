@@ -20,11 +20,13 @@ const FAQ: FC<Props> = ({ content }) => {
     >
       <div className="relative  flex w-full items-center justify-between ">
         <span className="text-xl font-semibold">{content.title}</span>
-        {!open ? (
-          <ChevronDownIcon className="h-7 w-7 opacity-50" />
-        ) : (
-          <ChevronUpIcon className="h-7 w-7 opacity-50" />
-        )}
+        <span
+          className={`material-icons md-24 duration-200 ease-in-out ${
+            open && "-rotate-180 transform text-green-500"
+          }`}
+        >
+          expand_more
+        </span>
       </div>
       <span
         className={`overflow-hidden px-4 pt-0 transition-[max-height] duration-300  ${

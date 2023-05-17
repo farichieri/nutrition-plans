@@ -1,4 +1,3 @@
-import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/solid";
 import { fetchFoods } from "@/firebase/helpers/Food";
 import { FoodGroup } from "@/types/foodTypes";
 import { selectFoodsSlice, setFoodsSearched } from "@/store/slices/foodsSlice";
@@ -6,21 +5,17 @@ import { useDispatch, useSelector } from "react-redux";
 import React, { FC, useEffect, useState } from "react";
 import Spinner from "@/components/Loader/Spinner";
 
-interface Props {}
+interface Props {
+  onFocus?: Function;
+}
 
-const SearchBar: FC<Props> = () => {
+const SearchBar: FC<Props> = ({ onFocus }) => {
   const dispatch = useDispatch();
   const [searchInput, setSearchInput] = useState<string>("");
   const { foodsSearched } = useSelector(selectFoodsSlice);
   const noData = Object.values(foodsSearched).length === 0;
   const [openFilters, setOpenFilters] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
-
-  useEffect(() => {
-    if (noData) {
-      fetchData("");
-    }
-  }, []);
 
   const fetchData = async (input: string) => {
     setIsSearching(true);
@@ -35,9 +30,13 @@ const SearchBar: FC<Props> = () => {
   };
 
   useEffect(() => {
+    if (noData) {
+      fetchData("");
+    }
+
     const timer = setTimeout(() => {
       fetchData(searchInput.toLowerCase());
-    }, 1000);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, [searchInput]);
@@ -53,6 +52,11 @@ const SearchBar: FC<Props> = () => {
     setSearchInput(value);
   };
 
+  const handleFocus = (event: React.FocusEvent) => {
+    event.preventDefault();
+    onFocus && onFocus();
+  };
+
   return (
     <div className="flex w-full flex-wrap items-center gap-10">
       <form
@@ -66,14 +70,14 @@ const SearchBar: FC<Props> = () => {
           type="text"
           placeholder="Search Food"
           className=" w-full bg-transparent px-2 outline-none"
+          onFocus={handleFocus}
         />
         <div className="absolute right-5">
           {isSearching && <Spinner customClass="h-4 w-4" />}
         </div>
       </form>
       <button onClick={handleOpenFilters} className="flex items-center gap-2">
-        <AdjustmentsHorizontalIcon className="h-6 w-6" />
-        Filters
+        <span className="material-icons-outlined">tune</span> Filters
       </button>
       {openFilters && (
         <div className="flex flex-wrap gap-5">

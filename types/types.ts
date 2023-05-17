@@ -20,6 +20,12 @@ export enum UserSteps {
   step_2 = "step_2",
   step_3 = "step_3",
 }
+export enum MealsEnum {
+  breakfast = "breakfast",
+  lunch = "lunch",
+  dinner = "dinner",
+  snack = "snack",
+}
 
 // Posts
 export interface Post {
@@ -61,6 +67,8 @@ export interface UserAccount {
   user_id: string;
   weight_goal: WeightGoal;
   user_step: UserSteps;
+  num_meals: number;
+  user_meals: MealsEnum[];
 }
 export interface UserCreatedData {
   body_data: UserBodyData;
@@ -79,7 +87,7 @@ export interface UserBodyData {
   weight_in_kg: number | null;
 }
 export interface UserFoodData {
-  food_preferences: string[];
+  compatible_plans: string[];
 }
 
 export interface WeightGoal {

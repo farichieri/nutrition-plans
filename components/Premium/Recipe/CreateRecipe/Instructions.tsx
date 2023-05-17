@@ -1,12 +1,14 @@
 import { FC } from "react";
 import { Instruction } from "@/types/foodTypes";
-import { selectCreateRecipeSlice } from "@/store/slices/createRecipeSlice";
-import { setRecipeState } from "@/store/slices/createRecipeSlice";
+import {
+  selectCreateFoodSlice,
+  setRecipeState,
+} from "@/store/slices/createFoodSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const RecipeStep = ({ step }: { step: Instruction }) => {
   const dispatch = useDispatch();
-  const { recipeState } = useSelector(selectCreateRecipeSlice);
+  const { recipeState } = useSelector(selectCreateFoodSlice);
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     event.preventDefault();
@@ -84,7 +86,7 @@ const RecipeStep = ({ step }: { step: Instruction }) => {
 interface Props {}
 
 const Instructions: FC<Props> = () => {
-  const { recipeState } = useSelector(selectCreateRecipeSlice);
+  const { recipeState } = useSelector(selectCreateFoodSlice);
   return (
     <div className="flex flex-col gap-1">
       {recipeState.instructions.map(

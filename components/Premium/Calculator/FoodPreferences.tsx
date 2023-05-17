@@ -15,8 +15,8 @@ const FoodPreferences: FC<Props> = ({ handleSubmit }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { user } = useSelector(selectAuthSlice);
-  const food_preferences = user?.food_data.food_preferences;
-  const [selecteds, setSelecteds] = useState<string[]>(food_preferences || []);
+  const compatible_plans = user?.food_data.compatible_plans;
+  const [selecteds, setSelecteds] = useState<string[]>(compatible_plans || []);
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
   const isCreatingRoute = router.asPath === "/app/create";
@@ -39,7 +39,7 @@ const FoodPreferences: FC<Props> = ({ handleSubmit }) => {
     const userUpdated: UserAccount = {
       ...user,
       food_data: {
-        food_preferences: selecteds,
+        compatible_plans: selecteds,
       },
     };
     const res = await updateUser(userUpdated);
@@ -54,14 +54,14 @@ const FoodPreferences: FC<Props> = ({ handleSubmit }) => {
     if (isCreatingRoute && selecteds.length === 0) {
       setIsDisabled(true);
     } else if (
-      JSON.stringify(selecteds) !== JSON.stringify(food_preferences) ||
+      JSON.stringify(selecteds) !== JSON.stringify(compatible_plans) ||
       isCreatingRoute
     ) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
     }
-  }, [selecteds, food_preferences]);
+  }, [selecteds, compatible_plans]);
 
   return (
     <section className="flex w-full max-w-5xl select-none flex-col items-center justify-center gap-3 rounded-md border bg-white text-xs dark:bg-black s:text-sm sm:text-base">

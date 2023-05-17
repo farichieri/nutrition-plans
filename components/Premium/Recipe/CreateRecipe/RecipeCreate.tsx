@@ -1,20 +1,18 @@
 import {
   DishTypesEnum,
   Food,
-  FoodGroup,
-  FoodPreferences,
+  CompatiblePlans,
   FoodType,
   RecipeCategoriesEnum,
-  Ingredient,
   FoodKind,
   DigestionStatusEnum,
 } from "@/types/foodTypes";
 import {
-  selectCreateRecipeSlice,
+  selectCreateFoodSlice,
   setRecipeState,
-} from "@/store/slices/createRecipeSlice";
-import { addFood, fetchFoodIngredients } from "@/firebase/helpers/Food";
-import { FC, useEffect, useState } from "react";
+} from "@/store/slices/createFoodSlice";
+import { addFood } from "@/firebase/helpers/Food";
+import { FC, useState } from "react";
 import { getRecipeSize } from "../../Food/nutritionHelpers";
 import { NewFood } from "@/types/initialTypes";
 import { selectAuthSlice } from "@/store/slices/authSlice";
@@ -24,19 +22,19 @@ import AddInstruction from "./AddInstruction";
 import Checkbox from "@/components/Form/Checkbox";
 import FormAction from "@/components/Form/FormAction";
 import Image from "next/image";
-import Ingredients from "./Ingredients";
-import IngredientsSelector from "./IngredientsSelector";
+import Ingredients from "../../Ingredients/Ingredients";
+import IngredientsNutrition from "../../Ingredients/IngredientsNutrition";
+import IngredientsSelector from "../../Ingredients/IngredientsSelector";
 import Input from "@/components/Form/Input";
 import Instructions from "./Instructions";
 import NutritionInput from "@/components/Form/NutritionInput";
-import RecipeNutrition from "./RecipeNutrition";
 import Select from "@/components/Form/Select";
 
 interface Props {}
 const RecipeCreate: FC<Props> = () => {
   const dispatch = useDispatch();
   const [isCreating, setIsCreating] = useState(false);
-  const { recipeState } = useSelector(selectCreateRecipeSlice);
+  const { recipeState } = useSelector(selectCreateFoodSlice);
   const { user } = useSelector(selectAuthSlice);
   const router = useRouter();
 
@@ -60,14 +58,14 @@ const RecipeCreate: FC<Props> = () => {
         [id]: !foodTypes[id as keyof FoodType],
       };
       dispatch(setRecipeState({ ...recipeState, food_type: foodTypesUpdated }));
-    } else if (name === "food_preferences") {
-      let foodTypes = { ...recipeState.food_preferences };
+    } else if (name === "compatible_plans") {
+      let foodTypes = { ...recipeState.compatible_plans };
       let foodTypesUpdated = {
         ...foodTypes,
-        [id]: !foodTypes[id as keyof FoodPreferences],
+        [id]: !foodTypes[id as keyof CompatiblePlans],
       };
       dispatch(
-        setRecipeState({ ...recipeState, food_preferences: foodTypesUpdated })
+        setRecipeState({ ...recipeState, compatible_plans: foodTypesUpdated })
       );
     } else if (name === "nutrient") {
       let nutrients = { ...recipeState.nutrients };
@@ -99,7 +97,7 @@ const RecipeCreate: FC<Props> = () => {
     if (!user) return;
     if (isCreating) return;
     setIsCreating(true);
-    const recipeGrams = getRecipeSize(recipeState.ingredients, foodIngredients);
+    const recipeGrams = getRecipeSize(recipeState.ingredients);
     const newFood: Food = {
       ...recipeState,
       serving_grams: recipeGrams,
@@ -121,26 +119,6 @@ const RecipeCreate: FC<Props> = () => {
     dispatch(setRecipeState(NewFood));
     setNewImageFile(undefined);
   };
-
-  const fetchFoods = async (ingredients: Ingredient[]) => {
-    const ids = ingredients.map((ing) => ing.food_id);
-    const result = await fetchFoodIngredients(ids);
-    return result;
-  };
-
-  const [foodIngredients, setFoodIngredients] = useState<FoodGroup | null>(
-    null
-  );
-
-  useEffect(() => {
-    if (recipeState.ingredients.length > 0) {
-      const getFoods = async () => {
-        const foods = await fetchFoods(recipeState.ingredients);
-        setFoodIngredients(foods);
-      };
-      getFoods();
-    }
-  }, [recipeState.ingredients.length]);
 
   return (
     <form
@@ -286,6 +264,25 @@ const RecipeCreate: FC<Props> = () => {
             ))}
           </div>
         </div>
+        <div className="">
+          <h1 className="text-xl">Compatible plans</h1>
+          <div className="">
+            {Object.keys(recipeState.compatible_plans).map((type) => (
+              <Checkbox
+                key={type}
+                customClass={""}
+                handleChange={handleChange}
+                id={type}
+                isRequired={false}
+                labelFor={type}
+                labelText={type}
+                name={"compatible_plans"}
+                title={type}
+                value={recipeState["compatible_plans" as keyof FoodType][type]}
+              />
+            ))}
+          </div>
+        </div>
         <Checkbox
           customClass={""}
           handleChange={handleChange}
@@ -311,12 +308,7 @@ const RecipeCreate: FC<Props> = () => {
       </div>
       <div className="flex max-w-xl flex-col gap-2 rounded-md border p-2">
         <span className="text-3xl">Ingredients</span>
-        {foodIngredients && (
-          <Ingredients
-            ingredients={recipeState.ingredients}
-            foodIngredients={foodIngredients}
-          />
-        )}
+        <Ingredients ingredients={recipeState.ingredients} />
         <IngredientsSelector />
       </div>
       <div className="flex max-w-xl flex-col gap-2 rounded-md border p-2">
@@ -327,9 +319,9 @@ const RecipeCreate: FC<Props> = () => {
           <span className="text-2xl font-semibold">Nutrition Values</span>
         </div>
         {Object.keys(recipeState.nutrients).length > 0 && (
-          <RecipeNutrition
-            recipe={recipeState}
-            foodIngredients={foodIngredients}
+          <IngredientsNutrition
+            food={recipeState}
+            ingredients={recipeState.ingredients}
           />
         )}
       </div>

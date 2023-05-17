@@ -53,6 +53,7 @@ const NavBar: FC<Props> = () => {
               <Avatar changeable={false} width={30} height={30} />
             </Link>
           ) : (
+            // <AvatarDropDown isApp={false} />
             <>
               <Link href={"/login"} className="">
                 <button className="font-semibold xs:text-sm sm:text-base">

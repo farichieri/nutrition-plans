@@ -5,8 +5,12 @@ import {
 } from "firebase/auth";
 import { AUTH_ERRORS } from "@/firebase/errors";
 import { auth, provider } from "../../firebase/firebase.config";
-import { createNewUser } from "@/firebase/helpers/Auth";
-import { setIsCreatingUser, setIsSigningUser } from "@/store/slices/authSlice";
+import { createNewUser, generateUserObject } from "@/firebase/helpers/Auth";
+import {
+  setIsCreatingUser,
+  setIsSigningUser,
+  setUser,
+} from "@/store/slices/authSlice";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -41,6 +45,9 @@ const Login = () => {
           }
         } else {
           dispatch(setIsSigningUser(true));
+          const userData =
+            result.user && (await generateUserObject(result.user));
+          dispatch(setUser(userData));
           router.push(redirectRoute);
         }
       })

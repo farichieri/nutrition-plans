@@ -3,31 +3,25 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import Loader from "@/components/Loader/Loader";
-import PremiumLayout from "@/components/Layout/PremiumLayout";
 
 const App = () => {
   const { user } = useSelector(selectAuthSlice);
   const router = useRouter();
 
-  useEffect(() => {
-    if (user) {
-      if (!user.is_profile_completed) {
-        router.push("/app/create");
+  console.log({ user });
+  if (user) {
+    if (!user.is_profile_completed) {
+      router.push("/app/create");
+    } else {
+      if (user.plan_selected) {
+        router.push(`/app/plans/${user.plan_selected}/today`);
       } else {
-        if (user.plan_selected) {
-          router.push(`/app/plans/${user.plan_selected}`);
-        } else {
-          router.push(`/app/profile/progress`);
-        }
+        router.push(`/app/profile/progress`);
       }
     }
-  });
+  }
 
-  return (
-    <PremiumLayout>
-      <Loader />
-    </PremiumLayout>
-  );
+  return <Loader />;
 };
 
 export default App;

@@ -7,6 +7,7 @@ interface LayoutState {
   isBillingModalOpen: boolean;
   isSettingsOpen: boolean;
   sidebarEvolutionOpen: boolean;
+  sidebarAdminOpen: boolean;
   sidebarOpen: boolean;
   sidebarPlansOpen: boolean;
   theme: Theme;
@@ -17,6 +18,7 @@ const initialState: LayoutState = {
   isBillingModalOpen: false,
   isSettingsOpen: false,
   sidebarEvolutionOpen: true,
+  sidebarAdminOpen: true,
   sidebarOpen: true,
   sidebarPlansOpen: true,
   theme: Theme.light,
@@ -36,6 +38,9 @@ export const layoutSlice = createSlice({
     setSidebarEvolutionOpen: (state, action: PayloadAction<boolean>) => {
       state.sidebarEvolutionOpen = action.payload;
     },
+    setSidebarAdminOpen: (state, action: PayloadAction<boolean>) => {
+      state.sidebarAdminOpen = action.payload;
+    },
     setTheme: (state, action: PayloadAction<Theme>) => {
       state.theme = action.payload;
     },
@@ -51,6 +56,7 @@ export const layoutSlice = createSlice({
 export const {
   setIsBillingModalOpen,
   setIsSettingsOpen,
+  setSidebarAdminOpen,
   setSidebarEvolutionOpen,
   setSidebarOpen,
   setSidebarPlansOpen,

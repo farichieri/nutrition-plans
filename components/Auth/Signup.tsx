@@ -5,6 +5,7 @@ import {
   signInWithPopup,
   updateProfile,
 } from "firebase/auth";
+import { AUTH_ERRORS } from "@/firebase/errors";
 import { auth, provider } from "../../firebase/firebase.config";
 import { createNewUser } from "@/firebase/helpers/Auth";
 import { setIsCreatingUser, setIsSigningUser } from "@/store/slices/authSlice";
@@ -12,8 +13,6 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import GoogleLoginButton from "../Buttons/GoogleLogin";
 import Link from "next/link";
-import Submit from "../Buttons/SubmitButton";
-import { AUTH_ERRORS } from "@/firebase/errors";
 import SubmitButton from "../Buttons/SubmitButton";
 
 const Signup = () => {
@@ -40,6 +39,10 @@ const Signup = () => {
         dispatch(setIsSigningUser(true));
         if (additinalInfo?.isNewUser) {
           const user = result.user;
+          console.log({ user });
+          await updateProfile(user, {
+            displayName: input.displayName,
+          });
           dispatch(setIsCreatingUser(true));
           await createNewUser(user);
           dispatch(setIsCreatingUser(false));

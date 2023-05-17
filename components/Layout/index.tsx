@@ -23,7 +23,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     dispatch(setIsVerifyingUser());
     onAuthStateChanged(auth, async (user) => {
-      console.log(user);
       const [userData, progressData] = await Promise.all([
         user && generateUserObject(user),
         user && fetchProgress(user),

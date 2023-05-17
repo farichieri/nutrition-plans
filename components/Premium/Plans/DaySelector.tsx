@@ -20,7 +20,7 @@ import RoundButton from "@/components/Buttons/RoundButton";
 interface Props {}
 
 const fixedButtonClass =
-  "relative after:absolute after:bottom-[-1px] after:left-0 after:h-[3px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-green-500 after:transition-transform after:duration-300 after:ease-in-out hover:after:origin-bottom-left hover:after:scale-x-100";
+  "relative after:absolute text-lg after:bottom-[-1px] after:left-0 after:h-[3px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-green-500 after:transition-transform after:duration-300 after:ease-in-out hover:after:origin-bottom-left hover:after:scale-x-100";
 
 const selectedClass = "after:origin-bottom-left after:scale-x-100";
 
@@ -160,9 +160,9 @@ const DaySelector: FC<Props> = () => {
   };
 
   return (
-    <div className="bg m-auto flex flex-wrap items-center gap-2 sm:gap-10">
-      <div className="flex w-full flex-col items-center justify-center sm:w-auto">
-        <div className="flex w-full items-center justify-center gap-10 sm:w-auto">
+    <div className="bg m-auto flex flex-wrap items-center gap-2 lg:gap-10">
+      <div className="flex w-full flex-col items-center justify-center lg:w-auto">
+        <div className="flex w-full items-center justify-center lg:w-auto">
           <Link href={backRoute()}>
             <RoundButton>
               <span className="material-icons-outlined md-14">
@@ -170,7 +170,7 @@ const DaySelector: FC<Props> = () => {
               </span>
             </RoundButton>
           </Link>
-          <span className="flex w-40 justify-center text-sm opacity-75">
+          <span className="flex w-full max-w-xs justify-center text-lg font-semibold opacity-75 lg:w-96 lg:text-2xl">
             {formatDate()}
           </span>
           <Link href={nextRoute()}>
@@ -184,7 +184,7 @@ const DaySelector: FC<Props> = () => {
         <span className="text-xs opacity-50">{dateF}</span>
       </div>
 
-      <div className="flex w-full items-center justify-center gap-10 sm:w-auto">
+      <div className="flex w-full items-center justify-center gap-10 lg:w-auto">
         <Link
           href={todayRoute}
           className={fixedButtonClass + (!isWeek ? selectedClass : "")}

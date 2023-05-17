@@ -1,32 +1,42 @@
+import { AppRoutes } from "@/utils/routes";
 import { FC, useEffect, useState } from "react";
-import { Food, FoodGroup } from "@/types/foodTypes";
-import { getNutritionMerged } from "../../Food/nutritionHelpers";
-import { setRecipeState } from "@/store/slices/createRecipeSlice";
+import { Food, IngredientGroup } from "@/types/foodTypes";
+import { getNutritionMerged } from "../Food/nutritionHelpers";
+import { Meal } from "@/types/mealTypes";
+import { setRecipeState, setMealState } from "@/store/slices/createFoodSlice";
 import { useDispatch } from "react-redux";
-import FoodNutritionDetail from "../../Food/FoodNutritionDetail";
+import { useRouter } from "next/router";
+import FoodNutritionDetail from "../Food/FoodNutritionDetail";
 import PieGraph from "@/components/PieGraph/PieGraph";
 import Spinner from "@/components/Loader/Spinner";
 
 interface Props {
-  recipe: Food;
-  foodIngredients: FoodGroup | null;
+  food?: Food;
+  meal?: Meal;
+  ingredients: IngredientGroup;
 }
 
-const RecipeNutrition: FC<Props> = ({ recipe, foodIngredients }) => {
+const IngredientsNutrition: FC<Props> = ({ food, meal, ingredients }) => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const [openDetails, setOpenDetails] = useState(false);
-  const { nutrients, ingredients } = recipe;
+  const nutrients = food?.nutrients || meal?.nutrients;
+  // const { nutrients, ingredients } = food || meal;
 
   useEffect(() => {
-    console.log({ foodIngredients });
-    console.log({ ingredients });
-    const nutritionMerged = getNutritionMerged(ingredients, foodIngredients);
+    if (!nutrients || !ingredients) return;
+    const nutritionMerged = getNutritionMerged(ingredients);
+    console.log({ nutritionMerged });
     if (Object.keys(nutritionMerged).length > 0) {
-      dispatch(setRecipeState({ ...recipe, nutrients: nutritionMerged }));
+      if (router.asPath === AppRoutes.create_recipe && food) {
+        dispatch(setRecipeState({ ...food, nutrients: nutritionMerged }));
+      } else if (router.asPath === AppRoutes.create_meal && meal) {
+        dispatch(setMealState({ ...meal, nutrients: nutritionMerged }));
+      }
     }
-  }, [foodIngredients, ingredients]);
+  }, [ingredients]);
 
-  if (!nutrients) {
+  if (!nutrients || !ingredients) {
     return (
       <div>
         <Spinner customClass="h-4 w-4" />
@@ -105,4 +115,4 @@ const RecipeNutrition: FC<Props> = ({ recipe, foodIngredients }) => {
   );
 };
 
-export default RecipeNutrition;
+export default IngredientsNutrition;

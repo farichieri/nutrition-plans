@@ -7,7 +7,6 @@ import {
   getDocs,
   increment,
   limit,
-  or,
   query,
   serverTimestamp,
   setDoc,
@@ -40,8 +39,10 @@ const addFood = async (
       food_name_lowercase: food.food_name.toLowerCase(),
       image: img,
       kind: kind,
-      user_id: user.user_id,
       nutrients: { ...food.nutrients },
+      scale_amount: food.serving_amount,
+      scale_name: food.serving_name,
+      uploader: user.user_id,
     };
     console.log({ newFood });
     await setDoc(docRef, newFood);
@@ -108,7 +109,7 @@ const fetchFoodByID = async (food_id: string) => {
   }
 };
 
-const fetchFoodIngredients = async (food_ids: string[]) => {
+const fetchFoodsByIDS = async (food_ids: string[]) => {
   console.log(`Fetching Food ${food_ids}`);
   try {
     let data: FoodGroup = {};
@@ -124,7 +125,7 @@ const fetchFoodIngredients = async (food_ids: string[]) => {
       return null;
     }
   } catch (error) {
-    console.log({ error: `Error fetching Food: ${error}` });
+    console.log({ error: `Error fetching Foods: ${error}` });
     return null;
   }
 };
@@ -180,5 +181,5 @@ export {
   fetchFoods,
   updateFoodAction,
   fetchFoodByID,
-  fetchFoodIngredients,
+  fetchFoodsByIDS,
 };

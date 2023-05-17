@@ -1,67 +1,27 @@
 import {
-  selectFoodsSlice,
-  setBasicFoodsSearched,
-} from "@/store/slices/foodsSlice";
-import {
-  selectCreateRecipeSlice,
+  selectCreateFoodSlice,
   setIngredientOpened,
-} from "@/store/slices/createRecipeSlice";
-import { fetchFoods } from "@/firebase/helpers/Food";
+} from "@/store/slices/createFoodSlice";
 import { FC, useEffect, useState } from "react";
-import { filterObject } from "@/utils/filter";
-import { Food, FoodGroup, FoodKind } from "@/types/foodTypes";
+import { Food } from "@/types/foodTypes";
+import { selectFoodsSlice } from "@/store/slices/foodsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import IngredientData from "./IngredientData";
-import Spinner from "@/components/Loader/Spinner";
+import SearchBar from "../Food/FoodSearch/SearchBar";
 
 interface Props {}
 
 const IngredientsSelector: FC<Props> = () => {
   const dispatch = useDispatch();
-  const { basicFoodsSearched } = useSelector(selectFoodsSlice);
-  const [searchInput, setSearchInput] = useState("");
-  const [searchResult, setSearchResult] = useState(basicFoodsSearched);
-  const [isSearching, setIsSearching] = useState(false);
-  const { ingredientOpened } = useSelector(selectCreateRecipeSlice);
+  const { foodsSearched } = useSelector(selectFoodsSlice);
+  const [searchResult, setSearchResult] = useState(foodsSearched);
+  const { ingredientOpened } = useSelector(selectCreateFoodSlice);
   const [openIngredients, setOpenIngredients] = useState(false);
 
-  const handleChangeSearcher = (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
-    const value = event.target.value;
-    setSearchInput(value);
-  };
-
-  const fetchData = async (input: string) => {
-    setIsSearching(true);
-    const res: FoodGroup = await fetchFoods({
-      food_name_lowercase: input,
-      kind: FoodKind.basic_food,
-    });
-    if (!res?.error) {
-      const basicFoods = filterObject(res, 'kind', FoodKind.basic_food)
-      !res.error && dispatch(setBasicFoodsSearched(basicFoods));
-    }
-    setIsSearching(false);
-  };
-
   useEffect(() => {
-    setSearchResult(basicFoodsSearched);
-  }, [basicFoodsSearched]);
-
-  useEffect(() => {
-    const foodsFiltered = filterObject(
-      basicFoodsSearched,
-      "food_name_lowercase",
-      searchInput
-    );
-    setSearchResult(foodsFiltered);
-    const timer = setTimeout(() => {
-      fetchData(searchInput);
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, [searchInput]);
+    setSearchResult(foodsSearched);
+  }, [foodsSearched]);
 
   const handleCloseIngredients = () => {
     setOpenIngredients(false);
@@ -76,22 +36,12 @@ const IngredientsSelector: FC<Props> = () => {
     dispatch(setIngredientOpened(null));
   };
 
+  console.log({ ingredientOpened });
+
   return (
     <>
       <div className="flex items-center">
-        <div className=" focus-within:border:gray-500 relative flex w-fit items-center gap-1 rounded-3xl border px-4 dark:focus-within:border-white">
-          <span className="material-icons">search</span>
-          <input
-            placeholder="Add Ingredient"
-            className="bg-transparent px-1 py-2 outline-none "
-            value={searchInput}
-            onChange={handleChangeSearcher}
-            onFocus={() => setOpenIngredients(true)}
-          />
-          <div className="absolute right-5">
-            {isSearching && <Spinner customClass="h-4 w-4" />}
-          </div>
-        </div>
+        <SearchBar onFocus={() => setOpenIngredients(true)} />
         {openIngredients && (
           <span
             className="material-icons ml-auto flex cursor-pointer"
@@ -112,7 +62,7 @@ const IngredientsSelector: FC<Props> = () => {
                 >
                   close
                 </span>
-                <IngredientData ingredient={ingredientOpened} />
+                <IngredientData food={ingredientOpened} />
               </div>
             </div>
           )}
@@ -135,6 +85,9 @@ const IngredientsSelector: FC<Props> = () => {
                 </span>
                 <span className="text-xs opacity-50">
                   {searchResult[food].food_description}
+                </span>
+                <span className="text-xs text-green-500">
+                  {searchResult[food].kind}
                 </span>
               </div>
             </div>

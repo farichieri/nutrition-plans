@@ -1,17 +1,68 @@
+import { fetchFoodsByIDS } from "@/firebase/helpers/Food";
 import { getToday } from "@/utils/dateFormat";
 import { selectAuthSlice, setUpdateUser } from "@/store/slices/authSlice";
 import { updateUserPlan } from "@/firebase/helpers/Plans";
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 import DaySelector from "@/components/Premium/Plans/DaySelector";
 
 interface Props {
   planData: any;
 }
 
-const PLAN_EXAMPLE = {
-  date_created: "",
-  date: "",
+const MEAL_PLAN_DAY_EXAMPLE = {
+  date_created: "xxxxxxxxxxx",
   plan_id: "balanced",
+  num_meals: 4,
+  meal_plan_id: "ASDKLXL7893425XM",
+  meals: {
+    1: {
+      meal_id: "ASKLDJALSKDJKAS",
+      foods: {
+        Cbgaj8C9KitFtWMFVSk1: {
+          food_id: 'Cbgaj8C9KitFtWMFVSk1',
+          amount: 1,
+          weight_name: "serving",
+        },
+        F8gT3VIxiieQ0WP8Pt9u: {
+          meal_id: "F8gT3VIxiieQ0WP8Pt9u",
+          amount: 1,
+          weight_name: "serving",
+        }
+      },
+    },
+    2: {
+      meal_id: "ASKLDJALSK123123DJKAS",
+      foods: {
+        VxOrF4McQZOxGAJ1M9NF: {
+          meal_id: "VxOrF4McQZOxGAJ1M9NF",
+          amount: 1,
+          weight_name: "serving",
+        },
+      },
+    },
+    3: {
+      meal_id: "ASKLDJALSKDJKEEEEEAS",
+      foods: {
+        QMc305KQeDBWmgoQDd6y: {
+          food_id: 'QMc305KQeDBWmgoQDd6y',
+          amount: 1,
+          weight_name: "serving",
+        },
+      },
+    },
+    4: {
+      meal_id: "ASKLDJALSKDJKAS",
+      foods: {
+        khjj4zFUJLb6on0bu8O4: {
+          food_id: 'khjj4zFUJLb6on0bu8O4',
+          amount: 1,
+          weight_name: "serving",
+        },
+      },
+    },
+  },
+  // date: "05-15-2023",
 };
 
 const DayPlan = ({ planData }: Props) => {
@@ -30,6 +81,16 @@ const DayPlan = ({ planData }: Props) => {
       dispatch(setUpdateUser(userUpdated));
     }
   };
+
+  const fetchFoodsData = async (foods: any) => {
+    const ids = Object.keys(foods).map((f) => foods[f].meal_id);
+    const result = await fetchFoodsByIDS(ids);
+    return result;
+  };
+
+  useEffect(() => {
+    // const data = fetchFoodsByIDS(MEAL_PLAN_DAY_EXAMPLE.meals)
+  }, []);
 
   const isFree = user?.premium_plan === "free";
 

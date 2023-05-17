@@ -1,8 +1,7 @@
 import {
   Food,
-  FoodGroup,
   FoodNutrients,
-  Ingredient,
+  IngredientGroup,
   NutritionMeasurements,
 } from "@/types/foodTypes";
 import { NewFoodNutrients } from "@/types/initialTypes";
@@ -45,15 +44,12 @@ const getNutritionValues = (
   return nutrientsUpdated;
 };
 
-const getIngredientNutrition = (
-  foodIngredient: Food,
-  ingredient: Ingredient
-) => {
-  if (foodIngredient.nutrients) {
+const getIngredientNutrition = (food: Food) => {
+  if (food.nutrients && food.scale_amount && food.scale_name) {
     const foodNutrition: FoodNutrients = getNutritionValues(
-      foodIngredient,
-      ingredient.amount,
-      ingredient.weight_name
+      food,
+      food.scale_amount,
+      food.scale_name
     );
     return foodNutrition;
   } else {
@@ -62,28 +58,21 @@ const getIngredientNutrition = (
 };
 
 const getNutritionMerged = (
-  ingredients: Ingredient[],
-  foodIngredients: FoodGroup | null
+  ingredients: IngredientGroup
+  // ingredients: Ingredient[],
+  // foodIngredients: FoodGroup | null
 ): FoodNutrients => {
-  if (
-    !foodIngredients ||
-    Object.keys(foodIngredients).length < 1 ||
-    ingredients.length < 1
-  ) {
+  if (Object.keys(ingredients).length < 1) {
     return NewFoodNutrients;
   }
 
   let result: any = Object.create({});
 
-  ingredients.forEach((ingredient) => {
-    const id = ingredient.food_id;
-    if (id && foodIngredients) {
-      const food = foodIngredients[id];
+  Object.keys(ingredients).forEach((ing_id) => {
+    const food = ingredients[ing_id].food;
+    if (ing_id && food) {
       if (food) {
-        const ingredientNutrition: FoodNutrients = getIngredientNutrition(
-          food,
-          ingredient
-        );
+        const ingredientNutrition: FoodNutrients = getIngredientNutrition(food);
         for (let key in ingredientNutrition) {
           const value = result[key as keyof FoodNutrients];
           const newValue = ingredientNutrition[key as keyof FoodNutrients];
@@ -145,20 +134,20 @@ const getNewAmount = (
   }
 };
 
-const getRecipeSize = (
-  ingredients: Ingredient[],
-  foodIngredients: FoodGroup | null
-): number | null => {
-  if (!foodIngredients) return null;
+const getRecipeSize = (ingredients: IngredientGroup): number | null => {
+  if (!ingredients) return null;
   let size = 0;
-  ingredients.map((ing) => {
-    const equivalentInGrams = getNewAmount(
-      foodIngredients[ing.food_id],
-      ing.weight_name,
-      NutritionMeasurements.grams,
-      ing.amount
-    );
-    size += equivalentInGrams || 0;
+  Object.keys(ingredients).map((ing) => {
+    const food = ingredients[ing].food;
+    if (food.scale_name && food.scale_amount) {
+      const equivalentInGrams = getNewAmount(
+        food,
+        food.scale_name,
+        NutritionMeasurements.grams,
+        food.scale_amount
+      );
+      size += equivalentInGrams || 0;
+    }
   });
   return size;
 };

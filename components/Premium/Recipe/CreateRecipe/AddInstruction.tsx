@@ -1,7 +1,7 @@
 import {
-  selectCreateRecipeSlice,
+  selectCreateFoodSlice,
   setRecipeState,
-} from "@/store/slices/createRecipeSlice";
+} from "@/store/slices/createFoodSlice";
 import { FC, useState } from "react";
 import { Instruction } from "@/types/foodTypes";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,7 +11,7 @@ interface Props {}
 
 const AddInstruction: FC<Props> = () => {
   const dispatch = useDispatch();
-  const { recipeState } = useSelector(selectCreateRecipeSlice);
+  const { recipeState } = useSelector(selectCreateFoodSlice);
   const [newInstruction, setNewInstruction] = useState<Instruction>({
     instruction_id: "",
     order: 0,
@@ -68,7 +68,7 @@ const AddInstruction: FC<Props> = () => {
         onChange={handleChange}
         value={newInstruction.text}
         placeholder="New Instruction..."
-        className="h-full max-h-32 min-h-10 w-full rounded-lg border bg-transparent p-2 text-sm outline-none  placeholder:opacity-50 focus-within:border-black dark:focus-within:border-white"
+        className="min-h-10 h-full max-h-32 w-full rounded-lg border bg-transparent p-2 text-sm outline-none  placeholder:opacity-50 focus-within:border-black dark:focus-within:border-white"
       />
       <button onClick={handleAddInstruction} className="flex items-center">
         <span className="material-icons pointer-events-none">add</span>
