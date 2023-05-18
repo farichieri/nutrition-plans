@@ -1,6 +1,5 @@
 import {
   DishTypesEnum,
-  Food,
   CompatiblePlans,
   FoodType,
   RecipeCategoriesEnum,
@@ -29,6 +28,7 @@ import Input from "@/components/Form/Input";
 import Instructions from "./Instructions";
 import NutritionInput from "@/components/Form/NutritionInput";
 import Select from "@/components/Form/Select";
+import { Recipe } from "@/types/recipeTypes";
 
 interface Props {}
 const RecipeCreate: FC<Props> = () => {
@@ -98,7 +98,7 @@ const RecipeCreate: FC<Props> = () => {
     if (isCreating) return;
     setIsCreating(true);
     const recipeGrams = getRecipeSize(recipeState.ingredients);
-    const newFood: Food = {
+    const newFood: Recipe = {
       ...recipeState,
       serving_grams: recipeGrams,
     };
@@ -138,7 +138,7 @@ const RecipeCreate: FC<Props> = () => {
           name={"food_name"}
           title={"Food Name"}
           type={"text"}
-          value={recipeState["food_name" as keyof Food]}
+          value={recipeState["food_name" as keyof Recipe]}
         />
         <Input
           handleChange={handleChange}
@@ -231,7 +231,7 @@ const RecipeCreate: FC<Props> = () => {
           name={"dish_type"}
           title={"Dish Type"}
           options={Object.keys(DishTypesEnum)}
-          value={recipeState["dish_type" as keyof Food]}
+          value={recipeState["dish_type" as keyof Recipe]}
         />
         <Select
           customClass={""}
@@ -243,7 +243,7 @@ const RecipeCreate: FC<Props> = () => {
           name={"digestion_status"}
           title={"Digestion Status"}
           options={Object.keys(DigestionStatusEnum)}
-          value={recipeState["digestion_status" as keyof Food]}
+          value={recipeState["digestion_status" as keyof Recipe]}
         />
         <div className="">
           <h1 className="text-xl">Food Type</h1>

@@ -1,6 +1,6 @@
 import { fetchFoodByID } from "@/firebase/helpers/Food";
 import { Food } from "@/types/foodTypes";
-import { selectFoodsSlice, setFood } from "@/store/slices/foodsSlice";
+import { selectFoodsSlice, setFoodOpened } from "@/store/slices/foodsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
@@ -17,19 +17,19 @@ export default function Page() {
   const router = useRouter();
   const dispatch = useDispatch();
   const { id } = router.query;
-  const { food, foodsSearched } = useSelector(selectFoodsSlice);
-  const foodData = food.data;
+  const { foodOpened, foodsSearched } = useSelector(selectFoodsSlice);
+  const foodData = foodOpened.food;
 
   useEffect(() => {
     if (typeof id === "string") {
       if (!foodsSearched[id]) {
         const fetchFoodID = async () => {
           const foodFetched: Food | null = await fetchFoodByID(id);
-          foodFetched && dispatch(setFood(foodFetched));
+          foodFetched && dispatch(setFoodOpened(foodFetched));
         };
         fetchFoodID();
       } else {
-        dispatch(setFood(foodsSearched[id]));
+        dispatch(setFoodOpened(foodsSearched[id]));
       }
     }
   }, [id]);
@@ -74,7 +74,7 @@ export default function Page() {
                 {foodData.food_id && <FoodActions foodID={foodData.food_id} />}
               </div>
               <div className="flex w-full max-w-xl">
-                <FoodNutrition isIngredient={false} foodProp={foodData} />
+                <FoodNutrition />
               </div>
             </div>
             <div className="flex w-full max-w-xl flex-col gap-5">

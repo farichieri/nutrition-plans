@@ -196,6 +196,7 @@ export const NewFood: Food = {
   num_ingredient_usages: 0,
   num_likes: 0,
   nutrients: NewFoodNutrients,
+  order: null,
   prep_time: null,
   price: null,
   recipe_category: null,

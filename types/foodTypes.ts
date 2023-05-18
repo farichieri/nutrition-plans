@@ -28,6 +28,7 @@ export interface Food {
   num_ingredient_usages: number;
   num_likes: number;
   nutrients: FoodNutrients;
+  order: number | null;
   prep_time: number | null;
   price: number | null;
   recipe_category: RecipeCategoriesEnum | null;
@@ -186,8 +187,9 @@ export enum DishTypesEnum {
   "side_dish" = "Side Dish",
 }
 export enum FoodKind {
-  "recipe" = "recipe",
   "basic_food" = "basic_food",
+  "meal" = "meal",
+  "recipe" = "recipe",
 }
 
 export enum GlucemicStatusEnum {

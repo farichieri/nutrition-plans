@@ -7,15 +7,17 @@ import Spinner from "@/components/Loader/Spinner";
 
 interface Props {
   onFocus?: Function;
+  preFetch: boolean;
 }
 
-const SearchBar: FC<Props> = ({ onFocus }) => {
+const SearchBar: FC<Props> = ({ onFocus, preFetch }) => {
   const dispatch = useDispatch();
-  const [searchInput, setSearchInput] = useState<string>("");
   const { foodsSearched } = useSelector(selectFoodsSlice);
-  const noData = Object.values(foodsSearched).length === 0;
-  const [openFilters, setOpenFilters] = useState(false);
+  const [searchInput, setSearchInput] = useState<string>("");
+  const [isFocused, setIsFocused] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
+  const [openFilters, setOpenFilters] = useState(false);
+  const noData = Object.values(foodsSearched).length === 0;
 
   const fetchData = async (input: string) => {
     setIsSearching(true);
@@ -27,19 +29,22 @@ const SearchBar: FC<Props> = ({ onFocus }) => {
       !res.error && dispatch(setFoodsSearched(res));
     }
     setIsSearching(false);
+    setIsFocused(false);
   };
 
   useEffect(() => {
-    if (noData) {
-      fetchData("");
+    if (preFetch || (isFocused && noData)) {
+      if (noData) {
+        fetchData("");
+      }
+
+      const timer = setTimeout(() => {
+        fetchData(searchInput.toLowerCase());
+      }, 500);
+
+      return () => clearTimeout(timer);
     }
-
-    const timer = setTimeout(() => {
-      fetchData(searchInput.toLowerCase());
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, [searchInput]);
+  }, [searchInput, isFocused]);
 
   const handleOpenFilters = async (event: React.MouseEvent) => {
     event.preventDefault();
@@ -50,11 +55,13 @@ const SearchBar: FC<Props> = ({ onFocus }) => {
     event.preventDefault();
     const value = event.target.value;
     setSearchInput(value);
+    setIsFocused(true);
   };
 
   const handleFocus = (event: React.FocusEvent) => {
     event.preventDefault();
     onFocus && onFocus();
+    setIsFocused(true);
   };
 
   return (

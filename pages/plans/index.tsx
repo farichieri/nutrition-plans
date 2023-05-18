@@ -13,7 +13,7 @@ export default function Page({ plans }: Props) {
       <section className="flex w-full max-w-5xl flex-col items-center justify-start gap-10 py-24">
         <span className="text-5xl font-bold">Plans</span>
         <p>
-          Nutrition plans are essential for a healthy diet. That's why we
+          Nutrition plans are essential for a healthy diet. That&apos;s why we
           develop different diet plans to suit your goals, tastes and personal
           requirements, helping you achieve your desired goal in a calculated
           and simple way. Do not worry about the composition, we will do it for

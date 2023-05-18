@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Food } from "@/types/foodTypes";
-import { Meal, NewMeal } from "@/types/mealTypes";
 import { NewFood } from "@/types/initialTypes";
 import { PURGE } from "redux-persist";
 import type { RootState } from "../store";
@@ -9,7 +8,7 @@ import type { RootState } from "../store";
 interface FoodCreate {
   foodState: Food;
   ingredientOpened: Food | null;
-  mealState: Meal;
+  mealState: Food;
   recipeState: Food;
 }
 
@@ -17,7 +16,7 @@ interface FoodCreate {
 const initialState: FoodCreate = {
   foodState: NewFood,
   ingredientOpened: null,
-  mealState: NewMeal,
+  mealState: NewFood,
   recipeState: NewFood,
 };
 
@@ -32,7 +31,7 @@ export const createFoodSlice = createSlice({
     setRecipeState: (state, action: PayloadAction<Food>) => {
       state.recipeState = action.payload;
     },
-    setMealState: (state, action: PayloadAction<Meal>) => {
+    setMealState: (state, action: PayloadAction<Food>) => {
       state.mealState = action.payload;
     },
     setIngredientOpened: (state, action: PayloadAction<Food | null>) => {

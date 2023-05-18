@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import PremiumLayout from "@/components/Layout/PremiumLayout";
-import CreateDiet from "@/components/Premium/Diets/CreateDiet";
+import DietCreate from "@/components/Premium/Diets/CreateDiet/DietCreate";
 
 export default function Page() {
   const router = useRouter();
@@ -19,7 +19,7 @@ export default function Page() {
     <PremiumLayout>
       {user && user.is_admin && (
         <section className="gap-10 rounded-lg bg-white p-4 shadow-[0_1px_5px_lightgray] dark:bg-black dark:shadow-[0_1px_6px_#292929] sm:m-[1vw] sm:px-10">
-          <CreateDiet />
+          <DietCreate />
         </section>
       )}
     </PremiumLayout>

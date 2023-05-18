@@ -1,7 +1,7 @@
 import { NewFood } from "./initialTypes";
 import { Food } from "./foodTypes";
 
-export interface Meal extends Food {}
+export interface Recipe extends Food {}
 
 // Initials
-export const NewMeal: Meal = NewFood;
+export const NewMeal: Recipe = NewFood;

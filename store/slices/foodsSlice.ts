@@ -7,9 +7,9 @@ import type { RootState } from "../store";
 interface FoodsSlice {
   foodsSearched: FoodGroup;
   basicFoodsSearched: FoodGroup;
-  food: {
-    data: Food | null;
-    scale: {
+  foodOpened: {
+    food: Food | null;
+    food_scale: {
       amount: number;
       weightName: string;
     };
@@ -20,9 +20,9 @@ interface FoodsSlice {
 const initialState: FoodsSlice = {
   foodsSearched: {},
   basicFoodsSearched: {},
-  food: {
-    data: null,
-    scale: {
+  foodOpened: {
+    food: null,
+    food_scale: {
       amount: 1,
       weightName: "",
     },
@@ -40,14 +40,14 @@ export const foodsSlice = createSlice({
     setBasicFoodsSearched: (state, action: PayloadAction<FoodGroup>) => {
       state.basicFoodsSearched = action.payload;
     },
-    setFood: (state, action: PayloadAction<Food>) => {
-      state.food.data = action.payload;
+    setFoodOpened: (state, action: PayloadAction<Food | null>) => {
+      state.foodOpened.food = action.payload;
     },
-    setScale: (
+    setFoodOpenedScale: (
       state,
       action: PayloadAction<{ amount: number; weightName: string }>
     ) => {
-      state.food.scale = action.payload;
+      state.foodOpened.food_scale = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -57,8 +57,12 @@ export const foodsSlice = createSlice({
   },
 });
 
-export const { setFoodsSearched, setBasicFoodsSearched, setFood, setScale } =
-  foodsSlice.actions;
+export const {
+  setFoodsSearched,
+  setBasicFoodsSearched,
+  setFoodOpened,
+  setFoodOpenedScale,
+} = foodsSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectFoodsSlice = (state: RootState) => state.foods;

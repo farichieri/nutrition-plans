@@ -27,6 +27,10 @@ export enum MealsEnum {
   snack = "snack",
 }
 
+export type MealsType = {
+  [key in keyof typeof MealsEnum]?: (typeof MealsEnum)[key];
+};
+
 // Posts
 export interface Post {
   author: string;

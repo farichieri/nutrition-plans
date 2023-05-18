@@ -16,9 +16,9 @@ interface IngredientProps {
 }
 const Ingredient: FC<IngredientProps> = ({ ingredient }) => {
   const food = ingredient.food;
-  const { food: recipe } = useSelector(selectFoodsSlice);
-  const { data: foodData } = recipe;
-  const { amount, weightName } = recipe.scale;
+  const { foodOpened: recipe } = useSelector(selectFoodsSlice);
+  const { food: foodData } = recipe;
+  const { amount, weightName } = recipe.food_scale;
 
   if (!food || !food.scale_name || !food.scale_amount) {
     return (

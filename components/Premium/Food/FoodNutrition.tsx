@@ -1,10 +1,11 @@
-import { Food, NutritionMeasurements } from "@/types/foodTypes";
+import {
+  selectFoodsSlice,
+  setFoodOpenedScale,
+} from "@/store/slices/foodsSlice";
+import { NutritionMeasurements } from "@/types/foodTypes";
 import { formatToFixed } from "@/utils/format";
 import { getNewAmount, getNutritionValues } from "./nutritionHelpers";
-import { selectCreateFoodSlice } from "@/store/slices/createFoodSlice";
-import { selectFoodsSlice, setScale } from "@/store/slices/foodsSlice";
 import { useDispatch, useSelector } from "react-redux";
-import AddFoodIngredient from "./AddFood/AddFoodIngredient";
 import FoodNutritionDetail from "./FoodNutritionDetail";
 import Link from "next/link";
 import NutritionInput from "@/components/Form/NutritionInput";
@@ -12,18 +13,14 @@ import PieGraph from "@/components/PieGraph/PieGraph";
 import React, { FC, useEffect, useState } from "react";
 import Select from "@/components/Form/Select";
 
-interface Props {
-  foodProp: Food;
-  isIngredient: boolean;
-}
+interface Props {}
 
-const FoodNutrition: FC<Props> = ({ isIngredient, foodProp }) => {
+const FoodNutrition: FC<Props> = () => {
   const dispatch = useDispatch();
-  const { recipeState } = useSelector(selectCreateFoodSlice);
-  const { food } = useSelector(selectFoodsSlice);
-  const foodData = food?.data;
-  const amount = food?.scale?.amount;
-  const weightName = food?.scale?.weightName;
+  const { foodOpened } = useSelector(selectFoodsSlice);
+  const foodData = foodOpened?.food;
+  const amount = foodOpened?.food_scale?.amount;
+  const weightName = foodOpened?.food_scale?.weightName;
   const GRAMS = NutritionMeasurements.grams;
   const OZ = NutritionMeasurements.oz;
 
@@ -39,7 +36,9 @@ const FoodNutrition: FC<Props> = ({ isIngredient, foodProp }) => {
     const id = event.target.id;
     const value = event.target.value;
     if (id === "serving_amount") {
-      dispatch(setScale({ amount: Number(value), weightName: weightName }));
+      dispatch(
+        setFoodOpenedScale({ amount: Number(value), weightName: weightName })
+      );
     } else if (id === "weight_amount") {
       const newAmountSelected = getNewAmount(
         foodData,
@@ -48,7 +47,9 @@ const FoodNutrition: FC<Props> = ({ isIngredient, foodProp }) => {
         amount
       );
       newAmountSelected &&
-        dispatch(setScale({ amount: newAmountSelected, weightName: value }));
+        dispatch(
+          setFoodOpenedScale({ amount: newAmountSelected, weightName: value })
+        );
     }
   };
 
@@ -66,7 +67,10 @@ const FoodNutrition: FC<Props> = ({ isIngredient, foodProp }) => {
       originalValue = Number(foodData.serving_grams);
     }
     dispatch(
-      setScale({ amount: Number(originalValue), weightName: weightName })
+      setFoodOpenedScale({
+        amount: Number(originalValue),
+        weightName: weightName,
+      })
     );
     setIsNotOriginal(false);
   };
@@ -74,7 +78,7 @@ const FoodNutrition: FC<Props> = ({ isIngredient, foodProp }) => {
   useEffect(() => {
     if (!foodData) return;
     dispatch(
-      setScale({
+      setFoodOpenedScale({
         amount: foodData?.serving_amount || 1,
         weightName: foodData?.serving_name || "",
       })
@@ -161,13 +165,6 @@ const FoodNutrition: FC<Props> = ({ isIngredient, foodProp }) => {
             value={weightName}
           />
         </div>
-        {isIngredient && (
-          <AddFoodIngredient
-            amount={amount}
-            weight_name={weightName}
-            food={foodData}
-          />
-        )}
         <div className="flex h-10 justify-center">
           {isNotOriginal && (
             <button

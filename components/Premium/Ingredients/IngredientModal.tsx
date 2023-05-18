@@ -1,24 +1,27 @@
+import { DietMeal } from "@/types/dietTypes";
 import { FC, useEffect } from "react";
 import { Food } from "@/types/foodTypes";
-import { setFood, setScale } from "@/store/slices/foodsSlice";
+import { setFoodOpened, setFoodOpenedScale } from "@/store/slices/foodsSlice";
 import { useDispatch } from "react-redux";
+import AddFoodIngredient from "../Food/AddFood/AddFoodIngredient";
 import FoodNutrition from "../Food/FoodNutrition";
 import Image from "next/image";
 
 interface Props {
   food: Food;
+  dietMeal?: DietMeal;
 }
 
-const IngredientData: FC<Props> = ({ food }) => {
+const IngredientModal: FC<Props> = ({ food, dietMeal }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(
-      setScale({
+      setFoodOpenedScale({
         amount: food.serving_amount || 100,
         weightName: food.serving_name || "grams",
       })
     );
-    dispatch(setFood(food));
+    dispatch(setFoodOpened(food));
   }, [food]);
 
   return (
@@ -41,9 +44,10 @@ const IngredientData: FC<Props> = ({ food }) => {
           </span>
         </div>
       </div>
-      <FoodNutrition isIngredient={true} foodProp={food} />
+      <AddFoodIngredient dietMeal={dietMeal} />
+      <FoodNutrition />
     </div>
   );
 };
 
-export default IngredientData;
+export default IngredientModal;

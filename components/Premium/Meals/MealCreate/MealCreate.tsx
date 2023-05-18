@@ -1,29 +1,24 @@
 import {
-  FoodGroup,
-  CompatiblePlans,
-  FoodType,
-  Ingredient,
-} from "@/types/foodTypes";
-import { addMeal } from "@/firebase/helpers/Meal";
-import { FC, useEffect, useState } from "react";
-import { fetchFoodsByIDS } from "@/firebase/helpers/Food";
-import { Meal, NewMeal } from "@/types/mealTypes";
-import { selectAuthSlice } from "@/store/slices/authSlice";
-import {
   selectCreateFoodSlice,
   setMealState,
 } from "@/store/slices/createFoodSlice";
+import { addFood } from "@/firebase/helpers/Food";
+import { CompatiblePlans, FoodKind, FoodType } from "@/types/foodTypes";
+import { FC, useState } from "react";
+import { Meal } from "@/types/mealTypes";
+import { NewFood } from "@/types/initialTypes";
+import { selectAuthSlice } from "@/store/slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Checkbox from "@/components/Form/Checkbox";
 import FormAction from "@/components/Form/FormAction";
-import Ingredients from "../../Recipe/Ingredients";
+import Ingredients from "../../Ingredients/Ingredients";
 import IngredientsNutrition from "../../Ingredients/IngredientsNutrition";
 import IngredientsSelector from "../../Ingredients/IngredientsSelector";
 import Input from "@/components/Form/Input";
 
 interface Props {}
-const CreateMeal: FC<Props> = () => {
+const MealCreate: FC<Props> = () => {
   const dispatch = useDispatch();
   const [isCreating, setIsCreating] = useState(false);
   const { mealState } = useSelector(selectCreateFoodSlice);
@@ -72,41 +67,22 @@ const CreateMeal: FC<Props> = () => {
     const newMeal: Meal = {
       ...mealState,
     };
-    const res = await addMeal(newMeal, user);
+    const res = await addFood(newMeal, FoodKind.meal, undefined, user);
+    console.log({ res });
     if (!res?.error && res?.food_id) {
       dispatch(setMealState(newMeal));
-      alert("Recipe created successfully");
+      alert("Meal created successfully");
       router.push(`/app/food/${res.food_id}`);
     } else {
-      alert("Error creating recipe");
+      alert("Error creating meal");
     }
     setIsCreating(false);
   };
 
   const handleCancel = async (event: React.FormEvent) => {
     event.preventDefault();
-    dispatch(setMealState(NewMeal));
+    dispatch(setMealState(NewFood));
   };
-
-  // const fetchFoods = async (ingredients: Ingredient[]) => {
-  //   const ids = ingredients.map((ing) => ing.food_id);
-  //   const result = await fetchFoodsByIDS(ids);
-  //   return result;
-  // };
-
-  // const [foodIngredients, setFoodIngredients] = useState<FoodGroup | null>(
-  //   null
-  // );
-
-  // useEffect(() => {
-  //   if (mealState.ingredients.length > 0) {
-  //     const getFoods = async () => {
-  //       const foods = await fetchFoods(mealState.ingredients);
-  //       setFoodIngredients(foods);
-  //     };
-  //     getFoods();
-  //   }
-  // }, [mealState.ingredients.length]);
 
   return (
     <form
@@ -119,25 +95,25 @@ const CreateMeal: FC<Props> = () => {
       <div className="flex flex-col">
         <Input
           handleChange={handleChange}
-          id={"meal_name"}
+          id={"food_name"}
           isRequired={true}
-          labelFor={"meal_name"}
+          labelFor={"food_name"}
           labelText={"Name"}
-          name={"meal_name"}
+          name={"food_name"}
           title={"Meal Name"}
           type={"text"}
-          value={mealState["meal_name" as keyof Meal]}
+          value={mealState["food_name" as keyof Meal]}
         />
         <Input
           handleChange={handleChange}
-          id={"meal_description"}
+          id={"food_description"}
           isRequired={true}
-          labelFor={"meal_description"}
+          labelFor={"food_description"}
           labelText={"Description"}
-          name={"meal_description"}
+          name={"food_description"}
           title={"Meal Description"}
           type={"text"}
-          value={mealState["meal_description" as keyof Meal]}
+          value={mealState["food_description" as keyof Meal]}
         />
       </div>
       <div className="flex flex-col gap-5">
@@ -183,8 +159,8 @@ const CreateMeal: FC<Props> = () => {
         </div>
       </div>
       <div className="flex max-w-xl flex-col gap-2 rounded-md border p-2">
-        <span className="text-3xl">Foods</span>
-        <Ingredients ingredients={mealState.foods} />
+        <span className="text-3xl">Ingredients</span>
+        <Ingredients ingredients={mealState.ingredients} />
         <IngredientsSelector />
       </div>
       <div className="flex max-w-xl flex-col gap-2 rounded-md border p-2">
@@ -194,12 +170,12 @@ const CreateMeal: FC<Props> = () => {
           </span>
           <span className="text-2xl font-semibold">Nutrition Values</span>
         </div>
-        {/* {Object.keys(mealState.nutrients).length > 0 && (
+        {Object.keys(mealState.nutrients).length > 0 && (
           <IngredientsNutrition
             meal={mealState}
-            foodIngredients={mealState.foods}
+            ingredients={mealState.ingredients}
           />
-        )} */}
+        )}
       </div>
       <div className="flex gap-2">
         <FormAction
@@ -220,4 +196,4 @@ const CreateMeal: FC<Props> = () => {
     </form>
   );
 };
-export default CreateMeal;
+export default MealCreate;

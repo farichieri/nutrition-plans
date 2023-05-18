@@ -2,7 +2,6 @@ import { AppRoutes } from "@/utils/routes";
 import { FC, useEffect, useState } from "react";
 import { Food, IngredientGroup } from "@/types/foodTypes";
 import { getNutritionMerged } from "../Food/nutritionHelpers";
-import { Meal } from "@/types/mealTypes";
 import { setRecipeState, setMealState } from "@/store/slices/createFoodSlice";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
@@ -12,7 +11,7 @@ import Spinner from "@/components/Loader/Spinner";
 
 interface Props {
   food?: Food;
-  meal?: Meal;
+  meal?: Food;
   ingredients: IngredientGroup;
 }
 
@@ -21,7 +20,6 @@ const IngredientsNutrition: FC<Props> = ({ food, meal, ingredients }) => {
   const router = useRouter();
   const [openDetails, setOpenDetails] = useState(false);
   const nutrients = food?.nutrients || meal?.nutrients;
-  // const { nutrients, ingredients } = food || meal;
 
   useEffect(() => {
     if (!nutrients || !ingredients) return;

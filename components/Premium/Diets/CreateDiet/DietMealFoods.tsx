@@ -1,12 +1,10 @@
 import {
-  selectCreateFoodSlice,
-  setMealState,
-  setRecipeState,
-} from "@/store/slices/createFoodSlice";
-import { AppRoutes } from "@/utils/routes";
+  selectCreateDietSlice,
+  setDietState,
+} from "@/store/slices/createDietSlice";
 import { FC } from "react";
-import { getNewAmount } from "../Food/nutritionHelpers";
-import { Ingredient, IngredientGroup } from "@/types/foodTypes";
+import { getNewAmount } from "../../Food/nutritionHelpers";
+import { Food, FoodGroup } from "@/types/foodTypes";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Image from "next/image";
@@ -14,97 +12,83 @@ import Input from "@/components/Form/Input";
 import NutritionInput from "@/components/Form/NutritionInput";
 import Select from "@/components/Form/Select";
 import Spinner from "@/components/Loader/Spinner";
+import { DietMeal } from "@/types/dietTypes";
 
 interface IngredientProps {
-  ingredient: Ingredient;
+  food: Food;
+  dietMeal: DietMeal;
 }
 
-const Ingredient: FC<IngredientProps> = (props) => {
-  const food = props.ingredient.food;
+const DietMealFood: FC<IngredientProps> = ({ food, dietMeal }) => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { recipeState, mealState } = useSelector(selectCreateFoodSlice);
-  const isCreateRecipe = router.asPath === AppRoutes.create_recipe;
-  const isCreateMeal = router.asPath === AppRoutes.create_meal;
-  const state = isCreateMeal ? mealState : isCreateRecipe ? recipeState : null;
+  const { dietState } = useSelector(selectCreateDietSlice);
 
-  if (!state) return <>No State Provided</>;
+  if (!dietState) return <>No State Provided</>;
 
   const handleRemove = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    const id = (event.target as HTMLButtonElement).id;
-    const ingredients = { ...state.ingredients };
-    delete ingredients[id];
-    if (isCreateRecipe) {
-      dispatch(
-        setRecipeState({
-          ...state,
-          ingredients: ingredients,
-        })
-      );
-    } else if (isCreateMeal) {
-      dispatch(
-        setMealState({
-          ...state,
-          ingredients: ingredients,
-        })
-      );
-    }
+    // event.preventDefault();
+    // if (!dietMeal.diet_id) return;
+    // let id = (event.target as HTMLButtonElement).id;
+    // let diet_meals = { ...dietState.diet_meals };
+    // let diet_meal_foods = { ...diet_meals[dietMeal.diet_id].diet_meal_foods };
+    // if (typeof diet_meal_foods !== "undefined" && diet_meal_foods !== null) {
+    //   delete diet_meal_foods[id];
+    // }
+    // diet_meals[dietMeal.diet_id].diet_meal_foods = diet_meal_foods;
+    // console.log({ id });
+    // console.log({ diet_meals });
+    // console.log({ diet_meal_foods });
+    // dispatch(
+    //   setDietState({
+    //     ...dietState,
+    //     diet_meals: diet_meals,
+    //   })
+    // );
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
-    const type = event.target.type;
-    const name = event.target.name;
-    const id = event.target.id;
-    const value = event.target.value;
-    const valueF = type === "number" ? Number(value) : value;
-
-    const ingredients = { ...state.ingredients };
-    let ingredient = { ...ingredients[id] };
-    let ingredientUpdated = { ...ingredient };
-
-    if (name === "scale_name") {
-      // Este tiene que pasar a (food, scale_amount)
-      const newAmount = getNewAmount(
-        food,
-        food.scale_name || "grams",
-        value,
-        food.scale_amount || 1
-      );
-      ingredientUpdated = {
-        ...ingredientUpdated,
-        food: {
-          ...ingredient.food,
-          scale_name: value,
-          scale_amount: newAmount || ingredient.food.serving_amount,
-        },
-      };
-    } else {
-      ingredientUpdated = {
-        ...ingredientUpdated,
-        food: {
-          ...ingredient.food,
-          [name]: valueF,
-        },
-      };
-    }
-    ingredients[id] = ingredientUpdated;
-    if (isCreateRecipe) {
-      dispatch(
-        setRecipeState({
-          ...state,
-          ingredients: ingredients,
-        })
-      );
-    } else if (isCreateMeal) {
-      dispatch(
-        setMealState({
-          ...state,
-          ingredients: ingredients,
-        })
-      );
-    }
+    // event.preventDefault();
+    // const type = event.target.type;
+    // const name = event.target.name;
+    // const id = event.target.id;
+    // const value = event.target.value;
+    // const valueF = type === "number" ? Number(value) : value;
+    // const ingredients = { ...dietState.ingredients };
+    // let ingredient = { ...ingredients[id] };
+    // let ingredientUpdated = { ...ingredient };
+    // if (name === "scale_name") {
+    //   // Este tiene que pasar a (food, scale_amount)
+    //   const newAmount = getNewAmount(
+    //     food,
+    //     food.scale_name || "grams",
+    //     value,
+    //     food.scale_amount || 1
+    //   );
+    //   ingredientUpdated = {
+    //     ...ingredientUpdated,
+    //     food: {
+    //       ...ingredient.food,
+    //       scale_name: value,
+    //       scale_amount: newAmount || ingredient.food.serving_amount,
+    //     },
+    //   };
+    // } else {
+    //   ingredientUpdated = {
+    //     ...ingredientUpdated,
+    //     food: {
+    //       ...ingredient.food,
+    //       [name]: valueF,
+    //     },
+    //   };
+    // }
+    // ingredients[id] = ingredientUpdated;
+    // dispatch(
+    //   setDietState({
+    //     ...dietState,
+    //     ingredients: ingredients,
+    //   })
+    // );
   };
 
   if (!food.food_id) {
@@ -187,21 +171,27 @@ const Ingredient: FC<IngredientProps> = (props) => {
 };
 
 interface Props {
-  ingredients: IngredientGroup;
+  dietMeal: DietMeal;
 }
 
-const Ingredients: FC<Props> = (props) => {
-  if (Object.keys(props.ingredients).length < 1) {
+const DietMealFoods: FC<Props> = ({ dietMeal }) => {
+  const dietMealFoods = dietMeal.diet_meal_foods;
+
+  if (Object.keys(dietMealFoods).length < 1) {
     return <></>;
   }
 
   return (
     <div className="flex flex-col gap-1">
-      {Object.keys(props.ingredients).map((food_id) => (
-        <Ingredient ingredient={props.ingredients[food_id]} key={food_id} />
+      {Object.keys(dietMealFoods).map((food_id) => (
+        <DietMealFood
+          dietMeal={dietMeal}
+          food={dietMealFoods[food_id]}
+          key={food_id}
+        />
       ))}
     </div>
   );
 };
 
-export default Ingredients;
+export default DietMealFoods;
