@@ -65,8 +65,6 @@ export default function Page() {
                   width={500}
                   height={500}
                   className="m-auto h-[300px] w-[300px] rounded-lg object-cover"
-
-                  // className="w-50 pt-[var(--nav-h) m-auto rounded-lg"
                 />
                 <span className="text-center opacity-50">
                   {foodData.food_description}

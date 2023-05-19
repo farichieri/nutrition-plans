@@ -13,8 +13,8 @@ const FAQ: FC<Props> = ({ content }) => {
   return (
     <div
       key={content.title}
-      className={`flex w-full cursor-pointer select-none flex-col gap-4 ${
-        open && "bg-gray-100/40 dark:bg-gray-100/5"
+      className={`flex w-full  cursor-pointer select-none flex-col gap-4 rounded-md p-2 ${
+        open && "bg-gray-100/30 dark:bg-gray-500/20"
       }`}
       onClick={() => setOpen(!open)}
     >

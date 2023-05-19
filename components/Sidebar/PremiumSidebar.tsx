@@ -1,6 +1,5 @@
 import {
   selectLayoutSlice,
-  setIsSettingsOpen,
   setSidebarAdminOpen,
   setSidebarEvolutionOpen,
   setSidebarPlansOpen,
@@ -109,6 +108,9 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
     },
   ];
 
+  const fixedOptClass =
+    "text-md px-2 py-1 flex w-full items-center gap-1 rounded-lg text-base duration-300 hover:bg-slate-500/30 sm:text-lg active:border-gray-400 dark:active:border-white border border-transparent";
+
   return (
     <>
       {sidebarOpen && (
@@ -129,7 +131,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
             className={`${
               router.pathname === page.pathname &&
               "bg-slate-500/30 font-semibold "
-            } text-md hover:opacity-7 flex w-full flex-col items-center gap-1  rounded-lg px-2 py-1 text-base duration-300 hover:bg-slate-500/30 sm:text-lg`}
+            } text-md hover:opacity-7 flex w-full flex-col items-center gap-1 rounded-lg border border-transparent px-1.5 py-1 text-center text-base duration-300 hover:bg-slate-500/30 active:border-gray-400 dark:active:border-white sm:text-lg`}
           >
             <span className="material-icons md-24 notraslate text-green-500">
               {page.icon}
@@ -147,11 +149,13 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
         <div className="flex w-full flex-col items-center gap-2">
           <Link
             href={`/app/plans/${planSelected}/today`}
-            className={`${
-              planSelected &&
-              planVisited(planSelected) &&
-              " bg-slate-500/30 font-semibold"
-            } text-md flex w-full items-center gap-1 rounded-lg px-2 py-1 text-base duration-300 hover:bg-slate-500/30  sm:text-lg`}
+            className={
+              `${
+                planSelected &&
+                planVisited(planSelected) &&
+                " bg-slate-500/30 font-semibold"
+              } px-2` + fixedOptClass
+            }
           >
             <span className="material-icons md-24 text-green-500">
               description
@@ -187,9 +191,11 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
               <Link
                 href={`/app/plans/${plan.id}/${BaseDatesEnum.today}`}
                 key={plan.id}
-                className={`${
-                  planVisited(plan.id) && " bg-slate-500/30 font-semibold"
-                } flex items-center gap-1 rounded-lg py-1 pl-4 pr-2 text-base duration-300 hover:bg-slate-500/30 `}
+                className={
+                  `${
+                    planVisited(plan.id) && " bg-slate-500/30 font-semibold"
+                  } px-2` + fixedOptClass
+                }
               >
                 {plan.name}
                 {plan.id === planSelected && (
@@ -204,10 +210,12 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
         <div className="flex w-full flex-col items-center gap-2">
           <Link
             href={"/app/search-food"}
-            className={`${
-              router.asPath === "/app/search-food" &&
-              " bg-slate-500/30 font-semibold"
-            } text-md hover:opacity-7 flex w-full items-center gap-2 rounded-lg px-2 py-1 text-base  duration-300 hover:bg-slate-500/30 sm:text-lg`}
+            className={
+              `${
+                router.asPath === "/app/search-food" &&
+                " bg-slate-500/30 font-semibold"
+              } px-2` + fixedOptClass
+            }
           >
             <span className="material-icons md-24 text-green-500">
               menu_book
@@ -241,9 +249,12 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
               <Link
                 key={page.name}
                 href={page.url}
-                className={`${
-                  router.asPath === page.url && " bg-slate-500/30 font-semibold"
-                } hover:opacity-7 flex items-center gap-1.5 rounded-lg py-1 pl-4 pr-2 text-base duration-300 hover:bg-slate-500/30`}
+                className={
+                  `${
+                    router.asPath === page.url &&
+                    " bg-slate-500/30 font-semibold"
+                  }` + fixedOptClass
+                }
               >
                 <span className="material-icons md-24 notraslate text-green-500">
                   {page.icon}
@@ -284,10 +295,12 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
                 <Link
                   key={page.name}
                   href={page.url}
-                  className={`${
-                    router.asPath === page.url &&
-                    " bg-slate-500/30 font-semibold"
-                  } hover:opacity-7 flex items-center gap-1.5 rounded-lg py-1 pl-4 pr-2 text-base duration-300 hover:bg-slate-500/30`}
+                  className={
+                    `${
+                      router.asPath === page.url &&
+                      "bg-slate-500/30 font-semibold"
+                    }` + fixedOptClass
+                  }
                 >
                   <span className="material-icons md-24 notraslate text-red-500">
                     {page.icon}

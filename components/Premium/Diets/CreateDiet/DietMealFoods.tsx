@@ -2,17 +2,16 @@ import {
   selectCreateDietSlice,
   setDietState,
 } from "@/store/slices/createDietSlice";
+import { DietMeal } from "@/types/dietTypes";
 import { FC } from "react";
+import { Food } from "@/types/foodTypes";
 import { getNewAmount } from "../../Food/nutritionHelpers";
-import { Food, FoodGroup } from "@/types/foodTypes";
 import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/router";
 import Image from "next/image";
 import Input from "@/components/Form/Input";
 import NutritionInput from "@/components/Form/NutritionInput";
 import Select from "@/components/Form/Select";
 import Spinner from "@/components/Loader/Spinner";
-import { DietMeal } from "@/types/dietTypes";
 
 interface IngredientProps {
   food: Food;
@@ -20,75 +19,79 @@ interface IngredientProps {
 }
 
 const DietMealFood: FC<IngredientProps> = ({ food, dietMeal }) => {
-  const router = useRouter();
   const dispatch = useDispatch();
   const { dietState } = useSelector(selectCreateDietSlice);
 
   if (!dietState) return <>No State Provided</>;
 
   const handleRemove = (event: React.MouseEvent<HTMLButtonElement>) => {
-    // event.preventDefault();
-    // if (!dietMeal.diet_id) return;
-    // let id = (event.target as HTMLButtonElement).id;
-    // let diet_meals = { ...dietState.diet_meals };
-    // let diet_meal_foods = { ...diet_meals[dietMeal.diet_id].diet_meal_foods };
-    // if (typeof diet_meal_foods !== "undefined" && diet_meal_foods !== null) {
-    //   delete diet_meal_foods[id];
-    // }
-    // diet_meals[dietMeal.diet_id].diet_meal_foods = diet_meal_foods;
-    // console.log({ id });
-    // console.log({ diet_meals });
-    // console.log({ diet_meal_foods });
-    // dispatch(
-    //   setDietState({
-    //     ...dietState,
-    //     diet_meals: diet_meals,
-    //   })
-    // );
+    event.preventDefault();
+    if (!dietMeal.diet_meal_id) return;
+    let id = (event.target as HTMLButtonElement).id;
+    let diet_meals = { ...dietState.diet_meals };
+    let diet_meal_foods = { ...dietMeal.diet_meal_foods };
+    delete diet_meal_foods[id];
+
+    dispatch(
+      setDietState({
+        ...dietState,
+        diet_meals: {
+          ...diet_meals,
+          [dietMeal.diet_meal_id]: {
+            ...dietMeal,
+            diet_meal_foods: diet_meal_foods,
+          },
+        },
+      })
+    );
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // event.preventDefault();
-    // const type = event.target.type;
-    // const name = event.target.name;
-    // const id = event.target.id;
-    // const value = event.target.value;
-    // const valueF = type === "number" ? Number(value) : value;
-    // const ingredients = { ...dietState.ingredients };
-    // let ingredient = { ...ingredients[id] };
-    // let ingredientUpdated = { ...ingredient };
-    // if (name === "scale_name") {
-    //   // Este tiene que pasar a (food, scale_amount)
-    //   const newAmount = getNewAmount(
-    //     food,
-    //     food.scale_name || "grams",
-    //     value,
-    //     food.scale_amount || 1
-    //   );
-    //   ingredientUpdated = {
-    //     ...ingredientUpdated,
-    //     food: {
-    //       ...ingredient.food,
-    //       scale_name: value,
-    //       scale_amount: newAmount || ingredient.food.serving_amount,
-    //     },
-    //   };
-    // } else {
-    //   ingredientUpdated = {
-    //     ...ingredientUpdated,
-    //     food: {
-    //       ...ingredient.food,
-    //       [name]: valueF,
-    //     },
-    //   };
-    // }
-    // ingredients[id] = ingredientUpdated;
-    // dispatch(
-    //   setDietState({
-    //     ...dietState,
-    //     ingredients: ingredients,
-    //   })
-    // );
+    event.preventDefault();
+    if (!dietMeal.diet_meal_id) return;
+    const type = event.target.type;
+    const name = event.target.name;
+    const id = event.target.id;
+    const value = event.target.value;
+    const valueF = type === "number" ? Number(value) : value;
+
+    let diet_meals = { ...dietState.diet_meals };
+    let diet_meal_foods = { ...dietMeal.diet_meal_foods };
+    let food = { ...diet_meal_foods[id] };
+    let foodUpdated = { ...food };
+
+    if (name === "scale_name") {
+      // Este tiene que pasar a (food, scale_amount)
+      const newAmount = getNewAmount(
+        food,
+        food.scale_name || "grams",
+        value,
+        food.scale_amount || 1
+      );
+      foodUpdated = {
+        ...foodUpdated,
+        scale_name: value,
+        scale_amount: newAmount || food.food.serving_amount,
+      };
+    } else {
+      foodUpdated = {
+        ...foodUpdated,
+        [name]: valueF,
+      };
+    }
+    diet_meal_foods[id] = foodUpdated;
+    dispatch(
+      setDietState({
+        ...dietState,
+        diet_meals: {
+          ...diet_meals,
+          [dietMeal.diet_meal_id]: {
+            ...dietMeal,
+            diet_meal_foods: diet_meal_foods,
+          },
+        },
+      })
+    );
   };
 
   if (!food.food_id) {
@@ -178,7 +181,7 @@ const DietMealFoods: FC<Props> = ({ dietMeal }) => {
   const dietMealFoods = dietMeal.diet_meal_foods;
 
   if (Object.keys(dietMealFoods).length < 1) {
-    return <></>;
+    return <>No Foods Added.</>;
   }
 
   return (

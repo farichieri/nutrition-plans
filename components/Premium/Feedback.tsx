@@ -52,8 +52,10 @@ const Feedback: FC<Props> = () => {
     <div className="">
       <button
         onClick={handleFeedback}
-        className={`flex items-center text-sm outline-none duration-300 hover:opacity-100 ${
-          feedbackOpen ? "opacity-100" : "opacity-50"
+        className={`flex items-center rounded-3xl border border-transparent px-3 py-1 text-sm outline-none duration-300 hover:opacity-100 active:border-black dark:active:border-white ${
+          feedbackOpen
+            ? "border-black opacity-100 dark:border-white"
+            : "opacity-50"
         }`}
       >
         Feedback
@@ -103,7 +105,7 @@ const Feedback: FC<Props> = () => {
 
           <div
             onClick={handleFeedback}
-            className="absolute inset-0 h-screen w-screen"
+            className="absolute inset-0 z-[90] h-screen w-screen"
           ></div>
         </>
       )}

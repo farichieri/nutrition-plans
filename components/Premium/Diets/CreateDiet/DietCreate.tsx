@@ -10,8 +10,9 @@ import { useDispatch, useSelector } from "react-redux";
 import Checkbox from "@/components/Form/Checkbox";
 import DietMeals from "./DietMeals";
 import FormAction from "@/components/Form/FormAction";
+import IngredientsNutrition from "../../Ingredients/IngredientsNutrition";
 import Input from "@/components/Form/Input";
-import Ingredients from "../../Ingredients/Ingredients";
+import { createDiet } from "@/firebase/helpers/Diet";
 
 interface Props {}
 
@@ -29,16 +30,16 @@ const DietCreate: FC<Props> = () => {
     // const recipeGrams = getRecipeSize(dietState.ingredients);
     const newDiet: Diet = {
       ...dietState,
-      // serving_grams: recipeGrams,
+      num_meals: Object.keys(dietState.diet_meals).length,
     };
-    // const res = await addFood(newDiet, FoodKind.recipe, newImageFile, user);
-    // if (!res?.error && res?.food_id) {
-    //   dispatch(setDietState(NewDiet));
-    //   alert("Recipe created successfully");
-    //   router.push(`/app/food/${res.food_id}`);
-    // } else {
-    //   alert("Error creating recipe");
-    // }
+    const res = await createDiet(newDiet, user);
+    if (!res?.error && res?.diet_id) {
+      dispatch(setDietState(NewDiet));
+      alert("Diet created successfully");
+      // router.push(`/app/food/${res.diet_id}`);
+    } else {
+      alert("Error creating recipe");
+    }
     setIsCreating(false);
   };
 
@@ -69,88 +70,75 @@ const DietCreate: FC<Props> = () => {
   };
 
   return (
-    <form
-      className="mb-[100vh] mt-8 flex max-w-xl flex-col gap-2"
-      onSubmit={handleSubmit}
-    >
-      <div>
-        <span className="text-3xl font-semibold">Create Diet</span>
-      </div>
-      <div className="flex flex-col">
-        <Input
-          handleChange={handleChange}
-          id={"diet_name"}
-          isRequired={true}
-          labelFor={"diet_name"}
-          labelText={"Name"}
-          name={"diet_name"}
-          title={"Diet Name"}
-          type={"text"}
-          value={dietState["diet_name" as keyof Diet]}
-        />
-        <Input
-          handleChange={handleChange}
-          id={"diet_description"}
-          isRequired={true}
-          labelFor={"diet_description"}
-          labelText={"Description"}
-          name={"diet_description"}
-          title={"Diet Description"}
-          type={"text"}
-          value={dietState["diet_description"] || ""}
-        />
-      </div>
-      <div className="flex flex-col gap-5">
-        <span className="text-3xl font-normal">Diet Properties:</span>
-        <div className="">
-          <h1 className="text-xl">Compatible plans</h1>
-          <div className="">
-            {Object.keys(dietState.compatible_plans).map((type) => (
-              <Checkbox
-                key={type}
-                customClass={""}
-                handleChange={handleChange}
-                id={type}
-                isRequired={false}
-                labelFor={type}
-                labelText={type}
-                name={"compatible_plans"}
-                title={type}
-                value={dietState["compatible_plans" as keyof Diet][type]}
-              />
-            ))}
+    <form className="mb-4 mt-4 flex flex-col gap-2" onSubmit={handleSubmit}>
+      <div className="flex w-full flex-wrap gap-10">
+        <div className="w-full max-w-xl flex-col">
+          <div>
+            <span className="text-3xl font-semibold">Create Diet</span>
+          </div>
+          <div className="flex flex-col">
+            <Input
+              handleChange={handleChange}
+              id={"diet_name"}
+              isRequired={true}
+              labelFor={"diet_name"}
+              labelText={"Name"}
+              name={"diet_name"}
+              title={"Diet Name"}
+              type={"text"}
+              value={dietState["diet_name" as keyof Diet]}
+            />
+            <Input
+              handleChange={handleChange}
+              id={"diet_description"}
+              isRequired={true}
+              labelFor={"diet_description"}
+              labelText={"Description"}
+              name={"diet_description"}
+              title={"Diet Description"}
+              type={"text"}
+              value={dietState["diet_description"] || ""}
+            />
+          </div>
+          <div className="my-5 flex flex-col">
+            <h1 className="text-xl">Compatible plans</h1>
+            <div className="">
+              {Object.keys(dietState.compatible_plans).map((type) => (
+                <Checkbox
+                  key={type}
+                  customClass={""}
+                  handleChange={handleChange}
+                  id={type}
+                  isRequired={false}
+                  labelFor={type}
+                  labelText={type}
+                  name={"compatible_plans"}
+                  title={type}
+                  value={dietState["compatible_plans" as keyof Diet][type]}
+                />
+              ))}
+            </div>
+          </div>
+          <div className="mt-5 flex w-full max-w-xl flex-col gap-2 rounded-md border p-2">
+            <div className="flex items-center gap-1">
+              <span className="material-icons-outlined text-green-500">
+                data_usage
+              </span>
+              <span className="text-2xl font-semibold">Nutrition Values</span>
+            </div>
+            {Object.keys(dietState.diet_nutrients).length > 0 && (
+              <IngredientsNutrition diet={dietState} />
+            )}
           </div>
         </div>
-      </div>
-      <div className="flex flex-col gap-5">
-        <div className="">
-          <h1 className="text-xl">Meals</h1>
-          <div className="">
-            <DietMeals dietMeals={dietState.diet_meals} />
-          </div>
-        </div>
-      </div>
-      {/* <div className="flex max-w-xl flex-col gap-2 rounded-md border p-2">
-        <span className="text-3xl">Ingredients</span>
-        <Ingredients ingredients={dietState.ingredients} />
-        <IngredientsSelector />
-      </div>
-      <div className="flex max-w-xl flex-col gap-2 rounded-md border p-2">
-        <div className="flex items-center gap-1">
-          <span className="material-icons-outlined text-green-500">
-            data_usage
-          </span>
-          <span className="text-2xl font-semibold">Nutrition Values</span>
-        </div>
-        {Object.keys(dietState.nutrients).length > 0 && (
-          <IngredientsNutrition
-            food={dietState}
-            ingredients={dietState.ingredients}
-          />
-        )}
-      </div> */}
 
-      <div className="flex gap-2">
+        <div className="flex w-full max-w-xl flex-col gap-1 ">
+          <h1 className="text-xl">Meals</h1>
+          <DietMeals dietMeals={dietState.diet_meals} />
+        </div>
+      </div>
+
+      <div className="m-auto flex max-w-xl  gap-2">
         <FormAction
           handleSubmit={handleCancel}
           text="Discard"

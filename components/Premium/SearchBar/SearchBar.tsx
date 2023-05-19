@@ -33,7 +33,7 @@ const SearchBar: FC<Props> = ({ onFocus, preFetch }) => {
   };
 
   useEffect(() => {
-    if (preFetch || (isFocused && noData)) {
+    if (preFetch || (isFocused && noData) || (!preFetch && isFocused)) {
       if (noData) {
         fetchData("");
       }

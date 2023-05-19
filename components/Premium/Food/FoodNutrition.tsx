@@ -119,14 +119,9 @@ const FoodNutrition: FC<Props> = () => {
     setOpenDetails(true);
   };
 
-  console.log({ foodData, nutrients, weightName });
   if (!foodData || !nutrients || !weightName) {
     return <div>Loading...</div>;
   }
-
-  console.log({ amount });
-  console.log({ weightName });
-  console.log({ foodData });
 
   return (
     <div className="flex w-full max-w-xl flex-wrap items-center justify-center gap-10">

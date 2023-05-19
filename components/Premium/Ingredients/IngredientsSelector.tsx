@@ -47,7 +47,7 @@ const IngredientsSelector: FC<Props> = () => {
       {openIngredients && (
         <div className="relative flex flex-col gap-1 rounded-md">
           {foodOpened.food && (
-            <div className="absolute z-50 flex h-auto w-full flex-col gap-1 rounded-md bg-gray-200 dark:bg-black">
+            <div className="absolute z-50 flex h-full w-full flex-col gap-1 overflow-auto rounded-md bg-gray-200 dark:bg-black">
               <div className="relative flex h-full flex-col gap-1 overflow-auto rounded-md border p-1">
                 <span
                   onClick={handleCloseIngredient}

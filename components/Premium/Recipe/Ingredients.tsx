@@ -5,11 +5,11 @@ import {
 } from "@/types/foodTypes";
 import { FC } from "react";
 import { getNewAmount } from "../Food/nutritionHelpers";
+import { selectFoodsSlice } from "@/store/slices/foodsSlice";
+import { useSelector } from "react-redux";
 import Image from "next/image";
 import Link from "next/link";
 import Spinner from "@/components/Loader/Spinner";
-import { useSelector } from "react-redux";
-import { selectFoodsSlice } from "@/store/slices/foodsSlice";
 
 interface IngredientProps {
   ingredient: Ingredient;
@@ -38,6 +38,7 @@ const Ingredient: FC<IngredientProps> = ({ ingredient }) => {
     );
 
   console.log({ ingGrams });
+  console.log({ foodData });
 
   const calculateIngredientScale = () => {
     if (!foodData || !foodData.serving_grams || !ingGrams) return;
@@ -68,6 +69,8 @@ const Ingredient: FC<IngredientProps> = ({ ingredient }) => {
       food.scale_name,
       ingScaleGramsAmount
     );
+
+  console.log({ ingScaleAmount });
 
   return (
     <Link

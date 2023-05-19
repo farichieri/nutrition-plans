@@ -1,5 +1,6 @@
 import {
   Food,
+  FoodGroup,
   FoodNutrients,
   IngredientGroup,
   NutritionMeasurements,
@@ -57,20 +58,16 @@ const getIngredientNutrition = (food: Food) => {
   }
 };
 
-const getNutritionMerged = (
-  ingredients: IngredientGroup
-  // ingredients: Ingredient[],
-  // foodIngredients: FoodGroup | null
-): FoodNutrients => {
-  if (Object.keys(ingredients).length < 1) {
+const getNutritionMerged = (foods: FoodGroup): FoodNutrients => {
+  if (Object.keys(foods).length < 1) {
     return NewFoodNutrients;
   }
 
   let result: any = Object.create({});
 
-  Object.keys(ingredients).forEach((ing_id) => {
-    const food = ingredients[ing_id].food;
-    if (ing_id && food) {
+  Object.keys(foods).forEach((food_id) => {
+    const food = foods[food_id];
+    if (food_id && food) {
       if (food) {
         const ingredientNutrition: FoodNutrients = getIngredientNutrition(food);
         for (let key in ingredientNutrition) {

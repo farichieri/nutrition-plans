@@ -1,7 +1,9 @@
 import { AppRoutes } from "@/utils/routes";
+import { Diet, DietMealGroup } from "@/types/dietTypes";
 import { FC, useEffect, useState } from "react";
-import { Food, IngredientGroup } from "@/types/foodTypes";
+import { Food, FoodGroup, IngredientGroup } from "@/types/foodTypes";
 import { getNutritionMerged } from "../Food/nutritionHelpers";
+import { setDietState } from "@/store/slices/createDietSlice";
 import { setRecipeState, setMealState } from "@/store/slices/createFoodSlice";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
@@ -12,29 +14,62 @@ import Spinner from "@/components/Loader/Spinner";
 interface Props {
   food?: Food;
   meal?: Food;
-  ingredients: IngredientGroup;
+  diet?: Diet;
+  ingredients?: IngredientGroup;
 }
 
-const IngredientsNutrition: FC<Props> = ({ food, meal, ingredients }) => {
+const IngredientsNutrition: FC<Props> = ({ food, meal, diet, ingredients }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const [openDetails, setOpenDetails] = useState(false);
-  const nutrients = food?.nutrients || meal?.nutrients;
+  const nutrients = food?.nutrients || meal?.nutrients || diet?.diet_nutrients;
+  const isCreateMeal = router.asPath === AppRoutes.create_meal;
+  const isCreateRecipe = router.asPath === AppRoutes.create_recipe;
+  const isCreateDiet = router.asPath === AppRoutes.create_diet;
+
+  const getIngredientsFoods = (ingredients: IngredientGroup): FoodGroup => {
+    let result: FoodGroup = {};
+    Object.keys(ingredients).map((ing) => {
+      const food = ingredients[ing].food;
+      if (food.food_id) {
+        result[food.food_id as keyof Food] = food;
+      }
+    });
+    return result;
+  };
+
+  const getDietFoods = (diet_meals: DietMealGroup): FoodGroup => {
+    let result: FoodGroup = {};
+    Object.keys(diet_meals).map((meal_id) => {
+      const diet_meal = diet_meals[meal_id];
+      const foods = diet_meal.diet_meal_foods;
+      Object.keys(foods).map((food_id, index) => {
+        result[meal_id + "_" + index] = foods[food_id];
+      });
+    });
+    return result;
+  };
 
   useEffect(() => {
-    if (!nutrients || !ingredients) return;
-    const nutritionMerged = getNutritionMerged(ingredients);
-    console.log({ nutritionMerged });
-    if (Object.keys(nutritionMerged).length > 0) {
-      if (router.asPath === AppRoutes.create_recipe && food) {
-        dispatch(setRecipeState({ ...food, nutrients: nutritionMerged }));
-      } else if (router.asPath === AppRoutes.create_meal && meal) {
-        dispatch(setMealState({ ...meal, nutrients: nutritionMerged }));
+    if (isCreateMeal || isCreateRecipe) {
+      if (!nutrients || !ingredients) return;
+      const foods = getIngredientsFoods(ingredients);
+      const nutritionMerged = getNutritionMerged(foods);
+      if (Object.keys(nutritionMerged).length > 0) {
+        if (isCreateRecipe && food) {
+          dispatch(setRecipeState({ ...food, nutrients: nutritionMerged }));
+        } else if (isCreateMeal && meal) {
+          dispatch(setMealState({ ...meal, nutrients: nutritionMerged }));
+        }
       }
+    } else if (isCreateDiet && diet) {
+      const foods = getDietFoods(diet.diet_meals);
+      const nutritionMerged = getNutritionMerged(foods);
+      dispatch(setDietState({ ...diet, diet_nutrients: nutritionMerged }));
     }
-  }, [ingredients]);
+  }, [food?.ingredients, meal?.ingredients, diet?.diet_meals]);
 
-  if (!nutrients || !ingredients) {
+  if (!nutrients) {
     return (
       <div>
         <Spinner customClass="h-4 w-4" />

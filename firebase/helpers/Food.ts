@@ -60,7 +60,7 @@ const fetchFoods = async ({
   food_name_lowercase: string;
   kind: FoodKind | undefined;
 }) => {
-  console.log(`Fetching Food ${food_name_lowercase}`);
+  console.log(`Fetching Food by name: '${food_name_lowercase}'`);
   try {
     let data: FoodGroup = {};
     const foodsRef = collection(db, "foods");
@@ -109,7 +109,7 @@ const fetchFoodByID = async (food_id: string) => {
 };
 
 const fetchFoodsByIDS = async (food_ids: string[]) => {
-  console.log(`Fetching Food ${food_ids}`);
+  console.log(`Fetching Food IDS ${food_ids}`);
   try {
     let data: FoodGroup = {};
     const foodRef = collection(db, "foods");

@@ -3,17 +3,17 @@ import {
   setMealState,
   setRecipeState,
 } from "@/store/slices/createFoodSlice";
-import { AppRoutes } from "@/utils/routes";
-import { FC } from "react";
-import { Food, Ingredient, IngredientGroup } from "@/types/foodTypes";
-import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/router";
-import { selectFoodsSlice, setFoodOpened } from "@/store/slices/foodsSlice";
-import { Diet, DietMeal, DietMealGroup } from "@/types/dietTypes";
 import {
   selectCreateDietSlice,
   setDietState,
 } from "@/store/slices/createDietSlice";
+import { AppRoutes } from "@/utils/routes";
+import { Diet, DietMeal, DietMealGroup } from "@/types/dietTypes";
+import { FC } from "react";
+import { Food, Ingredient, IngredientGroup } from "@/types/foodTypes";
+import { selectFoodsSlice, setFoodOpened } from "@/store/slices/foodsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 interface Props {
   dietMeal?: DietMeal;
@@ -71,11 +71,20 @@ const AddFoodIngredient: FC<Props> = ({ dietMeal }) => {
         })
       );
       dispatch(setFoodOpened(null));
-    } else if (isCreateDiet && dietMeal && food.food_id && dietMeal.diet_id) {
+    } else if (
+      isCreateDiet &&
+      dietMeal &&
+      food.food_id &&
+      dietMeal.diet_meal_id
+    ) {
+      const newFood = {
+        ...food,
+        scale_amount: foodOpened.food_scale.amount,
+        scale_name: foodOpened.food_scale.weightName,
+      };
       let diet_meal_foods = { ...dietMeal.diet_meal_foods };
-
       const newDietMealFoods = { ...diet_meal_foods };
-      newDietMealFoods[food.food_id] = food;
+      newDietMealFoods[food.food_id] = newFood;
 
       let newDietMeal: DietMeal = {
         ...dietMeal,
@@ -86,7 +95,7 @@ const AddFoodIngredient: FC<Props> = ({ dietMeal }) => {
         ...dietState.diet_meals,
       };
 
-      newDietMeals[dietMeal.diet_id] = newDietMeal;
+      newDietMeals[dietMeal.diet_meal_id] = newDietMeal;
 
       const newDietState: Diet = {
         ...dietState,

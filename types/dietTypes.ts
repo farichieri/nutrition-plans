@@ -14,15 +14,16 @@ export interface Diet {
   date_created: any | null;
   diet_description: string | null;
   diet_id: string | null;
+  diet_meals: DietMealGroup;
+  diet_name_lowercase: string | null;
   diet_name: string | null;
   diet_nutrients: FoodNutrients;
   num_meals: number | null;
-  diet_meals: DietMealGroup;
 }
 
 export interface DietMeal {
   [id: string]: any;
-  diet_id: string | null;
+  diet_meal_id: string | null;
   diet_meal_foods: FoodGroup;
   diet_meal_type: MealsEnum | null; //breakfast, lunch, dinner, snack
   order: number | null;
@@ -32,13 +33,17 @@ export interface DietMealGroup {
   [id: string]: DietMeal;
 }
 
+export interface DietGroup {
+  [id: string]: Diet;
+}
+
 export const FourDietMeals = (): DietMealGroup => {
   let dietMealGroup: DietMealGroup = {};
   Object.keys(MealsEnum).map((meal, index) => {
     const uuid = uuidv4();
     const mealType = MealsEnum[meal as keyof MealsType];
     const newDietMeal: DietMeal = {
-      diet_id: uuid,
+      diet_meal_id: uuid,
       diet_meal_foods: {},
       diet_meal_type: mealType,
       order: index,
@@ -55,15 +60,16 @@ export const NewDiet: Diet = {
   date_created: null,
   diet_description: null,
   diet_id: null,
+  diet_meals: FourDietMeals(),
+  diet_name_lowercase: null,
   diet_name: null,
   diet_nutrients: NewFoodNutrients,
   num_meals: null,
-  diet_meals: FourDietMeals(),
 };
 
 export const NewDietMeal: DietMeal = {
   diet_meal_foods: NewFood,
-  diet_id: null,
+  diet_meal_id: null,
   diet_meal_type: null,
   order: null,
 };

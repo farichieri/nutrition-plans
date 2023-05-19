@@ -27,6 +27,14 @@ export enum MealsEnum {
   snack = "snack",
 }
 
+export enum PlansEnum {
+  balanced = "balanced",
+  gluten_free = "gluten-free",
+  mediterranean = "mediterranean",
+  vegetarian = "vegetarian",
+  low_carb = "low-carb",
+}
+
 export type MealsType = {
   [key in keyof typeof MealsEnum]?: (typeof MealsEnum)[key];
 };
