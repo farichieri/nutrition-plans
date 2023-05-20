@@ -107,12 +107,11 @@ export const NewFoodType: FoodType = {
   is_snack: false,
 };
 export const NewFoodCompatiblePlans: CompatiblePlans = {
-  is_balanced: false,
-  is_gluten_free: false,
-  is_ketogenic: false,
-  is_low_carb: false,
-  is_mediterranean: false,
-  is_vegetarian: false,
+  balanced: false,
+  gluten_free: false,
+  low_carb: false,
+  mediterranean: false,
+  vegetarian: false,
 };
 
 export const NewFoodNutrients: FoodNutrients = {
@@ -176,6 +175,7 @@ export const NewFood: Food = {
   digestion_status: null,
   dish_type: null,
   easily_single_serving: false,
+  eaten: false,
   food_category: null,
   food_description: null,
   food_id: null,

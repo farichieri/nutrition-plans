@@ -29,10 +29,10 @@ export enum MealsEnum {
 
 export enum PlansEnum {
   balanced = "balanced",
-  gluten_free = "gluten-free",
+  gluten_free = "gluten_free",
   mediterranean = "mediterranean",
   vegetarian = "vegetarian",
-  low_carb = "low-carb",
+  low_carb = "low_carb",
 }
 
 export type MealsType = {

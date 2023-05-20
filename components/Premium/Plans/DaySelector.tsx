@@ -12,10 +12,12 @@ import {
   getYesterday,
 } from "@/utils/dateFormat";
 import { BaseDatesEnum } from "@/types/datesTypes";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import RoundButton from "@/components/Buttons/RoundButton";
+import { useDispatch } from "react-redux";
+import { setPlansDate } from "@/store/slices/plansSlice";
 
 interface Props {}
 
@@ -25,6 +27,7 @@ const fixedButtonClass =
 const selectedClass = "after:origin-bottom-left after:scale-x-100";
 
 const DaySelector: FC<Props> = () => {
+  const dispatch = useDispatch();
   const router = useRouter();
   const { id, date } = router.query;
   const today = getToday();
@@ -56,6 +59,7 @@ const DaySelector: FC<Props> = () => {
   };
 
   const dateF = String(getRealDate());
+  console.log({ dateF });
   const isWeek = dateF?.includes("~");
   const weekDates = isWeek && String(dateF).split("~");
   const startOfWeek = weekDates && getStartOfWeek(weekDates[0]);
@@ -159,8 +163,12 @@ const DaySelector: FC<Props> = () => {
     }
   };
 
+  useEffect(() => {
+    dispatch(setPlansDate(dateF));
+  }, [dateF]);
+
   return (
-    <div className="bg m-auto flex flex-wrap items-center gap-2 lg:gap-10">
+    <div className="mx-auto flex flex-wrap items-center gap-2 lg:gap-10">
       <div className="flex w-full flex-col items-center justify-center lg:w-auto">
         <div className="flex w-full items-center justify-center lg:w-auto">
           <Link href={backRoute()}>

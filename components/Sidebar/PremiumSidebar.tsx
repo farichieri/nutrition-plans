@@ -111,6 +111,9 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
   const fixedOptClass =
     "text-md px-2 py-1 flex w-full items-center gap-1 rounded-lg text-base duration-300 hover:bg-slate-500/30 sm:text-lg active:border-gray-400 dark:active:border-white border border-transparent";
 
+  const fixedSecOptClass =
+    "text-md pr-2 pl-4 py-1 flex w-full items-center gap-1 rounded-lg text-sm duration-300 hover:bg-slate-500/30 sm:text-base active:border-gray-400 dark:active:border-white border border-transparent";
+
   return (
     <>
       {sidebarOpen && (
@@ -143,8 +146,8 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
 
       <div
         className={`${
-          sidebarOpen ? "left-0" : "left-[-13rem]"
-        } fixed left-0 z-[70] flex h-screen min-h-screen w-52 select-none flex-col gap-2 overflow-auto border-r bg-white/80 px-2 pb-5 pt-16 backdrop-blur-sm transition-all duration-300 ease-in-out dark:border-slate-400/20 dark:bg-black/80 sm:gap-4 sm:duration-0`}
+          sidebarOpen ? "left-0" : "left-[-14rem]"
+        } fixed left-0 z-[70] flex h-screen min-h-screen w-52 select-none flex-col gap-2 overflow-auto border-r bg-white/80 px-2 pb-5 pt-16 backdrop-blur-sm transition-all duration-300 ease-in-out dark:border-slate-400/20 dark:bg-black/80 sm:gap-4 sm:duration-0 md:w-56`}
       >
         <div className="flex w-full flex-col items-center gap-2">
           <Link
@@ -194,7 +197,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
                 className={
                   `${
                     planVisited(plan.id) && " bg-slate-500/30 font-semibold"
-                  } px-2` + fixedOptClass
+                  } px-2` + fixedSecOptClass
                 }
               >
                 {plan.name}
@@ -253,7 +256,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
                   `${
                     router.asPath === page.url &&
                     " bg-slate-500/30 font-semibold"
-                  }` + fixedOptClass
+                  }` + fixedSecOptClass
                 }
               >
                 <span className="material-icons md-24 notraslate text-green-500">
@@ -299,7 +302,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
                     `${
                       router.asPath === page.url &&
                       "bg-slate-500/30 font-semibold"
-                    }` + fixedOptClass
+                    }` + fixedSecOptClass
                   }
                 >
                   <span className="material-icons md-24 notraslate text-red-500">

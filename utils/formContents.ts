@@ -38,7 +38,7 @@ const GOAL_OPTIONS = [
 const FOOD_PREFERENCES = [
   { value: "anything", name: "Anything", includes: "", excludes: "Nothing" },
   {
-    value: "gluten-free",
+    value: "gluten_free",
     name: "Gluten Free",
     includes: "",
     excludes:
@@ -67,7 +67,7 @@ const FOOD_PREFERENCES = [
     excludes: "",
   },
   {
-    value: "low-carb",
+    value: "low_carb",
     name: "Low Carb",
     includes:
       "foods rich in protein and fat and limit the amount of refined carbohydrates you eat, favoring complex carbohydrates such as vegetables, fruits and some grains.",

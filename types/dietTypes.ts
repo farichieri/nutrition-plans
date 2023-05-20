@@ -4,7 +4,7 @@ import {
   NewFoodNutrients,
 } from "./initialTypes";
 import { CompatiblePlans, FoodGroup, FoodNutrients } from "./foodTypes";
-import { MealsEnum, MealsType } from "./types";
+import { MealsEnum, MealsType, PlansEnum } from "./types";
 import { uuidv4 } from "@firebase/util";
 
 export interface Diet {
@@ -18,7 +18,9 @@ export interface Diet {
   diet_name_lowercase: string | null;
   diet_name: string | null;
   diet_nutrients: FoodNutrients;
+  plan_id: PlansEnum | null;
   num_meals: number | null;
+  plan_date: string | null;
 }
 
 export interface DietMeal {
@@ -65,6 +67,8 @@ export const NewDiet: Diet = {
   diet_name: null,
   diet_nutrients: NewFoodNutrients,
   num_meals: null,
+  plan_date: null,
+  plan_id: null,
 };
 
 export const NewDietMeal: DietMeal = {

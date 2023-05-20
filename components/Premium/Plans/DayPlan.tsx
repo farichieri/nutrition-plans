@@ -1,37 +1,43 @@
-import { getToday } from "@/utils/dateFormat";
-import { selectAuthSlice } from "@/store/slices/authSlice";
-import { useDispatch, useSelector } from "react-redux";
-import DaySelector from "@/components/Premium/Plans/DaySelector";
-import { selectDietsSlice } from "@/store/slices/dietsSlice";
-import { filterObject } from "@/utils/filter";
 import { Diet, DietMeal } from "@/types/dietTypes";
+import { FC, useEffect } from "react";
+import { PlansEnum } from "@/types/types";
+import { selectAuthSlice } from "@/store/slices/authSlice";
+import { selectPlansSlice, setDietOpened } from "@/store/slices/plansSlice";
+import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
+import Spinner from "@/components/Loader/Spinner";
+import { Food } from "@/types/foodTypes";
+import Link from "next/link";
 
 interface Props {
-  planData: any;
+  planID: PlansEnum;
 }
 
 // Atencion aca. Habra que cambiar casi todo probably.
-const DayPlan = ({ planData }: Props) => {
+const DayPlan: FC<Props> = ({ planID }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
-  const { diets } = useSelector(selectDietsSlice);
-  const today = getToday();
-  const diet: any = Object.entries(
-    filterObject(diets, "date_available", today)
-  )[0][1];
+  const { date, dietOpened, plans } = useSelector(selectPlansSlice);
   const isFree = user?.premium_plan === "free";
 
-  if (Object.keys(diet).length < 1) {
-    return <>No diet found</>;
-  }
-  console.log(Object.values(diet.diet_meals));
+  useEffect(() => {
+    dispatch(setDietOpened(null));
+    const dietFiltered: Diet = plans[planID][date];
+    if (dietFiltered) {
+      dispatch(setDietOpened(dietFiltered));
+    } else {
+      dispatch(setDietOpened(null));
+    }
+  }, [date, plans, planID]);
 
   return (
     <>
-      <div className="flex max-w-lg flex-col gap-10"></div>
-      <div className="flex flex-col items-start justify-center gap-10 rounded-lg bg-white p-4 shadow-[0_1px_5px_lightgray] dark:bg-black dark:shadow-[0_1px_6px_#292929] sm:m-[1vw] sm:px-10">
-        <DaySelector />
+      {!dietOpened ? (
+        <div className="m-auto flex flex-col items-center justify-center gap-1">
+          <span className="text-xl">Generating Plan</span>
+          <Spinner customClass="h-10 w-10 " />
+        </div>
+      ) : (
         <div className="flex w-full max-w-xl flex-col items-center justify-start gap-10">
           <div
             className={`${
@@ -39,35 +45,76 @@ const DayPlan = ({ planData }: Props) => {
               "z-50 flex h-full w-full max-w-5xl cursor-auto select-none flex-col gap-5"
             } max-w-5xl`}
           >
-            {Object.values(diet.diet_meals)
+            {Object.values(dietOpened.diet_meals)
               .sort((a: any, b: any) => Number(a.order) - Number(b.order))
-              .map((meal: any) => {
+              .map((meal: DietMeal) => {
+                const mealKcals: number = Object.values(
+                  meal.diet_meal_foods
+                ).reduce(
+                  (acc: number, curr: Food) =>
+                    acc + Number(curr.nutrients.calories),
+                  0
+                );
                 return (
                   <div
                     key={meal.diet_meal_id}
-                    className="min-h-20 flex w-full flex-col gap-2 rounded-md border "
+                    className="min-h-20 flex w-full flex-col overflow-auto rounded-md border "
                   >
-                    <div className="px-2 py-1">
+                    <div className="flex items-center gap-5 border-b px-2 py-1 text-center">
                       <span className="font-semibold capitalize">
                         {meal.diet_meal_type}
                       </span>
+                      <span className="ml-auto text-xs opacity-50">
+                        {mealKcals} calories
+                      </span>
+                      <div className="flex items-center">
+                        {/* Eaten */}
+                        <span className="material-icons">
+                          radio_button_unchecked
+                        </span>
+                      </div>
                     </div>
                     <div>
                       {Object.keys(meal.diet_meal_foods).map((food_id) => {
-                        const food = meal.diet_meal_foods[food_id];
+                        const food: Food = meal.diet_meal_foods[food_id];
                         return (
-                          <div key={food_id} className="flex">
+                          <Link
+                            key={food_id}
+                            className="flex"
+                            href={`/app/food/${food_id}`}
+                          >
                             <Image
                               src={food.image}
                               height={150}
                               width={150}
                               alt={food.food_name || ""}
-                              className="h-[100px] w-[100px] min-w-[100px] max-w-[100px] rounded-md object-cover"
+                              className="h-[100px] w-[100px] min-w-[100px] max-w-[100px] rounded-r-md object-cover"
                             />
-                            <div className="px-2 py-1">
-                              <span>{food.food_name}</span>
+                            <div className="flex w-full p-2">
+                              <div className="flex w-full flex-col">
+                                <div className="">
+                                  <span>{food.food_name}</span>
+                                </div>
+                                <div className="">
+                                  <span className="text-xs opacity-50">
+                                    {food.food_description}
+                                  </span>
+                                </div>
+                                <div className="flex gap-1 text-xs capitalize">
+                                  <span>{food.scale_amount}</span>
+                                  <span>{food.scale_name}</span>
+                                </div>
+                              </div>
+                              <div className="my-auto flex">
+                                <div>
+                                  {/* Eaten */}
+                                  <span className="material-icons md-20">
+                                    radio_button_unchecked
+                                  </span>
+                                </div>
+                              </div>
                             </div>
-                          </div>
+                          </Link>
                         );
                       })}
                     </div>
@@ -76,7 +123,7 @@ const DayPlan = ({ planData }: Props) => {
               })}
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 };

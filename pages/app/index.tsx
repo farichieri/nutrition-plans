@@ -1,14 +1,12 @@
 import { selectAuthSlice } from "@/store/slices/authSlice";
-import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import Loader from "@/components/Loader/Loader";
+import PremiumLayout from "@/components/Layout/PremiumLayout";
 
 const App = () => {
   const { user } = useSelector(selectAuthSlice);
   const router = useRouter();
 
-  console.log({ user });
   if (user) {
     if (!user.is_profile_completed) {
       router.push("/app/create");
@@ -21,7 +19,7 @@ const App = () => {
     }
   }
 
-  return <Loader />;
+  return <PremiumLayout>{}</PremiumLayout>;
 };
 
 export default App;

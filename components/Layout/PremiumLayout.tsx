@@ -39,7 +39,7 @@ export default function PremiumLayout({
           <Sidebar sidebarOpen={sidebarOpen} handleSidebar={handleSidebar} />
           <div
             className={`flex flex-col pt-[var(--nav-h)] duration-0 ease-in-out ${
-              sidebarOpen ? "md:pl-52" : "md:pl-20"
+              sidebarOpen ? "md:pl-56" : "md:pl-20"
             }`}
           >
             {children}

@@ -4,7 +4,7 @@ export const FAQS_INDEX = [
   {
     title: "What plans are available in Nutrition Plans?",
     answer:
-      "The plans available today are: Vegetarian, Mediterranean, Low Carb, Gluten Free and Balanced",
+      "The plans available at this moment are: Vegetarian, Mediterranean, Low Carb, Gluten Free and Balanced",
   },
 ];
 
@@ -42,7 +42,7 @@ export const MEAL_PLANS = [
   },
   {
     name: "Gluten Free",
-    id: "gluten-free",
+    id: "gluten_free",
     excludes: "any foods that contain gluten",
     macros: {
       carbs: {
@@ -99,7 +99,7 @@ export const MEAL_PLANS = [
   },
   {
     name: "Low Carb",
-    id: "low-carb",
+    id: "low_carb",
     macros: {
       carbs: {
         min: 10,

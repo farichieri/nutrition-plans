@@ -39,23 +39,49 @@ const createDiet = async (diet: Diet, user: UserAccount) => {
   }
 };
 
-const fetchDietByDate = async ({
-  date_available,
+const fetchDietByPlanAndDate = async ({
+  date,
+  planID,
+  user,
 }: {
-  date_available: string;
+  date: string;
+  planID: PlansEnum;
+  user: UserAccount;
 }) => {
-  console.log(`Fetching Food by date_available: '${date_available}'`);
+  console.log(`Fetching Diet by date: '${date}' for user ${user.user_id}`);
   try {
-    let data: DietGroup = {};
+    const docRef = doc(
+      db,
+      "users",
+      user.user_id,
+      "plans",
+      planID,
+      "diets",
+      date
+    );
+    const querySnapshot = await getDoc(docRef);
+    const data: any = querySnapshot.data();
+    console.log({ data });
+    return data;
+  } catch (error) {
+    console.log({ error: `Error fetching Food: ${error}` });
+    return null;
+  }
+};
+
+const fetchRandomDietByPlan = async ({ plan }: { plan: PlansEnum }) => {
+  console.log(`Fetching Random Diet by plan: '${plan}'`);
+  try {
+    let data: Diet | null = null;
     const dietsRef = collection(db, "diets");
     let q = query(
       dietsRef,
-      where("date_available", "==", `${date_available}`),
-      limit(10)
+      where(`compatible_plans.${plan}`, "==", true),
+      limit(1)
     );
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((food: any) => {
-      data[food.id] = food.data();
+      data = food.data();
     });
     console.log({ data });
     return data;
@@ -65,4 +91,47 @@ const fetchDietByDate = async ({
   }
 };
 
-export { createDiet, fetchDietByDate };
+const postDietToUserDiets = async ({
+  diet,
+  planID,
+  date,
+  user,
+}: {
+  diet: Diet;
+  planID: PlansEnum;
+  date: string;
+  user: UserAccount;
+}) => {
+  try {
+    console.log("postDietToUserDiets");
+    if (!diet.diet_id) return { error: "No diet_id provided" };
+    const docRef = doc(
+      db,
+      "users",
+      user.user_id,
+      "plans",
+      planID,
+      "diets",
+      date
+    );
+
+    const newDiet: Diet = {
+      ...diet,
+      plan_date: date,
+      plan_id: planID,
+    };
+    await setDoc(docRef, newDiet);
+    console.log("Diet posted: ", newDiet);
+    return { newDiet };
+  } catch (error) {
+    console.log({ error });
+    return { error: `Error creating Food: ${error}` };
+  }
+};
+
+export {
+  createDiet,
+  fetchDietByPlanAndDate,
+  fetchRandomDietByPlan,
+  postDietToUserDiets,
+};

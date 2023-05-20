@@ -1,3 +1,5 @@
+import { PlansEnum } from "./types";
+
 export interface Food {
   [id: string]: any;
   allow_public: boolean;
@@ -8,6 +10,7 @@ export interface Food {
   digestion_status: DigestionStatusEnum | null;
   dish_type: DishTypesEnum | null;
   easily_single_serving: boolean;
+  eaten: boolean;
   food_category: FoodCategoriesEnum | null;
   food_description: string | null;
   food_id: string | null;
@@ -73,14 +76,9 @@ export interface FoodType {
   is_snack: boolean;
 }
 
-export interface CompatiblePlans {
-  is_balanced: boolean;
-  is_gluten_free: boolean;
-  is_mediterranean: boolean;
-  is_ketogenic: boolean;
-  is_vegetarian: boolean;
-  is_low_carb: boolean;
-}
+export type CompatiblePlans = {
+  [key in PlansEnum]: boolean;
+};
 
 export enum NutrientsEnum {
   betaine = "betaine",

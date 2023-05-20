@@ -100,6 +100,13 @@ li {
 .material-icons-two-tone.md-18 {
   font-size: 18px;
 }
+.material-icons.md-20,
+.material-icons-outlined.md-20,
+.material-icons-round.md-20,
+.material-icons-sharp.md-20,
+.material-icons-two-tone.md-20 {
+  font-size: 20px;
+}
 .material-icons.md-24,
 .material-icons-outlined.md-24,
 .material-icons-round.md-24,
