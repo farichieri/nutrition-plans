@@ -1,4 +1,4 @@
-import { ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
+import { ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recharts";
 import React, { FC } from "react";
 import { FoodNutrients } from "@/types/foodTypes";
 
@@ -49,7 +49,7 @@ const PieGraph: FC<Props> = ({ nutrients }) => {
     percent: number;
     index: number;
   }) => {
-    const radius = 35 + innerRadius + (outerRadius - innerRadius) * 0.5;
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
@@ -58,12 +58,15 @@ const PieGraph: FC<Props> = ({ nutrients }) => {
         x={x}
         y={y}
         fill="white"
-        textAnchor={x > cx ? "start" : "end"}
+        textAnchor="middle"
         dominantBaseline="central"
       >
-        <tspan fontSize={15} fontWeight={400} fill="gray">
-          {`${(percent * 100).toFixed(0)}%`} {data[index].name}
+        <tspan fontSize={12} fontWeight={400}>
+          {`${(percent * 100).toFixed(0)}%`}
         </tspan>
+        {/* <tspan x={x + 10} y={y + 15} fontSize={12} fontWeight={400}>
+          {data[index].name}
+        </tspan> */}
       </text>
     );
   };
@@ -77,20 +80,21 @@ const PieGraph: FC<Props> = ({ nutrients }) => {
   }
 
   return (
-    <div className="m-auto flex h-48 w-72 overflow-hidden sm:w-full ">
+    <div className="m-auto flex h-52 w-72 max-w-xs overflow-hidden sm:w-full">
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
+          <Legend verticalAlign="bottom" align="center" />
           <Pie
             data={data}
             cx="50%"
             cy="50%"
-            labelLine={true}
+            labelLine={false}
             label={renderCustomizedLabel}
-            outerRadius={50}
-            innerRadius={30}
+            outerRadius={80}
             fill="#8884d8"
             dataKey="value"
             className="outline-none"
+            strokeOpacity="0.5"
           >
             {data.map((entry, index) => (
               <Cell

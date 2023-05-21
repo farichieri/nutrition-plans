@@ -2,6 +2,7 @@ import { selectAuthSlice } from "@/store/slices/authSlice";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import PremiumLayout from "@/components/Layout/PremiumLayout";
+import Loader from "@/components/Loader/Loader";
 
 const App = () => {
   const { user } = useSelector(selectAuthSlice);
@@ -19,7 +20,11 @@ const App = () => {
     }
   }
 
-  return <PremiumLayout>{}</PremiumLayout>;
+  return (
+    <PremiumLayout>
+      <Loader />
+    </PremiumLayout>
+  );
 };
 
 export default App;

@@ -8,28 +8,16 @@ import { persistor, store } from "@/store/store";
 import { Provider } from "react-redux";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import AppLoader from "@/components/Loader/AppLoader";
 import Layout from "@/components/Layout";
 import NProgress from "nprogress";
 import type { AppProps } from "next/app";
+import Loader from "@/components/Loader/Loader";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
   NProgress.configure({ showSpinner: false });
   NProgress.configure({ trickle: false });
-
-  // useEffect(() => {
-  //   if (typeof window !== "undefined") {
-  //     const handleResize = () => {
-  //       let vh = window.innerHeight * 0.01;
-  //       document.documentElement.style.setProperty("--vh", `${vh}px`);
-  //     };
-  //     window.addEventListener("resize", handleResize);
-  //     handleResize();
-  //     return () => window.removeEventListener("resize", handleResize);
-  //   }
-  // }, []);
 
   useEffect(() => {
     if (
@@ -72,7 +60,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <Provider store={store}>
-      <PersistGate loading={<AppLoader />} persistor={persistor}>
+      <PersistGate loading={<Loader />} persistor={persistor}>
         <Layout>
           <Component {...pageProps} />
         </Layout>

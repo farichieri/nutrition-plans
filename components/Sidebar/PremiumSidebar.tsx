@@ -96,8 +96,8 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
     },
     {
       name: "Recipes & Foods",
-      url: "/app/search-food",
-      pathname: "/app/search-food",
+      url: "/app/search",
+      pathname: "/app/search",
       icon: "menu_book",
     },
     {
@@ -109,10 +109,10 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
   ];
 
   const fixedOptClass =
-    "text-md px-2 py-1 flex w-full items-center gap-1 rounded-lg text-base duration-300 hover:bg-slate-500/30 sm:text-lg active:border-gray-400 dark:active:border-white border border-transparent";
+    "text-md px-2 py-0.5 flex w-full items-center gap-1 rounded-lg text-base duration-300 hover:bg-slate-500/30 md:text-lg active:border-gray-400 dark:active:border-white border border-transparent";
 
   const fixedSecOptClass =
-    "text-md pr-2 pl-4 py-1 flex w-full items-center gap-1 rounded-lg text-sm duration-300 hover:bg-slate-500/30 sm:text-base active:border-gray-400 dark:active:border-white border border-transparent";
+    "text-md pr-2 pl-4 py-0.5 flex w-full items-center gap-1 rounded-lg text-sm duration-300 hover:bg-slate-500/30 md:text-base active:border-gray-400 dark:active:border-white border border-transparent";
 
   return (
     <>
@@ -147,7 +147,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
       <div
         className={`${
           sidebarOpen ? "left-0" : "left-[-14rem]"
-        } fixed left-0 z-[70] flex h-screen min-h-screen w-52 select-none flex-col gap-2 overflow-auto border-r bg-white/80 px-2 pb-5 pt-16 backdrop-blur-sm transition-all duration-300 ease-in-out dark:border-slate-400/20 dark:bg-black/80 sm:gap-4 sm:duration-0 md:w-56`}
+        } fixed left-0 z-[70] flex h-screen min-h-screen w-52 select-none flex-col gap-2 overflow-auto border-r bg-white/80 px-2 pb-5 pt-16 backdrop-blur-sm transition-all duration-300 ease-in-out dark:border-slate-400/20 dark:bg-black/80 sm:gap-4 md:w-56 md:duration-0`}
       >
         <div className="flex w-full flex-col items-center gap-2">
           <Link
@@ -175,7 +175,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
               format_list_bulleted
             </span>
             <div className="flex w-full cursor-pointer items-center justify-between">
-              <span className="text-md  sm:text-lg">All plans</span>
+              <span className="text-md sm:text-lg">All plans</span>
               <span
                 className={`material-icons md-24 duration-200 ease-in-out ${
                   sidebarPlansOpen && "-rotate-180 transform text-green-500"
@@ -212,10 +212,10 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
         </div>
         <div className="flex w-full flex-col items-center gap-2">
           <Link
-            href={"/app/search-food"}
+            href={"/app/search"}
             className={
               `${
-                router.asPath === "/app/search-food" &&
+                router.asPath === "/app/search" &&
                 " bg-slate-500/30 font-semibold"
               } px-2` + fixedOptClass
             }
@@ -233,7 +233,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
           >
             <span className="material-icons md-24 text-green-500">person</span>
             <div className="flex w-full cursor-pointer items-center justify-between">
-              <span className="text-md  sm:text-lg">Profile</span>
+              <span className="text-md sm:text-lg">Profile</span>
               <span
                 className={`material-icons md-24 duration-200 ease-in-out ${
                   sidebarEvolutionOpen && "-rotate-180 transform text-green-500"

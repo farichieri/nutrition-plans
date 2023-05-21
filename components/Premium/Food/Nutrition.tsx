@@ -1,53 +1,43 @@
-import { Food, FoodNutrients } from "@/types/foodTypes";
+import { FC, useState } from "react";
+import { FoodNutrients } from "@/types/foodTypes";
 import { formatToFixed } from "@/utils/format";
-import { getNutritionValues } from "./nutritionHelpers";
 import FoodNutritionDetail from "./FoodNutritionDetail";
 import PieGraph from "@/components/PieGraph/PieGraph";
-import React, { FC, useEffect, useState } from "react";
-import Link from "next/link";
 
 interface Props {
-  food: Food;
-  amount: number;
-  scale: string;
+  nutrients: FoodNutrients;
 }
 
-const FoodNutrition: FC<Props> = ({ food, amount, scale }) => {
+// This component should receive props, to be easy-reusable.
+// And I'm not sure If I want to me modifying the scale. Or just render the results and have another copmonent for the modifies.
+
+const Nutrition: FC<Props> = ({ nutrients }) => {
   const [openDetails, setOpenDetails] = useState(false);
-  const [nutrients, setNutrients] = useState<FoodNutrients | null>(null);
 
   const handleOpenDetail = (event: React.MouseEvent) => {
     event.preventDefault();
     setOpenDetails(true);
   };
 
-  useEffect(() => {
-    if (!food) return;
-    const nutrientsUpdated = getNutritionValues(food, amount, scale);
-    setNutrients(nutrientsUpdated);
-  }, [amount, scale, food]);
-
   if (!nutrients) {
-    return <div>Loading...</div>;
+    return <div>No Nutrients Found.</div>;
   }
 
   return (
-    <div className="flex w-full max-w-xl ">
+    <div className="flex w-full max-w-xl flex-wrap items-center justify-center gap-10">
       {openDetails && (
         <FoodNutritionDetail
           nutrients={nutrients}
           handleClose={() => setOpenDetails(false)}
         />
       )}
-      <div className="flex w-full max-w-lg flex-col gap-2">
-        <div className="flex items-center justify-between gap-2">
-          <div className="flex items-center justify-start gap-2">
-            <span className="material-icons-outlined text-green-500">
-              data_usage
-            </span>
-            <span className="text-2xl font-semibold">Nutrition Values</span>
-          </div>
-          {food.source && (
+      <div className="flex w-full max-w-lg flex-col gap-5">
+        <div className="flex items-center gap-2">
+          <span className="material-icons-outlined text-green-500">
+            data_usage
+          </span>
+          <span className="text-2xl font-semibold">Nutrition Values</span>
+          {/* {foodData.source && (
             <div className="flex items-center gap-1">
               <span>Source:</span>
               <Link
@@ -55,10 +45,10 @@ const FoodNutrition: FC<Props> = ({ food, amount, scale }) => {
                 target="_blank"
                 className="text-green-500 opacity-50 duration-300 hover:opacity-100"
               >
-                {food.source}
+                {foodData.source}
               </Link>
             </div>
-          )}
+          )} */}
         </div>
         <PieGraph nutrients={nutrients} />
         <div className="flex flex-col gap-4">
@@ -117,4 +107,4 @@ const FoodNutrition: FC<Props> = ({ food, amount, scale }) => {
   );
 };
 
-export default FoodNutrition;
+export default Nutrition;

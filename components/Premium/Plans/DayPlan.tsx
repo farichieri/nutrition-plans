@@ -1,19 +1,18 @@
 import { Diet, DietMeal } from "@/types/dietTypes";
 import { FC, useEffect } from "react";
+import { Food } from "@/types/foodTypes";
 import { PlansEnum } from "@/types/types";
 import { selectAuthSlice } from "@/store/slices/authSlice";
 import { selectPlansSlice, setDietOpened } from "@/store/slices/plansSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
-import Spinner from "@/components/Loader/Spinner";
-import { Food } from "@/types/foodTypes";
 import Link from "next/link";
+import Spinner from "@/components/Loader/Spinner";
 
 interface Props {
   planID: PlansEnum;
 }
 
-// Atencion aca. Habra que cambiar casi todo probably.
 const DayPlan: FC<Props> = ({ planID }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
@@ -38,7 +37,7 @@ const DayPlan: FC<Props> = ({ planID }) => {
           <Spinner customClass="h-10 w-10 " />
         </div>
       ) : (
-        <div className="flex w-full max-w-xl flex-col items-center justify-start gap-10">
+        <div className="flex w-full flex-col items-center justify-start gap-10">
           <div
             className={`${
               isFree &&
@@ -81,7 +80,7 @@ const DayPlan: FC<Props> = ({ planID }) => {
                           <Link
                             key={food_id}
                             className="flex"
-                            href={`/app/food/${food_id}`}
+                            href={`/app/food/${food_id}?amount=${food.scale_amount}&scale=${food.scale_name}`}
                           >
                             <Image
                               src={food.image}

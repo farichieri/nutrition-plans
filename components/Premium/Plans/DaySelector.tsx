@@ -168,7 +168,7 @@ const DaySelector: FC<Props> = () => {
   }, [dateF]);
 
   return (
-    <div className="mx-auto flex flex-wrap items-center gap-2 lg:gap-10">
+    <div className="mx-auto flex w-full flex-wrap items-center justify-center gap-2 pb-2 lg:gap-10">
       <div className="flex w-full flex-col items-center justify-center lg:w-auto">
         <div className="flex w-full items-center justify-center lg:w-auto">
           <Link href={backRoute()}>
@@ -178,7 +178,7 @@ const DaySelector: FC<Props> = () => {
               </span>
             </RoundButton>
           </Link>
-          <span className="flex w-full max-w-xs justify-center text-lg font-semibold opacity-75 lg:w-96 lg:text-2xl">
+          <span className="flex w-full max-w-xs justify-center text-xl font-semibold text-green-500 opacity-75 md:text-2xl lg:w-96 lg:text-3xl">
             {formatDate()}
           </span>
           <Link href={nextRoute()}>

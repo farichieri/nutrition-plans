@@ -2,19 +2,19 @@ import { fetchFoods } from "@/firebase/helpers/Food";
 import { FoodGroup } from "@/types/foodTypes";
 import { selectFoodsSlice, setFoodsSearched } from "@/store/slices/foodsSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/router";
 import React, { FC, useEffect, useState } from "react";
 import Spinner from "@/components/Loader/Spinner";
 
 interface Props {
-  q: string;
+  onFocus?: Function;
+  preFetch: boolean;
 }
 
-const SearchBar: FC<Props> = ({ q }) => {
-  const router = useRouter();
+const SearchBarCreate: FC<Props> = ({ onFocus, preFetch }) => {
   const dispatch = useDispatch();
   const { foodsSearched } = useSelector(selectFoodsSlice);
-  const [searchInput, setSearchInput] = useState<string>(q);
+  const [searchInput, setSearchInput] = useState<string>("");
+  const [isFocused, setIsFocused] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
   const [openFilters, setOpenFilters] = useState(false);
   const noData = Object.values(foodsSearched).length === 0;
@@ -29,34 +29,22 @@ const SearchBar: FC<Props> = ({ q }) => {
       !res.error && dispatch(setFoodsSearched(res));
     }
     setIsSearching(false);
+    setIsFocused(false);
   };
 
   useEffect(() => {
-    if (noData) {
-      fetchData("");
-    }
-    const timer = setTimeout(() => {
-      if (searchInput) {
-        router.replace({
-          pathname: router.pathname,
-          query: {
-            q: searchInput,
-          },
-        });
-      } else {
-        router.replace({
-          pathname: router.pathname,
-        });
+    if (preFetch || (isFocused && noData) || (!preFetch && isFocused)) {
+      if (noData) {
+        fetchData("");
       }
 
-      fetchData(searchInput.toLowerCase());
-    }, 500);
-    return () => clearTimeout(timer);
-  }, [searchInput]);
+      const timer = setTimeout(() => {
+        fetchData(searchInput.toLowerCase());
+      }, 500);
 
-  useEffect(() => {
-    setSearchInput(q);
-  }, [q]);
+      return () => clearTimeout(timer);
+    }
+  }, [searchInput, isFocused]);
 
   const handleOpenFilters = async (event: React.MouseEvent) => {
     event.preventDefault();
@@ -67,6 +55,13 @@ const SearchBar: FC<Props> = ({ q }) => {
     event.preventDefault();
     const value = event.target.value;
     setSearchInput(value);
+    setIsFocused(true);
+  };
+
+  const handleFocus = (event: React.FocusEvent) => {
+    event.preventDefault();
+    onFocus && onFocus();
+    setIsFocused(true);
   };
 
   return (
@@ -82,6 +77,7 @@ const SearchBar: FC<Props> = ({ q }) => {
           type="text"
           placeholder="Search Food"
           className=" w-full bg-transparent px-2 outline-none"
+          onFocus={handleFocus}
         />
         <div className="absolute right-5">
           {isSearching && <Spinner customClass="h-4 w-4" />}
@@ -102,4 +98,4 @@ const SearchBar: FC<Props> = ({ q }) => {
   );
 };
 
-export default SearchBar;
+export default SearchBarCreate;

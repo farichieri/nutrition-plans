@@ -45,7 +45,11 @@ const IngredientModal: FC<Props> = ({ food, dietMeal }) => {
         </div>
       </div>
       <AddFoodIngredient dietMeal={dietMeal} />
-      <FoodNutrition />
+      <FoodNutrition
+        food={food}
+        amount={Number(food.serving_amount)}
+        scale={String(food.serving_name)}
+      />
     </div>
   );
 };

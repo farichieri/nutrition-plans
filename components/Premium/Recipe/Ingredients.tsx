@@ -1,24 +1,24 @@
-import {
-  Ingredient,
-  IngredientGroup,
-  NutritionMeasurements,
-} from "@/types/foodTypes";
 import { FC } from "react";
+import { Food, Ingredient, NutritionMeasurements } from "@/types/foodTypes";
 import { getNewAmount } from "../Food/nutritionHelpers";
-import { selectFoodsSlice } from "@/store/slices/foodsSlice";
-import { useSelector } from "react-redux";
 import Image from "next/image";
 import Link from "next/link";
 import Spinner from "@/components/Loader/Spinner";
 
 interface IngredientProps {
+  amount: number;
+  food: Food;
   ingredient: Ingredient;
+  scale: string;
 }
-const Ingredient: FC<IngredientProps> = ({ ingredient }) => {
-  const food = ingredient.food;
-  const { foodOpened: recipe } = useSelector(selectFoodsSlice);
-  const { food: foodData } = recipe;
-  const { amount, weightName } = recipe.food_scale;
+const Ingredient: FC<IngredientProps> = ({
+  food,
+  ingredient,
+  amount,
+  scale,
+}) => {
+  const recipe = food;
+  const { food: foodIngredient } = ingredient;
 
   if (!food || !food.scale_name || !food.scale_amount) {
     return (
@@ -29,29 +29,24 @@ const Ingredient: FC<IngredientProps> = ({ ingredient }) => {
   }
 
   const ingGrams =
-    food &&
+    foodIngredient &&
     getNewAmount(
-      food,
-      food.scale_name,
+      foodIngredient,
+      String(foodIngredient.scale_name),
       NutritionMeasurements.grams,
-      food.scale_amount
+      Number(foodIngredient.scale_amount)
     );
-
-  console.log({ ingGrams });
-  console.log({ foodData });
 
   const calculateIngredientScale = () => {
-    if (!foodData || !foodData.serving_grams || !ingGrams) return;
+    if (!foodIngredient || !foodIngredient.serving_grams || !ingGrams) return;
 
-    // Deberia estar en el redux state de food scale.
     const recipeEquivalentInGrams = getNewAmount(
-      foodData,
-      weightName,
+      recipe,
+      String(scale || recipe.scale_name),
       NutritionMeasurements.grams,
-      amount
+      Number(amount || recipe.scale_amount)
     );
-    console.log({ recipeEquivalentInGrams });
-    const ingredientPart = (ingGrams / foodData.serving_grams) * 100;
+    const ingredientPart = (ingGrams / Number(recipe.serving_grams)) * 100;
 
     if (recipeEquivalentInGrams) {
       return (recipeEquivalentInGrams * ingredientPart) / 100;
@@ -59,42 +54,41 @@ const Ingredient: FC<IngredientProps> = ({ ingredient }) => {
   };
 
   const ingScaleGramsAmount = calculateIngredientScale();
-  console.log({ ingScaleGramsAmount });
 
   const ingScaleAmount =
     ingScaleGramsAmount &&
     getNewAmount(
-      food,
+      foodIngredient,
       NutritionMeasurements.grams,
-      food.scale_name,
+      String(foodIngredient.scale_name),
       ingScaleGramsAmount
     );
 
-  console.log({ ingScaleAmount });
-
   return (
     <Link
-      href={`/app/food/${ingredient.food_id}`}
+      href={`/app/food/${foodIngredient.food_id}`}
       className="flex w-full items-start rounded-md border"
     >
       <Image
-        src={food.image}
+        src={foodIngredient.image}
         height={150}
         width={150}
-        alt={food.food_name || ""}
+        alt={foodIngredient.food_name || ""}
         className="h-[100px] w-[100px] min-w-[100px] max-w-[100px] rounded-md object-cover"
       />
       <div className="flex h-full w-full flex-col px-2 py-1">
         <div className="flex flex-col gap-0.5">
           <span className="text-base font-semibold capitalize">
-            {food.food_name}
+            {foodIngredient.food_name}
           </span>
-          <span className="text-sm opacity-50">{food.food_description}</span>
-          <span className="text-sm">{ingredient.text}</span>
+          <span className="text-sm opacity-50">
+            {foodIngredient.food_description}
+          </span>
+          <span className="text-sm">{foodIngredient.text}</span>
         </div>
         <div className="flex items-center gap-0.5">
           <span>{ingScaleAmount && Math.round(ingScaleAmount)}</span>
-          <span>{food.scale_name}</span>
+          <span>{foodIngredient.scale_name}</span>
           <span className="ml-5 text-sm opacity-50">
             {ingScaleGramsAmount && Math.round(ingScaleGramsAmount)}g
           </span>
@@ -104,18 +98,26 @@ const Ingredient: FC<IngredientProps> = ({ ingredient }) => {
   );
 };
 interface Props {
-  ingredients: IngredientGroup;
+  food: Food;
+  amount: number;
+  scale: string;
 }
 
-const Ingredients: FC<Props> = (props) => {
-  if (Object.keys(props.ingredients).length < 1) {
+const Ingredients: FC<Props> = ({ food, amount, scale }) => {
+  if (Object.keys(food.ingredients).length < 1) {
     return <></>;
   }
 
   return (
     <div className="flex flex-col gap-1">
-      {Object.keys(props.ingredients).map((food_id) => (
-        <Ingredient ingredient={props.ingredients[food_id]} key={food_id} />
+      {Object.keys(food.ingredients).map((food_id) => (
+        <Ingredient
+          food={food}
+          ingredient={food.ingredients[food_id]}
+          key={food_id}
+          amount={amount}
+          scale={scale}
+        />
       ))}
     </div>
   );

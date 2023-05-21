@@ -13,9 +13,9 @@ html {
   --nav-h: 3rem;
   --subnav-h: 3rem;
   --border-color: lightgray;
-  --carbs-color: #8d4d00d9;
+  --carbs-color: #976802;
   --fats-color: #2fa800e0;
-  --prots-color: #6767dd;
+  --prots-color: #3d80d0;
 }
 
 :root.dark {

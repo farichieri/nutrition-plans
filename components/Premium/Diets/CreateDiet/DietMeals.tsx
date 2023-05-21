@@ -5,7 +5,7 @@ import { selectFoodsSlice, setFoodOpened } from "@/store/slices/foodsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import DietMealFoods from "./DietMealFoods";
 import IngredientModal from "../../Ingredients/IngredientModal";
-import SearchBar from "../../SearchBar/SearchBar";
+import SearchBarCreate from "../../SearchBar/SearchBarCreate";
 import SearchedResults from "../../SearchBar/SearchedResults";
 
 interface MealProps {
@@ -39,7 +39,10 @@ const DietMeal: FC<MealProps> = ({ dietMeal }) => {
         <span className="uppercase">{dietMeal.diet_meal_type}</span>
         <DietMealFoods dietMeal={dietMeal} />
 
-        <SearchBar onFocus={() => setShowSearched(true)} preFetch={false} />
+        <SearchBarCreate
+          onFocus={() => setShowSearched(true)}
+          preFetch={false}
+        />
         {showSearched && (
           <span
             className="material-icons ml-auto flex cursor-pointer"

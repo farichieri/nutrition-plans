@@ -15,6 +15,7 @@ import DaySelector from "@/components/Premium/Plans/DaySelector";
 import PlanSelector from "@/components/Premium/Plans/PlanSelector";
 import PremiumLayout from "@/components/Layout/PremiumLayout";
 import SubPremiumNav from "@/components/Layout/SubPremiumNav";
+import Nutrition from "@/components/Premium/Food/Nutrition";
 
 export default function Page() {
   const router = useRouter();
@@ -78,13 +79,22 @@ export default function Page() {
           <>
             <SubPremiumNav>
               <span className="ml-5 font-semibold capitalize sm:text-xl">
-                {planID.replaceAll("-", " ")}
+                {planID.replaceAll("_", " ")}
               </span>
               <PlanSelector planID={planID} />
             </SubPremiumNav>
-            <div className="flex min-h-[100vh] flex-col items-start justify-start gap-5 rounded-lg bg-white px-4 py-4 shadow-[0_1px_5px_lightgray] dark:bg-black dark:shadow-[0_1px_6px_#292929] sm:m-[1vw] sm:min-h-[calc(100vh_-_6rem_-_2vw)] sm:gap-5 sm:px-10">
+            <div className="flex min-h-[100vh] flex-col items-start justify-start gap-5 bg-white px-4 pb-8 pt-4 shadow-[0_1px_5px_lightgray] dark:bg-black dark:shadow-[0_1px_6px_#292929] sm:m-[0.5vw] sm:min-h-[calc(100vh_-_6rem_-_1vw)] sm:gap-5 sm:rounded-lg sm:border sm:px-10">
               <DaySelector />
-              <DayPlan planID={planID} />
+              <div className="flex w-full flex-wrap gap-10">
+                <div className="3xl:max-w-xl w-full max-w-lg">
+                  <DayPlan planID={planID} />
+                </div>
+                {dietOpened && (
+                  <div className="3xl:max-w-xl w-full max-w-lg">
+                    <Nutrition nutrients={dietOpened.diet_nutrients} />
+                  </div>
+                )}
+              </div>
             </div>
           </>
         )}

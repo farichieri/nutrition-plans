@@ -52,10 +52,10 @@ const Feedback: FC<Props> = () => {
     <div className="">
       <button
         onClick={handleFeedback}
-        className={`flex items-center rounded-3xl border border-transparent px-3 py-1 text-sm outline-none duration-300 hover:opacity-100 active:border-black dark:active:border-white ${
+        className={`flex items-center rounded-3xl border  px-3 py-1 text-sm outline-none duration-300 hover:opacity-100 active:border-black dark:active:border-white ${
           feedbackOpen
             ? "border-black opacity-100 dark:border-white"
-            : "opacity-50"
+            : "border-transparent opacity-50"
         }`}
       >
         Feedback

@@ -3,7 +3,7 @@ import { Food } from "@/types/foodTypes";
 import { selectFoodsSlice, setFoodOpened } from "@/store/slices/foodsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import IngredientModal from "./IngredientModal";
-import SearchBar from "../SearchBar/SearchBar";
+import SearchBarCreate from "../SearchBar/SearchBarCreate";
 import SearchedResults from "../SearchBar/SearchedResults";
 
 interface Props {}
@@ -34,7 +34,10 @@ const IngredientsSelector: FC<Props> = () => {
   return (
     <>
       <div className="flex items-center">
-        <SearchBar onFocus={() => setOpenIngredients(true)} preFetch={false} />
+        <SearchBarCreate
+          onFocus={() => setOpenIngredients(true)}
+          preFetch={false}
+        />
         {openIngredients && (
           <span
             className="material-icons ml-auto flex cursor-pointer"
