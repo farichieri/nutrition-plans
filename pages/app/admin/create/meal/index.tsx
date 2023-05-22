@@ -18,7 +18,7 @@ export default function Page() {
   return (
     <PremiumLayout>
       {user && user.is_admin && (
-        <section className="gap-10 rounded-lg bg-white p-4 shadow-[0_1px_5px_lightgray] dark:bg-black dark:shadow-[0_1px_6px_#292929] sm:m-[1vw] sm:px-10">
+        <section className="gap-10 rounded-lg bg-white p-4 shadow-[0_1px_5px_lightgray] dark:bg-black dark:shadow-[0_1px_6px_#292929] sm:m-[0.5vw] sm:px-10">
           <MealCreate />
         </section>
       )}

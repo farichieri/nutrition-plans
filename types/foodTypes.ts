@@ -69,6 +69,8 @@ export interface FoodGroup {
   [id: string]: Food;
 }
 
+export interface FoodGroupArray extends Array<Food> {}
+
 export interface FoodType {
   is_breakfast: boolean;
   is_dinner: boolean;
@@ -186,8 +188,8 @@ export enum DishTypesEnum {
 }
 export enum FoodKind {
   "basic_food" = "basic_food",
-  "meal" = "meal",
   "recipe" = "recipe",
+  "meal" = "meal",
 }
 
 export enum GlucemicStatusEnum {

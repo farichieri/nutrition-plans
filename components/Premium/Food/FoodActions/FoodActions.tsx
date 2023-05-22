@@ -1,15 +1,10 @@
-import Spinner from "@/components/Loader/Spinner";
-import { updateUser } from "@/firebase/helpers/Auth";
-import { updateFoodAction } from "@/firebase/helpers/Food";
-import { selectAuthSlice, setUpdateUser } from "@/store/slices/authSlice";
-import { FoodRating } from "@/types/types";
-import {
-  HandThumbDownIcon,
-  HandThumbUpIcon,
-  HeartIcon,
-} from "@heroicons/react/24/solid";
 import { FC, useState } from "react";
+import { FoodRating } from "@/types/types";
+import { selectAuthSlice, setUpdateUser } from "@/store/slices/authSlice";
+import { updateFoodAction } from "@/firebase/helpers/Food";
+import { updateUser } from "@/firebase/helpers/Auth";
 import { useDispatch, useSelector } from "react-redux";
+import Spinner from "@/components/Loader/Spinner";
 
 interface Props {
   foodID: string;

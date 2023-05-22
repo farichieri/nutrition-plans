@@ -1,9 +1,8 @@
-import { CheckIcon } from "@heroicons/react/20/solid";
+import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import { FC, useState } from "react";
 import { selectAuthSlice } from "@/store/slices/authSlice";
 import { useSelector } from "react-redux";
 import Link from "next/link";
-import { CheckCircleIcon } from "@heroicons/react/24/solid";
 
 interface Props {
   pricingPlan: any;

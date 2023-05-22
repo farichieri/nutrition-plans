@@ -123,7 +123,7 @@ const RecipeCreate: FC<Props> = () => {
   return (
     <form className="my-4 flex w-full flex-col gap-2" onSubmit={handleSubmit}>
       <div className="flex w-full flex-wrap gap-10 ">
-        <div className="flex w-full max-w-xl flex-col ">
+        <div className="flex w-full max-w-xl flex-col gap-5">
           <div>
             <span className="text-3xl font-semibold">Create Recipe</span>
           </div>

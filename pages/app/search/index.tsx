@@ -1,25 +1,34 @@
+import { FilterQueries } from "@/types/types";
 import { GetServerSideProps } from "next";
 import FoodsSearched from "@/components/Premium/Food/FoodSearch/FoodsSearched";
 import PremiumLayout from "@/components/Layout/PremiumLayout";
 import SearchBar from "@/components/Premium/SearchBar/SearchBar";
+import Filters from "@/components/Premium/SearchBar/Filters";
 
 interface Props {
-  q: string;
+  queries: FilterQueries;
 }
 
-export default function Page({ q }: Props) {
+export default function Page({ queries }: Props) {
   return (
     <PremiumLayout>
-      <section className="flex flex-col gap-10 px-4 pb-24 pt-4 sm:px-10">
-        <SearchBar q={String(q)} />
-        <FoodsSearched />
+      <section className="0 m-auto flex w-full max-w-screen-xl flex-col justify-center gap-5 px-4 pb-24 pt-4 sm:px-10">
+        <SearchBar queries={queries} />
+        <Filters queries={queries} />
+        <FoodsSearched queries={queries} />
       </section>
     </PremiumLayout>
   );
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const q = context?.query?.q ?? "";
+  const queries: FilterQueries = {};
 
-  return { props: { q: q } };
+  Object.entries(context?.query).forEach((query) => {
+    if (query) {
+      queries[query[0] as keyof FilterQueries] = String(query[1]);
+    }
+  });
+
+  return { props: { queries } };
 };

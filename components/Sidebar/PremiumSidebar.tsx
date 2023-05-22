@@ -108,6 +108,8 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
     },
   ];
 
+  console.log({ router });
+
   const fixedOptClass =
     "text-md px-2 py-0.5 flex w-full items-center gap-1 rounded-lg text-base duration-300 hover:bg-slate-500/30 md:text-lg active:border-gray-400 dark:active:border-white border border-transparent";
 
@@ -132,8 +134,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
             key={page.name}
             href={page.url}
             className={`${
-              router.pathname === page.pathname &&
-              "bg-slate-500/30 font-semibold "
+              router.asPath === page.url && "bg-slate-500/30 font-semibold "
             } text-md hover:opacity-7 flex w-full flex-col items-center gap-1 rounded-lg border border-transparent px-1.5 py-1 text-center text-base duration-300 hover:bg-slate-500/30 active:border-gray-400 dark:active:border-white sm:text-lg`}
           >
             <span className="material-icons md-24 notraslate text-green-500">
@@ -220,10 +221,8 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
               } px-2` + fixedOptClass
             }
           >
-            <span className="material-icons md-24 text-green-500">
-              menu_book
-            </span>
-            <span>Recipes & Foods</span>
+            <span className="material-icons md-24 text-green-500">search</span>
+            <span>Search</span>
           </Link>
         </div>
         <div className="flex flex-col gap-1">

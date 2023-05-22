@@ -5,13 +5,12 @@ import {
 import { addFood } from "@/firebase/helpers/Food";
 import {
   CompatiblePlans,
-  Food,
   FoodKind,
   FoodType,
   Ingredient,
 } from "@/types/foodTypes";
 import { FC, useState } from "react";
-import { Meal } from "@/types/mealTypes";
+import { Meal, NewMeal } from "@/types/mealTypes";
 import { NewFood } from "@/types/initialTypes";
 import { selectAuthSlice } from "@/store/slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -81,7 +80,7 @@ const MealCreate: FC<Props> = () => {
     };
     const res = await addFood(newMeal, FoodKind.meal, undefined, user);
     if (!res?.error && res?.food_id) {
-      dispatch(setMealState(newMeal));
+      dispatch(setMealState(NewMeal));
       alert("Meal created successfully");
       router.push(`/app/food/${res.food_id}`);
     } else {

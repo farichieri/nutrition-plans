@@ -1,10 +1,17 @@
-import { FC } from "react";
-import { FoodKind } from "@/types/foodTypes";
+import { FC, useState } from "react";
+import { Food, FoodGroup, FoodGroupArray, FoodKind } from "@/types/foodTypes";
 import { Meal } from "@/types/mealTypes";
 import { selectFoodsSlice } from "@/store/slices/foodsSlice";
 import { useSelector } from "react-redux";
 import Image from "next/image";
 import Link from "next/link";
+import { FilterQueries, FilterSortTypes } from "@/types/types";
+import {
+  filterByCaloriesRange,
+  filterByCompatiblePlan,
+  filterObject,
+  sortFoodsSearched,
+} from "@/utils/filter";
 
 interface MealProps {
   meal: Meal;
@@ -44,9 +51,11 @@ const Meal: FC<MealProps> = ({ meal }) => {
   );
 };
 
-interface Props {}
+interface Props {
+  queries: FilterQueries;
+}
 
-const FoodsSearched: FC<Props> = () => {
+const FoodsSearched: FC<Props> = ({ queries }) => {
   const { foodsSearched } = useSelector(selectFoodsSlice);
   const noData = Object.values(foodsSearched).length === 0;
 
@@ -54,10 +63,26 @@ const FoodsSearched: FC<Props> = () => {
     return <div>No Foods found with that name</div>;
   }
 
+  let foodsFiltered: FoodGroup = queries.kind
+    ? filterObject(foodsSearched, "kind", queries.kind)
+    : foodsSearched;
+
+  foodsFiltered = queries.plan
+    ? filterByCompatiblePlan(foodsFiltered, queries.plan, true)
+    : foodsFiltered;
+
+  foodsFiltered = queries.calories_range
+    ? filterByCaloriesRange(foodsFiltered, queries.calories_range)
+    : foodsFiltered;
+
+  const foodsSorted: FoodGroupArray = queries.sort
+    ? sortFoodsSearched(Object.values(foodsFiltered), queries.sort)
+    : sortFoodsSearched(Object.values(foodsFiltered), FilterSortTypes.rating);
+
+  console.log("asdasdasd");
   return (
-    <div className="grid select-none grid-cols-fluid gap-4 px-4 sm:px-0">
-      {Object.keys(foodsSearched).map((key) => {
-        const food = foodsSearched[key];
+    <div className="grid max-w-screen-2xl select-none grid-cols-fluid gap-4 px-4 sm:px-0">
+      {foodsSorted.map((food: Food) => {
         return (
           <Link
             href={`/app/food/${food.food_id}`}

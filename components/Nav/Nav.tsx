@@ -1,12 +1,12 @@
 import { Bars2Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import { FC, useState } from "react";
+import { selectAuthSlice } from "@/store/slices/authSlice";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import Avatar from "../Avatar/Avatar";
 import Link from "next/link";
 import PrimaryButton from "../Buttons/PrimaryButton";
 import ThemeSwitcher from "../theme-switcher";
-import { useSelector } from "react-redux";
-import { selectAuthSlice } from "@/store/slices/authSlice";
-import Avatar from "../Avatar/Avatar";
 
 interface Props {}
 

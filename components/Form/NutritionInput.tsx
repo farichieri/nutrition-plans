@@ -77,7 +77,9 @@ const NutritionInput: FC<Props> = ({
       {labelText && (
         <label
           htmlFor={labelFor}
-          className="w-full min-w-fit basis-1/2 text-base capitalize"
+          className={
+            `w-full min-w-fit basis-1/2 text-base capitalize` + customClass
+          }
         >
           {labelText.replaceAll("_", " ")}
         </label>

@@ -247,7 +247,7 @@ const FoodCreate: FC<Props> = () => {
               />
             </div>
             <div
-              className={`mt-5 flex flex-col gap-10 overflow-hidden pl-1 text-sm transition-[max-height] duration-1000 ease-in-out sm:text-base ${
+              className={`mt-5 flex flex-col gap-5 overflow-hidden pl-1 text-sm transition-[max-height] duration-1000 ease-in-out sm:text-base ${
                 optionalsOpen ? " max-h-[800vh]" : "max-h-0"
               }`}
             >

@@ -35,6 +35,14 @@ export enum PlansEnum {
   low_carb = "low_carb",
 }
 
+export enum FiltersEnum {
+  q = "q",
+  kind = "kind",
+  plan = "plan",
+  sort = "sort",
+  calories_range = "calories_range",
+}
+
 export type MealsType = {
   [key in keyof typeof MealsEnum]?: (typeof MealsEnum)[key];
 };
@@ -159,4 +167,18 @@ export interface FoodRating {
   favorites: string[];
   likes: string[];
   dislikes: string[];
+}
+
+export interface FilterQueries {
+  q?: string;
+  kind?: string;
+  plan?: string;
+  calories_range?: string;
+  sort?: string;
+}
+
+export enum FilterSortTypes {
+  rating = "rating",
+  higher_calories = "higher_calories",
+  lower_calories = "lower_calories",
 }

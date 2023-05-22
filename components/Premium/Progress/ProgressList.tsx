@@ -1,10 +1,10 @@
-import { FC } from "react";
-import { format } from "date-fns";
-import { selectAuthSlice } from "@/store/slices/authSlice";
 import {
   selectProgressSlice,
   setProgressOpen,
 } from "@/store/slices/progressSlice";
+import { FC } from "react";
+import { format } from "date-fns";
+import { selectAuthSlice } from "@/store/slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { PencilIcon } from "@heroicons/react/24/outline";
 import { ProgressItem } from "@/types/types";
