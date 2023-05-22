@@ -3,7 +3,13 @@ import {
   setMealState,
 } from "@/store/slices/createFoodSlice";
 import { addFood } from "@/firebase/helpers/Food";
-import { CompatiblePlans, FoodKind, FoodType } from "@/types/foodTypes";
+import {
+  CompatiblePlans,
+  Food,
+  FoodKind,
+  FoodType,
+  Ingredient,
+} from "@/types/foodTypes";
 import { FC, useState } from "react";
 import { Meal } from "@/types/mealTypes";
 import { NewFood } from "@/types/initialTypes";
@@ -64,8 +70,14 @@ const MealCreate: FC<Props> = () => {
     if (!user) return;
     if (isCreating) return;
     setIsCreating(true);
+    const servingGrams: number = Object.values(mealState.ingredients).reduce(
+      (acc: number, curr: Ingredient) =>
+        acc + Number(curr.food.serving_grams) * Number(curr.food.scale_amount),
+      0
+    );
     const newMeal: Meal = {
       ...mealState,
+      serving_grams: servingGrams,
     };
     const res = await addFood(newMeal, FoodKind.meal, undefined, user);
     if (!res?.error && res?.food_id) {

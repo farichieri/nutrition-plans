@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 import Layout from "@/components/Layout";
 import NProgress from "nprogress";
 import type { AppProps } from "next/app";
-import Loader from "@/components/Loader/Loader";
+import AppLoader from "@/components/Loader/AppLoader";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -60,7 +60,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <Provider store={store}>
-      <PersistGate loading={<Loader />} persistor={persistor}>
+      <PersistGate loading={<AppLoader />} persistor={persistor}>
         <Layout>
           <Component {...pageProps} />
         </Layout>

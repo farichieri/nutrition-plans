@@ -1,7 +1,7 @@
+import { GetServerSideProps } from "next";
 import FoodsSearched from "@/components/Premium/Food/FoodSearch/FoodsSearched";
 import PremiumLayout from "@/components/Layout/PremiumLayout";
 import SearchBar from "@/components/Premium/SearchBar/SearchBar";
-import { GetServerSideProps } from "next";
 
 interface Props {
   q: string;

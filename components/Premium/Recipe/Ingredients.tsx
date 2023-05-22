@@ -18,6 +18,7 @@ const Ingredient: FC<IngredientProps> = ({
   scale,
 }) => {
   const recipe = food;
+  console.log({ food });
   const { food: foodIngredient } = ingredient;
 
   if (!food || !food.scale_name || !food.scale_amount) {
@@ -88,7 +89,7 @@ const Ingredient: FC<IngredientProps> = ({
         </div>
         <div className="flex items-center gap-0.5">
           <span>{ingScaleAmount && Math.round(ingScaleAmount)}</span>
-          <span>{foodIngredient.scale_name}</span>
+          <span className="capitalize">{foodIngredient.scale_name}</span>
           <span className="ml-5 text-sm opacity-50">
             {ingScaleGramsAmount && Math.round(ingScaleGramsAmount)}g
           </span>

@@ -44,19 +44,16 @@ const SearchBar: FC<Props> = ({ q }) => {
           },
         });
       } else {
-        router.replace({
-          pathname: router.pathname,
-        });
+        if (searchInput !== q) {
+          router.replace({
+            pathname: router.pathname,
+          });
+        }
       }
-
       fetchData(searchInput.toLowerCase());
     }, 500);
     return () => clearTimeout(timer);
   }, [searchInput]);
-
-  useEffect(() => {
-    setSearchInput(q);
-  }, [q]);
 
   const handleOpenFilters = async (event: React.MouseEvent) => {
     event.preventDefault();

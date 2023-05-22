@@ -235,7 +235,6 @@ const getNutrientsClasified = (nutrients: FoodNutrients) => {
         principals[nutrient as keyof NutrientsClasified] =
           nutrients[nutrient as keyof FoodNutrients];
         break;
-
       case NutrientsEnum.sugar:
       case NutrientsEnum.sucrose:
       case NutrientsEnum.glucose:
