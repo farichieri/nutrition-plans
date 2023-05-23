@@ -75,11 +75,11 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
       url: "/app/admin/create/recipe",
       icon: "add",
     },
-    {
-      name: "Create Meal",
-      url: "/app/admin/create/meal",
-      icon: "add",
-    },
+    // {
+    //   name: "Create Meal",
+    //   url: "/app/admin/create/meal",
+    //   icon: "add",
+    // },
     {
       name: "Create Diet Plan",
       url: "/app/admin/create/diet",
@@ -95,10 +95,10 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
       icon: "description",
     },
     {
-      name: "Recipes & Foods",
+      name: "Search",
       url: "/app/search",
       pathname: "/app/search",
-      icon: "menu_book",
+      icon: "search",
     },
     {
       name: "Progress",
@@ -107,8 +107,6 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
       icon: "auto_graph",
     },
   ];
-
-  console.log({ router });
 
   const fixedOptClass =
     "text-md px-2 py-0.5 flex w-full items-center gap-1 rounded-lg text-base duration-300 hover:bg-slate-500/30 md:text-lg active:border-gray-400 dark:active:border-white border border-transparent";

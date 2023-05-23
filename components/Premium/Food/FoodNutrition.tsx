@@ -2,9 +2,9 @@ import { Food, FoodNutrients } from "@/types/foodTypes";
 import { formatToFixed } from "@/utils/format";
 import { getNutritionValues } from "./nutritionHelpers";
 import FoodNutritionDetail from "./FoodNutritionDetail";
+import Link from "next/link";
 import PieGraph from "@/components/PieGraph/PieGraph";
 import React, { FC, useEffect, useState } from "react";
-import Link from "next/link";
 
 interface Props {
   food: Food;
@@ -32,7 +32,7 @@ const FoodNutrition: FC<Props> = ({ food, amount, scale }) => {
   }
 
   return (
-    <div className="flex w-full max-w-xl ">
+    <div className="flex w-full max-w-xl items-center justify-center">
       {openDetails && (
         <FoodNutritionDetail
           nutrients={nutrients}

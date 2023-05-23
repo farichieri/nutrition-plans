@@ -1,5 +1,5 @@
 import {
-  formatToLongDate,
+  formatToShortDate,
   getDatePlusDays,
   getLastWeek,
   getMonthDate,
@@ -13,16 +13,16 @@ import {
 } from "@/utils/dateFormat";
 import { BaseDatesEnum } from "@/types/datesTypes";
 import { FC, useEffect } from "react";
+import { setPlansDate } from "@/store/slices/plansSlice";
+import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import RoundButton from "@/components/Buttons/RoundButton";
-import { useDispatch } from "react-redux";
-import { setPlansDate } from "@/store/slices/plansSlice";
 
 interface Props {}
 
 const fixedButtonClass =
-  "relative after:absolute text-lg after:bottom-[-1px] after:left-0 after:h-[3px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-green-500 after:transition-transform after:duration-300 after:ease-in-out hover:after:origin-bottom-left hover:after:scale-x-100";
+  "relative after:absolute text-sm sm:text-lg after:bottom-[-1px] after:left-0 after:h-[3px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-green-500 after:transition-transform after:duration-300 after:ease-in-out hover:after:origin-bottom-left hover:after:scale-x-100";
 
 const selectedClass = "after:origin-bottom-left after:scale-x-100";
 
@@ -158,7 +158,7 @@ const DaySelector: FC<Props> = () => {
         if (isWeek && weekDates) {
           return `Week of ${getMonthDate(String(weekDates[0]))}`;
         } else {
-          return formatToLongDate(String(dateF));
+          return formatToShortDate(String(dateF));
         }
     }
   };
@@ -168,28 +168,28 @@ const DaySelector: FC<Props> = () => {
   }, [dateF]);
 
   return (
-    <div className="mx-auto flex w-full flex-wrap items-center justify-center gap-2 pb-2 lg:gap-10">
+    <div className=" flex w-full flex-wrap items-center justify-center pb-2 lg:gap-10">
       <div className="flex w-full flex-col items-center justify-center lg:w-auto">
         <div className="flex w-full items-center justify-center lg:w-auto">
           <Link href={backRoute()}>
-            <RoundButton>
+            <RoundButton customClass="p-1.5 h-10 w-10">
               <span className="material-icons-outlined md-14">
                 arrow_back_ios
               </span>
             </RoundButton>
           </Link>
-          <span className="flex w-full max-w-xs justify-center text-xl font-semibold text-green-500 opacity-75 md:text-2xl lg:w-96 lg:text-3xl">
+          <span className="flex w-full max-w-xs justify-center text-xl  text-green-500 opacity-75 md:text-2xl lg:w-96 lg:text-3xl">
             {formatDate()}
           </span>
           <Link href={nextRoute()}>
-            <RoundButton>
+            <RoundButton customClass="p-1.5 h-10 w-10">
               <span className="material-icons-outlined md-14">
                 arrow_forward_ios
               </span>
             </RoundButton>
           </Link>
         </div>
-        <span className="text-xs opacity-50">{dateF}</span>
+        {/* <span className="text-xs opacity-50">{dateF}</span> */}
       </div>
 
       <div className="flex w-full items-center justify-center gap-10 lg:w-auto">

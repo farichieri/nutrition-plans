@@ -41,6 +41,9 @@ export enum FiltersEnum {
   plan = "plan",
   sort = "sort",
   calories_range = "calories_range",
+  proteins_range = "proteins_range",
+  carbs_range = "carbs_range",
+  fats_range = "fats_range",
 }
 
 export type MealsType = {
@@ -174,6 +177,9 @@ export interface FilterQueries {
   kind?: string;
   plan?: string;
   calories_range?: string;
+  proteins_range?: string;
+  carbs_range?: string;
+  fats_range?: string;
   sort?: string;
 }
 

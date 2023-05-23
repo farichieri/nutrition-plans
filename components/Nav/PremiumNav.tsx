@@ -15,7 +15,7 @@ const PremiumNav: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
       <div className="flex h-[var(--nav-h)] w-full items-center justify-between gap-2 border-b bg-white/100 pr-4 backdrop-blur-sm dark:border-slate-400/20 dark:bg-black/100 dark:shadow-cyan-100/10 xs:gap-4 ">
         <div className="text-md flex w-fit min-w-fit basis-1/3 cursor-pointer items-center justify-start font-semibold sm:text-2xl">
           <div className="flex w-12 items-center justify-center xs:w-14 sm:w-20 ">
-            <RoundButton>
+            <RoundButton customClass="p-1.5 h-10 w-10">
               {!sidebarOpen ? (
                 <Bars3Icon className="h-7 w-7" onClick={handleSidebar} />
               ) : (

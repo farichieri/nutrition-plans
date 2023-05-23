@@ -1,8 +1,8 @@
 import { fetchFoods } from "@/firebase/helpers/Food";
 import { FilterQueries } from "@/types/types";
 import { FoodGroup } from "@/types/foodTypes";
-import { selectFoodsSlice, setFoodsSearched } from "@/store/slices/foodsSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { setFoodsSearched } from "@/store/slices/foodsSlice";
+import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import React, { FC, useEffect, useState } from "react";
 import Spinner from "@/components/Loader/Spinner";
@@ -14,10 +14,8 @@ interface Props {
 const SearchBar: FC<Props> = ({ queries }) => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { foodsSearched } = useSelector(selectFoodsSlice);
   const [searchInput, setSearchInput] = useState<string>(queries.q || "");
   const [isSearching, setIsSearching] = useState(false);
-  const noData = Object.values(foodsSearched).length === 0;
 
   const fetchData = async (input: string) => {
     setIsSearching(true);
@@ -32,9 +30,6 @@ const SearchBar: FC<Props> = ({ queries }) => {
   };
 
   useEffect(() => {
-    if (noData) {
-      fetchData("");
-    }
     const timer = setTimeout(() => {
       if (searchInput) {
         router.replace({
@@ -45,7 +40,7 @@ const SearchBar: FC<Props> = ({ queries }) => {
           },
         });
       } else {
-        if (searchInput !== queries.q) {
+        if (queries.q && searchInput !== queries.q) {
           delete queries.q;
           router.replace({
             query: {
@@ -55,10 +50,13 @@ const SearchBar: FC<Props> = ({ queries }) => {
           });
         }
       }
-      fetchData(searchInput.toLowerCase());
     }, 500);
     return () => clearTimeout(timer);
   }, [searchInput]);
+
+  useEffect(() => {
+    fetchData((queries.q || "").toLocaleLowerCase());
+  }, [queries.q]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -69,7 +67,7 @@ const SearchBar: FC<Props> = ({ queries }) => {
   return (
     <form
       action=""
-      className="relative mx-auto flex h-10 w-fit items-center gap-2 overflow-auto rounded-3xl border bg-slate-400/20 pl-4 shadow-sm focus-within:border-[darkgray] dark:bg-slate-500/10 dark:focus-within:border-white"
+      className="relative mx-auto flex h-10 w-full max-w-md items-center gap-2 overflow-auto rounded-3xl border bg-slate-400/20 pl-4 shadow-sm focus-within:border-[darkgray] dark:bg-slate-500/10 dark:focus-within:border-white"
     >
       <span className="material-icons md-18">search</span>
       <input
@@ -77,7 +75,7 @@ const SearchBar: FC<Props> = ({ queries }) => {
         value={searchInput}
         type="text"
         placeholder="Search"
-        className=" w-full bg-transparent px-2 outline-none"
+        className="w-full bg-transparent px-2 outline-none"
       />
       {searchInput && (
         <span

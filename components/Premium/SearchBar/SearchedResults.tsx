@@ -12,7 +12,7 @@ const Meal: FC<MealProps> = ({ meal }) => {
   return (
     <div
       // onClick={() => handleClick(meal)}
-      className="flex h-full cursor-pointer flex-col items-start rounded-md border"
+      className="flex h-full cursor-pointer flex-col items-start overflow-auto rounded-md border-2"
     >
       <div className="flex h-full w-full flex-col items-center border-b p-2">
         <span className="text-lg font-semibold capitalize">
@@ -57,15 +57,13 @@ interface Props {
 
 const SearchedResults: FC<Props> = ({ searchResult, handleClick }) => {
   return (
-    <>
+    <div className="flex flex-col gap-5">
       {Object.keys(searchResult).map((food) => {
-        return searchResult[food].kind === FoodKind.meal ? (
-          <Meal meal={searchResult[food]} />
-        ) : (
+        return (
           <div
             onClick={() => handleClick(searchResult[food])}
             key={food}
-            className="flex h-full cursor-pointer items-start gap-1 rounded-md border"
+            className="flex h-full cursor-pointer items-start gap-1 overflow-auto rounded-md border"
           >
             <Image
               src={searchResult[food].image}
@@ -88,7 +86,7 @@ const SearchedResults: FC<Props> = ({ searchResult, handleClick }) => {
           </div>
         );
       })}
-    </>
+    </div>
   );
 };
 

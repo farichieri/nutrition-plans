@@ -189,7 +189,6 @@ export enum DishTypesEnum {
 export enum FoodKind {
   "basic_food" = "basic_food",
   "recipe" = "recipe",
-  "meal" = "meal",
 }
 
 export enum GlucemicStatusEnum {

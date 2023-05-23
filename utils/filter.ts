@@ -1,4 +1,4 @@
-import { Food, FoodGroupArray } from "@/types/foodTypes";
+import { Food, FoodGroupArray, FoodNutrients } from "@/types/foodTypes";
 import { FilterSortTypes } from "@/types/types";
 
 const filterObject = (obj: any, filter: string, filterValue: string) =>
@@ -25,15 +25,19 @@ const filterByCompatiblePlan = (obj: any, plan: string, filterValue: boolean) =>
     {}
   );
 
-const filterByCaloriesRange = (obj: any, calories_range: string) => {
-  const min = Number(calories_range.split("-")[0]);
-  const max = Number(calories_range.split("-")[1]);
+const filterByNutrientRange = (
+  obj: any,
+  nutrientRange: string,
+  nutrient: string
+) => {
+  const min = Number(nutrientRange.split("-")[0]);
+  const max = Number(nutrientRange.split("-")[1]);
 
   return Object.keys(obj).reduce(
     (acc, val) =>
       !(
-        obj[val]["nutrients"]["calories"] >= (min || 0) &&
-        obj[val]["nutrients"]["calories"] <= (max || Infinity)
+        obj[val]["nutrients"][nutrient] >= (min || 0) &&
+        obj[val]["nutrients"][nutrient] <= (max || Infinity)
       )
         ? acc
         : {
@@ -78,6 +82,6 @@ const sortFoodsSearched = (foodsArray: FoodGroupArray, sortBy: string) => {
 export {
   filterObject,
   filterByCompatiblePlan,
-  filterByCaloriesRange,
+  filterByNutrientRange,
   sortFoodsSearched,
 };

@@ -83,7 +83,7 @@ export default function Page() {
               </span>
               <PlanSelector planID={planID} />
             </SubPremiumNav>
-            <div className="flex min-h-[100vh] flex-col items-start justify-start gap-5 bg-white px-4 pb-8 pt-4 shadow-[0_1px_5px_lightgray] dark:bg-black dark:shadow-[0_1px_6px_#292929] sm:m-[0.5vw] sm:min-h-[calc(100vh_-_6rem_-_1vw)] sm:gap-5 sm:rounded-lg sm:border sm:px-10">
+            <div className="flex min-h-[100vh] flex-col items-start justify-start gap-5 bg-white p-4 shadow-[0_1px_5px_lightgray] dark:bg-black dark:shadow-[0_1px_6px_#292929] sm:m-[0.5vw] sm:min-h-[calc(100vh_-_6rem_-_1vw)] sm:gap-5 sm:rounded-lg sm:border sm:p-8 sm:pt-2">
               <DaySelector />
               <div className="flex w-full flex-wrap gap-10">
                 <div className="3xl:max-w-xl w-full max-w-lg">

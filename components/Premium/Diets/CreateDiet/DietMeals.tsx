@@ -60,7 +60,7 @@ const DietMeal: FC<MealProps> = ({ dietMeal }) => {
       </div>
 
       {foodOpened.food && thisFoodOpened && (
-        <div className="absolute z-50 flex h-full w-auto flex-col overflow-auto rounded-md border border-black bg-gray-200 dark:border-white dark:bg-black">
+        <div className="absolute z-50 flex h-full w-full  flex-col overflow-auto rounded-md border border-black bg-gray-200 dark:border-white dark:bg-black">
           <div className="flex w-full border-b border-black dark:border-white">
             <span
               onClick={handleCloseIngredient}
@@ -69,9 +69,7 @@ const DietMeal: FC<MealProps> = ({ dietMeal }) => {
               close
             </span>
           </div>
-          <div className="relative flex h-full flex-col gap-1 overflow-auto rounded-md ">
-            <IngredientModal food={foodOpened.food} dietMeal={dietMeal} />
-          </div>
+          <IngredientModal food={foodOpened.food} dietMeal={dietMeal} />
         </div>
       )}
     </div>

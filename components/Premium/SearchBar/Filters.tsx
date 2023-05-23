@@ -7,18 +7,79 @@ import {
 import { FoodKind } from "@/types/foodTypes";
 import { useRouter } from "next/router";
 import React, { FC, useState } from "react";
+import RoundButton from "@/components/Buttons/RoundButton";
 
 interface Props {
   queries: FilterQueries;
 }
 
+interface Nuts {
+  calories_range: {
+    min: number;
+    max: number;
+  };
+  proteins_range: {
+    min: number;
+    max: number;
+  };
+  carbs_range: {
+    min: number;
+    max: number;
+  };
+  fats_range: {
+    min: number;
+    max: number;
+  };
+}
+
 const Filters: FC<Props> = ({ queries }) => {
   const router = useRouter();
   const [openFilters, setOpenFilters] = useState(false);
-  const [calories, setCalories] = useState({
-    min: 0,
-    max: 0,
+  const [nutrients, setNutrients] = useState<Nuts>({
+    calories_range: {
+      min: 0,
+      max: 0,
+    },
+    proteins_range: {
+      min: 0,
+      max: 0,
+    },
+    carbs_range: {
+      min: 0,
+      max: 0,
+    },
+    fats_range: {
+      min: 0,
+      max: 0,
+    },
   });
+
+  const NUTRIENTS_OPTIONS = [
+    {
+      name: "Calories",
+      filterEnum: FiltersEnum.calories_range,
+      min: nutrients.calories_range.min,
+      max: nutrients.calories_range.max,
+    },
+    {
+      name: "Proteins",
+      filterEnum: FiltersEnum.proteins_range,
+      min: nutrients.proteins_range.min,
+      max: nutrients.proteins_range.max,
+    },
+    {
+      name: "Carbs",
+      filterEnum: FiltersEnum.carbs_range,
+      min: nutrients.carbs_range.min,
+      max: nutrients.carbs_range.max,
+    },
+    {
+      name: "Fats",
+      filterEnum: FiltersEnum.fats_range,
+      min: nutrients.fats_range.min,
+      max: nutrients.fats_range.max,
+    },
+  ];
 
   const handleOpenFilters = async (event: React.MouseEvent) => {
     event.preventDefault();
@@ -31,11 +92,18 @@ const Filters: FC<Props> = ({ queries }) => {
     const value = (event.target as HTMLButtonElement).value;
 
     let query;
-    if (name === FiltersEnum.calories_range) {
-      if (!calories.min && !calories.max) return;
+    if (
+      name === FiltersEnum.calories_range ||
+      name === FiltersEnum.proteins_range ||
+      name === FiltersEnum.fats_range ||
+      name === FiltersEnum.carbs_range
+    ) {
+      const min = nutrients[name as keyof Nuts].min;
+      const max = nutrients[name as keyof Nuts].max;
+      if (!min && !max) return;
       query = {
         ...queries,
-        [name]: `${calories.min}-${calories.max}`,
+        [name]: `${min}-${max}`,
       };
     } else {
       query = {
@@ -59,15 +127,37 @@ const Filters: FC<Props> = ({ queries }) => {
         ...queries,
       },
     });
+    if (
+      name === FiltersEnum.calories_range ||
+      name === FiltersEnum.proteins_range ||
+      name === FiltersEnum.fats_range ||
+      name === FiltersEnum.carbs_range
+    ) {
+      setNutrients({
+        ...nutrients,
+        [name]: {
+          min: 0,
+          max: 0,
+        },
+      });
+    }
   };
 
-  const handleCalories = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleNutrient = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     const name = (event.target as HTMLButtonElement).name;
     const value = (event.target as HTMLButtonElement).value;
-    setCalories({
-      ...calories,
-      [name]: value,
+    const id = (event.target as HTMLButtonElement).id;
+
+    const nutrient = { ...nutrients[id as keyof Nuts] };
+
+    const newNutrient = {
+      ...nutrient,
+      [name]: Number(value),
+    };
+    setNutrients({
+      ...nutrients,
+      [id]: newNutrient,
     });
   };
 
@@ -143,73 +233,93 @@ const Filters: FC<Props> = ({ queries }) => {
               ))}
             </div>
           </div>
+
           <div className="flex flex-col items-start gap-2">
-            <span className="font-semibold">Calories</span>
-            {!queries.calories_range ? (
-              <>
-                <div className="flex w-full items-center gap-2 text-sm ">
-                  <span className="basis-1/2">Min:</span>
-                  <input
-                    type="number"
-                    onChange={handleCalories}
-                    name={"min"}
-                    min="0"
-                    value={calories.min > 0 ? calories.min : ""}
-                    className="w-16 basis-1/2 border-b bg-transparent  text-right outline-none"
-                  />
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <span className="basis-1/2">Max:</span>
-                  <input
-                    type="number"
-                    onChange={handleCalories}
-                    name={"max"}
-                    min="0"
-                    value={calories.max > 0 ? calories.max : ""}
-                    className="w-16 basis-1/2 border-b bg-transparent  text-right outline-none"
-                  />
-                </div>
-                <button
-                  onClick={handleSelect}
-                  name={FiltersEnum.calories_range}
-                  className="mx-auto rounded-md border px-2 py-1 text-sm"
+            <span className="font-semibold">Nutrients</span>
+            {NUTRIENTS_OPTIONS.map((nutrient) => {
+              const min = nutrient.min;
+              const max = nutrient.max;
+              const filterEnum = nutrient.filterEnum;
+              const value = queries[filterEnum];
+
+              return (
+                <div
+                  key={filterEnum}
+                  className="flex w-full items-center justify-between gap-1"
                 >
-                  Apply
-                </button>
-              </>
-            ) : (
-              <div className="flex items-center gap-1">
-                <div className="flex flex-col gap-1">
-                  <div className="flex w-full items-center gap-2 text-sm text-green-500">
-                    <span className="basis-1/2">Min:</span>
-                    <span className="basis-1/2 text-right">
-                      {Number(queries.calories_range.split("-")[0]) > 0
-                        ? queries.calories_range.split("-")[0]
-                        : "-"}
-                    </span>
-                  </div>
-                  <div className="flex w-full items-center gap-2 text-sm text-green-500">
-                    <span className="basis-1/2">Max:</span>
-                    <span className="basis-1/2 text-right">
-                      {Number(queries.calories_range.split("-")[1]) > 0
-                        ? queries.calories_range.split("-")[1]
-                        : "-"}
-                    </span>
-                  </div>
-                </div>
-                <button
-                  onClick={handleRemove}
-                  name={FiltersEnum.calories_range}
-                  className="flex items-center"
-                >
-                  <span className="material-icons md-14 pointer-events-none ">
-                    close
+                  <span className={`text-sm ${value && "text-green-500"}`}>
+                    {nutrient.name}:
                   </span>
-                </button>
-              </div>
-            )}
+                  {!value ? (
+                    <div className="flex items-center gap-1">
+                      <div className="flex gap-2">
+                        <input
+                          type="number"
+                          onChange={handleNutrient}
+                          name={"min"}
+                          id={filterEnum}
+                          min="0"
+                          placeholder="Min"
+                          value={min > 0 ? min : ""}
+                          className="w-12 basis-1/2 border-b bg-transparent text-right  text-xs outline-none"
+                        />
+                        <input
+                          type="number"
+                          onChange={handleNutrient}
+                          name={"max"}
+                          id={filterEnum}
+                          min="0"
+                          placeholder="Max"
+                          value={max > 0 ? max : ""}
+                          className=" w-12 basis-1/2 border-b bg-transparent text-right  text-xs outline-none"
+                        />
+                      </div>
+                      <RoundButton
+                        onClick={handleSelect}
+                        name={filterEnum}
+                        customClass="h-5 w-5"
+                      >
+                        <span className="material-icons-outlined md-18 pointer-events-none">
+                          arrow_right
+                        </span>
+                      </RoundButton>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-1 ">
+                      <div className="flex gap-2">
+                        <input
+                          type="number"
+                          value={
+                            Number(value.split("-")[0]) > 0
+                              ? value.split("-")[0]
+                              : "-"
+                          }
+                          readOnly
+                          className="w-12 basis-1/2 cursor-not-allowed border-b border-green-500 bg-transparent text-right text-xs  text-green-500 outline-none"
+                        />
+                        <input
+                          type="number"
+                          value={
+                            Number(value.split("-")[1]) > 0
+                              ? value.split("-")[1]
+                              : "-"
+                          }
+                          readOnly
+                          className="w-12 basis-1/2 cursor-not-allowed border-b border-green-500 bg-transparent text-right text-xs  text-green-500 outline-none"
+                        />
+                      </div>
+                      <RoundButton onClick={handleRemove} name={filterEnum}>
+                        <span className="material-icons-outlined md-14 pointer-events-none">
+                          close
+                        </span>
+                      </RoundButton>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
-          {/* <div>By Macros min/max</div> */}
+
           <div className="flex flex-col items-start gap-2">
             <span className="font-semibold">Sort By</span>
             <div className="flex flex-col items-start gap-1">

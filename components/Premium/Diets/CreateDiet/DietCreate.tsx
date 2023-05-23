@@ -3,6 +3,7 @@ import {
   setDietState,
 } from "@/store/slices/createDietSlice";
 import { CompatiblePlans } from "@/types/foodTypes";
+import { createDiet } from "@/firebase/helpers/Diet";
 import { Diet, NewDiet } from "@/types/dietTypes";
 import { FC, useState } from "react";
 import { selectAuthSlice } from "@/store/slices/authSlice";
@@ -12,7 +13,6 @@ import DietMeals from "./DietMeals";
 import FormAction from "@/components/Form/FormAction";
 import IngredientsNutrition from "../../Ingredients/IngredientsNutrition";
 import Input from "@/components/Form/Input";
-import { createDiet } from "@/firebase/helpers/Diet";
 
 interface Props {}
 

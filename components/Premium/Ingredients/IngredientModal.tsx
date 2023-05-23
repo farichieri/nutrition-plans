@@ -25,8 +25,8 @@ const IngredientModal: FC<Props> = ({ food, dietMeal }) => {
   }, [food]);
 
   return (
-    <div className="sm:-4 flex flex-col gap-5 p-2">
-      <div className="flex">
+    <div className="flex w-full flex-col items-center gap-5 p-2 sm:p-4">
+      <div className="m-auto flex w-full">
         <div className="relative m-auto flex h-40 w-full basis-1/2 sm:h-60 ">
           <Image
             src={food.image}

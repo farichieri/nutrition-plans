@@ -9,8 +9,8 @@ const formatToUSDate = (date: Date): string => {
   return result;
 };
 
-const formatToLongDate = (date: string): string => {
-  const result = format(new Date(date), "eeee, LLLL dd");
+const formatToShortDate = (date: string): string => {
+  const result = format(new Date(date), "eee, LLLL dd");
   return result;
 };
 
@@ -79,7 +79,7 @@ const getMonthDate = (date: string): string => {
 };
 
 export {
-  formatToLongDate,
+  formatToShortDate,
   getDatePlusDays,
   getLastWeek,
   getMonthDate,

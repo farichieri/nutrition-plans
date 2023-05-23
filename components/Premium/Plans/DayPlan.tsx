@@ -44,6 +44,12 @@ const DayPlan: FC<Props> = ({ planID }) => {
               "z-50 flex h-full w-full max-w-5xl cursor-auto select-none flex-col gap-5"
             } max-w-5xl`}
           >
+            <div className="flex items-center gap-2">
+              <span className="material-icons-outlined text-green-500">
+                restaurant
+              </span>
+              <span className="text-2xl font-semibold">Meals</span>
+            </div>
             {Object.values(dietOpened.diet_meals)
               .sort((a: any, b: any) => Number(a.order) - Number(b.order))
               .map((meal: DietMeal) => {
@@ -79,7 +85,7 @@ const DayPlan: FC<Props> = ({ planID }) => {
                         return (
                           <Link
                             key={food_id}
-                            className="flex"
+                            className="flex divide-y"
                             href={`/app/food/${food_id}?amount=${food.scale_amount}&scale=${food.scale_name}`}
                           >
                             <Image
@@ -87,7 +93,7 @@ const DayPlan: FC<Props> = ({ planID }) => {
                               height={150}
                               width={150}
                               alt={food.food_name || ""}
-                              className="h-[100px] w-[100px] min-w-[100px] max-w-[100px] rounded-r-md object-cover"
+                              className="h-[100px] w-[100px] min-w-[100px] max-w-[100px] object-cover"
                             />
                             <div className="flex w-full p-2">
                               <div className="flex w-full flex-col">
