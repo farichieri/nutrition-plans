@@ -5,6 +5,7 @@ import { updateUserMeal } from "@/firebase/helpers/Meals";
 import { useDispatch, useSelector } from "react-redux";
 import { UserMeals, UserMealsArr } from "@/types/mealsSettingsTypes";
 import React, { FC, useEffect, useState } from "react";
+import { reorderArr } from "@/utils/filter";
 
 interface Props {
   meals: UserMeals;
@@ -14,21 +15,8 @@ interface Props {
 const Meals: FC<Props> = ({ meals, handleConfirmDelete }) => {
   const { user } = useSelector(selectAuthSlice);
   const dispatch = useDispatch();
-  const mealsArraySorted = Object.values(meals).sort(
-    (a, b) => a.order - b.order
-  );
-  const [mealsState, setmealsState] = useState<UserMealsArr>(mealsArraySorted);
-
-  const reorder = (
-    list: UserMealsArr,
-    startIndex: number,
-    endIndex: number
-  ) => {
-    const result = [...list];
-    const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
-    return result;
-  };
+  const mealsArrSorted = Object.values(meals).sort((a, b) => a.order - b.order);
+  const [mealsState, setmealsState] = useState<UserMealsArr>(mealsArrSorted);
 
   const onDragEnd = (result: any) => {
     const { source, destination } = result;
@@ -39,13 +27,16 @@ const Meals: FC<Props> = ({ meals, handleConfirmDelete }) => {
     ) {
       return;
     }
-    const mealsReordered = reorder(mealsState, source.index, destination.index);
+    const mealsReordered = reorderArr(
+      mealsState,
+      source.index,
+      destination.index
+    );
     updateMealsOrders(mealsReordered);
     setmealsState(mealsReordered);
   };
 
   const updateMealsOrders = async (mealsReordered: UserMealsArr) => {
-    console.log("updating");
     if (!user?.user_id) return;
 
     const mealsUpdated: UserMeals = {};
@@ -59,6 +50,7 @@ const Meals: FC<Props> = ({ meals, handleConfirmDelete }) => {
     Object.values(mealsUpdated).map(async (meal) => {
       const res = await updateUserMeal(user, meal);
       if (res?.error) {
+        // Add error UI
         console.log("Error reordering meals");
       }
     });
@@ -71,7 +63,7 @@ const Meals: FC<Props> = ({ meals, handleConfirmDelete }) => {
   }, [meals]);
 
   return (
-    <div className="w-full max-w-sm select-none rounded-md border px-4">
+    <div className="w-full max-w-sm select-none rounded-md border ">
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="opaaa">
           {(droppableProvided) => (
@@ -93,7 +85,7 @@ const Meals: FC<Props> = ({ meals, handleConfirmDelete }) => {
                           ref={draggableProvided.innerRef}
                           {...draggableProvided.draggableProps}
                           {...draggableProvided.dragHandleProps}
-                          className="flex items-center gap-2 py-2"
+                          className="flex items-center gap-2 px-4 py-2 hover:bg-slate-500/20 active:bg-slate-500/40"
                         >
                           <span className="text-xs opacity-50">
                             {meal.order + 1}

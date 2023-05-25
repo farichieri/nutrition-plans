@@ -30,7 +30,7 @@ const IngredientsNutrition: FC<Props> = ({ food, meal, diet, ingredients }) => {
   const getIngredientsFoods = (ingredients: IngredientGroup): FoodGroup => {
     let result: FoodGroup = {};
     Object.keys(ingredients).map((ing) => {
-      const food = ingredients[ing].food;
+      const food = ingredients[ing];
       if (food.food_id) {
         result[food.food_id as keyof Food] = food;
       }

@@ -6,6 +6,7 @@ import { FC, useState } from "react";
 import { Instruction } from "@/types/foodTypes";
 import { useDispatch, useSelector } from "react-redux";
 import { uuidv4 } from "@firebase/util";
+import RoundButton from "@/components/Buttons/RoundButton";
 
 interface Props {}
 
@@ -14,8 +15,7 @@ const AddInstruction: FC<Props> = () => {
   const { recipeState } = useSelector(selectCreateFoodSlice);
   const [newInstruction, setNewInstruction] = useState<Instruction>({
     instruction_id: "",
-    order: 0,
-    recipe_id: recipeState.food_id || "",
+    order: -1,
     text: "",
   });
 
@@ -51,8 +51,7 @@ const AddInstruction: FC<Props> = () => {
     );
     setNewInstruction({
       instruction_id: "",
-      order: 0,
-      recipe_id: recipeState.food_id || "",
+      order: -1,
       text: "",
     });
   };
@@ -70,9 +69,12 @@ const AddInstruction: FC<Props> = () => {
         placeholder="New Instruction..."
         className="min-h-10 h-full max-h-32 w-full rounded-lg border bg-transparent p-2 text-sm outline-none  placeholder:opacity-50 focus-within:border-black dark:focus-within:border-white"
       />
-      <button onClick={handleAddInstruction} className="flex items-center">
+      <RoundButton
+        customClass="w-10 h-10 p-1.5 my-auto ml-auto"
+        onClick={handleAddInstruction}
+      >
         <span className="material-icons pointer-events-none">add</span>
-      </button>
+      </RoundButton>
     </div>
   );
 };

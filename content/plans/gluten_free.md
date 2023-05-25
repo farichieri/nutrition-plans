@@ -1,7 +1,7 @@
 ---
 title: "Gluten Free"
 isAvailable: true
-image: "/images/plans/gluten-free.jpg"
+image: "/images/plans/gluten_free.jpg"
 ---
 
 The gluten-free diet consists of a diet in which gluten is avoided, a protein present in wheat, oats, barley and rye and which can also be found in other products such as medicines, vitamins or supplements. Adaptation to this diet usually occurs for medical reasons, such as celiac disease, non-celiac gluten sensitivity, or wheat allergy. You can also follow a gluten-free diet as a measure to lose weight or even as an option for intestinal pathologies, autoimmune diseases, even for those who choose an anti-inflammatory diet as a lifestyle.

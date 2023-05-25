@@ -1,7 +1,7 @@
 ---
 title: "Low Carb"
 isAvailable: true
-image: "/images/plans/low-carb.jpg"
+image: "/images/plans/low_carb.jpg"
 ---
 
 The low carb diet or low carbohydrate diet is a diet that involves reducing carbohydrates to give preference to proteins and fats.

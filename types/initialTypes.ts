@@ -189,7 +189,7 @@ export const NewFood: Food = {
   num_ingredient_usages: 0,
   num_likes: 0,
   nutrients: NewFoodNutrients,
-  order: null,
+  order: -1,
   prep_time: null,
   price: null,
   recipe_category: null,
@@ -202,11 +202,5 @@ export const NewFood: Food = {
   source: null,
   uploader: null,
   user_id: null,
-};
-
-export const NewIngredient: Ingredient = {
-  food_id: "",
-  food: NewFood,
-  order: 0,
-  text: "",
+  note: "",
 };

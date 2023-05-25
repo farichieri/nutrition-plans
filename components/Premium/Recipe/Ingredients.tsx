@@ -18,8 +18,7 @@ const Ingredient: FC<IngredientProps> = ({
   scale,
 }) => {
   const recipe = food;
-  console.log({ food });
-  const { food: foodIngredient } = ingredient;
+  const foodIngredient = ingredient;
 
   if (!food || !food.scale_name || !food.scale_amount) {
     return (
@@ -105,21 +104,28 @@ interface Props {
 }
 
 const Ingredients: FC<Props> = ({ food, amount, scale }) => {
-  if (Object.keys(food.ingredients).length < 1) {
+  const ingsSorted = Object.values(food.ingredients).sort(
+    (a, b) => a.order - b.order
+  );
+
+  if (ingsSorted.length < 1) {
     return <></>;
   }
 
   return (
     <div className="flex flex-col gap-1">
-      {Object.keys(food.ingredients).map((food_id) => (
-        <Ingredient
-          food={food}
-          ingredient={food.ingredients[food_id]}
-          key={food_id}
-          amount={amount}
-          scale={scale}
-        />
-      ))}
+      {ingsSorted.map((ingredient) => {
+        if (ingredient.food_id)
+          return (
+            <Ingredient
+              food={food}
+              ingredient={food.ingredients[ingredient.food_id]}
+              key={ingredient.food_id}
+              amount={amount}
+              scale={scale}
+            />
+          );
+      })}
     </div>
   );
 };

@@ -22,7 +22,7 @@ import AddInstruction from "./AddInstruction";
 import Checkbox from "@/components/Form/Checkbox";
 import FormAction from "@/components/Form/FormAction";
 import Image from "next/image";
-import Ingredients from "../../Ingredients/Ingredients";
+import RecipeCreateIngredients from "../../Ingredients/RecipeCreateIngredients";
 import IngredientsNutrition from "../../Ingredients/IngredientsNutrition";
 import IngredientsSelector from "../../Ingredients/IngredientsSelector";
 import Input from "@/components/Form/Input";
@@ -325,7 +325,7 @@ const RecipeCreate: FC<Props> = () => {
           </div>
           <div className="flex max-w-xl flex-col gap-2 rounded-md border p-2">
             <span className="text-3xl">Ingredients</span>
-            <Ingredients ingredients={recipeState.ingredients} />
+            <RecipeCreateIngredients ingredients={recipeState.ingredients} />
             <IngredientsSelector />
           </div>
           <div className="flex max-w-xl flex-col gap-2 rounded-md border p-2">

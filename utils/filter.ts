@@ -1,4 +1,10 @@
-import { Food, FoodGroupArray, FoodNutrients } from "@/types/foodTypes";
+import {
+  Food,
+  FoodGroupArray,
+  FoodNutrients,
+  IngsGroupArray,
+} from "@/types/foodTypes";
+import { UserMealsArr } from "@/types/mealsSettingsTypes";
 import { FilterSortTypes } from "@/types/types";
 
 const filterObject = (obj: any, filter: string, filterValue: string) =>
@@ -79,9 +85,17 @@ const sortFoodsSearched = (foodsArray: FoodGroupArray, sortBy: string) => {
   }
 };
 
+const reorderArr = (list: any[], startI: number, endI: number) => {
+  const result = [...list];
+  const [removed] = result.splice(startI, 1);
+  result.splice(endI, 0, removed);
+  return result;
+};
+
 export {
   filterObject,
   filterByCompatiblePlan,
   filterByNutrientRange,
   sortFoodsSearched,
+  reorderArr,
 };

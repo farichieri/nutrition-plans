@@ -11,7 +11,7 @@ const MealsSettings: FC<Props> = ({ mealsSettings }) => {
 
   return (
     <div className="flex flex-col gap-5 rounded-md border bg-white p-5 dark:bg-black">
-      <span className="text-2xl font-semibold">Meal Templates:</span>
+      <span className="text-2xl font-semibold">My Templates:</span>
       {noData ? (
         <div>No meals found</div>
       ) : (

@@ -31,7 +31,7 @@ export interface Food {
   num_ingredient_usages: number;
   num_likes: number;
   nutrients: FoodNutrients;
-  order: number | null;
+  order: number;
   prep_time: number | null;
   price: number | null;
   recipe_category: RecipeCategoriesEnum | null;
@@ -44,24 +44,20 @@ export interface Food {
   source: string | null;
   uploader: string | null;
   user_id: string | null;
+  note: string;
 }
 
-export interface Ingredient {
-  [id: string]: any;
-  food: Food;
-  food_id: string | null;
-  order: number;
-  text: string;
-}
+export interface Ingredient extends Food {}
 
 export interface IngredientGroup {
-  [id: string]: Ingredient;
+  [id: string]: Food;
 }
+
+export interface IngsGroupArray extends Array<Food> {}
 
 export interface Instruction {
   instruction_id: string;
   order: number;
-  recipe_id: string;
   text: string;
 }
 

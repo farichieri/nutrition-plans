@@ -135,7 +135,7 @@ const getRecipeSize = (ingredients: IngredientGroup): number | null => {
   if (!ingredients) return null;
   let size = 0;
   Object.keys(ingredients).map((ing) => {
-    const food = ingredients[ing].food;
+    const food = ingredients[ing];
     if (food.scale_name && food.scale_amount) {
       const equivalentInGrams = getNewAmount(
         food,

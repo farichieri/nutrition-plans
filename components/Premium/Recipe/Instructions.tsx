@@ -16,10 +16,16 @@ interface Props {
 }
 
 const Instructions: FC<Props> = ({ instructions }) => {
+  console.log({ instructions });
+  console.log([...instructions]);
+  const instructionsSorted = [...instructions].sort(
+    (a, b) => a.order - b.order
+  );
+
   return (
     <div className="flex flex-col gap-1">
       <span className="text-3xl font-semibold">Instructions:</span>
-      {instructions.map((instruction: Instruction, index: number) => (
+      {instructionsSorted.map((instruction: Instruction, index: number) => (
         <div
           key={instruction.instruction_id}
           className="flex w-full items-center gap-1"

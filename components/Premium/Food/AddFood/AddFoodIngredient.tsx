@@ -37,14 +37,9 @@ const AddFoodIngredient: FC<Props> = ({ dietMeal }) => {
   ): void => {
     event.preventDefault();
     const newIngredient: Ingredient = {
-      food: {
-        ...food,
-        scale_amount: foodOpened.food_scale.amount,
-        scale_name: foodOpened.food_scale.weightName,
-      },
-      food_id: food.food_id,
-      order: 0,
-      text: "",
+      ...food,
+      scale_amount: foodOpened.food_scale.amount,
+      scale_name: foodOpened.food_scale.weightName,
     };
 
     if (isCreateRecipe) {
