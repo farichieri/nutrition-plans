@@ -6,7 +6,6 @@ import {
   Ingredient,
 } from "@/types/foodTypes";
 import {
-  MealsEnum,
   NutritionTargets,
   Progress,
   Ratings,
@@ -74,13 +73,7 @@ export const newAccount: UserAccount = {
   food_data: newFoodData,
   is_admin: false,
   is_premium: false,
-  num_meals: 4,
-  user_meals: [
-    MealsEnum.breakfast,
-    MealsEnum.lunch,
-    MealsEnum.dinner,
-    MealsEnum.snack,
-  ],
+  user_meals: {},
   is_profile_completed: false,
   lang: "",
   nutrition_targets: newNutritionTargets,

@@ -1,4 +1,3 @@
-import { db } from "../firebase.config";
 import {
   collection,
   deleteDoc,
@@ -7,6 +6,7 @@ import {
   query,
   setDoc,
 } from "firebase/firestore";
+import { db } from "../firebase.config";
 import { Progress, ProgressItem, UserAccount } from "@/types/types";
 import { User } from "firebase/auth";
 

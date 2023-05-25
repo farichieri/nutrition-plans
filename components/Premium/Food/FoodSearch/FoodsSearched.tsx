@@ -99,7 +99,7 @@ const FoodsSearched: FC<Props> = ({ queries }) => {
   const foods = getFoodsFiltered();
 
   return (
-    <div className="grid max-w-screen-2xl select-none grid-cols-fluid gap-4 px-4 sm:px-0">
+    <div className="grid max-w-screen-2xl select-none grid-cols-fluid gap-4 px-4 sm:grid-cols sm:px-0">
       {foods.map((food: Food) => {
         return (
           <Link

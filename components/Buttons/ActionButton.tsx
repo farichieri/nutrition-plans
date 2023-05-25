@@ -1,5 +1,6 @@
 import { ButtonType } from "@/types/types";
 import { MouseEventHandler } from "react";
+import Spinner from "../Loader/Spinner";
 
 const ActionButton = ({
   action,
@@ -39,15 +40,22 @@ const ActionButton = ({
     return (
       <button
         type={action}
-        className={`flex select-none justify-center rounded-md border px-4 py-1 text-sm font-medium shadow-[0_1px_5px_gray] duration-300  ${className} ${
+        className={`flex select-none justify-center rounded-md border px-4 py-2 text-sm font-medium duration-300 ${className} ${
           isDisabled
             ? "cursor-not-allowed border-transparent bg-transparent opacity-70"
-            : " border-red-500 bg-red-500/70 opacity-100 hover:bg-red-600 active:shadow-[0_0_10px_gray]"
+            : "border-red-500 text-red-500"
         }`}
         onClick={onClick}
         disabled={isDisabled}
       >
-        {isLoading ? <span>{loadMessage}</span> : <span>{content}</span>}
+        {isLoading ? (
+          <div className="flex w-full items-center justify-between gap-2">
+            <span>{loadMessage}</span>
+            <Spinner customClass="h-5 w-5" />
+          </div>
+        ) : (
+          <span className="w-full">{content}</span>
+        )}
       </button>
     );
   } else if (type === ButtonType.discard) {

@@ -1,3 +1,5 @@
+import { UserMeals } from "./mealsSettingsTypes";
+
 export enum Theme {
   dark = "dark",
   light = "light",
@@ -26,7 +28,6 @@ export enum MealsEnum {
   dinner = "dinner",
   snack = "snack",
 }
-
 export enum PlansEnum {
   balanced = "balanced",
   gluten_free = "gluten_free",
@@ -34,7 +35,6 @@ export enum PlansEnum {
   vegetarian = "vegetarian",
   low_carb = "low_carb",
 }
-
 export enum FiltersEnum {
   q = "q",
   kind = "kind",
@@ -44,6 +44,11 @@ export enum FiltersEnum {
   proteins_range = "proteins_range",
   carbs_range = "carbs_range",
   fats_range = "fats_range",
+}
+export enum FilterSortTypes {
+  rating = "rating",
+  higher_calories = "higher_calories",
+  lower_calories = "lower_calories",
 }
 
 export type MealsType = {
@@ -90,8 +95,7 @@ export interface UserAccount {
   user_id: string;
   weight_goal: WeightGoal;
   user_step: UserSteps;
-  num_meals: number;
-  user_meals: MealsEnum[];
+  user_meals: UserMeals;
 }
 export interface UserCreatedData {
   body_data: UserBodyData;
@@ -181,10 +185,4 @@ export interface FilterQueries {
   carbs_range?: string;
   fats_range?: string;
   sort?: string;
-}
-
-export enum FilterSortTypes {
-  rating = "rating",
-  higher_calories = "higher_calories",
-  lower_calories = "lower_calories",
 }

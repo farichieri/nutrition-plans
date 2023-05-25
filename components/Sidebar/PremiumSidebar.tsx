@@ -64,10 +64,11 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
     },
     {
       name: "Meal settings",
-      url: "/app/profile/meal-settings",
+      url: "/app/profile/meals",
       icon: "restaurant_menu",
     },
   ];
+
   const ADMIN_PAGES = [
     { name: "Create Food", url: "/app/admin/create/food", icon: "add" },
     {
@@ -80,11 +81,11 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
     //   url: "/app/admin/create/meal",
     //   icon: "add",
     // },
-    {
-      name: "Create Diet Plan",
-      url: "/app/admin/create/diet",
-      icon: "add",
-    },
+    // {
+    //   name: "Create Diet Plan",
+    //   url: "/app/admin/create/diet",
+    //   icon: "add",
+    // },
   ];
 
   const COLLAPSED_PAGES = [

@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   createUserWithEmailAndPassword,
   getAdditionalUserInfo,
@@ -13,6 +12,7 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import GoogleLoginButton from "../Buttons/GoogleLogin";
 import Link from "next/link";
+import React, { useState } from "react";
 import SubmitButton from "../Buttons/SubmitButton";
 
 const Signup = () => {

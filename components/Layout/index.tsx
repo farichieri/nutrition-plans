@@ -1,4 +1,5 @@
 import { auth } from "@/firebase/firebase.config";
+import { fetchMeals, fetchMealsSettings } from "@/firebase/helpers/Meals";
 import { fetchProgress } from "@/firebase/helpers/Progress";
 import { generateUserObject } from "@/firebase/helpers/Auth";
 import { Inter } from "next/font/google";
@@ -6,6 +7,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { selectLayoutSlice } from "@/store/slices/layoutSlice";
 import { setIsVerifyingUser, setUser } from "@/store/slices/authSlice";
 import { setProgress } from "@/store/slices/progressSlice";
+import { setUserMeals, setUserMealsSettings } from "@/store/slices/mealsSlice";
 import { Theme } from "@/types/types";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -23,12 +25,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     dispatch(setIsVerifyingUser());
     onAuthStateChanged(auth, async (user) => {
-      const [userData, progressData] = await Promise.all([
+      const [userData, progressData, mealsData, mealsSettings] = await Promise.all([
         user && generateUserObject(user),
         user && fetchProgress(user),
+        user && fetchMeals(user),
+        user && fetchMealsSettings(user),
       ]);
       dispatch(setUser(userData));
       progressData && dispatch(setProgress(progressData));
+      mealsData && dispatch(setUserMeals(mealsData));
+      mealsSettings && dispatch(setUserMealsSettings(mealsSettings));
     });
   }, []);
 
