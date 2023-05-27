@@ -1,5 +1,3 @@
-import { UserMeals } from "./mealsSettingsTypes";
-
 export enum Theme {
   dark = "dark",
   light = "light",
@@ -22,12 +20,7 @@ export enum UserSteps {
   step_2 = "step_2",
   step_3 = "step_3",
 }
-export enum MealsEnum {
-  breakfast = "breakfast",
-  lunch = "lunch",
-  dinner = "dinner",
-  snack = "snack",
-}
+
 export enum PlansEnum {
   balanced = "balanced",
   gluten_free = "gluten_free",
@@ -50,10 +43,6 @@ export enum FilterSortTypes {
   higher_calories = "higher_calories",
   lower_calories = "lower_calories",
 }
-
-export type MealsType = {
-  [key in keyof typeof MealsEnum]?: (typeof MealsEnum)[key];
-};
 
 // Posts
 export interface Post {
@@ -95,7 +84,6 @@ export interface UserAccount {
   user_id: string;
   weight_goal: WeightGoal;
   user_step: UserSteps;
-  user_meals: UserMeals;
 }
 export interface UserCreatedData {
   body_data: UserBodyData;
@@ -186,3 +174,7 @@ export interface FilterQueries {
   fats_range?: string;
   sort?: string;
 }
+
+export type Result<T, E> =
+  | { result: "success"; data: T }
+  | { result: "error"; error: E };

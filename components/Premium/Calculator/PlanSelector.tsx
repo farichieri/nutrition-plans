@@ -1,4 +1,3 @@
-import { CheckBadgeIcon } from "@heroicons/react/24/solid";
 import { FC, useEffect, useState } from "react";
 import { MEAL_PLANS } from "@/utils/content";
 import { selectAuthSlice, setUpdateUser } from "@/store/slices/authSlice";
@@ -6,8 +5,8 @@ import { updateUser } from "@/firebase/helpers/Auth";
 import { useDispatch, useSelector } from "react-redux";
 import { UserAccount } from "@/types/types";
 import { useRouter } from "next/router";
-import SubmitButton from "@/components/Buttons/SubmitButton";
 import Image from "next/image";
+import SubmitButton from "@/components/Buttons/SubmitButton";
 
 interface Props {
   handleSubmit: Function;

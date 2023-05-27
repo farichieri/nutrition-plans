@@ -9,7 +9,7 @@ import Signup from "@/components/Auth/Signup";
 
 export default function Page() {
   const router = useRouter();
-  const { user, isVerifyingUser } = useSelector(selectAuthSlice);
+  const { user, isVerifyingUser, isSigningUser } = useSelector(selectAuthSlice);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -23,10 +23,7 @@ export default function Page() {
 
   return (
     <SignLayout>
-      {isLoading && <Loader />}
-      {/* <div className="flex w-fit min-w-fit justify-start pt-3 font-bold xxs:text-sm xs:text-base sm:text-2xl">
-        <Link href={"/"}>Nutrition Plans</Link>
-      </div> */}
+      {(isLoading || isSigningUser) && <Loader />}
       <Signup />
       <div className="mt- mb-5 text-center text-base">
         <p>

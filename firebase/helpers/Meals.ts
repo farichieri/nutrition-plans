@@ -6,42 +6,49 @@ import {
   query,
   setDoc,
 } from "firebase/firestore";
+import {
+  MealComplexities,
+  MealsSettings,
+  UserMeal,
+  UserMeals,
+} from "@/types/mealsSettingsTypes";
 import { db } from "../firebase.config";
-import { User } from "firebase/auth";
 import { UserAccount } from "@/types/types";
-import { UserMeal, UserMeals } from "@/types/mealsSettingsTypes";
+import { UserMealsArr } from "@/types/mealsSettingsTypes";
+import { MealSizes } from "@/types/mealsSettingsTypes";
+import { MealMinutes } from "@/types/mealsSettingsTypes";
 
-const fetchMeals = async (user: User) => {
+const fetchMeals = async (userID: string) => {
   console.log("Fetching Meals");
   try {
     let data: UserMeals = {};
-    const userMealsRef = query(collection(db, "users", user.uid, "meals"));
+    const userMealsRef = query(collection(db, "users", userID, "meals"));
     const querySnapshot = await getDocs(userMealsRef);
     querySnapshot.forEach((meal: any) => {
       data[meal.id] = meal.data();
     });
-    return data;
+    return { data };
   } catch (error) {
     console.log("fetchMeals", { error });
-    return {};
+    return { error };
   }
 };
 
-const fetchMealsSettings = async (user: User) => {
+const fetchMealsSettings = async (userID: string) => {
   console.log("Fetching MealsSettings");
   try {
-    let data: UserMeals = {};
+    let data: MealsSettings = {};
     const userMealsSettingsRef = query(
-      collection(db, "users", user.uid, "settings", "mealsSettings", "meals")
+      collection(db, "users", userID, "settings", "mealsSettings", "meals")
     );
     const querySnapshot = await getDocs(userMealsSettingsRef);
     querySnapshot.forEach((meal: any) => {
       data[meal.id] = meal.data();
     });
-    return data;
+    return { data };
   } catch (error) {
     console.log("fetchMealsSettings", { error });
-    return {};
+    return { error };
   }
 };
 
@@ -128,6 +135,81 @@ const updateUserMeal = async (user: UserAccount, userMeal: UserMeal) => {
   }
 };
 
+const defaultMeals: UserMealsArr = [
+  {
+    cook: true,
+    id: null,
+    name: "Breakfast",
+    order: -1,
+    size: MealSizes.normal,
+    time: MealMinutes.less_than_30_min,
+    complexity: MealComplexities.moderate,
+  },
+  {
+    cook: true,
+    id: null,
+    name: "Lunch",
+    order: -1,
+    size: MealSizes.normal,
+    time: MealMinutes.less_than_30_min,
+    complexity: MealComplexities.moderate,
+  },
+  {
+    cook: true,
+    id: null,
+    name: "Dinner",
+    order: -1,
+    size: MealSizes.normal,
+    time: MealMinutes.less_than_30_min,
+    complexity: MealComplexities.moderate,
+  },
+  {
+    cook: true,
+    id: null,
+    name: "Snack",
+    order: -1,
+    size: MealSizes.normal,
+    time: MealMinutes.less_than_30_min,
+    complexity: MealComplexities.moderate,
+  },
+];
+
+const createDefaultMealsSettings = async (user: UserAccount) => {
+  try {
+    defaultMeals.map(async (meal) => {
+      const res = await createMealSetting(user, meal);
+      if (res.error) throw Error;
+    });
+    const fetchRes = await fetchMealsSettings(user.user_id);
+    if (!fetchRes.error) {
+      return fetchRes;
+    } else throw Error;
+  } catch (error) {
+    console.log("createDefaultMealsSettings", { error });
+    return { error };
+  }
+};
+
+const createDefaultUserMeals = async (user: UserAccount) => {
+  try {
+    defaultMeals.map(async (meal, index) => {
+      const newUserMeal = {
+        ...meal,
+        order: index,
+      };
+      const res = await createUserMeal(user, newUserMeal);
+      if (res.error) throw Error;
+    });
+    const fetchRes = await fetchMeals(user.user_id);
+    if (!fetchRes.error) {
+      return fetchRes;
+    } else throw Error;
+  } catch (error) {
+    console.log("createDefaultUserMeals", { error });
+    return { error };
+  }
+};
+
 export {
   createMealSetting,
   createUserMeal,
@@ -136,4 +218,6 @@ export {
   fetchMeals,
   fetchMealsSettings,
   updateUserMeal,
+  createDefaultUserMeals,
+  createDefaultMealsSettings,
 };

@@ -1,11 +1,11 @@
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
+import { reorderArr } from "@/utils/filter";
 import { selectAuthSlice } from "@/store/slices/authSlice";
 import { setUserMeals } from "@/store/slices/mealsSlice";
 import { updateUserMeal } from "@/firebase/helpers/Meals";
 import { useDispatch, useSelector } from "react-redux";
 import { UserMeals, UserMealsArr } from "@/types/mealsSettingsTypes";
 import React, { FC, useEffect, useState } from "react";
-import { reorderArr } from "@/utils/filter";
 
 interface Props {
   meals: UserMeals;

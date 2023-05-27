@@ -1,57 +1,18 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { MEAL_PLANS } from "@/utils/content";
 import { selectAuthSlice } from "@/store/slices/authSlice";
 import { useSelector } from "react-redux";
-import Image from "next/image";
 
-interface Props {
-  setNutritionTargets: Function;
-}
+interface Props {}
 
-const NutritionTarget: FC<Props> = ({ setNutritionTargets }) => {
+const NutritionTarget: FC<Props> = () => {
   const { user } = useSelector(selectAuthSlice);
-  const body_data = user?.body_data;
   const plan_selected = user?.plan_selected;
   const planData = MEAL_PLANS.find((plan) => plan.id === plan_selected);
-  const calories = Number(body_data?.kcals_recommended);
 
-  const getMacro = (
-    personCalories: number,
-    macroMultiplyer: number,
-    macroValue: number
-  ): number => {
-    return Math.round(
-      (Number(personCalories) * (Number(macroValue) / 100)) / macroMultiplyer
-    );
-  };
+  if (!user) return <></>;
 
-  const carbsMin = getMacro(calories, 4, Number(planData?.macros.carbs.min));
-  const carbsMax = getMacro(calories, 4, Number(planData?.macros.carbs.max));
-
-  const protsMin = getMacro(calories, 4, Number(planData?.macros.proteins.min));
-  const protsMax = getMacro(calories, 4, Number(planData?.macros.proteins.max));
-
-  const fatsMin = getMacro(calories, 4, Number(planData?.macros.fats.min));
-  const fatsMax = getMacro(calories, 4, Number(planData?.macros.fats.max));
-
-  useEffect(() => {
-    if (carbsMin && carbsMax && protsMin && protsMax && fatsMin && fatsMax) {
-      setNutritionTargets({
-        carbohydrates: {
-          min: carbsMin,
-          max: carbsMax,
-        },
-        proteins: {
-          min: protsMin,
-          max: protsMax,
-        },
-        fats: {
-          min: fatsMin,
-          max: protsMax,
-        },
-      });
-    }
-  }, [carbsMin, carbsMax, protsMin, protsMax, fatsMin, fatsMax]);
+  const { nutrition_targets } = user;
 
   return (
     <div className="flex flex-col gap-5">
@@ -68,7 +29,8 @@ const NutritionTarget: FC<Props> = ({ setNutritionTargets }) => {
             <span>Carbohydrates:</span>
             <div className="flex gap-4 sm:gap-10">
               <div className="flex gap-1">
-                <span>{carbsMin}g</span>-<span>{carbsMax}g</span>
+                <span>{nutrition_targets.carbohydrates.min}g</span>-
+                <span>{nutrition_targets.carbohydrates.min}g</span>
               </div>
               <div>
                 <span>{planData?.macros.carbs.min}%</span>-
@@ -81,7 +43,8 @@ const NutritionTarget: FC<Props> = ({ setNutritionTargets }) => {
 
             <div className="flex gap-4 sm:gap-10">
               <div className="flex gap-1">
-                <span>{protsMin}g</span>-<span>{protsMax}g</span>
+                <span>{nutrition_targets.proteins.min}g</span>-
+                <span>{nutrition_targets.proteins.max}g</span>
               </div>
               <div>
                 <span>{planData?.macros.proteins.min}%</span>-
@@ -93,7 +56,8 @@ const NutritionTarget: FC<Props> = ({ setNutritionTargets }) => {
             <span>Fats:</span>
             <div className="flex gap-4 sm:gap-10">
               <div className="flex gap-1">
-                <span>{fatsMin}g</span>-<span>{fatsMax}g</span>
+                <span>{nutrition_targets.fats.min}g</span>-
+                <span>{nutrition_targets.fats.max}g</span>
               </div>
               <div>
                 <span>{planData?.macros.fats.min}%</span>-
@@ -103,21 +67,6 @@ const NutritionTarget: FC<Props> = ({ setNutritionTargets }) => {
           </div>
         </div>
       </div>
-      {/* <div className="flex flex-col items-start justify-center gap-1">
-        <span className="text-lg font-semibold">Plan Selected:</span>
-        <div className="flex flex-col items-center justify-center">
-          <span className="flex w-full items-center justify-center text-center text-xl font-bold text-green-500">
-            {planData?.name}
-          </span>
-          <Image
-            src={`/images/plans/${plan_selected}.jpg`}
-            alt={plan_selected || ""}
-            width={150}
-            height={150}
-            className="pointer-events-none m-2 rounded-3xl shadow-[0_1px_5px_gray] dark:shadow-[0px_1px_5px_#4040408c]"
-          />
-        </div>
-      </div> */}
     </div>
   );
 };

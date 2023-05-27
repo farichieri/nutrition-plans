@@ -52,7 +52,6 @@ const generateUserObject = async (user: User) => {
         premium_plan: userData.premium_plan,
         ratings: userData.ratings,
         user_id: userData.user_id,
-        user_meals: userData.user_meals,
         user_step: userData.user_step,
         weight_goal: userData.weight_goal,
       };

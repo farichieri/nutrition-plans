@@ -1,6 +1,6 @@
 import { FC } from "react";
-import Link from "next/link";
 import { MealsSettings } from "@/types/mealsSettingsTypes";
+import Link from "next/link";
 
 interface Props {
   mealsSettings: MealsSettings;
@@ -11,11 +11,16 @@ const MealsSettings: FC<Props> = ({ mealsSettings }) => {
 
   return (
     <div className="flex flex-col gap-5 rounded-md border bg-white p-5 dark:bg-black">
-      <span className="text-2xl font-semibold">My Templates:</span>
+      <div className="flex flex-wrap items-baseline">
+        <span className="text-2xl font-semibold">My Templates:</span>
+        <span className="ml-1 text-xs opacity-50">
+          (You can re-use them in My Meals)
+        </span>
+      </div>
       {noData ? (
         <div>No meals found</div>
       ) : (
-        <div className="flex flex-wrap items-center gap-5">
+        <div className="flex flex-wrap  gap-5">
           {Object.keys(mealsSettings).map((meal_id) => (
             <Link href={`/app/profile/meals/${meal_id}`} key={meal_id}>
               <span className="rounded-md border px-4 py-2 font-semibold capitalize text-green-500">

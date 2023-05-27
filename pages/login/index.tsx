@@ -8,7 +8,7 @@ import SignLayout from "@/components/Layout/SignLayout";
 
 export default function Page() {
   const router = useRouter();
-  const { user, isVerifyingUser } = useSelector(selectAuthSlice);
+  const { user, isVerifyingUser, isSigningUser } = useSelector(selectAuthSlice);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export default function Page() {
 
   return (
     <SignLayout>
-      {isLoading && <Loader />}
+      {(isLoading || isSigningUser) && <Loader />}
       <Login />
     </SignLayout>
   );

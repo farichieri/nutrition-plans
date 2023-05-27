@@ -11,6 +11,7 @@ import { updateUser } from "@/firebase/helpers/Auth";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import SubmitButton from "@/components/Buttons/SubmitButton";
+import { getNutritionTargets } from "./helpers";
 
 interface Props {
   handleSubmit: Function;
@@ -190,6 +191,10 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
       setError("Complete all fields to continue");
     } else {
       setIsLoading(true);
+      const planSelected = user.plan_selected;
+      const nutritionTargets =
+        planSelected && getNutritionTargets(kcals_recommended, planSelected);
+      if (!nutritionTargets) return;
       const userUpdated: UserAccount = {
         ...user,
         body_data: {
@@ -204,6 +209,7 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
           measurement_unit: input.measurement_unit,
           weight_in_kg: Number(input.kilograms),
         },
+        nutrition_targets: nutritionTargets,
       };
       const res = await updateUser(userUpdated);
       if (!res?.error) {

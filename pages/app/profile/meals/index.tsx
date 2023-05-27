@@ -1,5 +1,5 @@
-import { selectMealsSlice } from "@/store/slices/mealsSlice";
 import { selectAuthSlice } from "@/store/slices/authSlice";
+import { selectMealsSlice } from "@/store/slices/mealsSlice";
 import { useSelector } from "react-redux";
 import MealsSettings from "@/components/Premium/UserMeals/MealsSettings/MealsSettings";
 import PremiumLayout from "@/components/Layout/PremiumLayout";

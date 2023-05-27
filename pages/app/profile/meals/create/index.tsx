@@ -1,4 +1,6 @@
 import {
+  MealComplexities,
+  MealComplexitiesType,
   MealCook,
   MealMinutes,
   MealMinutesType,
@@ -8,15 +10,12 @@ import {
   UserMeal,
 } from "@/types/mealsSettingsTypes";
 import {
-  createMealSetting,
-  fetchMealsSettings,
-} from "@/firebase/helpers/Meals";
-import { selectAuthSlice } from "@/store/slices/authSlice";
-import {
   selectMealsSlice,
   setAddNewMealSetting,
   setNewMealState,
 } from "@/store/slices/mealsSlice";
+import { createMealSetting } from "@/firebase/helpers/Meals";
+import { selectAuthSlice } from "@/store/slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -35,6 +34,9 @@ export default function Page() {
   const [isCreating, setIsCreating] = useState(false);
   const sizeOptions = Object.keys(MealSizes).filter((i) => isNaN(Number(i)));
   const timeOptions = Object.keys(MealMinutes).filter((i) => isNaN(Number(i)));
+  const complexityOptions = Object.keys(MealComplexities).filter((i) =>
+    isNaN(Number(i))
+  );
   const cookOptions = Object.values(MealCook);
 
   if (!user) return;
@@ -60,6 +62,16 @@ export default function Page() {
         setNewMealState({
           ...newMealState,
           time: newTime,
+        })
+      );
+    } else if (id === "complexity") {
+      const newComplexity = Number(
+        MealComplexities[value as keyof MealComplexitiesType]
+      );
+      dispatch(
+        setNewMealState({
+          ...newMealState,
+          complexity: newComplexity,
         })
       );
     } else if (id === "cook") {
@@ -147,6 +159,20 @@ export default function Page() {
                   title={"Meal Time"}
                   options={timeOptions}
                   value={MealMinutes[newMealState["time"]]}
+                />
+              </div>
+              <div className="w-full max-w-xl flex-col">
+                <Select
+                  customClass={""}
+                  handleChange={handleChange}
+                  id={"complexity"}
+                  isRequired={true}
+                  labelFor={"complexity"}
+                  labelText={"complexity"}
+                  name={"complexity"}
+                  title={"Meal Complexity"}
+                  options={complexityOptions}
+                  value={MealComplexities[newMealState["complexity"]]}
                 />
               </div>
               <div className="w-full max-w-xl flex-col">

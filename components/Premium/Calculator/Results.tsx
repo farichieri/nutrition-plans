@@ -1,14 +1,20 @@
-import { FC, useState } from "react";
-import { newBodyData, newNutritionTargets } from "@/types/initialTypes";
+import {
+  createDefaultMealsSettings,
+  createDefaultUserMeals,
+} from "@/firebase/helpers/Meals";
 import {
   selectAuthSlice,
   setIsCreatingUser,
   setUpdateUser,
 } from "@/store/slices/authSlice";
 import { addProgress } from "@/firebase/helpers/Progress";
+import { FC, useState } from "react";
 import { format, formatISO } from "date-fns";
-import { NutritionTargets, ProgressItem, UserAccount } from "@/types/types";
+import { getNutritionTargets } from "./helpers";
+import { newBodyData } from "@/types/initialTypes";
+import { ProgressItem, UserAccount } from "@/types/types";
 import { setAddProgress } from "@/store/slices/progressSlice";
+import { setUserMealsSettings } from "@/store/slices/mealsSlice";
 import { updateUser } from "@/firebase/helpers/Auth";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
@@ -24,12 +30,15 @@ const Results: FC<Props> = ({ handleSubmit }) => {
   const router = useRouter();
   const { user } = useSelector(selectAuthSlice);
   const body_data = user?.body_data || newBodyData;
-  const [nutritionTargets, setNutritionTargets] =
-    useState<NutritionTargets>(newNutritionTargets);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const isCreatingRoute = router.asPath === "/app/create";
+
+  const calories = body_data.kcals_recommended;
+  const planSelected = user?.plan_selected;
+  const nutritionTargets =
+    calories && planSelected && getNutritionTargets(calories, planSelected);
 
   const addFirstProgress = async () => {
     if (!user) return;
@@ -50,7 +59,9 @@ const Results: FC<Props> = ({ handleSubmit }) => {
     if (!user) return;
     setIsLoading(true);
     setIsDisabled(true);
+
     try {
+      if (!nutritionTargets) return;
       const userUpdated: UserAccount = {
         ...user,
         first_data: {
@@ -60,16 +71,30 @@ const Results: FC<Props> = ({ handleSubmit }) => {
         is_profile_completed: true,
         nutrition_targets: nutritionTargets,
       };
-      const updateUserRes = await updateUser(userUpdated);
-      const addProgressRes = await addFirstProgress();
-      if (!updateUserRes?.error && !addProgressRes?.error) {
+      const [updateUserRes, addProgressRes, addMealsRes, addMeals] =
+        await Promise.all([
+          updateUser(userUpdated),
+          addFirstProgress(),
+          createDefaultMealsSettings(user),
+          createDefaultUserMeals(user),
+        ]);
+
+      if (
+        !updateUserRes?.error &&
+        !addProgressRes?.error &&
+        !addMealsRes.error &&
+        !addMeals.error
+      ) {
+        addMealsRes.data && dispatch(setUserMealsSettings(addMealsRes.data));
+        addMeals.data && dispatch(setUserMealsSettings(addMeals.data));
         dispatch(setUpdateUser(userUpdated));
-        handleSubmit();
         dispatch(setIsCreatingUser(false));
+        handleSubmit();
         setIsLoading(false);
         setIsDisabled(false);
       }
     } catch (error) {
+      console.log({ error });
       setIsLoading(false);
       setIsDisabled(false);
     }
@@ -138,7 +163,7 @@ const Results: FC<Props> = ({ handleSubmit }) => {
             </div>
           </div>
           <div className="py-5">
-            <NutritionTarget setNutritionTargets={setNutritionTargets} />
+            <NutritionTarget />
           </div>
         </div>
         {isCreatingRoute && (

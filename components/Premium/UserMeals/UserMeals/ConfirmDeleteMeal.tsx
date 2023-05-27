@@ -24,7 +24,6 @@ const ConfirmDeleteMeal: FC<Props> = ({ confirmDelete, setConfirmDelete }) => {
     const res = await deleteUserMeal(user, mealSetting);
     if (!res?.error) {
       dispatch(setDeleteUserMeal(mealSetting));
-      alert("Meal deleted successfully");
       setConfirmDelete(null);
     } else {
       alert("Error deleting meal");

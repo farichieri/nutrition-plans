@@ -13,7 +13,8 @@ const UserMeals: FC<Props> = ({ meals }) => {
   const [openSelector, setOpenSelector] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState<null | UserMeal>(null);
   const [isCreating, setIsCreating] = useState<null | UserMeal>(null);
-  const noData = Object.keys(meals).length < 1;
+  const length = Object.keys(meals).length;
+  const noData = length < 1;
 
   const handleConfirmDelete = (mealSetting: UserMeal) => {
     setConfirmDelete(mealSetting);
@@ -30,6 +31,7 @@ const UserMeals: FC<Props> = ({ meals }) => {
       {openSelector && (
         <AddMealSelector
           isCreating={isCreating}
+          index={length}
           setIsCreating={setIsCreating}
           setOpenSelector={setOpenSelector}
         />

@@ -6,6 +6,7 @@ export interface UserMeal {
   order: number;
   size: MealSizes;
   time: MealMinutes;
+  complexity: MealComplexities;
 }
 
 export enum MealCook {
@@ -22,6 +23,16 @@ export enum MealSizes {
 }
 export type MealSizesType = {
   [key in keyof typeof MealSizes]?: (typeof MealSizes)[key];
+};
+
+export enum MealComplexities {
+  very_simple = 1,
+  simple = 2,
+  moderate = 3,
+  complex = 4,
+}
+export type MealComplexitiesType = {
+  [key in keyof typeof MealComplexities]?: (typeof MealComplexities)[key];
 };
 
 export enum MealMinutes {
@@ -52,4 +63,5 @@ export const NewMealSetting: UserMeal = {
   order: -1,
   size: MealSizes.normal,
   time: MealMinutes.less_than_30_min,
+  complexity: MealComplexities.moderate,
 };

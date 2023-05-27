@@ -25,16 +25,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     dispatch(setIsVerifyingUser());
     onAuthStateChanged(auth, async (user) => {
-      const [userData, progressData, mealsData, mealsSettings] = await Promise.all([
-        user && generateUserObject(user),
-        user && fetchProgress(user),
-        user && fetchMeals(user),
-        user && fetchMealsSettings(user),
-      ]);
-      dispatch(setUser(userData));
+      const [userData, progressData, mealsData, mealsSettings] =
+        await Promise.all([
+          user && generateUserObject(user),
+          user && fetchProgress(user),
+          user && fetchMeals(user.uid),
+          user && fetchMealsSettings(user.uid),
+        ]);
+      if (!mealsData?.error && !mealsSettings?.error)
+        dispatch(setUser(userData));
       progressData && dispatch(setProgress(progressData));
-      mealsData && dispatch(setUserMeals(mealsData));
-      mealsSettings && dispatch(setUserMealsSettings(mealsSettings));
+      mealsData?.data && dispatch(setUserMeals(mealsData.data));
+      mealsSettings?.data && dispatch(setUserMealsSettings(mealsSettings.data));
     });
   }, []);
 

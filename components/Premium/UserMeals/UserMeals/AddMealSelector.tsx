@@ -11,12 +11,14 @@ interface Props {
   isCreating: null | UserMeal;
   setIsCreating: Function;
   setOpenSelector: Function;
+  index: number;
 }
 
 const AddMealSelector: FC<Props> = ({
   isCreating,
   setIsCreating,
   setOpenSelector,
+  index,
 }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
@@ -26,7 +28,11 @@ const AddMealSelector: FC<Props> = ({
     if (!user) return;
     if (isCreating) return;
     setIsCreating(mealSetting);
-    const res = await createUserMeal(user, mealSetting);
+    const newMealSetting = {
+      ...mealSetting,
+      order: index,
+    };
+    const res = await createUserMeal(user, newMealSetting);
     if (!res?.error && res?.mealSettingAdded) {
       dispatch(setAddNewUserMeal(res.mealSettingAdded));
       setOpenSelector(false);

@@ -1,22 +1,24 @@
-import { db, storage } from "../firebase.config";
 import {
   collection,
   doc,
   documentId,
+  getCountFromServer,
   getDoc,
   getDocs,
   increment,
   limit,
+  orderBy,
   query,
   serverTimestamp,
   setDoc,
   updateDoc,
   where,
 } from "firebase/firestore";
+import { db, storage } from "../firebase.config";
 import { DEFAULT_IMAGE } from "@/types/initialTypes";
 import { Food, FoodGroup, FoodKind } from "@/types/foodTypes";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { UserAccount } from "@/types/types";
+import { PlansEnum, Result, UserAccount } from "@/types/types";
 
 const addFood = async (
   food: Food,
@@ -141,16 +143,6 @@ const uploadImage = async (file: Blob, food_id: string) => {
   }
 };
 
-// const deleteProgress = async (user: UserAccount, progress: ProgressItem) => {
-//   try {
-//     const docRef = doc(db, "users", user.user_id, "progress", progress.date);
-//     await deleteDoc(docRef);
-//   } catch (error) {
-//     console.log(error);
-//     return { error: "Error deleting progress" };
-//   }
-// };
-
 const updateFoodAction = async (
   food_id: string,
   field: string,
@@ -175,10 +167,70 @@ const updateFoodAction = async (
   }
 };
 
+const getFoodsCollectionLength = async (): Promise<Result<number, unknown>> => {
+  try {
+    const docRef = collection(db, "foods");
+    let q = query(docRef);
+
+    const snapshot = await getCountFromServer(q);
+    const collLength: number = snapshot.data().count;
+
+    return { result: "success", data: collLength };
+  } catch (error) {
+    return { result: "error", error };
+  }
+};
+
+const fetchRandomFoodByPlan = async (
+  plan: PlansEnum,
+  collLength: number
+): Promise<Result<Food, unknown>> => {
+  console.log(`Fetching Random Food by plan: '${plan}'`);
+  try {
+    let data: Food | null = null;
+    const docRef = collection(db, "foods");
+    const random = Math.round(collLength * Math.random());
+
+    let q1 = query(
+      docRef,
+      where(`compatible_plans.${plan}`, "==", true),
+      where("index", ">=", random),
+      orderBy("index"),
+      limit(1)
+    );
+    let q2 = query(
+      docRef,
+      where(`compatible_plans.${plan}`, "==", true),
+      orderBy("index", "desc"),
+      limit(1)
+    );
+
+    const fetchOne = async (q_selected: any) => {
+      const querySnapshot = await getDocs(q_selected);
+      querySnapshot.forEach((food: any) => {
+        data = food.data();
+      });
+    };
+
+    await fetchOne(q1);
+    if (!data) {
+      await fetchOne(q2);
+    }
+
+    if (!data) throw Error;
+    return { result: "success", data };
+  } catch (error) {
+    console.log(`Error fetching Food: ${error}`);
+    return { result: "error", error };
+  }
+};
+
 export {
   addFood,
   fetchFoods,
   updateFoodAction,
   fetchFoodByID,
   fetchFoodsByIDS,
+  fetchRandomFoodByPlan,
+  getFoodsCollectionLength,
 };

@@ -73,9 +73,8 @@ export const newAccount: UserAccount = {
   food_data: newFoodData,
   is_admin: false,
   is_premium: false,
-  user_meals: {},
   is_profile_completed: false,
-  lang: "",
+  lang: "en",
   nutrition_targets: newNutritionTargets,
   photo_url: "",
   plan_selected: null,
@@ -99,6 +98,7 @@ export const NewFoodType: FoodType = {
   is_lunch: false,
   is_snack: false,
 };
+
 export const NewFoodCompatiblePlans: CompatiblePlans = {
   balanced: false,
   gluten_free: false,

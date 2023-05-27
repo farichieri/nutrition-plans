@@ -22,7 +22,7 @@ import RoundButton from "@/components/Buttons/RoundButton";
 interface Props {}
 
 const fixedButtonClass =
-  "relative after:absolute text-sm sm:text-lg after:bottom-[-1px] after:left-0 after:h-[3px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-green-500 after:transition-transform after:duration-300 after:ease-in-out hover:after:origin-bottom-left hover:after:scale-x-100";
+  "relative after:absolute border-b border-b text-sm sm:text-lg after:bottom-[-1px] after:left-0 after:h-[3px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-green-500 after:transition-transform after:duration-300 after:ease-in-out hover:after:origin-bottom-left hover:after:scale-x-100";
 
 const selectedClass = "after:origin-bottom-left after:scale-x-100";
 
@@ -59,7 +59,6 @@ const DaySelector: FC<Props> = () => {
   };
 
   const dateF = String(getRealDate());
-  console.log({ dateF });
   const isWeek = dateF?.includes("~");
   const weekDates = isWeek && String(dateF).split("~");
   const startOfWeek = weekDates && getStartOfWeek(weekDates[0]);
@@ -168,21 +167,21 @@ const DaySelector: FC<Props> = () => {
   }, [dateF]);
 
   return (
-    <div className=" flex w-full flex-wrap items-center justify-center pb-2 lg:gap-10">
+    <div className="flex w-full items-center justify-center border-b px-0 pb-2 pr-1.5 sm:pb-2 lg:gap-10">
       <div className="flex w-full flex-col items-center justify-center lg:w-auto">
         <div className="flex w-full items-center justify-center lg:w-auto">
           <Link href={backRoute()}>
-            <RoundButton customClass="p-1.5 h-10 w-10">
+            <RoundButton customClass="p-1.5 sm:h-10 sm:w-10 h-6 w-6">
               <span className="material-icons-outlined md-14">
                 arrow_back_ios
               </span>
             </RoundButton>
           </Link>
-          <span className="flex w-full max-w-xs justify-center text-xl  text-green-500 opacity-75 md:text-2xl lg:w-96 lg:text-3xl">
+          <span className="flex w-full min-w-max justify-center text-xl  text-green-500 opacity-75 md:text-2xl lg:w-96 lg:text-3xl">
             {formatDate()}
           </span>
           <Link href={nextRoute()}>
-            <RoundButton customClass="p-1.5 h-10 w-10">
+            <RoundButton customClass="p-1.5 sm:h-10 sm:w-10 h-6 w-6">
               <span className="material-icons-outlined md-14">
                 arrow_forward_ios
               </span>
@@ -192,7 +191,7 @@ const DaySelector: FC<Props> = () => {
         {/* <span className="text-xs opacity-50">{dateF}</span> */}
       </div>
 
-      <div className="flex w-full items-center justify-center gap-10 lg:w-auto">
+      <div className="ml-auto flex w-full items-center justify-end gap-5 sm:gap-10 lg:w-auto">
         <Link
           href={todayRoute}
           className={fixedButtonClass + (!isWeek ? selectedClass : "")}
