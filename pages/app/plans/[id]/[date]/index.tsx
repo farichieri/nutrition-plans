@@ -84,7 +84,6 @@ export default function Page() {
   useEffect(() => {
     if (!dietOpened) {
       if (planID && date) {
-        console.log("asd");
         getDiet(planID);
       }
     }
