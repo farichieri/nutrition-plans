@@ -32,7 +32,7 @@ const FoodNutrition: FC<Props> = ({ food, amount, scale }) => {
   }
 
   return (
-    <div className="flex w-full max-w-xl items-center justify-center">
+    <div className="flex w-full max-w-xl justify-center">
       {openDetails && (
         <FoodNutritionDetail
           nutrients={nutrients}

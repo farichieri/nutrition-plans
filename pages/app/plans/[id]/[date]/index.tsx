@@ -12,12 +12,12 @@ import { selectPlansSlice, setDiet } from "@/store/slices/plansSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import DayPlan from "@/components/Premium/Plans/DayPlan";
 import DaySelector from "@/components/Premium/Plans/DaySelector";
 import Nutrition from "@/components/Premium/Food/Nutrition";
 import PlanSelector from "@/components/Premium/Plans/PlanSelector";
 import PremiumLayout from "@/components/Layout/PremiumLayout";
 import SubPremiumNav from "@/components/Layout/SubPremiumNav";
+import PlanMeals from "@/components/Premium/Plans/PlanMeals";
 
 export default function Page() {
   const router = useRouter();
@@ -106,11 +106,11 @@ export default function Page() {
               <DaySelector />
               <div className="flex w-full flex-wrap gap-10">
                 <div className="3xl:max-w-xl w-full max-w-lg">
-                  <DayPlan planID={planID} />
+                  <PlanMeals planID={planID} />
                 </div>
-                {newDiet && (
+                {dietOpened && (
                   <div className="3xl:max-w-xl w-full max-w-lg">
-                    <Nutrition nutrients={newDiet.diet_nutrients} />
+                    <Nutrition nutrients={dietOpened.diet_nutrients} />
                   </div>
                 )}
               </div>

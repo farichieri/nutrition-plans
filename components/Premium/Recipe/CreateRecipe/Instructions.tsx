@@ -92,8 +92,6 @@ const Instructions: FC<Props> = () => {
   const instructions = recipeState.instructions;
   const dispatch = useDispatch();
 
-  console.log({ instructions });
-
   const insArrSorted = [...instructions].sort((a, b) => a.order - b.order);
   const [ingsState, setIngsState] = useState<Instruction[]>(insArrSorted);
 

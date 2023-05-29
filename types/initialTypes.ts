@@ -3,7 +3,6 @@ import {
   FoodNutrients,
   CompatiblePlans,
   FoodType,
-  Ingredient,
 } from "@/types/foodTypes";
 import {
   NutritionTargets,
@@ -165,6 +164,7 @@ export const NewFood: Food = {
   cook_time: null,
   date_created: null,
   date_updated: null,
+  deleted: false,
   digestion_status: null,
   dish_type: null,
   easily_single_serving: false,
@@ -177,6 +177,7 @@ export const NewFood: Food = {
   food_type: NewFoodType,
   glucemic_status: null,
   image: DEFAULT_IMAGE,
+  index: -1,
   ingredients: {},
   instructions: [],
   is_deleted: false,
@@ -184,6 +185,7 @@ export const NewFood: Food = {
   major_ingredients: null,
   makes_leftovers: false,
   manufactured_by: null,
+  note: "",
   num_dislikes: 0,
   num_favorites: 0,
   num_ingredient_usages: 0,
@@ -202,5 +204,4 @@ export const NewFood: Food = {
   source: null,
   uploader: null,
   user_id: null,
-  note: "",
 };

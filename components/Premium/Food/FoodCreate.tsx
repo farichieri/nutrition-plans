@@ -1,5 +1,8 @@
 import {
-  Food,
+  selectCreateFoodSlice,
+  setFoodState,
+} from "@/store/slices/createFoodSlice";
+import {
   FoodNutrients,
   CompatiblePlans,
   FoodType,
@@ -18,16 +21,12 @@ import {
   sugarFields,
   vitsAndMinsFields,
 } from "./formFields";
-import {
-  selectCreateFoodSlice,
-  setFoodState,
-} from "@/store/slices/createFoodSlice";
 import { addFood } from "@/firebase/helpers/Food";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { NewFood } from "@/types/initialTypes";
 import { selectAuthSlice } from "@/store/slices/authSlice";
-import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
 import Checkbox from "@/components/Form/Checkbox";
 import FormAction from "@/components/Form/FormAction";
 import Image from "next/image";

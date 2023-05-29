@@ -2,13 +2,18 @@ import {
   fetchRandomFoodByPlan,
   getFoodsCollectionLength,
 } from "@/firebase/helpers/Food";
+import { Diet, NewDiet } from "@/types/dietTypes";
 import { DietMeal, DietMealGroup, DietMealGroupArr } from "@/types/dietTypes";
 import { FC, useEffect, useState } from "react";
 import { Food, FoodGroup } from "@/types/foodTypes";
+import { getDietFoods } from "@/utils/foodsHelpers";
+import { getNutritionMerged } from "../Food/nutritionHelpers";
 import { PlansEnum, Result } from "@/types/types";
+import { selectAuthSlice } from "@/store/slices/authSlice";
 import { selectMealsSlice } from "@/store/slices/mealsSlice";
+import { selectPlansSlice, setDietOpened } from "@/store/slices/plansSlice";
 import { UserMealsArr } from "@/types/mealsSettingsTypes";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { uuidv4 } from "@firebase/util";
 import Image from "next/image";
 import Link from "next/link";
@@ -23,11 +28,17 @@ interface Props {
 }
 
 const PlanMeals: FC<Props> = ({ planID }) => {
+  const dispatch = useDispatch();
+  const { user } = useSelector(selectAuthSlice);
+  const nutrition_targets = user?.nutrition_targets;
   const { meals } = useSelector(selectMealsSlice);
   const [dietMeals, setDietMeals] = useState<DietMealGroupArr>([]);
   const mealsArr: UserMealsArr = Object.values(meals).sort(
     (a, b) => a.order - b.order
   );
+  const { date, dietOpened, plans } = useSelector(selectPlansSlice);
+
+  console.log({ nutrition_targets });
 
   const generateMeals = async (): Promise<Result<DietMealGroup, unknown>> => {
     try {
@@ -74,6 +85,32 @@ const PlanMeals: FC<Props> = ({ planID }) => {
     }
   };
 
+  const buildDiet = (meals: DietMealGroupArr) => {
+    const dietMeals: DietMealGroup = {};
+    meals.forEach((m) => {
+      if (!m.diet_meal_id) return;
+      dietMeals[m.diet_meal_id as keyof DietMeal] = m;
+    });
+    const foods = getDietFoods(dietMeals);
+    const nutrition = getNutritionMerged(foods);
+
+    const diet: Diet = {
+      ...NewDiet,
+      date_available: null,
+      date_created: null,
+      diet_description: null,
+      diet_id: null,
+      diet_meals: dietMeals,
+      diet_name_lowercase: null,
+      diet_name: null,
+      diet_nutrients: nutrition,
+      plan_date: null,
+      plan_id: planID,
+    };
+
+    return diet;
+  };
+
   const generate = async () => {
     const res = await generateMeals();
     if (res.result === "success") {
@@ -86,12 +123,37 @@ const PlanMeals: FC<Props> = ({ planID }) => {
     generate();
   }, []);
 
+  useEffect(() => {
+    if (dietMeals.length > 0) {
+      const diet = buildDiet(dietMeals);
+      dispatch(setDietOpened(diet));
+    }
+  }, [dietMeals]);
+
+  // useEffect(() => {
+  //   dispatch(setDietOpened(null));
+  //   const dietFiltered: Diet = plans[planID][date];
+  //   if (dietFiltered) {
+  //     dispatch(setDietOpened(dietFiltered));
+  //   } else {
+  //     dispatch(setDietOpened(null));
+  //   }
+  // }, [date, plans, planID]);
+
+  console.log({ dietMeals });
+
   if (dietMeals.length < 1) {
     return <>Generating Meals...</>;
   }
 
   return (
     <div>
+      <div className="flex items-center gap-2">
+        <span className="material-icons-outlined text-green-500">
+          restaurant
+        </span>
+        <span className="text-2xl font-semibold">Meals</span>
+      </div>
       <button
         className="m-1 rounded-md border border-red-500 px-3 py-1"
         onClick={() => generate()}

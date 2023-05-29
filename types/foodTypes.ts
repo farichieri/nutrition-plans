@@ -45,6 +45,8 @@ export interface Food {
   uploader: string | null;
   user_id: string | null;
   note: string;
+  index: number;
+  deleted: boolean;
 }
 
 export interface Ingredient extends Food {}

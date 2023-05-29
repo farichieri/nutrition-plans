@@ -33,6 +33,11 @@ const addFood = async (
       newImage && (await uploadImage(newImage, docRef.id));
     let img =
       newImage && typeof imageURL === "string" ? imageURL : DEFAULT_IMAGE;
+    let indexResponse = await getFoodsCollectionLength();
+    const { result } = indexResponse;
+    if (result === "error") throw Error;
+    const index = indexResponse.data;
+
     const newFood: Food = {
       ...food,
       date_created: serverTimestamp(),
@@ -44,6 +49,7 @@ const addFood = async (
       scale_amount: food.serving_amount,
       scale_name: food.serving_name,
       uploader: user.user_id,
+      index: index,
     };
     console.log({ newFood });
     await setDoc(docRef, newFood);

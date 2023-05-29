@@ -13,6 +13,7 @@ import Instructions from "@/components/Premium/Recipe/Instructions";
 import PremiumLayout from "@/components/Layout/PremiumLayout";
 import ScaleSelector from "@/components/Premium/ScaleSelector/ScaleSelector";
 import Spinner from "@/components/Loader/Spinner";
+import CompatiblePlans from "@/components/Premium/Food/CompatiblePlans";
 
 export default function Page() {
   const router = useRouter();
@@ -81,6 +82,7 @@ export default function Page() {
                     <FoodActions foodID={foodData.food_id} />
                   )}
                 </div>
+                <CompatiblePlans compatible_plans={foodData.compatible_plans} />
                 <div className="m-auto flex w-full max-w-lg">
                   <ScaleSelector
                     food={foodData}

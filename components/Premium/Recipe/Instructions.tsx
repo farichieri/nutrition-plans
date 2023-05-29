@@ -16,8 +16,6 @@ interface Props {
 }
 
 const Instructions: FC<Props> = ({ instructions }) => {
-  console.log({ instructions });
-  console.log([...instructions]);
   const instructionsSorted = [...instructions].sort(
     (a, b) => a.order - b.order
   );
