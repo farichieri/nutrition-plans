@@ -14,7 +14,7 @@ const Post: FC<Props> = ({ post }) => {
       href={`/blog/${post.id}`}
       className="flex h-full flex-wrap overflow-auto sm:flex-nowrap"
     >
-      <span className="relative h-56 w-full overflow-auto rounded-lg sm:w-56">
+      <span className="relative h-56 w-full overflow-auto rounded-lg sm:w-56 sm:min-w-[14rem]">
         <Image
           src={post.image}
           alt={post.title}
