@@ -114,6 +114,7 @@ const Ingredients: FC<Props> = ({ food, amount, scale }) => {
 
   return (
     <div className="flex flex-col gap-1">
+      <span className="text-3xl font-semibold">Ingredients:</span>
       {ingsSorted.map((ingredient) => {
         if (ingredient.food_id)
           return (

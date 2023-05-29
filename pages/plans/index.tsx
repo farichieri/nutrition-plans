@@ -10,8 +10,10 @@ interface Props {
 export default function Page({ plans }: Props) {
   return (
     <LandingLayout>
-      <section className="flex w-full max-w-5xl flex-col items-center justify-start gap-10 py-24">
-        <span className="text-5xl font-bold">Plans</span>
+      <section className="flex w-full max-w-5xl flex-col items-center justify-start gap-5 py-24">
+        <span className="mb-10 text-5xl font-bold md:text-6xl lg:text-7xl">
+          Plans
+        </span>
         <p>
           Nutrition plans are essential for a healthy diet. That&apos;s why we
           develop different diet plans to suit your goals, tastes and personal

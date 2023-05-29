@@ -59,7 +59,7 @@ export interface Post {
 }
 export interface Posts extends Array<Post> {}
 export interface PlanType {
-  contentHtml: string;
+  content: string;
   id: string;
   title: string;
   image: string;

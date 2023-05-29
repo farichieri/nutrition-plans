@@ -12,7 +12,9 @@ export default function Blog({ posts }: Props) {
   return (
     <LandingLayout>
       <section className="flex w-full max-w-5xl flex-col items-center gap-10 py-24">
-        <span className="text-5xl font-bold">Blog</span>
+        <span className="mb-10 text-5xl font-bold md:text-6xl lg:text-7xl">
+          Blog
+        </span>
         <Posts posts={posts} />
       </section>
     </LandingLayout>

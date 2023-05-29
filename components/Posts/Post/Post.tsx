@@ -12,7 +12,7 @@ const Post: FC<Props> = ({ post }) => {
   return (
     <Link
       href={`/blog/${post.id}`}
-      className="flex h-full flex-wrap overflow-auto sm:flex-nowrap"
+      className="flex h-full flex-wrap gap-2 overflow-auto sm:flex-nowrap sm:gap-4"
     >
       <span className="relative h-56 w-full overflow-auto rounded-lg sm:w-56 sm:min-w-[14rem]">
         <Image
@@ -22,10 +22,12 @@ const Post: FC<Props> = ({ post }) => {
           className="object-cover"
         />
       </span>
-      <div className="flex flex-col justify-between gap-4 p-5">
-        <span>{post.topic}</span>
-        <span className="font-semibold md:text-3xl">{post.title}</span>
-        <div className="flex items-center gap-1 opacity-50">
+      <div className="flex flex-col justify-start gap-2 sm:gap-4">
+        <span className="text-2xl font-semibold md:text-3xl xl:text-5xl">
+          {post.title}
+        </span>
+        <span className="text-green-500">{post.topic}</span>
+        <div className="flex items-center gap-1 opacity-70">
           <Date dateString={post.date} />
           &#8226;
           <span>{post.timeReading}</span>

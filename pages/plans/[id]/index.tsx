@@ -10,6 +10,8 @@ import CallToAction from "@/components/CallToAction";
 import Image from "next/image";
 import LandingLayout from "@/components/Layout/LandingLayout";
 import RestOfPlans from "@/components/Plans/RestOfPlans";
+import { ReactMarkdown } from "react-markdown/lib/react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface Props {
   planData: PlanType;
@@ -19,9 +21,11 @@ interface Props {
 export default function Page({ planData, restOfPlans }: Props) {
   return (
     <LandingLayout>
-      <section className="flex max-w-5xl flex-col items-center justify-center py-10">
-        <div className="flex flex-col items-center justify-center gap-4">
-          <span className="text-5xl font-bold">{planData.title}</span>
+      <section className="flex max-w-5xl flex-col items-center justify-center py-24">
+        <div className="mb-10 flex flex-col items-center justify-center gap-4">
+          <span className="mb-10 text-5xl font-bold md:text-6xl lg:text-7xl">
+            {planData.title}
+          </span>
           <Image
             src={planData.image}
             alt={planData.title}
@@ -33,12 +37,24 @@ export default function Page({ planData, restOfPlans }: Props) {
             className="m-2 rounded-3xl shadow-[0_1px_5px_gray] dark:shadow-[0px_1px_5px_#4040408c]"
           />
         </div>
-        <div
-          className="flex flex-col gap-4 py-10"
-          dangerouslySetInnerHTML={{
-            __html: planData.contentHtml,
+        <ReactMarkdown
+          className="border-b pb-14"
+          remarkPlugins={[remarkGfm]}
+          components={{
+            img: (props) => (
+              <div className="relative mx-auto my-5 h-[50vh] w-full">
+                <Image
+                  src={props.src || ""}
+                  alt={props.alt || ""}
+                  fill
+                  className="rounded-lg object-cover"
+                />
+              </div>
+            ),
           }}
-        />
+        >
+          {planData.content}
+        </ReactMarkdown>
         <RestOfPlans plans={restOfPlans} />
         <CallToAction />
       </section>
