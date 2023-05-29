@@ -20,8 +20,8 @@ export default function Page() {
 
   return (
     <LandingLayout>
-      <section className="flex w-full max-w-5xl flex-col items-center justify-start gap-10 py-24">
-        <span className="text-5xl font-bold">About</span>
+      <section className="flex w-full max-w-5xl flex-col items-center justify-start gap-2 py-24">
+        <span className="mb-10 text-5xl font-bold">About</span>
         <p className="">
           We&apos;re a meal planning platform that allows you to discover
           recipes and calculate your own meal plan that fits your goals and the

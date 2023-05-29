@@ -49,7 +49,9 @@ a {
 .dark {
   color-scheme: dark;
 }
-
+p {
+  padding: 0.5rem 0;
+}
 h1 {
   font-size: 2.5rem;
   font-weight: 600;
@@ -69,14 +71,17 @@ h5 {
 h6 {
   font-size: 1rem;
 }
-
 ul {
-  padding: 0 2rem;
+  padding: 1rem 2rem;
 }
-
 li {
   list-style: outside;
-  padding: 0.2rem 0;
+  padding: 0.2rem;
+}
+
+ol li {
+  list-style-type: decimal;
+  margin: 0 0 0 2rem;
 }
 
 .material-icons.md-12,

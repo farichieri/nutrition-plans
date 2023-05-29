@@ -1,0 +1,60 @@
+---
+title: "Why is it important to follow a healthy diet?"
+image: "/images/posts/why-is-it-important-to-follow-a-healthy-diet/0.jpg"
+summary: "What should we consider"
+date: "2022-05-29"
+author: "aldana-richieri"
+authorName: "Aldana Richieri"
+topic: "Nutrition"
+premium: false
+isAvailable: true
+---
+
+The importance of eating in people's lives begins before birth with the feeding of the pregnant mother, then continues with the feeding of lactation when we are babies and then continues in the different stages of each person's life. That is why on this depends how our health will be throughout our lives, the cognitive development, the physical growth of each one, the development of the different biological functions of our body, how we go through cellular aging through throughout our lives and the existence or not of non-communicable chronic diseases.
+
+Although it is not a direct cause-effect relationship, it does contribute to increasing the risk of appearance and development of said diseases. In fact, according to the WHO, 2.7 million people die every year from not having a good diet, and from abusing fried foods and batters.
+That is why nutrition is of great importance when choosing the goal of obtaining health. One of the necessary conditions to be able to achieve adequate nutrition comes from the type of food that we have and choose in a sustained way in the time of our days.
+Next, we will see why it is essential to take care of your diet and we will give you some tips to have a complete, healthy and balanced diet.
+Therefore, knowing the importance of diet is essential to decide which foods we should consume, in what quantities, and which ones should be completely eliminated from our diet. The wide availability of food that is found today, on many occasions, leads to overeating, and wrongly choosing the nutrients that we should consume.
+
+To have a healthy diet, no macronutrient should be excluded from the diet, so the variety of foods is a fundamental element, but all of this, in adequate proportions and adapted to each requirement. The nutritional plan must be adapted to the age, weight, height, the objective sought and the energy expenditure and health needs of each person. In addition, the attributes that characterize it are: balance, moderation and, very important, that it is appetizing to be able to sustain it over time.
+
+![Why is it important to follow a healthy diet?](/images/posts/why-is-it-important-to-follow-a-healthy-diet/1.jpg)
+
+### **Benefits of a healthy diet**
+
+For all these reasons, we must emphasize the **importance of healthy eating** and the benefits that can be obtained, among which we find:
+
+- Strengthen the immune system.
+- Lower risk of suffering from chronic diseases.
+- Improves blood circulation.
+- Slows down the premature aging process.
+- Regulates the production of hormones.
+- Avoid cardiovascular diseases and diabetes.
+- Helps to obtain a healthy weight.
+- Prevents chronic fatigue and tiredness.
+- Improves mood and daily energy.
+- Improves physical and sexual health.
+- Prevents mental disorders.
+- Helps sleep better.
+
+![Why is it important to follow a healthy diet?](/images/posts/why-is-it-important-to-follow-a-healthy-diet/2.jpg)
+
+### **How to get a healthy diet**
+
+To have a healthy diet and guarantee its benefits, it is important to take into account certain simple attitudes, such as the following:
+
+- Drink at least 2 liters of water daily;
+- Have a varied diet, alternating fruits and vegetables that are consumed daily, and varying between meat, fish, chicken and eggs as the main sources of protein in the case of omnivores and legumes, eggs and dairy products for vegetarians;
+- Eat at least 2 whole units of fruit a day, preferably with the peel and seeds, for a greater fiber intake;
+- Consume vegetables 2 or more times a day, mainly at lunch and dinner;
+- Include proteins such as cheese and eggs at breakfast and in the afternoon snack;
+- The consumption of dairy products must be low in fat or as a substitute, fortified vegetable drinks such as almond, oat or coconut milk, for example, can be included;
+- Reduce salt intake to a maximum of 2.5 g per day, opting for natural seasonings such as oregano, rosemary, garlic, onion, pepper, basil, parsley or other aromatic plants, and avoiding using high industrialized seasonings. in sodiums
+- Opt for foods in their integral version, such as whole wheat bread and pasta, being important to read the nutritional labeling of the products, because in some cases, even though they are integral, they may have unhealthy ingredients;
+- Include portions of polyunsaturated and monounsaturated fats, such as olive oil, avocado, nuts, flax or chia seeds, for example;
+- Avoid the consumption of foods rich in sugar, artificial sweeteners and fats (mainly saturated and trans) which are found in industrialized foods, mostly bakery, soft drinks, sweets, sausages and snack foods;
+- Avoid the consumption of alcoholic drinks;
+- Avoid eating processed meat, such as sausage, sausage, serrano ham, bacon, salami and its derivatives.
+
+Now that you know the importance of healthy eating and how to carry it out with these recommendations, don't forget to implement them to lead a healthy lifestyle. Your nutritional plan must include foods from all nutritional groups and, in addition, it is important to perform physical activity to adapt them to your health on a daily basis.

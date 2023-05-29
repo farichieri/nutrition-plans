@@ -48,12 +48,14 @@ export enum FilterSortTypes {
 export interface Post {
   author: string;
   authorName: string;
-  contentHtml: string;
+  content: string;
   date: string;
   id: string;
   summary: string;
   title: string;
   topic: string;
+  image: string;
+  timeReading: string;
 }
 export interface Posts extends Array<Post> {}
 export interface PlanType {

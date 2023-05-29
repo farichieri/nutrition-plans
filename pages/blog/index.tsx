@@ -8,6 +8,7 @@ interface Props {
 }
 
 export default function Blog({ posts }: Props) {
+  console.log({ posts });
   return (
     <LandingLayout>
       <section className="flex w-full max-w-5xl flex-col items-center gap-10 py-24">
