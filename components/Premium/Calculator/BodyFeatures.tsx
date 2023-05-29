@@ -4,14 +4,14 @@ import {
   GOAL_OPTIONS,
 } from "@/utils/formContents";
 import { FC, useEffect, useState } from "react";
+import { getNutritionTargets } from "./helpers";
 import { MeasurementUnits, UserAccount } from "@/types/types";
-import { newBodyData } from "@/types/initialTypes";
+import { newBodyData, newNutritionTargets } from "@/types/initialTypes";
 import { selectAuthSlice, setUpdateUser } from "@/store/slices/authSlice";
 import { updateUser } from "@/firebase/helpers/Auth";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import SubmitButton from "@/components/Buttons/SubmitButton";
-import { getNutritionTargets } from "./helpers";
 
 interface Props {
   handleSubmit: Function;
@@ -194,8 +194,7 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
       const planSelected = user.plan_selected;
       const nutritionTargets =
         planSelected && getNutritionTargets(kcals_recommended, planSelected);
-      if (!nutritionTargets) return;
-      const userUpdated: UserAccount = {
+      let userUpdated: UserAccount = {
         ...user,
         body_data: {
           activity: Number(input.activity),
@@ -209,8 +208,13 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
           measurement_unit: input.measurement_unit,
           weight_in_kg: Number(input.kilograms),
         },
-        nutrition_targets: nutritionTargets,
       };
+      if (!isCreatingRoute && nutritionTargets) {
+        userUpdated = {
+          ...userUpdated,
+          nutrition_targets: nutritionTargets,
+        };
+      }
       const res = await updateUser(userUpdated);
       if (!res?.error) {
         dispatch(setUpdateUser(userUpdated));
