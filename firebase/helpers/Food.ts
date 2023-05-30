@@ -19,6 +19,11 @@ import { DEFAULT_IMAGE } from "@/types/initialTypes";
 import { Food, FoodGroup, FoodKind } from "@/types/foodTypes";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { PlansEnum, Result, UserAccount } from "@/types/types";
+import {
+  MealComplexities,
+  UserMeal,
+  matchComplexity,
+} from "@/types/mealsSettingsTypes";
 
 const addFood = async (
   food: Food,
@@ -38,6 +43,9 @@ const addFood = async (
     if (result === "error") throw Error;
     const index = indexResponse.data;
 
+    const numIngredients = Object.keys(food.ingredients).length;
+    const complexity = numIngredients + food.prep_time + food.cook_time * 0.2;
+
     const newFood: Food = {
       ...food,
       date_created: serverTimestamp(),
@@ -48,8 +56,11 @@ const addFood = async (
       nutrients: { ...food.nutrients },
       scale_amount: food.serving_amount,
       scale_name: food.serving_name,
+      num_ingredients: numIngredients,
       uploader: user.user_id,
       index: index,
+      complexity: complexity,
+      total_time: food.cook_time + food.prep_time,
     };
     console.log({ newFood });
     await setDoc(docRef, newFood);
@@ -189,9 +200,9 @@ const getFoodsCollectionLength = async (): Promise<Result<number, unknown>> => {
 
 const fetchRandomFoodByPlan = async (
   plan: PlansEnum,
-  collLength: number
+  collLength: number,
+  userMeal: UserMeal
 ): Promise<Result<Food, unknown>> => {
-  console.log(`Fetching Random Food by plan: '${plan}'`);
   try {
     let data: Food | null = null;
     const docRef = collection(db, "foods");
@@ -212,6 +223,7 @@ const fetchRandomFoodByPlan = async (
     );
 
     const fetchOne = async (q_selected: any) => {
+      console.log(`Fetching Random Food by plan: '${plan}'`);
       const querySnapshot = await getDocs(q_selected);
       querySnapshot.forEach((food: any) => {
         data = food.data();
@@ -221,6 +233,18 @@ const fetchRandomFoodByPlan = async (
     await fetchOne(q1);
     if (!data) {
       await fetchOne(q2);
+    }
+
+    // Check Complexity
+    const checkComplexity = () =>
+      matchComplexity((data as Food).complexity, userMeal.complexity);
+    if (data) {
+      if (!checkComplexity()) {
+        await fetchOne(q1);
+      }
+      if (!checkComplexity()) {
+        await fetchOne(q2);
+      }
     }
 
     if (!data) throw Error;

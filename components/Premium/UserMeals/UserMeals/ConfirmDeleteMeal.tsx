@@ -1,12 +1,12 @@
-import ActionButton from "@/components/Buttons/ActionButton";
-import Modal from "@/components/Modal/Modal";
+import { ButtonType } from "@/types/types";
 import { deleteUserMeal } from "@/firebase/helpers/Meals";
+import { FC, useState } from "react";
 import { selectAuthSlice } from "@/store/slices/authSlice";
 import { setDeleteUserMeal } from "@/store/slices/mealsSlice";
-import { UserMeal } from "@/types/mealsSettingsTypes";
-import { ButtonType } from "@/types/types";
-import { FC, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { UserMeal } from "@/types/mealsSettingsTypes";
+import ActionButton from "@/components/Buttons/ActionButton";
+import Modal from "@/components/Modal/Modal";
 
 interface Props {
   confirmDelete: null | UserMeal;
@@ -35,7 +35,7 @@ const ConfirmDeleteMeal: FC<Props> = ({ confirmDelete, setConfirmDelete }) => {
 
   return (
     <Modal onClose={() => setConfirmDelete(null)}>
-      <div className="flex w-96 flex-col gap-5 p-5">
+      <div className="flex w-xs flex-col gap-5 px-4 py-8 sm:w-md sm:px-10">
         <span className="mx-auto text-xl font-semibold">
           Confirm delete of {confirmDelete.name}
         </span>

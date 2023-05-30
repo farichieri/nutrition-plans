@@ -10,12 +10,9 @@ const MealsSettings: FC<Props> = ({ mealsSettings }) => {
   const noData = Object.keys(mealsSettings).length < 1;
 
   return (
-    <div className="flex flex-col gap-5 rounded-md border bg-white p-5 dark:bg-black">
+    <div className="mx-auto flex w-full max-w-3xl flex-col gap-5 rounded-md border bg-white p-5 dark:bg-black">
       <div className="flex flex-wrap items-baseline">
         <span className="text-2xl font-semibold">My Templates:</span>
-        <span className="ml-1 text-xs opacity-50">
-          (You can re-use them in My Meals)
-        </span>
       </div>
       {noData ? (
         <div>No meals found</div>
@@ -32,7 +29,7 @@ const MealsSettings: FC<Props> = ({ mealsSettings }) => {
       )}
       <Link
         href={"/app/profile/meals/create"}
-        className="w-fit rounded-md border border-green-500 bg-green-500 px-3 py-1.5 duration-100 hover:bg-green-600 active:scale-95 active:shadow-[0_0_10px_gray]"
+        className="ml-auto w-fit rounded-md border border-green-500 bg-green-500 px-3 py-1.5 duration-100 hover:bg-green-600 active:scale-95 active:shadow-[0_0_10px_gray]"
       >
         Create meal setting
       </Link>

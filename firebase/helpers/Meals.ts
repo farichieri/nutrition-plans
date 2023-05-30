@@ -13,7 +13,7 @@ import {
   UserMeals,
 } from "@/types/mealsSettingsTypes";
 import { db } from "../firebase.config";
-import { UserAccount } from "@/types/types";
+import { Result, UserAccount } from "@/types/types";
 import { UserMealsArr } from "@/types/mealsSettingsTypes";
 import { MealSizes } from "@/types/mealsSettingsTypes";
 import { MealMinutes } from "@/types/mealsSettingsTypes";
@@ -76,6 +76,29 @@ const createMealSetting = async (user: UserAccount, mealSetting: UserMeal) => {
   }
 };
 
+const updateMealSetting = async (
+  user: UserAccount,
+  mealSetting: UserMeal
+): Promise<Result<UserMeal, unknown>> => {
+  try {
+    if (!mealSetting.id) throw Error;
+    const mealSettingRef = doc(
+      db,
+      "users",
+      user.user_id,
+      "settings",
+      "mealsSettings",
+      "meals",
+      mealSetting.id
+    );
+    await setDoc(mealSettingRef, mealSetting);
+    return { result: "success", data: mealSetting };
+  } catch (error) {
+    console.log("createMealSetting", { error });
+    return { result: "error", error };
+  }
+};
+
 const createUserMeal = async (user: UserAccount, mealSetting: UserMeal) => {
   try {
     const newUserMeal = doc(collection(db, "users", user.user_id, "meals"));
@@ -103,7 +126,10 @@ const deleteUserMeal = async (user: UserAccount, mealSetting: UserMeal) => {
   }
 };
 
-const deleteMealSetting = async (user: UserAccount, mealSetting: UserMeal) => {
+const deleteMealSetting = async (
+  user: UserAccount,
+  mealSetting: UserMeal
+): Promise<Result<UserMeal, unknown>> => {
   try {
     if (!mealSetting.id) throw Error;
     const docRef = doc(
@@ -116,29 +142,33 @@ const deleteMealSetting = async (user: UserAccount, mealSetting: UserMeal) => {
       mealSetting.id
     );
     await deleteDoc(docRef);
-    return { res: "success" };
+    return { result: "success", data: mealSetting };
   } catch (error) {
     console.log("deleteMealSetting", { error });
-    return { error: error };
+    return { result: "error", error };
   }
 };
 
-const updateUserMeal = async (user: UserAccount, userMeal: UserMeal) => {
+const updateUserMeal = async (
+  user: UserAccount,
+  userMeal: UserMeal
+): Promise<Result<UserMeal, unknown>> => {
   try {
     if (!userMeal.id) throw Error;
     const docRef = doc(db, "users", user?.user_id, "meals", userMeal.id);
     await setDoc(docRef, userMeal);
-    return {};
+    return { result: "success", data: userMeal };
   } catch (error) {
     console.log("updateUserMeal", { error });
-    return { error: error };
+    return { result: "error", error };
   }
 };
 
 const defaultMeals: UserMealsArr = [
   {
     cook: true,
-    id: null,
+    id: "def-1",
+    setting_id: null,
     name: "Breakfast",
     order: -1,
     size: MealSizes.normal,
@@ -147,7 +177,8 @@ const defaultMeals: UserMealsArr = [
   },
   {
     cook: true,
-    id: null,
+    id: "def-2",
+    setting_id: null,
     name: "Lunch",
     order: -1,
     size: MealSizes.normal,
@@ -156,7 +187,8 @@ const defaultMeals: UserMealsArr = [
   },
   {
     cook: true,
-    id: null,
+    id: "def-3",
+    setting_id: null,
     name: "Dinner",
     order: -1,
     size: MealSizes.normal,
@@ -165,7 +197,8 @@ const defaultMeals: UserMealsArr = [
   },
   {
     cook: true,
-    id: null,
+    id: "def-4",
+    setting_id: null,
     name: "Snack",
     order: -1,
     size: MealSizes.normal,
@@ -176,10 +209,12 @@ const defaultMeals: UserMealsArr = [
 
 const createDefaultMealsSettings = async (user: UserAccount) => {
   try {
-    defaultMeals.map(async (meal) => {
-      const res = await createMealSetting(user, meal);
-      if (res.error) throw Error;
+    const promises = defaultMeals.map(async (meal) => {
+      const res = await updateMealSetting(user, meal);
+      if (res.result === "error") throw Error;
     });
+    await Promise.all(promises);
+
     const fetchRes = await fetchMealsSettings(user.user_id);
     if (!fetchRes.error) {
       return fetchRes;
@@ -192,14 +227,17 @@ const createDefaultMealsSettings = async (user: UserAccount) => {
 
 const createDefaultUserMeals = async (user: UserAccount) => {
   try {
-    defaultMeals.map(async (meal, index) => {
+    const promises = defaultMeals.map(async (meal, index) => {
       const newUserMeal = {
         ...meal,
         order: index,
+        setting_id: meal.id,
       };
-      const res = await createUserMeal(user, newUserMeal);
-      if (res.error) throw Error;
+      const res = await updateUserMeal(user, newUserMeal);
+      if (res.result === "error") throw Error;
     });
+    await Promise.all(promises);
+
     const fetchRes = await fetchMeals(user.user_id);
     if (!fetchRes.error) {
       return fetchRes;
@@ -220,4 +258,5 @@ export {
   updateUserMeal,
   createDefaultUserMeals,
   createDefaultMealsSettings,
+  updateMealSetting,
 };

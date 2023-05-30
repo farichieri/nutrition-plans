@@ -10,11 +10,11 @@ import Settings from "../Premium/Settings/Settings";
 import Sidebar from "../Sidebar/PremiumSidebar";
 import WelcomeSteps from "../WelcomeSteps/WelcomeSteps";
 
-export default function PremiumLayout({
-  children,
-}: {
+interface Props {
   children: React.ReactNode;
-}) {
+}
+
+export default function PremiumLayout({ children }: Props) {
   const dispatch = useDispatch();
   const { sidebarOpen, isBillingModalOpen, isSettingsOpen } =
     useSelector(selectLayoutSlice);

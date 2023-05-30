@@ -1,4 +1,9 @@
 import {
+  selectMealsSlice,
+  setAddNewMealSetting,
+  setNewMealState,
+} from "@/store/slices/mealsSlice";
+import {
   MealComplexities,
   MealComplexitiesType,
   MealCook,
@@ -9,22 +14,16 @@ import {
   NewMealSetting,
   UserMeal,
 } from "@/types/mealsSettingsTypes";
-import {
-  selectMealsSlice,
-  setAddNewMealSetting,
-  setNewMealState,
-} from "@/store/slices/mealsSlice";
 import { createMealSetting } from "@/firebase/helpers/Meals";
 import { selectAuthSlice } from "@/store/slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import BackButton from "@/components/Back/BackButton";
 import FormAction from "@/components/Form/FormAction";
 import Input from "@/components/Form/Input";
-import PremiumLayout from "@/components/Layout/PremiumLayout";
+import MealsLayout from "@/components/Layout/MealsLayout";
+import Modal from "@/components/Modal/Modal";
 import Select from "@/components/Form/Select";
-import SubPremiumNav from "@/components/Layout/SubPremiumNav";
 
 export default function Page() {
   const dispatch = useDispatch();
@@ -42,8 +41,8 @@ export default function Page() {
   if (!user) return;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
     const type = event.target.type;
-    const name = event.target.name;
     const id = event.target.id;
     const value = event.target.value;
     const valueF = type === "number" ? Number(value) : value;
@@ -89,6 +88,7 @@ export default function Page() {
   const handleCancel = async (event: React.FormEvent) => {
     event.preventDefault();
     dispatch(setNewMealState(NewMealSetting));
+    onClose();
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -107,20 +107,21 @@ export default function Page() {
     setIsCreating(false);
   };
 
+  const onClose = () => {
+    router.back();
+  };
+
   return (
-    <PremiumLayout>
-      <section className="flex w-full select-none flex-col gap-[var(--nav-h)]">
-        <SubPremiumNav>
-          <BackButton />
-          <span>Create Meal Setting</span>
-        </SubPremiumNav>
-        <div className="flex max-w-xl flex-col items-center justify-start gap-5 bg-white px-4 pb-4 pt-4 shadow-[0_1px_5px_lightgray] dark:bg-black dark:shadow-[0_1px_6px_#292929] sm:m-[0.5vw] sm:min-h-[calc(100vh_-_6rem_-_1vw)] sm:gap-5 sm:rounded-lg sm:border sm:px-10">
+    <MealsLayout>
+      <Modal onClose={onClose}>
+        <div className="flex w-xs max-w-[95vw] flex-col gap-5 px-4 py-8 sm:w-md sm:px-10">
+          <span className="text-2xl font-semibold">Create Meal Setting</span>
           <form
-            className="mb-4 mt-4 flex flex-col gap-2"
+            className="mb-4 mt-4 flex h-full w-full flex-col gap-2"
             onSubmit={handleSubmit}
           >
-            <div className="flex w-full flex-wrap gap-5">
-              <div className="w-full max-w-xl flex-col">
+            <div className="flex w-full flex-col gap-5">
+              <div className="w-full flex-col">
                 <Input
                   handleChange={handleChange}
                   id={"name"}
@@ -133,7 +134,7 @@ export default function Page() {
                   value={newMealState["name" as keyof UserMeal]}
                 />
               </div>
-              <div className="w-full max-w-xl flex-col">
+              <div className="w-full flex-col">
                 <Select
                   customClass={""}
                   handleChange={handleChange}
@@ -147,7 +148,7 @@ export default function Page() {
                   value={MealSizes[newMealState["size"]]}
                 />
               </div>
-              <div className="w-full max-w-xl flex-col">
+              <div className="w-full flex-col">
                 <Select
                   customClass={""}
                   handleChange={handleChange}
@@ -161,7 +162,7 @@ export default function Page() {
                   value={MealMinutes[newMealState["time"]]}
                 />
               </div>
-              <div className="w-full max-w-xl flex-col">
+              <div className="w-full flex-col">
                 <Select
                   customClass={""}
                   handleChange={handleChange}
@@ -175,7 +176,7 @@ export default function Page() {
                   value={MealComplexities[newMealState["complexity"]]}
                 />
               </div>
-              <div className="w-full max-w-xl flex-col">
+              <div className="w-full flex-col">
                 <Select
                   customClass={""}
                   handleChange={handleChange}
@@ -191,7 +192,7 @@ export default function Page() {
               </div>
             </div>
 
-            <div className="m-auto flex max-w-xl  gap-2">
+            <div className="mx-auto mt-auto flex gap-2">
               <FormAction
                 handleSubmit={handleCancel}
                 text="Discard"
@@ -209,7 +210,7 @@ export default function Page() {
             </div>
           </form>
         </div>
-      </section>
-    </PremiumLayout>
+      </Modal>
+    </MealsLayout>
   );
 }

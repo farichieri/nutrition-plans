@@ -49,7 +49,7 @@ const Meals: FC<Props> = ({ meals, handleConfirmDelete }) => {
     });
     Object.values(mealsUpdated).map(async (meal) => {
       const res = await updateUserMeal(user, meal);
-      if (res?.error) {
+      if (res.result === "error") {
         // Add error UI
         console.log("Error reordering meals");
       }
@@ -63,7 +63,7 @@ const Meals: FC<Props> = ({ meals, handleConfirmDelete }) => {
   }, [meals]);
 
   return (
-    <div className="w-full max-w-sm select-none rounded-md border ">
+    <div className="w-full select-none rounded-md border ">
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="opaaa">
           {(droppableProvided) => (

@@ -14,7 +14,7 @@ const PricingPlan: FC<Props> = ({ pricingPlan }) => {
   return (
     <div
       key={pricingPlan.name}
-      className="flex min-h-[27rem] w-full max-w-xs select-none flex-col items-center gap-5 rounded-3xl border border-green-400/20 bg-white px-5 py-10 shadow-[0_3px_20px] shadow-green-800/40 dark:border-green-700/20 dark:bg-black dark:shadow-green-400/30"
+      className="flex min-h-[27rem] w-full max-w-xs select-none flex-col items-center gap-5 rounded-3xl border border-green-400/20 bg-white px-5 py-10 shadow-[0_3px_20px] shadow-green-800/40 duration-300 dark:border-green-700/20 dark:bg-black dark:hover:shadow-green-400/80"
     >
       <span className="text-2xl font-medium">{pricingPlan.name}</span>
       {yearly && pricingPlan.yearlyPrice > 0 ? (

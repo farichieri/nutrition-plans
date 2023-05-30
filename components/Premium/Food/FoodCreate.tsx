@@ -41,7 +41,6 @@ const FoodCreate: FC<Props> = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { user } = useSelector(selectAuthSlice);
-  // const [foodState, setFoodState] = useState<Food>(NewFood);
   const { foodState } = useSelector(selectCreateFoodSlice);
   const [optionalsOpen, setOptionalsOpen] = useState<boolean>(false);
   const foodCategory = foodCategorySelect;
@@ -230,6 +229,118 @@ const FoodCreate: FC<Props> = () => {
               ))}
             </div>
           </div>
+          <Input
+            customClass={""}
+            handleChange={handleChange}
+            id={sourceField.id}
+            isRequired={sourceField.isRequired}
+            key={sourceField.id}
+            labelFor={sourceField.labelFor}
+            labelText={sourceField.labelText}
+            max={sourceField.max}
+            min={sourceField.min}
+            name={sourceField.name}
+            pattern={sourceField.pattern}
+            placeholder={sourceField.placeholder}
+            step={sourceField.step}
+            title={sourceField.title}
+            type={sourceField.type}
+            value={foodState[sourceField.id]}
+          />
+          <div className="">
+            <h1 className="text-xl"></h1>
+            <div className="">
+              <Select
+                customClass={""}
+                handleChange={handleChange}
+                id={foodCategory.id}
+                isRequired={foodCategory.isRequired}
+                labelFor={foodCategory.labelFor}
+                labelText={foodCategory.labelText}
+                name={foodCategory.name}
+                placeholder={foodCategory.placeholder}
+                title={foodCategory.title}
+                options={foodCategory.options}
+                value={foodState[foodCategory.id]}
+              />
+            </div>
+          </div>
+          <div className="">
+            <h1 className="text-xl"></h1>
+            <div className="">
+              <Select
+                customClass={""}
+                handleChange={handleChange}
+                id={glucemicStatus.id}
+                isRequired={glucemicStatus.isRequired}
+                labelFor={glucemicStatus.labelFor}
+                labelText={glucemicStatus.labelText}
+                name={glucemicStatus.name}
+                placeholder={glucemicStatus.placeholder}
+                title={glucemicStatus.title}
+                options={glucemicStatus.options}
+                value={foodState[glucemicStatus.id]}
+              />
+            </div>
+          </div>
+          <div className="">
+            <h1 className="text-xl"></h1>
+            <div className="">
+              <Select
+                customClass={""}
+                handleChange={handleChange}
+                id={digestionStatus.id}
+                isRequired={digestionStatus.isRequired}
+                labelFor={digestionStatus.labelFor}
+                labelText={digestionStatus.labelText}
+                name={digestionStatus.name}
+                placeholder={digestionStatus.placeholder}
+                title={digestionStatus.title}
+                options={digestionStatus.options}
+                value={foodState[digestionStatus.id]}
+              />
+            </div>
+          </div>
+          <div className="">
+            <h1 className="text-xl">Food Type</h1>
+            <div className="">
+              {Object.keys(foodState.food_type).map((type) => (
+                <Checkbox
+                  key={type}
+                  customClass={""}
+                  handleChange={handleChange}
+                  id={type}
+                  isRequired={false}
+                  labelFor={type}
+                  labelText={type}
+                  name={"food_type"}
+                  title={type}
+                  value={foodState["food_type" as keyof FoodType][type]}
+                />
+              ))}
+            </div>
+          </div>
+          <div className="">
+            <h1 className="text-xl">Compatible Plans</h1>
+            <div className="">
+              {Object.keys(foodState.compatible_plans).map((type) => (
+                <Checkbox
+                  key={type}
+                  customClass={""}
+                  handleChange={handleChange}
+                  id={type}
+                  isRequired={false}
+                  labelFor={type}
+                  labelText={type}
+                  name={"compatible_plans"}
+                  title={type}
+                  value={
+                    foodState["compatible_plans" as keyof CompatiblePlans][type]
+                  }
+                />
+              ))}
+            </div>
+          </div>
         </div>
 
         <div className="flex w-full max-w-xl flex-col gap-5">
@@ -250,120 +361,6 @@ const FoodCreate: FC<Props> = () => {
                 optionalsOpen ? " max-h-[800vh]" : "max-h-0"
               }`}
             >
-              <Input
-                customClass={""}
-                handleChange={handleChange}
-                id={sourceField.id}
-                isRequired={sourceField.isRequired}
-                key={sourceField.id}
-                labelFor={sourceField.labelFor}
-                labelText={sourceField.labelText}
-                max={sourceField.max}
-                min={sourceField.min}
-                name={sourceField.name}
-                pattern={sourceField.pattern}
-                placeholder={sourceField.placeholder}
-                step={sourceField.step}
-                title={sourceField.title}
-                type={sourceField.type}
-                value={foodState[sourceField.id]}
-              />
-              <div className="">
-                <h1 className="text-xl"></h1>
-                <div className="">
-                  <Select
-                    customClass={""}
-                    handleChange={handleChange}
-                    id={foodCategory.id}
-                    isRequired={foodCategory.isRequired}
-                    labelFor={foodCategory.labelFor}
-                    labelText={foodCategory.labelText}
-                    name={foodCategory.name}
-                    placeholder={foodCategory.placeholder}
-                    title={foodCategory.title}
-                    options={foodCategory.options}
-                    value={foodState[foodCategory.id]}
-                  />
-                </div>
-              </div>
-              <div className="">
-                <h1 className="text-xl"></h1>
-                <div className="">
-                  <Select
-                    customClass={""}
-                    handleChange={handleChange}
-                    id={glucemicStatus.id}
-                    isRequired={glucemicStatus.isRequired}
-                    labelFor={glucemicStatus.labelFor}
-                    labelText={glucemicStatus.labelText}
-                    name={glucemicStatus.name}
-                    placeholder={glucemicStatus.placeholder}
-                    title={glucemicStatus.title}
-                    options={glucemicStatus.options}
-                    value={foodState[glucemicStatus.id]}
-                  />
-                </div>
-              </div>
-              <div className="">
-                <h1 className="text-xl"></h1>
-                <div className="">
-                  <Select
-                    customClass={""}
-                    handleChange={handleChange}
-                    id={digestionStatus.id}
-                    isRequired={digestionStatus.isRequired}
-                    labelFor={digestionStatus.labelFor}
-                    labelText={digestionStatus.labelText}
-                    name={digestionStatus.name}
-                    placeholder={digestionStatus.placeholder}
-                    title={digestionStatus.title}
-                    options={digestionStatus.options}
-                    value={foodState[digestionStatus.id]}
-                  />
-                </div>
-              </div>
-              <div className="">
-                <h1 className="text-xl">Food Type</h1>
-                <div className="">
-                  {Object.keys(foodState.food_type).map((type) => (
-                    <Checkbox
-                      key={type}
-                      customClass={""}
-                      handleChange={handleChange}
-                      id={type}
-                      isRequired={false}
-                      labelFor={type}
-                      labelText={type}
-                      name={"food_type"}
-                      title={type}
-                      value={foodState["food_type" as keyof FoodType][type]}
-                    />
-                  ))}
-                </div>
-              </div>
-              <div className="">
-                <h1 className="text-xl">Compatible Plans</h1>
-                <div className="">
-                  {Object.keys(foodState.compatible_plans).map((type) => (
-                    <Checkbox
-                      key={type}
-                      customClass={""}
-                      handleChange={handleChange}
-                      id={type}
-                      isRequired={false}
-                      labelFor={type}
-                      labelText={type}
-                      name={"compatible_plans"}
-                      title={type}
-                      value={
-                        foodState["compatible_plans" as keyof CompatiblePlans][
-                          type
-                        ]
-                      }
-                    />
-                  ))}
-                </div>
-              </div>
               <div className="">
                 <h1 className="text-xl"></h1>
                 <div className="">

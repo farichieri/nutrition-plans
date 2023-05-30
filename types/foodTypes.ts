@@ -4,7 +4,8 @@ export interface Food {
   [id: string]: any;
   allow_public: boolean;
   compatible_plans: CompatiblePlans;
-  cook_time: number | null;
+  complexity: number;
+  cook_time: number;
   date_created: any | null;
   date_updated: string | null;
   digestion_status: DigestionStatusEnum | null;
@@ -19,6 +20,7 @@ export interface Food {
   food_type: FoodType;
   glucemic_status: GlucemicStatusEnum | null;
   image: string;
+  index: number;
   ingredients: IngredientGroup;
   instructions: Instruction[];
   is_deleted: boolean;
@@ -26,13 +28,14 @@ export interface Food {
   major_ingredients: string | null;
   makes_leftovers: boolean;
   manufactured_by: string | null;
+  note: string;
   num_dislikes: number;
   num_favorites: number;
-  num_ingredient_usages: number;
+  num_ingredients: number;
   num_likes: number;
   nutrients: FoodNutrients;
   order: number;
-  prep_time: number | null;
+  prep_time: number;
   price: number | null;
   recipe_category: RecipeCategoriesEnum | null;
   scale_amount: number | null;
@@ -42,11 +45,9 @@ export interface Food {
   serving_grams: number | null;
   serving_name: string | null;
   source: string | null;
+  total_time: number;
   uploader: string | null;
   user_id: string | null;
-  note: string;
-  index: number;
-  deleted: boolean;
 }
 
 export interface Ingredient extends Food {}

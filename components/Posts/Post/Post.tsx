@@ -23,7 +23,7 @@ const Post: FC<Props> = ({ post }) => {
         />
       </span>
       <div className="flex flex-col justify-start gap-2 sm:gap-4">
-        <span className="text-2xl font-semibold md:text-3xl xl:text-5xl">
+        <span className="text-xl font-semibold uppercase md:text-2xl lg:text-3xl xl:text-4xl">
           {post.title}
         </span>
         <span className="text-green-500">{post.topic}</span>

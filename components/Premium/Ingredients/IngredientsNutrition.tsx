@@ -2,7 +2,7 @@ import { AppRoutes } from "@/utils/routes";
 import { Diet } from "@/types/dietTypes";
 import { FC, useEffect, useState } from "react";
 import { Food, IngredientGroup } from "@/types/foodTypes";
-import { getNutritionMerged } from "../Food/nutritionHelpers";
+import { getNutritionMerged } from "../../../utils/nutritionHelpers";
 import { setDietState } from "@/store/slices/createDietSlice";
 import { setRecipeState, setMealState } from "@/store/slices/createFoodSlice";
 import { useDispatch } from "react-redux";

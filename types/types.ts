@@ -114,6 +114,7 @@ export interface WeightGoal {
 }
 
 export interface NutritionTargets {
+  calories: number | null;
   carbohydrates: {
     min: number | null;
     max: number | null;

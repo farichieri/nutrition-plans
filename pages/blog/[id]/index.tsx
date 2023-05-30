@@ -12,12 +12,11 @@ interface Props {
 }
 
 export default function Page({ postData }: Props) {
-  console.log({ postData });
   return (
     <LandingLayout>
       <section className="flex max-w-5xl flex-col py-24">
         <div className="mb-10 flex flex-col items-center justify-center gap-6 border-b pb-14">
-          <span className="text-center text-3xl font-bold sm:text-4xl md:text-5xl lg:text-6xl">
+          <span className="text-center text-3xl font-bold uppercase sm:text-4xl md:text-5xl lg:text-6xl">
             {postData.title}
           </span>
           <div className="flex items-center gap-1 opacity-50">

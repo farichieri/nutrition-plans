@@ -1,6 +1,6 @@
 import { Food, FoodNutrients } from "@/types/foodTypes";
 import { formatToFixed } from "@/utils/format";
-import { getNutritionValues } from "./nutritionHelpers";
+import { getNutritionValues } from "../../../utils/nutritionHelpers";
 import FoodNutritionDetail from "./FoodNutritionDetail";
 import Link from "next/link";
 import PieGraph from "@/components/PieGraph/PieGraph";

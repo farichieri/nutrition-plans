@@ -81,6 +81,20 @@ export default function Page() {
                   {foodData.food_id && (
                     <FoodActions foodID={foodData.food_id} />
                   )}
+                  <div>
+                    {foodData.prep_time && (
+                      <div className="flex justify-between">
+                        <span>Prep time:</span>
+                        <span>{foodData.prep_time} minutes</span>
+                      </div>
+                    )}
+                    {foodData.cook_time && (
+                      <div className="flex justify-between">
+                        <span>Cook time:</span>
+                        <span>{foodData.cook_time} minutes</span>
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <CompatiblePlans compatible_plans={foodData.compatible_plans} />
                 <div className="m-auto flex w-full max-w-lg">

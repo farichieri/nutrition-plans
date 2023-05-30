@@ -50,6 +50,7 @@ export const newRagins: Ratings = {
 };
 
 export const newNutritionTargets: NutritionTargets = {
+  calories: null,
   carbohydrates: {
     min: null,
     max: null,
@@ -161,10 +162,10 @@ export const NewFoodNutrients: FoodNutrients = {
 export const NewFood: Food = {
   allow_public: true,
   compatible_plans: NewFoodCompatiblePlans,
-  cook_time: null,
+  complexity: 0,
+  cook_time: 0,
   date_created: null,
   date_updated: null,
-  deleted: false,
   digestion_status: null,
   dish_type: null,
   easily_single_serving: false,
@@ -188,11 +189,11 @@ export const NewFood: Food = {
   note: "",
   num_dislikes: 0,
   num_favorites: 0,
-  num_ingredient_usages: 0,
+  num_ingredients: 0,
   num_likes: 0,
   nutrients: NewFoodNutrients,
   order: -1,
-  prep_time: null,
+  prep_time: 0,
   price: null,
   recipe_category: null,
   scale_amount: null,
@@ -202,6 +203,7 @@ export const NewFood: Food = {
   serving_grams: null,
   serving_name: "serving",
   source: null,
+  total_time: 0,
   uploader: null,
   user_id: null,
 };

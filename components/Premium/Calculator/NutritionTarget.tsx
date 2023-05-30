@@ -2,17 +2,19 @@ import { FC } from "react";
 import { MEAL_PLANS } from "@/utils/content";
 import { selectAuthSlice } from "@/store/slices/authSlice";
 import { useSelector } from "react-redux";
+import { getNutritionTargets } from "./helpers";
 
 interface Props {}
 
 const NutritionTarget: FC<Props> = () => {
   const { user } = useSelector(selectAuthSlice);
   const plan_selected = user?.plan_selected;
+  const calories = user?.nutrition_targets.calories;
   const planData = MEAL_PLANS.find((plan) => plan.id === plan_selected);
+  const nutritionTargets =
+    calories && plan_selected && getNutritionTargets(calories, plan_selected);
 
-  if (!user) return <></>;
-
-  const { nutrition_targets } = user;
+  if (!user || !nutritionTargets) return <></>;
 
   return (
     <div className="flex flex-col gap-5">
@@ -29,8 +31,8 @@ const NutritionTarget: FC<Props> = () => {
             <span>Carbohydrates:</span>
             <div className="flex gap-4 sm:gap-10">
               <div className="flex gap-1">
-                <span>{nutrition_targets.carbohydrates.min}g</span>-
-                <span>{nutrition_targets.carbohydrates.min}g</span>
+                <span>{nutritionTargets.carbohydrates.min}g</span>-
+                <span>{nutritionTargets.carbohydrates.min}g</span>
               </div>
               <div>
                 <span>{planData?.macros.carbs.min}%</span>-
@@ -43,8 +45,8 @@ const NutritionTarget: FC<Props> = () => {
 
             <div className="flex gap-4 sm:gap-10">
               <div className="flex gap-1">
-                <span>{nutrition_targets.proteins.min}g</span>-
-                <span>{nutrition_targets.proteins.max}g</span>
+                <span>{nutritionTargets.proteins.min}g</span>-
+                <span>{nutritionTargets.proteins.max}g</span>
               </div>
               <div>
                 <span>{planData?.macros.proteins.min}%</span>-
@@ -56,8 +58,8 @@ const NutritionTarget: FC<Props> = () => {
             <span>Fats:</span>
             <div className="flex gap-4 sm:gap-10">
               <div className="flex gap-1">
-                <span>{nutrition_targets.fats.min}g</span>-
-                <span>{nutrition_targets.fats.max}g</span>
+                <span>{nutritionTargets.fats.min}g</span>-
+                <span>{nutritionTargets.fats.max}g</span>
               </div>
               <div>
                 <span>{planData?.macros.fats.min}%</span>-

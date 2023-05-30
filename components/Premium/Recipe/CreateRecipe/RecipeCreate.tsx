@@ -12,7 +12,7 @@ import {
 } from "@/store/slices/createFoodSlice";
 import { addFood } from "@/firebase/helpers/Food";
 import { FC, useState } from "react";
-import { getRecipeSize } from "../../Food/nutritionHelpers";
+import { getRecipeSize } from "../../../../utils/nutritionHelpers";
 import { NewFood } from "@/types/initialTypes";
 import { Recipe } from "@/types/recipeTypes";
 import { selectAuthSlice } from "@/store/slices/authSlice";

@@ -1,5 +1,5 @@
-import { XCircleIcon } from "@heroicons/react/20/solid";
 import { ReactNode } from "react";
+import RoundButton from "../Buttons/RoundButton";
 
 const Modal = ({
   children,
@@ -8,23 +8,24 @@ const Modal = ({
   children: ReactNode;
   onClose: Function;
 }) => {
-  const handleCloseModal = (e: any) => {
+  const handleCloseModal = () => {
     if (onClose) {
       onClose();
     }
   };
-
   return (
     <div className="min-w-screen max-w-screen fixed inset-0 z-[100] m-0 flex min-h-screen items-center justify-center overflow-auto">
       <div
         className="min-w-screen fixed inset-0 z-[90] m-0 flex min-h-screen items-center justify-center bg-black/60 dark:bg-black/40"
         onClick={handleCloseModal}
       ></div>
-      <div className="relative z-[100] m-auto max-w-[100vw] overflow-hidden rounded-3xl border bg-gray-100 shadow-lg dark:bg-gray-800">
-        <XCircleIcon
+      <div className="relative z-[100] m-auto max-w-[100vw] overflow-hidden rounded-3xl border bg-white dark:bg-black ">
+        <RoundButton
           onClick={handleCloseModal}
-          className="absolute right-2 top-2 h-5 w-5 cursor-pointer fill-gray-500"
-        />
+          customClass=" p-1.5 h-10 w-10 absolute right-2 top-2"
+        >
+          <span className="material-icons-outlined">close</span>{" "}
+        </RoundButton>
         {children}
       </div>
     </div>

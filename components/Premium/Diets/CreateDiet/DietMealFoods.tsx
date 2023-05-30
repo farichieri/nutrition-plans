@@ -5,7 +5,7 @@ import {
 import { DietMeal } from "@/types/dietTypes";
 import { FC } from "react";
 import { Food } from "@/types/foodTypes";
-import { getNewAmount } from "../../Food/nutritionHelpers";
+import { getNewAmount } from "../../../../utils/nutritionHelpers";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import Input from "@/components/Form/Input";

@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { Food, NutritionMeasurements } from "@/types/foodTypes";
-import { getNewAmount } from "../Food/nutritionHelpers";
+import { getNewAmount } from "../../../utils/nutritionHelpers";
 import { useRouter } from "next/router";
 import NutritionInput from "@/components/Form/NutritionInput";
 import Select from "@/components/Form/Select";

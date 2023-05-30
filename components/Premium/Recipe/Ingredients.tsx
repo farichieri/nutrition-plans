@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Food, Ingredient, NutritionMeasurements } from "@/types/foodTypes";
-import { getNewAmount } from "../Food/nutritionHelpers";
+import { getNewAmount } from "../../../utils/nutritionHelpers";
 import Image from "next/image";
 import Link from "next/link";
 import Spinner from "@/components/Loader/Spinner";

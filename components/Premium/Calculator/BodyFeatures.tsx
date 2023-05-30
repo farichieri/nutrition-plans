@@ -214,6 +214,14 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
           ...userUpdated,
           nutrition_targets: nutritionTargets,
         };
+      } else {
+        userUpdated = {
+          ...userUpdated,
+          nutrition_targets: {
+            ...user.nutrition_targets,
+            calories: kcals_recommended,
+          },
+        };
       }
       const res = await updateUser(userUpdated);
       if (!res?.error) {

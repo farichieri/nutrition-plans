@@ -31,6 +31,7 @@ const AddMealSelector: FC<Props> = ({
     const newMealSetting = {
       ...mealSetting,
       order: index,
+      setting_id: mealSetting.id,
     };
     const res = await createUserMeal(user, newMealSetting);
     if (!res?.error && res?.mealSettingAdded) {
@@ -44,7 +45,7 @@ const AddMealSelector: FC<Props> = ({
 
   return (
     <Modal onClose={() => setOpenSelector(false)}>
-      <div className="flex w-96 flex-col gap-5 p-5">
+      <div className="flex w-xs max-w-[95vw] flex-col gap-5 px-4 py-8 sm:w-md sm:px-10">
         <span className="mx-auto text-center  text-xl font-semibold">
           Select the Meal Template
         </span>

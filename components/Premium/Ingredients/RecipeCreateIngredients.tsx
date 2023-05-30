@@ -5,7 +5,7 @@ import {
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { FC, useEffect, useState } from "react";
 import { Food, IngredientGroup, IngsGroupArray } from "@/types/foodTypes";
-import { getNewAmount } from "../Food/nutritionHelpers";
+import { getNewAmount } from "../../../utils/nutritionHelpers";
 import { reorderArr } from "@/utils/filter";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
