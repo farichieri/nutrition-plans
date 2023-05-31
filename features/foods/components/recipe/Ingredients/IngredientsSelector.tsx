@@ -1,10 +1,10 @@
 import { FC, useEffect, useState } from "react";
-import { Food } from "@/types/foodTypes";
-import { selectFoodsSlice, setFoodOpened } from "@/store/slices/foodsSlice";
+import { Food } from "@/features/foods/types";
+import { selectFoodsSlice, setFoodOpened } from "@/features/foods/slice";
 import { useDispatch, useSelector } from "react-redux";
 import IngredientModal from "./IngredientModal";
-import SearchBarCreate from "../SearchBar/SearchBarCreate";
-import SearchedResults from "../SearchBar/SearchedResults";
+import SearchBarCreate from "../../../../../components/Premium/SearchBar/SearchBarCreate";
+// import SearchedResults from "../../../../../components/Premium/SearchBar/SearchedResults";
 
 interface Props {}
 
@@ -62,10 +62,10 @@ const IngredientsSelector: FC<Props> = () => {
               </div>
             </div>
           )}
-          <SearchedResults
+          {/* <SearchedResults
             searchResult={searchResult}
             handleClick={handleOpenIngredient}
-          />
+          /> */}
         </div>
       )}
     </>

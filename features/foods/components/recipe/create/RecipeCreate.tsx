@@ -5,14 +5,13 @@ import {
   RecipeCategoriesEnum,
   FoodKind,
   DigestionStatusEnum,
-} from "@/types/foodTypes";
+} from "@/features/foods/types";
 import {
   selectCreateFoodSlice,
   setRecipeState,
 } from "@/store/slices/createFoodSlice";
-import { addFood } from "@/services/firebase/helpers/Food";
+import { addFood } from "@/features/foods/services";
 import { FC, useState } from "react";
-import { getRecipeSize } from "../../../../utils/nutritionHelpers";
 import { NewFood } from "@/types/initialTypes";
 import { Recipe } from "@/types/recipeTypes";
 import { selectAuthSlice } from "@/features/authentication/slice";
@@ -22,13 +21,14 @@ import AddInstruction from "./AddInstruction";
 import Checkbox from "@/components/Form/Checkbox";
 import FormAction from "@/components/Form/FormAction";
 import Image from "next/image";
-import RecipeCreateIngredients from "../../Ingredients/RecipeCreateIngredients";
-import IngredientsNutrition from "../../Ingredients/IngredientsNutrition";
-import IngredientsSelector from "../../Ingredients/IngredientsSelector";
 import Input from "@/components/Form/Input";
-import Instructions from "./Instructions";
+import Instructions from "./InstructionsCreate";
 import NutritionInput from "@/components/Form/NutritionInput";
 import Select from "@/components/Form/Select";
+import { getRecipeSize } from "@/utils/nutritionHelpers";
+import IngredientsNutrition from "../Ingredients/IngredientsNutrition";
+import RecipeCreateIngredients from "../Ingredients/RecipeCreateIngredients";
+import IngredientsSelector from "../Ingredients/IngredientsSelector";
 
 interface Props {}
 const RecipeCreate: FC<Props> = () => {

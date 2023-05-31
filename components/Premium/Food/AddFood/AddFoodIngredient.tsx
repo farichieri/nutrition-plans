@@ -1,4 +1,11 @@
 import {
+  Food,
+  Ingredient,
+  IngredientGroup,
+  selectFoodsSlice,
+  setFoodOpened,
+} from "@/features/foods";
+import {
   selectCreateFoodSlice,
   setMealState,
   setRecipeState,
@@ -10,8 +17,6 @@ import {
 import { AppRoutes } from "@/utils/routes";
 import { Diet, DietMeal, DietMealGroup } from "@/types/dietTypes";
 import { FC } from "react";
-import { Food, Ingredient, IngredientGroup } from "@/types/foodTypes";
-import { selectFoodsSlice, setFoodOpened } from "@/store/slices/foodsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 

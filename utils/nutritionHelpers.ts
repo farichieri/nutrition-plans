@@ -4,7 +4,7 @@ import {
   FoodNutrients,
   IngredientGroup,
   NutritionMeasurements,
-} from "@/types/foodTypes";
+} from "@/features/foods/types";
 import { NewFoodNutrients } from "@/types/initialTypes";
 import { GRAMS_IN_ONE_OZ } from "@/utils/constants";
 import { formatToFixed } from "@/utils/format";

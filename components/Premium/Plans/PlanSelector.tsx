@@ -1,9 +1,9 @@
-import { FC } from "react";
 import {
   selectAuthSlice,
   setUpdateUser,
-} from "@/features/authentication/slice";
-import { updateUserPlan } from "@/services/firebase/helpers/Plans";
+  updateUserPlan,
+} from "@/features/authentication";
+import { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { PlansEnum } from "@/types";
 
@@ -18,7 +18,7 @@ const PlanSelector: FC<Props> = ({ planID }) => {
   const selectPlan = async () => {
     if (!user) return;
     const res = await updateUserPlan(planID, user);
-    if (!res?.error) {
+    if (res.result === "success") {
       const userUpdated = {
         ...user,
         plan_selected: planID,

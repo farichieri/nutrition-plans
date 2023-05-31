@@ -3,7 +3,7 @@ import {
   setRecipeState,
 } from "@/store/slices/createFoodSlice";
 import { FC, useState } from "react";
-import { Instruction } from "@/types/foodTypes";
+import { Instruction } from "@/features/foods/types";
 import { useDispatch, useSelector } from "react-redux";
 import { uuidv4 } from "@firebase/util";
 import RoundButton from "@/components/Buttons/RoundButton";

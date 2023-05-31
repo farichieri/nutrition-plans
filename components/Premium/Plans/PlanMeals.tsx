@@ -1,7 +1,7 @@
 import { buildDiet, generateMeals } from "@/utils/planHelper";
 import { DietMeal, DietMealGroupArr } from "@/types/dietTypes";
 import { FC, useEffect, useState } from "react";
-import { Food } from "@/types/foodTypes";
+import { Food } from "@/features/foods/types";
 import { PlansEnum } from "@/types";
 import { selectAuthSlice } from "@/features/authentication/slice";
 import { UserMealsArr, selectMealsSlice } from "@/features/meals";

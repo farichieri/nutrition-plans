@@ -2,7 +2,7 @@ import {
   fetchRandomDietByPlan,
   postDietToUserDiets,
 } from "@/services/firebase/helpers/Diet";
-import { CompatiblePlans } from "@/types/foodTypes";
+import { CompatiblePlans } from "@/features/foods/types";
 import { Diet } from "@/types/dietTypes";
 import { fetchDietByPlanAndDate } from "@/services/firebase/helpers/Diet";
 import { NewDiet } from "@/types/dietTypes";

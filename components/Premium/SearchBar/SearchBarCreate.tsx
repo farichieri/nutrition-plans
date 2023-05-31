@@ -1,6 +1,6 @@
-import { fetchFoods } from "@/services/firebase/helpers/Food";
-import { FoodGroup } from "@/types/foodTypes";
-import { selectFoodsSlice, setFoodsSearched } from "@/store/slices/foodsSlice";
+import { fetchFoods } from "@/features/foods/services";
+import { FoodGroup } from "@/features/foods/types";
+import { selectFoodsSlice, setFoodsSearched } from "@/features/foods/slice";
 import { useDispatch, useSelector } from "react-redux";
 import React, { FC, useEffect, useState } from "react";
 import Spinner from "@/components/Loader/Spinner";

@@ -3,7 +3,7 @@ import {
   NutrientsClasified,
   NutrientsEnum,
   NutritionMeasurements,
-} from "@/types/foodTypes";
+} from "@/features/foods/types";
 
 const g = NutritionMeasurements.g;
 const kcal = NutritionMeasurements.kcal;

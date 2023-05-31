@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Food } from "@/types/foodTypes";
+import { Food } from "@/features/foods/types";
 import { NewFood } from "@/types/initialTypes";
 import { PURGE } from "redux-persist";
 import type { RootState } from "../store";

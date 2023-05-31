@@ -1,6 +1,6 @@
-import { fetchFoodByID } from "@/services/firebase/helpers/Food";
-import { Food, FoodKind } from "@/types/foodTypes";
-import { selectFoodsSlice, setFoodOpened } from "@/store/slices/foodsSlice";
+import { fetchFoodByID } from "@/features/foods/services";
+import { Food, FoodKind } from "@/features/foods/types";
+import { selectFoodsSlice, setFoodOpened } from "@/features/foods/slice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
@@ -8,12 +8,12 @@ import BackButton from "@/components/Buttons/BackButton";
 import FoodActions from "@/components/Premium/Food/FoodActions/FoodActions";
 import FoodNutrition from "@/components/Premium/Food/FoodNutrition";
 import Image from "next/image";
-import Ingredients from "@/components/Premium/Recipe/Ingredients";
-import Instructions from "@/components/Premium/Recipe/Instructions";
+import Ingredients from "@/features/foods/components/recipe/Ingredients/Ingredients";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import ScaleSelector from "@/components/Premium/ScaleSelector/ScaleSelector";
 import Spinner from "@/components/Loader/Spinner";
 import CompatiblePlans from "@/components/Premium/Food/CompatiblePlans";
+import { Instructions } from "@/features/foods";
 
 export default function Page() {
   const router = useRouter();

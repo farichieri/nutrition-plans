@@ -1,7 +1,7 @@
 import { Bars3Icon } from "@heroicons/react/24/solid";
 import { FC, MouseEventHandler } from "react";
 import AvatarDropDown from "../DropDown/AvatarDropDown/AvatarDropDown";
-import Feedback from "../Premium/Feedback";
+import Feedback from "../../features/client-contact/components/Feedback/Feedback";
 import RoundButton from "../Buttons/RoundButton";
 
 interface Props {

@@ -2,7 +2,7 @@ import {
   selectCreateDietSlice,
   setDietState,
 } from "@/store/slices/createDietSlice";
-import { CompatiblePlans } from "@/types/foodTypes";
+import { CompatiblePlans } from "@/features/foods/types";
 import { createDiet } from "@/services/firebase/helpers/Diet";
 import { Diet, NewDiet } from "@/types/dietTypes";
 import { FC, useState } from "react";
@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Checkbox from "@/components/Form/Checkbox";
 import DietMeals from "./DietMeals";
 import FormAction from "@/components/Form/FormAction";
-import IngredientsNutrition from "../../Ingredients/IngredientsNutrition";
+import IngredientsNutrition from "../../../../features/foods/components/recipe/Ingredients/IngredientsNutrition";
 import Input from "@/components/Form/Input";
 
 interface Props {}

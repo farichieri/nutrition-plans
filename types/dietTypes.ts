@@ -1,5 +1,5 @@
 import { NewFood, NewFoodNutrients } from "./initialTypes";
-import { FoodGroup, FoodNutrients } from "./foodTypes";
+import { FoodGroup, FoodNutrients } from "../features/foods/types";
 import { PlansEnum } from ".";
 
 export interface Diet {

@@ -1,7 +1,7 @@
-import { fetchFoods } from "@/services/firebase/helpers/Food";
+import { fetchFoods } from "@/features/foods/services";
 import { FilterQueries } from "@/types";
-import { FoodGroup } from "@/types/foodTypes";
-import { setFoodsSearched } from "@/store/slices/foodsSlice";
+import { FoodGroup } from "@/features/foods/types";
+import { setFoodsSearched } from "@/features/foods/slice";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import React, { FC, useEffect, useState } from "react";

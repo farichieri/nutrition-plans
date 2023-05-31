@@ -1,4 +1,4 @@
-import { PlansEnum } from ".";
+import { PlansEnum } from "../../../types";
 
 export interface Food {
   [id: string]: any;

@@ -14,9 +14,9 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
-import { db, storage } from "../firebase.config";
+import { db, storage } from "../../../services/firebase/firebase.config";
 import { DEFAULT_IMAGE } from "@/types/initialTypes";
-import { Food, FoodGroup, FoodKind } from "@/types/foodTypes";
+import { Food, FoodGroup, FoodKind } from "@/features/foods/types";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { PlansEnum, Result } from "@/types";
 import { UserMeal, matchComplexity } from "@/features/meals";

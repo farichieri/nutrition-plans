@@ -4,7 +4,7 @@ import {
 } from "@/store/slices/createFoodSlice";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { FC, useEffect, useState } from "react";
-import { Instruction } from "@/types/foodTypes";
+import { Instruction } from "@/features/foods/types";
 import { reorderArr } from "@/utils/filter";
 import { useDispatch, useSelector } from "react-redux";
 import RoundButton from "@/components/Buttons/RoundButton";
@@ -87,7 +87,7 @@ const RecipeStep = ({ step }: { step: Instruction }) => {
 
 interface Props {}
 
-const Instructions: FC<Props> = () => {
+const InstructionsCreate: FC<Props> = () => {
   const { recipeState } = useSelector(selectCreateFoodSlice);
   const instructions = recipeState.instructions;
   const dispatch = useDispatch();
@@ -175,4 +175,4 @@ const Instructions: FC<Props> = () => {
   );
 };
 
-export default Instructions;
+export default InstructionsCreate;

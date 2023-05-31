@@ -7,7 +7,7 @@ import {
   CompatiblePlans,
   FoodType,
   FoodKind,
-} from "@/types/foodTypes";
+} from "@/features/foods/types";
 import {
   fatsFields,
   firstOptionalFields,
@@ -21,7 +21,7 @@ import {
   sugarFields,
   vitsAndMinsFields,
 } from "./formFields";
-import { addFood } from "@/services/firebase/helpers/Food";
+import { addFood } from "@/features/foods/services";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { NewFood } from "@/types/initialTypes";
 import { selectAuthSlice } from "@/features/authentication/slice";

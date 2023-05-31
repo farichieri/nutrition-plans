@@ -1,5 +1,5 @@
 import { NewFood } from "./initialTypes";
-import { Food } from "./foodTypes";
+import { Food } from "../features/foods/types";
 
 export interface Recipe extends Food {}
 

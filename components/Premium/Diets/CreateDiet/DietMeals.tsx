@@ -1,12 +1,12 @@
 import { DietMeal, DietMealGroup } from "@/types/dietTypes";
 import { FC, useState } from "react";
-import { Food } from "@/types/foodTypes";
-import { selectFoodsSlice, setFoodOpened } from "@/store/slices/foodsSlice";
+import { Food } from "@/features/foods/types";
+import { selectFoodsSlice, setFoodOpened } from "@/features/foods/slice";
 import { useDispatch, useSelector } from "react-redux";
 import DietMealFoods from "./DietMealFoods";
-import IngredientModal from "../../Ingredients/IngredientModal";
+import IngredientModal from "../../../../features/foods/components/recipe/Ingredients/IngredientModal";
 import SearchBarCreate from "../../SearchBar/SearchBarCreate";
-import SearchedResults from "../../SearchBar/SearchedResults";
+// import SearchedResults from "../../SearchBar/SearchedResults";
 
 interface MealProps {
   dietMeal: DietMeal;
@@ -51,12 +51,12 @@ const DietMeal: FC<MealProps> = ({ dietMeal }) => {
             close_fullscreen
           </span>
         )}
-        {showSearched && (
+        {/* {showSearched && (
           <SearchedResults
             searchResult={foodsSearched}
             handleClick={handleOpenFood}
           />
-        )}
+        )} */}
       </div>
 
       {foodOpened.food && thisFoodOpened && (

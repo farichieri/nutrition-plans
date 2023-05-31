@@ -1,4 +1,4 @@
-import { Food, FoodNutrients } from "@/types/foodTypes";
+import { Food, FoodNutrients } from "@/features/foods/types";
 import { formatToFixed } from "@/utils/format";
 import { getNutritionValues } from "../../../utils/nutritionHelpers";
 import FoodNutritionDetail from "./FoodNutritionDetail";

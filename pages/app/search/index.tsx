@@ -12,7 +12,7 @@ interface Props {
 export default function Page({ queries }: Props) {
   return (
     <PremiumLayout>
-      <section className="0 m-auto flex w-full max-w-screen-xl flex-col justify-center gap-5 px-4 pb-24 pt-4 sm:px-10">
+      <section className="m-auto flex w-full max-w-screen-xl flex-col justify-center gap-5 px-4 pb-24 pt-4 sm:px-10">
         <SearchBar queries={queries} />
         <Filters queries={queries} />
         <FoodsSearched queries={queries} />

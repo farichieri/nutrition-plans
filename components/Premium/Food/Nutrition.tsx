@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { FoodNutrients } from "@/types/foodTypes";
+import { FoodNutrients } from "@/features/foods/types";
 import { formatToFixed } from "@/utils/format";
 import FoodNutritionDetail from "./FoodNutritionDetail";
 import PieGraph from "@/components/PieGraph/PieGraph";

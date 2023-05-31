@@ -1,5 +1,5 @@
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { db } from "../firebase.config";
+import { db } from "@/services/firebase/firebase.config";
 import { UserAccount } from "@/features/authentication";
 
 const postFeedback = async (user: UserAccount, message: string) => {

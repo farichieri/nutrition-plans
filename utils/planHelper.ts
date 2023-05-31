@@ -1,7 +1,7 @@
 import {
   fetchRandomFoodByPlan,
   getFoodsCollectionLength,
-} from "@/services/firebase/helpers/Food";
+} from "@/features/foods/services";
 import {
   Diet,
   DietMeal,
@@ -9,7 +9,7 @@ import {
   DietMealGroupArr,
   NewDiet,
 } from "@/types/dietTypes";
-import { FoodGroup } from "@/types/foodTypes";
+import { FoodGroup } from "@/features/foods/types";
 import { getDietFoods } from "./foodsHelpers";
 import { getNutritionMerged } from "@/utils/nutritionHelpers";
 import { NutritionTargets } from "@/features/authentication";

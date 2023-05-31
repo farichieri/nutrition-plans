@@ -1,4 +1,4 @@
-import { Food, FoodGroupArray } from "@/types/foodTypes";
+import { Food, FoodGroupArray } from "@/features/foods/types";
 import { FilterSortTypes } from "@/types";
 
 const filterObject = (obj: any, filter: string, filterValue: string) =>

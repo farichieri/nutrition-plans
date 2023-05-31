@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { Food, NutritionMeasurements } from "@/types/foodTypes";
+import { Food, NutritionMeasurements } from "@/features/foods/types";
 import { getNewAmount } from "../../../utils/nutritionHelpers";
 import { useRouter } from "next/router";
 import NutritionInput from "@/components/Form/NutritionInput";

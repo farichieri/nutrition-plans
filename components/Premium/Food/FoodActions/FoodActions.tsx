@@ -3,7 +3,7 @@ import {
   selectAuthSlice,
   setUpdateUser,
 } from "@/features/authentication/slice";
-import { updateFoodAction } from "@/services/firebase/helpers/Food";
+import { updateFoodAction } from "@/features/foods/services";
 import { updateUser } from "@/features/authentication/services";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "@/components/Loader/Spinner";

@@ -12,7 +12,7 @@ import {
   FoodNutrients,
   CompatiblePlans,
   FoodType,
-} from "@/types/foodTypes";
+} from "@/features/foods/types";
 import { SubscriptionState } from "@/types";
 import { Progress } from "@/features/progress";
 

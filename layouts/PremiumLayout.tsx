@@ -23,6 +23,8 @@ export default function PremiumLayout({ children }: Props) {
   const handleSidebar = () => {
     dispatch(setSidebarOpen(!sidebarOpen));
   };
+
+  console.log({ sidebarOpen });
   return (
     <>
       <Head>
@@ -33,13 +35,13 @@ export default function PremiumLayout({ children }: Props) {
       {isSettingsOpen && <Settings />}
       {user && <WelcomeSteps />}
       {user ? (
-        <div className="flex min-h-screen w-full flex-col bg-gray-100 dark:bg-[#50525040]">
+        <div className="flex min-h-screen w-full flex-col">
           {isBillingModalOpen && <BillingModal />}
           <PremiumNav sidebarOpen={sidebarOpen} handleSidebar={handleSidebar} />
           <Sidebar sidebarOpen={sidebarOpen} handleSidebar={handleSidebar} />
           <div
             className={`flex flex-col pt-[var(--nav-h)] duration-0 ease-in-out ${
-              sidebarOpen ? "md:pl-56" : "md:pl-20"
+              sidebarOpen ? "md:pl-56 " : "md:pl-20 "
             }`}
           >
             {children}

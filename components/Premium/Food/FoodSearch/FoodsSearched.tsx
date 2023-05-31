@@ -6,50 +6,11 @@ import {
 } from "@/utils/filter";
 import { FC } from "react";
 import { FilterQueries, FilterSortTypes } from "@/types";
-import { Food, FoodGroup, FoodGroupArray, FoodKind } from "@/types/foodTypes";
-import { Meal } from "@/types/mealsTypes";
-import { selectFoodsSlice } from "@/store/slices/foodsSlice";
+import { Food, FoodGroup, FoodGroupArray } from "@/features/foods/types";
+import { selectFoodsSlice } from "@/features/foods/slice";
 import { useSelector } from "react-redux";
 import Image from "next/image";
 import Link from "next/link";
-
-// interface MealProps {
-//   meal: Meal;
-// }
-
-// const Meal: FC<MealProps> = ({ meal }) => {
-//   const mealFoods = meal.ingredients;
-//   return (
-//     <div className="flex h-56 w-full cursor-pointer flex-col items-start border">
-//       <div className="flex w-full flex-col divide-y">
-//         {Object.keys(mealFoods).map((food_id) => {
-//           const food = mealFoods[food_id].food;
-//           return (
-//             <div key={food_id} className="flex h-full w-full gap-2 ">
-//               <span className="relative h-auto w-full basis-1/2 ">
-//                 <Image
-//                   src={food.image}
-//                   fill
-//                   className="object-cover"
-//                   alt={food.food_name || ""}
-//                 />
-//               </span>
-//               <div className="flex w-full basis-1/2 flex-col">
-//                 <span className="text-lg font-semibold capitalize">
-//                   {food.food_name}
-//                 </span>
-//                 <span className="text-xs opacity-50">
-//                   {food.food_description}
-//                 </span>
-//                 <span className="text-xs text-green-500">{food.kind}</span>
-//               </div>
-//             </div>
-//           );
-//         })}
-//       </div>
-//     </div>
-//   );
-// };
 
 interface Props {
   queries: FilterQueries;

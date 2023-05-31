@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import PremiumLayout from "@/layouts/PremiumLayout";
-import RecipeCreate from "@/components/Premium/Recipe/CreateRecipe/RecipeCreate";
+import RecipeCreate from "@/features/foods/components/recipe/create/RecipeCreate";
 
 export default function Page() {
   const router = useRouter();

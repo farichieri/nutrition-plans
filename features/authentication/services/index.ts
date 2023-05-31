@@ -1,7 +1,7 @@
 import { db } from "../../../services/firebase/firebase.config";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { newAccount } from "@/types/initialTypes";
-import { Result } from "@/types";
+import { PlansEnum, Result } from "@/types";
 import { User, deleteUser } from "firebase/auth";
 import { UserAccount } from "@/features/authentication";
 
@@ -81,4 +81,19 @@ const updateUser = async (
   }
 };
 
-export { createNewUser, generateUserObject, updateUser };
+const updateUserPlan = async (
+  planID: PlansEnum,
+  user: UserAccount
+): Promise<Result<boolean, unknown>> => {
+  try {
+    const userRef = doc(db, "users", user.user_id);
+    await updateDoc(userRef, {
+      plan_selected: planID,
+    });
+    return { result: "success", data: true };
+  } catch (error) {
+    return { result: "error", error };
+  }
+};
+
+export { createNewUser, generateUserObject, updateUser, updateUserPlan };

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { FoodNutrients, NutrientsClasified } from "@/types/foodTypes";
+import { FoodNutrients, NutrientsClasified } from "@/features/foods/types";
 import {
   getNutrientMeasurementUnit,
   getNutrientsClasified,

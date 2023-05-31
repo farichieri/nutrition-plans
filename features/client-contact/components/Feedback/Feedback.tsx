@@ -1,10 +1,9 @@
-import { postFeedback } from "@/services/firebase/helpers/Settings";
-import { selectAuthSlice } from "@/features/authentication/slice";
-import { FC, useState } from "react";
-import { useSelector } from "react-redux";
-import FormAction from "../Form/FormAction";
-import SubmitButton from "../Buttons/SubmitButton";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
+import { FC, useState } from "react";
+import { postFeedback } from "@/features/client-contact";
+import { selectAuthSlice } from "@/features/authentication/slice";
+import { useSelector } from "react-redux";
+import SubmitButton from "../../../../components/Buttons/SubmitButton";
 
 interface Props {}
 

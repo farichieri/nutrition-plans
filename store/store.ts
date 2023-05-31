@@ -7,7 +7,7 @@ import { WebStorage } from "redux-persist/lib/types";
 import authSlice from "../features/authentication/slice";
 import createFoodSlice from "./slices/createFoodSlice";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
-import foodsSlice from "./slices/foodsSlice";
+import foodsSlice from "../features/foods/slice";
 import layoutSlice from "./slices/layoutSlice";
 import progressSlice from "../features/progress/slice";
 import createDietSlice from "./slices/createDietSlice";

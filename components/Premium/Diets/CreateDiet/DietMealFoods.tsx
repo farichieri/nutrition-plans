@@ -4,7 +4,7 @@ import {
 } from "@/store/slices/createDietSlice";
 import { DietMeal } from "@/types/dietTypes";
 import { FC } from "react";
-import { Food } from "@/types/foodTypes";
+import { Food } from "@/features/foods/types";
 import { getNewAmount } from "../../../../utils/nutritionHelpers";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";

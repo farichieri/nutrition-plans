@@ -1,6 +1,6 @@
 import { ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recharts";
 import React, { FC } from "react";
-import { FoodNutrients } from "@/types/foodTypes";
+import { FoodNutrients } from "@/features/foods/types";
 
 interface Props {
   nutrients: FoodNutrients;

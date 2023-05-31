@@ -3,7 +3,7 @@ import {
   FoodCategoriesEnum,
   GlucemicStatusEnum,
   NutrientsEnum,
-} from "@/types/foodTypes";
+} from "@/features/foods/types";
 import { NewFood } from "@/types/initialTypes";
 
 let foodKeys: any = {};
