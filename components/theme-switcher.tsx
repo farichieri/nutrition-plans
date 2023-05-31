@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Theme } from "@/types/types";
+import { Theme } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
 import { selectLayoutSlice, setTheme } from "@/store/slices/layoutSlice";
 

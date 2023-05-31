@@ -1,11 +1,11 @@
 import { directories, getSortedData } from "@/utils/mds";
-import { FAQS_INDEX } from "@/utils/content";
-import { PlansType } from "@/types/types";
+import { FAQS_INDEX } from "@/data/content";
+import { PlansType } from "@/types";
 import CallToAction from "@/components/CallToAction";
 import FAQS from "@/components/FAQS/FAQS";
 import Goals from "@/components/Goals/Goals";
 import Image from "next/image";
-import LandingLayout from "@/components/Layout/LandingLayout";
+import LandingLayout from "@/layouts/LandingLayout";
 import Link from "next/link";
 import Plans from "@/components/Plans/Plans";
 import PrimaryButton from "@/components/Buttons/PrimaryButton";

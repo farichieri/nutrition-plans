@@ -1,20 +1,20 @@
 import {
+  UserAccount,
+  NutritionTargets,
+  Ratings,
+  UserBodyData,
+  UserFoodData,
+  UserSteps,
+  WeightGoal,
+} from "@/features/authentication";
+import {
   Food,
   FoodNutrients,
   CompatiblePlans,
   FoodType,
 } from "@/types/foodTypes";
-import {
-  NutritionTargets,
-  Progress,
-  Ratings,
-  SubscriptionState,
-  UserAccount,
-  UserBodyData,
-  UserFoodData,
-  UserSteps,
-  WeightGoal,
-} from "@/types/types";
+import { SubscriptionState } from "@/types";
+import { Progress } from "@/features/progress";
 
 export const DEFAULT_IMAGE = "/images/foods/default_food.png";
 

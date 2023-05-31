@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FoodGroup, FoodKind } from "@/types/foodTypes";
-import { Meal } from "@/types/mealTypes";
+import { Meal } from "@/types/mealsTypes";
 import Image from "next/image";
 
 interface MealProps {

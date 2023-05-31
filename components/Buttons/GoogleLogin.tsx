@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import GoogleIcon from "../Icons/GoogleIcon";
+import GoogleIcon from "../../assets/GoogleIcon";
 
 const GoogleLoginButton = ({
   onClick,

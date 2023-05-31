@@ -1,4 +1,4 @@
-import LandingLayout from "@/components/Layout/LandingLayout";
+import LandingLayout from "@/layouts/LandingLayout";
 import Image from "next/image";
 import Link from "next/link";
 

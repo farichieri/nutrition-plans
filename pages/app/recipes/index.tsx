@@ -1,5 +1,5 @@
-import PremiumLayout from "@/components/Layout/PremiumLayout";
+import PremiumLayout from "@/layouts/PremiumLayout";
 
 export default function Page() {
-  return <PremiumLayout>Recipes</PremiumLayout>
+  return <PremiumLayout>Recipes</PremiumLayout>;
 }

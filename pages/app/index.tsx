@@ -1,7 +1,7 @@
-import { selectAuthSlice } from "@/store/slices/authSlice";
+import { selectAuthSlice } from "@/features/authentication/slice";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import PremiumLayout from "@/components/Layout/PremiumLayout";
+import PremiumLayout from "@/layouts/PremiumLayout";
 import Loader from "@/components/Loader/Loader";
 
 const App = () => {

@@ -1,6 +1,6 @@
 import { NewFood, NewFoodNutrients } from "./initialTypes";
 import { FoodGroup, FoodNutrients } from "./foodTypes";
-import { PlansEnum } from "./types";
+import { PlansEnum } from ".";
 
 export interface Diet {
   [id: string]: any;

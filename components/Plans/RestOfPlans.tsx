@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { PlansType } from "@/types/types";
+import { PlansType } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 

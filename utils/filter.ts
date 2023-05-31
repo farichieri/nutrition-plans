@@ -1,5 +1,5 @@
 import { Food, FoodGroupArray } from "@/types/foodTypes";
-import { FilterSortTypes } from "@/types/types";
+import { FilterSortTypes } from "@/types";
 
 const filterObject = (obj: any, filter: string, filterValue: string) =>
   Object.keys(obj).reduce(

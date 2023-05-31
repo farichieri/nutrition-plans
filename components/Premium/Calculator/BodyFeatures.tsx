@@ -2,13 +2,17 @@ import {
   ACTIVITY_OPTIONS,
   GENDER_OPTIONS,
   GOAL_OPTIONS,
-} from "@/utils/formContents";
+} from "@/data/formContents";
+import {
+  UserAccount,
+  selectAuthSlice,
+  setUpdateUser,
+  updateUser,
+} from "@/features/authentication";
 import { FC, useEffect, useState } from "react";
 import { getNutritionTargets } from "./helpers";
-import { MeasurementUnits, UserAccount } from "@/types/types";
-import { newBodyData, newNutritionTargets } from "@/types/initialTypes";
-import { selectAuthSlice, setUpdateUser } from "@/store/slices/authSlice";
-import { updateUser } from "@/firebase/helpers/Auth";
+import { MeasurementUnits } from "@/types";
+import { newBodyData } from "@/types/initialTypes";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import SubmitButton from "@/components/Buttons/SubmitButton";
@@ -224,7 +228,7 @@ const BodyFeatures: FC<Props> = ({ handleSubmit }) => {
         };
       }
       const res = await updateUser(userUpdated);
-      if (!res?.error) {
+      if (res.result === "success") {
         dispatch(setUpdateUser(userUpdated));
         handleSubmit();
       } else {

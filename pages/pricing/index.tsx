@@ -1,7 +1,7 @@
 import FAQS from "@/components/FAQS/FAQS";
-import LandingLayout from "@/components/Layout/LandingLayout";
+import LandingLayout from "@/layouts/LandingLayout";
 import Plans from "@/components/Pricing/PricingPlans";
-import { FAQS_PRICING } from "@/utils/content";
+import { FAQS_PRICING } from "@/data/content";
 
 export default function Pricing() {
   return (

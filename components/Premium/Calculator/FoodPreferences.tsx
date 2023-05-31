@@ -1,9 +1,12 @@
+import {
+  UserAccount,
+  selectAuthSlice,
+  setUpdateUser,
+  updateUser,
+} from "@/features/authentication";
 import { FC, useEffect, useState } from "react";
-import { FOOD_PREFERENCES } from "@/utils/formContents";
-import { selectAuthSlice, setUpdateUser } from "@/store/slices/authSlice";
-import { updateUser } from "@/firebase/helpers/Auth";
+import { FOOD_PREFERENCES } from "@/data/formContents";
 import { useDispatch, useSelector } from "react-redux";
-import { UserAccount } from "@/types/types";
 import { useRouter } from "next/router";
 import SubmitButton from "@/components/Buttons/SubmitButton";
 
@@ -43,7 +46,7 @@ const FoodPreferences: FC<Props> = ({ handleSubmit }) => {
       },
     };
     const res = await updateUser(userUpdated);
-    if (!res?.error) {
+    if (res.result === "success") {
       dispatch(setUpdateUser(userUpdated));
       handleSubmit();
     }

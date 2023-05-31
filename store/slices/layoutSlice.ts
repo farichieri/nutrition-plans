@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Theme } from "@/types/types";
+import { Theme } from "@/types";
 import type { RootState } from "../store";
 
 // Define a type for the slice state

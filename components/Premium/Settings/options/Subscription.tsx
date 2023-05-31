@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { selectAuthSlice } from "@/store/slices/authSlice";
+import { selectAuthSlice } from "@/features/authentication/slice";
 import { setIsBillingModalOpen } from "@/store/slices/layoutSlice";
 import { useDispatch, useSelector } from "react-redux";
 

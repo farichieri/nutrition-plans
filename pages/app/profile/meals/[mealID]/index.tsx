@@ -3,8 +3,9 @@ import {
   setAddNewMealSetting,
   setAddNewUserMeal,
   setDeleteMealSetting,
-} from "@/store/slices/mealsSlice";
-import {
+  deleteMealSetting,
+  updateMealSetting,
+  updateUserMeal,
   MealComplexities,
   MealComplexitiesType,
   MealCook,
@@ -13,22 +14,17 @@ import {
   MealSizes,
   MealSizesType,
   UserMeal,
-} from "@/types/mealsSettingsTypes";
-import { ButtonType } from "@/types/types";
-import {
-  deleteMealSetting,
-  updateMealSetting,
-  updateUserMeal,
-} from "@/firebase/helpers/Meals";
+} from "@/features/meals";
+import { ButtonType } from "@/types";
 import { GetServerSideProps } from "next";
-import { selectAuthSlice } from "@/store/slices/authSlice";
+import { selectAuthSlice } from "@/features/authentication";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import ActionButton from "@/components/Buttons/ActionButton";
 import FormAction from "@/components/Form/FormAction";
 import Input from "@/components/Form/Input";
-import MealsLayout from "@/components/Layout/MealsLayout";
+import MealsLayout from "@/layouts/MealsLayout";
 import Modal from "@/components/Modal/Modal";
 import Select from "@/components/Form/Select";
 

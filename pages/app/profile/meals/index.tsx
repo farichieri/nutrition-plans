@@ -1,4 +1,4 @@
-import MealsLayout from "@/components/Layout/MealsLayout";
+import MealsLayout from "@/layouts/MealsLayout";
 
 export default function Page() {
   return <MealsLayout>{}</MealsLayout>;

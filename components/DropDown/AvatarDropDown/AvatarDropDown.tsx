@@ -1,12 +1,12 @@
-import { auth } from "@/firebase/firebase.config";
+import { auth } from "@/services/firebase/firebase.config";
+import { FC, useState } from "react";
 import { persistor } from "@/store/store";
-import { selectAuthSlice } from "@/store/slices/authSlice";
+import { selectAuthSlice } from "@/features/authentication";
 import { setIsSettingsOpen } from "@/store/slices/layoutSlice";
-import { setProgress } from "@/store/slices/progressSlice";
+import { setProgress } from "@/features/progress";
 import { signOut } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import { FC, useState } from "react";
 import Avatar from "@/components/Avatar/Avatar";
 import DropDown from "../DropDown";
 import Link from "next/link";

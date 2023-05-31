@@ -1,8 +1,8 @@
-import { selectAuthSlice } from "@/store/slices/authSlice";
+import { selectAuthSlice } from "@/features/authentication/slice";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import PremiumLayout from "@/components/Layout/PremiumLayout";
+import PremiumLayout from "@/layouts/PremiumLayout";
 import RecipeCreate from "@/components/Premium/Recipe/CreateRecipe/RecipeCreate";
 
 export default function Page() {

@@ -1,4 +1,4 @@
-import PremiumLayout from "@/components/Layout/PremiumLayout";
+import PremiumLayout from "@/layouts/PremiumLayout";
 import useSWR from "swr";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());

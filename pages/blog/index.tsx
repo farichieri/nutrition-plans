@@ -1,6 +1,6 @@
-import LandingLayout from "@/components/Layout/LandingLayout";
+import LandingLayout from "@/layouts/LandingLayout";
 import Posts from "@/components/Posts/Posts";
-import { Posts as PostsType } from "@/types/types";
+import { Posts as PostsType } from "@/types";
 import { directories, getSortedData } from "@/utils/mds";
 
 interface Props {

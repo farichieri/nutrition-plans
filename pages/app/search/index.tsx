@@ -1,7 +1,7 @@
-import { FilterQueries } from "@/types/types";
+import { FilterQueries } from "@/types";
 import { GetServerSideProps } from "next";
 import FoodsSearched from "@/components/Premium/Food/FoodSearch/FoodsSearched";
-import PremiumLayout from "@/components/Layout/PremiumLayout";
+import PremiumLayout from "@/layouts/PremiumLayout";
 import SearchBar from "@/components/Premium/SearchBar/SearchBar";
 import Filters from "@/components/Premium/SearchBar/Filters";
 

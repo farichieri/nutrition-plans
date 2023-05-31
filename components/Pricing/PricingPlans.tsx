@@ -1,4 +1,4 @@
-import { SUBSCRIPTION_PLANS } from "@/utils/content";
+import { SUBSCRIPTION_PLANS } from "@/data/content";
 import Plan from "./PricingPlan";
 
 const PricingPlans = () => {

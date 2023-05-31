@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { PlansEnum } from "@/types/types";
+import { PlansEnum } from "@/types";
 
 interface Props {
   compatible_plans: any;

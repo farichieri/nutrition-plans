@@ -10,12 +10,12 @@ import {
   selectCreateFoodSlice,
   setRecipeState,
 } from "@/store/slices/createFoodSlice";
-import { addFood } from "@/firebase/helpers/Food";
+import { addFood } from "@/services/firebase/helpers/Food";
 import { FC, useState } from "react";
 import { getRecipeSize } from "../../../../utils/nutritionHelpers";
 import { NewFood } from "@/types/initialTypes";
 import { Recipe } from "@/types/recipeTypes";
-import { selectAuthSlice } from "@/store/slices/authSlice";
+import { selectAuthSlice } from "@/features/authentication/slice";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import AddInstruction from "./AddInstruction";

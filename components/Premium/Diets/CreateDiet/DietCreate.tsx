@@ -3,10 +3,10 @@ import {
   setDietState,
 } from "@/store/slices/createDietSlice";
 import { CompatiblePlans } from "@/types/foodTypes";
-import { createDiet } from "@/firebase/helpers/Diet";
+import { createDiet } from "@/services/firebase/helpers/Diet";
 import { Diet, NewDiet } from "@/types/dietTypes";
 import { FC, useState } from "react";
-import { selectAuthSlice } from "@/store/slices/authSlice";
+import { selectAuthSlice } from "@/features/authentication/slice";
 import { useDispatch, useSelector } from "react-redux";
 import Checkbox from "@/components/Form/Checkbox";
 import DietMeals from "./DietMeals";

@@ -1,5 +1,5 @@
-import InstagramIcon from "./Icons/InstagramIcon";
-import TwitterIcon from "./Icons/TwitterIcon";
+import InstagramIcon from "@/assets/InstagramIcon";
+import TwitterIcon from "@/assets/TwitterIcon";
 import ThemeSwitcher from "./theme-switcher";
 
 export default function Footer() {

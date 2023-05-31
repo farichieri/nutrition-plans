@@ -5,10 +5,10 @@ import {
   getSortedData,
 } from "@/utils/mds";
 import { blurDataURL } from "@/components/Layout/BlurDataImage";
-import { PlanType, PlansType } from "@/types/types";
+import { PlanType, PlansType } from "@/types";
 import CallToAction from "@/components/CallToAction";
 import Image from "next/image";
-import LandingLayout from "@/components/Layout/LandingLayout";
+import LandingLayout from "@/layouts/LandingLayout";
 import RestOfPlans from "@/components/Plans/RestOfPlans";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import remarkGfm from "remark-gfm";

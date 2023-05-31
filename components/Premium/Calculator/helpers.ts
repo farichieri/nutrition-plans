@@ -1,4 +1,4 @@
-import { MEAL_PLANS } from "@/utils/content";
+import { MEAL_PLANS } from "@/data/content";
 
 const getNutritionTargets = (calories: number, planSelected: string) => {
   const getMacro = (

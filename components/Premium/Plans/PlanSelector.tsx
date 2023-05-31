@@ -1,8 +1,11 @@
 import { FC } from "react";
-import { selectAuthSlice, setUpdateUser } from "@/store/slices/authSlice";
-import { updateUserPlan } from "@/firebase/helpers/Plans";
+import {
+  selectAuthSlice,
+  setUpdateUser,
+} from "@/features/authentication/slice";
+import { updateUserPlan } from "@/services/firebase/helpers/Plans";
 import { useDispatch, useSelector } from "react-redux";
-import { PlansEnum } from "@/types/types";
+import { PlansEnum } from "@/types";
 
 interface Props {
   planID: PlansEnum;

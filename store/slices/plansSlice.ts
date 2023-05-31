@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Diet, DietGroup } from "@/types/dietTypes";
 import { getToday } from "@/utils/dateFormat";
-import { PlansEnum } from "@/types/types";
+import { PlansEnum } from "@/types";
 import { PURGE } from "redux-persist";
 import type { RootState } from "../store";
 

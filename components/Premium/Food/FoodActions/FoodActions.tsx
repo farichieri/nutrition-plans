@@ -1,10 +1,13 @@
 import { FC, useState } from "react";
-import { FoodRating } from "@/types/types";
-import { selectAuthSlice, setUpdateUser } from "@/store/slices/authSlice";
-import { updateFoodAction } from "@/firebase/helpers/Food";
-import { updateUser } from "@/firebase/helpers/Auth";
+import {
+  selectAuthSlice,
+  setUpdateUser,
+} from "@/features/authentication/slice";
+import { updateFoodAction } from "@/services/firebase/helpers/Food";
+import { updateUser } from "@/features/authentication/services";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "@/components/Loader/Spinner";
+import { FoodRating } from "@/features/authentication";
 
 interface Props {
   foodID: string;
@@ -105,7 +108,7 @@ const FoodActions: FC<Props> = ({ foodID }) => {
       };
       if (JSON.stringify(userUpdated) !== JSON.stringify(user)) {
         const res = await updateUser(userUpdated);
-        if (!res?.error) {
+        if (res.result === "success") {
           dispatch(setUpdateUser(userUpdated));
         }
       }

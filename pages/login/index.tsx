@@ -1,9 +1,8 @@
-import { selectAuthSlice } from "@/store/slices/authSlice";
+import { selectAuthSlice, Login } from "@/features/authentication";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import Loader from "@/components/Loader/Loader";
-import Login from "@/components/Auth/Login";
 import SignLayout from "@/components/Layout/SignLayout";
 
 export default function Page() {

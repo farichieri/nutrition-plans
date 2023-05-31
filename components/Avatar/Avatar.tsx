@@ -1,8 +1,8 @@
-import { db, storage } from "@/firebase/firebase.config";
+import { db, storage } from "@/services/firebase/firebase.config";
 import { doc, updateDoc } from "firebase/firestore";
 import { FC } from "react";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { selectAuthSlice, setUser } from "@/store/slices/authSlice";
+import { selectAuthSlice, setUser } from "@/features/authentication/slice";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 

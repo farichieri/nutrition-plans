@@ -4,15 +4,15 @@ import { configureStore } from "@reduxjs/toolkit";
 import { persistReducer } from "redux-persist";
 import { persistStore } from "redux-persist";
 import { WebStorage } from "redux-persist/lib/types";
-import authSlice from "./slices/authSlice";
+import authSlice from "../features/authentication/slice";
 import createFoodSlice from "./slices/createFoodSlice";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import foodsSlice from "./slices/foodsSlice";
 import layoutSlice from "./slices/layoutSlice";
-import progressSlice from "./slices/progressSlice";
+import progressSlice from "../features/progress/slice";
 import createDietSlice from "./slices/createDietSlice";
 import plansSlice from "./slices/plansSlice";
-import mealsSlice from "./slices/mealsSlice";
+import mealsSlice from "../features/meals/slice";
 
 export function createPersistStorage(): WebStorage {
   const isServer = typeof window === "undefined";

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { FC } from "react";
-import { Post } from "@/types/types";
+import { Post } from "@/types";
 import Date from "./Date/Date";
 import Link from "next/link";
 

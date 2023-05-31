@@ -1,6 +1,5 @@
 import { FC } from "react";
-import { selectAuthSlice } from "@/store/slices/authSlice";
-import { UserSteps } from "@/types/types";
+import { UserSteps, selectAuthSlice } from "@/features/authentication";
 import { useSelector } from "react-redux";
 import StepOne from "./StepOne";
 

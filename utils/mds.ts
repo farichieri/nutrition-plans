@@ -4,8 +4,8 @@ import path from "path";
 import readingTime from "reading-time";
 
 export const directories = {
-  postsDirectory: path.join(process.cwd(), "/content/posts"),
-  plansDirectory: path.join(process.cwd(), "/content/plans"),
+  postsDirectory: path.join(process.cwd(), "/data/content/posts"),
+  plansDirectory: path.join(process.cwd(), "/data/content/plans"),
 };
 
 const getSortedData = (directory: string) => {

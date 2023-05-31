@@ -5,9 +5,9 @@ import {
   sortFoodsSearched,
 } from "@/utils/filter";
 import { FC } from "react";
-import { FilterQueries, FilterSortTypes } from "@/types/types";
+import { FilterQueries, FilterSortTypes } from "@/types";
 import { Food, FoodGroup, FoodGroupArray, FoodKind } from "@/types/foodTypes";
-import { Meal } from "@/types/mealTypes";
+import { Meal } from "@/types/mealsTypes";
 import { selectFoodsSlice } from "@/store/slices/foodsSlice";
 import { useSelector } from "react-redux";
 import Image from "next/image";
@@ -99,7 +99,7 @@ const FoodsSearched: FC<Props> = ({ queries }) => {
   const foods = getFoodsFiltered();
 
   return (
-    <div className="grid max-w-screen-2xl select-none grid-cols-fluid gap-4 px-4 sm:grid-cols sm:px-0">
+    <div className="sm:grid-cols grid max-w-screen-2xl select-none grid-cols-fluid gap-4 px-4 sm:px-0">
       {foods.map((food: Food) => {
         return (
           <Link

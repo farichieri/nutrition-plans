@@ -1,4 +1,4 @@
-import PremiumLayout from "@/components/Layout/PremiumLayout";
+import PremiumLayout from "@/layouts/PremiumLayout";
 
 const Plans = () => {
   return (

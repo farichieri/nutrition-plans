@@ -1,7 +1,7 @@
 import {
   fetchRandomFoodByPlan,
   getFoodsCollectionLength,
-} from "@/firebase/helpers/Food";
+} from "@/services/firebase/helpers/Food";
 import {
   Diet,
   DietMeal,
@@ -12,8 +12,9 @@ import {
 import { FoodGroup } from "@/types/foodTypes";
 import { getDietFoods } from "./foodsHelpers";
 import { getNutritionMerged } from "@/utils/nutritionHelpers";
-import { NutritionTargets, PlansEnum, Result } from "@/types/types";
-import { UserMealsArr } from "@/types/mealsSettingsTypes";
+import { NutritionTargets } from "@/features/authentication";
+import { PlansEnum, Result } from "@/types";
+import { UserMealsArr } from "@/features/meals";
 import { uuidv4 } from "@firebase/util";
 
 const generateMeals = async (

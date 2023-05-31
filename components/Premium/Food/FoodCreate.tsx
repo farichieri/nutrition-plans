@@ -21,10 +21,10 @@ import {
   sugarFields,
   vitsAndMinsFields,
 } from "./formFields";
-import { addFood } from "@/firebase/helpers/Food";
+import { addFood } from "@/services/firebase/helpers/Food";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { NewFood } from "@/types/initialTypes";
-import { selectAuthSlice } from "@/store/slices/authSlice";
+import { selectAuthSlice } from "@/features/authentication/slice";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Checkbox from "@/components/Form/Checkbox";

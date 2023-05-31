@@ -1,6 +1,6 @@
-import PremiumLayout from "@/components/Layout/PremiumLayout";
+import PremiumLayout from "@/layouts/PremiumLayout";
 import PricingPlans from "@/components/Pricing/PricingPlans";
-import { selectAuthSlice } from "@/store/slices/authSlice";
+import { selectAuthSlice } from "@/features/authentication/slice";
 import { useSelector } from "react-redux";
 
 export default function Page() {

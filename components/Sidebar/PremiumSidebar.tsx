@@ -6,8 +6,8 @@ import {
 } from "@/store/slices/layoutSlice";
 import { BaseDatesEnum } from "@/types/datesTypes";
 import { FC, MouseEventHandler } from "react";
-import { MEAL_PLANS } from "@/utils/content";
-import { selectAuthSlice } from "@/store/slices/authSlice";
+import { MEAL_PLANS } from "@/data/content";
+import { selectAuthSlice } from "@/features/authentication/slice";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";

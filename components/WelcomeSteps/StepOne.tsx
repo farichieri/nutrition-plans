@@ -1,9 +1,11 @@
+import {
+  UserAccount,
+  UserSteps,
+  setUpdateUser,
+  updateUser,
+} from "@/features/authentication";
 import { FC, useState } from "react";
-import { selectAuthSlice, setUpdateUser } from "@/store/slices/authSlice";
-import { updateUser } from "@/firebase/helpers/Auth";
-import { useDispatch, useSelector } from "react-redux";
-import { UserAccount } from "@/types/types";
-import { UserSteps } from "@/types/types";
+import { useDispatch } from "react-redux";
 import Confetti from "../Confetti";
 import SubmitButton from "../Buttons/SubmitButton";
 
@@ -27,7 +29,7 @@ const StepOne: FC<Props> = ({ user }) => {
         user_step: UserSteps.step_2,
       };
       const updateUserRes = await updateUser(userUpdated);
-      if (!updateUserRes?.error) {
+      if (updateUserRes.result === "success") {
         dispatch(setUpdateUser(userUpdated));
         setIsLoading(false);
         setIsDisabled(false);

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Posts } from "@/types/types";
+import { Posts } from "@/types";
 import Post from "./Post/Post";
 
 interface Props {

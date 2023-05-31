@@ -3,7 +3,7 @@ import {
   FiltersEnum,
   PlansEnum,
   FilterSortTypes,
-} from "@/types/types";
+} from "@/types";
 import { FoodKind } from "@/types/foodTypes";
 import { useRouter } from "next/router";
 import React, { FC, useState } from "react";

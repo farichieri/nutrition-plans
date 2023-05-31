@@ -1,14 +1,14 @@
 import "nprogress/nprogress.css";
 import "@/styles/globals.css";
 import "material-icons/iconfont/material-icons.css";
-import { auth } from "@/firebase/firebase.config";
+import { auth } from "@/services/firebase/firebase.config";
 import { getAnalytics, logEvent, setUserId } from "firebase/analytics";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "@/store/store";
 import { Provider } from "react-redux";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import Layout from "@/components/Layout";
+import Layout from "@/layouts";
 import NProgress from "nprogress";
 import type { AppProps } from "next/app";
 import AppLoader from "@/components/Loader/AppLoader";

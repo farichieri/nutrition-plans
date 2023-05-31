@@ -1,5 +1,5 @@
-import { postFeedback } from "@/firebase/helpers/Settings";
-import { selectAuthSlice } from "@/store/slices/authSlice";
+import { postFeedback } from "@/services/firebase/helpers/Settings";
+import { selectAuthSlice } from "@/features/authentication/slice";
 import { FC, useState } from "react";
 import { useSelector } from "react-redux";
 import FormAction from "../Form/FormAction";

@@ -1,10 +1,10 @@
 import { directories, getAllMDIDS, getAllMDData } from "@/utils/mds";
-import { Post } from "@/types/types";
+import { Post } from "@/types";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import CallToAction from "@/components/CallToAction";
 import Date from "@/components/Posts/Post/Date/Date";
 import Image from "next/image";
-import LandingLayout from "@/components/Layout/LandingLayout";
+import LandingLayout from "@/layouts/LandingLayout";
 import remarkGfm from "remark-gfm";
 
 interface Props {

@@ -1,21 +1,21 @@
 import {
-  createDefaultMealsSettings,
-  createDefaultUserMeals,
-} from "@/firebase/helpers/Meals";
-import {
+  UserAccount,
   selectAuthSlice,
   setIsCreatingUser,
   setUpdateUser,
-} from "@/store/slices/authSlice";
-import { addProgress } from "@/firebase/helpers/Progress";
+  updateUser,
+} from "@/features/authentication";
+import {
+  createDefaultMealsSettings,
+  createDefaultUserMeals,
+  setUserMeals,
+  setUserMealsSettings,
+} from "@/features/meals";
+import { addProgress, ProgressItem, setAddProgress } from "@/features/progress";
 import { FC, useState } from "react";
 import { format, formatISO } from "date-fns";
 import { getNutritionTargets } from "./helpers";
 import { newBodyData } from "@/types/initialTypes";
-import { ProgressItem, UserAccount } from "@/types/types";
-import { setAddProgress } from "@/store/slices/progressSlice";
-import { setUserMealsSettings } from "@/store/slices/mealsSlice";
-import { updateUser } from "@/firebase/helpers/Auth";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import NutritionTarget from "./NutritionTarget";
@@ -71,7 +71,7 @@ const Results: FC<Props> = ({ handleSubmit }) => {
         is_profile_completed: true,
         nutrition_targets: nutritionTargets,
       };
-      const [updateUserRes, addProgressRes, addMealsRes, addMeals] =
+      const [updateUserRes, addProgressRes, mealSettings, addMeals] =
         await Promise.all([
           updateUser(userUpdated),
           addFirstProgress(),
@@ -80,13 +80,13 @@ const Results: FC<Props> = ({ handleSubmit }) => {
         ]);
 
       if (
-        !updateUserRes?.error &&
+        updateUserRes.result === "success" &&
         !addProgressRes?.error &&
-        !addMealsRes.error &&
-        !addMeals.error
+        mealSettings.result === "success" &&
+        addMeals.result === "success"
       ) {
-        addMealsRes.data && dispatch(setUserMealsSettings(addMealsRes.data));
-        addMeals.data && dispatch(setUserMealsSettings(addMeals.data));
+        dispatch(setUserMealsSettings(mealSettings.data));
+        dispatch(setUserMeals(addMeals.data));
         dispatch(setUpdateUser(userUpdated));
         dispatch(setIsCreatingUser(false));
         handleSubmit();

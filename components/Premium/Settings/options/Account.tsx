@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { selectAuthSlice } from "@/store/slices/authSlice";
+import { selectAuthSlice } from "@/features/authentication/slice";
 import { useSelector } from "react-redux";
 import Avatar from "@/components/Avatar/Avatar";
 interface Props {

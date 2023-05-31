@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { MEAL_PLANS } from "@/utils/content";
-import { selectAuthSlice } from "@/store/slices/authSlice";
+import { MEAL_PLANS } from "@/data/content";
+import { selectAuthSlice } from "@/features/authentication/slice";
 import { useSelector } from "react-redux";
 import { getNutritionTargets } from "./helpers";
 

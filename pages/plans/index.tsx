@@ -1,6 +1,6 @@
 import { directories, getSortedData } from "@/utils/mds";
-import { PlansType } from "@/types/types";
-import LandingLayout from "@/components/Layout/LandingLayout";
+import { PlansType } from "@/types";
+import LandingLayout from "@/layouts/LandingLayout";
 import Plans from "@/components/Plans/Plans";
 
 interface Props {

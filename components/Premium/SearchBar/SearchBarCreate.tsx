@@ -1,4 +1,4 @@
-import { fetchFoods } from "@/firebase/helpers/Food";
+import { fetchFoods } from "@/services/firebase/helpers/Food";
 import { FoodGroup } from "@/types/foodTypes";
 import { selectFoodsSlice, setFoodsSearched } from "@/store/slices/foodsSlice";
 import { useDispatch, useSelector } from "react-redux";

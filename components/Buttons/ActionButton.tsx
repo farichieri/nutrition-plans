@@ -1,4 +1,4 @@
-import { ButtonType } from "@/types/types";
+import { ButtonType } from "@/types";
 import { MouseEventHandler } from "react";
 import Spinner from "../Loader/Spinner";
 

@@ -1,7 +1,10 @@
 import ActionButton from "@/components/Buttons/ActionButton";
-import { updateUser } from "@/firebase/helpers/Auth";
-import { selectAuthSlice, setUpdateUser } from "@/store/slices/authSlice";
-import { ButtonType, MeasurementUnits } from "@/types/types";
+import { updateUser } from "@/features/authentication/services";
+import {
+  selectAuthSlice,
+  setUpdateUser,
+} from "@/features/authentication/slice";
+import { ButtonType, MeasurementUnits } from "@/types";
 import { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -29,7 +32,7 @@ const General: FC<Props> = () => {
     };
     setIsSaving(true);
     const res = await updateUser(userUpdated);
-    if (!res?.error) {
+    if (res.result === "success") {
       dispatch(setUpdateUser(userUpdated));
     }
     setIsSaving(false);

@@ -1,4 +1,4 @@
-import LandingLayout from "@/components/Layout/LandingLayout";
+import LandingLayout from "@/layouts/LandingLayout";
 
 export default function Page() {
   return (

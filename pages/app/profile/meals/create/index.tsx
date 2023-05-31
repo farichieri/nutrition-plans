@@ -2,8 +2,6 @@ import {
   selectMealsSlice,
   setAddNewMealSetting,
   setNewMealState,
-} from "@/store/slices/mealsSlice";
-import {
   MealComplexities,
   MealComplexitiesType,
   MealCook,
@@ -13,15 +11,15 @@ import {
   MealSizesType,
   NewMealSetting,
   UserMeal,
-} from "@/types/mealsSettingsTypes";
-import { createMealSetting } from "@/firebase/helpers/Meals";
-import { selectAuthSlice } from "@/store/slices/authSlice";
+  createMealSetting,
+} from "@/features/meals";
+import { selectAuthSlice } from "@/features/authentication";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import FormAction from "@/components/Form/FormAction";
 import Input from "@/components/Form/Input";
-import MealsLayout from "@/components/Layout/MealsLayout";
+import MealsLayout from "@/layouts/MealsLayout";
 import Modal from "@/components/Modal/Modal";
 import Select from "@/components/Form/Select";
 
