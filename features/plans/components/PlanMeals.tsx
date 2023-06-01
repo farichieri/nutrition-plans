@@ -1,13 +1,19 @@
+import {
+  selectPlansSlice,
+  setDietOpened,
+  DietMeal,
+  DietMealGroupArr,
+} from "@/features/plans";
 import { buildDiet, generateMeals } from "@/utils/planHelper";
 import { FC, useEffect, useState } from "react";
 import { Food } from "@/features/foods";
 import { PlansEnum } from "@/types";
 import { selectAuthSlice } from "@/features/authentication/slice";
-import { selectPlansSlice, setDietOpened,  DietMeal, DietMealGroupArr } from "@/features/plans";
 import { UserMealsArr, selectMealsSlice } from "@/features/meals";
 import { useSelector, useDispatch } from "react-redux";
 import Image from "next/image";
 import Link from "next/link";
+import Spinner from "@/components/Loader/Spinner";
 
 interface MealProps {}
 const Meal: FC<MealProps> = () => {
@@ -61,7 +67,7 @@ const PlanMeals: FC<Props> = ({ planID }) => {
   // }, [date, plans, planID]);
 
   if (dietMeals.length < 1) {
-    return <>Generating Meals...</>;
+    return <Spinner customClass="h-6 w-6 m-auto" />;
   }
 
   return (

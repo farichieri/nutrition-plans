@@ -1,6 +1,5 @@
 import {
   fetchFoods,
-  FoodGroup,
   selectFoodsSlice,
   setFoodsSearched,
 } from "@/features/foods";
@@ -24,12 +23,12 @@ const SearchBarCreate: FC<Props> = ({ onFocus, preFetch }) => {
 
   const fetchData = async (input: string) => {
     setIsSearching(true);
-    const res: FoodGroup = await fetchFoods({
+    const res = await fetchFoods({
       food_name_lowercase: input,
       kind: undefined,
     });
-    if (!res?.error) {
-      !res.error && dispatch(setFoodsSearched(res));
+    if (res.result === "success") {
+      dispatch(setFoodsSearched(res.data));
     }
     setIsSearching(false);
     setIsFocused(false);

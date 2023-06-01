@@ -19,7 +19,7 @@ export default function Page() {
     if (user?.is_profile_completed) {
       router.push("/app");
     }
-  }, [user]);
+  }, [user, router]);
 
   const STEPS = [
     { step: 1, name: "Body Features" },

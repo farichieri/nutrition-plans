@@ -101,11 +101,11 @@ const RecipeCreate: FC<Props> = () => {
       serving_grams: recipeGrams,
     };
     const res = await addFood(newFood, FoodKind.recipe, newImageFile, user);
-    if (!res?.error && res?.food_id) {
+    if (res.result === "success") {
       setNewImageFile(undefined);
       dispatch(setRecipeState(NewFood));
       alert("Recipe created successfully");
-      router.push(`/app/food/${res.food_id}`);
+      router.push(`/app/food/${res.data.food_id}`);
     } else {
       alert("Error creating recipe");
     }

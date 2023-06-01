@@ -1,5 +1,9 @@
 import { FC, useEffect, useState } from "react";
-import { fetchFoods, FoodGroup, setFoodsSearched } from "@/features/foods";
+import {
+  fetchFoods,
+  setFoodsSearched,
+  setIsSearchingFoods,
+} from "@/features/foods";
 import { FilterQueries } from "@/types";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
@@ -17,14 +21,16 @@ const SearchBar: FC<Props> = ({ queries }) => {
 
   const fetchData = async (input: string) => {
     setIsSearching(true);
-    const res: FoodGroup = await fetchFoods({
+    dispatch(setIsSearchingFoods(true));
+    const res = await fetchFoods({
       food_name_lowercase: input,
       kind: undefined,
     });
-    if (!res?.error) {
-      !res.error && dispatch(setFoodsSearched(res));
+    if (res.result === "success") {
+      dispatch(setFoodsSearched(res.data));
     }
     setIsSearching(false);
+    dispatch(setIsSearchingFoods(false));
   };
 
   useEffect(() => {

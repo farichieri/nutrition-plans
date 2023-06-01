@@ -11,7 +11,7 @@ export default function Page() {
     if (id) {
       router.push(`${id}/${BaseDatesEnum.today}`);
     }
-  }, [router]);
+  }, [router, id]);
 
   return <Loader />;
 }

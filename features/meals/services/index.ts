@@ -119,15 +119,18 @@ const createUserMeal = async (user: UserAccount, mealSetting: UserMeal) => {
   }
 };
 
-const deleteUserMeal = async (user: UserAccount, mealSetting: UserMeal) => {
+const deleteUserMeal = async (
+  user: UserAccount,
+  mealSetting: UserMeal
+): Promise<Result<UserMeal, unknown>> => {
   try {
     if (!mealSetting.id) throw Error;
     const docRef = doc(db, "users", user.user_id, "meals", mealSetting.id);
     await deleteDoc(docRef);
-    return { res: "success" };
+    return { result: "success", data: mealSetting };
   } catch (error) {
     console.log("deleteUserMeal", { error });
-    return { error: error };
+    return { result: "error", error };
   }
 };
 

@@ -27,9 +27,9 @@ const addFood = async (
   kind: FoodKind,
   newImage: File | undefined,
   user: UserAccount
-) => {
+): Promise<Result<Food, unknown>> => {
   try {
-    if (!food.food_name) return;
+    if (!food.food_name) throw new Error("No food_name provided");
     const docRef = doc(collection(db, "foods"));
     const imageURL: string | { error: string } | undefined =
       newImage && (await uploadImage(newImage, docRef.id));
@@ -62,10 +62,10 @@ const addFood = async (
     console.log({ newFood });
     await setDoc(docRef, newFood);
     console.log("Food created: ", newFood);
-    return { food_id: docRef.id };
+    return { result: "success", data: newFood };
   } catch (error) {
     console.log({ error });
-    return { error: `Error creating Food: ${error}` };
+    return { result: "error", error };
   }
 };
 
@@ -75,7 +75,7 @@ const fetchFoods = async ({
 }: {
   food_name_lowercase: string;
   kind: FoodKind | undefined;
-}) => {
+}): Promise<Result<FoodGroup, unknown>> => {
   console.log(`Fetching Food by name: '${food_name_lowercase}'`);
   try {
     let data: FoodGroup = {};
@@ -99,11 +99,10 @@ const fetchFoods = async ({
     querySnapshot.forEach((food: any) => {
       data[food.id] = food.data();
     });
-    console.log({ data });
-    return data;
+    return { result: "success", data };
   } catch (error) {
     console.log({ error: `Error fetching Food: ${error}` });
-    return {};
+    return { result: "error", error };
   }
 };
 

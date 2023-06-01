@@ -22,12 +22,14 @@ const addProgress = async (user: UserAccount, progress: ProgressItem) => {
 };
 
 const fetchProgress = async (
-  user: User
+  user: UserAccount
 ): Promise<Result<Progress, unknown>> => {
   console.log("fetchProgress");
   try {
     let data: Progress = {};
-    const progressRef = query(collection(db, "users", user.uid, "progress"));
+    const progressRef = query(
+      collection(db, "users", user.user_id, "progress")
+    );
     const querySnapshot = await getDocs(progressRef);
     querySnapshot.forEach((progress: any) => {
       data[progress.id] = progress.data();

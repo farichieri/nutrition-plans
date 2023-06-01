@@ -92,11 +92,12 @@ const FoodCreate: FC<Props> = () => {
       newImageFile,
       user
     );
-    if (!res?.error && res?.food_id) {
+    if (res.result === "success") {
       setNewImageFile(undefined);
       dispatch(setFoodState(NewFood));
-      alert("Food created successfully");
-      router.push(`/app/food/${res.food_id}`);
+      router.push(`/app/food/${res.data.food_id}`).then(() => {
+        alert("Food created successfully");
+      });
     } else {
       alert("Error creating food");
     }

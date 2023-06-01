@@ -8,6 +8,7 @@ import {
   setIsVerifyingUser,
   setUser,
   generateUserObject,
+  selectAuthSlice,
 } from "@/features/authentication";
 import { auth } from "@/services/firebase/firebase.config";
 import { fetchProgress, setProgress } from "@/features/progress";
@@ -27,28 +28,37 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const dispatch = useDispatch();
   const { theme } = useSelector(selectLayoutSlice);
   const [_theme, setTheme] = useState<Theme | null>(null);
+  const { user } = useSelector(selectAuthSlice);
+
+  useEffect(() => {
+    if (user) {
+      const fetchData = async () => {
+        const [progressRes, userMealsRes, mealsSettings] = await Promise.all([
+          fetchProgress(user),
+          fetchMeals(user.user_id),
+          fetchMealsSettings(user.user_id),
+        ]);
+        if (
+          progressRes.result === "success" &&
+          userMealsRes.result === "success" &&
+          mealsSettings.result === "success"
+        ) {
+          dispatch(setProgress(progressRes.data));
+          dispatch(setUserMeals(userMealsRes.data));
+          dispatch(setUserMealsSettings(mealsSettings.data));
+        }
+      };
+      fetchData();
+    }
+  }, [user]);
 
   useEffect(() => {
     dispatch(setIsVerifyingUser());
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        const [userRes, progressRes, userMealsRes, mealsSettings] =
-          await Promise.all([
-            generateUserObject(user),
-            fetchProgress(user),
-            fetchMeals(user.uid),
-            fetchMealsSettings(user.uid),
-          ]);
-        if (
-          userRes.result === "success" &&
-          progressRes.result === "success" &&
-          userMealsRes.result === "success" &&
-          mealsSettings.result === "success"
-        ) {
+        const [userRes] = await Promise.all([generateUserObject(user)]);
+        if (userRes.result === "success") {
           dispatch(setUser(userRes.data));
-          dispatch(setProgress(progressRes.data));
-          dispatch(setUserMeals(userMealsRes.data));
-          dispatch(setUserMealsSettings(mealsSettings.data));
         }
       } else {
         dispatch(setUser(null));

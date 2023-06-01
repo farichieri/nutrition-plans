@@ -1,14 +1,10 @@
-import {
-  updateUserMeal,
-  UserMeals,
-  UserMealsArr,
-  setUserMeals,
-} from "@/features/meals";
+import { UserMeals, UserMealsArr, setUserMeals } from "@/features/meals";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
+import { FC, useEffect, useState } from "react";
 import { reorderArr } from "@/utils/filter";
 import { selectAuthSlice } from "@/features/authentication";
 import { useDispatch, useSelector } from "react-redux";
-import React, { FC, useEffect, useState } from "react";
+import { updateMealsOrders } from "./utils";
 
 interface Props {
   meals: UserMeals;
@@ -35,29 +31,17 @@ const Meals: FC<Props> = ({ meals, handleConfirmDelete }) => {
       source.index,
       destination.index
     );
-    updateMealsOrders(mealsReordered);
+    updateMeals(mealsReordered);
     setmealsState(mealsReordered);
   };
 
-  const updateMealsOrders = async (mealsReordered: UserMealsArr) => {
-    if (!user?.user_id) return;
-
-    const mealsUpdated: UserMeals = {};
-    mealsReordered.forEach((meal, index) => {
-      if (!meal.id) return;
-      mealsUpdated[meal.id] = {
-        ...meal,
-        order: index,
-      };
-    });
-    Object.values(mealsUpdated).map(async (meal) => {
-      const res = await updateUserMeal(user, meal);
-      if (res.result === "error") {
-        // Add error UI
-        console.log("Error reordering meals");
+  const updateMeals = async (mealsReordered: UserMealsArr) => {
+    if (user) {
+      const res = await updateMealsOrders(mealsReordered, user);
+      if (res.result === "success") {
+        dispatch(setUserMeals(res.data));
       }
-    });
-    dispatch(setUserMeals(mealsUpdated));
+    }
   };
 
   useEffect(() => {

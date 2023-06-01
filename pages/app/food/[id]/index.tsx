@@ -39,7 +39,7 @@ export default function Page() {
         dispatch(setFoodOpened(foodsSearched[id]));
       }
     }
-  }, [id]);
+  }, [id, foodsSearched, dispatch]);
 
   if (foodData?.food_id !== id) {
     return (
@@ -68,7 +68,7 @@ export default function Page() {
               </span>
             </div>
           </div>
-          <div className="flex min-h-[100vh] flex-col items-start justify-start gap-5 bg-white px-4 pb-4 pt-4 shadow-[0_1px_5px_lightgray] dark:bg-black dark:shadow-[0_1px_6px_#292929] sm:m-[0.5vw] sm:min-h-[calc(100vh_-_6rem_-_1vw)] sm:gap-5 sm:rounded-lg sm:border sm:px-10">
+          <div className="flex min-h-[100vh] flex-col items-start justify-start gap-5 bg-white px-4 py-8 pb-4 shadow-[0_1px_5px_lightgray] dark:bg-black dark:shadow-[0_1px_6px_#292929] sm:m-[0.5vw] sm:min-h-[calc(100vh_-_6rem_-_1vw)] sm:gap-5 sm:rounded-lg sm:border sm:px-10">
             <div className="flex w-full flex-wrap gap-10">
               <div className="flex w-full flex-col gap-5 md:max-w-md">
                 <div className="flex w-full flex-col gap-5">
@@ -77,7 +77,7 @@ export default function Page() {
                     alt={`${foodData.food_name}`}
                     width={500}
                     height={500}
-                    className="m-auto h-[250px] w-[250px] rounded-lg object-cover"
+                    className="m-auto h-[300px] w-[300px] rounded-lg object-cover"
                   />
                   <span className="text-center opacity-50">
                     {foodData.food_description}
@@ -85,20 +85,22 @@ export default function Page() {
                   {foodData.food_id && (
                     <FoodActions foodID={foodData.food_id} />
                   )}
-                  <div>
-                    {foodData.prep_time && (
-                      <div className="flex justify-between">
-                        <span>Prep time:</span>
-                        <span>{foodData.prep_time} minutes</span>
-                      </div>
-                    )}
-                    {foodData.cook_time && (
-                      <div className="flex justify-between">
-                        <span>Cook time:</span>
-                        <span>{foodData.cook_time} minutes</span>
-                      </div>
-                    )}
-                  </div>
+                  {foodData.kind === FoodKind.recipe && (
+                    <div>
+                      {foodData.prep_time && (
+                        <div className="flex justify-between">
+                          <span>Prep time:</span>
+                          <span>{foodData.prep_time} minutes</span>
+                        </div>
+                      )}
+                      {foodData.cook_time && (
+                        <div className="flex justify-between">
+                          <span>Cook time:</span>
+                          <span>{foodData.cook_time} minutes</span>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
                 <CompatiblePlansC
                   compatible_plans={foodData.compatible_plans}

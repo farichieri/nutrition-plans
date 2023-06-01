@@ -13,7 +13,7 @@ export default function Page() {
     if (user && !user.is_admin) {
       router.push("/app");
     }
-  }, [user]);
+  }, [user, router]);
 
   return (
     <PremiumLayout>

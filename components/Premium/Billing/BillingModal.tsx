@@ -34,7 +34,7 @@ const BillingModal: FC<Props> = () => {
 
   return (
     <Modal onClose={() => dispatch(setIsBillingModalOpen(false))}>
-      <section className="flex h-auto max-h-70vh w-auto min-w-full max-w-[95vw] overflow-hidden rounded-3xl border bg-white dark:bg-black">
+      <section className="flex h-auto max-h-70vh w-auto min-w-full max-w-[95vw] overflow-hidden rounded-3xl">
         <div className="m-auto flex h-full w-full flex-col items-center gap-10 overflow-auto px-4 py-10 sm:p-10">
           <div className="flex flex-col items-center text-center text-xs md:text-base">
             <span className="text-xl font-semibold sm:text-3xl">

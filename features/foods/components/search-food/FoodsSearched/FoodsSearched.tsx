@@ -15,15 +15,19 @@ import { FilterQueries, FilterSortTypes } from "@/types";
 import { useSelector } from "react-redux";
 import Image from "next/image";
 import Link from "next/link";
+import Spinner from "@/components/Loader/Spinner";
 
 interface Props {
   queries: FilterQueries;
 }
 
 const FoodsSearched: FC<Props> = ({ queries }) => {
-  const { foodsSearched } = useSelector(selectFoodsSlice);
+  const { foodsSearched, isSearchingFoods } = useSelector(selectFoodsSlice);
   const noData = Object.values(foodsSearched).length === 0;
 
+  if (noData && isSearchingFoods) {
+    return <Spinner customClass="h-6 w-6 m-auto" />;
+  }
   if (noData) {
     return <div>No Foods found with that name</div>;
   }

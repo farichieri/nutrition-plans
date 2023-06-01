@@ -6,6 +6,7 @@ import { NewFood } from "@/types/initialTypes";
 
 interface FoodsSlice {
   foodsSearched: FoodGroup;
+  isSearchingFoods: boolean;
   basicFoodsSearched: FoodGroup;
   foodOpened: {
     food: Food | null;
@@ -22,6 +23,7 @@ interface FoodsSlice {
 
 const initialState: FoodsSlice = {
   foodsSearched: {},
+  isSearchingFoods: true,
   basicFoodsSearched: {},
   foodOpened: {
     food: null,
@@ -67,6 +69,9 @@ export const foodsSlice = createSlice({
     setIngredientOpened: (state, action: PayloadAction<Food | null>) => {
       state.ingredientOpened = action.payload;
     },
+    setIsSearchingFoods: (state, action: PayloadAction<boolean>) => {
+      state.isSearchingFoods = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(PURGE, () => {
@@ -76,14 +81,15 @@ export const foodsSlice = createSlice({
 });
 
 export const {
-  setFoodsSearched,
   setBasicFoodsSearched,
   setFoodOpened,
   setFoodOpenedScale,
+  setFoodsSearched,
   setFoodState,
-  setRecipeState,
-  setMealState,
   setIngredientOpened,
+  setIsSearchingFoods,
+  setMealState,
+  setRecipeState,
 } = foodsSlice.actions;
 
 export const selectFoodsSlice = (state: RootState) => state.foods;

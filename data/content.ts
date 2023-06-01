@@ -120,7 +120,7 @@ export const MEAL_PLANS = [
 export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
   {
     buttonContent: "Get started with Free",
-    checklist: ["Plan Calculator", "Weekly Newsletter"],
+    checklist: ["Plan Calculator", "Weekly Newsletter", "Foods Database"],
     checklistTitle: "",
     checkoutLink: "/app/billing",
     discount: "",
