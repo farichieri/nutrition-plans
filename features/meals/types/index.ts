@@ -56,24 +56,6 @@ export type MealComplexitiesType = {
   [key in keyof typeof MealComplexities]?: (typeof MealComplexities)[key];
 };
 
-export const matchComplexity = (
-  complexity: number,
-  toEval: number
-): boolean => {
-  switch (toEval) {
-    case MealComplexities.very_simple:
-      return complexity >= 1 && complexity < 2;
-    case MealComplexities.simple:
-      return complexity >= 2 && complexity < 3;
-    case MealComplexities.moderate:
-      return complexity >= 3 && complexity < 4;
-    case MealComplexities.complex:
-      return complexity >= 4;
-    default:
-      return false;
-  }
-};
-
 export enum MealMinutes {
   no_time = 0,
   less_than_5_min = 5,

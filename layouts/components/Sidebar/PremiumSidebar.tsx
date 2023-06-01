@@ -63,7 +63,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
       icon: "data_saver_off",
     },
     {
-      name: "Meal settings",
+      name: "Meals settings",
       url: "/app/profile/meals",
       icon: "restaurant_menu",
     },

@@ -4,6 +4,7 @@ import {
   getDoc,
   getDocs,
   limit,
+  orderBy,
   query,
   serverTimestamp,
   setDoc,
@@ -11,8 +12,11 @@ import {
 } from "firebase/firestore";
 import { db } from "../../../services/firebase/firebase.config";
 import { Diet } from "@/features/plans";
-import { PlansEnum } from "@/types";
+import { Food, FoodGroupArray } from "@/features/foods";
+import { maxComplexity } from "../components/utils";
+import { PlansEnum, Result } from "@/types";
 import { UserAccount } from "@/features/authentication";
+import { UserMeal } from "@/features/meals";
 
 const createDiet = async (diet: Diet, user: UserAccount) => {
   try {
@@ -127,9 +131,82 @@ const postDietToUserDiets = async ({
   }
 };
 
+const fetchRandomFoodByPlan = async (
+  plan: PlansEnum,
+  userMeal: UserMeal
+): Promise<Result<Food, unknown>> => {
+  try {
+    let data: Food | null = null;
+    const docRef = collection(db, "foods");
+    const complexity = userMeal.complexity;
+    const max_complexity = maxComplexity(complexity);
+
+    let q = query(
+      docRef,
+      where(`compatible_plans.${plan}`, "==", true),
+      where("complexity", ">=", complexity),
+      where("complexity", "<", max_complexity),
+      orderBy("complexity")
+    );
+
+    const fetchMatchingFoods = async (q_selected: any) => {
+      const matchingFoods: FoodGroupArray = [];
+      const querySnapshot = await getDocs(q_selected);
+      querySnapshot.forEach((food: any) => {
+        const res = food.data();
+        if (res) {
+          matchingFoods.push(res);
+        }
+      });
+      return matchingFoods;
+    };
+
+    const filterMatchingFoods = (
+      matchingFoods: FoodGroupArray
+    ): FoodGroupArray => {
+      let foodsFiltered;
+      // cook
+      foodsFiltered = matchingFoods.filter(
+        (food) => userMeal.cook && food.cook_time > 0 && food
+      );
+      // time
+      foodsFiltered = foodsFiltered.filter((food) => {
+        const available_time = food.prep_time + food.cook_time;
+        available_time < userMeal.time && food;
+      });
+      // size
+      // ?
+      return foodsFiltered;
+    };
+
+    const chooseOne = (foodsFiltered: FoodGroupArray): Food => {
+      const length = foodsFiltered.length;
+      const randomIndex = Math.floor(length * Math.random());
+      return foodsFiltered[randomIndex];
+    };
+
+    const matchingFoods = await fetchMatchingFoods(q);
+    const matchingFoodsFiltered = filterMatchingFoods(matchingFoods);
+    const matchingFood = chooseOne(matchingFoodsFiltered);
+    if (!matchingFood) {
+      // Choose one with no filters.
+      data = chooseOne(matchingFoods);
+    } else {
+      data = matchingFood;
+    }
+
+    if (!data) throw new Error("No foods fetched");
+    return { result: "success", data };
+  } catch (error) {
+    console.log(`Error fetching Food: ${error}`);
+    return { result: "error", error };
+  }
+};
+
 export {
   createDiet,
   fetchDietByPlanAndDate,
   fetchRandomDietByPlan,
   postDietToUserDiets,
+  fetchRandomFoodByPlan,
 };

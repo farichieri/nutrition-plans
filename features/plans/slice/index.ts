@@ -13,6 +13,7 @@ interface PlansSlice {
   };
   diets: DietGroup;
   dietOpened: Diet | null;
+  isGeneratingMeals: boolean;
 }
 
 // Define the initial state using that type
@@ -27,6 +28,7 @@ const initialState: PlansSlice = {
   },
   diets: {},
   dietOpened: null,
+  isGeneratingMeals: true,
 };
 
 export const plansSlice = createSlice({
@@ -47,6 +49,9 @@ export const plansSlice = createSlice({
     setPlansDate: (state, action: PayloadAction<string>) => {
       state.date = action.payload;
     },
+    setIsGeneratingMeals: (state, action: PayloadAction<boolean>) => {
+      state.isGeneratingMeals = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(PURGE, () => {
@@ -55,7 +60,8 @@ export const plansSlice = createSlice({
   },
 });
 
-export const { setDiet, setDietOpened, setPlansDate } = plansSlice.actions;
+export const { setDiet, setDietOpened, setPlansDate, setIsGeneratingMeals } =
+  plansSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectPlansSlice = (state: RootState) => state.plans;

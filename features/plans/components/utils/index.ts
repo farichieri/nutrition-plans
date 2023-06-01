@@ -1,20 +1,17 @@
 import {
-  fetchRandomFoodByPlan,
-  getFoodsCollectionLength,
-  FoodGroup,
-} from "@/features/foods";
-import {
   Diet,
   DietMeal,
   DietMealGroup,
   DietMealGroupArr,
   NewDiet,
+  fetchRandomFoodByPlan,
 } from "@/features/plans";
-import { getDietFoods } from "./foodsHelpers";
+import { FoodGroup } from "@/features/foods";
+import { getDietFoods } from "../../../../utils/foodsHelpers";
 import { getNutritionMerged } from "@/utils/nutritionHelpers";
+import { MealComplexities, UserMealsArr } from "@/features/meals";
 import { NutritionTargets } from "@/features/authentication";
 import { PlansEnum, Result } from "@/types";
-import { UserMealsArr } from "@/features/meals";
 import { uuidv4 } from "@firebase/util";
 
 const generateMeals = async (
@@ -23,23 +20,15 @@ const generateMeals = async (
   nutrition_targets: NutritionTargets
 ): Promise<Result<DietMealGroup, unknown>> => {
   try {
-    const res = await getFoodsCollectionLength();
-    if (res.result === "error") {
-      throw new Error("Error fetching collLength");
-    }
-    const { data: collLength } = res;
-    console.log({ nutrition_targets });
     const generate = async (userMeals: UserMealsArr) => {
       const diet_meals: DietMealGroup = {};
       const promises = userMeals.map(async (meal) => {
         const uuid = uuidv4();
         const foodsFetched: FoodGroup = {};
-        // Fetch 1 per meal
-        const res = await fetchRandomFoodByPlan(planID, collLength, meal);
+        const res = await fetchRandomFoodByPlan(planID, meal);
         if (res.result === "error") throw new Error("Error fetching food");
         const { data: food } = res;
         if (!food.food_id) throw Error("No food_id provided");
-        console.log({ food });
         foodsFetched[food.food_id] = food;
 
         const newDietMeal: DietMeal = {
@@ -48,6 +37,8 @@ const generateMeals = async (
           diet_meal_id: uuid,
           diet_meal_foods: foodsFetched,
           order: meal.order,
+          complexity: meal.complexity,
+          time: meal.time,
         };
         if (newDietMeal.diet_meal_id) {
           diet_meals[newDietMeal.diet_meal_id] = newDietMeal;
@@ -60,6 +51,7 @@ const generateMeals = async (
     const mealsGenerated = await generate(userMeals);
     return { result: "success", data: mealsGenerated };
   } catch (error) {
+    console.log({ error });
     return { result: "error", error };
   }
 };
@@ -90,4 +82,34 @@ const buildDiet = (meals: DietMealGroupArr, planID: PlansEnum) => {
   return diet;
 };
 
-export { generateMeals, buildDiet };
+const matchComplexity = (complexity: number, toEval: number): boolean => {
+  switch (toEval) {
+    case MealComplexities.very_simple:
+      return complexity >= 1 && complexity < 2;
+    case MealComplexities.simple:
+      return complexity >= 2 && complexity < 3;
+    case MealComplexities.moderate:
+      return complexity >= 3 && complexity < 4;
+    case MealComplexities.complex:
+      return complexity >= 4;
+    default:
+      return false;
+  }
+};
+
+const maxComplexity = (toEval: number): number => {
+  switch (toEval) {
+    case MealComplexities.very_simple:
+      return MealComplexities.simple;
+    case MealComplexities.simple:
+      return MealComplexities.moderate;
+    case MealComplexities.moderate:
+      return MealComplexities.complex;
+    case MealComplexities.complex:
+      return Infinity;
+    default:
+      return Infinity;
+  }
+};
+
+export { generateMeals, buildDiet, matchComplexity, maxComplexity };

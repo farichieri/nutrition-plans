@@ -1,4 +1,5 @@
 import { FoodGroup, FoodNutrients } from "@/features/foods";
+import { MealComplexities, MealMinutes } from "@/features/meals";
 import { PlansEnum } from "@/types";
 import { NewFood, NewFoodNutrients } from "@/types/initialTypes";
 
@@ -23,6 +24,8 @@ export interface DietMeal {
   diet_meal_id: string | null;
   diet_meal_foods: FoodGroup;
   order: number;
+  complexity: MealComplexities | null;
+  time: MealMinutes | null;
 }
 
 export interface DietMealGroup {
@@ -56,4 +59,6 @@ export const NewDietMeal: DietMeal = {
   diet_meal_id: null,
   diet_meal_type: null,
   order: -1,
+  complexity: null,
+  time: null,
 };

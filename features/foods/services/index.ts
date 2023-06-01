@@ -7,7 +7,6 @@ import {
   getDocs,
   increment,
   limit,
-  orderBy,
   query,
   serverTimestamp,
   setDoc,
@@ -18,8 +17,7 @@ import { db, storage } from "../../../services/firebase/firebase.config";
 import { DEFAULT_IMAGE } from "@/types/initialTypes";
 import { Food, FoodGroup, FoodKind } from "@/features/foods";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { PlansEnum, Result } from "@/types";
-import { UserMeal, matchComplexity } from "@/features/meals";
+import { Result } from "@/types";
 import { UserAccount } from "@/features/authentication";
 
 const addFood = async (
@@ -41,7 +39,8 @@ const addFood = async (
     const index = indexResponse.data;
 
     const numIngredients = Object.keys(food.ingredients).length;
-    const complexity = numIngredients + food.prep_time + food.cook_time * 0.2;
+    const complexity =
+      1 + numIngredients + food.prep_time + food.cook_time * 0.2;
 
     const newFood: Food = {
       ...food,
@@ -194,69 +193,11 @@ const getFoodsCollectionLength = async (): Promise<Result<number, unknown>> => {
   }
 };
 
-const fetchRandomFoodByPlan = async (
-  plan: PlansEnum,
-  collLength: number,
-  userMeal: UserMeal
-): Promise<Result<Food, unknown>> => {
-  try {
-    let data: Food | null = null;
-    const docRef = collection(db, "foods");
-    const random = Math.round(collLength * Math.random());
-
-    let q1 = query(
-      docRef,
-      where(`compatible_plans.${plan}`, "==", true),
-      where("index", ">=", random),
-      orderBy("index"),
-      limit(1)
-    );
-    let q2 = query(
-      docRef,
-      where(`compatible_plans.${plan}`, "==", true),
-      orderBy("index", "desc"),
-      limit(1)
-    );
-
-    const fetchOne = async (q_selected: any) => {
-      console.log(`Fetching Random Food by plan: '${plan}'`);
-      const querySnapshot = await getDocs(q_selected);
-      querySnapshot.forEach((food: any) => {
-        data = food.data();
-      });
-    };
-
-    await fetchOne(q1);
-    if (!data) {
-      await fetchOne(q2);
-    }
-
-    // Check Complexity
-    const checkComplexity = () =>
-      matchComplexity((data as Food).complexity, userMeal.complexity);
-    if (data) {
-      if (!checkComplexity()) {
-        await fetchOne(q1);
-      }
-      if (!checkComplexity()) {
-        await fetchOne(q2);
-      }
-    }
-
-    if (!data) throw Error;
-    return { result: "success", data };
-  } catch (error) {
-    console.log(`Error fetching Food: ${error}`);
-    return { result: "error", error };
-  }
-};
-
 export {
   addFood,
   fetchFoods,
   updateFoodAction,
   fetchFoodByID,
   fetchFoodsByIDS,
-  fetchRandomFoodByPlan,
   getFoodsCollectionLength,
 };

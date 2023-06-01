@@ -24,7 +24,6 @@ export default function PremiumLayout({ children }: Props) {
     dispatch(setSidebarOpen(!sidebarOpen));
   };
 
-  console.log({ sidebarOpen });
   return (
     <>
       <Head>

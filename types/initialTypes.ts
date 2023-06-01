@@ -162,7 +162,7 @@ export const NewFoodNutrients: FoodNutrients = {
 export const NewFood: Food = {
   allow_public: true,
   compatible_plans: NewFoodCompatiblePlans,
-  complexity: 0,
+  complexity: 1,
   cook_time: 0,
   date_created: null,
   date_updated: null,

@@ -1,4 +1,3 @@
-import { CompatiblePlans, Nutrition } from "@/features/foods";
 import {
   Diet,
   NewDiet,
@@ -8,14 +7,20 @@ import {
   DaySelector,
   PlanMeals,
   PlanSelector,
+  setIsGeneratingMeals,
+  setDietOpened,
 } from "@/features/plans";
-import { UserAccount, selectAuthSlice } from "@/features/authentication";
+import { buildDiet, generateMeals } from "@/features/plans/components/utils";
+import { CompatiblePlans, Nutrition } from "@/features/foods";
 import { PlansEnum } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { UserAccount, selectAuthSlice } from "@/features/authentication";
+import { UserMealsArr, selectMealsSlice } from "@/features/meals";
 import { useRouter } from "next/router";
-
 import PremiumLayout from "@/layouts/PremiumLayout";
+import ReGeneratePlan from "@/features/plans/components/ReGeneratePlan";
+import Spinner from "@/components/Loader/Spinner";
 import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
 
 export default function Page() {
@@ -23,11 +28,13 @@ export default function Page() {
   const dispatch = useDispatch();
   const { id } = router.query;
   const { user } = useSelector(selectAuthSlice);
-  const { date, dietOpened } = useSelector(selectPlansSlice);
+  const { date, dietOpened, isGeneratingMeals } = useSelector(selectPlansSlice);
+  const { meals } = useSelector(selectMealsSlice);
   const planID = PlansEnum[id as keyof CompatiblePlans];
-
-  // const { nutrition_targets } = user;
-
+  const nutrition_targets = user?.nutrition_targets;
+  const userMealsArr: UserMealsArr = Object.values(meals).sort(
+    (a, b) => a.order - b.order
+  );
   const [newDiet, setNewDiet] = useState(NewDiet);
 
   const fetchUserDiet = async (
@@ -88,6 +95,23 @@ export default function Page() {
     }
   }, [router, dietOpened]);
 
+  const generatePlan = async () => {
+    if (!nutrition_targets) return;
+    dispatch(setIsGeneratingMeals(true));
+    const res = await generateMeals(planID, userMealsArr, nutrition_targets);
+    if (res.result === "success") {
+      const { data } = res;
+      const dietMeals = Object.values(data);
+      const diet = buildDiet(dietMeals, planID);
+      dispatch(setDietOpened(diet));
+    }
+    dispatch(setIsGeneratingMeals(false));
+  };
+
+  useEffect(() => {
+    generatePlan();
+  }, []);
+
   return (
     <PremiumLayout>
       <section className="mt-[calc(1_*_var(--nav-h))] flex w-full select-none flex-col sm:mt-[var(--nav-h)]">
@@ -103,16 +127,21 @@ export default function Page() {
             </SubPremiumNav>
             <div className="flex min-h-[100vh] flex-col items-start justify-start gap-5 bg-white p-4 pt-2 shadow-[0_1px_5px_lightgray] dark:bg-black dark:shadow-[0_1px_6px_#292929] sm:m-[0.5vw] sm:min-h-[calc(100vh_-_6rem_-_1vw)] sm:gap-5 sm:rounded-lg sm:border sm:p-8 sm:pt-2">
               <DaySelector />
-              <div className="flex w-full flex-wrap gap-10">
-                <div className="3xl:max-w-xl w-full max-w-lg">
-                  <PlanMeals planID={planID} />
-                </div>
-                {dietOpened && (
+              <ReGeneratePlan planID={planID} />
+              {isGeneratingMeals ? (
+                <Spinner customClass="h-6 w-6 m-auto" />
+              ) : (
+                <div className="flex w-full flex-wrap gap-10">
                   <div className="3xl:max-w-xl w-full max-w-lg">
-                    <Nutrition nutrients={dietOpened.diet_nutrients} />
+                    <PlanMeals planID={planID} />
                   </div>
-                )}
-              </div>
+                  {dietOpened && (
+                    <div className="3xl:max-w-xl w-full max-w-lg">
+                      <Nutrition nutrients={dietOpened.diet_nutrients} />
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         )}

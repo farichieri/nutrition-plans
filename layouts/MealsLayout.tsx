@@ -22,7 +22,7 @@ export default function MealsLayout({ children }: Props) {
   return (
     <PremiumLayout>
       <section className="flex flex-col justify-center gap-5 px-4 py-8">
-        <span className="mx-auto text-2xl font-semibold">Meal Settings</span>
+        <span className="mx-auto text-2xl font-semibold">Meals Settings</span>
         <UserMealsC meals={meals} />
         {isLoadingMealsSettings ? (
           <Spinner customClass="h-5 w-5" />
