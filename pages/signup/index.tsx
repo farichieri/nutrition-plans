@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import Link from "next/link";
 import Loader from "@/components/Loader/Loader";
-import SignLayout from "@/components/Layout/SignLayout";
+import SignLayout from "@/layouts/SignLayout";
 import Signup from "@/features/authentication/components/Signup";
 
 export default function Page() {

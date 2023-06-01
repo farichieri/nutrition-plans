@@ -16,7 +16,7 @@ import {
 } from "firebase/firestore";
 import { db, storage } from "../../../services/firebase/firebase.config";
 import { DEFAULT_IMAGE } from "@/types/initialTypes";
-import { Food, FoodGroup, FoodKind } from "@/features/foods/types";
+import { Food, FoodGroup, FoodKind } from "@/features/foods";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { PlansEnum, Result } from "@/types";
 import { UserMeal, matchComplexity } from "@/features/meals";

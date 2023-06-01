@@ -1,9 +1,5 @@
 import { FC } from "react";
-import {
-  Food,
-  Ingredient,
-  NutritionMeasurements,
-} from "@/features/foods/types";
+import { Food, Ingredient, NutritionMeasurements } from "@/features/foods";
 import { getNewAmount } from "../../../../../utils/nutritionHelpers";
 import Image from "next/image";
 import Link from "next/link";

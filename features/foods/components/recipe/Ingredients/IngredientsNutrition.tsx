@@ -1,16 +1,20 @@
+import {
+  Food,
+  IngredientGroup,
+  setRecipeState,
+  setMealState,
+} from "@/features/foods";
 import { AppRoutes } from "@/utils/routes";
-import { Diet } from "@/types/dietTypes";
+import { Diet } from "@/features/plans";
 import { FC, useEffect, useState } from "react";
-import { Food, IngredientGroup } from "@/features/foods/types";
-import { getNutritionMerged } from "../../../../../utils/nutritionHelpers";
+import { getDietFoods, getIngredientsFoods } from "@/utils/foodsHelpers";
+import { getNutritionMerged } from "@/utils/nutritionHelpers";
 import { setDietState } from "@/store/slices/createDietSlice";
-import { setRecipeState, setMealState } from "@/store/slices/createFoodSlice";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
-import FoodNutritionDetail from "../../../../../components/Premium/Food/FoodNutritionDetail";
+import FoodNutritionDetail from "../../common/FoodNutritionDetail";
 import PieGraph from "@/components/PieGraph/PieGraph";
 import Spinner from "@/components/Loader/Spinner";
-import { getDietFoods, getIngredientsFoods } from "@/utils/foodsHelpers";
 
 interface Props {
   food?: Food;

@@ -1,15 +1,15 @@
 import {
   fetchRandomFoodByPlan,
   getFoodsCollectionLength,
-} from "@/features/foods/services";
+  FoodGroup,
+} from "@/features/foods";
 import {
   Diet,
   DietMeal,
   DietMealGroup,
   DietMealGroupArr,
   NewDiet,
-} from "@/types/dietTypes";
-import { FoodGroup } from "@/features/foods/types";
+} from "@/features/plans";
 import { getDietFoods } from "./foodsHelpers";
 import { getNutritionMerged } from "@/utils/nutritionHelpers";
 import { NutritionTargets } from "@/features/authentication";

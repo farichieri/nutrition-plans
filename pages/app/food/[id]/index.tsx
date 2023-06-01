@@ -1,19 +1,23 @@
-import { fetchFoodByID } from "@/features/foods/services";
-import { Food, FoodKind } from "@/features/foods/types";
-import { selectFoodsSlice, setFoodOpened } from "@/features/foods/slice";
+import {
+  fetchFoodByID,
+  Food,
+  FoodActions,
+  FoodKind,
+  FoodNutrition,
+  Ingredients,
+  Instructions,
+  selectFoodsSlice,
+  setFoodOpened,
+  CompatiblePlansC,
+  ScaleSelector,
+} from "@/features/foods";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import BackButton from "@/components/Buttons/BackButton";
-import FoodActions from "@/components/Premium/Food/FoodActions/FoodActions";
-import FoodNutrition from "@/components/Premium/Food/FoodNutrition";
 import Image from "next/image";
-import Ingredients from "@/features/foods/components/recipe/Ingredients/Ingredients";
 import PremiumLayout from "@/layouts/PremiumLayout";
-import ScaleSelector from "@/components/Premium/ScaleSelector/ScaleSelector";
 import Spinner from "@/components/Loader/Spinner";
-import CompatiblePlans from "@/components/Premium/Food/CompatiblePlans";
-import { Instructions } from "@/features/foods";
 
 export default function Page() {
   const router = useRouter();
@@ -96,7 +100,9 @@ export default function Page() {
                     )}
                   </div>
                 </div>
-                <CompatiblePlans compatible_plans={foodData.compatible_plans} />
+                <CompatiblePlansC
+                  compatible_plans={foodData.compatible_plans}
+                />
                 <div className="m-auto flex w-full max-w-lg">
                   <ScaleSelector
                     food={foodData}

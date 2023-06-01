@@ -1,17 +1,17 @@
 import {
-  selectCreateFoodSlice,
+  Instruction,
+  selectFoodsSlice,
   setRecipeState,
-} from "@/store/slices/createFoodSlice";
+} from "@/features/foods";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { FC, useEffect, useState } from "react";
-import { Instruction } from "@/features/foods/types";
 import { reorderArr } from "@/utils/filter";
 import { useDispatch, useSelector } from "react-redux";
 import RoundButton from "@/components/Buttons/RoundButton";
 
 const RecipeStep = ({ step }: { step: Instruction }) => {
   const dispatch = useDispatch();
-  const { recipeState } = useSelector(selectCreateFoodSlice);
+  const { recipeState } = useSelector(selectFoodsSlice);
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     event.preventDefault();
@@ -88,7 +88,7 @@ const RecipeStep = ({ step }: { step: Instruction }) => {
 interface Props {}
 
 const InstructionsCreate: FC<Props> = () => {
-  const { recipeState } = useSelector(selectCreateFoodSlice);
+  const { recipeState } = useSelector(selectFoodsSlice);
   const instructions = recipeState.instructions;
   const dispatch = useDispatch();
 

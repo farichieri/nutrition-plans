@@ -1,13 +1,12 @@
 import {
-  selectCreateFoodSlice,
-  setFoodState,
-} from "@/store/slices/createFoodSlice";
-import {
   FoodNutrients,
   CompatiblePlans,
   FoodType,
   FoodKind,
-} from "@/features/foods/types";
+  addFood,
+  selectFoodsSlice,
+  setFoodState,
+} from "@/features/foods";
 import {
   fatsFields,
   firstOptionalFields,
@@ -21,7 +20,6 @@ import {
   sugarFields,
   vitsAndMinsFields,
 } from "./formFields";
-import { addFood } from "@/features/foods/services";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { NewFood } from "@/types/initialTypes";
 import { selectAuthSlice } from "@/features/authentication/slice";
@@ -41,7 +39,7 @@ const FoodCreate: FC<Props> = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { user } = useSelector(selectAuthSlice);
-  const { foodState } = useSelector(selectCreateFoodSlice);
+  const { foodState } = useSelector(selectFoodsSlice);
   const [optionalsOpen, setOptionalsOpen] = useState<boolean>(false);
   const foodCategory = foodCategorySelect;
   const glucemicStatus = foodGlucemicStatusSelect;

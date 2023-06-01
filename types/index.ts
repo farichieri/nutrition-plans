@@ -23,6 +23,7 @@ export enum PlansEnum {
   vegetarian = "vegetarian",
   low_carb = "low_carb",
 }
+
 export enum FiltersEnum {
   q = "q",
   kind = "kind",

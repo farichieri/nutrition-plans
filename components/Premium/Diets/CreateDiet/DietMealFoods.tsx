@@ -2,9 +2,9 @@ import {
   selectCreateDietSlice,
   setDietState,
 } from "@/store/slices/createDietSlice";
-import { DietMeal } from "@/types/dietTypes";
+import { DietMeal } from "@/features/plans";
 import { FC } from "react";
-import { Food } from "@/features/foods/types";
+import { Food } from "@/features/foods";
 import { getNewAmount } from "../../../../utils/nutritionHelpers";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";

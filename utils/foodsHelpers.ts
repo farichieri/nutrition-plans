@@ -1,5 +1,5 @@
-import { DietMealGroup } from "@/types/dietTypes";
-import { Food, FoodGroup, IngredientGroup } from "@/features/foods/types";
+import { DietMealGroup } from "@/features/plans";
+import { Food, FoodGroup, IngredientGroup } from "@/features/foods";
 
 const getIngredientsFoods = (ingredients: IngredientGroup): FoodGroup => {
   let result: FoodGroup = {};

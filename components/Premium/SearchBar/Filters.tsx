@@ -4,9 +4,9 @@ import {
   PlansEnum,
   FilterSortTypes,
 } from "@/types";
-import { FoodKind } from "@/features/foods/types";
+import { FC, useState } from "react";
+import { FoodKind } from "@/features/foods";
 import { useRouter } from "next/router";
-import React, { FC, useState } from "react";
 import RoundButton from "@/components/Buttons/RoundButton";
 
 interface Props {

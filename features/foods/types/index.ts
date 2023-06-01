@@ -1,3 +1,4 @@
+import { NewFood } from "@/types/initialTypes";
 import { PlansEnum } from "../../../types";
 
 export interface Food {
@@ -211,3 +212,8 @@ export enum Macronutrients {
   proteins = "proteins",
   fats = "fats",
 }
+
+export interface Recipe extends Food {}
+
+// Initials
+export const NewMeal: Recipe = NewFood;

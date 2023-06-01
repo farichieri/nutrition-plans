@@ -1,9 +1,9 @@
+import { RecipeCreate } from "@/features/foods";
 import { selectAuthSlice } from "@/features/authentication/slice";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import PremiumLayout from "@/layouts/PremiumLayout";
-import RecipeCreate from "@/features/foods/components/recipe/create/RecipeCreate";
 
 export default function Page() {
   const router = useRouter();

@@ -1,6 +1,9 @@
-import { fetchFoods } from "@/features/foods/services";
-import { FoodGroup } from "@/features/foods/types";
-import { selectFoodsSlice, setFoodsSearched } from "@/features/foods/slice";
+import {
+  fetchFoods,
+  FoodGroup,
+  selectFoodsSlice,
+  setFoodsSearched,
+} from "@/features/foods";
 import { useDispatch, useSelector } from "react-redux";
 import React, { FC, useEffect, useState } from "react";
 import Spinner from "@/components/Loader/Spinner";

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Instruction } from "@/features/foods/types";
+import { Instruction } from "@/features/foods";
 
 const RecipeStep = ({ step }: { step: Instruction }) => {
   return (

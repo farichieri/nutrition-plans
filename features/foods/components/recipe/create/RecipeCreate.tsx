@@ -1,40 +1,38 @@
 import {
-  DishTypesEnum,
+  addFood,
   CompatiblePlans,
-  FoodType,
-  RecipeCategoriesEnum,
-  FoodKind,
   DigestionStatusEnum,
-} from "@/features/foods/types";
-import {
-  selectCreateFoodSlice,
+  DishTypesEnum,
+  FoodKind,
+  FoodType,
+  Recipe,
+  RecipeCategoriesEnum,
+  selectFoodsSlice,
   setRecipeState,
-} from "@/store/slices/createFoodSlice";
-import { addFood } from "@/features/foods/services";
+} from "@/features/foods";
 import { FC, useState } from "react";
+import { getRecipeSize } from "@/utils/nutritionHelpers";
 import { NewFood } from "@/types/initialTypes";
-import { Recipe } from "@/types/recipeTypes";
-import { selectAuthSlice } from "@/features/authentication/slice";
+import { selectAuthSlice } from "@/features/authentication";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import AddInstruction from "./AddInstruction";
 import Checkbox from "@/components/Form/Checkbox";
 import FormAction from "@/components/Form/FormAction";
 import Image from "next/image";
+import IngredientsNutrition from "../Ingredients/IngredientsNutrition";
+import IngredientsSelector from "../Ingredients/IngredientsSelector";
 import Input from "@/components/Form/Input";
 import Instructions from "./InstructionsCreate";
 import NutritionInput from "@/components/Form/NutritionInput";
-import Select from "@/components/Form/Select";
-import { getRecipeSize } from "@/utils/nutritionHelpers";
-import IngredientsNutrition from "../Ingredients/IngredientsNutrition";
 import RecipeCreateIngredients from "../Ingredients/RecipeCreateIngredients";
-import IngredientsSelector from "../Ingredients/IngredientsSelector";
+import Select from "@/components/Form/Select";
 
 interface Props {}
 const RecipeCreate: FC<Props> = () => {
   const dispatch = useDispatch();
   const [isCreating, setIsCreating] = useState(false);
-  const { recipeState } = useSelector(selectCreateFoodSlice);
+  const { recipeState } = useSelector(selectFoodsSlice);
   const { user } = useSelector(selectAuthSlice);
   const router = useRouter();
 

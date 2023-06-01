@@ -1,10 +1,9 @@
-import { DietMeal } from "@/types/dietTypes";
+import { DietMeal } from "@/features/plans";
 import { FC, useEffect } from "react";
-import { Food } from "@/features/foods/types";
-import { setFoodOpened, setFoodOpenedScale } from "@/features/foods/slice";
+import { Food, setFoodOpened, setFoodOpenedScale } from "@/features/foods";
 import { useDispatch } from "react-redux";
-import AddFoodIngredient from "../../../../../components/Premium/Food/AddFood/AddFoodIngredient";
-import FoodNutrition from "../../../../../components/Premium/Food/FoodNutrition";
+import AddFoodIngredient from "./AddFoodIngredient";
+import FoodNutrition from "../../common/FoodNutrition";
 import Image from "next/image";
 
 interface Props {

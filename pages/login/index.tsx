@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import Loader from "@/components/Loader/Loader";
-import SignLayout from "@/components/Layout/SignLayout";
+import SignLayout from "@/layouts/SignLayout";
 
 export default function Page() {
   const router = useRouter();

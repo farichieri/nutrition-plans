@@ -1,9 +1,9 @@
 import { FilterQueries } from "@/types";
+import { FoodsSearched } from "@/features/foods";
 import { GetServerSideProps } from "next";
-import FoodsSearched from "@/components/Premium/Food/FoodSearch/FoodsSearched";
+import Filters from "@/components/Premium/SearchBar/Filters";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import SearchBar from "@/components/Premium/SearchBar/SearchBar";
-import Filters from "@/components/Premium/SearchBar/Filters";
 
 interface Props {
   queries: FilterQueries;

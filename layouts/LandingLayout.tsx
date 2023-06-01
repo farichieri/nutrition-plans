@@ -1,8 +1,8 @@
 import { selectLayoutSlice } from "@/store/slices/layoutSlice";
 import { useSelector } from "react-redux";
-import Footer from "../components/Footer";
+import Footer from "./components/Footer/Footer";
 import Head from "next/head";
-import NavBar from "../components/Nav/Nav";
+import NavBar from "./components/Nav/Nav";
 import Settings from "../components/Premium/Settings/Settings";
 
 export default function LandingLayout({

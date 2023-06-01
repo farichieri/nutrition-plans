@@ -1,10 +1,8 @@
-import { fetchFoods } from "@/features/foods/services";
+import { FC, useEffect, useState } from "react";
+import { fetchFoods, FoodGroup, setFoodsSearched } from "@/features/foods";
 import { FilterQueries } from "@/types";
-import { FoodGroup } from "@/features/foods/types";
-import { setFoodsSearched } from "@/features/foods/slice";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
-import React, { FC, useEffect, useState } from "react";
 import Spinner from "@/components/Loader/Spinner";
 
 interface Props {

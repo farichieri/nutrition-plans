@@ -5,13 +5,12 @@ import { persistReducer } from "redux-persist";
 import { persistStore } from "redux-persist";
 import { WebStorage } from "redux-persist/lib/types";
 import authSlice from "../features/authentication/slice";
-import createFoodSlice from "./slices/createFoodSlice";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import foodsSlice from "../features/foods/slice";
 import layoutSlice from "./slices/layoutSlice";
 import progressSlice from "../features/progress/slice";
 import createDietSlice from "./slices/createDietSlice";
-import plansSlice from "./slices/plansSlice";
+import plansSlice from "../features/plans/slice";
 import mealsSlice from "../features/meals/slice";
 
 export function createPersistStorage(): WebStorage {
@@ -46,7 +45,6 @@ const persistConfig = {
   storage,
   whitelist: [
     "auth",
-    "createFood",
     "foods",
     "layout",
     "progress",
@@ -59,7 +57,6 @@ const persistConfig = {
 const rootReducer = combineReducers({
   auth: authSlice,
   createDiet: createDietSlice,
-  createFood: createFoodSlice,
   foods: foodsSlice,
   layout: layoutSlice,
   progress: progressSlice,

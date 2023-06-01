@@ -1,11 +1,13 @@
 import {
-  selectCreateFoodSlice,
+  Food,
+  IngredientGroup,
+  IngsGroupArray,
+  selectFoodsSlice,
   setRecipeState,
-} from "@/store/slices/createFoodSlice";
+} from "@/features/foods";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { FC, useEffect, useState } from "react";
-import { Food, IngredientGroup, IngsGroupArray } from "@/features/foods/types";
-import { getNewAmount } from "../../../../../utils/nutritionHelpers";
+import { getNewAmount } from "@/utils/nutritionHelpers";
 import { reorderArr } from "@/utils/filter";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
@@ -22,7 +24,7 @@ interface IngredientProps {
 const Ingredient: FC<IngredientProps> = ({ ingredient }) => {
   const food = ingredient;
   const dispatch = useDispatch();
-  const { recipeState } = useSelector(selectCreateFoodSlice);
+  const { recipeState } = useSelector(selectFoodsSlice);
 
   if (!recipeState) return <>No State Provided</>;
 
@@ -165,7 +167,7 @@ interface Props {
 
 const RecipeCreateIngredients: FC<Props> = ({ ingredients }) => {
   const dispatch = useDispatch();
-  const { recipeState } = useSelector(selectCreateFoodSlice);
+  const { recipeState } = useSelector(selectFoodsSlice);
 
   const ingArrSorted = Object.values(ingredients).sort(
     (a, b) => a.order - b.order

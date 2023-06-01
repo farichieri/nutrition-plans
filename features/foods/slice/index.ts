@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Food, FoodGroup } from "@/features/foods/types";
+import { Food, FoodGroup } from "@/features/foods";
 import { PURGE } from "redux-persist";
-import type { RootState } from "../../../store/store";
+import { RootState } from "@/store/store";
+import { NewFood } from "@/types/initialTypes";
 
 interface FoodsSlice {
   foodsSearched: FoodGroup;
@@ -13,6 +14,10 @@ interface FoodsSlice {
       weightName: string;
     };
   };
+  foodState: Food;
+  ingredientOpened: Food | null;
+  mealState: Food;
+  recipeState: Food;
 }
 
 const initialState: FoodsSlice = {
@@ -25,6 +30,10 @@ const initialState: FoodsSlice = {
       weightName: "",
     },
   },
+  foodState: NewFood,
+  ingredientOpened: null,
+  mealState: NewFood,
+  recipeState: NewFood,
 };
 
 export const foodsSlice = createSlice({
@@ -46,6 +55,18 @@ export const foodsSlice = createSlice({
     ) => {
       state.foodOpened.food_scale = action.payload;
     },
+    setFoodState: (state, action: PayloadAction<Food>) => {
+      state.foodState = action.payload;
+    },
+    setRecipeState: (state, action: PayloadAction<Food>) => {
+      state.recipeState = action.payload;
+    },
+    setMealState: (state, action: PayloadAction<Food>) => {
+      state.mealState = action.payload;
+    },
+    setIngredientOpened: (state, action: PayloadAction<Food | null>) => {
+      state.ingredientOpened = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(PURGE, () => {
@@ -59,6 +80,10 @@ export const {
   setBasicFoodsSearched,
   setFoodOpened,
   setFoodOpenedScale,
+  setFoodState,
+  setRecipeState,
+  setMealState,
+  setIngredientOpened,
 } = foodsSlice.actions;
 
 export const selectFoodsSlice = (state: RootState) => state.foods;

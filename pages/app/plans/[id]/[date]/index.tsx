@@ -1,23 +1,22 @@
+import { CompatiblePlans, Nutrition } from "@/features/foods";
 import {
-  fetchRandomDietByPlan,
-  postDietToUserDiets,
-} from "@/services/firebase/helpers/Diet";
-import { CompatiblePlans } from "@/features/foods/types";
-import { Diet } from "@/types/dietTypes";
-import { fetchDietByPlanAndDate } from "@/services/firebase/helpers/Diet";
-import { NewDiet } from "@/types/dietTypes";
+  Diet,
+  NewDiet,
+  selectPlansSlice,
+  setDiet,
+  fetchDietByPlanAndDate,
+  DaySelector,
+  PlanMeals,
+  PlanSelector,
+} from "@/features/plans";
+import { UserAccount, selectAuthSlice } from "@/features/authentication";
 import { PlansEnum } from "@/types";
-import { selectPlansSlice, setDiet } from "@/store/slices/plansSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import DaySelector from "@/components/Premium/Plans/DaySelector";
-import Nutrition from "@/components/Premium/Food/Nutrition";
-import PlanSelector from "@/components/Premium/Plans/PlanSelector";
+
 import PremiumLayout from "@/layouts/PremiumLayout";
-import SubPremiumNav from "@/components/Layout/SubPremiumNav";
-import PlanMeals from "@/components/Premium/Plans/PlanMeals";
-import { UserAccount, selectAuthSlice } from "@/features/authentication";
+import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
 
 export default function Page() {
   const router = useRouter();

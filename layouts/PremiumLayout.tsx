@@ -5,9 +5,9 @@ import BillingModal from "../components/Premium/Billing/BillingModal";
 import Head from "next/head";
 import Loader from "../components/Loader/Loader";
 import Login from "../features/authentication/components/Login";
-import PremiumNav from "../components/Nav/PremiumNav";
+import PremiumNav from "./components/Nav/PremiumNav";
 import Settings from "../components/Premium/Settings/Settings";
-import Sidebar from "../components/Sidebar/PremiumSidebar";
+import Sidebar from "./components/Sidebar/PremiumSidebar";
 import WelcomeSteps from "../components/WelcomeSteps/WelcomeSteps";
 
 interface Props {

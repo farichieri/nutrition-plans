@@ -1,9 +1,9 @@
 import {
-  selectCreateFoodSlice,
+  Instruction,
+  selectFoodsSlice,
   setRecipeState,
-} from "@/store/slices/createFoodSlice";
+} from "@/features/foods";
 import { FC, useState } from "react";
-import { Instruction } from "@/features/foods/types";
 import { useDispatch, useSelector } from "react-redux";
 import { uuidv4 } from "@firebase/util";
 import RoundButton from "@/components/Buttons/RoundButton";
@@ -12,7 +12,7 @@ interface Props {}
 
 const AddInstruction: FC<Props> = () => {
   const dispatch = useDispatch();
-  const { recipeState } = useSelector(selectCreateFoodSlice);
+  const { recipeState } = useSelector(selectFoodsSlice);
   const [newInstruction, setNewInstruction] = useState<Instruction>({
     instruction_id: "",
     order: -1,
