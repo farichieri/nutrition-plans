@@ -83,7 +83,7 @@ const PlanMeals: FC<Props> = ({ planID }) => {
                             height={150}
                             width={150}
                             alt={food.food_name || ""}
-                            className="h-[100px] w-[100px] min-w-[100px] max-w-[100px] object-cover"
+                            className="h-[130px] w-[130px] min-w-[130px] max-w-[130px] object-cover"
                           />
                           <div className="flex w-full p-2">
                             <div className="flex w-full flex-col">

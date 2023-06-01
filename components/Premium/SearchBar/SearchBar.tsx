@@ -7,6 +7,7 @@ import {
 import { FilterQueries } from "@/types";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
+import RoundButton from "@/components/Buttons/RoundButton";
 import Spinner from "@/components/Loader/Spinner";
 
 interface Props {
@@ -82,12 +83,12 @@ const SearchBar: FC<Props> = ({ queries }) => {
         className="w-full bg-transparent px-2 outline-none"
       />
       {searchInput && (
-        <span
-          className="material-icons md-18 absolute right-2 cursor-pointer"
+        <RoundButton
           onClick={() => setSearchInput("")}
+          customClass="p-1 flex items-center justify-center  absolute right-2 "
         >
-          close
-        </span>
+          <span className="material-icons md-18 ">close</span>
+        </RoundButton>
       )}
       <div className="absolute right-10">
         {isSearching && <Spinner customClass="h-4 w-4" />}

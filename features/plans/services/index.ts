@@ -164,18 +164,19 @@ const fetchRandomFoodByPlan = async (
     const filterMatchingFoods = (
       matchingFoods: FoodGroupArray
     ): FoodGroupArray => {
-      let foodsFiltered;
+      let foodsFiltered = matchingFoods;
       // cook
-      foodsFiltered = matchingFoods.filter(
-        (food) => userMeal.cook && food.cook_time > 0 && food
-      );
+      if (!userMeal.cook) {
+        foodsFiltered = matchingFoods.filter((food) => {
+          if (food.cook_time < 1) return food;
+        });
+      }
       // time
       foodsFiltered = foodsFiltered.filter((food) => {
         const available_time = food.prep_time + food.cook_time;
-        available_time < userMeal.time && food;
+        if (available_time < userMeal.time) return food;
       });
       // size
-      // ?
       return foodsFiltered;
     };
 
@@ -189,7 +190,6 @@ const fetchRandomFoodByPlan = async (
     const matchingFoodsFiltered = filterMatchingFoods(matchingFoods);
     const matchingFood = chooseOne(matchingFoodsFiltered);
     if (!matchingFood) {
-      // Choose one with no filters.
       data = chooseOne(matchingFoods);
     } else {
       data = matchingFood;

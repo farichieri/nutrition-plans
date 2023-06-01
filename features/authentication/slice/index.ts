@@ -9,6 +9,7 @@ interface AuthState {
   isCreatingUser: boolean;
   error: string | null;
   isSigningUser: boolean;
+  isSelectingPlan: boolean;
 }
 
 const initialState: AuthState = {
@@ -17,6 +18,7 @@ const initialState: AuthState = {
   isCreatingUser: false,
   error: null,
   isSigningUser: false,
+  isSelectingPlan: false,
 };
 
 export const authSlice = createSlice({
@@ -40,6 +42,9 @@ export const authSlice = createSlice({
     setUpdateUser: (state, action: PayloadAction<UserAccount>) => {
       state.user = action.payload;
     },
+    setIsSelectingPlan: (state, action: PayloadAction<boolean>) => {
+      state.isSelectingPlan = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(PURGE, () => {
@@ -54,6 +59,7 @@ export const {
   setIsCreatingUser,
   setIsSigningUser,
   setUpdateUser,
+  setIsSelectingPlan,
 } = authSlice.actions;
 
 export const selectAuthSlice = (state: RootState) => state.auth;

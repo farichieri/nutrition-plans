@@ -19,7 +19,7 @@ import { UserAccount, selectAuthSlice } from "@/features/authentication";
 import { UserMealsArr, selectMealsSlice } from "@/features/meals";
 import { useRouter } from "next/router";
 import PremiumLayout from "@/layouts/PremiumLayout";
-import ReGeneratePlan from "@/features/plans/components/ReGeneratePlan";
+import ReGenerateMeals from "@/features/plans/components/ReGenerateMeals";
 import Spinner from "@/components/Loader/Spinner";
 import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
 
@@ -104,13 +104,17 @@ export default function Page() {
       const dietMeals = Object.values(data);
       const diet = buildDiet(dietMeals, planID);
       dispatch(setDietOpened(diet));
+    } else {
+      dispatch(setDietOpened(null));
     }
     dispatch(setIsGeneratingMeals(false));
   };
 
   useEffect(() => {
-    generatePlan();
-  }, []);
+    if (planID) {
+      generatePlan();
+    }
+  }, [planID]);
 
   return (
     <PremiumLayout>
@@ -127,7 +131,7 @@ export default function Page() {
             </SubPremiumNav>
             <div className="flex min-h-[100vh] flex-col items-start justify-start gap-5 bg-white p-4 pt-2 shadow-[0_1px_5px_lightgray] dark:bg-black dark:shadow-[0_1px_6px_#292929] sm:m-[0.5vw] sm:min-h-[calc(100vh_-_6rem_-_1vw)] sm:gap-5 sm:rounded-lg sm:border sm:p-8 sm:pt-2">
               <DaySelector />
-              <ReGeneratePlan planID={planID} />
+              <ReGenerateMeals planID={planID} />
               {isGeneratingMeals ? (
                 <Spinner customClass="h-6 w-6 m-auto" />
               ) : (
