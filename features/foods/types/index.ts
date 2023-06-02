@@ -4,6 +4,7 @@ import { PlansEnum } from "../../../types";
 export interface Food {
   [id: string]: any;
   allow_public: boolean;
+  brand: string | null;
   compatible_plans: CompatiblePlans;
   complexity: number;
   cook_time: number;

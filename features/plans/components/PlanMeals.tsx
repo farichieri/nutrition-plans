@@ -1,16 +1,11 @@
-import { selectPlansSlice, DietMeal } from "@/features/plans";
 import { FC } from "react";
 import { Food } from "@/features/foods";
 import { PlansEnum } from "@/types";
 import { selectAuthSlice } from "@/features/authentication/slice";
+import { selectPlansSlice, DietMeal } from "@/features/plans";
 import { useSelector, useDispatch } from "react-redux";
 import Image from "next/image";
 import Link from "next/link";
-
-interface MealProps {}
-const Meal: FC<MealProps> = () => {
-  return <div> </div>;
-};
 
 interface Props {
   planID: PlansEnum;
@@ -51,12 +46,18 @@ const PlanMeals: FC<Props> = ({ planID }) => {
                     <span className="font-semibold capitalize">
                       {meal.diet_meal_name}
                     </span>
-                    <div className="flex w-full flex-col text-left">
+                    <div className="flex w-full flex-col text-left text-xs">
                       <span className="text-blue-500">
                         Meal Complexity: {meal.complexity}
                       </span>
+                      <span className="text-cyan-500">
+                        Meal Cook: {String(meal.cook)}
+                      </span>
                       <span className="text-yellow-500">
                         Meal Time: {meal.time}
+                      </span>
+                      <span className="text-purple-500">
+                        Meal Size: {meal.size}
                       </span>
                     </div>
                     <span className="ml-auto text-xs opacity-50">
@@ -99,12 +100,17 @@ const PlanMeals: FC<Props> = ({ planID }) => {
                                 <span>{food.scale_amount}</span>
                                 <span>{food.scale_name}</span>
                               </div>
-                              <span className="text-blue-500">
-                                Food Complexity: {food.complexity}
-                              </span>
-                              <span className="text-yellow-500">
-                                Food Time: {food.prep_time + food.cook_time}
-                              </span>
+                              <div className="flex w-full flex-col text-left text-xs">
+                                <span className="text-blue-500">
+                                  Food Complexity: {food.complexity}
+                                </span>
+                                <span className="text-cyan-500">
+                                  Meal Cook: {String(food.cook_time > 0)}
+                                </span>
+                                <span className="text-yellow-500">
+                                  Food Time: {food.prep_time + food.cook_time}
+                                </span>
+                              </div>
                             </div>
                             <div className="my-auto flex">
                               <div>

@@ -172,6 +172,7 @@ export const NewFood: Food = {
   eaten: false,
   food_category: null,
   food_description: null,
+  brand: null,
   food_id: null,
   food_name_lowercase: null,
   food_name: null,

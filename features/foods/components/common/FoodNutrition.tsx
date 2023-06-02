@@ -51,11 +51,11 @@ const FoodNutrition: FC<Props> = ({ food, amount, scale }) => {
             <div className="flex items-center gap-1">
               <span>Source:</span>
               <Link
-                href={"https://www.usda.gov/"}
+                href={food.source}
                 target="_blank"
-                className="text-green-500 opacity-50 duration-300 hover:opacity-100"
+                className="capitalize text-green-500 opacity-50 duration-300 hover:opacity-100"
               >
-                {food.source}
+                {food.source.split(".")[1]}
               </Link>
             </div>
           )}

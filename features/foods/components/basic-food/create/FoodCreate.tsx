@@ -8,6 +8,7 @@ import {
   setFoodState,
 } from "@/features/foods";
 import {
+  brandField,
   fatsFields,
   firstOptionalFields,
   foodCategorySelect,
@@ -228,6 +229,24 @@ const FoodCreate: FC<Props> = () => {
               ))}
             </div>
           </div>
+          <Input
+            customClass={""}
+            handleChange={handleChange}
+            id={brandField.id}
+            isRequired={brandField.isRequired}
+            key={brandField.id}
+            labelFor={brandField.labelFor}
+            labelText={brandField.labelText}
+            max={brandField.max}
+            min={brandField.min}
+            name={brandField.name}
+            pattern={brandField.pattern}
+            placeholder={brandField.placeholder}
+            step={brandField.step}
+            title={brandField.title}
+            type={brandField.type}
+            value={foodState[brandField.id]}
+          />
           <Input
             customClass={""}
             handleChange={handleChange}

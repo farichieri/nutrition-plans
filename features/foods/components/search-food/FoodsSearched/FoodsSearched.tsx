@@ -85,7 +85,7 @@ const FoodsSearched: FC<Props> = ({ queries }) => {
               />
             </span>
             <div className="flex w-full flex-col break-words p-2">
-              <span className="text-center text-lg font-semibold">
+              <span className="text-ellipsi truncate text-center text-lg font-semibold">
                 {food.food_name}
               </span>
               <div className="flex w-full justify-between">

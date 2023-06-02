@@ -26,6 +26,7 @@ const fats = nutrientKeys.fats;
 const food_description = foodKeys.food_description;
 const food_name = foodKeys.food_name;
 const price = foodKeys.price;
+const brand = foodKeys.brand;
 const proteins = nutrientKeys.proteins;
 const serving_amount = foodKeys.serving_amount;
 const serving_amount_per_package = foodKeys.serving_amount_per_package;
@@ -80,7 +81,7 @@ const servingSizeFields = [
     placeholder: "",
     max: "",
     min: "0",
-    step: "",
+    step: "0.1",
     title: "",
     pattern: "",
     unit: null,
@@ -96,7 +97,7 @@ const servingSizeFields = [
     placeholder: "",
     max: "",
     min: "0",
-    step: "",
+    step: "0.1",
     title: "",
     pattern: "",
     unit: null,
@@ -112,7 +113,7 @@ const servingSizeFields = [
     placeholder: "",
     max: "",
     min: "0",
-    step: "",
+    step: "0.1",
     title: "",
     unit: null,
     pattern: "",
@@ -128,7 +129,7 @@ const servingSizeFields = [
     placeholder: "",
     max: "",
     min: "0",
-    step: "",
+    step: "0.1",
     title: "",
     pattern: "",
     unit: null,
@@ -176,7 +177,7 @@ const servingSizeFields = [
     placeholder: "",
     max: "",
     min: "0",
-    step: "",
+    step: "0.1",
     title: "",
     pattern: "",
     unit: "g",
@@ -217,6 +218,22 @@ const servingsPerPackage = [
     unit: "U$D",
   },
 ];
+
+const brandField = {
+  labelText: "Brand",
+  labelFor: brand,
+  id: brand,
+  name: brand,
+  type: "text",
+  autoComplete: "off",
+  isRequired: false,
+  placeholder: "",
+  max: "",
+  min: "",
+  step: "",
+  title: "",
+  pattern: undefined,
+};
 
 const source = foodKeys.source;
 
@@ -451,6 +468,7 @@ export {
   servingSizeFields,
   servingsPerPackage,
   sourceField,
+  brandField,
   sugarFields,
   vitsAndMinsFields,
   foodGlucemicStatusSelect,

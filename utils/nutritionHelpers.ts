@@ -58,34 +58,6 @@ const getIngredientNutrition = (food: Food) => {
   }
 };
 
-const getNutritionMerged = (foods: FoodGroup): FoodNutrients => {
-  if (Object.keys(foods).length < 1) {
-    return NewFoodNutrients;
-  }
-
-  let result: any = Object.create({});
-
-  Object.keys(foods).forEach((food_id) => {
-    const food = foods[food_id];
-    if (food_id && food) {
-      if (food) {
-        const ingredientNutrition: FoodNutrients = getIngredientNutrition(food);
-        for (let key in ingredientNutrition) {
-          const value = result[key as keyof FoodNutrients];
-          const newValue = ingredientNutrition[key as keyof FoodNutrients];
-          if (key in result) {
-            result[key as keyof FoodNutrients] =
-              value + newValue > 0 ? value + newValue : null;
-          } else {
-            result[key as keyof FoodNutrients] = newValue;
-          }
-        }
-      }
-    }
-  });
-  return result;
-};
-
 const getNewAmount = (
   food: Food,
   prevWeightName: string,
@@ -149,4 +121,66 @@ const getRecipeSize = (ingredients: IngredientGroup): number | null => {
   return size;
 };
 
-export { getNutritionValues, getNutritionMerged, getNewAmount, getRecipeSize };
+const getNutritionMerged = (foods: FoodGroup): FoodNutrients => {
+  if (Object.keys(foods).length < 1) {
+    return NewFoodNutrients;
+  }
+
+  let result: any = Object.create({});
+
+  Object.keys(foods).forEach((food_id) => {
+    const food = foods[food_id];
+    if (food_id && food) {
+      if (food) {
+        const ingredientNutrition: FoodNutrients = getIngredientNutrition(food);
+        for (let key in ingredientNutrition) {
+          const value = result[key as keyof FoodNutrients];
+          const newValue = ingredientNutrition[key as keyof FoodNutrients];
+          if (key in result) {
+            result[key as keyof FoodNutrients] =
+              value + newValue > 0 ? value + newValue : null;
+          } else {
+            result[key as keyof FoodNutrients] = newValue;
+          }
+        }
+      }
+    }
+  });
+  return result;
+};
+
+const getDietNutrition = (foods: FoodGroup) => {
+  if (Object.keys(foods).length < 1) {
+    return NewFoodNutrients;
+  }
+
+  let result: any = Object.create({});
+
+  Object.keys(foods).forEach((food_id) => {
+    const food = foods[food_id];
+    if (food_id && food) {
+      if (food) {
+        const { nutrients } = food;
+        for (let key in nutrients) {
+          const value = result[key as keyof FoodNutrients];
+          const newValue = nutrients[key as keyof FoodNutrients];
+          if (key in result) {
+            result[key as keyof FoodNutrients] =
+              value + newValue > 0 ? value + newValue : null;
+          } else {
+            result[key as keyof FoodNutrients] = newValue;
+          }
+        }
+      }
+    }
+  });
+  return result;
+};
+
+export {
+  getNutritionValues,
+  getNutritionMerged,
+  getNewAmount,
+  getRecipeSize,
+  getDietNutrition,
+};

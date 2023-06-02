@@ -63,7 +63,7 @@ export default function Page() {
           <div className="flex flex-col gap-10 md:max-w-md ">
             <div className="fixed left-auto top-[var(--nav-h)] z-[60] flex h-[var(--subnav-h)] w-screen items-center gap-10 border-b bg-white/80 px-4 backdrop-blur-lg dark:bg-black/80">
               <BackButton />
-              <span className="font-semibold sm:text-xl">
+              <span className="truncate text-ellipsis font-semibold sm:text-xl">
                 {foodData.food_name}
               </span>
             </div>

@@ -1,13 +1,13 @@
 export interface UserMeal {
   [id: string]: any;
+  complexity: MealComplexities;
   cook: boolean;
-  setting_id: string | null;
   id: string | null;
   name: string | null;
   order: number;
+  setting_id: string | null;
   size: MealSizes;
   time: MealMinutes;
-  complexity: MealComplexities;
 }
 
 export enum MealCook {
@@ -16,32 +16,32 @@ export enum MealCook {
 }
 
 export enum MealSizes {
-  tiny = 300,
-  small = 500,
-  normal = 700,
-  big = 1000,
-  huge = 10000,
+  tiny = 50,
+  small = 75,
+  normal = 100,
+  big = 125,
+  huge = 150,
 }
 export type MealSizesType = {
   [key in keyof typeof MealSizes]?: (typeof MealSizes)[key];
 };
 
-export const matchSize = (size: number, toEval: number): boolean => {
-  switch (toEval) {
-    case MealSizes.tiny:
-      return size >= 0 && size < 300;
-    case MealSizes.small:
-      return size >= 300 && size < 500;
-    case MealSizes.normal:
-      return size >= 500 && size < 700;
-    case MealSizes.big:
-      return size >= 700 && size < 1000;
-    case MealSizes.huge:
-      return size >= 1000;
-    default:
-      return false;
-  }
-};
+// export const matchSize = (size: number, toEval: number): boolean => {
+//   switch (toEval) {
+//     case MealSizes.tiny:
+//       return size >= 0 && size < 300;
+//     case MealSizes.small:
+//       return size >= 300 && size < 500;
+//     case MealSizes.normal:
+//       return size >= 500 && size < 700;
+//     case MealSizes.big:
+//       return size >= 700 && size < 1000;
+//     case MealSizes.huge:
+//       return size >= 1000;
+//     default:
+//       return false;
+//   }
+// };
 
 // 1 Ingredient = 1
 // 1 min Prep Time = 1

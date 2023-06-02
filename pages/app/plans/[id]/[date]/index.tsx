@@ -53,10 +53,11 @@ export default function Page() {
   // Quiero que se me arme una dieta personalizada para mi dia,
   // Teniendo en cuenta mi plan seleccionado, mis nutrientes y mis meals.
   // Por ende, una opcion para crearla es:
-  // Teniendo en cuenta las meals y sus settings (complejidad, size, time and cook)
-  // Hacer un fetch de foods para cada meal
-  // Y luego dividir las proporciones en base a los valores nutricionales.
-  // Problemas: Como encontrar esas comidas que cumplan con los valores macros que necesito.
+  // Fetchh foods por compatible_plan === planID, y rango de complejidad.
+  // Filtrar Cook y time.
+  // Y el size y el match de nutrients?
+  // Si todas las comidas son moderadas, los sizes son equivalentes.
+  // Para una dieta de 2000kcal, de 4 comidas, podemos hacer un 2000 / 4  * 1 = 500 kcal +-
 
   const getDiet = async (planID: PlansEnum) => {
     if (!user) return;
@@ -103,6 +104,7 @@ export default function Page() {
       const { data } = res;
       const dietMeals = Object.values(data);
       const diet = buildDiet(dietMeals, planID);
+      console.log({ diet });
       dispatch(setDietOpened(diet));
     } else {
       dispatch(setDietOpened(null));
