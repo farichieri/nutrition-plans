@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { FoodRating } from "@/features/authentication";
 import { selectAuthSlice, setUpdateUser } from "@/features/authentication";
-import { updateFoodAction } from "@/features/foods";
+import { updateFoodRating } from "@/features/favorites";
 import { updateUser } from "@/features/authentication/services";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "@/components/Loader/Spinner";
@@ -15,11 +15,9 @@ const FoodActions: FC<Props> = ({ foodID }) => {
   const { user } = useSelector(selectAuthSlice);
   const [isLiking, setIsLiking] = useState(false);
   const [isDisliking, setIsDisliking] = useState(false);
-  const [isFavoriting, setIsFavoriting] = useState(false);
   if (!user) return <></>;
 
   const food_rating: FoodRating = user.ratings.food_rating;
-  const isFavorite = food_rating?.favorites.includes(foodID);
   const isLiked = food_rating?.likes.includes(foodID);
   const isDisliked = food_rating?.dislikes.includes(foodID);
 
@@ -28,40 +26,24 @@ const FoodActions: FC<Props> = ({ foodID }) => {
     try {
       const id = (event.target as HTMLButtonElement).id;
       if (!food_rating) return;
-      if (isLiking || isFavoriting || isDisliking) return;
+      if (isLiking || isDisliking) return;
 
-      id === "favorites"
-        ? setIsFavoriting(true)
-        : id === "likes"
-        ? setIsLiking(true)
-        : setIsDisliking(true);
+      id === "likes" ? setIsLiking(true) : setIsDisliking(true);
 
-      let favorites = [...food_rating["favorites"]];
       let likes = [...food_rating["likes"]];
       let dislikes = [...food_rating["dislikes"]];
-      let userUpdated = { ...user };
 
-      const favIndex = favorites.indexOf(foodID);
       const likeIndex = likes.indexOf(foodID);
       const dislikeIndex = dislikes.indexOf(foodID);
 
       const updateAction = async (field: string, action: string) => {
-        const res = await updateFoodAction(foodID, field, action);
-        if (res?.error) {
-          return Error;
+        const res = await updateFoodRating(foodID, field, action);
+        if (res.result === "error") {
+          throw new Error("Error updating food rating");
         }
       };
 
       switch (id) {
-        case "favorites":
-          if (favIndex > -1) {
-            await updateAction("num_favorites", "decrement");
-            favorites.splice(favIndex, 1);
-          } else {
-            await updateAction("num_favorites", "increment");
-            favorites = [...favorites, foodID];
-          }
-          break;
         case "likes":
           if (likeIndex > -1) {
             await updateAction("num_likes", "decrement");
@@ -92,12 +74,11 @@ const FoodActions: FC<Props> = ({ foodID }) => {
           break;
       }
 
-      userUpdated = {
-        ...userUpdated,
+      let userUpdated = {
+        ...user,
         ratings: {
           food_rating: {
             ...food_rating,
-            favorites: favorites,
             likes: likes,
             dislikes: dislikes,
           },
@@ -112,34 +93,12 @@ const FoodActions: FC<Props> = ({ foodID }) => {
     } catch (error) {
       console.log({ error });
     }
-    setIsFavoriting(false);
     setIsLiking(false);
     setIsDisliking(false);
   };
 
   return (
     <div className="flex justify-center gap-2">
-      <button
-        onClick={handleRating}
-        id="favorites"
-        className={`flex h-10 w-10 items-center justify-center rounded-full border  duration-300 hover:bg-slate-500/20 active:scale-90 ${
-          isFavorite && "border-green-500"
-        }`}
-      >
-        {isFavoriting ? (
-          <Spinner
-            customClass={` h-5 w-5  ${isFavorite && "text-green-500"}`}
-          />
-        ) : (
-          <span
-            className={`material-icons md-18 pointer-events-none m-auto ${
-              isFavorite && "text-green-500"
-            }`}
-          >
-            favorite
-          </span>
-        )}
-      </button>
       <button
         onClick={handleRating}
         id="likes"
@@ -157,11 +116,6 @@ const FoodActions: FC<Props> = ({ foodID }) => {
           >
             thumb_up
           </span>
-          // <HandThumbUpIcon
-          //   className={` pointer-events-none h-5 w-5 ${
-          //     isLiked && "fill-green-500"
-          //   }`}
-          // />
         )}
       </button>
       <button

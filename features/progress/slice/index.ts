@@ -18,7 +18,7 @@ const initialState: ProgressState = {
   addWeightGoalOpen: false,
 };
 
-export const authSlice = createSlice({
+export const progressSlice = createSlice({
   name: "progress",
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
@@ -60,9 +60,9 @@ export const {
   setProgressOpen,
   setRestartProgress,
   setAddWeightGoalOpen,
-} = authSlice.actions;
+} = progressSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectProgressSlice = (state: RootState) => state.progress;
 
-export default authSlice.reducer;
+export default progressSlice.reducer;

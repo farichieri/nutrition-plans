@@ -196,8 +196,6 @@ export const NewFood: Food = {
   prep_time: 0,
   price: null,
   recipe_category: null,
-  // scale_amount: null,
-  // scale_name: null,
   scales: [],
   serving_amount_per_package: null,
   serving_amount: 1,

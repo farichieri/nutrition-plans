@@ -39,8 +39,6 @@ export interface Food {
   prep_time: number;
   price: number | null;
   recipe_category: RecipeCategoriesEnum | null;
-  // scale_amount: number | null;
-  // scale_name: string | null;
   scales: FoodScales;
   serving_amount_per_package: number | null;
   serving_amount: number | null;

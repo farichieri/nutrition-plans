@@ -4,14 +4,15 @@ import { configureStore } from "@reduxjs/toolkit";
 import { persistReducer } from "redux-persist";
 import { persistStore } from "redux-persist";
 import { WebStorage } from "redux-persist/lib/types";
-import authSlice from "../features/authentication/slice";
-import createWebStorage from "redux-persist/lib/storage/createWebStorage";
-import foodsSlice from "../features/foods/slice";
-import layoutSlice from "./slices/layoutSlice";
-import progressSlice from "../features/progress/slice";
+import authSlice from "@/features/authentication/slice";
 import createDietSlice from "./slices/createDietSlice";
-import plansSlice from "../features/plans/slice";
-import mealsSlice from "../features/meals/slice";
+import createWebStorage from "redux-persist/lib/storage/createWebStorage";
+import foodsSlice from "@/features/foods/slice";
+import layoutSlice from "./slices/layoutSlice";
+import mealsSlice from "@/features/meals/slice";
+import plansSlice from "@/features/plans/slice";
+import progressSlice from "@/features/progress/slice";
+import favoritesSlice from "@/features/favorites/slice";
 
 export function createPersistStorage(): WebStorage {
   const isServer = typeof window === "undefined";
@@ -51,6 +52,7 @@ const persistConfig = {
     "createDiet",
     "plans",
     "meals",
+    "favorites",
   ],
 };
 
@@ -62,6 +64,7 @@ const rootReducer = combineReducers({
   progress: progressSlice,
   plans: plansSlice,
   meals: mealsSlice,
+  favorites: favoritesSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

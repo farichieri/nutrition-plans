@@ -132,7 +132,9 @@ const fetchFoodByID = async (food_id: string) => {
   }
 };
 
-const fetchFoodsByIDS = async (food_ids: string[]) => {
+const fetchFoodsByIDS = async (
+  food_ids: string[]
+): Promise<Result<FoodGroup, unknown>> => {
   console.log(`Fetching Food IDS ${food_ids}`);
   try {
     let data: FoodGroup = {};
@@ -142,14 +144,10 @@ const fetchFoodsByIDS = async (food_ids: string[]) => {
     querySnapshot.forEach((food: any) => {
       data[food.id] = food.data();
     });
-    if (data) {
-      return data;
-    } else {
-      return null;
-    }
+    return { result: "success", data };
   } catch (error) {
     console.log({ error: `Error fetching Foods: ${error}` });
-    return null;
+    return { result: "error", error };
   }
 };
 
@@ -162,30 +160,6 @@ const uploadImage = async (file: Blob, food_id: string) => {
     return imageUrl;
   } catch (error) {
     return { error: `Error uploading image ${error}` };
-  }
-};
-
-const updateFoodAction = async (
-  food_id: string,
-  field: string,
-  action: string
-) => {
-  try {
-    if (!food_id) throw new Error("No food_id found");
-    const docRef = doc(db, "foods", food_id);
-    if (action === "increment") {
-      await updateDoc(docRef, {
-        [field]: increment(1),
-      });
-    } else if (action === "decrement") {
-      await updateDoc(docRef, {
-        [field]: increment(-1),
-      });
-    } else {
-      throw new Error("action invalid");
-    }
-  } catch (error) {
-    return { error: `Error updating food ${food_id}: ${error}` };
   }
 };
 
@@ -206,7 +180,6 @@ const getFoodsCollectionLength = async (): Promise<Result<number, unknown>> => {
 export {
   addFood,
   fetchFoods,
-  updateFoodAction,
   fetchFoodByID,
   fetchFoodsByIDS,
   getFoodsCollectionLength,
