@@ -2,20 +2,22 @@ import {
   Food,
   FoodGroup,
   FoodNutrients,
+  FoodScales,
   IngredientGroup,
   NutritionMeasurements,
 } from "@/features/foods/types";
-import { NewFoodNutrients } from "@/types/initialTypes";
-import { GRAMS_IN_ONE_OZ } from "@/utils/constants";
 import { formatToFixed } from "@/utils/format";
+import { GRAMS_IN_ONE_OZ } from "@/utils/constants";
+import { mergeScales } from "@/features/foods";
+import { NewFoodNutrients } from "@/types/initialTypes";
 
 const GRAMS = NutritionMeasurements.grams;
 const OZ = NutritionMeasurements.oz;
 
 const getNutritionValues = (
   food: Food,
-  amount: number,
-  weightName: string
+  scale_amount: number,
+  scale_name: string
 ): FoodNutrients => {
   let nutrientsUpdated = { ...food.nutrients };
 
@@ -28,20 +30,26 @@ const getNutritionValues = (
           ? formatToFixed(Number(food.nutrients[keyEv]) * servings)
           : null;
     };
-    if (weightName === food.serving_name) {
-      updateByServing(amount);
-    } else if (weightName === GRAMS) {
+    if (scale_name === GRAMS) {
       const servings =
-        (amount * Number(food.serving_amount)) / Number(food.serving_grams);
-      updateByServing(servings);
-    } else if (weightName === OZ) {
-      const servings =
-        (amount * GRAMS_IN_ONE_OZ * Number(food.serving_amount)) /
+        (scale_amount * Number(food.serving_amount)) /
         Number(food.serving_grams);
       updateByServing(servings);
+    } else if (scale_name === OZ) {
+      const servings =
+        (scale_amount * GRAMS_IN_ONE_OZ * Number(food.serving_amount)) /
+        Number(food.serving_grams);
+      updateByServing(servings);
+    } else {
+      const scale = food.scales.find(
+        (scale) => scale.scale_name === scale_name
+      );
+      const amount =
+        scale_amount /
+        (Number(food.serving_grams) / Number(scale?.scale_grams));
+      updateByServing(amount);
     }
   }
-
   return nutrientsUpdated;
 };
 
@@ -59,47 +67,23 @@ const getIngredientNutrition = (food: Food) => {
 };
 
 const getNewAmount = (
-  food: Food,
-  prevWeightName: string,
-  newWeightName: string,
-  weight: number
+  scales: FoodScales,
+  prev_scale_name: string,
+  new_scale_name: string,
+  scale_amount: number
 ): number | undefined => {
-  switch (prevWeightName) {
+  const scale = scales.find((scale) => scale.scale_name === prev_scale_name);
+  const newScale = scales.find((scale) => scale.scale_name === new_scale_name);
+  switch (new_scale_name) {
     case GRAMS:
-      if (newWeightName === OZ) {
-        return weight / GRAMS_IN_ONE_OZ;
-      } else if (newWeightName === food.serving_name) {
-        return (
-          (weight * Number(food.serving_amount)) / Number(food.serving_grams)
-        );
-      } else if (newWeightName === GRAMS) {
-        return weight;
-      }
-      break;
+      return scale_amount * Number(scale?.scale_grams);
     case OZ:
-      if (newWeightName === GRAMS) {
-        return weight * GRAMS_IN_ONE_OZ;
-      } else if (newWeightName === food.serving_name) {
-        return (
-          (weight * GRAMS_IN_ONE_OZ * Number(food.serving_amount)) /
-          Number(food.serving_grams)
-        );
-      }
-      break;
-    case food.serving_name:
-      if (newWeightName === GRAMS) {
-        return (
-          (weight * Number(food.serving_grams)) / Number(food.serving_amount)
-        );
-      } else if (newWeightName === OZ) {
-        return (
-          (weight * Number(food.serving_grams)) /
-          Number(food.serving_amount) /
-          GRAMS_IN_ONE_OZ
-        );
-      }
+      return (scale_amount * Number(scale?.scale_grams)) / GRAMS_IN_ONE_OZ;
     default:
-      break;
+      return (
+        (scale_amount / Number(newScale?.scale_grams)) *
+        Number(scale?.scale_grams)
+      );
   }
 };
 
@@ -108,9 +92,10 @@ const getRecipeSize = (ingredients: IngredientGroup): number | null => {
   let size = 0;
   Object.keys(ingredients).map((ing) => {
     const food = ingredients[ing];
+    const scalesMerged = mergeScales(food);
     if (food.scale_name && food.scale_amount) {
       const equivalentInGrams = getNewAmount(
-        food,
+        scalesMerged,
         food.scale_name,
         NutritionMeasurements.grams,
         food.scale_amount

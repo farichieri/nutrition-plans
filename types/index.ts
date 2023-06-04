@@ -93,3 +93,5 @@ export interface FilterQueries {
 export type Result<T, E> =
   | { result: "success"; data: T }
   | { result: "error"; error: E };
+
+export type Options = { text: string; value: string }[];

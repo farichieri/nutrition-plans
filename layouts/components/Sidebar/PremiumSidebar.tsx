@@ -96,6 +96,12 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
       icon: "description",
     },
     {
+      name: "Favorites",
+      url: "/app/favorites",
+      pathname: "/app/favorites",
+      icon: "favorite",
+    },
+    {
       name: "Search",
       url: "/app/search",
       pathname: "/app/search",
@@ -209,6 +215,22 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
               </Link>
             ))}
           </div>
+        </div>
+        <div className="flex w-full flex-col items-center gap-2">
+          <Link
+            href={"/app/favorites"}
+            className={
+              `${
+                router.asPath === "/app/favorites" &&
+                " bg-slate-500/30 font-semibold"
+              } px-2` + fixedOptClass
+            }
+          >
+            <span className="material-icons md-24 text-green-500">
+              favorite
+            </span>
+            <span>Favorites</span>
+          </Link>
         </div>
         <div className="flex w-full flex-col items-center gap-2">
           <Link

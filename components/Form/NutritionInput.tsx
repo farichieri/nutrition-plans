@@ -2,7 +2,7 @@ import { ChangeEventHandler, FC, useMemo, useState } from "react";
 import { getNutrientMeasurementUnit } from "@/utils/helpers";
 
 const fixedInputClass =
-  "rounded-md h-[2rem] sm:h-[2.5rem]  my-1 dark:border-gray-500 font-semibold appearance-none dark:bg-slate-500/20 dark:text-white bg-slate-500/20 relative block w-20 px-2 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 caret-green-500 focus:outline-none focus:ring--500 focus:border-green-500 focus:z-10 sm:text-sm";
+  "rounded-md truncate h-[2rem] sm:h-[2.5rem] my-1 dark:border-gray-500 font-semibold appearance-none dark:bg-slate-500/20 dark:text-white bg-slate-500/20 relative block w-20 px-2 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 caret-green-500 focus:outline-none focus:ring--500 focus:border-green-500 focus:z-10 sm:text-sm";
 
 interface Props {
   customClass?: string;
@@ -100,6 +100,7 @@ const NutritionInput: FC<Props> = ({
             title={title}
             type={type}
             value={value || ""}
+            onWheel={(event) => event.currentTarget.blur()}
           />
           {measurementUnit ||
             (unit && (
@@ -127,6 +128,7 @@ const NutritionInput: FC<Props> = ({
                 step={step}
                 title={title}
                 type={type}
+                onWheel={(event) => event.currentTarget.blur()}
                 value={percentage > 0 ? Math.round(percentage) : ""}
               />
               <label htmlFor={labelFor} className="">

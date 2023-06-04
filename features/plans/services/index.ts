@@ -13,7 +13,7 @@ import {
 import { db } from "../../../services/firebase/firebase.config";
 import { Diet } from "@/features/plans";
 import { Food, FoodGroupArray } from "@/features/foods";
-import { maxComplexity } from "../components/utils";
+import { maxComplexity } from "../utils";
 import { PlansEnum, Result } from "@/types";
 import { UserAccount } from "@/features/authentication";
 import { UserMeal } from "@/features/meals";

@@ -1,5 +1,10 @@
+import {
+  Food,
+  NutritionMeasurements,
+  getScaleOptions,
+  mergeScales,
+} from "@/features/foods";
 import { FC, useEffect, useState } from "react";
-import { Food, NutritionMeasurements } from "@/features/foods";
 import { getNewAmount } from "../../../../utils/nutritionHelpers";
 import { useRouter } from "next/router";
 import NutritionInput from "@/components/Form/NutritionInput";
@@ -15,8 +20,8 @@ const ScaleSelector: FC<Props> = ({ food, amount, scale }) => {
   const [isNotOriginal, setIsNotOriginal] = useState(false);
   const router = useRouter();
   const GRAMS = NutritionMeasurements.grams;
-  const OZ = NutritionMeasurements.oz;
-  const options = [food?.serving_name || "", GRAMS, OZ];
+  const scalesMerged = mergeScales(food);
+  const options = getScaleOptions(scalesMerged);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -29,12 +34,12 @@ const ScaleSelector: FC<Props> = ({ food, amount, scale }) => {
         query: {
           id: router.query.id,
           amount: value,
-          scale: scale || food.scale_name,
+          scale: scale,
         },
       });
     }
     if (id === "scale_name") {
-      const newAmount = getNewAmount(food, scale, value, amount);
+      const newAmount = getNewAmount(scalesMerged, scale, value, amount);
       router.replace({
         pathname: router.pathname,
         query: {
@@ -53,15 +58,19 @@ const ScaleSelector: FC<Props> = ({ food, amount, scale }) => {
       pathname: router.pathname,
       query: {
         id: router.query.id,
-        amount: food.scale_amount,
-        scale: food.scale_name,
       },
     });
   };
 
   useEffect(() => {
+    // Improve.
     if (!food) return;
-    const OzAndServingToGrams = getNewAmount(food, scale, GRAMS, amount);
+    const OzAndServingToGrams = getNewAmount(
+      scalesMerged,
+      scale,
+      GRAMS,
+      amount
+    );
     if (scale === GRAMS) {
       if (amount !== food.serving_grams) {
         setIsNotOriginal(true);
@@ -92,7 +101,7 @@ const ScaleSelector: FC<Props> = ({ food, amount, scale }) => {
           step={"1"}
           title={""}
           type={"number"}
-          value={Number(amount)}
+          value={Number(amount.toFixed(2))}
         />
         <Select
           customClass={""}

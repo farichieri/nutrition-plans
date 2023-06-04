@@ -1,5 +1,10 @@
+import {
+  Food,
+  Ingredient,
+  NutritionMeasurements,
+  mergeScales,
+} from "@/features/foods";
 import { FC } from "react";
-import { Food, Ingredient, NutritionMeasurements } from "@/features/foods";
 import { getNewAmount } from "../../../../../utils/nutritionHelpers";
 import Image from "next/image";
 import Link from "next/link";
@@ -20,7 +25,7 @@ const Ingredient: FC<IngredientProps> = ({
   const recipe = food;
   const foodIngredient = ingredient;
 
-  if (!food || !food.scale_name || !food.scale_amount) {
+  if (!food) {
     return (
       <div className="m-auto">
         <Spinner customClass="h-5 w-5" />
@@ -28,10 +33,13 @@ const Ingredient: FC<IngredientProps> = ({
     );
   }
 
+  const ingredientScalesMerged = mergeScales(foodIngredient);
+  const recipeScalesMerged = mergeScales(recipe);
+
   const ingGrams =
     foodIngredient &&
     getNewAmount(
-      foodIngredient,
+      ingredientScalesMerged,
       String(foodIngredient.scale_name),
       NutritionMeasurements.grams,
       Number(foodIngredient.scale_amount)
@@ -41,7 +49,7 @@ const Ingredient: FC<IngredientProps> = ({
     if (!foodIngredient || !foodIngredient.serving_grams || !ingGrams) return;
 
     const recipeEquivalentInGrams = getNewAmount(
-      recipe,
+      recipeScalesMerged,
       String(scale || recipe.scale_name),
       NutritionMeasurements.grams,
       Number(amount || recipe.scale_amount)
@@ -58,7 +66,7 @@ const Ingredient: FC<IngredientProps> = ({
   const ingScaleAmount =
     ingScaleGramsAmount &&
     getNewAmount(
-      foodIngredient,
+      ingredientScalesMerged,
       NutritionMeasurements.grams,
       String(foodIngredient.scale_name),
       ingScaleGramsAmount

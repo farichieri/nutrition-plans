@@ -24,8 +24,9 @@ export default function Page() {
   const dispatch = useDispatch();
   const { id } = router.query;
   const { foodOpened, foodsSearched } = useSelector(selectFoodsSlice);
-  const foodData: Food | null = foodOpened.food;
+  const food: Food | null = foodOpened.food;
   const { amount, scale } = router.query;
+  const defaultScale = food?.scales.find((scale) => scale.is_default === true);
 
   useEffect(() => {
     if (typeof id === "string") {
@@ -41,7 +42,7 @@ export default function Page() {
     }
   }, [id, foodsSearched, dispatch]);
 
-  if (foodData?.food_id !== id) {
+  if (!food || food?.food_id !== id || !defaultScale) {
     return (
       <PremiumLayout>
         <div className="flex flex-col gap-10 md:max-w-md ">
@@ -58,13 +59,13 @@ export default function Page() {
 
   return (
     <PremiumLayout>
-      {foodData && (
+      {food && (
         <section className="flex w-full select-none flex-col gap-[var(--nav-h)]">
           <div className="flex flex-col gap-10 md:max-w-md ">
             <div className="fixed left-auto top-[var(--nav-h)] z-[60] flex h-[var(--subnav-h)] w-screen items-center gap-10 border-b bg-white/80 px-4 backdrop-blur-lg dark:bg-black/80">
               <BackButton />
               <span className="truncate text-ellipsis font-semibold sm:text-xl">
-                {foodData.food_name}
+                {food.food_name}
               </span>
             </div>
           </div>
@@ -73,65 +74,61 @@ export default function Page() {
               <div className="flex w-full flex-col gap-5 md:max-w-md">
                 <div className="flex w-full flex-col gap-5">
                   <Image
-                    src={foodData.image}
-                    alt={`${foodData.food_name}`}
+                    src={food.image}
+                    alt={`${food.food_name}`}
                     width={500}
                     height={500}
                     className="m-auto h-[300px] w-[300px] rounded-lg object-cover"
                   />
                   <span className="text-center opacity-50">
-                    {foodData.food_description}
+                    {food.food_description}
                   </span>
-                  {foodData.food_id && (
-                    <FoodActions foodID={foodData.food_id} />
-                  )}
-                  {foodData.kind === FoodKind.recipe && (
+                  {food.food_id && <FoodActions foodID={food.food_id} />}
+                  {food.kind === FoodKind.recipe && (
                     <div>
-                      {foodData.prep_time && (
+                      {food.kind === FoodKind.recipe && (
                         <div className="flex justify-between">
                           <span>Prep time:</span>
-                          <span>{foodData.prep_time} minutes</span>
+                          <span>{food.prep_time} minutes</span>
                         </div>
                       )}
-                      {foodData.cook_time && (
+                      {food.kind === FoodKind.recipe && (
                         <div className="flex justify-between">
                           <span>Cook time:</span>
-                          <span>{foodData.cook_time} minutes</span>
+                          <span>{food.cook_time} minutes</span>
                         </div>
                       )}
                     </div>
                   )}
                 </div>
-                <CompatiblePlansC
-                  compatible_plans={foodData.compatible_plans}
-                />
+                <CompatiblePlansC compatible_plans={food.compatible_plans} />
                 <div className="m-auto flex w-full max-w-lg">
                   <ScaleSelector
-                    food={foodData}
-                    amount={Number(amount || foodData.scale_amount)}
-                    scale={String(scale || foodData.scale_name)}
+                    food={food}
+                    amount={Number(amount || defaultScale.scale_amount)}
+                    scale={String(scale || defaultScale.scale_name)}
                   />
                 </div>
               </div>
               <div className="flex w-full md:max-w-md">
                 <FoodNutrition
-                  food={foodData}
-                  amount={Number(amount || foodData.scale_amount)}
-                  scale={String(scale || foodData.scale_name)}
+                  food={food}
+                  amount={Number(amount || defaultScale.scale_amount)}
+                  scale={String(scale || defaultScale.scale_name)}
                 />
               </div>
-              {foodData.kind !== FoodKind.basic_food && (
+              {food.kind !== FoodKind.basic_food && (
                 <div className="flex w-full flex-col gap-5 md:max-w-md ">
                   <div className="w-full md:max-w-md">
                     <Ingredients
-                      food={foodData}
-                      amount={Number(amount || foodData.scale_amount)}
-                      scale={String(scale || foodData.scale_name)}
+                      food={food}
+                      amount={Number(amount || defaultScale.scale_amount)}
+                      scale={String(scale || defaultScale.scale_name)}
                     />
                   </div>
-                  {foodData.instructions.length > 0 && (
+                  {food.instructions.length > 0 && (
                     <div className="w-full md:max-w-md">
-                      <Instructions instructions={foodData.instructions} />
+                      <Instructions instructions={food.instructions} />
                     </div>
                   )}
                 </div>

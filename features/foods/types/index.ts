@@ -29,7 +29,6 @@ export interface Food {
   kind: FoodKind | null;
   major_ingredients: string | null;
   makes_leftovers: boolean;
-  manufactured_by: string | null;
   note: string;
   num_dislikes: number;
   num_favorites: number;
@@ -40,8 +39,9 @@ export interface Food {
   prep_time: number;
   price: number | null;
   recipe_category: RecipeCategoriesEnum | null;
-  scale_amount: number | null;
-  scale_name: string | null;
+  // scale_amount: number | null;
+  // scale_name: string | null;
+  scales: FoodScales;
   serving_amount_per_package: number | null;
   serving_amount: number | null;
   serving_grams: number | null;
@@ -50,7 +50,17 @@ export interface Food {
   total_time: number;
   uploader: string | null;
   user_id: string | null;
+  curated: boolean;
 }
+
+export interface FoodScale {
+  is_default: boolean;
+  scale_amount: 1;
+  scale_grams: number | null;
+  scale_name: string | null;
+}
+
+export interface FoodScales extends Array<FoodScale> {}
 
 export interface Ingredient extends Food {}
 
@@ -141,11 +151,11 @@ export type FoodNutrients = {
 
 export enum NutritionMeasurements {
   g = "g",
-  grams = "grams",
+  grams = "Grams",
   kcal = "kcal",
   mcg = "μg",
   mg = "mg",
-  oz = "oz",
+  oz = "Oz",
 }
 
 export enum FoodCategoriesEnum {
@@ -218,3 +228,10 @@ export interface Recipe extends Food {}
 
 // Initials
 export const NewMeal: Recipe = NewFood;
+
+export const InitialScale: FoodScale = {
+  scale_name: "",
+  scale_grams: 0,
+  scale_amount: 1,
+  is_default: false,
+};

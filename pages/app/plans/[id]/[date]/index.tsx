@@ -9,8 +9,9 @@ import {
   PlanSelector,
   setIsGeneratingMeals,
   setDietOpened,
+  buildDiet,
+  generateMeals,
 } from "@/features/plans";
-import { buildDiet, generateMeals } from "@/features/plans/components/utils";
 import { CompatiblePlans, Nutrition } from "@/features/foods";
 import { PlansEnum } from "@/types";
 import { useDispatch, useSelector } from "react-redux";

@@ -4,7 +4,7 @@ import {
 } from "@/store/slices/createDietSlice";
 import { DietMeal } from "@/features/plans";
 import { FC } from "react";
-import { Food } from "@/features/foods";
+import { Food, getScaleOptions, mergeScales } from "@/features/foods";
 import { getNewAmount } from "../../../../utils/nutritionHelpers";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
@@ -21,6 +21,8 @@ interface IngredientProps {
 const DietMealFood: FC<IngredientProps> = ({ food, dietMeal }) => {
   const dispatch = useDispatch();
   const { dietState } = useSelector(selectCreateDietSlice);
+  const scalesMerged = mergeScales(food);
+  const options = getScaleOptions(scalesMerged);
 
   if (!dietState) return <>No State Provided</>;
 
@@ -63,7 +65,7 @@ const DietMealFood: FC<IngredientProps> = ({ food, dietMeal }) => {
     if (name === "scale_name") {
       // Este tiene que pasar a (food, scale_amount)
       const newAmount = getNewAmount(
-        food,
+        scalesMerged,
         food.scale_name || "grams",
         value,
         food.scale_amount || 1
@@ -101,6 +103,8 @@ const DietMealFood: FC<IngredientProps> = ({ food, dietMeal }) => {
       </div>
     );
   }
+
+  console.log({ options });
 
   return (
     <div className="flex items-center rounded-md border">
@@ -145,7 +149,7 @@ const DietMealFood: FC<IngredientProps> = ({ food, dietMeal }) => {
                 labelText={""}
                 name={"scale_name"}
                 title={"Scale Name"}
-                options={[food.serving_name || "", "grams", "oz"]}
+                options={options}
                 value={food.scale_name}
               />
             </div>

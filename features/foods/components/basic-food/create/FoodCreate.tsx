@@ -6,6 +6,7 @@ import {
   addFood,
   selectFoodsSlice,
   setFoodState,
+  FoodScales,
 } from "@/features/foods";
 import {
   brandField,
@@ -33,6 +34,8 @@ import Input from "@/components/Form/Input";
 import NutritionInput from "@/components/Form/NutritionInput";
 import React, { FC, useState } from "react";
 import Select from "@/components/Form/Select";
+import ExtraScales from "../../common/ExtraScales";
+import { generateOptions } from "@/utils";
 
 interface Props {}
 
@@ -80,6 +83,10 @@ const FoodCreate: FC<Props> = () => {
     } else {
       dispatch(setFoodState({ ...foodState, [id]: valueF }));
     }
+  };
+
+  const handleChangeScales = (newScales: FoodScales) => {
+    dispatch(setFoodState({ ...foodState, scales: [...newScales] }));
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -203,6 +210,17 @@ const FoodCreate: FC<Props> = () => {
               ))}
             </div>
           </div>
+
+          <div className="my-5">
+            <h1 className="text-xl">Extra scales {`(optional)`}</h1>
+            <div className="relative">
+              <ExtraScales
+                scales={foodState.scales}
+                handleChangeScales={handleChangeScales}
+              />
+            </div>
+          </div>
+
           <div className="">
             <h1 className="text-xl">Package Info</h1>
             <div className="">
@@ -278,7 +296,7 @@ const FoodCreate: FC<Props> = () => {
                 name={foodCategory.name}
                 placeholder={foodCategory.placeholder}
                 title={foodCategory.title}
-                options={foodCategory.options}
+                options={generateOptions(foodCategory.options)}
                 value={foodState[foodCategory.id]}
               />
             </div>
@@ -296,7 +314,7 @@ const FoodCreate: FC<Props> = () => {
                 name={glucemicStatus.name}
                 placeholder={glucemicStatus.placeholder}
                 title={glucemicStatus.title}
-                options={glucemicStatus.options}
+                options={generateOptions(glucemicStatus.options)}
                 value={foodState[glucemicStatus.id]}
               />
             </div>
@@ -314,7 +332,7 @@ const FoodCreate: FC<Props> = () => {
                 name={digestionStatus.name}
                 placeholder={digestionStatus.placeholder}
                 title={digestionStatus.title}
-                options={digestionStatus.options}
+                options={generateOptions(digestionStatus.options)}
                 value={foodState[digestionStatus.id]}
               />
             </div>

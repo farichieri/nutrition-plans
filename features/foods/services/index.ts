@@ -42,6 +42,15 @@ const addFood = async (
     const complexity =
       1 + numIngredients + food.prep_time + food.cook_time * 0.2;
 
+    // Add the default scale:
+    const newScales = [...food.scales];
+    newScales.unshift({
+      scale_name: food.serving_name,
+      scale_amount: 1,
+      scale_grams: food.serving_grams,
+      is_default: true,
+    });
+
     const newFood: Food = {
       ...food,
       date_created: serverTimestamp(),
@@ -50,8 +59,9 @@ const addFood = async (
       image: img,
       kind: kind,
       nutrients: { ...food.nutrients },
-      scale_amount: food.serving_amount,
-      scale_name: food.serving_name,
+      // scale_amount: food.serving_amount,
+      // scale_name: food.serving_name,
+      scales: newScales,
       num_ingredients: numIngredients,
       uploader: user.user_id,
       index: index,

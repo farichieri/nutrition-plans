@@ -2,6 +2,8 @@ import {
   Food,
   IngredientGroup,
   IngsGroupArray,
+  getScaleOptions,
+  mergeScales,
   selectFoodsSlice,
   setRecipeState,
 } from "@/features/foods";
@@ -25,6 +27,8 @@ const Ingredient: FC<IngredientProps> = ({ ingredient }) => {
   const food = ingredient;
   const dispatch = useDispatch();
   const { recipeState } = useSelector(selectFoodsSlice);
+  const scalesMerged = mergeScales(food);
+  const options = getScaleOptions(scalesMerged);
 
   if (!recipeState) return <>No State Provided</>;
 
@@ -56,7 +60,7 @@ const Ingredient: FC<IngredientProps> = ({ ingredient }) => {
     if (name === "scale_name") {
       // Este tiene que pasar a (food, scale_amount)
       const newAmount = getNewAmount(
-        food,
+        scalesMerged,
         food.scale_name || "grams",
         value,
         food.scale_amount || 1
@@ -131,7 +135,7 @@ const Ingredient: FC<IngredientProps> = ({ ingredient }) => {
                 labelText={""}
                 name={"scale_name"}
                 title={"Scale Name"}
-                options={[food.serving_name || "", "grams", "oz"]}
+                options={options}
                 value={food.scale_name}
               />
             </div>

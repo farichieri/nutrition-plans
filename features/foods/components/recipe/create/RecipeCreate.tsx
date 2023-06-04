@@ -4,6 +4,7 @@ import {
   DigestionStatusEnum,
   DishTypesEnum,
   FoodKind,
+  FoodScales,
   FoodType,
   Recipe,
   RecipeCategoriesEnum,
@@ -11,6 +12,7 @@ import {
   setRecipeState,
 } from "@/features/foods";
 import { FC, useState } from "react";
+import { generateOptions } from "@/utils";
 import { getRecipeSize } from "@/utils/nutritionHelpers";
 import { NewFood } from "@/types/initialTypes";
 import { selectAuthSlice } from "@/features/authentication";
@@ -27,6 +29,7 @@ import Instructions from "./InstructionsCreate";
 import NutritionInput from "@/components/Form/NutritionInput";
 import RecipeCreateIngredients from "../Ingredients/RecipeCreateIngredients";
 import Select from "@/components/Form/Select";
+import ExtraScales from "../../common/ExtraScales";
 
 interface Props {}
 const RecipeCreate: FC<Props> = () => {
@@ -75,6 +78,10 @@ const RecipeCreate: FC<Props> = () => {
     } else {
       dispatch(setRecipeState({ ...recipeState, [id]: valueF }));
     }
+  };
+
+  const handleChangeScales = (newScales: FoodScales) => {
+    dispatch(setRecipeState({ ...recipeState, scales: [...newScales] }));
   };
 
   const [newImageFile, setNewImageFile] = useState<File | undefined>(undefined);
@@ -170,7 +177,7 @@ const RecipeCreate: FC<Props> = () => {
             <NutritionInput
               handleChange={handleChange}
               id={"prep_time"}
-              isRequired={true}
+              isRequired={false}
               labelFor={"prep_time"}
               labelText={"Prep Time"}
               name={"prep_time"}
@@ -183,7 +190,7 @@ const RecipeCreate: FC<Props> = () => {
             <NutritionInput
               handleChange={handleChange}
               id={"cook_time"}
-              isRequired={true}
+              isRequired={false}
               labelFor={"cook_time"}
               labelText={"Cook Time"}
               name={"cook_time"}
@@ -206,6 +213,15 @@ const RecipeCreate: FC<Props> = () => {
               unit={"servings"}
               value={recipeState["serving_amount"]}
             />
+            <div className="my-5">
+              <h1 className="text-xl">Extra scales {`(optional)`}</h1>
+              <div className="relative">
+                <ExtraScales
+                  scales={recipeState.scales}
+                  handleChangeScales={handleChangeScales}
+                />
+              </div>
+            </div>
             <Select
               customClass={""}
               handleChange={handleChange}
@@ -215,7 +231,7 @@ const RecipeCreate: FC<Props> = () => {
               labelText={"Category"}
               name={"food_category"}
               title={"Category"}
-              options={Object.keys(RecipeCategoriesEnum)}
+              options={generateOptions(Object.keys(RecipeCategoriesEnum))}
               value={recipeState["food_category"]}
             />
             <Select
@@ -227,7 +243,7 @@ const RecipeCreate: FC<Props> = () => {
               labelText={"Dish Type"}
               name={"dish_type"}
               title={"Dish Type"}
-              options={Object.keys(DishTypesEnum)}
+              options={generateOptions(Object.keys(DishTypesEnum))}
               value={recipeState["dish_type" as keyof Recipe]}
             />
             <Select
@@ -239,7 +255,7 @@ const RecipeCreate: FC<Props> = () => {
               labelText={"Digestion Status"}
               name={"digestion_status"}
               title={"Digestion Status"}
-              options={Object.keys(DigestionStatusEnum)}
+              options={generateOptions(Object.keys(DigestionStatusEnum))}
               value={recipeState["digestion_status" as keyof Recipe]}
             />
             <div className="">
@@ -333,7 +349,6 @@ const RecipeCreate: FC<Props> = () => {
           </div>
         </div>
       </div>
-
       <div className="m-auto flex gap-2">
         <FormAction
           handleSubmit={handleCancel}

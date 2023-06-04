@@ -27,6 +27,7 @@ import Input from "@/components/Form/Input";
 import MealsLayout from "@/layouts/MealsLayout";
 import Modal from "@/components/Modal/Modal";
 import Select from "@/components/Form/Select";
+import { generateOptions } from "@/utils";
 
 interface Props {
   mealID: string;
@@ -187,7 +188,7 @@ export default function Page({ mealID }: Props) {
                   labelText={"Meal Size"}
                   name={"size"}
                   title={"Meal Size"}
-                  options={sizeOptions}
+                  options={generateOptions(sizeOptions)}
                   value={MealSizes[mealState["size"]]}
                 />
               </div>
@@ -201,7 +202,7 @@ export default function Page({ mealID }: Props) {
                   labelText={"Available Time"}
                   name={"time"}
                   title={"Meal Time"}
-                  options={timeOptions}
+                  options={generateOptions(timeOptions)}
                   value={MealMinutes[mealState["time"]]}
                 />
               </div>
@@ -215,7 +216,7 @@ export default function Page({ mealID }: Props) {
                   labelText={"complexity"}
                   name={"complexity"}
                   title={"Meal Complexity"}
-                  options={complexityOptions}
+                  options={generateOptions(complexityOptions)}
                   value={MealComplexities[mealState["complexity"]]}
                 />
               </div>
@@ -229,7 +230,7 @@ export default function Page({ mealID }: Props) {
                   labelText={"cook"}
                   name={"cook"}
                   title={"Meal cook"}
-                  options={cookOptions}
+                  options={generateOptions(cookOptions)}
                   value={mealState["cook"] ? MealCook.yes : MealCook.no}
                 />
               </div>

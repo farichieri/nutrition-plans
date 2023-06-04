@@ -22,6 +22,7 @@ import Input from "@/components/Form/Input";
 import MealsLayout from "@/layouts/MealsLayout";
 import Modal from "@/components/Modal/Modal";
 import Select from "@/components/Form/Select";
+import { generateOptions } from "@/utils";
 
 export default function Page() {
   const dispatch = useDispatch();
@@ -142,7 +143,7 @@ export default function Page() {
                   labelText={"Meal Size"}
                   name={"size"}
                   title={"Meal Size"}
-                  options={sizeOptions}
+                  options={generateOptions(sizeOptions)}
                   value={MealSizes[newMealState["size"]]}
                 />
               </div>
@@ -156,7 +157,7 @@ export default function Page() {
                   labelText={"Available Time"}
                   name={"time"}
                   title={"Meal Time"}
-                  options={timeOptions}
+                  options={generateOptions(timeOptions)}
                   value={MealMinutes[newMealState["time"]]}
                 />
               </div>
@@ -170,7 +171,7 @@ export default function Page() {
                   labelText={"complexity"}
                   name={"complexity"}
                   title={"Meal Complexity"}
-                  options={complexityOptions}
+                  options={generateOptions(complexityOptions)}
                   value={MealComplexities[newMealState["complexity"]]}
                 />
               </div>
@@ -184,7 +185,7 @@ export default function Page() {
                   labelText={"cook"}
                   name={"cook"}
                   title={"Meal cook"}
-                  options={cookOptions}
+                  options={generateOptions(cookOptions)}
                   value={newMealState["cook"] ? MealCook.yes : MealCook.no}
                 />
               </div>

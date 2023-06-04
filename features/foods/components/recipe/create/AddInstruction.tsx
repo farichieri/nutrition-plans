@@ -70,10 +70,11 @@ const AddInstruction: FC<Props> = () => {
         className="min-h-10 h-full max-h-32 w-full rounded-lg border bg-transparent p-2 text-sm outline-none  placeholder:opacity-50 focus-within:border-black dark:focus-within:border-white"
       />
       <RoundButton
-        customClass="w-10 h-10 p-1.5 my-auto ml-auto"
+        customClass="py-1.5 px-2 my-auto ml-auto !border-green-400 bg-green-400/30"
         onClick={handleAddInstruction}
       >
-        <span className="material-icons pointer-events-none">add</span>
+        <span className="text-sm">Add</span>
+        <span className="material-icons md-18 pointer-events-none">add</span>
       </RoundButton>
     </div>
   );

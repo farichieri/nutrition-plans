@@ -3,7 +3,7 @@ import {
   setDietOpened,
   setIsGeneratingMeals,
 } from "../slice";
-import { buildDiet, generateMeals } from "./utils";
+import { buildDiet, generateMeals } from "../utils";
 import { FC } from "react";
 import { PlansEnum } from "@/types";
 import { selectAuthSlice } from "@/features/authentication";

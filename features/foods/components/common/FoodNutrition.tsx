@@ -1,6 +1,11 @@
-import { Food, FoodNutrients } from "@/features/foods";
+import {
+  Food,
+  FoodNutrients,
+  NutritionMeasurements,
+  mergeScales,
+} from "@/features/foods";
 import { formatToFixed } from "@/utils/format";
-import { getNutritionValues } from "@/utils/nutritionHelpers";
+import { getNewAmount, getNutritionValues } from "@/utils/nutritionHelpers";
 import FoodNutritionDetail from "./FoodNutritionDetail";
 import Link from "next/link";
 import PieGraph from "@/components/PieGraph/PieGraph";
@@ -15,11 +20,19 @@ interface Props {
 const FoodNutrition: FC<Props> = ({ food, amount, scale }) => {
   const [openDetails, setOpenDetails] = useState(false);
   const [nutrients, setNutrients] = useState<FoodNutrients | null>(null);
+  const scalesMerged = mergeScales(food);
 
   const handleOpenDetail = (event: React.MouseEvent) => {
     event.preventDefault();
     setOpenDetails(true);
   };
+
+  const equivalentInGrams = getNewAmount(
+    scalesMerged,
+    scale,
+    NutritionMeasurements.grams,
+    amount
+  );
 
   useEffect(() => {
     if (!food) return;
@@ -61,6 +74,9 @@ const FoodNutrition: FC<Props> = ({ food, amount, scale }) => {
           )}
         </div>
         <PieGraph nutrients={nutrients} />
+        <span className="opacity-50">
+          {Number(equivalentInGrams?.toFixed(2))} grams
+        </span>
         <div className="flex flex-col gap-4">
           <div className="flex flex-col">
             <div className="flex w-full justify-between">

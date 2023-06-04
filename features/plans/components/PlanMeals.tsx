@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Food } from "@/features/foods";
+import { Food, FoodScales, getDefaultScale } from "@/features/foods";
 import { PlansEnum } from "@/types";
 import { selectAuthSlice } from "@/features/authentication/slice";
 import { selectPlansSlice, DietMeal } from "@/features/plans";
@@ -73,11 +73,13 @@ const PlanMeals: FC<Props> = ({ planID }) => {
                   <div>
                     {Object.keys(meal.diet_meal_foods).map((food_id) => {
                       const food: Food = meal.diet_meal_foods[food_id];
+                      const { scale_name, scale_amount, scale_grams } =
+                        getDefaultScale(food.scales);
                       return (
                         <Link
                           key={food_id}
                           className="flex divide-y"
-                          href={`/app/food/${food_id}?amount=${food.scale_amount}&scale=${food.scale_name}`}
+                          href={`/app/food/${food_id}?amount=${scale_amount}&scale=${scale_name}`}
                         >
                           <Image
                             src={food.image}
@@ -96,9 +98,12 @@ const PlanMeals: FC<Props> = ({ planID }) => {
                                   {food.food_description}
                                 </span>
                               </div>
-                              <div className="flex gap-1 text-xs capitalize">
-                                <span>{food.scale_amount}</span>
-                                <span>{food.scale_name}</span>
+                              <div className="flex gap-1 text-xs">
+                                <span>{scale_amount}</span>
+                                <span className="capitalize">{scale_name}</span>
+                                <span className="ml-5 text-xs opacity-50">
+                                  {`(${scale_grams} grams)`}
+                                </span>
                               </div>
                               <div className="flex w-full flex-col text-left text-xs">
                                 <span className="text-blue-500">

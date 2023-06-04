@@ -79,7 +79,7 @@ const sortFoodsSearched = (foodsArray: FoodGroupArray, sortBy: string) => {
   }
 };
 
-const reorderArr = (list: any[], startI: number, endI: number) => {
+const reorderArr = (list: any[], startI: number, endI: number): any[] => {
   const result = [...list];
   const [removed] = result.splice(startI, 1);
   result.splice(endI, 0, removed);
