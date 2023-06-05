@@ -10,33 +10,41 @@ import {
   filterObject,
   sortFoodsSearched,
 } from "@/utils/filter";
+import { AppRoutes } from "@/utils/routes";
 import { FC } from "react";
 import { FilterQueries, FilterSortTypes } from "@/types";
+import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import Image from "next/image";
-import Link from "next/link";
-import Spinner from "@/components/Loader/Spinner";
 import FoodCard from "./FoodCard";
+import Spinner from "@/components/Loader/Spinner";
 
 interface Props {
   queries: FilterQueries;
 }
 
 const FoodsSearched: FC<Props> = ({ queries }) => {
-  const { foodsSearched, isSearchingFoods } = useSelector(selectFoodsSlice);
-  const noData = Object.values(foodsSearched).length === 0;
+  const router = useRouter();
+  const { foodsSearched, isSearchingFoods, myFoodsSearched } =
+    useSelector(selectFoodsSlice);
 
-  if (noData && isSearchingFoods) {
+  const foodsToFilter =
+    router.pathname === AppRoutes.search_my_foods
+      ? myFoodsSearched
+      : foodsSearched;
+
+  const noData = Object.values(foodsToFilter).length === 0;
+
+  if (isSearchingFoods) {
     return <Spinner customClass="h-6 w-6 m-auto" />;
   }
   if (noData) {
     return <div>No Foods found with that name</div>;
   }
 
-  const getFoodsFiltered = () => {
+  const getFoodsFiltered = (foodsToFilter: FoodGroup): FoodGroupArray => {
     let foodsFiltered: FoodGroup = queries.kind
-      ? filterObject(foodsSearched, "kind", queries.kind)
-      : foodsSearched;
+      ? filterObject(foodsToFilter, "kind", queries.kind)
+      : foodsToFilter;
 
     foodsFiltered = queries.plan
       ? filterByCompatiblePlan(foodsFiltered, queries.plan, true)
@@ -66,10 +74,10 @@ const FoodsSearched: FC<Props> = ({ queries }) => {
     return foodsSorted;
   };
 
-  const foods = getFoodsFiltered();
+  const foods = getFoodsFiltered(foodsToFilter);
 
   return (
-    <div className="sm:grid-cols grid max-w-screen-2xl select-none grid-cols-fluid gap-4 px-4 sm:px-0">
+    <div className="grid max-w-screen-2xl select-none grid-cols-fluid_fr items-start justify-center gap-4 px-4 sm:px-0 lg:grid-cols-fluid lg:justify-start">
       {foods.map((food: Food) => {
         return <FoodCard food={food} key={food.food_id} />;
       })}

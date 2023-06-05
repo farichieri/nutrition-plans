@@ -70,11 +70,11 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
   ];
 
   const ADMIN_PAGES = [
-    { name: "Create Food", url: "/app/admin/create/food", icon: "add" },
+    { name: "Food", url: "/app/create/food", icon: "add_circle" },
     {
-      name: "Create Recipe",
-      url: "/app/admin/create/recipe",
-      icon: "add",
+      name: "Recipe",
+      url: "/app/create/recipe",
+      icon: "add_circle",
     },
     // {
     //   name: "Create Meal",
@@ -92,25 +92,25 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
     {
       name: "My Plan",
       url: `/app/plans/${planSelected}/today`,
-      pathname: "/app/plans/[id]/[date]",
+      pathname: ["/app/plans/[id]/[date]"],
       icon: "description",
     },
     {
       name: "Favorites",
       url: "/app/favorites",
-      pathname: "/app/favorites",
+      pathname: ["/app/favorites"],
       icon: "favorite",
     },
     {
       name: "Search",
       url: "/app/search",
-      pathname: "/app/search",
+      pathname: ["/app/search", "/app/search/my-foods"],
       icon: "search",
     },
     {
       name: "Progress",
       url: "/app/profile/progress",
-      pathname: "/app/profile/progress",
+      pathname: ["/app/profile/progress"],
       icon: "auto_graph",
     },
   ];
@@ -139,7 +139,8 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
             key={page.name}
             href={page.url}
             className={`${
-              router.asPath === page.url && "bg-slate-500/30 font-semibold "
+              page.pathname.includes(router.pathname) &&
+              "bg-slate-500/30 font-semibold "
             } text-md hover:opacity-7 flex w-full flex-col items-center gap-1 rounded-lg border border-transparent px-1.5 py-1 text-center text-base duration-300 hover:bg-slate-500/30 active:border-gray-400 dark:active:border-white sm:text-lg`}
           >
             <span className="material-icons md-24 notraslate text-green-500">
@@ -153,7 +154,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
       <div
         className={`${
           sidebarOpen ? "left-0" : "left-[-14rem]"
-        } fixed left-0 z-[70] flex h-screen min-h-screen w-52 select-none flex-col gap-2 overflow-auto border-r bg-white/80 px-2 pb-5 pt-16 backdrop-blur-sm transition-all duration-300 ease-in-out dark:border-slate-400/20 dark:bg-black/80 sm:gap-4 md:w-56 md:duration-0`}
+        } fixed left-0 z-[70] flex h-screen min-h-screen w-52 select-none flex-col gap-1 overflow-auto border-r bg-white/80 px-2 pb-5 pt-16 backdrop-blur-sm transition-all duration-300 ease-in-out dark:border-slate-400/20 dark:bg-black/80 sm:gap-2 md:w-56 md:duration-0`}
       >
         <div className="flex w-full flex-col items-center gap-2">
           <Link
@@ -173,10 +174,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
           </Link>
         </div>
         <div className="flex flex-col gap-1">
-          <div
-            className="text-md flex w-full items-center gap-1 rounded-lg px-2 py-1 text-base sm:text-lg "
-            onClick={toggleAllPlans}
-          >
+          <div className={fixedOptClass} onClick={toggleAllPlans}>
             <span className="material-icons md-24 text-green-500">
               format_list_bulleted
             </span>
@@ -237,7 +235,8 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
             href={"/app/search"}
             className={
               `${
-                router.asPath === "/app/search" &&
+                (router.pathname === "/app/search" ||
+                  router.pathname === "/app/search/my-foods") &&
                 " bg-slate-500/30 font-semibold"
               } px-2` + fixedOptClass
             }
@@ -247,10 +246,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
           </Link>
         </div>
         <div className="flex flex-col gap-1">
-          <div
-            className="text-md flex w-full items-center gap-1 rounded-lg px-2 py-1 text-base  sm:text-lg "
-            onClick={toggleEvolution}
-          >
+          <div className={fixedOptClass} onClick={toggleEvolution}>
             <span className="material-icons md-24 text-green-500">person</span>
             <div className="flex w-full cursor-pointer items-center justify-between">
               <span className="text-md sm:text-lg">Profile</span>
@@ -289,52 +285,45 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
           </div>
         </div>
 
-        {user?.is_admin && (
-          <div className="flex flex-col gap-1">
-            <div
-              className="text-md flex w-full items-center gap-1 rounded-lg px-2 py-1 text-base  sm:text-lg "
-              onClick={toggleAdmin}
-            >
-              <span className="material-icons md-24 text-red-500">
-                manage_accounts
+        <div className="flex flex-col gap-1">
+          <div className={fixedOptClass} onClick={toggleAdmin}>
+            <span className="material-icons md-24 text-green-500">create</span>
+            <div className="flex w-full cursor-pointer items-center justify-between">
+              <span className="text-md  sm:text-lg">Create</span>
+              <span
+                className={`material-icons md-24 duration-200 ease-in-out ${
+                  sidebarAdminOpen && "-rotate-180 transform text-green-500"
+                }`}
+              >
+                expand_more
               </span>
-              <div className="flex w-full cursor-pointer items-center justify-between">
-                <span className="text-md  sm:text-lg">Admin</span>
-                <span
-                  className={`material-icons md-24 duration-200 ease-in-out ${
-                    sidebarAdminOpen && "-rotate-180 transform text-red-500"
-                  }`}
-                >
-                  expand_more
-                </span>
-              </div>
-            </div>
-            <div
-              className={`flex flex-col gap-1 overflow-hidden pl-1 text-sm transition-[max-height] duration-200 ease-linear sm:text-base ${
-                sidebarAdminOpen ? " max-h-[30rem]" : "max-h-0"
-              }`}
-            >
-              {ADMIN_PAGES.map((page) => (
-                <Link
-                  key={page.name}
-                  href={page.url}
-                  className={
-                    `${
-                      router.asPath === page.url &&
-                      "bg-slate-500/30 font-semibold"
-                    }` + fixedSecOptClass
-                  }
-                >
-                  <span className="material-icons md-24 notraslate text-red-500">
-                    {page.icon}
-                  </span>
-
-                  {page.name}
-                </Link>
-              ))}
             </div>
           </div>
-        )}
+          <div
+            className={`flex flex-col gap-1 overflow-hidden pl-1 text-sm transition-[max-height] duration-200 ease-linear sm:text-base ${
+              sidebarAdminOpen ? " max-h-[30rem]" : "max-h-0"
+            }`}
+          >
+            {ADMIN_PAGES.map((page) => (
+              <Link
+                key={page.name}
+                href={page.url}
+                className={
+                  `${
+                    router.asPath === page.url &&
+                    "bg-slate-500/30 font-semibold"
+                  }` + fixedSecOptClass
+                }
+              >
+                <span className="material-icons md-24 notraslate text-green-500">
+                  {page.icon}
+                </span>
+
+                {page.name}
+              </Link>
+            ))}
+          </div>
+        </div>
         <div className="mx-auto flex w-full items-center justify-center px-2 py-1">
           <SubscribeButton />
         </div>

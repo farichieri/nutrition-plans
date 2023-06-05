@@ -75,7 +75,7 @@ const AddToFavorite: FC<Props> = ({ foodID }) => {
     <button
       onClick={handleRating}
       id="favorites"
-      className={`mr-5 flex h-10 w-10 min-w-[2.5rem] items-center justify-center rounded-full border  duration-300 hover:bg-slate-500/20 active:scale-90 ${
+      className={`mr-5 flex h-9 w-9 min-w-[2.25rem] items-center justify-center rounded-full border  duration-300 hover:bg-slate-500/20 active:scale-90 ${
         isFavorite && "border-green-500"
       }`}
     >
@@ -83,7 +83,7 @@ const AddToFavorite: FC<Props> = ({ foodID }) => {
         <Spinner customClass={` h-5 w-5  ${isFavorite && "text-green-500"}`} />
       ) : (
         <span
-          className={`material-icons-outlined md-20 pointer-events-none mr-[0.05rem] ${
+          className={`material-icons-outlined md-18 pointer-events-none mr-[0.05rem] ${
             isFavorite && "text-green-500"
           }`}
         >

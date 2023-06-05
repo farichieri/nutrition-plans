@@ -7,6 +7,7 @@ import { selectAuthSlice } from "@/features/authentication";
 import { useSelector } from "react-redux";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import Spinner from "@/components/Loader/Spinner";
+import SubPremiumNav from "./components/Nav/SubPremiumNav";
 
 interface Props {
   children: React.ReactNode;
@@ -21,8 +22,11 @@ export default function MealsLayout({ children }: Props) {
 
   return (
     <PremiumLayout>
-      <section className="flex flex-col justify-center gap-5 px-4 py-8">
-        <span className="mx-auto text-2xl font-semibold">Meals Settings</span>
+      <SubPremiumNav
+        title="Meals Settings"
+        customClass="top-[var(--subnav-h)]"
+      />
+      <section className="m-auto mt-[var(--subnav-h)] flex w-full max-w-screen-xl flex-col items-center justify-center gap-5 px-4 pb-4 pt-4 sm:px-10">
         <UserMealsC meals={meals} />
         {isLoadingMealsSettings ? (
           <Spinner customClass="h-5 w-5" />

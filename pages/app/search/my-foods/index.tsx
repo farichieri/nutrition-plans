@@ -12,7 +12,6 @@ export default function Page({ queries }: Props) {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const queries: FilterQueries = {};
-
   Object.entries(context?.query).forEach((query) => {
     if (query) {
       queries[query[0] as keyof FilterQueries] = String(query[1]);

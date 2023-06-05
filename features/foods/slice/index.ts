@@ -6,8 +6,8 @@ import { NewFood } from "@/types/initialTypes";
 
 interface FoodsSlice {
   foodsSearched: FoodGroup;
+  myFoodsSearched: FoodGroup;
   isSearchingFoods: boolean;
-  basicFoodsSearched: FoodGroup;
   foodOpened: {
     food: Food | null;
     food_scale: {
@@ -23,8 +23,8 @@ interface FoodsSlice {
 
 const initialState: FoodsSlice = {
   foodsSearched: {},
+  myFoodsSearched: {},
   isSearchingFoods: true,
-  basicFoodsSearched: {},
   foodOpened: {
     food: null,
     food_scale: {
@@ -45,8 +45,15 @@ export const foodsSlice = createSlice({
     setFoodsSearched: (state, action: PayloadAction<FoodGroup>) => {
       state.foodsSearched = action.payload;
     },
-    setBasicFoodsSearched: (state, action: PayloadAction<FoodGroup>) => {
-      state.basicFoodsSearched = action.payload;
+    setMyFoodsSearched: (state, action: PayloadAction<FoodGroup>) => {
+      const isEmpty = Object.keys(action.payload).length === 0;
+      if (isEmpty) state.myFoodsSearched = {};
+      else {
+        for (const key in action.payload) {
+          state.myFoodsSearched[key] = action.payload[key];
+          state.foodsSearched[key] = action.payload[key];
+        }
+      }
     },
     setFoodOpened: (state, action: PayloadAction<Food | null>) => {
       state.foodOpened.food = action.payload;
@@ -81,9 +88,9 @@ export const foodsSlice = createSlice({
 });
 
 export const {
-  setBasicFoodsSearched,
   setFoodOpened,
   setFoodOpenedScale,
+  setMyFoodsSearched,
   setFoodsSearched,
   setFoodState,
   setIngredientOpened,

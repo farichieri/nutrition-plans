@@ -124,12 +124,10 @@ export default function Page() {
       <section className="mt-[calc(1_*_var(--nav-h))] flex w-full select-none flex-col sm:mt-[var(--nav-h)]">
         {planID && (
           <div>
-            <SubPremiumNav customClass="top-[var(--subnav-h)]">
-              <div className="min-w-fit">
-                <span className="font-semibold capitalize sm:ml-5 sm:text-xl">
-                  {planID.replaceAll("_", " ")}
-                </span>
-              </div>
+            <SubPremiumNav
+              title={planID.replaceAll("_", " ")}
+              customClass="top-[var(--subnav-h)]"
+            >
               <PlanSelector planID={planID} />
             </SubPremiumNav>
             <div className="flex min-h-[100vh] flex-col items-start justify-start gap-5 bg-white p-4 pt-2 shadow-[0_1px_5px_lightgray] dark:bg-black dark:shadow-[0_1px_6px_#292929] sm:m-[0.5vw] sm:min-h-[calc(100vh_-_6rem_-_1vw)] sm:gap-5 sm:rounded-lg sm:border sm:p-8 sm:pt-2">

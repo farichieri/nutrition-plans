@@ -29,7 +29,7 @@ const createDiet = async (diet: Diet, user: UserAccount) => {
       diet_id: docRef.id,
       diet_name_lowercase: diet.diet_name.toLowerCase(),
       diet_nutrients: { ...diet.diet_nutrients },
-      uploader: user.user_id,
+      uploader_id: user.user_id,
     };
     console.log({ newDiet });
     await setDoc(docRef, newDiet);

@@ -15,6 +15,7 @@ export interface Diet {
   diet_nutrients: FoodNutrients;
   plan_date: string | null;
   plan_id: PlansEnum | null;
+  uploader_id: string | null;
 }
 
 export interface DietMeal {
@@ -52,6 +53,7 @@ export const NewDiet: Diet = {
   diet_nutrients: NewFoodNutrients,
   plan_date: null,
   plan_id: null,
+  uploader_id: null,
 };
 
 export const NewDietMeal: DietMeal = {

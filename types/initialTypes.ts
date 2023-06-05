@@ -204,6 +204,5 @@ export const NewFood: Food = {
   source: null,
   curated: false,
   total_time: 0,
-  uploader: null,
-  user_id: null,
+  uploader_id: null,
 };

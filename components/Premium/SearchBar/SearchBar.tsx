@@ -1,11 +1,14 @@
-import { FC, useEffect, useState } from "react";
 import {
   fetchFoods,
   setFoodsSearched,
   setIsSearchingFoods,
+  setMyFoodsSearched,
 } from "@/features/foods";
+import { FC, useEffect, useState } from "react";
+import { AppRoutes } from "@/utils/routes";
 import { FilterQueries } from "@/types";
-import { useDispatch } from "react-redux";
+import { selectAuthSlice } from "@/features/authentication";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import RoundButton from "@/components/Buttons/RoundButton";
 import Spinner from "@/components/Loader/Spinner";
@@ -17,18 +20,41 @@ interface Props {
 const SearchBar: FC<Props> = ({ queries }) => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const { user } = useSelector(selectAuthSlice);
   const [searchInput, setSearchInput] = useState<string>(queries.q || "");
   const [isSearching, setIsSearching] = useState(false);
+
+  const fetchMyFoods = async (input: string) => {
+    const myFoodsRes = await fetchFoods({
+      food_name_lowercase: input,
+      kind: undefined,
+      uploader_id: user?.user_id,
+    });
+    if (myFoodsRes.result === "success") {
+      dispatch(setMyFoodsSearched(myFoodsRes.data));
+    } else {
+      dispatch(setMyFoodsSearched({}));
+    }
+  };
+
+  const fetchAllDBFoods = async (input: string) => {
+    const myFoodsRes = await fetchFoods({
+      food_name_lowercase: input,
+      kind: undefined,
+    });
+    if (myFoodsRes.result === "success") {
+      dispatch(setFoodsSearched(myFoodsRes.data));
+    }
+  };
 
   const fetchData = async (input: string) => {
     setIsSearching(true);
     dispatch(setIsSearchingFoods(true));
-    const res = await fetchFoods({
-      food_name_lowercase: input,
-      kind: undefined,
-    });
-    if (res.result === "success") {
-      dispatch(setFoodsSearched(res.data));
+    if (router.pathname === AppRoutes.search_my_foods) {
+      await fetchMyFoods(input);
+    } else {
+      await fetchAllDBFoods(input);
+      await fetchMyFoods(input);
     }
     setIsSearching(false);
     dispatch(setIsSearchingFoods(false));

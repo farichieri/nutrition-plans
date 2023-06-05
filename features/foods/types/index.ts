@@ -46,8 +46,7 @@ export interface Food {
   serving_name: string | null;
   source: string | null;
   total_time: number;
-  uploader: string | null;
-  user_id: string | null;
+  uploader_id: string | null;
   curated: boolean;
 }
 

@@ -1,14 +1,12 @@
 import Footer from "./components/Footer/Footer";
 import Head from "next/head";
 import SignBar from "./components/Nav/SignBar";
-import { useRouter } from "next/router";
 
 export default function SignLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const router = useRouter();
   return (
     <>
       <Head>

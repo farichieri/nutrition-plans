@@ -72,11 +72,16 @@ const Login = () => {
     setIsLoadingForm(true);
     setIsDisabled(true);
     await signInWithEmailAndPassword(auth, input.email, input.password)
-      .then((result) => {
+      .then(async (result) => {
         const user = result.user;
         if (user) {
           dispatch(setIsSigningUser(true));
-          router.push(redirectRoute);
+          const userRes =
+            result.user && (await generateUserObject(result.user));
+          if (userRes.result === "success") {
+            dispatch(setUser(userRes.data));
+            router.push(redirectRoute);
+          }
         }
       })
       .catch((error) => {

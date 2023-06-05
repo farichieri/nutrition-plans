@@ -126,12 +126,9 @@ const RecipeCreate: FC<Props> = () => {
   };
 
   return (
-    <form className="my-4 flex w-full flex-col gap-2" onSubmit={handleSubmit}>
-      <div className="flex w-full flex-wrap gap-10 ">
-        <div className="flex w-full max-w-xl flex-col gap-5">
-          <div>
-            <span className="text-3xl font-semibold">Create Recipe</span>
-          </div>
+    <form className="flex w-full flex-col" onSubmit={handleSubmit}>
+      <div className="flex w-full flex-wrap lg:divide-x">
+        <div className="flex w-full max-w-xl flex-col gap-5 px-4">
           <div className="flex flex-col">
             <Input
               handleChange={handleChange}
@@ -322,7 +319,7 @@ const RecipeCreate: FC<Props> = () => {
             />
           </div>
         </div>
-        <div className="flex w-full max-w-xl flex-col gap-5">
+        <div className="flex w-full max-w-xl flex-col gap-5 px-4">
           <div className="flex max-w-xl flex-col gap-2 rounded-md border p-2">
             <div className="flex items-center gap-1">
               <span className="material-icons-outlined text-green-500">

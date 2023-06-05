@@ -23,19 +23,19 @@ import {
   vitsAndMinsFields,
 } from "./formFields";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { generateOptions } from "@/utils";
 import { NewFood } from "@/types/initialTypes";
 import { selectAuthSlice } from "@/features/authentication/slice";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Checkbox from "@/components/Form/Checkbox";
+import ExtraScales from "../../common/ExtraScales";
 import FormAction from "@/components/Form/FormAction";
 import Image from "next/image";
 import Input from "@/components/Form/Input";
 import NutritionInput from "@/components/Form/NutritionInput";
 import React, { FC, useState } from "react";
 import Select from "@/components/Form/Select";
-import ExtraScales from "../../common/ExtraScales";
-import { generateOptions } from "@/utils";
 
 interface Props {}
 
@@ -137,11 +137,10 @@ const FoodCreate: FC<Props> = () => {
   };
 
   return (
-    <form className="my-4 flex flex-col gap-2" onSubmit={handleSubmit}>
-      <div className="flex w-full flex-wrap gap-10">
-        <div className="flex w-full max-w-xl flex-col gap-5">
+    <form className="flex w-full flex-col gap-2" onSubmit={handleSubmit}>
+      <div className="flex w-full flex-wrap lg:divide-x">
+        <div className="flex w-full max-w-xl flex-col gap-5 px-4">
           <div className="">
-            <span className="text-3xl font-semibold">Create Food</span>
             {nameDescFields.map((field) => (
               <Input
                 customClass={""}
@@ -287,7 +286,7 @@ const FoodCreate: FC<Props> = () => {
             <h1 className="text-xl"></h1>
             <div className="">
               <Select
-                customClass={""}
+                customClass={"capitalize"}
                 handleChange={handleChange}
                 id={foodCategory.id}
                 isRequired={foodCategory.isRequired}
@@ -379,7 +378,7 @@ const FoodCreate: FC<Props> = () => {
           </div>
         </div>
 
-        <div className="flex w-full max-w-xl flex-col gap-5">
+        <div className="flex w-full max-w-xl flex-col gap-5 px-4">
           <div className="flex flex-col rounded-md ">
             <div
               className="flex w-fit cursor-pointer items-center gap-5 "

@@ -5,20 +5,23 @@ import { RootState } from "@/store/store";
 
 interface FavoritesState {
   favoriteFoods: FoodGroup;
+  isSearchingFavoriteFoods: boolean;
 }
 
-// Define the initial state using that type
 const initialState: FavoritesState = {
   favoriteFoods: {},
+  isSearchingFavoriteFoods: true,
 };
 
 export const favoritesSlice = createSlice({
   name: "favorites",
-  // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
     setFavoriteFoods: (state, action: PayloadAction<FoodGroup>) => {
       state.favoriteFoods = action.payload;
+    },
+    setIsSearchingFavoriteFoods: (state, action: PayloadAction<boolean>) => {
+      state.isSearchingFavoriteFoods = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -28,9 +31,9 @@ export const favoritesSlice = createSlice({
   },
 });
 
-export const { setFavoriteFoods } = favoritesSlice.actions;
+export const { setFavoriteFoods, setIsSearchingFavoriteFoods } =
+  favoritesSlice.actions;
 
-// Other code such as selectors can use the imported `RootState` type
 export const selectFavoritesSlice = (state: RootState) => state.favorites;
 
 export default favoritesSlice.reducer;

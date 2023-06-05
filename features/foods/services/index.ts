@@ -5,12 +5,10 @@ import {
   getCountFromServer,
   getDoc,
   getDocs,
-  increment,
   limit,
   query,
   serverTimestamp,
   setDoc,
-  updateDoc,
   where,
 } from "firebase/firestore";
 import { db, storage } from "../../../services/firebase/firebase.config";
@@ -59,11 +57,9 @@ const addFood = async (
       image: img,
       kind: kind,
       nutrients: { ...food.nutrients },
-      // scale_amount: food.serving_amount,
-      // scale_name: food.serving_name,
       scales: newScales,
       num_ingredients: numIngredients,
-      uploader: user.user_id,
+      uploader_id: user.user_id,
       index: index,
       complexity: complexity,
       total_time: food.cook_time + food.prep_time,
@@ -81,9 +77,11 @@ const addFood = async (
 const fetchFoods = async ({
   food_name_lowercase,
   kind,
+  uploader_id,
 }: {
   food_name_lowercase: string;
   kind: FoodKind | undefined;
+  uploader_id?: string;
 }): Promise<Result<FoodGroup, unknown>> => {
   console.log(`Fetching Food by name: '${food_name_lowercase}'`);
   try {
@@ -93,15 +91,25 @@ const fetchFoods = async ({
       foodsRef,
       where("food_name_lowercase", ">=", `${food_name_lowercase}`),
       where("food_name_lowercase", "<=", `${food_name_lowercase}z`),
+      where("curated", "==", true),
       limit(40)
     );
-    if (kind) {
+    // if (kind) {
+    //   q = query(
+    //     foodsRef,
+    //     where("food_name_lowercase", ">=", `${food_name_lowercase}`),
+    //     where("food_name_lowercase", "<=", `${food_name_lowercase}z`),
+    //     limit(40)
+    //     // where("kind", "==", `${kind}`),
+    //   );
+    // }
+    if (uploader_id) {
       q = query(
         foodsRef,
         where("food_name_lowercase", ">=", `${food_name_lowercase}`),
         where("food_name_lowercase", "<=", `${food_name_lowercase}z`),
+        where("uploader_id", "==", `${uploader_id}`),
         limit(40)
-        // where("kind", "==", `${kind}`),
       );
     }
     const querySnapshot = await getDocs(q);
