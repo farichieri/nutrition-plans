@@ -50,7 +50,7 @@ export const foodsSlice = createSlice({
       if (isEmpty) state.myFoodsSearched = {};
       else {
         for (const key in action.payload) {
-          state.myFoodsSearched[key] = action.payload[key];
+          state.myFoodsSearched = action.payload;
           state.foodsSearched[key] = action.payload[key];
         }
       }

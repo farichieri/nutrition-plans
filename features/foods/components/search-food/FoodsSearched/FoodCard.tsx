@@ -2,7 +2,6 @@ import { FC } from "react";
 import { Food } from "@/features/foods/types";
 import Image from "next/image";
 import Link from "next/link";
-import AddToFavorite from "@/features/favorites/components/AddToFavorite";
 
 interface Props {
   food: Food;

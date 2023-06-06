@@ -28,7 +28,7 @@ const FoodsSearched: FC<Props> = ({ queries }) => {
     useSelector(selectFoodsSlice);
 
   const foodsToFilter =
-    router.pathname === AppRoutes.search_my_foods
+    router.pathname === AppRoutes.search_my_creations
       ? myFoodsSearched
       : foodsSearched;
 

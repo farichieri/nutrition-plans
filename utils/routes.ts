@@ -3,6 +3,6 @@ export enum AppRoutes {
   create_recipe = "/app/admin/create/recipe",
   create_meal = "/app/admin/create/meal",
   create_diet = "/app/admin/create/diet",
-  search_my_foods = "/app/search/my-foods",
+  search_my_creations = "/app/search/my-creations",
   search_foods = "/app/search",
 }

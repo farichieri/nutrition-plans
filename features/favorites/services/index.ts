@@ -1,7 +1,6 @@
-import { UserAccount } from "@/features/authentication";
 import { db } from "@/services/firebase/firebase.config";
-import { Result } from "@/types";
 import { doc, increment, updateDoc } from "firebase/firestore";
+import { Result } from "@/types";
 
 const updateFoodRating = async (
   food_id: string,

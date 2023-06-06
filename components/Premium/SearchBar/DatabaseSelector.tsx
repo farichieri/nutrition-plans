@@ -1,7 +1,7 @@
+import { AppRoutes } from "@/utils/routes";
 import { FC } from "react";
-import Link from "next/link";
-import { useRouter } from "next/router";
 import { FilterQueries } from "@/types";
+import { useRouter } from "next/router";
 
 const fixedButtonClass =
   "relative after:absolute border-b border-b text-sm sm:text-lg after:bottom-[-1px] after:left-0 after:h-[3px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-green-500 after:transition-transform after:duration-300 after:ease-in-out hover:after:origin-bottom-left hover:after:scale-x-100";
@@ -14,15 +14,15 @@ interface Props {
 const DatabaseSelector: FC<Props> = ({ queries }) => {
   const router = useRouter();
   console.log({ router });
-  const allDatabaseRoute = "/app/search";
-  const myFoodsRoute = "/app/search/my-foods";
+  const allDatabaseRoute = AppRoutes.search_foods;
+  const myCreationsRoute = AppRoutes.search_my_creations;
   const isAllDatabase = router.route === allDatabaseRoute;
-  const isMyFoods = router.route === myFoodsRoute;
+  const isMyCreations = router.route === myCreationsRoute;
 
   const handleSelect = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    const path = isAllDatabase ? myFoodsRoute : allDatabaseRoute;
+    const path = isAllDatabase ? myCreationsRoute : allDatabaseRoute;
 
     let query = { ...queries };
     router.replace({
@@ -42,9 +42,9 @@ const DatabaseSelector: FC<Props> = ({ queries }) => {
         </button>
         <button
           onClick={handleSelect}
-          className={fixedButtonClass + (isMyFoods ? selectedClass : "")}
+          className={fixedButtonClass + (isMyCreations ? selectedClass : "")}
         >
-          My Foods
+          My Creations
         </button>
       </div>
     </div>

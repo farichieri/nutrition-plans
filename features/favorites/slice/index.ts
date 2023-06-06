@@ -6,11 +6,13 @@ import { RootState } from "@/store/store";
 interface FavoritesState {
   favoriteFoods: FoodGroup;
   isSearchingFavoriteFoods: boolean;
+  isRating: boolean;
 }
 
 const initialState: FavoritesState = {
   favoriteFoods: {},
   isSearchingFavoriteFoods: true,
+  isRating: false,
 };
 
 export const favoritesSlice = createSlice({
@@ -23,6 +25,9 @@ export const favoritesSlice = createSlice({
     setIsSearchingFavoriteFoods: (state, action: PayloadAction<boolean>) => {
       state.isSearchingFavoriteFoods = action.payload;
     },
+    setIsRating: (state, action: PayloadAction<boolean>) => {
+      state.isRating = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(PURGE, () => {
@@ -31,7 +36,7 @@ export const favoritesSlice = createSlice({
   },
 });
 
-export const { setFavoriteFoods, setIsSearchingFavoriteFoods } =
+export const { setFavoriteFoods, setIsSearchingFavoriteFoods, setIsRating } =
   favoritesSlice.actions;
 
 export const selectFavoritesSlice = (state: RootState) => state.favorites;

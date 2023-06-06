@@ -1,7 +1,11 @@
 import { FC, useState } from "react";
 import { FoodRating } from "@/features/authentication";
 import { selectAuthSlice, setUpdateUser } from "@/features/authentication";
-import { updateFoodRating } from "@/features/favorites";
+import {
+  selectFavoritesSlice,
+  setIsRating,
+  updateFoodRating,
+} from "@/features/favorites";
 import { updateUser } from "@/features/authentication/services";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "@/components/Loader/Spinner";
@@ -15,6 +19,7 @@ const FoodActions: FC<Props> = ({ foodID }) => {
   const { user } = useSelector(selectAuthSlice);
   const [isLiking, setIsLiking] = useState(false);
   const [isDisliking, setIsDisliking] = useState(false);
+  const { isRating } = useSelector(selectFavoritesSlice);
   if (!user) return <></>;
 
   const food_rating: FoodRating = user.ratings.food_rating;
@@ -26,7 +31,8 @@ const FoodActions: FC<Props> = ({ foodID }) => {
     try {
       const id = (event.target as HTMLButtonElement).id;
       if (!food_rating) return;
-      if (isLiking || isDisliking) return;
+      if (isRating) return;
+      dispatch(setIsRating(true));
 
       id === "likes" ? setIsLiking(true) : setIsDisliking(true);
 
@@ -95,6 +101,7 @@ const FoodActions: FC<Props> = ({ foodID }) => {
     }
     setIsLiking(false);
     setIsDisliking(false);
+    dispatch(setIsRating(false));
   };
 
   return (

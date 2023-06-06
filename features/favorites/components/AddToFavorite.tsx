@@ -5,6 +5,7 @@ import {
   updateUser,
 } from "@/features/authentication";
 import { FC, useState } from "react";
+import { selectFavoritesSlice, setIsRating } from "../slice";
 import { updateFoodRating } from "../services";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "@/components/Loader/Spinner";
@@ -17,6 +18,7 @@ const AddToFavorite: FC<Props> = ({ foodID }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
   const [isFavoriting, setIsFavoriting] = useState(false);
+  const { isRating } = useSelector(selectFavoritesSlice);
   if (!user) return <></>;
 
   const food_rating: FoodRating = user.ratings.food_rating;
@@ -27,7 +29,8 @@ const AddToFavorite: FC<Props> = ({ foodID }) => {
     try {
       const id = (event.target as HTMLButtonElement).id;
       if (!food_rating) return;
-      if (isFavoriting) return;
+      if (isRating) return;
+      dispatch(setIsRating(true));
 
       id === "favorites" && setIsFavoriting(true);
 
@@ -69,6 +72,7 @@ const AddToFavorite: FC<Props> = ({ foodID }) => {
       console.log({ error });
     }
     setIsFavoriting(false);
+    dispatch(setIsRating(false));
   };
 
   return (

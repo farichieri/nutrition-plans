@@ -50,7 +50,7 @@ const SearchBar: FC<Props> = ({ queries }) => {
   const fetchData = async (input: string) => {
     setIsSearching(true);
     dispatch(setIsSearchingFoods(true));
-    if (router.pathname === AppRoutes.search_my_foods) {
+    if (router.pathname === AppRoutes.search_my_creations) {
       await fetchMyFoods(input);
     } else {
       await fetchAllDBFoods(input);

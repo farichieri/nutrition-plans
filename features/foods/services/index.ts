@@ -85,6 +85,7 @@ const fetchFoods = async ({
 }): Promise<Result<FoodGroup, unknown>> => {
   console.log(`Fetching Food by name: '${food_name_lowercase}'`);
   try {
+    console.log({ food_name_lowercase });
     let data: FoodGroup = {};
     const foodsRef = collection(db, "foods");
     let q = query(
@@ -108,14 +109,15 @@ const fetchFoods = async ({
         foodsRef,
         where("food_name_lowercase", ">=", `${food_name_lowercase}`),
         where("food_name_lowercase", "<=", `${food_name_lowercase}z`),
-        where("uploader_id", "==", `${uploader_id}`),
         limit(40)
       );
+      // where("uploader_id", "==", `${uploader_id}`),
     }
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((food: any) => {
       data[food.id] = food.data();
     });
+    console.log({ data });
     return { result: "success", data };
   } catch (error) {
     console.log({ error: `Error fetching Food: ${error}` });
