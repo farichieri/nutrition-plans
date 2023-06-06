@@ -2,10 +2,8 @@ import {
   fetchFoods,
   setFoodsSearched,
   setIsSearchingFoods,
-  setMyFoodsSearched,
 } from "@/features/foods";
 import { FC, useEffect, useState } from "react";
-import { AppRoutes } from "@/utils/routes";
 import { FilterQueries } from "@/types";
 import { selectAuthSlice } from "@/features/authentication";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,37 +22,15 @@ const SearchBar: FC<Props> = ({ queries }) => {
   const [searchInput, setSearchInput] = useState<string>(queries.q || "");
   const [isSearching, setIsSearching] = useState(false);
 
-  const fetchMyFoods = async (input: string) => {
-    const myFoodsRes = await fetchFoods({
+  const fetchData = async (input: string) => {
+    if (!user?.user_id) return;
+    setIsSearching(true);
+    const res = await fetchFoods({
       food_name_lowercase: input,
-      kind: undefined,
       uploader_id: user?.user_id,
     });
-    if (myFoodsRes.result === "success") {
-      dispatch(setMyFoodsSearched(myFoodsRes.data));
-    } else {
-      dispatch(setMyFoodsSearched({}));
-    }
-  };
-
-  const fetchAllDBFoods = async (input: string) => {
-    const myFoodsRes = await fetchFoods({
-      food_name_lowercase: input,
-      kind: undefined,
-    });
-    if (myFoodsRes.result === "success") {
-      dispatch(setFoodsSearched(myFoodsRes.data));
-    }
-  };
-
-  const fetchData = async (input: string) => {
-    setIsSearching(true);
-    dispatch(setIsSearchingFoods(true));
-    if (router.pathname === AppRoutes.search_my_creations) {
-      await fetchMyFoods(input);
-    } else {
-      await fetchAllDBFoods(input);
-      await fetchMyFoods(input);
+    if (res.result === "success") {
+      dispatch(setFoodsSearched({ foods: res.data, user_id: user.user_id }));
     }
     setIsSearching(false);
     dispatch(setIsSearchingFoods(false));

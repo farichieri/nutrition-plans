@@ -55,6 +55,7 @@ export interface FoodScale {
   scale_amount: 1;
   scale_grams: number | null;
   scale_name: string | null;
+  id: string | null;
 }
 
 export interface FoodScales extends Array<FoodScale> {}
@@ -227,8 +228,9 @@ export interface Recipe extends Food {}
 export const NewMeal: Recipe = NewFood;
 
 export const InitialScale: FoodScale = {
-  scale_name: "",
-  scale_grams: 0,
-  scale_amount: 1,
+  id: null,
   is_default: false,
+  scale_amount: 1,
+  scale_grams: 0,
+  scale_name: "",
 };

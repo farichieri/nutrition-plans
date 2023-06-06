@@ -11,6 +11,8 @@ import RoundButton from "@/components/Buttons/RoundButton";
 
 interface Props {
   queries: FilterQueries;
+  updateRoute: boolean;
+  setLocalQueries: Function;
 }
 
 interface Nuts {
@@ -32,7 +34,7 @@ interface Nuts {
   };
 }
 
-const Filters: FC<Props> = ({ queries }) => {
+const Filters: FC<Props> = ({ queries, updateRoute, setLocalQueries }) => {
   const router = useRouter();
   const [openFilters, setOpenFilters] = useState(false);
   const [nutrients, setNutrients] = useState<Nuts>({
@@ -111,22 +113,30 @@ const Filters: FC<Props> = ({ queries }) => {
         [name]: value,
       };
     }
-    router.replace({
-      pathname: router.pathname,
-      query,
-    });
+    if (updateRoute) {
+      router.replace({
+        pathname: router.pathname,
+        query,
+      });
+    } else {
+      setLocalQueries(query);
+    }
   };
 
   const handleRemove = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const name = (event.target as HTMLButtonElement).name;
     delete queries[name as keyof FilterQueries];
-    router.replace({
-      pathname: router.pathname,
-      query: {
-        ...queries,
-      },
-    });
+    if (updateRoute) {
+      router.replace({
+        pathname: router.pathname,
+        query: {
+          ...queries,
+        },
+      });
+    } else {
+      setLocalQueries({ ...queries });
+    }
     if (
       name === FiltersEnum.calories_range ||
       name === FiltersEnum.proteins_range ||
@@ -171,7 +181,7 @@ const Filters: FC<Props> = ({ queries }) => {
       </button>
       {openFilters && (
         <div className="flex w-full flex-wrap justify-between gap-5">
-          <div className="flex flex-col items-start gap-2">
+          <div className="flex basis-1/4 flex-col items-start gap-2">
             <span className="font-semibold">Plan</span>
             <div className="flex flex-col items-start gap-1">
               {Object.keys(PlansEnum).map((plan) => (
@@ -202,7 +212,7 @@ const Filters: FC<Props> = ({ queries }) => {
               ))}
             </div>
           </div>
-          <div className="flex flex-col items-start gap-2">
+          <div className="flex basis-1/4 flex-col items-start gap-2">
             <span className="font-semibold">Kind</span>
             <div className="flex flex-col items-start gap-1">
               {Object.keys(FoodKind).map((kind) => (
@@ -234,7 +244,7 @@ const Filters: FC<Props> = ({ queries }) => {
             </div>
           </div>
 
-          <div className="flex flex-col items-start gap-2">
+          <div className="flex basis-1/4 flex-col items-start gap-2">
             <span className="font-semibold">Nutrients</span>
             {NUTRIENTS_OPTIONS.map((nutrient) => {
               const min = nutrient.min;
@@ -320,7 +330,7 @@ const Filters: FC<Props> = ({ queries }) => {
             })}
           </div>
 
-          <div className="flex flex-col items-start gap-2">
+          <div className="flex basis-1/4 flex-col items-start gap-2">
             <span className="font-semibold">Sort By</span>
             <div className="flex flex-col items-start gap-1">
               {Object.keys(FilterSortTypes).map((sort) => (
@@ -329,7 +339,7 @@ const Filters: FC<Props> = ({ queries }) => {
                     onClick={handleSelect}
                     name={FiltersEnum.sort}
                     value={sort}
-                    className={`text-sm font-light capitalize ${
+                    className={`text-left text-sm font-light capitalize ${
                       (queries.sort === sort ||
                         (!queries.sort && sort === FilterSortTypes.rating)) &&
                       "text-green-500"

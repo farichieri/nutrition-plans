@@ -22,7 +22,11 @@ export default function SearchLayout({ queries }: Props) {
       </SubPremiumNav>
       <section className="m-auto mt-[var(--subnav-h)] flex w-full max-w-screen-xl flex-col justify-center gap-5 px-4 pb-24 pt-4 sm:px-10">
         <DatabaseSelector queries={queries} />
-        <Filters queries={queries} />
+        <Filters
+          queries={queries}
+          updateRoute={true}
+          setLocalQueries={() => {}}
+        />
         <FoodsSearched queries={queries} />
       </section>
     </PremiumLayout>

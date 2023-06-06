@@ -4,12 +4,13 @@ import {
   setFoodOpened,
   IngredientModal,
 } from "@/features/foods";
+import { DietMeal, DietMealGroup } from "@/features/plans";
 import { FC, useState } from "react";
+import { FilterQueries } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
 import DietMealFoods from "./DietMealFoods";
 import SearchBarCreate from "../../SearchBar/SearchBarCreate";
 import SearchedResults from "../../SearchBar/SearchedResults";
-import { DietMeal, DietMealGroup } from "@/features/plans";
 
 interface MealProps {
   dietMeal: DietMeal;
@@ -36,6 +37,8 @@ const DietMeal: FC<MealProps> = ({ dietMeal }) => {
     setThisFoodOpened(false);
   };
 
+  const [queries, setLocalQueries] = useState<FilterQueries>({});
+
   return (
     <div className="relative flex flex-col rounded-md border">
       <div className="flex w-full flex-col gap-2 p-2">
@@ -56,6 +59,7 @@ const DietMeal: FC<MealProps> = ({ dietMeal }) => {
         )}
         {showSearched && (
           <SearchedResults
+            queries={queries}
             searchResult={foodsSearched}
             handleClick={handleOpenFood}
           />
@@ -72,7 +76,11 @@ const DietMeal: FC<MealProps> = ({ dietMeal }) => {
               close
             </span>
           </div>
-          <IngredientModal food={foodOpened.food} dietMeal={dietMeal} />
+          <IngredientModal
+            handleCloseIngredient={handleCloseIngredients}
+            food={foodOpened.food}
+            dietMeal={dietMeal}
+          />
         </div>
       )}
     </div>

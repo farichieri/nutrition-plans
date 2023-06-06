@@ -49,6 +49,7 @@ const AddFoodIngredient: FC<Props> = ({ dietMeal }) => {
         ...recipeState.ingredients,
         [food.food_id as keyof Food]: newIngredient,
       };
+      console.log({ newIngredients });
       dispatch(
         setRecipeState({
           ...recipeState,

@@ -94,15 +94,16 @@ const Ingredient: FC<IngredientProps> = ({ ingredient }) => {
   }
 
   return (
-    <div className="flex w-full items-center rounded-md border">
-      <Image
-        src={food.image}
-        height={150}
-        width={150}
-        alt={food.food_name || ""}
-        className="h-[100px] w-[100px] min-w-[100px] max-w-[100px] rounded-md object-cover"
-      />
-      <div className="flex w-full px-2">
+    <div className="flex w-full items-center overflow-auto rounded-md border">
+      <span className="relative h-36 w-full basis-2/6">
+        <Image
+          src={food.image}
+          fill
+          className="object-cover"
+          alt={food.food_name || ""}
+        />
+      </span>
+      <div className="flex w-full basis-4/6 px-2">
         <div className="w-full">
           <div className="flex flex-col">
             <span className="text-base font-semibold capitalize">

@@ -3,7 +3,7 @@ import { FC, useState } from "react";
 import { selectAuthSlice } from "@/features/authentication/slice";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import Avatar from "../../../components/Avatar/Avatar";
+import AvatarDropDown from "@/components/DropDown/AvatarDropDown/AvatarDropDown";
 import Link from "next/link";
 import PrimaryButton from "../../../components/Buttons/PrimaryButton";
 import ThemeSwitcher from "../../../components/theme-switcher";
@@ -49,11 +49,8 @@ const NavBar: FC<Props> = () => {
         </div>
         <div className="flex w-fit min-w-fit basis-1/3 items-center justify-end gap-4 text-xs xs:gap-5 sm:gap-10 sm:text-xl">
           {user ? (
-            <Link href={"/app"}>
-              <Avatar changeable={false} width={30} height={30} />
-            </Link>
+            <AvatarDropDown isApp={false} />
           ) : (
-            // <AvatarDropDown isApp={false} />
             <>
               <Link href={"/login"} className="">
                 <button className="font-semibold xs:text-sm sm:text-base">

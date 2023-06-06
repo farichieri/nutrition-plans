@@ -335,12 +335,12 @@ const RecipeCreate: FC<Props> = () => {
             )}
           </div>
           <div className="flex max-w-xl flex-col gap-2 rounded-md border p-2">
-            <span className="text-3xl">Ingredients</span>
+            <span className="text-2xl font-semibold">Ingredients</span>
             <RecipeCreateIngredients ingredients={recipeState.ingredients} />
             <IngredientsSelector />
           </div>
           <div className="flex max-w-xl flex-col gap-2 rounded-md border p-2">
-            <span className="text-3xl">Recipe Instructions</span>
+            <span className="text-2xl font-semibold">Instructions</span>
             <Instructions />
             <AddInstruction />
           </div>

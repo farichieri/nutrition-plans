@@ -154,7 +154,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
       <div
         className={`${
           sidebarOpen ? "left-0" : "left-[-14rem]"
-        } fixed left-0 z-[70] flex h-screen min-h-screen w-52 select-none flex-col gap-1 overflow-auto border-r bg-white/80 px-2 pb-5 pt-16 backdrop-blur-sm transition-all duration-300 ease-in-out dark:border-slate-400/20 dark:bg-black/80 sm:gap-2 md:w-56 md:duration-0`}
+        } fixed left-0 z-[70] flex h-screen min-h-screen w-56 select-none flex-col gap-1 overflow-auto border-r bg-white/80 px-2 pb-5 pt-16 backdrop-blur-sm transition-all duration-300 ease-in-out dark:border-slate-400/20 dark:bg-black/80 sm:gap-2 md:w-56 md:duration-0`}
       >
         <div className="flex w-full flex-col items-center gap-2">
           <Link

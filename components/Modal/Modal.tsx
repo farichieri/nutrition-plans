@@ -4,9 +4,11 @@ import RoundButton from "../Buttons/RoundButton";
 const Modal = ({
   children,
   onClose,
+  customClass,
 }: {
   children: ReactNode;
   onClose: Function;
+  customClass?: string;
 }) => {
   const handleCloseModal = () => {
     if (onClose) {
@@ -19,7 +21,12 @@ const Modal = ({
         className="min-w-screen fixed inset-0 z-[90] m-0 flex min-h-screen items-center justify-center bg-black/60 dark:bg-black/40"
         onClick={handleCloseModal}
       ></div>
-      <div className="relative z-[100] m-auto max-w-[100vw] overflow-hidden rounded-3xl border bg-white dark:bg-black ">
+      <div
+        className={
+          ` relative z-[100] m-auto max-w-[100vw] overflow-hidden rounded-3xl border bg-white dark:bg-black ` +
+          customClass
+        }
+      >
         <RoundButton
           onClick={handleCloseModal}
           customClass=" p-1.5 h-10 w-10 absolute right-2 top-2"

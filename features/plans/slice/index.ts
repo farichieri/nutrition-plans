@@ -3,9 +3,8 @@ import { DietGroup, Diet } from "@/features/plans";
 import { getToday } from "@/utils/dateFormat";
 import { PlansEnum } from "@/types";
 import { PURGE } from "redux-persist";
-import type { RootState } from "../../../store/store";
+import { RootState } from "@/store/store";
 
-// Define a type for the slice state
 interface PlansSlice {
   date: string;
   plans: {
@@ -16,7 +15,6 @@ interface PlansSlice {
   isGeneratingMeals: boolean;
 }
 
-// Define the initial state using that type
 const initialState: PlansSlice = {
   date: getToday(),
   plans: {
@@ -33,7 +31,6 @@ const initialState: PlansSlice = {
 
 export const plansSlice = createSlice({
   name: "plans",
-  // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
     setDiet: (state, action: PayloadAction<Diet>) => {
@@ -63,7 +60,6 @@ export const plansSlice = createSlice({
 export const { setDiet, setDietOpened, setPlansDate, setIsGeneratingMeals } =
   plansSlice.actions;
 
-// Other code such as selectors can use the imported `RootState` type
 export const selectPlansSlice = (state: RootState) => state.plans;
 
 export default plansSlice.reducer;

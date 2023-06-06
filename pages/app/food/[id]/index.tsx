@@ -33,8 +33,10 @@ export default function Page() {
     if (typeof id === "string") {
       if (!foodsSearched[id]) {
         const fetchFoodID = async () => {
-          const foodFetched: Food | null = await fetchFoodByID(id);
-          foodFetched && dispatch(setFoodOpened(foodFetched));
+          const res = await fetchFoodByID(id);
+          if (res.result === "success") {
+            dispatch(setFoodOpened(res.data));
+          }
         };
         fetchFoodID();
       } else {

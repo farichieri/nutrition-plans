@@ -26,23 +26,23 @@ const filterByCompatiblePlan = (obj: any, plan: string, filterValue: boolean) =>
   );
 
 const filterByNutrientRange = (
-  obj: any,
+  foods: any,
   nutrientRange: string,
   nutrient: string
 ) => {
   const min = Number(nutrientRange.split("-")[0]);
   const max = Number(nutrientRange.split("-")[1]);
 
-  return Object.keys(obj).reduce(
-    (acc, val) =>
+  return Object.keys(foods).reduce(
+    (acc, food) =>
       !(
-        obj[val]["nutrients"][nutrient] >= (min || 0) &&
-        obj[val]["nutrients"][nutrient] <= (max || Infinity)
+        foods[food]["nutrients"][nutrient] >= (min || 0) &&
+        foods[food]["nutrients"][nutrient] <= (max || Infinity)
       )
         ? acc
         : {
             ...acc,
-            [val]: obj[val],
+            [food]: foods[food],
           },
     {}
   );

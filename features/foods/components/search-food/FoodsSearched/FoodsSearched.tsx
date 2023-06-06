@@ -1,18 +1,7 @@
-import {
-  Food,
-  FoodGroup,
-  FoodGroupArray,
-  selectFoodsSlice,
-} from "@/features/foods";
-import {
-  filterByNutrientRange,
-  filterByCompatiblePlan,
-  filterObject,
-  sortFoodsSearched,
-} from "@/utils/filter";
+import { Food, getFoodsFiltered, selectFoodsSlice } from "@/features/foods";
 import { AppRoutes } from "@/utils/routes";
 import { FC } from "react";
-import { FilterQueries, FilterSortTypes } from "@/types";
+import { FilterQueries } from "@/types";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import FoodCard from "./FoodCard";
@@ -41,40 +30,7 @@ const FoodsSearched: FC<Props> = ({ queries }) => {
     return <div>No Foods found with that name</div>;
   }
 
-  const getFoodsFiltered = (foodsToFilter: FoodGroup): FoodGroupArray => {
-    let foodsFiltered: FoodGroup = queries.kind
-      ? filterObject(foodsToFilter, "kind", queries.kind)
-      : foodsToFilter;
-
-    foodsFiltered = queries.plan
-      ? filterByCompatiblePlan(foodsFiltered, queries.plan, true)
-      : foodsFiltered;
-
-    foodsFiltered = queries.calories_range
-      ? filterByNutrientRange(foodsFiltered, queries.calories_range, "calories")
-      : foodsFiltered;
-    foodsFiltered = queries.proteins_range
-      ? filterByNutrientRange(foodsFiltered, queries.proteins_range, "proteins")
-      : foodsFiltered;
-    foodsFiltered = queries.carbs_range
-      ? filterByNutrientRange(
-          foodsFiltered,
-          queries.carbs_range,
-          "carbohydrates"
-        )
-      : foodsFiltered;
-    foodsFiltered = queries.fats_range
-      ? filterByNutrientRange(foodsFiltered, queries.fats_range, "fats")
-      : foodsFiltered;
-
-    const foodsSorted: FoodGroupArray = queries.sort
-      ? sortFoodsSearched(Object.values(foodsFiltered), queries.sort)
-      : sortFoodsSearched(Object.values(foodsFiltered), FilterSortTypes.rating);
-
-    return foodsSorted;
-  };
-
-  const foods = getFoodsFiltered(foodsToFilter);
+  const foods = getFoodsFiltered(foodsToFilter, queries);
 
   return (
     <div className="grid max-w-screen-2xl select-none grid-cols-fluid_fr items-start justify-center gap-4 px-4 sm:px-0 lg:grid-cols-fluid lg:justify-start">
