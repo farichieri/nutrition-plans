@@ -40,7 +40,7 @@ const ReGenerateMeals: FC<Props> = ({ planID }) => {
 
   return (
     <button
-      className="m-1 rounded-md border border-green-500 px-3 py-1.5 duration-300 hover:bg-green-700/40 active:bg-green-700"
+      className="rounded-md border border-green-500 px-3 py-1.5 duration-300 hover:bg-green-700/40 active:bg-green-700"
       onClick={reGenerate}
     >
       {!isGeneratingMeals ? (

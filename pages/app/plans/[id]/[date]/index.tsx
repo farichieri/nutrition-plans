@@ -5,12 +5,15 @@ import {
   setDiet,
   fetchDietByPlanAndDate,
   DaySelector,
-  PlanMeals,
   PlanSelector,
   setIsGeneratingMeals,
   setDietOpened,
   buildDiet,
   generateMeals,
+  PlanGeneratorTypeSelector,
+  PlanGeneratorTypes,
+  AutomatedMeals,
+  ManualMeals,
 } from "@/features/plans";
 import { CompatiblePlans, Nutrition } from "@/features/foods";
 import { PlansEnum } from "@/types";
@@ -29,7 +32,8 @@ export default function Page() {
   const dispatch = useDispatch();
   const { id } = router.query;
   const { user } = useSelector(selectAuthSlice);
-  const { date, dietOpened, isGeneratingMeals } = useSelector(selectPlansSlice);
+  const { date, dietOpened, isGeneratingMeals, planGeneratorType } =
+    useSelector(selectPlansSlice);
   const { meals } = useSelector(selectMealsSlice);
   const planID = PlansEnum[id as keyof CompatiblePlans];
   const nutrition_targets = user?.nutrition_targets;
@@ -114,8 +118,10 @@ export default function Page() {
   };
 
   useEffect(() => {
-    if (planID) {
-      generatePlan();
+    if (planGeneratorType === PlanGeneratorTypes.automated) {
+      if (planID) {
+        generatePlan();
+      }
     }
   }, [planID]);
 
@@ -132,13 +138,22 @@ export default function Page() {
             </SubPremiumNav>
             <div className="flex min-h-[100vh] flex-col items-start justify-start gap-5 bg-white p-4 pt-2 shadow-[0_1px_5px_lightgray] dark:bg-black dark:shadow-[0_1px_6px_#292929] sm:m-[0.5vw] sm:min-h-[calc(100vh_-_6rem_-_1vw)] sm:gap-5 sm:rounded-lg sm:border sm:p-8 sm:pt-2">
               <DaySelector />
-              <ReGenerateMeals planID={planID} />
+              <div className="flex w-full items-center justify-between">
+                {planGeneratorType === PlanGeneratorTypes.automated && (
+                  <ReGenerateMeals planID={planID} />
+                )}
+                <PlanGeneratorTypeSelector />
+              </div>
               {isGeneratingMeals ? (
                 <Spinner customClass="h-6 w-6 m-auto" />
               ) : (
                 <div className="flex w-full flex-wrap gap-10">
                   <div className="3xl:max-w-xl w-full max-w-lg">
-                    <PlanMeals planID={planID} />
+                    {planGeneratorType === PlanGeneratorTypes.automated ? (
+                      <AutomatedMeals planID={planID} meals={meals} />
+                    ) : (
+                      <ManualMeals />
+                    )}
                   </div>
                   {dietOpened && (
                     <div className="3xl:max-w-xl w-full max-w-lg">

@@ -16,7 +16,7 @@ export default function SearchLayout({ queries }: Props) {
     <PremiumLayout>
       <SubPremiumNav
         title=""
-        customClass="top-[var(--subnav-h)] !border-transparent h-14"
+        customClass="top-[var(--subnav-h)] border-[#1d1d1d;] h-14"
       >
         <SearchBar queries={queries} />
       </SubPremiumNav>

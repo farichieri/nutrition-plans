@@ -1,5 +1,15 @@
+import AutomatedMeals from "./Automated/AutomatedMeals";
 import DaySelector from "./DaySelector";
-import PlanMeals from "./PlanMeals";
+import ManualMeals from "./Manual/ManualMeals";
+import MealCard from "./common/MealCard";
+import PlanGeneratorTypeSelector from "./PlanGeneratorTypeSelector";
 import PlanSelector from "./PlanSelector";
 
-export { DaySelector, PlanSelector, PlanMeals };
+export {
+  AutomatedMeals,
+  DaySelector,
+  ManualMeals,
+  MealCard,
+  PlanGeneratorTypeSelector,
+  PlanSelector,
+};

@@ -68,3 +68,12 @@ export const NewDietMeal: DietMeal = {
   size: null,
   cook: true,
 };
+
+export enum PlanGeneratorTypes {
+  manual = "manual",
+  automated = "automated",
+}
+
+export type PlanGeneratorTypesT = {
+  [key in PlanGeneratorTypes]: string;
+};

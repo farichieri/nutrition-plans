@@ -58,7 +58,7 @@ module.exports = {
         flash: "flash 1.4s infinite linear",
       },
       gridTemplateColumns: {
-        fluid: "repeat(auto-fit, minmax(15rem, 20rem))",
+        fluid: "repeat(auto-fit, minmax(15rem, 1fr))",
         fluid_fr: "repeat(auto-fit, minmax(15rem, 1fr))",
       },
     },

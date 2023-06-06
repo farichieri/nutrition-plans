@@ -173,15 +173,15 @@ const Filters: FC<Props> = ({ queries, updateRoute, setLocalQueries }) => {
 
   return (
     <div className="flex w-full flex-col items-start justify-center gap-5 border-b pb-5">
-      <button
+      <RoundButton
         onClick={handleOpenFilters}
-        className="ml-[-0.75rem] flex items-center justify-center gap-1 rounded-full border border-transparent px-3 py-1.5 active:bg-slate-500/30 sm:hover:bg-slate-500/20 sm:active:border-black/10 sm:dark:active:border-white/10"
+        customClass={`px-3 py-1.5 ${openFilters && "!border-slate-500/30"}`}
       >
         <span className="material-icons-outlined">tune</span> Filters
-      </button>
+      </RoundButton>
       {openFilters && (
-        <div className="flex w-full flex-wrap justify-between gap-5">
-          <div className="flex basis-1/4 flex-col items-start gap-2">
+        <div className="flex w-full flex-wrap justify-between ">
+          <div className="flex w-1/2 flex-col items-start gap-2 p-2 sm:w-auto">
             <span className="font-semibold">Plan</span>
             <div className="flex flex-col items-start gap-1">
               {Object.keys(PlansEnum).map((plan) => (
@@ -212,7 +212,7 @@ const Filters: FC<Props> = ({ queries, updateRoute, setLocalQueries }) => {
               ))}
             </div>
           </div>
-          <div className="flex basis-1/4 flex-col items-start gap-2">
+          <div className="flex w-1/2 flex-col items-start gap-2 p-2 sm:w-auto">
             <span className="font-semibold">Kind</span>
             <div className="flex flex-col items-start gap-1">
               {Object.keys(FoodKind).map((kind) => (
@@ -244,7 +244,7 @@ const Filters: FC<Props> = ({ queries, updateRoute, setLocalQueries }) => {
             </div>
           </div>
 
-          <div className="flex basis-1/4 flex-col items-start gap-2">
+          <div className="flex w-auto flex-col items-start gap-2 p-2 ">
             <span className="font-semibold">Nutrients</span>
             {NUTRIENTS_OPTIONS.map((nutrient) => {
               const min = nutrient.min;
@@ -330,7 +330,7 @@ const Filters: FC<Props> = ({ queries, updateRoute, setLocalQueries }) => {
             })}
           </div>
 
-          <div className="flex basis-1/4 flex-col items-start gap-2">
+          <div className="flex w-1/2 flex-col items-start gap-2 p-2 sm:w-auto">
             <span className="font-semibold">Sort By</span>
             <div className="flex flex-col items-start gap-1">
               {Object.keys(FilterSortTypes).map((sort) => (

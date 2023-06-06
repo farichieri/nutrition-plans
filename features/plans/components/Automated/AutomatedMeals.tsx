@@ -1,21 +1,25 @@
 import { FC } from "react";
-import { Food, FoodScales, getDefaultScale } from "@/features/foods";
+import { Food, getDefaultScale } from "@/features/foods";
 import { PlansEnum } from "@/types";
 import { selectAuthSlice } from "@/features/authentication/slice";
 import { selectPlansSlice, DietMeal } from "@/features/plans";
+import { UserMeals, UserMealsArr } from "@/features/meals";
 import { useSelector, useDispatch } from "react-redux";
 import Image from "next/image";
 import Link from "next/link";
 
 interface Props {
   planID: PlansEnum;
+  meals: UserMeals;
 }
 
-const PlanMeals: FC<Props> = ({ planID }) => {
+const AutomatedMeals: FC<Props> = ({ planID, meals }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
   const { dietOpened } = useSelector(selectPlansSlice);
   const dietMeals = dietOpened?.diet_meals;
+
+  console.log({ dietMeals });
 
   return (
     <div>
@@ -139,4 +143,4 @@ const PlanMeals: FC<Props> = ({ planID }) => {
   );
 };
 
-export default PlanMeals;
+export default AutomatedMeals;

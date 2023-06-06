@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { DietGroup, Diet } from "@/features/plans";
+import { DietGroup, Diet, PlanGeneratorTypes } from "@/features/plans/types";
 import { getToday } from "@/utils/dateFormat";
 import { PlansEnum } from "@/types";
 import { PURGE } from "redux-persist";
@@ -13,6 +13,7 @@ interface PlansSlice {
   diets: DietGroup;
   dietOpened: Diet | null;
   isGeneratingMeals: boolean;
+  planGeneratorType: PlanGeneratorTypes;
 }
 
 const initialState: PlansSlice = {
@@ -27,6 +28,7 @@ const initialState: PlansSlice = {
   diets: {},
   dietOpened: null,
   isGeneratingMeals: true,
+  planGeneratorType: PlanGeneratorTypes.automated,
 };
 
 export const plansSlice = createSlice({
@@ -49,6 +51,12 @@ export const plansSlice = createSlice({
     setIsGeneratingMeals: (state, action: PayloadAction<boolean>) => {
       state.isGeneratingMeals = action.payload;
     },
+    setPlanGeneratorType: (
+      state,
+      action: PayloadAction<PlanGeneratorTypes>
+    ) => {
+      state.planGeneratorType = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(PURGE, () => {
@@ -57,8 +65,13 @@ export const plansSlice = createSlice({
   },
 });
 
-export const { setDiet, setDietOpened, setPlansDate, setIsGeneratingMeals } =
-  plansSlice.actions;
+export const {
+  setDiet,
+  setDietOpened,
+  setPlansDate,
+  setIsGeneratingMeals,
+  setPlanGeneratorType,
+} = plansSlice.actions;
 
 export const selectPlansSlice = (state: RootState) => state.plans;
 
