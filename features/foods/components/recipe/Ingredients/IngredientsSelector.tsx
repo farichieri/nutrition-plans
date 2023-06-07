@@ -1,6 +1,13 @@
 import { FC, useEffect, useState } from "react";
 import { FilterQueries } from "@/types";
-import { selectFoodsSlice, setFoodOpened, Food } from "@/features/foods";
+import {
+  selectFoodsSlice,
+  setFoodOpened,
+  Food,
+  setRecipeState,
+  Ingredient,
+  IngredientGroup,
+} from "@/features/foods";
 import { useDispatch, useSelector } from "react-redux";
 import Filters from "@/components/Premium/SearchBar/Filters";
 import IngredientModal from "./IngredientModal";
@@ -13,9 +20,11 @@ interface Props {}
 const IngredientsSelector: FC<Props> = () => {
   const dispatch = useDispatch();
   const { foodsSearched, foodOpened } = useSelector(selectFoodsSlice);
+  const { food } = foodOpened;
   const [searchResult, setSearchResult] = useState(foodsSearched);
   const [openIngredients, setOpenIngredients] = useState(false);
   const noData = Object.keys(searchResult).length < 1;
+  const { recipeState } = useSelector(selectFoodsSlice);
 
   useEffect(() => {
     setSearchResult(foodsSearched);
@@ -30,6 +39,30 @@ const IngredientsSelector: FC<Props> = () => {
   };
 
   const [queries, setLocalQueries] = useState<FilterQueries>({});
+
+  const handleAddIngredient = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ): void => {
+    event.preventDefault();
+    if (!food) return;
+    const newIngredient: Ingredient = {
+      ...food,
+      scale_amount: foodOpened.food_scale.amount,
+      scale_name: foodOpened.food_scale.weightName,
+    };
+
+    const newIngredients: IngredientGroup = {
+      ...recipeState.ingredients,
+      [food.food_id as keyof Food]: newIngredient,
+    };
+    dispatch(
+      setRecipeState({
+        ...recipeState,
+        ingredients: newIngredients,
+      })
+    );
+    dispatch(setFoodOpened(null));
+  };
 
   return (
     <>
@@ -83,6 +116,7 @@ const IngredientsSelector: FC<Props> = () => {
                 <IngredientModal
                   handleCloseIngredient={handleCloseIngredient}
                   food={foodOpened.food}
+                  handleAddIngredient={handleAddIngredient}
                 />
               </div>
             </div>

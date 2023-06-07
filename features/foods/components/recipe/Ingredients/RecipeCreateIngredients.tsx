@@ -8,7 +8,8 @@ import {
   setRecipeState,
 } from "@/features/foods";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
-import { FC, useEffect, useState } from "react";
+import { FC, MouseEventHandler, useEffect, useState } from "react";
+import { FoodKeys } from "@/types/initialTypes";
 import { getNewAmount } from "@/utils/nutritionHelpers";
 import { reorderArr } from "@/utils/filter";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,9 +22,10 @@ import Spinner from "@/components/Loader/Spinner";
 
 interface IngredientProps {
   ingredient: Food;
+  handleRemove: MouseEventHandler;
 }
 
-const Ingredient: FC<IngredientProps> = ({ ingredient }) => {
+const Ingredient: FC<IngredientProps> = ({ ingredient, handleRemove }) => {
   const food = ingredient;
   const dispatch = useDispatch();
   const { recipeState } = useSelector(selectFoodsSlice);
@@ -31,19 +33,6 @@ const Ingredient: FC<IngredientProps> = ({ ingredient }) => {
   const options = getScaleOptions(scalesMerged);
 
   if (!recipeState) return <>No State Provided</>;
-
-  const handleRemove = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    const id = (event.target as HTMLButtonElement).id;
-    const ingredients = { ...recipeState.ingredients };
-    delete ingredients[id];
-    dispatch(
-      setRecipeState({
-        ...recipeState,
-        ingredients: ingredients,
-      })
-    );
-  };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -117,11 +106,10 @@ const Ingredient: FC<IngredientProps> = ({ ingredient }) => {
                 handleChange={handleChange}
                 id={food.food_id}
                 isRequired={false}
-                key={"scale_amount"}
-                labelFor={"scale_amount"}
+                labelFor={String(FoodKeys.scale_amount)}
                 labelText={""}
                 min={"0"}
-                name={"scale_amount"}
+                name={String(FoodKeys.scale_amount)}
                 step={"1"}
                 title={""}
                 type={"number"}
@@ -132,9 +120,9 @@ const Ingredient: FC<IngredientProps> = ({ ingredient }) => {
                 handleChange={handleChange}
                 id={food.food_id}
                 isRequired={false}
-                labelFor={"scale_name"}
+                labelFor={String(FoodKeys.scale_name)}
                 labelText={""}
-                name={"scale_name"}
+                name={String(FoodKeys.scale_name)}
                 title={"Scale Name"}
                 options={options}
                 value={food.scale_name}
@@ -144,11 +132,11 @@ const Ingredient: FC<IngredientProps> = ({ ingredient }) => {
               handleChange={handleChange}
               id={food.food_id}
               isRequired={false}
-              labelFor={"note"}
+              labelFor={FoodKeys.note}
               labelText={""}
-              name={"note"}
+              name={FoodKeys.note}
               title={"Food Note"}
-              type={"note"}
+              type={FoodKeys.note}
               value={food.note}
               placeholder="Aditional Note"
             />
@@ -168,12 +156,12 @@ const Ingredient: FC<IngredientProps> = ({ ingredient }) => {
 
 interface Props {
   ingredients: IngredientGroup;
+  handleRemove: MouseEventHandler;
 }
 
-const RecipeCreateIngredients: FC<Props> = ({ ingredients }) => {
+const RecipeCreateIngredients: FC<Props> = ({ ingredients, handleRemove }) => {
   const dispatch = useDispatch();
   const { recipeState } = useSelector(selectFoodsSlice);
-
   const ingArrSorted = Object.values(ingredients).sort(
     (a, b) => a.order - b.order
   );
@@ -221,6 +209,7 @@ const RecipeCreateIngredients: FC<Props> = ({ ingredients }) => {
     setIngsState(ingArrSorted);
   }, [ingredients]);
 
+  console.log({ ingsState });
   if (ingsState.length < 1) {
     return <></>;
   }
@@ -253,7 +242,11 @@ const RecipeCreateIngredients: FC<Props> = ({ ingredients }) => {
                           <span className="material-icons-outlined opacity-50">
                             drag_handle
                           </span>
-                          <Ingredient ingredient={ing} key={ing.food_id} />
+                          <Ingredient
+                            ingredient={ing}
+                            key={ing.food_id}
+                            handleRemove={handleRemove}
+                          />
                         </div>
                       )}
                     </Draggable>

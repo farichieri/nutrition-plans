@@ -59,7 +59,7 @@ module.exports = {
       },
       gridTemplateColumns: {
         fluid: "repeat(auto-fit, minmax(15rem, 1fr))",
-        fluid_fr: "repeat(auto-fit, minmax(15rem, 1fr))",
+        fluid_lg: "repeat(auto-fit, minmax(30rem, 1fr))",
       },
     },
   },

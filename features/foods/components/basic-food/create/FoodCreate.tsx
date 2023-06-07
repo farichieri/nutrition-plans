@@ -139,7 +139,7 @@ const FoodCreate: FC<Props> = () => {
   return (
     <form className="flex w-full flex-col gap-2" onSubmit={handleSubmit}>
       <div className="flex w-full flex-wrap  xl:divide-x">
-        <div className="mb-10 flex w-full max-w-xl flex-col gap-5 px-4">
+        <div className="mb-10 flex w-full max-w-xl flex-col gap-5 sm:px-4">
           <div className="">
             {nameDescFields.map((field) => (
               <Input
@@ -378,7 +378,7 @@ const FoodCreate: FC<Props> = () => {
           </div>
         </div>
 
-        <div className="flex w-full max-w-xl flex-col gap-5 px-4">
+        <div className="flex w-full max-w-xl flex-col gap-5 sm:px-4">
           <div className="flex flex-col rounded-md ">
             <div
               className="flex w-fit cursor-pointer items-center gap-5 "

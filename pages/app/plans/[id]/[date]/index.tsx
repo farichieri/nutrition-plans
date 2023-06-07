@@ -14,6 +14,7 @@ import {
   PlanGeneratorTypes,
   AutomatedMeals,
   ManualMeals,
+  generateDietMeals,
 } from "@/features/plans";
 import { CompatiblePlans, Nutrition } from "@/features/foods";
 import { PlansEnum } from "@/types";
@@ -40,7 +41,8 @@ export default function Page() {
   const userMealsArr: UserMealsArr = Object.values(meals).sort(
     (a, b) => a.order - b.order
   );
-  const [newDiet, setNewDiet] = useState(NewDiet);
+  const isAutomated = planGeneratorType === PlanGeneratorTypes.automated;
+  const isManual = planGeneratorType === PlanGeneratorTypes.manual;
 
   const fetchUserDiet = async (
     date: string,
@@ -101,7 +103,7 @@ export default function Page() {
     }
   }, [router, dietOpened]);
 
-  const generatePlan = async () => {
+  const generateAutomatedPlan = async () => {
     if (!nutrition_targets) return;
     dispatch(setIsGeneratingMeals(true));
     const res = await generateMeals(planID, userMealsArr, nutrition_targets);
@@ -117,10 +119,18 @@ export default function Page() {
     dispatch(setIsGeneratingMeals(false));
   };
 
+  const setDietSkeleton = (): void => {
+    const mealsGenerated = generateDietMeals(Object.values(meals));
+    const diet = buildDiet(Object.values(mealsGenerated), planID);
+    dispatch(setDietOpened(diet));
+  };
+
   useEffect(() => {
-    if (planGeneratorType === PlanGeneratorTypes.automated) {
+    setDietSkeleton();
+
+    if (isAutomated) {
       if (planID) {
-        generatePlan();
+        generateAutomatedPlan();
       }
     }
   }, [planID]);
@@ -139,24 +149,22 @@ export default function Page() {
             <div className="flex min-h-[100vh] flex-col items-start justify-start gap-5 bg-white p-4 pt-2 shadow-[0_1px_5px_lightgray] dark:bg-black dark:shadow-[0_1px_6px_#292929] sm:m-[0.5vw] sm:min-h-[calc(100vh_-_6rem_-_1vw)] sm:gap-5 sm:rounded-lg sm:border sm:p-8 sm:pt-2">
               <DaySelector />
               <div className="flex w-full items-center justify-between">
-                {planGeneratorType === PlanGeneratorTypes.automated && (
-                  <ReGenerateMeals planID={planID} />
-                )}
+                {isAutomated && <ReGenerateMeals planID={planID} />}
                 <PlanGeneratorTypeSelector />
               </div>
-              {isGeneratingMeals ? (
+              {isGeneratingMeals || !dietOpened ? (
                 <Spinner customClass="h-6 w-6 m-auto" />
               ) : (
-                <div className="flex w-full flex-wrap gap-10">
-                  <div className="3xl:max-w-xl w-full max-w-lg">
-                    {planGeneratorType === PlanGeneratorTypes.automated ? (
-                      <AutomatedMeals planID={planID} meals={meals} />
+                <div className="grid w-full gap-10 sm:grid-cols-fluid_lg">
+                  <div className="w-full">
+                    {isAutomated ? (
+                      <AutomatedMeals dietOpened={dietOpened} />
                     ) : (
-                      <ManualMeals />
+                      <ManualMeals dietOpened={dietOpened} />
                     )}
                   </div>
                   {dietOpened && (
-                    <div className="3xl:max-w-xl w-full max-w-lg">
+                    <div className="w-full ">
                       <Nutrition nutrients={dietOpened.diet_nutrients} />
                     </div>
                   )}

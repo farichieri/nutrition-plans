@@ -1,17 +1,14 @@
 import { FC, useState } from "react";
 import { FoodNutrients } from "@/features/foods";
 import { formatToFixed } from "@/utils/format";
+import { selectAuthSlice } from "@/features/authentication";
+import { useSelector } from "react-redux";
 import FoodNutritionDetail from "./FoodNutritionDetail";
 import PieGraph from "@/components/PieGraph/PieGraph";
-import { useSelector } from "react-redux";
-import { selectAuthSlice } from "@/features/authentication";
 
 interface Props {
   nutrients: FoodNutrients;
 }
-
-// This component should receive props, to be easy-reusable.
-// And I'm not sure If I want to me modifying the scale. Or just render the results and have another copmonent for the modifies.
 
 const Nutrition: FC<Props> = ({ nutrients }) => {
   const { user } = useSelector(selectAuthSlice);
@@ -28,14 +25,14 @@ const Nutrition: FC<Props> = ({ nutrients }) => {
   }
 
   return (
-    <div className="flex w-full max-w-xl flex-wrap items-center justify-center gap-10">
+    <div className="flex w-full flex-wrap items-center justify-center gap-10">
       {openDetails && (
         <FoodNutritionDetail
           nutrients={nutrients}
           handleClose={() => setOpenDetails(false)}
         />
       )}
-      <div className="flex w-full max-w-lg flex-col gap-0">
+      <div className="flex w-full flex-col gap-0">
         <div className="mb-4 flex items-center gap-2">
           <span className="material-icons-outlined text-green-500">
             data_usage

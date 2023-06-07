@@ -42,7 +42,7 @@ const Favorites: FC<Props> = () => {
 
   return (
     <div>
-      <div className="grid max-w-screen-2xl select-none grid-cols-fluid_fr items-start justify-center gap-4 px-4 sm:px-0 lg:grid-cols-fluid lg:justify-start">
+      <div className="grid max-w-screen-2xl select-none grid-cols-fluid items-start justify-center gap-4 px-4 sm:px-0 lg:justify-start">
         {noData ? (
           <div className="m-auto">No favorites found 😔</div>
         ) : (

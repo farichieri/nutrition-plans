@@ -45,14 +45,14 @@ const FoodNutrition: FC<Props> = ({ food, amount, scale }) => {
   }
 
   return (
-    <div className="flex w-full max-w-xl justify-center">
+    <div className="flex w-full justify-center">
       {openDetails && (
         <FoodNutritionDetail
           nutrients={nutrients}
           handleClose={() => setOpenDetails(false)}
         />
       )}
-      <div className="flex w-full max-w-lg flex-col gap-2">
+      <div className="flex w-full  flex-col gap-2">
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center justify-start gap-2">
             <span className="material-icons-outlined text-green-500">

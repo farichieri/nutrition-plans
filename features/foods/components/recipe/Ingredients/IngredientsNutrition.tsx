@@ -4,10 +4,10 @@ import {
   setRecipeState,
   setMealState,
 } from "@/features/foods";
+import {  getIngredientsFoods } from "@/utils/foodsHelpers";
 import { AppRoutes } from "@/utils/routes";
-import { Diet } from "@/features/plans";
+import { Diet, getDietFoods } from "@/features/plans";
 import { FC, useEffect, useState } from "react";
-import { getDietFoods, getIngredientsFoods } from "@/utils/foodsHelpers";
 import { getNutritionMerged } from "@/utils/nutritionHelpers";
 import { setDietState } from "@/store/slices/createDietSlice";
 import { useDispatch } from "react-redux";

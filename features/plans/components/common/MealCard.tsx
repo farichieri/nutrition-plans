@@ -1,99 +1,181 @@
-import { DietMeal } from "../../types";
+import { Diet, DietMeal } from "../../types";
+import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { FC } from "react";
-import { Food, getDefaultScale } from "@/features/foods";
-import Image from "next/image";
-import Link from "next/link";
+import { Food, RecipeCreateIngredients } from "@/features/foods";
+import { selectPlansSlice, setDietOpened } from "../../slice";
+import { useDispatch, useSelector } from "react-redux";
+import AddFood from "./AddFood";
+import FoodInMealCard from "./FoodCard";
 
 interface Props {
-  meal: DietMeal;
+  dietMeal: DietMeal;
   mealKcals: number;
+  dietOpened: Diet;
 }
 
-const MealCard: FC<Props> = ({ meal, mealKcals }) => {
+const MealCard: FC<Props> = ({ dietMeal, mealKcals, dietOpened }) => {
+  const dispatch = useDispatch();
+  const { isEditingDiet } = useSelector(selectPlansSlice);
+
+  const handleRemove = (event: React.MouseEvent) => {
+    event.preventDefault();
+    const id = (event.target as HTMLButtonElement).id;
+    if (!dietMeal.diet_meal_id || !dietOpened) return;
+
+    const dietMeals = { ...dietOpened?.diet_meals };
+    const dietMealOpened = { ...dietMeals[dietMeal.diet_meal_id] };
+    const dietMealFoods = { ...dietMealOpened.diet_meal_foods };
+    delete dietMealFoods[id];
+
+    const dietUpdated: Diet = {
+      ...dietOpened,
+      diet_meals: {
+        ...dietMeals,
+        [dietMeal.diet_meal_id]: {
+          ...dietMealOpened,
+          diet_meal_foods: {
+            ...dietMealFoods,
+          },
+        },
+      },
+    };
+    dispatch(setDietOpened(dietUpdated));
+  };
+
+  const onDragEnd = (result: any) => {
+    const { source, destination } = result;
+    if (!destination) return;
+    if (
+      source.index === destination.index &&
+      source.droppableId === destination.droppableId
+    ) {
+      return;
+    }
+    // const ingsReordered = reorderArr(
+    //   ingsState,
+    //   source.index,
+    //   destination.index
+    // );
+    // updateIngredientsOrder(ingsReordered);
+    // setIngsState(ingsReordered);
+  };
+
+  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   event.preventDefault();
+  //   const scalesMerged = mergeScales(food);
+  //   const type = event.target.type;
+  //   const name = event.target.name;
+  //   const id = event.target.id;
+  //   const value = event.target.value;
+  //   const valueF = type === "number" ? Number(value) : value;
+
+  //   const ingredients = { ...recipeState.ingredients };
+  //   let ingredient = { ...ingredients[id] };
+  //   let ingredientUpdated = { ...ingredient };
+
+  //   if (name === "scale_name") {
+  //     // Este tiene que pasar a (food, scale_amount)
+  //     const newAmount = getNewAmount(
+  //       scalesMerged,
+  //       food.scale_name || "grams",
+  //       value,
+  //       food.scale_amount || 1
+  //     );
+  //     ingredientUpdated = {
+  //       ...food,
+  //       scale_name: value,
+  //       scale_amount: newAmount || food.serving_amount,
+  //     };
+  //   } else {
+  //     ingredientUpdated = {
+  //       ...food,
+  //       [name]: valueF,
+  //     };
+  //   }
+  //   ingredients[id] = ingredientUpdated;
+  //   // dispatch(
+  //   //   setRecipeState({
+  //   //     ...recipeState,
+  //   //     ingredients: ingredients,
+  //   //   })
+  //   // );
+  // };
+
   return (
     <div
-      key={meal.diet_meal_id}
+      key={dietMeal.diet_meal_id}
       className="min-h-20 flex w-full flex-col overflow-auto rounded-md border "
     >
       <div className="flex items-center gap-5 border-b px-2 py-1 text-center">
-        <span className="font-semibold capitalize">{meal.diet_meal_name}</span>
-        <div className="flex w-full flex-col text-left text-xs">
+        <span className="font-semibold capitalize">
+          {dietMeal.diet_meal_name}
+        </span>
+        {/* <div className="flex w-full flex-col text-left text-xs">
           <span className="text-blue-500">
-            Meal Complexity: {meal.complexity}
+            Meal Complexity: {dietMeal.complexity}
           </span>
-          <span className="text-cyan-500">Meal Cook: {String(meal.cook)}</span>
-          <span className="text-yellow-500">Meal Time: {meal.time}</span>
-          <span className="text-purple-500">Meal Size: {meal.size}</span>
-        </div>
+          <span className="text-cyan-500">Meal Cook: {String(dietMeal.cook)}</span>
+          <span className="text-yellow-500">Meal Time: {dietMeal.time}</span>
+          <span className="text-purple-500">Meal Size: {dietMeal.size}</span>
+        </div> */}
         <span className="ml-auto text-xs opacity-50">{mealKcals} calories</span>
-        <div className="flex items-center">
-          {/* Eaten */}
-          <span className="material-icons">radio_button_unchecked</span>
-        </div>
+        {!isEditingDiet && (
+          <div className="flex items-center">
+            {/* Eaten */}
+            <span className="material-icons">radio_button_unchecked</span>
+          </div>
+        )}
       </div>
-      <div>
-        {Object.keys(meal.diet_meal_foods).map((food_id) => {
-          const food: Food = meal.diet_meal_foods[food_id];
-          const { scale_name, scale_amount, scale_grams } = getDefaultScale(
-            food.scales
-          );
-          return (
-            <Link
-              key={food.food_id}
-              className="flex divide-y"
-              href={`/app/food/${food.food_id}?amount=${scale_amount}&scale=${scale_name}`}
+
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId="ingredients">
+          {(droppableProvided) => (
+            <div
+              {...droppableProvided.droppableProps}
+              ref={droppableProvided.innerRef}
+              className="divide-y"
             >
-              <Image
-                src={food.image}
-                height={150}
-                width={150}
-                alt={food.food_name || ""}
-                className="h-[130px] w-[130px] min-w-[130px] max-w-[130px] object-cover"
-              />
-              <div className="flex w-full p-2">
-                <div className="flex w-full flex-col">
-                  <div className="">
-                    <span>{food.food_name}</span>
-                  </div>
-                  <div className="">
-                    <span className="text-xs opacity-50">
-                      {food.food_description}
-                    </span>
-                  </div>
-                  <div className="flex gap-1 text-xs">
-                    <span>{scale_amount}</span>
-                    <span className="capitalize">{scale_name}</span>
-                    <span className="ml-5 text-xs opacity-50">
-                      {`(${scale_grams} grams)`}
-                    </span>
-                  </div>
-                  <div className="flex w-full flex-col text-left text-xs">
-                    <span className="text-blue-500">
-                      Food Complexity: {food.complexity}
-                    </span>
-                    <span className="text-cyan-500">
-                      Meal Cook: {String(food.cook_time > 0)}
-                    </span>
-                    <span className="text-yellow-500">
-                      Food Time: {food.prep_time + food.cook_time}
-                    </span>
-                  </div>
-                </div>
-                <div className="my-auto flex">
-                  <div>
-                    {/* Eaten */}
-                    <span className="material-icons md-20">
-                      radio_button_unchecked
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </Link>
-          );
-        })}
-      </div>
+              {Object.keys(dietMeal.diet_meal_foods).map((food_id, index) => {
+                const food: Food = dietMeal.diet_meal_foods[food_id];
+                return (
+                  <Draggable
+                    key={food_id}
+                    draggableId={food_id}
+                    index={index}
+                    isDragDisabled={!isEditingDiet}
+                  >
+                    {(draggableProvided) => (
+                      <div
+                        ref={draggableProvided.innerRef}
+                        {...draggableProvided.draggableProps}
+                        {...draggableProvided.dragHandleProps}
+                        className="flex items-center gap-2 px-0 hover:bg-slate-500/20 active:bg-slate-500/40"
+                      >
+                        {isEditingDiet && (
+                          <span className="material-icons-outlined opacity-50">
+                            drag_handle
+                          </span>
+                        )}
+                        <FoodInMealCard
+                          food={food}
+                          handleRemove={handleRemove}
+                        />
+                      </div>
+                    )}
+                  </Draggable>
+                );
+              })}
+
+              {droppableProvided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
+      {isEditingDiet && <AddFood dietMeal={dietMeal} />}
     </div>
   );
 };
 
 export default MealCard;
+
+// ;

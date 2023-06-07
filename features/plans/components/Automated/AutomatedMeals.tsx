@@ -2,21 +2,19 @@ import { FC } from "react";
 import { Food, getDefaultScale } from "@/features/foods";
 import { PlansEnum } from "@/types";
 import { selectAuthSlice } from "@/features/authentication/slice";
-import { selectPlansSlice, DietMeal } from "@/features/plans";
-import { UserMeals, UserMealsArr } from "@/features/meals";
+import { selectPlansSlice, DietMeal, Diet } from "@/features/plans";
+import { UserMeals } from "@/features/meals";
 import { useSelector, useDispatch } from "react-redux";
 import Image from "next/image";
 import Link from "next/link";
 
 interface Props {
-  planID: PlansEnum;
-  meals: UserMeals;
+  dietOpened: Diet;
 }
 
-const AutomatedMeals: FC<Props> = ({ planID, meals }) => {
+const AutomatedMeals: FC<Props> = ({ dietOpened }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
-  const { dietOpened } = useSelector(selectPlansSlice);
   const dietMeals = dietOpened?.diet_meals;
 
   console.log({ dietMeals });

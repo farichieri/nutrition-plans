@@ -14,6 +14,7 @@ interface PlansSlice {
   dietOpened: Diet | null;
   isGeneratingMeals: boolean;
   planGeneratorType: PlanGeneratorTypes;
+  isEditingDiet: boolean;
 }
 
 const initialState: PlansSlice = {
@@ -29,6 +30,7 @@ const initialState: PlansSlice = {
   dietOpened: null,
   isGeneratingMeals: true,
   planGeneratorType: PlanGeneratorTypes.automated,
+  isEditingDiet: false,
 };
 
 export const plansSlice = createSlice({
@@ -57,6 +59,9 @@ export const plansSlice = createSlice({
     ) => {
       state.planGeneratorType = action.payload;
     },
+    setIsEditingDiet: (state, action: PayloadAction<boolean>) => {
+      state.isEditingDiet = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(PURGE, () => {
@@ -71,6 +76,7 @@ export const {
   setPlansDate,
   setIsGeneratingMeals,
   setPlanGeneratorType,
+  setIsEditingDiet,
 } = plansSlice.actions;
 
 export const selectPlansSlice = (state: RootState) => state.plans;

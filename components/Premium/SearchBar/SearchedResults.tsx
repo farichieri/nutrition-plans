@@ -11,7 +11,6 @@ interface Props {
 
 const SearchedResults: FC<Props> = ({ searchResult, handleClick, queries }) => {
   const foods = getFoodsFiltered(searchResult, queries);
-  console.log({ queries });
   return (
     <div className="flex flex-col gap-5">
       {foods.map((food) => {

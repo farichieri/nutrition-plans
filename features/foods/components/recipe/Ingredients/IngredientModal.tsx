@@ -5,22 +5,21 @@ import {
   setFoodOpened,
   setFoodOpenedScale,
 } from "@/features/foods";
-import { DietMeal } from "@/features/plans";
-import { FC, useEffect } from "react";
+import { FC, MouseEventHandler, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Image from "next/image";
 import Modal from "@/components/Modal/Modal";
 
 interface Props {
   food: Food;
-  dietMeal?: DietMeal;
   handleCloseIngredient: Function;
+  handleAddIngredient: MouseEventHandler;
 }
 
 const IngredientModal: FC<Props> = ({
   food,
-  dietMeal,
   handleCloseIngredient,
+  handleAddIngredient,
 }) => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -39,8 +38,8 @@ const IngredientModal: FC<Props> = ({
       customClass="rounded-none sm:rounded-3xl"
     >
       <div className="flex h-screen w-xl max-w-full flex-col items-center gap-5 overflow-auto p-4 sm:h-[90vh] sm:w-xl">
-        <div className="m-auto flex w-full">
-          <div className="relative m-auto flex h-40 w-full basis-1/2 sm:h-60 ">
+        <div className="mt-5 flex w-full items-start justify-start gap-2">
+          <div className="relative flex h-40 w-full basis-1/2 sm:h-60 ">
             <Image
               src={food.image}
               fill
@@ -48,7 +47,7 @@ const IngredientModal: FC<Props> = ({
               alt={food.food_name || ""}
             />
           </div>
-          <div className="flex h-full w-full basis-1/2 flex-col p-2">
+          <div className="flex h-full w-full basis-1/2 flex-col ">
             <span className="text-3xl font-semibold capitalize">
               {food.food_name}
             </span>
@@ -57,7 +56,7 @@ const IngredientModal: FC<Props> = ({
             </span>
           </div>
         </div>
-        <AddFoodIngredient dietMeal={dietMeal} />
+        <AddFoodIngredient handleAddIngredient={handleAddIngredient} />
         <FoodNutrition
           food={food}
           amount={Number(food.serving_amount)}

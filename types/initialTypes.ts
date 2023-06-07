@@ -161,9 +161,11 @@ export const NewFoodNutrients: FoodNutrients = {
 
 export const NewFood: Food = {
   allow_public: true,
+  brand: null,
   compatible_plans: NewFoodCompatiblePlans,
   complexity: 1,
   cook_time: 0,
+  curated: false,
   date_created: null,
   date_updated: null,
   digestion_status: null,
@@ -172,7 +174,6 @@ export const NewFood: Food = {
   eaten: false,
   food_category: null,
   food_description: null,
-  brand: null,
   food_id: null,
   food_name_lowercase: null,
   food_name: null,
@@ -196,13 +197,19 @@ export const NewFood: Food = {
   prep_time: 0,
   price: null,
   recipe_category: null,
+  scale_amount: null,
+  scale_name: null,
   scales: [],
   serving_amount_per_package: null,
   serving_amount: 1,
   serving_grams: null,
   serving_name: "Serving",
   source: null,
-  curated: false,
   total_time: 0,
   uploader_id: null,
 };
+
+export let FoodKeys = {} as Food;
+Object.keys(NewFood).forEach((key: string) => {
+  FoodKeys[key] = key;
+});

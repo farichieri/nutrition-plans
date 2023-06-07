@@ -1,7 +1,3 @@
-import { MealComplexities } from "@/features/meals";
-import { getDietFoods } from "../../../utils/foodsHelpers";
-import { getDietNutrition } from "@/utils/nutritionHelpers";
-import { PlansEnum } from "@/types";
 import {
   Diet,
   DietMeal,
@@ -9,6 +5,23 @@ import {
   DietMealGroupArr,
   NewDiet,
 } from "@/features/plans";
+import { getDietNutrition } from "@/utils/nutritionHelpers";
+import { MealComplexities, UserMealsArr } from "@/features/meals";
+import { PlansEnum } from "@/types";
+import { FoodGroup } from "@/features/foods";
+import { uuidv4 } from "@firebase/util";
+
+const getDietFoods = (diet_meals: DietMealGroup): FoodGroup => {
+  let result: FoodGroup = {};
+  Object.keys(diet_meals).map((meal_id) => {
+    const diet_meal = diet_meals[meal_id];
+    const foods = diet_meal.diet_meal_foods;
+    Object.keys(foods).map((food_id, index) => {
+      result[meal_id + "_" + index] = foods[food_id];
+    });
+  });
+  return result;
+};
 
 const matchComplexity = (complexity: number, toEval: number): boolean => {
   switch (toEval) {
@@ -42,9 +55,9 @@ const maxComplexity = (toEval: number): number => {
 
 const buildDiet = (meals: DietMealGroupArr, planID: PlansEnum) => {
   const dietMeals: DietMealGroup = {};
-  meals.forEach((m) => {
-    if (!m.diet_meal_id) return;
-    dietMeals[m.diet_meal_id as keyof DietMeal] = m;
+  meals.forEach((meal) => {
+    if (!meal.diet_meal_id) return;
+    dietMeals[meal.diet_meal_id as keyof DietMeal] = meal;
   });
   const foods = getDietFoods(dietMeals);
   const nutrition = getDietNutrition(foods);
@@ -66,4 +79,33 @@ const buildDiet = (meals: DietMealGroupArr, planID: PlansEnum) => {
   return diet;
 };
 
-export { matchComplexity, maxComplexity, buildDiet };
+const generateDietMeals = (userMealsArr: UserMealsArr): DietMealGroup => {
+  const diet_meals: DietMealGroup = {};
+  userMealsArr.map((meal) => {
+    const uuid = uuidv4();
+
+    const newDietMeal: DietMeal = {
+      complexity: meal.complexity,
+      cook: meal.cook,
+      diet_meal_foods: {},
+      diet_meal_id: uuid,
+      diet_meal_name: meal.name,
+      order: meal.order,
+      size: meal.size,
+      time: meal.time,
+      user_meal_id: meal.id,
+    };
+    if (newDietMeal.diet_meal_id) {
+      diet_meals[newDietMeal.diet_meal_id] = newDietMeal;
+    }
+  });
+  return diet_meals;
+};
+
+export {
+  matchComplexity,
+  maxComplexity,
+  buildDiet,
+  getDietFoods,
+  generateDietMeals,
+};

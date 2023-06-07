@@ -1,5 +1,5 @@
+import { PlansEnum } from "@/types";
 import { NewFood } from "@/types/initialTypes";
-import { PlansEnum } from "../../../types";
 
 export interface Food {
   [id: string]: any;
@@ -8,6 +8,7 @@ export interface Food {
   compatible_plans: CompatiblePlans;
   complexity: number;
   cook_time: number;
+  curated: boolean;
   date_created: any | null;
   date_updated: string | null;
   digestion_status: DigestionStatusEnum | null;
@@ -40,6 +41,8 @@ export interface Food {
   price: number | null;
   recipe_category: RecipeCategoriesEnum | null;
   scales: FoodScales;
+  scale_amount: number | null;
+  scale_name: string | null;
   serving_amount_per_package: number | null;
   serving_amount: number | null;
   serving_grams: number | null;
@@ -47,7 +50,6 @@ export interface Food {
   source: string | null;
   total_time: number;
   uploader_id: string | null;
-  curated: boolean;
 }
 
 export interface FoodScale {

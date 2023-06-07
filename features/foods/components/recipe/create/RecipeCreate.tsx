@@ -125,10 +125,25 @@ const RecipeCreate: FC<Props> = () => {
     setNewImageFile(undefined);
   };
 
+  const handleRemoveIngredient = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+    const id = (event.target as HTMLButtonElement).id;
+    const ingredients = { ...recipeState.ingredients };
+    delete ingredients[id];
+    dispatch(
+      setRecipeState({
+        ...recipeState,
+        ingredients: ingredients,
+      })
+    );
+  };
+
   return (
     <form className="flex w-full flex-col" onSubmit={handleSubmit}>
       <div className="flex w-full flex-wrap lg:divide-x">
-        <div className="flex w-full max-w-xl flex-col gap-5 px-4">
+        <div className="flex w-full max-w-xl flex-col gap-5 sm:px-4">
           <div className="flex flex-col">
             <Input
               handleChange={handleChange}
@@ -319,7 +334,7 @@ const RecipeCreate: FC<Props> = () => {
             />
           </div>
         </div>
-        <div className="flex w-full max-w-xl flex-col gap-5 px-4">
+        <div className="flex w-full max-w-xl flex-col gap-5 sm:px-4">
           <div className="flex max-w-xl flex-col gap-2 rounded-md border p-2">
             <div className="flex items-center gap-1">
               <span className="material-icons-outlined text-green-500">
@@ -336,7 +351,10 @@ const RecipeCreate: FC<Props> = () => {
           </div>
           <div className="flex max-w-xl flex-col gap-2 rounded-md border p-2">
             <span className="text-2xl font-semibold">Ingredients</span>
-            <RecipeCreateIngredients ingredients={recipeState.ingredients} />
+            <RecipeCreateIngredients
+              ingredients={recipeState.ingredients}
+              handleRemove={handleRemoveIngredient}
+            />
             <IngredientsSelector />
           </div>
           <div className="flex max-w-xl flex-col gap-2 rounded-md border p-2">

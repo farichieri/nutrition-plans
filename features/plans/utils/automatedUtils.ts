@@ -1,15 +1,11 @@
 import {
-  Diet,
   DietMeal,
   DietMealGroup,
-  DietMealGroupArr,
-  NewDiet,
   fetchRandomFoodByPlan,
 } from "@/features/plans";
 import { FoodGroup } from "@/features/foods";
-import { getDietFoods } from "../../../utils/foodsHelpers";
-import { getDietNutrition, getNutritionValues } from "@/utils/nutritionHelpers";
-import { MealComplexities, UserMealsArr } from "@/features/meals";
+import { getNutritionValues } from "@/utils/nutritionHelpers";
+import { UserMealsArr } from "@/features/meals";
 import { NutritionTargets } from "@/features/authentication";
 import { PlansEnum, Result } from "@/types";
 import { uuidv4 } from "@firebase/util";

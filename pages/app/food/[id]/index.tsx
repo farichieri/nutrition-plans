@@ -48,7 +48,7 @@ export default function Page() {
   if (!food || food?.food_id !== id || !defaultScale) {
     return (
       <PremiumLayout>
-        <div className="flex flex-col gap-10 md:max-w-md ">
+        <div className="flex flex-col gap-10 md:max-w-md">
           <div className="fixed left-auto top-[var(--nav-h)] z-[60] flex h-[var(--subnav-h)] w-screen items-center gap-10 border-b bg-white/80 px-4 backdrop-blur-lg dark:bg-black/80">
             <BackButton />
           </div>
@@ -74,8 +74,8 @@ export default function Page() {
             </div>
           </div>
           <div className="flex min-h-[100vh] flex-col items-start justify-start gap-5 bg-white px-4 py-8 pb-4 shadow-[0_1px_5px_lightgray] dark:bg-black dark:shadow-[0_1px_6px_#292929] sm:m-[0.5vw] sm:min-h-[calc(100vh_-_6rem_-_1vw)] sm:gap-5 sm:rounded-lg sm:border sm:px-10">
-            <div className="flex w-full flex-wrap gap-10">
-              <div className="flex w-full flex-col gap-5 md:max-w-md">
+            <div className="divide grid w-full gap-10 sm:grid-cols-fluid_lg sm:gap-20">
+              <div className="flex w-full flex-col gap-5 ">
                 <div className="flex w-full flex-col gap-5">
                   <Image
                     src={food.image}
@@ -114,7 +114,7 @@ export default function Page() {
                   />
                 </div>
               </div>
-              <div className="flex w-full md:max-w-md">
+              <div className="flex w-full ">
                 <FoodNutrition
                   food={food}
                   amount={Number(amount || defaultScale.scale_amount)}
@@ -122,8 +122,8 @@ export default function Page() {
                 />
               </div>
               {food.kind !== FoodKind.basic_food && (
-                <div className="flex w-full flex-col gap-5 md:max-w-md ">
-                  <div className="w-full md:max-w-md">
+                <div className="flex w-full flex-col gap-5  ">
+                  <div className="w-full ">
                     <Ingredients
                       food={food}
                       amount={Number(amount || defaultScale.scale_amount)}
@@ -131,7 +131,7 @@ export default function Page() {
                     />
                   </div>
                   {food.instructions.length > 0 && (
-                    <div className="w-full md:max-w-md">
+                    <div className="w-full ">
                       <Instructions instructions={food.instructions} />
                     </div>
                   )}

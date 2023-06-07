@@ -20,15 +20,15 @@ export interface Diet {
 
 export interface DietMeal {
   [id: string]: any;
-  diet_meal_name: string | null;
-  user_meal_id: string | null;
-  diet_meal_id: string | null;
-  diet_meal_foods: FoodGroup;
-  order: number;
   complexity: MealComplexities | null;
-  time: MealMinutes | null;
-  size: MealSizes | null;
   cook: boolean;
+  diet_meal_foods: FoodGroup;
+  diet_meal_id: string | null;
+  diet_meal_name: string | null;
+  order: number;
+  size: MealSizes | null;
+  time: MealMinutes | null;
+  user_meal_id: string | null;
 }
 
 export interface DietMealGroup {
@@ -57,21 +57,21 @@ export const NewDiet: Diet = {
 };
 
 export const NewDietMeal: DietMeal = {
-  diet_meal_name: null,
-  user_meal_id: null,
+  complexity: null,
+  cook: true,
   diet_meal_foods: NewFood,
   diet_meal_id: null,
+  diet_meal_name: null,
   diet_meal_type: null,
   order: -1,
-  complexity: null,
-  time: null,
   size: null,
-  cook: true,
+  time: null,
+  user_meal_id: null,
 };
 
 export enum PlanGeneratorTypes {
-  manual = "manual",
   automated = "automated",
+  manual = "manual",
 }
 
 export type PlanGeneratorTypesT = {
