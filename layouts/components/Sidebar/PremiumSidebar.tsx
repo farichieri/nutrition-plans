@@ -91,8 +91,8 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
   const COLLAPSED_PAGES = [
     {
       name: "My Plan",
-      url: `/app/plans/${planSelected}/today`,
-      pathname: ["/app/plans/[id]/[date]"],
+      url: `/app/today`,
+      pathname: ["/app/[date]"],
       icon: "description",
     },
     {

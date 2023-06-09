@@ -62,7 +62,7 @@ const WeekPlan: FC<Props> = ({ dateInterval }) => {
               >
                 <div className="flex w-full justify-between">
                   <span className="text-xl font-semibold capitalize text-green-500">
-                    {diet.plan_id?.replaceAll("-", " ")}
+                    {diet?.plan_id?.replaceAll("-", " ")}
                   </span>
                   <Link href={`/app/${dateF}`}>
                     <span className="font-semibold capitalize text-red-500">
