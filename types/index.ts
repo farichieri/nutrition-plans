@@ -34,6 +34,7 @@ export enum FiltersEnum {
   carbs_range = "carbs_range",
   fats_range = "fats_range",
 }
+
 export enum FilterSortTypes {
   rating = "rating",
   higher_calories = "higher_calories",

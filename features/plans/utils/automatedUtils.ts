@@ -62,7 +62,7 @@ const generateMeals = async (
         // };
 
         console.log({ foodsFetched });
-
+        // To be fixed diet_id
         const newDietMeal: DietMeal = {
           diet_meal_name: meal.name,
           user_meal_id: meal.id,
@@ -73,6 +73,7 @@ const generateMeals = async (
           time: meal.time,
           size: meal.size,
           cook: meal.cook,
+          diet_id: "",
         };
         if (newDietMeal.diet_meal_id) {
           diet_meals[newDietMeal.diet_meal_id] = newDietMeal;

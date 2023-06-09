@@ -173,7 +173,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
             <span>My Plan</span>
           </Link>
         </div>
-        <div className="flex flex-col gap-1">
+        {/* <div className="flex flex-col gap-1">
           <div className={fixedOptClass} onClick={toggleAllPlans}>
             <span className="material-icons md-24 text-green-500">
               format_list_bulleted
@@ -213,7 +213,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
               </Link>
             ))}
           </div>
-        </div>
+        </div> */}
         <div className="flex w-full flex-col items-center gap-2">
           <Link
             href={"/app/favorites"}

@@ -9,6 +9,7 @@ import {
   setUser,
   generateUserObject,
   selectAuthSlice,
+  setLoginError,
 } from "@/features/authentication";
 import { auth } from "@/services/firebase/firebase.config";
 import { fetchProgress, setProgress } from "@/features/progress";
@@ -59,9 +60,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         const [userRes] = await Promise.all([generateUserObject(user)]);
         if (userRes.result === "success") {
           dispatch(setUser(userRes.data));
+        } else {
+          dispatch(setLoginError());
         }
       } else {
-        dispatch(setUser(null));
+        dispatch(setLoginError());
       }
     });
   }, []);

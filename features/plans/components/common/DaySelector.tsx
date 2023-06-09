@@ -1,70 +1,49 @@
 import {
-  formatToShortDate,
+  addOneWeek,
   getDatePlusDays,
+  getIsToday,
+  getIsWeek,
   getLastWeek,
-  getMonthDate,
   getNextWeek,
   getStartOfWeek,
-  getThisWeek,
-  getToday,
   getTomorrow,
-  getWeekPlusDays,
   getYesterday,
+  restOneWeek,
 } from "@/utils/dateFormat";
 import { BaseDatesEnum } from "@/types/datesTypes";
+import { convertDateToDateString, getRealDate } from "../../utils/dates";
 import { FC, useEffect } from "react";
 import { setPlansDate } from "@/features/plans";
 import { useDispatch } from "react-redux";
-import { useRouter } from "next/router";
 import Link from "next/link";
 import RoundButton from "@/components/Buttons/RoundButton";
 
-interface Props {}
+interface Props {
+  date: string;
+}
 
 const fixedButtonClass =
   "relative after:absolute border-b border-b text-sm sm:text-lg after:bottom-[-1px] after:left-0 after:h-[3px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-green-500 after:transition-transform after:duration-300 after:ease-in-out hover:after:origin-bottom-left hover:after:scale-x-100";
 
 const selectedClass = "after:origin-bottom-left after:scale-x-100";
 
-const DaySelector: FC<Props> = () => {
+const DaySelector: FC<Props> = ({ date }) => {
   const dispatch = useDispatch();
-  const router = useRouter();
-  const { id, date } = router.query;
-  const today = getToday();
-  const thisWeek = getThisWeek();
   const tomorrow = getTomorrow();
   const yesterday = getYesterday();
   const nextWeek = getNextWeek();
   const lastWeek = getLastWeek();
-  const todayRoute = `/app/plans/${id}/${BaseDatesEnum.today}`;
-  const thisWeekRoute = `/app/plans/${id}/${BaseDatesEnum.this_week}`;
+  const todayRoute = `/app/${BaseDatesEnum.today}`;
+  const thisWeekRoute = `/app/${BaseDatesEnum.this_week}`;
 
-  const getRealDate = () => {
-    switch (date) {
-      case BaseDatesEnum.today:
-        return today;
-      case BaseDatesEnum.tomorrow:
-        return tomorrow;
-      case BaseDatesEnum.yesterday:
-        return yesterday;
-      case BaseDatesEnum.this_week:
-        return thisWeek;
-      case BaseDatesEnum.next_week:
-        return nextWeek;
-      case BaseDatesEnum.last_week:
-        return lastWeek;
-      default:
-        return date;
-    }
-  };
-
-  const dateF = String(getRealDate());
-  const isWeek = dateF?.includes("~");
+  const dateF = String(getRealDate(date));
+  const isWeek = getIsWeek(dateF);
+  const isToday = getIsToday(dateF);
   const weekDates = isWeek && String(dateF).split("~");
   const startOfWeek = weekDates && getStartOfWeek(weekDates[0]);
 
   const backRoute = () => {
-    let baseURL = `/app/plans/${id}/`;
+    let baseURL = `/app/`;
     switch (date) {
       case BaseDatesEnum.today:
         return baseURL + BaseDatesEnum.yesterday;
@@ -78,7 +57,7 @@ const DaySelector: FC<Props> = () => {
         return baseURL + BaseDatesEnum.this_week;
       case BaseDatesEnum.last_week:
         if (startOfWeek) {
-          return baseURL + getWeekPlusDays(startOfWeek, -7);
+          return baseURL + restOneWeek(startOfWeek);
         } else {
           return baseURL + BaseDatesEnum.this_week;
         }
@@ -86,9 +65,9 @@ const DaySelector: FC<Props> = () => {
         if (isWeek && startOfWeek) {
           return (
             baseURL +
-            (getWeekPlusDays(startOfWeek, -7) === nextWeek
+            (restOneWeek(startOfWeek) === nextWeek
               ? BaseDatesEnum.next_week
-              : getWeekPlusDays(startOfWeek, -7))
+              : restOneWeek(startOfWeek))
           );
         } else {
           return (
@@ -102,7 +81,7 @@ const DaySelector: FC<Props> = () => {
   };
 
   const nextRoute = () => {
-    let baseURL = `/app/plans/${id}/`;
+    let baseURL = `/app/`;
     switch (date) {
       case BaseDatesEnum.today:
         return baseURL + BaseDatesEnum.tomorrow;
@@ -114,7 +93,7 @@ const DaySelector: FC<Props> = () => {
         return baseURL + BaseDatesEnum.next_week;
       case BaseDatesEnum.next_week:
         if (startOfWeek) {
-          return baseURL + getWeekPlusDays(startOfWeek, 7);
+          return baseURL + addOneWeek(startOfWeek);
         } else {
           return baseURL + BaseDatesEnum.this_week;
         }
@@ -124,9 +103,9 @@ const DaySelector: FC<Props> = () => {
         if (isWeek && startOfWeek) {
           return (
             baseURL +
-            (getWeekPlusDays(startOfWeek, 7) === lastWeek
+            (addOneWeek(startOfWeek) === lastWeek
               ? BaseDatesEnum.last_week
-              : getWeekPlusDays(startOfWeek, 7))
+              : addOneWeek(startOfWeek))
           );
         } else {
           return (
@@ -139,37 +118,14 @@ const DaySelector: FC<Props> = () => {
     }
   };
 
-  const formatDate = () => {
-    switch (date) {
-      case BaseDatesEnum.today:
-        return "Today";
-      case BaseDatesEnum.yesterday:
-        return "Yesterday";
-      case BaseDatesEnum.tomorrow:
-        return "Tomorrow";
-      case BaseDatesEnum.this_week:
-        return "This Week";
-      case BaseDatesEnum.next_week:
-        return "Next Week";
-      case BaseDatesEnum.last_week:
-        return "Last Week";
-      default:
-        if (isWeek && weekDates) {
-          return `Week of ${getMonthDate(String(weekDates[0]))}`;
-        } else {
-          return formatToShortDate(String(dateF));
-        }
-    }
-  };
-
   useEffect(() => {
     dispatch(setPlansDate(dateF));
   }, [dateF]);
 
   return (
-    <div className="flex w-full items-center justify-center border-b px-0 pb-2 pr-1.5 sm:pb-2 lg:gap-10">
-      <div className="flex w-full flex-col items-center justify-center lg:w-auto">
-        <div className="flex w-full items-center justify-center lg:w-auto">
+    <div className="m-auto flex w-full justify-between px-1 xs:px-2 s:px-3 sm:px-4 lg:px-10">
+      <div className="ml-2 flex flex-col items-center justify-center">
+        <div className="flex w-full max-w-sm items-center justify-center xs:gap-5 lg:w-auto">
           <Link href={backRoute()}>
             <RoundButton customClass="p-1.5 sm:h-10 sm:w-10 h-6 w-6">
               <span className="material-icons-outlined md-14">
@@ -177,8 +133,8 @@ const DaySelector: FC<Props> = () => {
               </span>
             </RoundButton>
           </Link>
-          <span className="flex w-full min-w-max justify-center text-xl  text-green-500 opacity-75 md:text-2xl lg:w-96 lg:text-3xl">
-            {formatDate()}
+          <span className="opacity-65 flex w-full min-w-max justify-center text-base capitalize  text-green-500 sm:text-xl md:text-2xl lg:w-96 lg:text-3xl">
+            {convertDateToDateString(dateF)}
           </span>
           <Link href={nextRoute()}>
             <RoundButton customClass="p-1.5 sm:h-10 sm:w-10 h-6 w-6">
@@ -191,10 +147,12 @@ const DaySelector: FC<Props> = () => {
         {/* <span className="text-xs opacity-50">{dateF}</span> */}
       </div>
 
-      <div className="ml-auto flex w-full items-center justify-end gap-5 sm:gap-10 lg:w-auto">
+      <div className="flex items-center gap-5 sm:gap-10 ">
         <Link
           href={todayRoute}
-          className={fixedButtonClass + (!isWeek ? selectedClass : "")}
+          className={
+            fixedButtonClass + (!isWeek && isToday ? selectedClass : "")
+          }
         >
           Today
         </Link>

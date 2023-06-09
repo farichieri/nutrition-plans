@@ -10,6 +10,7 @@ import {
   setFoodOpened,
   CompatiblePlansC,
   ScaleSelector,
+  getDefaultScale,
 } from "@/features/foods";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -27,7 +28,7 @@ export default function Page() {
   const { foodOpened, foodsSearched } = useSelector(selectFoodsSlice);
   const food: Food | null = foodOpened.food;
   const { amount, scale } = router.query;
-  const defaultScale = food?.scales.find((scale) => scale.is_default === true);
+  const defaultScale = food && getDefaultScale(food.scales);
 
   useEffect(() => {
     if (typeof id === "string") {
@@ -108,9 +109,11 @@ export default function Page() {
                 <CompatiblePlansC compatible_plans={food.compatible_plans} />
                 <div className="m-auto flex w-full max-w-lg">
                   <ScaleSelector
+                    setLocalScale={() => {}}
+                    updateRoute={true}
                     food={food}
-                    amount={Number(amount || defaultScale.scale_amount)}
-                    scale={String(scale || defaultScale.scale_name)}
+                    scale_amount={Number(amount || defaultScale.scale_amount)}
+                    scale_name={String(scale || defaultScale.scale_name)}
                   />
                 </div>
               </div>

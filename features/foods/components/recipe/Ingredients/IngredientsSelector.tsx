@@ -114,9 +114,9 @@ const IngredientsSelector: FC<Props> = () => {
                   close
                 </span>
                 <IngredientModal
-                  handleCloseIngredient={handleCloseIngredient}
+                  handleClose={handleCloseIngredient}
                   food={foodOpened.food}
-                  handleAddIngredient={handleAddIngredient}
+                  handleAdd={handleAddIngredient}
                 />
               </div>
             </div>

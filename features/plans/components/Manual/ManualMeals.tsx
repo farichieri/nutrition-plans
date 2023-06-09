@@ -1,23 +1,20 @@
-import {
-  DietMeal,
-  MealCard,
-  Diet,
-  selectPlansSlice,
-  setIsEditingDiet,
-} from "@/features/plans";
-import { FC } from "react";
-import { Food } from "@/features/foods";
-import { selectAuthSlice } from "@/features/authentication/slice";
-import { useSelector, useDispatch } from "react-redux";
+import { Diet, DietMeal, MealCard } from "@/features/plans";
+import { FC, useState } from "react";
+import { getNutritionMerged } from "@/utils/nutritionHelpers";
+import { UserAccount } from "@/features/authentication";
+import SaveAndEditButton from "../common/SaveAndEditButton";
 
 interface Props {
-  dietOpened: Diet;
+  diet: Diet;
+  date: string;
+  user: UserAccount;
 }
-const ManualMeals: FC<Props> = ({ dietOpened }) => {
-  const dispatch = useDispatch();
-  const { user } = useSelector(selectAuthSlice);
-  const { isEditingDiet } = useSelector(selectPlansSlice);
-  const dietMeals = dietOpened?.diet_meals;
+
+const ManualMeals: FC<Props> = ({ diet, date, user }) => {
+  const dietMeals = diet?.diet_meals;
+  const [isEditing, setIsEditing] = useState(false);
+
+  // Update Meal.
 
   return (
     <div>
@@ -26,30 +23,28 @@ const ManualMeals: FC<Props> = ({ dietOpened }) => {
           restaurant
         </span>
         <span className="text-2xl font-semibold">Meals</span>
-        <button
-          className="ml-auto rounded-md border px-3 py-1"
-          onClick={() => dispatch(setIsEditingDiet(!isEditingDiet))}
-        >
-          {isEditingDiet ? "Stop Editing" : "Edit"}
-        </button>
+        <SaveAndEditButton
+          diet={diet}
+          isEditing={isEditing}
+          setIsEditing={setIsEditing}
+          date={date}
+          user={user}
+        />
       </div>
       {dietMeals && (
         <div className="flex flex-col gap-2">
           {Object.values(dietMeals)
             .sort((a: any, b: any) => Number(a.order) - Number(b.order))
             .map((dietMeal: DietMeal) => {
-              const mealKcals: number = Object.values(
+              const nutritionMerged = getNutritionMerged(
                 dietMeal.diet_meal_foods
-              ).reduce(
-                (acc: number, curr: Food) =>
-                  acc + Number(curr.nutrients.calories),
-                0
               );
+              const { calories } = nutritionMerged;
               return (
                 <MealCard
+                  isEditing={isEditing}
                   dietMeal={dietMeal}
-                  mealKcals={mealKcals}
-                  dietOpened={dietOpened}
+                  mealKcals={Number(calories)}
                   key={dietMeal.diet_meal_id}
                 />
               );

@@ -38,9 +38,11 @@ const addFood = async (
     // Add the default scale:
     const newScales = [...food.scales];
     const uuid = uuidv4();
+    const scale_name = food.serving_name;
+    const scale_amount = 1;
     newScales.unshift({
-      scale_name: food.serving_name,
-      scale_amount: 1,
+      scale_name: scale_name,
+      scale_amount: scale_amount,
       scale_grams: food.serving_grams,
       is_default: true,
       id: uuid,
@@ -60,6 +62,8 @@ const addFood = async (
       scales: newScales,
       total_time: food.cook_time + food.prep_time,
       uploader_id: user.user_id,
+      scale_name: scale_name,
+      scale_amount: scale_amount,
     };
     await setDoc(docRef, newFood);
     return { result: "success", data: newFood };

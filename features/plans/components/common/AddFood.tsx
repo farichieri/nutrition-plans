@@ -1,8 +1,13 @@
-import { Diet, DietMeal } from "../../types";
+import {
+  Food,
+  IngredientModal,
+  selectFoodsSlice,
+  setFoodModal,
+} from "@/features/foods";
+import { addFoodToDiet } from "../../slice";
+import { DietMeal } from "../../types";
 import { FC, useState } from "react";
 import { FilterQueries } from "@/types";
-import { Food, IngredientModal, selectFoodsSlice } from "@/features/foods";
-import { selectPlansSlice, setDietOpened } from "../../slice";
 import { useDispatch, useSelector } from "react-redux";
 import Filters from "@/components/Premium/SearchBar/Filters";
 import Modal from "@/components/Modal/Modal";
@@ -15,36 +20,18 @@ interface Props {
 
 const AddFood: FC<Props> = ({ dietMeal }) => {
   const dispatch = useDispatch();
-  const { dietOpened } = useSelector(selectPlansSlice);
-  const { foodsSearched } = useSelector(selectFoodsSlice);
+  const { foodsSearched, foodModal } = useSelector(selectFoodsSlice);
   const [isOpen, setIsOpen] = useState(false);
   const [queries, setLocalQueries] = useState<FilterQueries>({});
-  const [foodOpened, setFoodOpened] = useState<Food | null>(null);
 
   const handleOpenFood = (food: Food) => {
-    setFoodOpened(food);
+    dispatch(setFoodModal(food));
   };
 
   const handleAddFood = () => {
-    if (!dietMeal.diet_meal_id || !foodOpened || !dietOpened) return;
-    const dietMeals = { ...dietOpened?.diet_meals };
-    const dietMealOpened = dietMeals[dietMeal.diet_meal_id];
-
-    const dietUpdated: Diet = {
-      ...dietOpened,
-      diet_meals: {
-        ...dietMeals,
-        [dietMeal.diet_meal_id]: {
-          ...dietMealOpened,
-          diet_meal_foods: {
-            ...dietMealOpened.diet_meal_foods,
-            [foodOpened?.food_id as keyof Food]: { ...foodOpened },
-          },
-        },
-      },
-    };
-    dispatch(setDietOpened(dietUpdated));
-    setFoodOpened(null);
+    if (!dietMeal.diet_meal_id || !foodModal) return;
+    dispatch(addFoodToDiet({ food: foodModal, dietMeal }));
+    dispatch(setFoodModal(null));
     setIsOpen(false);
   };
 
@@ -52,12 +39,12 @@ const AddFood: FC<Props> = ({ dietMeal }) => {
     <div className="border-t p-2">
       {isOpen && (
         <Modal onClose={() => setIsOpen(false)}>
-          {foodOpened && (
+          {foodModal && (
             <IngredientModal
-              food={foodOpened}
-              handleAddIngredient={handleAddFood}
-              handleCloseIngredient={() => {
-                setFoodOpened(null);
+              food={foodModal}
+              handleAdd={handleAddFood}
+              handleClose={() => {
+                dispatch(setFoodModal(null));
               }}
             />
           )}

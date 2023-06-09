@@ -1,6 +1,7 @@
 import {
   Food,
   NutritionMeasurements,
+  getDefaultScale,
   getScaleOptions,
   mergeScales,
 } from "@/features/foods";
@@ -12,11 +13,19 @@ import Select from "@/components/Form/Select";
 
 interface Props {
   food: Food;
-  amount: number;
-  scale: string;
+  scale_amount: number;
+  scale_name: string;
+  updateRoute: boolean;
+  setLocalScale: Function;
 }
 
-const ScaleSelector: FC<Props> = ({ food, amount, scale }) => {
+const ScaleSelector: FC<Props> = ({
+  food,
+  scale_amount,
+  scale_name,
+  updateRoute,
+  setLocalScale,
+}) => {
   const [isNotOriginal, setIsNotOriginal] = useState(false);
   const router = useRouter();
   const GRAMS = NutritionMeasurements.grams;
@@ -28,38 +37,49 @@ const ScaleSelector: FC<Props> = ({ food, amount, scale }) => {
     if (!food) return;
     const id = event.target.id;
     const value = event.target.value;
+
+    let newAmount;
+    let newScale;
+
     if (id === "scale_amount") {
-      router.replace({
-        pathname: router.pathname,
-        query: {
-          id: router.query.id,
-          amount: value,
-          scale: scale,
-        },
-      });
+      newAmount = value;
+      newScale = scale_name;
     }
     if (id === "scale_name") {
-      const newAmount = getNewAmount(scalesMerged, scale, value, amount);
+      newAmount = getNewAmount(scalesMerged, scale_name, value, scale_amount);
+      newScale = value;
+    }
+
+    if (updateRoute) {
       router.replace({
         pathname: router.pathname,
         query: {
           id: router.query.id,
-          amount: newAmount || food.scale_amount,
-          scale: value,
+          amount: newAmount,
+          scale: newScale,
         },
       });
+    } else {
+      setLocalScale(newAmount, newScale);
     }
   };
 
   const setOriginal = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (!food) return;
-    router.replace({
-      pathname: router.pathname,
-      query: {
-        id: router.query.id,
-      },
-    });
+
+    if (updateRoute) {
+      router.replace({
+        pathname: router.pathname,
+        query: {
+          id: router.query.id,
+        },
+      });
+    } else {
+      const defaultScale = getDefaultScale(food.scales);
+      const { scale_amount, scale_name } = defaultScale;
+      setLocalScale(scale_amount, scale_name);
+    }
   };
 
   useEffect(() => {
@@ -67,12 +87,12 @@ const ScaleSelector: FC<Props> = ({ food, amount, scale }) => {
     if (!food) return;
     const OzAndServingToGrams = getNewAmount(
       scalesMerged,
-      scale,
+      scale_name,
       GRAMS,
-      amount
+      scale_amount
     );
-    if (scale === GRAMS) {
-      if (amount !== food.serving_grams) {
+    if (scale_name === GRAMS) {
+      if (scale_amount !== food.serving_grams) {
         setIsNotOriginal(true);
       } else {
         setIsNotOriginal(false);
@@ -84,7 +104,7 @@ const ScaleSelector: FC<Props> = ({ food, amount, scale }) => {
         setIsNotOriginal(false);
       }
     }
-  }, [amount, scale]);
+  }, [scale_amount, scale_name]);
 
   return (
     <div className="flex w-full flex-col gap-2">
@@ -101,7 +121,7 @@ const ScaleSelector: FC<Props> = ({ food, amount, scale }) => {
           step={"1"}
           title={""}
           type={"number"}
-          value={Number(amount.toFixed(2))}
+          value={Number(Number(scale_amount).toFixed(2))}
         />
         <Select
           customClass={""}
@@ -113,7 +133,7 @@ const ScaleSelector: FC<Props> = ({ food, amount, scale }) => {
           name={"scale_name"}
           title={"Scale name"}
           options={options}
-          value={String(scale)}
+          value={scale_name}
         />
       </div>
       <div className="flex h-10 justify-center">

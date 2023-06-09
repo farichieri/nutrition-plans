@@ -10,6 +10,7 @@ import { formatToFixed } from "@/utils/format";
 import { GRAMS_IN_ONE_OZ } from "@/utils/constants";
 import { mergeScales } from "@/features/foods";
 import { NewFoodNutrients } from "@/types/initialTypes";
+import { DietMealGroup, getDietFoods } from "@/features/plans";
 
 const GRAMS = NutritionMeasurements.grams;
 const OZ = NutritionMeasurements.oz;
@@ -134,32 +135,10 @@ const getNutritionMerged = (foods: FoodGroup): FoodNutrients => {
   return result;
 };
 
-const getDietNutrition = (foods: FoodGroup) => {
-  if (Object.keys(foods).length < 1) {
-    return NewFoodNutrients;
-  }
-
-  let result: any = Object.create({});
-
-  Object.keys(foods).forEach((food_id) => {
-    const food = foods[food_id];
-    if (food_id && food) {
-      if (food) {
-        const { nutrients } = food;
-        for (let key in nutrients) {
-          const value = result[key as keyof FoodNutrients];
-          const newValue = nutrients[key as keyof FoodNutrients];
-          if (key in result) {
-            result[key as keyof FoodNutrients] =
-              value + newValue > 0 ? value + newValue : null;
-          } else {
-            result[key as keyof FoodNutrients] = newValue;
-          }
-        }
-      }
-    }
-  });
-  return result;
+const getDietNutrition = (dietMeals: DietMealGroup) => {
+  const foods = getDietFoods(dietMeals);
+  const nutrition = getNutritionMerged(foods);
+  return nutrition;
 };
 
 export {

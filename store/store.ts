@@ -50,7 +50,6 @@ const persistConfig = {
     "layout",
     "progress",
     "createDiet",
-    "plans",
     "meals",
     "favorites",
   ],

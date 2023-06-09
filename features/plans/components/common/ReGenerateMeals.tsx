@@ -1,9 +1,10 @@
 import {
+  buildDiet,
+  generateMeals,
   selectPlansSlice,
-  setDietOpened,
+  setDiet,
   setIsGeneratingMeals,
-} from "../slice";
-import { buildDiet, generateMeals } from "../utils";
+} from "@/features/plans";
 import { FC } from "react";
 import { PlansEnum } from "@/types";
 import { selectAuthSlice } from "@/features/authentication";
@@ -25,23 +26,23 @@ const ReGenerateMeals: FC<Props> = ({ planID }) => {
     (a, b) => a.order - b.order
   );
 
-  const reGenerate = async () => {
-    if (!nutrition_targets) return;
-    dispatch(setIsGeneratingMeals(true));
-    const res = await generateMeals(planID, userMealsArr, nutrition_targets);
-    if (res.result === "success") {
-      const { data } = res;
-      const dietMeals = Object.values(data);
-      const diet = buildDiet(dietMeals, planID);
-      dispatch(setDietOpened(diet));
-    }
-    dispatch(setIsGeneratingMeals(false));
-  };
+  // const reGenerate = async () => {
+  //   if (!nutrition_targets) return;
+  //   dispatch(setIsGeneratingMeals(true));
+  //   const res = await generateMeals(planID, userMealsArr, nutrition_targets);
+  //   if (res.result === "success") {
+  //     const { data } = res;
+  //     const dietMeals = Object.values(data);
+  //     const diet = buildDiet(dietMeals, planID, plan_id);
+  //     dispatch(setDiet(diet));
+  //   }
+  //   dispatch(setIsGeneratingMeals(false));
+  // };
 
   return (
     <button
       className="rounded-md border border-green-500 px-3 py-1.5 duration-300 hover:bg-green-700/40 active:bg-green-700"
-      onClick={reGenerate}
+      // onClick={reGenerate}
     >
       {!isGeneratingMeals ? (
         <span className="m-auto">Re-Generate meals</span>

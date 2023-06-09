@@ -2,7 +2,10 @@ import { ChangeEventHandler, FC, useMemo, useState } from "react";
 import { getNutrientMeasurementUnit } from "@/utils/helpers";
 
 const fixedInputClass =
-  "rounded-md truncate h-[2rem] sm:h-[2.5rem] my-1 dark:border-gray-500 font-semibold appearance-none dark:bg-slate-500/20 dark:text-white bg-slate-500/20 relative block w-20 px-2 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 caret-green-500 focus:outline-none focus:ring--500 focus:border-green-500 focus:z-10 sm:text-sm";
+  " rounded-md truncate h-[2rem] sm:h-[2.5rem] my-1 dark:border-gray-500 font-semibold appearance-none dark:bg-slate-500/20 dark:text-white bg-slate-500/20 relative block w-20 px-2 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 caret-green-500 focus:outline-none focus:ring--500 focus:border-green-500 focus:z-10 sm:text-sm ";
+
+const readOnlyClass =
+  " outline-none bg-transparent cursor-default select-none appearance-none w-20 text-right ";
 
 interface Props {
   customClass?: string;
@@ -21,6 +24,7 @@ interface Props {
   type: string;
   value: number | null;
   unit?: string | null;
+  readOnly?: boolean;
 }
 
 const NutritionInput: FC<Props> = ({
@@ -40,6 +44,7 @@ const NutritionInput: FC<Props> = ({
   type,
   value,
   unit,
+  readOnly,
 }) => {
   const [percentage, setPercentage] = useState<number>(0);
   const nutritionData = useMemo(
@@ -87,7 +92,9 @@ const NutritionInput: FC<Props> = ({
       <div className="flex w-full items-center justify-between md:basis-1/2 ">
         <div className="flex w-full basis-1/2 items-center justify-start gap-2">
           <input
-            className={fixedInputClass + customClass}
+            className={
+              !readOnly ? fixedInputClass : readOnlyClass + customClass
+            }
             id={id}
             max={max}
             min={min}
@@ -100,6 +107,7 @@ const NutritionInput: FC<Props> = ({
             title={title}
             type={type}
             value={value || ""}
+            disabled={readOnly}
             onWheel={(event) => event.currentTarget.blur()}
           />
           {measurementUnit ||

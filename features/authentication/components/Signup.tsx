@@ -3,6 +3,7 @@ import {
   setIsCreatingUser,
   setIsSigningUser,
   AUTH_ERRORS,
+  setLoginError,
 } from "@/features/authentication";
 import {
   createUserWithEmailAndPassword,
@@ -42,7 +43,6 @@ const Signup = () => {
         dispatch(setIsSigningUser(true));
         if (additinalInfo?.isNewUser) {
           const user = result.user;
-          console.log({ user });
           await updateProfile(user, {
             displayName: input.displayName,
           });
@@ -53,8 +53,7 @@ const Signup = () => {
       })
       .then(() => router.push(redirectRoute))
       .catch((error) => {
-        dispatch(setIsCreatingUser(false));
-        dispatch(setIsSigningUser(false));
+        dispatch(setLoginError());
         const errorCode = error.code;
         setErrorMessage(AUTH_ERRORS[errorCode]);
       });
@@ -85,7 +84,7 @@ const Signup = () => {
       .catch((error) => {
         const errorCode = error.code;
         setErrorMessage(AUTH_ERRORS[errorCode]);
-        setIsLoadingForm(false);
+        setLoginError();
         setIsDisabled(false);
         dispatch(setIsCreatingUser(false));
       });

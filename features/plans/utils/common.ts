@@ -4,24 +4,13 @@ import {
   DietMealGroup,
   DietMealGroupArr,
   NewDiet,
+  PlanTypes,
 } from "@/features/plans";
-import { getDietNutrition } from "@/utils/nutritionHelpers";
-import { MealComplexities, UserMealsArr } from "@/features/meals";
+import { Food, FoodGroup } from "@/features/foods";
+import { getDietNutrition, getNutritionValues } from "@/utils/nutritionHelpers";
+import { MealComplexities, UserMeals, UserMealsArr } from "@/features/meals";
 import { PlansEnum } from "@/types";
-import { FoodGroup } from "@/features/foods";
 import { uuidv4 } from "@firebase/util";
-
-const getDietFoods = (diet_meals: DietMealGroup): FoodGroup => {
-  let result: FoodGroup = {};
-  Object.keys(diet_meals).map((meal_id) => {
-    const diet_meal = diet_meals[meal_id];
-    const foods = diet_meal.diet_meal_foods;
-    Object.keys(foods).map((food_id, index) => {
-      result[meal_id + "_" + index] = foods[food_id];
-    });
-  });
-  return result;
-};
 
 const matchComplexity = (complexity: number, toEval: number): boolean => {
   switch (toEval) {
@@ -53,14 +42,29 @@ const maxComplexity = (toEval: number): number => {
   }
 };
 
-const buildDiet = (meals: DietMealGroupArr, planID: PlansEnum) => {
+const getDietFoods = (diet_meals: DietMealGroup): FoodGroup => {
+  let result: FoodGroup = {};
+  Object.keys(diet_meals).map((meal_id) => {
+    const diet_meal = diet_meals[meal_id];
+    const foods = diet_meal.diet_meal_foods;
+    Object.keys(foods).map((food_id, index) => {
+      result[meal_id + "_" + index] = foods[food_id];
+    });
+  });
+  return result;
+};
+
+const buildDiet = (
+  meals: DietMealGroupArr,
+  plan_id: PlansEnum,
+  plan_type: PlanTypes
+) => {
   const dietMeals: DietMealGroup = {};
   meals.forEach((meal) => {
     if (!meal.diet_meal_id) return;
     dietMeals[meal.diet_meal_id as keyof DietMeal] = meal;
   });
-  const foods = getDietFoods(dietMeals);
-  const nutrition = getDietNutrition(foods);
+  const nutrition = getDietNutrition(dietMeals);
 
   const diet: Diet = {
     ...NewDiet,
@@ -71,9 +75,10 @@ const buildDiet = (meals: DietMealGroupArr, planID: PlansEnum) => {
     diet_meals: dietMeals,
     diet_name_lowercase: null,
     diet_name: null,
-    diet_nutrients: nutrition,
+    diet_nutrition: nutrition,
     plan_date: null,
-    plan_id: planID,
+    plan_id: plan_id,
+    plan_type: plan_type,
   };
 
   return diet;
@@ -94,6 +99,7 @@ const generateDietMeals = (userMealsArr: UserMealsArr): DietMealGroup => {
       size: meal.size,
       time: meal.time,
       user_meal_id: meal.id,
+      diet_id: null,
     };
     if (newDietMeal.diet_meal_id) {
       diet_meals[newDietMeal.diet_meal_id] = newDietMeal;
@@ -102,10 +108,33 @@ const generateDietMeals = (userMealsArr: UserMealsArr): DietMealGroup => {
   return diet_meals;
 };
 
+const getMealCalories = (dietMealFoods: FoodGroup): number => {
+  return Object.values(dietMealFoods).reduce((acc: number, curr: Food) => {
+    const nutrientsUpdated = getNutritionValues(
+      curr,
+      curr.scale_amount,
+      curr.scale_name
+    );
+    return acc + Number(nutrientsUpdated.calories);
+  }, 0);
+};
+
+const createDiet = (
+  meals: UserMeals,
+  planID: PlansEnum,
+  plan_type: PlanTypes
+): Diet => {
+  const mealsGenerated = generateDietMeals(Object.values(meals));
+  const diet = buildDiet(Object.values(mealsGenerated), planID, plan_type);
+  return diet;
+};
+
 export {
   matchComplexity,
   maxComplexity,
   buildDiet,
   getDietFoods,
   generateDietMeals,
+  getMealCalories,
+  createDiet,
 };

@@ -3,6 +3,20 @@ import { MealComplexities, MealMinutes, MealSizes } from "@/features/meals";
 import { PlansEnum } from "@/types";
 import { NewFood, NewFoodNutrients } from "@/types/initialTypes";
 
+export enum PlanTypes {
+  automatically = "automatically",
+  manually = "manually",
+}
+
+export type PlanTypesT = {
+  [key in PlanTypes]: string;
+};
+
+export enum PlanDateType {
+  day = "day",
+  week = "week",
+}
+
 export interface Diet {
   [id: string]: any;
   date_available: string | null;
@@ -12,16 +26,18 @@ export interface Diet {
   diet_meals: DietMealGroup;
   diet_name_lowercase: string | null;
   diet_name: string | null;
-  diet_nutrients: FoodNutrients;
+  diet_nutrition: FoodNutrients;
   plan_date: string | null;
   plan_id: PlansEnum | null;
-  uploader_id: string | null;
+  plan_type: PlanTypes;
+  user_id: string | null;
 }
 
 export interface DietMeal {
   [id: string]: any;
   complexity: MealComplexities | null;
   cook: boolean;
+  diet_id: string | null;
   diet_meal_foods: FoodGroup;
   diet_meal_id: string | null;
   diet_meal_name: string | null;
@@ -50,15 +66,17 @@ export const NewDiet: Diet = {
   diet_meals: {},
   diet_name_lowercase: null,
   diet_name: null,
-  diet_nutrients: NewFoodNutrients,
+  diet_nutrition: NewFoodNutrients,
   plan_date: null,
   plan_id: null,
-  uploader_id: null,
+  plan_type: PlanTypes.manually,
+  user_id: null,
 };
 
 export const NewDietMeal: DietMeal = {
   complexity: null,
   cook: true,
+  diet_id: null,
   diet_meal_foods: NewFood,
   diet_meal_id: null,
   diet_meal_name: null,
@@ -67,13 +85,4 @@ export const NewDietMeal: DietMeal = {
   size: null,
   time: null,
   user_meal_id: null,
-};
-
-export enum PlanGeneratorTypes {
-  automated = "automated",
-  manual = "manual",
-}
-
-export type PlanGeneratorTypesT = {
-  [key in PlanGeneratorTypes]: string;
 };

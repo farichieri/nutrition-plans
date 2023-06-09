@@ -18,8 +18,8 @@ const PieGraph: FC<Props> = ({ nutrients }) => {
       (Number(nutrients.proteins) * 4) / Number(nutrients.calories);
     return [
       { name: "Carbs", value: carbsPercentage },
-      { name: "Fats", value: protsPercentage },
-      { name: "Proteins", value: fatsPercentage },
+      { name: "Fats", value: fatsPercentage },
+      { name: "Proteins", value: protsPercentage },
     ];
   };
 

@@ -3,34 +3,30 @@ import {
   IngredientGroup,
   setRecipeState,
   setMealState,
+  FoodNutritionDetail,
 } from "@/features/foods";
-import {  getIngredientsFoods } from "@/utils/foodsHelpers";
 import { AppRoutes } from "@/utils/routes";
-import { Diet, getDietFoods } from "@/features/plans";
 import { FC, useEffect, useState } from "react";
+import { getIngredientsFoods } from "@/utils/foodsHelpers";
 import { getNutritionMerged } from "@/utils/nutritionHelpers";
-import { setDietState } from "@/store/slices/createDietSlice";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
-import FoodNutritionDetail from "../../common/FoodNutritionDetail";
 import PieGraph from "@/components/PieGraph/PieGraph";
 import Spinner from "@/components/Loader/Spinner";
 
 interface Props {
   food?: Food;
   meal?: Food;
-  diet?: Diet;
   ingredients?: IngredientGroup;
 }
 
-const IngredientsNutrition: FC<Props> = ({ food, meal, diet, ingredients }) => {
+const IngredientsNutrition: FC<Props> = ({ food, meal, ingredients }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const [openDetails, setOpenDetails] = useState(false);
-  const nutrients = food?.nutrients || meal?.nutrients || diet?.diet_nutrients;
+  const nutrients = food?.nutrients || meal?.nutrients;
   const isCreateMeal = router.asPath === AppRoutes.create_meal;
   const isCreateRecipe = router.asPath === AppRoutes.create_recipe;
-  const isCreateDiet = router.asPath === AppRoutes.create_diet;
 
   useEffect(() => {
     if (isCreateMeal || isCreateRecipe) {
@@ -44,12 +40,8 @@ const IngredientsNutrition: FC<Props> = ({ food, meal, diet, ingredients }) => {
           dispatch(setMealState({ ...meal, nutrients: nutritionMerged }));
         }
       }
-    } else if (isCreateDiet && diet) {
-      const foods = getDietFoods(diet.diet_meals);
-      const nutritionMerged = getNutritionMerged(foods);
-      dispatch(setDietState({ ...diet, diet_nutrients: nutritionMerged }));
     }
-  }, [food?.ingredients, meal?.ingredients, diet?.diet_meals]);
+  }, [food?.ingredients, meal?.ingredients]);
 
   if (!nutrients) {
     return (

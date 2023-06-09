@@ -19,6 +19,7 @@ interface FoodsSlice {
   ingredientOpened: Food | null;
   mealState: Food;
   recipeState: Food;
+  foodModal: Food | null;
 }
 
 const initialState: FoodsSlice = {
@@ -36,6 +37,7 @@ const initialState: FoodsSlice = {
   ingredientOpened: null,
   mealState: NewFood,
   recipeState: NewFood,
+  foodModal: null,
 };
 
 interface SearchedFoods {
@@ -84,6 +86,18 @@ export const foodsSlice = createSlice({
     setIsSearchingFoods: (state, action: PayloadAction<boolean>) => {
       state.isSearchingFoods = action.payload;
     },
+    setFoodModal: (state, action: PayloadAction<Food | null>) => {
+      state.foodModal = action.payload;
+    },
+    setFoodModalScale: (
+      state,
+      action: PayloadAction<{ scale_amount: number; scale_name: string }>
+    ) => {
+      const { scale_amount, scale_name } = action.payload;
+      if (!state.foodModal) return;
+      state.foodModal.scale_amount = Number(scale_amount);
+      state.foodModal.scale_name = scale_name;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(PURGE, () => {
@@ -101,6 +115,8 @@ export const {
   setIsSearchingFoods,
   setMealState,
   setRecipeState,
+  setFoodModal,
+  setFoodModalScale,
 } = foodsSlice.actions;
 
 export const selectFoodsSlice = (state: RootState) => state.foods;

@@ -11,6 +11,8 @@ export interface Food {
   curated: boolean;
   date_created: any | null;
   date_updated: string | null;
+  diet_id: string | null;
+  diet_meal_id: string | null;
   digestion_status: DigestionStatusEnum | null;
   dish_type: DishTypesEnum | null;
   easily_single_serving: boolean;
@@ -40,13 +42,13 @@ export interface Food {
   prep_time: number;
   price: number | null;
   recipe_category: RecipeCategoriesEnum | null;
+  scale_amount: number;
+  scale_name: string;
   scales: FoodScales;
-  scale_amount: number | null;
-  scale_name: string | null;
   serving_amount_per_package: number | null;
-  serving_amount: number | null;
-  serving_grams: number | null;
-  serving_name: string | null;
+  serving_amount: number;
+  serving_grams: number;
+  serving_name: string;
   source: string | null;
   total_time: number;
   uploader_id: string | null;
@@ -54,9 +56,9 @@ export interface Food {
 
 export interface FoodScale {
   is_default: boolean;
-  scale_amount: 1;
-  scale_grams: number | null;
-  scale_name: string | null;
+  scale_amount: number;
+  scale_grams: number;
+  scale_name: string;
   id: string | null;
 }
 

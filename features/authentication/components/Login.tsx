@@ -5,6 +5,7 @@ import {
   generateUserObject,
   setUser,
   AUTH_ERRORS,
+  setLoginError,
 } from "@/features/authentication";
 import {
   getAdditionalUserInfo,
@@ -46,18 +47,18 @@ const Login = () => {
           }
         } else {
           dispatch(setIsSigningUser(true));
-          const userRes =
-            result.user && (await generateUserObject(result.user));
+          const userRes = await generateUserObject(result.user);
           if (userRes.result === "success") {
             dispatch(setUser(userRes.data));
             router.push(redirectRoute);
+          } else {
+            throw new Error("Not userRes found");
           }
         }
       })
       .then(() => dispatch(setIsCreatingUser(false)))
       .catch((error) => {
-        dispatch(setIsCreatingUser(false));
-        dispatch(setIsSigningUser(true));
+        dispatch(setLoginError());
         const errorCode = error.code;
         setErrorMessage(AUTH_ERRORS[errorCode]);
       });
@@ -81,6 +82,8 @@ const Login = () => {
           if (userRes.result === "success") {
             dispatch(setUser(userRes.data));
             router.push(redirectRoute);
+          } else {
+            throw new Error("Not userRes found");
           }
         }
       })

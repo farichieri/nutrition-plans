@@ -45,6 +45,11 @@ export const authSlice = createSlice({
     setIsSelectingPlan: (state, action: PayloadAction<boolean>) => {
       state.isSelectingPlan = action.payload;
     },
+    setLoginError: (state) => {
+      state.user = null;
+      state.isSigningUser = false;
+      state.isVerifyingUser = false;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(PURGE, () => {
@@ -59,6 +64,7 @@ export const {
   setIsCreatingUser,
   setIsSigningUser,
   setUpdateUser,
+  setLoginError,
   setIsSelectingPlan,
 } = authSlice.actions;
 

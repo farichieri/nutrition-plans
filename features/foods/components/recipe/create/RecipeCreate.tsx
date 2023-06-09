@@ -103,6 +103,7 @@ const RecipeCreate: FC<Props> = () => {
     if (isCreating) return;
     setIsCreating(true);
     const recipeGrams = getRecipeSize(recipeState.ingredients);
+    if (!recipeGrams) return;
     const newFood: Recipe = {
       ...recipeState,
       serving_grams: recipeGrams,
