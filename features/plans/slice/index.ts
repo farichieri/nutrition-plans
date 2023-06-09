@@ -136,6 +136,12 @@ export const plansSlice = createSlice({
     setIsCreatingDiet: (state, action: PayloadAction<boolean>) => {
       state.isCreatingDiet = action.payload;
     },
+    setDeleteDiet: (state, action: PayloadAction<Diet>) => {
+      const { diet_id } = action.payload;
+      if (diet_id) {
+        delete state.diets[diet_id];
+      }
+    },
     setIsGeneratingMeals: (state, action: PayloadAction<boolean>) => {
       state.isGeneratingMeals = action.payload;
     },
@@ -176,6 +182,7 @@ export const {
   setIsSavingDiet,
   setIsLoadingDiet,
   updateDietMealFoodsOrder,
+  setDeleteDiet,
   setPlanDateType,
   toggleEatenFood,
 } = plansSlice.actions;

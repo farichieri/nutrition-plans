@@ -49,7 +49,7 @@ const DayPlan: FC<Props> = ({ date }) => {
           {diet ? (
             <div className="mb-auto flex flex-col gap-2 ">
               <span className="text-xl font-semibold capitalize text-green-500">
-                {diet.plan_id?.replaceAll("-", " ")}
+                {diet.plan_id?.replaceAll("_", " ")}
               </span>
               <div className="grid w-full gap-10 sm:grid-cols-fluid_lg">
                 <div className="w-full w-full rounded-md ">

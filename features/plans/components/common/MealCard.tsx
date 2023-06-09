@@ -2,6 +2,7 @@ import { DietMeal } from "../../types";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { FC } from "react";
 import { FoodGroupArray } from "@/features/foods";
+import { isAllEaten } from "../../utils";
 import { reorderArr } from "@/utils/filter";
 import { updateDietMealFoodsOrder } from "../../slice";
 import { useDispatch } from "react-redux";
@@ -19,7 +20,8 @@ const MealCard: FC<Props> = ({ dietMeal, mealKcals, isEditing }) => {
   const dispatch = useDispatch();
   const dietMealFoodsArr: FoodGroupArray = Object.values(
     dietMeal.diet_meal_foods
-  );
+  ).sort((a, b) => a.order - b.order);
+  const allEaten = isAllEaten(dietMealFoodsArr);
 
   const onDragEnd = (result: any) => {
     const { source, destination } = result;
@@ -42,22 +44,12 @@ const MealCard: FC<Props> = ({ dietMeal, mealKcals, isEditing }) => {
     dispatch(updateDietMealFoodsOrder({ dietMeal, foodsArrayOrdered }));
   };
 
-  const isAllEaten = (dietMealFoodsArr: FoodGroupArray) => {
-    let result = true;
-
-    if (dietMealFoodsArr.length < 1) result = false;
-
-    dietMealFoodsArr.forEach((food) => {
-      if (food.eaten === false) result = false;
-    });
-
-    return result;
-  };
-
   return (
     <div
       key={dietMeal.diet_meal_id}
-      className="min-h-20 flex w-full flex-col overflow-auto rounded-md border bg-gray-500/20"
+      className={`min-h-20 flex w-full flex-col overflow-auto rounded-md border ${
+        allEaten ? "border-green-500 bg-green-500/20" : "bg-gray-500/20"
+      }`}
     >
       <div className="flex items-center gap-5 border-b px-2 py-1 text-center">
         <span className="font-semibold capitalize">
@@ -74,8 +66,10 @@ const MealCard: FC<Props> = ({ dietMeal, mealKcals, isEditing }) => {
         <span className="ml-auto text-xs opacity-50">{mealKcals} calories</span>
         {!isEditing && (
           <div className="flex items-center">
-            {isAllEaten(dietMealFoodsArr) ? (
-              <span className="material-icons text-green-500">task_alt</span>
+            {allEaten ? (
+              <span className="material-icons text-green-500">
+                check_circle
+              </span>
             ) : (
               <span className="material-icons">radio_button_unchecked</span>
             )}
@@ -89,7 +83,7 @@ const MealCard: FC<Props> = ({ dietMeal, mealKcals, isEditing }) => {
             <div
               {...droppableProvided.droppableProps}
               ref={droppableProvided.innerRef}
-              className="divide-y"
+              className="w-full"
             >
               {dietMealFoodsArr.map((food, index) => {
                 if (!food.food_id) return <></>;
@@ -105,7 +99,7 @@ const MealCard: FC<Props> = ({ dietMeal, mealKcals, isEditing }) => {
                         ref={draggableProvided.innerRef}
                         {...draggableProvided.draggableProps}
                         {...draggableProvided.dragHandleProps}
-                        className="flex items-center gap-1 px-0 hover:bg-slate-500/20 active:bg-slate-500/40"
+                        className="flex w-full items-center gap-1 px-0 hover:bg-slate-500/20 active:bg-slate-500/40"
                       >
                         {isEditing ? (
                           <FoodInMealCard food={food} isEditing={isEditing} />

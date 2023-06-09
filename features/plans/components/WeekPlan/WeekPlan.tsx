@@ -9,6 +9,7 @@ import Link from "next/link";
 import ManualMeals from "../Manual/ManualMeals";
 import PlanGenerator from "../common/PlanGenerator";
 import Spinner from "@/components/Loader/Spinner";
+import { Nutrition } from "@/features/foods";
 
 interface Props {
   dateInterval: string;
@@ -57,30 +58,30 @@ const WeekPlan: FC<Props> = ({ dateInterval }) => {
             const dateF = convertDateToDateString(date);
             return (
               <div
-                className="w-full rounded-md border bg-gray-500/10 p-2"
+                className="flex w-full flex-col items-center justify-center rounded-md border bg-gray-500/10 p-2"
                 key={date}
               >
                 <div className="flex w-full justify-between">
                   <span className="text-xl font-semibold capitalize text-green-500">
-                    {diet?.plan_id?.replaceAll("-", " ")}
+                    {diet?.plan_id?.replaceAll("_", " ")}
                   </span>
-                  <Link href={`/app/${dateF}`}>
+                  <Link href={`/app/${date}`}>
                     <span className="font-semibold capitalize text-red-500">
                       {dateF}
                     </span>
                   </Link>
                 </div>
                 {diet ? (
-                  <div className="mb-auto flex flex-col gap-2">
-                    <div className="grid w-full gap-10 sm:grid-cols-fluid_lg">
+                  <div className="mb-auto flex w-full flex-col gap-2">
+                    <div className="flex w-full flex-wrap justify-between gap-10 ">
                       <div className="w-full">
                         <ManualMeals diet={diet} date={date} user={user} />
                       </div>
-                      {/* {diet && (
-                  <div className="w-full ">
-                    <Nutrition nutrients={diet.diet_nutrition} />
-                  </div>
-                )} */}
+                      {diet && (
+                        <div className="w-full">
+                          <Nutrition nutrients={diet.diet_nutrition} />
+                        </div>
+                      )}
                     </div>
                   </div>
                 ) : (

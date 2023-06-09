@@ -6,7 +6,7 @@ import {
   NewDiet,
   PlanTypes,
 } from "@/features/plans";
-import { Food, FoodGroup } from "@/features/foods";
+import { Food, FoodGroup, FoodGroupArray } from "@/features/foods";
 import { getDietNutrition, getNutritionValues } from "@/utils/nutritionHelpers";
 import { MealComplexities, UserMeals, UserMealsArr } from "@/features/meals";
 import { PlansEnum } from "@/types";
@@ -129,6 +129,18 @@ const createDiet = (
   return diet;
 };
 
+const isAllEaten = (dietMealFoodsArr: FoodGroupArray) => {
+  let result = true;
+
+  if (dietMealFoodsArr.length < 1) result = false;
+
+  dietMealFoodsArr.forEach((food) => {
+    if (food.eaten === false) result = false;
+  });
+
+  return result;
+};
+
 export {
   matchComplexity,
   maxComplexity,
@@ -137,4 +149,5 @@ export {
   generateDietMeals,
   getMealCalories,
   createDiet,
+  isAllEaten,
 };

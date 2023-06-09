@@ -117,34 +117,42 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
             <span className="text-sm opacity-50">{food.food_description}</span>
           </div>
           <div className="flex flex-col">
-            <div className="flex w-full items-start gap-2">
-              <NutritionInput
-                handleChange={handleChange}
-                id={food.food_id}
-                isRequired={false}
-                labelFor={String(FoodKeys.scale_amount)}
-                labelText={""}
-                min={"0"}
-                name={String(FoodKeys.scale_amount)}
-                step={"1"}
-                title={""}
-                type={"number"}
-                value={food.scale_amount}
-                readOnly={!isEditing}
-              />
-              <Select
-                customClass={"h-full"}
-                handleChange={handleChange}
-                id={food.food_id}
-                isRequired={false}
-                labelFor={String(FoodKeys.scale_name)}
-                labelText={""}
-                name={String(FoodKeys.scale_name)}
-                title={"Scale Name"}
-                options={options}
-                value={food.scale_name}
-                readOnly={!isEditing}
-              />
+            <div className="flex w-full flex-wrap items-start gap-2">
+              {isEditing ? (
+                <NutritionInput
+                  handleChange={handleChange}
+                  id={food.food_id}
+                  isRequired={false}
+                  labelFor={String(FoodKeys.scale_amount)}
+                  labelText={""}
+                  min={"0"}
+                  name={String(FoodKeys.scale_amount)}
+                  step={"1"}
+                  title={""}
+                  type={"number"}
+                  value={food.scale_amount}
+                  readOnly={!isEditing}
+                />
+              ) : (
+                <span>{food.scale_amount}</span>
+              )}
+              {isEditing ? (
+                <Select
+                  customClass={"h-full"}
+                  handleChange={handleChange}
+                  id={food.food_id}
+                  isRequired={false}
+                  labelFor={String(FoodKeys.scale_name)}
+                  labelText={""}
+                  name={String(FoodKeys.scale_name)}
+                  title={"Scale Name"}
+                  options={options}
+                  value={food.scale_name}
+                  readOnly={!isEditing}
+                />
+              ) : (
+                <span>{food.scale_name}</span>
+              )}
             </div>
             {food.note && (
               <Input
@@ -177,7 +185,9 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
             onClick={toggleDone}
           >
             {food.eaten ? (
-              <span className="material-icons text-green-500">task_alt</span>
+              <span className="material-icons text-green-500">
+                check_circle
+              </span>
             ) : (
               <span className="material-icons">radio_button_unchecked</span>
             )}
