@@ -2,6 +2,7 @@ import { FC } from "react";
 import { Food } from "@/features/foods/types";
 import Image from "next/image";
 import Link from "next/link";
+import AddToFavorite from "@/features/favorites/components/AddToFavorite";
 
 interface Props {
   food: Food;
@@ -24,9 +25,12 @@ const FoodCard: FC<Props> = ({ food }) => {
         />
       </span>
       <div className="flex w-full flex-col break-words p-2">
-        <span className="text-ellipsi truncate text-center text-lg font-semibold">
-          {food.food_name}
-        </span>
+        <div className="flex w-full items-center justify-between gap-1">
+          <span className="truncate text-ellipsis text-center text-lg font-semibold">
+            {food.food_name}
+          </span>
+          <AddToFavorite foodID={food.food_id} />
+        </div>
         <div className="flex w-full justify-between">
           <span>Calories:</span>
           <span>{food.nutrients.calories}</span>

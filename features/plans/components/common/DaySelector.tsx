@@ -128,9 +128,7 @@ const DaySelector: FC<Props> = ({ date }) => {
         <div className="flex w-full max-w-sm items-center justify-center xs:gap-5 lg:w-auto">
           <Link href={backRoute()}>
             <RoundButton customClass="p-1.5 sm:h-10 sm:w-10 h-6 w-6">
-              <span className="material-icons-outlined md-14">
-                arrow_back_ios
-              </span>
+              <span className="material-icons-outlined md-24">arrow_left</span>
             </RoundButton>
           </Link>
           <span className="opacity-65 flex w-full min-w-max justify-center text-base capitalize  text-green-500 sm:text-xl md:text-2xl lg:w-96 lg:text-3xl">
@@ -138,9 +136,7 @@ const DaySelector: FC<Props> = ({ date }) => {
           </span>
           <Link href={nextRoute()}>
             <RoundButton customClass="p-1.5 sm:h-10 sm:w-10 h-6 w-6">
-              <span className="material-icons-outlined md-14">
-                arrow_forward_ios
-              </span>
+              <span className="material-icons-outlined md-24">arrow_right</span>
             </RoundButton>
           </Link>
         </div>

@@ -86,10 +86,24 @@ const reorderArr = (list: any[], startI: number, endI: number): any[] => {
   return result;
 };
 
+const removeFromList = (list: any[], index: number) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(index, 1);
+  return [removed, result];
+};
+
+const addToList = (list: any[], index: number, element: any) => {
+  const result = Array.from(list);
+  result.splice(index, 0, element);
+  return result;
+};
+
 export {
   filterObject,
   filterByCompatiblePlan,
   filterByNutrientRange,
   sortFoodsSearched,
   reorderArr,
+  removeFromList,
+  addToList,
 };

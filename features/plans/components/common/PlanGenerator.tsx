@@ -65,7 +65,7 @@ const PlanGenerator: FC<Props> = ({ date }) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center gap-5">
+    <div className="flex flex-col items-center justify-center gap-5 p-5">
       <div className="flex items-center gap-2">
         <span className="text-lg font-semibold">Generate Plan:</span>
         <select

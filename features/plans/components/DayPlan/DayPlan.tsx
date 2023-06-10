@@ -1,10 +1,10 @@
 import { FC, useEffect, useState } from "react";
 import { fetchDietByDate } from "../../services";
-import { Nutrition } from "@/features/foods";
 import { selectPlansSlice, setDiet, setIsLoadingDiet } from "../../slice";
 import { useDispatch, useSelector } from "react-redux";
 import { UserAccount, selectAuthSlice } from "@/features/authentication";
-import ManualMeals from "../Manual/ManualMeals";
+import MealCards from "../MealCards/MealCards";
+import Nutrition from "../common/Nutrition";
 import PlanGenerator from "../common/PlanGenerator";
 import Spinner from "@/components/Loader/Spinner";
 
@@ -19,6 +19,7 @@ const DayPlan: FC<Props> = ({ date }) => {
   const { diets, isLoadingDiet, isCreatingDiet } =
     useSelector(selectPlansSlice);
   const diet = diets[date];
+  const planID = diet?.plan_id;
 
   const getDayDiet = async (date: string, user: UserAccount) => {
     dispatch(setIsLoadingDiet(true));
@@ -37,7 +38,6 @@ const DayPlan: FC<Props> = ({ date }) => {
   }, [date]);
 
   if (!user) return <></>;
-
   return (
     <div className="w-full">
       {isLoadingDiet || loading ? (
@@ -49,15 +49,18 @@ const DayPlan: FC<Props> = ({ date }) => {
           {diet ? (
             <div className="mb-auto flex flex-col gap-2 ">
               <span className="text-xl font-semibold capitalize text-green-500">
-                {diet.plan_id?.replaceAll("_", " ")}
+                {planID?.replaceAll("_", " ")}
               </span>
               <div className="grid w-full gap-10 sm:grid-cols-fluid_lg">
-                <div className="w-full w-full rounded-md ">
-                  <ManualMeals diet={diet} date={date} user={user} />
+                <div className="w-full rounded-md ">
+                  <MealCards diet={diet} date={date} user={user} />
                 </div>
                 {diet && (
-                  <div className="w-full w-full rounded-md  ">
-                    <Nutrition nutrients={diet.diet_nutrition} />
+                  <div className=" w-full rounded-md  ">
+                    <Nutrition
+                      nutrients={diet.diet_nutrition}
+                      planID={planID}
+                    />
                   </div>
                 )}
               </div>

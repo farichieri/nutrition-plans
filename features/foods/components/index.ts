@@ -22,7 +22,6 @@ import FoodsSearched from "./search-food/FoodsSearched/FoodsSearched";
 import FoodActions from "./common/FoodActions";
 import FoodNutrition from "./common/FoodNutrition";
 import FoodNutritionDetail from "./common/FoodNutritionDetail";
-import Nutrition from "./common/Nutrition";
 import CompatiblePlansC from "./common/CompatiblePlansC";
 import ScaleSelector from "./common/ScaleSelector";
 
@@ -41,7 +40,6 @@ export {
   IngredientsSelector,
   Instructions,
   InstructionsCreate,
-  Nutrition,
   RecipeCreate,
   RecipeCreateIngredients,
   ScaleSelector,

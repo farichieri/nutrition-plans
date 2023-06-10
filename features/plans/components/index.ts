@@ -1,5 +1,5 @@
 // Manual
-import ManualMeals from "./Manual/ManualMeals";
+import ManualMeals from "./MealCards/MealCards";
 
 // WeekPlan
 import WeekPlan from "./WeekPlan/WeekPlan";
@@ -14,6 +14,7 @@ import PlanGeneratorTypeSelector from "./common/PlanGenerator";
 import PlanSelector from "./common/PlanSelector";
 import ReGenerateMeals from "./common/ReGenerateMeals";
 import SaveAndEditButton from "./common/SaveAndEditButton";
+import Nutrition from "./common/Nutrition";
 
 export {
   AddFood,
@@ -27,4 +28,5 @@ export {
   ReGenerateMeals,
   SaveAndEditButton,
   WeekPlan,
+  Nutrition,
 };

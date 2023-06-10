@@ -158,7 +158,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
       >
         <div className="flex w-full flex-col items-center gap-2">
           <Link
-            href={`/app/plans/${planSelected}/today`}
+            href={`/app/today`}
             className={
               `${
                 planSelected &&

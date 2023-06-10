@@ -36,7 +36,7 @@ const AddFood: FC<Props> = ({ dietMeal }) => {
   };
 
   return (
-    <div className="border-t p-2">
+    <div className="p-2">
       {isOpen && (
         <Modal onClose={() => setIsOpen(false)}>
           {foodModal && (
@@ -73,7 +73,7 @@ const AddFood: FC<Props> = ({ dietMeal }) => {
           e.preventDefault();
           setIsOpen(true);
         }}
-        className="m-auto flex rounded-3xl border px-4 py-1 duration-100 hover:border-green-500 hover:bg-green-800 active:bg-green-600"
+        className="mr-auto flex rounded-md border px-4 py-1 duration-100 hover:border-green-500 hover:bg-green-800 active:bg-green-600"
       >
         Add Food
       </button>

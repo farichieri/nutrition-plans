@@ -1,11 +1,8 @@
 import { DietMeal } from "../../types";
-import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
+import { Draggable, Droppable } from "@hello-pangea/dnd";
 import { FC } from "react";
 import { FoodGroupArray } from "@/features/foods";
 import { isAllEaten } from "../../utils";
-import { reorderArr } from "@/utils/filter";
-import { updateDietMealFoodsOrder } from "../../slice";
-import { useDispatch } from "react-redux";
 import AddFood from "./AddFood";
 import FoodInMealCard from "./FoodInMealCard";
 import Link from "next/link";
@@ -17,41 +14,21 @@ interface Props {
 }
 
 const MealCard: FC<Props> = ({ dietMeal, mealKcals, isEditing }) => {
-  const dispatch = useDispatch();
   const dietMealFoodsArr: FoodGroupArray = Object.values(
     dietMeal.diet_meal_foods
   ).sort((a, b) => a.order - b.order);
   const allEaten = isAllEaten(dietMealFoodsArr);
 
-  const onDragEnd = (result: any) => {
-    const { source, destination } = result;
-    if (!destination) return;
-    if (
-      source.index === destination.index &&
-      source.droppableId === destination.droppableId
-    ) {
-      return;
-    }
-    const foodsReordered = reorderArr(
-      dietMealFoodsArr,
-      source.index,
-      destination.index
-    );
-    updateFoodsOrder(foodsReordered);
-  };
-
-  const updateFoodsOrder = (foodsArrayOrdered: FoodGroupArray) => {
-    dispatch(updateDietMealFoodsOrder({ dietMeal, foodsArrayOrdered }));
-  };
+  if (!dietMeal.diet_meal_id) return <></>;
 
   return (
     <div
       key={dietMeal.diet_meal_id}
-      className={`min-h-20 flex w-full flex-col overflow-auto rounded-md border ${
+      className={`min-h-20 flex w-full flex-col divide-y overflow-auto rounded-md border ${
         allEaten ? "border-green-500 bg-green-500/20" : "bg-gray-500/20"
       }`}
     >
-      <div className="flex items-center gap-5 border-b px-2 py-1 text-center">
+      <div className="flex items-center gap-5 px-2 py-1 text-center">
         <span className="font-semibold capitalize">
           {dietMeal.diet_meal_name}
         </span>
@@ -76,21 +53,22 @@ const MealCard: FC<Props> = ({ dietMeal, mealKcals, isEditing }) => {
           </div>
         )}
       </div>
-
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="ingredients">
-          {(droppableProvided) => (
-            <div
-              {...droppableProvided.droppableProps}
-              ref={droppableProvided.innerRef}
-              className="w-full"
-            >
-              {dietMealFoodsArr.map((food, index) => {
+      <Droppable droppableId={dietMeal.diet_meal_id}>
+        {(droppableProvided) => (
+          <div
+            {...droppableProvided.droppableProps}
+            ref={droppableProvided.innerRef}
+            className="w-full divide-y overflow-hidden"
+          >
+            {dietMealFoodsArr.length < 1 ? (
+              <div className="h-1"></div>
+            ) : (
+              dietMealFoodsArr.map((food, index) => {
                 if (!food.food_id) return <></>;
                 return (
                   <Draggable
                     key={food.food_id}
-                    draggableId={food.food_id}
+                    draggableId={food.food_id + food.diet_meal_id}
                     index={index}
                     isDragDisabled={!isEditing}
                   >
@@ -99,7 +77,7 @@ const MealCard: FC<Props> = ({ dietMeal, mealKcals, isEditing }) => {
                         ref={draggableProvided.innerRef}
                         {...draggableProvided.draggableProps}
                         {...draggableProvided.dragHandleProps}
-                        className="flex w-full items-center gap-1 px-0 hover:bg-slate-500/20 active:bg-slate-500/40"
+                        className={`flex w-full items-center gap-1 px-0 hover:bg-slate-500/20 active:bg-slate-500/50 `}
                       >
                         {isEditing ? (
                           <FoodInMealCard food={food} isEditing={isEditing} />
@@ -116,17 +94,15 @@ const MealCard: FC<Props> = ({ dietMeal, mealKcals, isEditing }) => {
                     )}
                   </Draggable>
                 );
-              })}
-              {droppableProvided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
+              })
+            )}
+            {droppableProvided.placeholder}
+          </div>
+        )}
+      </Droppable>
       {isEditing && <AddFood dietMeal={dietMeal} />}
     </div>
   );
 };
 
 export default MealCard;
-
-// ;

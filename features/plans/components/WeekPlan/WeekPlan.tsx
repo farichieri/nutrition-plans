@@ -1,4 +1,7 @@
-import { convertDateToDateString } from "../../utils/dates";
+import {
+  convertDateToDateString,
+  convertDayToUrlDate,
+} from "../../utils/dates";
 import { FC, useEffect } from "react";
 import { fetchDietByDate } from "../../services";
 import { getDaysOfWeek } from "@/utils/dateFormat";
@@ -6,10 +9,10 @@ import { selectPlansSlice, setDiet, setIsLoadingDiet } from "../../slice";
 import { useDispatch, useSelector } from "react-redux";
 import { UserAccount, selectAuthSlice } from "@/features/authentication";
 import Link from "next/link";
-import ManualMeals from "../Manual/ManualMeals";
+import ManualMeals from "../MealCards/MealCards";
+import Nutrition from "../common/Nutrition";
 import PlanGenerator from "../common/PlanGenerator";
 import Spinner from "@/components/Loader/Spinner";
-import { Nutrition } from "@/features/foods";
 
 interface Props {
   dateInterval: string;
@@ -49,13 +52,18 @@ const WeekPlan: FC<Props> = ({ dateInterval }) => {
   return (
     <div className="w-full">
       {isLoadingDiet ? (
-        <Spinner customClass="h-6 w-6 m-auto" />
+        <div className="fixed inset-0 mt-auto flex h-screen w-screen justify-center">
+          <Spinner customClass="h-6 w-6 m-auto" />
+        </div>
       ) : (
         <div className="grid w-full gap-5 sm:grid-cols-fluid_lg">
           {!week && "Invalid Week"}
           {week?.map((date) => {
             const diet = diets[date];
             const dateF = convertDateToDateString(date);
+            const urlDate = convertDayToUrlDate(date);
+            const planID = diet?.plan_id;
+
             return (
               <div
                 className="flex w-full flex-col items-center justify-center rounded-md border bg-gray-500/10 p-2"
@@ -65,7 +73,7 @@ const WeekPlan: FC<Props> = ({ dateInterval }) => {
                   <span className="text-xl font-semibold capitalize text-green-500">
                     {diet?.plan_id?.replaceAll("_", " ")}
                   </span>
-                  <Link href={`/app/${date}`}>
+                  <Link href={`/app/${urlDate}`}>
                     <span className="font-semibold capitalize text-red-500">
                       {dateF}
                     </span>
@@ -79,7 +87,10 @@ const WeekPlan: FC<Props> = ({ dateInterval }) => {
                       </div>
                       {diet && (
                         <div className="w-full">
-                          <Nutrition nutrients={diet.diet_nutrition} />
+                          <Nutrition
+                            nutrients={diet.diet_nutrition}
+                            planID={planID}
+                          />
                         </div>
                       )}
                     </div>

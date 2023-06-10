@@ -71,7 +71,9 @@ export default function Page() {
               <span className="truncate text-ellipsis font-semibold sm:text-xl">
                 {food.food_name}
               </span>
-              <AddToFavorite foodID={food.food_id} />
+              <div className="flex items-center justify-between gap-1">
+                <AddToFavorite foodID={food.food_id} />
+              </div>
             </div>
           </div>
           <div className="flex min-h-[100vh] flex-col items-start justify-start gap-5 bg-white px-4 py-8 pb-4 shadow-[0_1px_5px_lightgray] dark:bg-black dark:shadow-[0_1px_6px_#292929] sm:m-[0.5vw] sm:min-h-[calc(100vh_-_6rem_-_1vw)] sm:gap-5 sm:rounded-lg sm:border sm:px-10">

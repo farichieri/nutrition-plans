@@ -83,6 +83,7 @@ export const plansSlice = createSlice({
     },
     removeFoodInDiet: (state, action: PayloadAction<Food>) => {
       const { food_id, diet_meal_id, diet_id } = action.payload;
+      console.log(action.payload);
       if (!diet_meal_id || !diet_id || !food_id) return;
       delete state.diets[diet_id].diet_meals[diet_meal_id].diet_meal_foods[
         food_id
@@ -112,15 +113,19 @@ export const plansSlice = createSlice({
       }>
     ) => {
       const { dietMeal, foodsArrayOrdered } = action.payload;
-      const { diet_id } = dietMeal;
-      if (!diet_id || !dietMeal.diet_meal_id) return;
+      const { diet_id, diet_meal_id } = dietMeal;
+      if (!diet_id || !diet_meal_id) return;
       const diet = state.diets[diet_id];
       let foodsUpdated: FoodGroup = {};
       foodsArrayOrdered.map((food, index) => {
         if (!food.food_id) return;
-        foodsUpdated[food.food_id] = { ...food, order: index };
+        foodsUpdated[food.food_id] = {
+          ...food,
+          order: index,
+          diet_meal_id: diet_meal_id,
+        };
       });
-      diet.diet_meals[dietMeal.diet_meal_id].diet_meal_foods = foodsUpdated;
+      diet.diet_meals[diet_meal_id].diet_meal_foods = foodsUpdated;
     },
     toggleEatenFood: (
       state,

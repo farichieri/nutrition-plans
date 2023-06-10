@@ -1,6 +1,10 @@
 import { MEAL_PLANS } from "@/data/content";
+import { NutritionTargets } from "@/features/authentication";
 
-const getNutritionTargets = (calories: number, planSelected: string) => {
+const getNutritionTargets = (
+  calories: number,
+  planSelected: string
+): NutritionTargets => {
   const getMacro = (
     personCalories: number,
     macroMultiplyer: number,

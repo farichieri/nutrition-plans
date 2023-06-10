@@ -86,7 +86,14 @@ const SaveAndEditButton: FC<Props> = ({
         className="ml-auto flex items-center gap-1 rounded-md border px-3 py-1"
         onClick={toggleButton}
       >
-        {isEditing ? "Save Changes" : "Edit"}
+        {isEditing ? (
+          <div className="flex items-center gap-1">
+            Save
+            <span className="material-icons-outlined">save</span>
+          </div>
+        ) : (
+          <span className="material-icons-outlined">edit</span>
+        )}
         {isSaving && <Spinner customClass="h-4 w-4" />}
       </button>
     </div>

@@ -48,6 +48,23 @@ const getRealDate = (date: string): string => {
   }
 };
 
+const convertDayToUrlDate = (date: string) => {
+  const isToday = getToday();
+  const isTomorrow = getTomorrow();
+  const isYesterday = getYesterday();
+
+  switch (date) {
+    case isToday:
+      return BaseDatesEnum.today;
+    case isTomorrow:
+      return BaseDatesEnum.tomorrow;
+    case isYesterday:
+      return BaseDatesEnum.yesterday;
+    default:
+      return date;
+  }
+};
+
 const convertDateToDateString = (date: string) => {
   const isToday = getToday();
   const isTomorrow = getTomorrow();
@@ -82,4 +99,9 @@ const convertDateToDateString = (date: string) => {
   }
 };
 
-export { getRealDate, isValidStringFormat, convertDateToDateString };
+export {
+  getRealDate,
+  isValidStringFormat,
+  convertDateToDateString,
+  convertDayToUrlDate,
+};
