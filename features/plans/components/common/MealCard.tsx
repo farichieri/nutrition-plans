@@ -1,10 +1,12 @@
-import { DietMeal } from "../../types";
+import {
+  isAllEaten,
+  DietMeal,
+  AddFood,
+  FoodInMealCard,
+} from "@/features/plans";
 import { Draggable, Droppable } from "@hello-pangea/dnd";
 import { FC } from "react";
 import { FoodGroupArray } from "@/features/foods";
-import { isAllEaten } from "../../utils";
-import AddFood from "./AddFood";
-import FoodInMealCard from "./FoodInMealCard";
 import Link from "next/link";
 
 interface Props {

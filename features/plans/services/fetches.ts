@@ -8,9 +8,8 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "@/services/firebase/firebase.config";
-import { Diet } from "@/features/plans";
 import { Food, FoodGroupArray } from "@/features/foods";
-import { maxComplexity } from "../utils";
+import { maxComplexity, Diet } from "@/features/plans";
 import { PlansEnum, Result } from "@/types";
 import { UserAccount } from "@/features/authentication";
 import { UserMeal } from "@/features/meals";

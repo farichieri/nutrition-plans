@@ -3,13 +3,13 @@ import {
   selectPlansSlice,
   removeFoodInDiet,
   toggleEatenFood,
-} from "../../slice";
-import { Diet } from "../../types";
+  updateDiet,
+  Diet,
+} from "@/features/plans";
 import { FC } from "react";
 import { Food, getScaleOptions, mergeScales } from "@/features/foods";
 import { FoodKeys } from "@/types/initialTypes";
 import { getNewAmount } from "@/utils/nutritionHelpers";
-import { updateDiet } from "../../services";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import Input from "@/components/Form/Input";

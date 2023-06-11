@@ -3,15 +3,19 @@ import {
   DietMeal,
   MealCard,
   updateDietMealFoodsOrder,
+  SaveAndEditButton,
 } from "@/features/plans";
+import {
+  addToList,
+  removeFromList,
+  reorderArr,
+  getNutritionMerged,
+} from "@/utils";
 import { DragDropContext } from "@hello-pangea/dnd";
 import { FC, useState } from "react";
 import { FoodGroupArray } from "@/features/foods";
-import { getNutritionMerged } from "@/utils/nutritionHelpers";
-import { addToList, removeFromList, reorderArr } from "@/utils/filter";
 import { useDispatch } from "react-redux";
 import { UserAccount } from "@/features/authentication";
-import SaveAndEditButton from "../common/SaveAndEditButton";
 
 interface Props {
   diet: Diet;
@@ -79,7 +83,7 @@ const MealCards: FC<Props> = ({ diet, date, user }) => {
   };
 
   return (
-    <div>
+    <div className="w-full">
       <div className="mb-1 flex items-center gap-2">
         <span className="material-icons-outlined text-green-500">
           restaurant

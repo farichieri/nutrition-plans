@@ -1,11 +1,15 @@
+import {
+  fetchDietByDate,
+  selectPlansSlice,
+  setDiet,
+  setIsLoadingDiet,
+  MealCards,
+  Nutrition,
+  PlanGenerator,
+} from "@/features/plans";
 import { FC, useEffect, useState } from "react";
-import { fetchDietByDate } from "../../services";
-import { selectPlansSlice, setDiet, setIsLoadingDiet } from "../../slice";
 import { useDispatch, useSelector } from "react-redux";
 import { UserAccount, selectAuthSlice } from "@/features/authentication";
-import MealCards from "../MealCards/MealCards";
-import Nutrition from "../common/Nutrition";
-import PlanGenerator from "../common/PlanGenerator";
 import Spinner from "@/components/Loader/Spinner";
 
 interface Props {
@@ -47,7 +51,7 @@ const DayPlan: FC<Props> = ({ date }) => {
       ) : (
         <>
           {diet ? (
-            <div className="mb-auto flex flex-col gap-2 ">
+            <div className="mb-auto flex h-full flex-col gap-2 ">
               <span className="text-xl font-semibold capitalize text-green-500">
                 {planID?.replaceAll("_", " ")}
               </span>

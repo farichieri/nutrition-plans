@@ -20,7 +20,7 @@ const SubPremiumNav: FC<Props> = ({ children, customClass, title }) => {
       }
     >
       {title && (
-        <span className="min-w-fit font-semibold capitalize sm:ml-5 sm:text-xl">
+        <span className="m-auto min-w-fit font-semibold capitalize sm:ml-5 sm:text-xl">
           {title}
         </span>
       )}

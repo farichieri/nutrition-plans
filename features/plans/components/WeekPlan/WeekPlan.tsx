@@ -1,17 +1,20 @@
 import {
   convertDateToDateString,
   convertDayToUrlDate,
-} from "../../utils/dates";
+  fetchDietByDate,
+  selectPlansSlice,
+  setDiet,
+  setIsLoadingDiet,
+  ManualMeals,
+  Nutrition,
+  PlanGenerator,
+} from "@/features/plans";
 import { FC, useEffect } from "react";
-import { fetchDietByDate } from "../../services";
-import { getDaysOfWeek } from "@/utils/dateFormat";
-import { selectPlansSlice, setDiet, setIsLoadingDiet } from "../../slice";
+import { getDaysOfWeek } from "@/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { UserAccount, selectAuthSlice } from "@/features/authentication";
 import Link from "next/link";
-import ManualMeals from "../MealCards/MealCards";
-import Nutrition from "../common/Nutrition";
-import PlanGenerator from "../common/PlanGenerator";
+
 import Spinner from "@/components/Loader/Spinner";
 
 interface Props {
@@ -66,10 +69,10 @@ const WeekPlan: FC<Props> = ({ dateInterval }) => {
 
             return (
               <div
-                className="flex w-full flex-col items-center justify-center rounded-md border bg-gray-500/10 p-2"
+                className="flex w-full flex-col items-center justify-center gap-2 rounded-md border bg-gray-500/10 p-2"
                 key={date}
               >
-                <div className="flex w-full justify-between">
+                <div className="flex w-full justify-between border-b pb-1">
                   <span className="text-xl font-semibold capitalize text-green-500">
                     {diet?.plan_id?.replaceAll("_", " ")}
                   </span>
@@ -80,13 +83,13 @@ const WeekPlan: FC<Props> = ({ dateInterval }) => {
                   </Link>
                 </div>
                 {diet ? (
-                  <div className="mb-auto flex w-full flex-col gap-2">
-                    <div className="flex w-full flex-wrap justify-between gap-10 ">
-                      <div className="w-full">
+                  <div className="mb-auto flex h-full w-full flex-col gap-2">
+                    <div className="flex h-full w-full flex-wrap justify-between gap-10 ">
+                      <div className="flex w-full">
                         <ManualMeals diet={diet} date={date} user={user} />
                       </div>
                       {diet && (
-                        <div className="w-full">
+                        <div className="flex w-full items-end">
                           <Nutrition
                             nutrients={diet.diet_nutrition}
                             planID={planID}

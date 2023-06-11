@@ -7,7 +7,7 @@ import { FC, useState } from "react";
 import { formatToFixed } from "@/utils/format";
 import { getNutritionTargets } from "@/components/Premium/Calculator/helpers";
 import { PlansEnum } from "@/types";
-import { NutritionTargets, selectAuthSlice } from "@/features/authentication";
+import { selectAuthSlice } from "@/features/authentication";
 import { useSelector } from "react-redux";
 import PieGraph from "@/components/PieGraph/PieGraph";
 
@@ -62,7 +62,7 @@ const Nutrition: FC<Props> = ({ nutrients, planID }) => {
   ];
 
   return (
-    <div className="flex w-full flex-wrap items-center justify-center gap-10 px-4">
+    <div className="flex w-full flex-wrap items-center justify-center gap-10 px-5">
       {openDetails && (
         <FoodNutritionDetail
           nutrients={nutrients}
@@ -86,7 +86,7 @@ const Nutrition: FC<Props> = ({ nutrients, planID }) => {
                   Number(nut.value) <= Number(nut.max);
                 return (
                   <div className="flex items-baseline">
-                    <span className="flex basis-1/3 capitalize">
+                    <span className="flex basis-1/3 truncate capitalize">
                       {nut.nutrient}
                     </span>
                     <div
@@ -115,12 +115,12 @@ const Nutrition: FC<Props> = ({ nutrients, planID }) => {
                         {nut.value || "-"}
                       </span>
                       {Number(nut.value) >= Number(nut.max) && (
-                        <span className="absolute right-[-1.5rem] flex text-sm">
+                        <span className="absolute right-[-1.25rem] flex text-sm">
                           🔻
                         </span>
                       )}
                       {Number(nut.value) <= Number(nut.min) && (
-                        <span className="absolute right-[-1.5rem] flex text-sm">
+                        <span className="absolute right-[-1.25rem] flex text-sm">
                           🔺
                         </span>
                       )}
@@ -129,80 +129,6 @@ const Nutrition: FC<Props> = ({ nutrients, planID }) => {
                 );
               })}
             </div>
-            {/* <div className="flex flex-col gap-4">
-              <div className="flex flex-col">
-                <div className="flex w-full items-baseline justify-between">
-                  <span className="basis-1/3">Calories:</span>
-                  <div className="flex basis-1/2 justify-end text-xs text-green-300">
-                    {"("}
-                    {nutrition_targets?.calories || "-"}
-                    {")"}
-                  </div>
-                  <span
-                    className={`flex basis-1/12 justify-end ${
-                      caloriesDiff.max >= 0 ? "text-green-500" : "text-red-500"
-                    }`}
-                  >
-                    {nutrients.calories || "-"}
-                  </span>
-                </div>
-                <div className="flex w-full items-baseline justify-between">
-                  <span className="basis-1/3">Carbs:</span>
-                  <div className="flex basis-1/2 justify-end text-xs text-green-300">
-                    {"("}
-                    {nutrition_targets?.carbohydrates.min || "-"}
-                    {")"}-{"("}
-                    {nutrition_targets?.carbohydrates.max || "-"}
-                    {")"}
-                  </div>
-                  <span
-                    className={`flex basis-1/12 justify-end ${
-                      carbsDiff.max >= 0 && carbsDiff.min <= 0
-                        ? "text-green-500"
-                        : "text-red-500"
-                    }`}
-                  >
-                    {nutrients.carbohydrates || "-"}
-                  </span>
-                </div>
-                <div className="flex w-full items-baseline justify-between">
-                  <span className="basis-1/3">Fats:</span>
-                  <div className="flex basis-1/2 justify-end text-xs text-green-300">
-                    {"("}
-                    {nutrition_targets?.fats.min}-{nutrition_targets?.fats.max}
-                    {")"}
-                  </div>
-                  <span
-                    className={`flex basis-1/12 justify-end ${
-                      fatsDiff.max >= 0 && fatsDiff.min <= 0
-                        ? "text-green-500"
-                        : "text-red-500"
-                    }`}
-                  >
-                    {nutrients.fats || "-"}
-                  </span>
-                </div>
-                <div className="flex w-full items-baseline justify-between">
-                  <span className="basis-1/3">Proteins:</span>
-                  <div className="flex basis-1/2 justify-end text-xs text-green-300">
-                    {"("}
-                    {nutrition_targets?.proteins.min}-
-                    {nutrition_targets?.proteins.max}
-                    {")"}
-                  </div>
-                  <span
-                    className={`flex basis-1/12 justify-end ${
-                      protsDiff.max >= 0 && protsDiff.min <= 0
-                        ? "text-green-500"
-                        : "text-red-500"
-                    }`}
-                  >
-                    {nutrients.proteins || "-"}
-                  </span>
-                </div>
-              </div>
-            </div> */}
-
             <div className="flex flex-col">
               <div className="flex w-full justify-between">
                 <span>Fiber:</span>

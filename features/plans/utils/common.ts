@@ -7,7 +7,7 @@ import {
   PlanTypes,
 } from "@/features/plans";
 import { Food, FoodGroup, FoodGroupArray } from "@/features/foods";
-import { getDietNutrition, getNutritionValues } from "@/utils/nutritionHelpers";
+import { getDietNutrition, getNutritionValues } from "@/utils";
 import { MealComplexities, UserMeals, UserMealsArr } from "@/features/meals";
 import { PlansEnum } from "@/types";
 import { uuidv4 } from "@firebase/util";
@@ -40,18 +40,6 @@ const maxComplexity = (toEval: number): number => {
     default:
       return Infinity;
   }
-};
-
-const getDietFoods = (diet_meals: DietMealGroup): FoodGroup => {
-  let result: FoodGroup = {};
-  Object.keys(diet_meals).map((meal_id) => {
-    const diet_meal = diet_meals[meal_id];
-    const foods = diet_meal.diet_meal_foods;
-    Object.keys(foods).map((food_id, index) => {
-      result[meal_id + "_" + index] = foods[food_id];
-    });
-  });
-  return result;
 };
 
 const buildDiet = (
@@ -145,7 +133,6 @@ export {
   matchComplexity,
   maxComplexity,
   buildDiet,
-  getDietFoods,
   generateDietMeals,
   getMealCalories,
   createDiet,

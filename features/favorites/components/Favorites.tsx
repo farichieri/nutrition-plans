@@ -4,7 +4,7 @@ import {
   setIsSearchingFavoriteFoods,
 } from "@/features/favorites";
 import { FC, useEffect } from "react";
-import { fetchFoodsByIDS } from "@/features/foods";
+import { Food, FoodGroupArray, fetchFoodsByIDS } from "@/features/foods";
 import { selectAuthSlice } from "@/features/authentication";
 import { useDispatch, useSelector } from "react-redux";
 import FoodCard from "@/features/foods/components/search-food/FoodsSearched/FoodCard";
@@ -32,6 +32,12 @@ const Favorites: FC<Props> = () => {
     dispatch(setIsSearchingFavoriteFoods(false));
   };
 
+  const sortFavorites = (foods: FoodGroupArray) => {
+    return foods.sort((a: Food, b: Food) => {
+      return a.food_name_lowercase.localeCompare(b.food_name_lowercase);
+    });
+  };
+
   useEffect(() => {
     getFavoriteFoods();
   }, []);
@@ -46,8 +52,8 @@ const Favorites: FC<Props> = () => {
         {noData ? (
           <div className="m-auto">No favorites found 😔</div>
         ) : (
-          Object.keys(favoriteFoods).map((food_id) => (
-            <FoodCard food={favoriteFoods[food_id]} key={food_id} />
+          sortFavorites(Object.values(favoriteFoods)).map((food) => (
+            <FoodCard food={food} key={food.food_id} />
           ))
         )}
       </div>

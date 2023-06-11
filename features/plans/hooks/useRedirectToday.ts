@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { isValidDate } from "@/utils/dateFormat";
 import { BaseDatesEnum } from "@/types/datesTypes";
-import { isValidStringFormat } from "../utils/dates";
+import { isValidStringFormat } from "@/features/plans";
 
 const useRedirectToday = (date: string) => {
   const router = useRouter();

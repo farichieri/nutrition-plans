@@ -27,7 +27,7 @@ const FoodsSearched: FC<Props> = ({ queries }) => {
     return <Spinner customClass="h-6 w-6 m-auto" />;
   }
   if (noData) {
-    return <div>No Foods found with that name</div>;
+    return <div className="m-auto">No Foods found</div>;
   }
 
   const foods = getFoodsFiltered(foodsToFilter, queries);

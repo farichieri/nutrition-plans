@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Theme } from "@/types";
-import type { RootState } from "../store";
+import { RootState } from "@/store/store";
 
 // Define a type for the slice state
 interface LayoutState {

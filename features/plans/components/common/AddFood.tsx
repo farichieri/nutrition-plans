@@ -4,8 +4,7 @@ import {
   selectFoodsSlice,
   setFoodModal,
 } from "@/features/foods";
-import { addFoodToDiet } from "../../slice";
-import { DietMeal } from "../../types";
+import { DietMeal, addFoodToDiet } from "@/features/plans";
 import { FC, useState } from "react";
 import { FilterQueries } from "@/types";
 import { useDispatch, useSelector } from "react-redux";

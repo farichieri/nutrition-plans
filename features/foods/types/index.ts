@@ -20,7 +20,7 @@ export interface Food {
   food_category: FoodCategoriesEnum | null;
   food_description: string | null;
   food_id: string | null;
-  food_name_lowercase: string | null;
+  food_name_lowercase: string;
   food_name: string | null;
   food_type: FoodType;
   glucemic_status: GlucemicStatusEnum | null;

@@ -10,7 +10,7 @@ import { formatToFixed } from "@/utils/format";
 import { GRAMS_IN_ONE_OZ } from "@/utils/constants";
 import { mergeScales } from "@/features/foods";
 import { NewFoodNutrients } from "@/types/initialTypes";
-import { DietMealGroup, getDietFoods } from "@/features/plans";
+import { DietMealGroup } from "@/features/plans";
 
 const GRAMS = NutritionMeasurements.grams;
 const OZ = NutritionMeasurements.oz;
@@ -131,6 +131,18 @@ const getNutritionMerged = (foods: FoodGroup): FoodNutrients => {
         }
       }
     }
+  });
+  return result;
+};
+
+const getDietFoods = (diet_meals: DietMealGroup): FoodGroup => {
+  let result: FoodGroup = {};
+  Object.keys(diet_meals).map((meal_id) => {
+    const diet_meal = diet_meals[meal_id];
+    const foods = diet_meal.diet_meal_foods;
+    Object.keys(foods).map((food_id, index) => {
+      result[meal_id + "_" + index] = foods[food_id];
+    });
   });
   return result;
 };

@@ -1,4 +1,4 @@
-import { AppRoutes } from "@/utils/routes";
+import { AppRoutes } from "@/utils";
 import { FC } from "react";
 import { useRouter } from "next/router";
 

@@ -29,7 +29,7 @@ const FoodCard: FC<Props> = ({ food }) => {
           <span className="truncate text-ellipsis text-center text-lg font-semibold">
             {food.food_name}
           </span>
-          <AddToFavorite foodID={food.food_id} />
+          <AddToFavorite food={food} />
         </div>
         <div className="flex w-full justify-between">
           <span>Calories:</span>

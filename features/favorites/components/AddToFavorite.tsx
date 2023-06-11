@@ -4,25 +4,32 @@ import {
   setUpdateUser,
   updateUser,
 } from "@/features/authentication";
+import {
+  addFavoriteFood,
+  removeFavoriteFood,
+  selectFavoritesSlice,
+  setIsRating,
+  updateFoodRating,
+} from "@/features/favorites";
 import { FC, useState } from "react";
-import { selectFavoritesSlice, setIsRating } from "../slice";
-import { updateFoodRating } from "../services";
+import { Food } from "@/features/foods";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "@/components/Loader/Spinner";
 
 interface Props {
-  foodID: string;
+  food: Food;
 }
 
-const AddToFavorite: FC<Props> = ({ foodID }) => {
+const AddToFavorite: FC<Props> = ({ food }) => {
+  const { food_id } = food;
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
   const [isFavoriting, setIsFavoriting] = useState(false);
   const { isRating } = useSelector(selectFavoritesSlice);
-  if (!user) return <></>;
+  if (!user || !food_id) return <></>;
 
   const food_rating: FoodRating = user.ratings.food_rating;
-  const isFavorite = food_rating?.favorites.includes(foodID);
+  const isFavorite = food_rating?.favorites.includes(food_id);
 
   const handleRating = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -36,21 +43,22 @@ const AddToFavorite: FC<Props> = ({ foodID }) => {
 
       let favorites = [...food_rating["favorites"]];
 
-      const favIndex = favorites.indexOf(foodID);
+      const favIndex = favorites.indexOf(food_id);
+      const isAlreadyFavorite = favIndex > -1;
 
       const updateAction = async (field: string, action: string) => {
-        const res = await updateFoodRating(foodID, field, action);
+        const res = await updateFoodRating(food_id, field, action);
         if (res.result === "error") {
           throw new Error("Error updating food rating");
         }
       };
 
-      if (favIndex > -1) {
+      if (isAlreadyFavorite) {
         await updateAction("num_favorites", "decrement");
         favorites.splice(favIndex, 1);
       } else {
         await updateAction("num_favorites", "increment");
-        favorites = [...favorites, foodID];
+        favorites = [...favorites, food_id];
       }
 
       let userUpdated = {
@@ -66,6 +74,11 @@ const AddToFavorite: FC<Props> = ({ foodID }) => {
         const res = await updateUser(userUpdated);
         if (res.result === "success") {
           dispatch(setUpdateUser(userUpdated));
+        }
+        if (isAlreadyFavorite) {
+          dispatch(removeFavoriteFood(food));
+        } else {
+          dispatch(addFavoriteFood(food));
         }
       }
     } catch (error) {

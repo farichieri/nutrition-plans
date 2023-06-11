@@ -104,7 +104,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
     {
       name: "Search",
       url: "/app/search",
-      pathname: ["/app/search", "/app/search/my-foods"],
+      pathname: ["/app/search", "/app/search/my-creations"],
       icon: "search",
     },
     {
@@ -236,7 +236,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
             className={
               `${
                 (router.pathname === "/app/search" ||
-                  router.pathname === "/app/search/my-foods") &&
+                  router.pathname === "/app/search/my-creations") &&
                 " bg-slate-500/30 font-semibold"
               } px-2` + fixedOptClass
             }

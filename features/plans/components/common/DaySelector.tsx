@@ -9,11 +9,14 @@ import {
   getTomorrow,
   getYesterday,
   restOneWeek,
-} from "@/utils/dateFormat";
+} from "@/utils";
+import {
+  convertDateToDateString,
+  getRealDate,
+  setPlansDate,
+} from "@/features/plans";
 import { BaseDatesEnum } from "@/types/datesTypes";
-import { convertDateToDateString, getRealDate } from "../../utils/dates";
 import { FC, useEffect } from "react";
-import { setPlansDate } from "@/features/plans";
 import { useDispatch } from "react-redux";
 import Link from "next/link";
 import RoundButton from "@/components/Buttons/RoundButton";
@@ -156,7 +159,7 @@ const DaySelector: FC<Props> = ({ date }) => {
           href={thisWeekRoute}
           className={fixedButtonClass + (isWeek ? selectedClass : "")}
         >
-          Week
+          This Week
         </Link>
       </div>
     </div>

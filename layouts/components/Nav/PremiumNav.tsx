@@ -24,7 +24,7 @@ const PremiumNav: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
             </RoundButton>
           </div>
           <span onClick={handleSidebar} className="flex">
-            Nutrition Plans co
+            Nutrition Plans
           </span>
         </div>
         <div className="flex w-fit min-w-fit basis-1/3 items-center justify-end gap-2 pr-2 text-xs xs:gap-4 sm:gap-10 sm:pr-5 sm:text-xl xl:pr-10">

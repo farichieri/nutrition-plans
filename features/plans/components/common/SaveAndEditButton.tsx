@@ -1,7 +1,12 @@
-import { Diet } from "../../types";
+import {
+  fetchDietByDate,
+  setDiet,
+  Diet,
+  updateDiet,
+  deleteDiet,
+  setDeleteDiet,
+} from "@/features/plans";
 import { FC, useState } from "react";
-import { deleteDiet, fetchDietByDate, updateDiet } from "../../services";
-import { setDeleteDiet, setDiet } from "@/features/plans";
 import { useDispatch } from "react-redux";
 import { UserAccount } from "@/features/authentication";
 import Spinner from "@/components/Loader/Spinner";

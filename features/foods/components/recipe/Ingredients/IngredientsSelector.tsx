@@ -1,5 +1,3 @@
-import { FC, useEffect, useState } from "react";
-import { FilterQueries } from "@/types";
 import {
   selectFoodsSlice,
   setFoodOpened,
@@ -8,6 +6,8 @@ import {
   Ingredient,
   IngredientGroup,
 } from "@/features/foods";
+import { FC, useEffect, useState } from "react";
+import { FilterQueries } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
 import Filters from "@/components/Premium/SearchBar/Filters";
 import IngredientModal from "./IngredientModal";

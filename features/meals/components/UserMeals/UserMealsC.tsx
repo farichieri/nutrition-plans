@@ -1,7 +1,11 @@
+import {
+  UserMeal,
+  UserMeals,
+  Meals,
+  ConfirmDeleteMeal,
+  AddMealSelector,
+} from "@/features/meals";
 import { FC, useState } from "react";
-import { UserMeal, UserMeals, Meals } from "@/features/meals";
-import AddMealSelector from "./AddMealSelector";
-import ConfirmDeleteMeal from "./ConfirmDeleteMeal";
 import SubmitButton from "@/components/Buttons/SubmitButton";
 
 interface Props {

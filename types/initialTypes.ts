@@ -177,7 +177,7 @@ export const NewFood: Food = {
   food_category: null,
   food_description: null,
   food_id: null,
-  food_name_lowercase: null,
+  food_name_lowercase: "",
   food_name: null,
   food_type: NewFoodType,
   glucemic_status: null,

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { PURGE } from "redux-persist";
-import { FoodGroup } from "@/features/foods";
+import { Food, FoodGroup } from "@/features/foods";
 import { RootState } from "@/store/store";
 
 interface FavoritesState {
@@ -28,6 +28,16 @@ export const favoritesSlice = createSlice({
     setIsRating: (state, action: PayloadAction<boolean>) => {
       state.isRating = action.payload;
     },
+    addFavoriteFood: (state, action: PayloadAction<Food>) => {
+      const { food_id } = action.payload;
+      if (!food_id) return;
+      state.favoriteFoods[food_id] = action.payload;
+    },
+    removeFavoriteFood: (state, action: PayloadAction<Food>) => {
+      const { food_id } = action.payload;
+      if (!food_id) return;
+      delete state.favoriteFoods[food_id];
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(PURGE, () => {
@@ -36,8 +46,13 @@ export const favoritesSlice = createSlice({
   },
 });
 
-export const { setFavoriteFoods, setIsSearchingFavoriteFoods, setIsRating } =
-  favoritesSlice.actions;
+export const {
+  setFavoriteFoods,
+  setIsSearchingFavoriteFoods,
+  setIsRating,
+  addFavoriteFood,
+  removeFavoriteFood,
+} = favoritesSlice.actions;
 
 export const selectFavoritesSlice = (state: RootState) => state.favorites;
 

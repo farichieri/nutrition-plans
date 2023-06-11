@@ -1,9 +1,9 @@
-import { Options } from "@/types";
-
-const generateOptions = (array: string[]): Options => {
-  return array.map((val) => {
-    return { value: val, text: val };
-  });
-};
-
-export { generateOptions };
+export * from "./constants";
+export * from "./dateFormat";
+export * from "./filter";
+export * from "./foodsHelpers";
+export * from "./format";
+export * from "./helpers";
+export * from "./nutritionHelpers";
+export * from "./routes";
+export * from "./formHelpers";

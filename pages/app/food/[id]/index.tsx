@@ -72,7 +72,7 @@ export default function Page() {
                 {food.food_name}
               </span>
               <div className="flex items-center justify-between gap-1">
-                <AddToFavorite foodID={food.food_id} />
+                <AddToFavorite food={food} />
               </div>
             </div>
           </div>

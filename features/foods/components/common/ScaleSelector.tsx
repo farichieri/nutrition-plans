@@ -6,7 +6,7 @@ import {
   mergeScales,
 } from "@/features/foods";
 import { FC, useEffect, useState } from "react";
-import { getNewAmount } from "../../../../utils/nutritionHelpers";
+import { getNewAmount } from "@/utils";
 import { useRouter } from "next/router";
 import NutritionInput from "@/components/Form/NutritionInput";
 import Select from "@/components/Form/Select";
@@ -31,6 +31,7 @@ const ScaleSelector: FC<Props> = ({
   const GRAMS = NutritionMeasurements.grams;
   const scalesMerged = mergeScales(food);
   const options = getScaleOptions(scalesMerged);
+  const defaultScale = getDefaultScale(food.scales);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -76,33 +77,20 @@ const ScaleSelector: FC<Props> = ({
         },
       });
     } else {
-      const defaultScale = getDefaultScale(food.scales);
       const { scale_amount, scale_name } = defaultScale;
       setLocalScale(scale_amount, scale_name);
     }
   };
 
   useEffect(() => {
-    // Improve.
     if (!food) return;
-    const OzAndServingToGrams = getNewAmount(
-      scalesMerged,
-      scale_name,
-      GRAMS,
-      scale_amount
-    );
-    if (scale_name === GRAMS) {
-      if (scale_amount !== food.serving_grams) {
-        setIsNotOriginal(true);
-      } else {
-        setIsNotOriginal(false);
-      }
+    if (
+      scale_name !== defaultScale.scale_name ||
+      scale_amount !== defaultScale.scale_amount
+    ) {
+      setIsNotOriginal(true);
     } else {
-      if (OzAndServingToGrams !== food.serving_grams) {
-        setIsNotOriginal(true);
-      } else {
-        setIsNotOriginal(false);
-      }
+      setIsNotOriginal(false);
     }
   }, [scale_amount, scale_name]);
 

@@ -14,13 +14,10 @@ interface Props {
 export default function SearchLayout({ queries }: Props) {
   return (
     <PremiumLayout>
-      <SubPremiumNav
-        title=""
-        customClass="top-[var(--subnav-h)] border-[#1d1d1d;] h-14"
-      >
+      <SubPremiumNav title="" customClass="top-[var(--subnav-h)] border-b h-14">
         <SearchBar queries={queries} />
       </SubPremiumNav>
-      <section className="m-auto mt-[var(--subnav-h)] flex w-full max-w-screen-xl flex-col justify-center gap-5 px-4 pb-24 pt-4 sm:px-10">
+      <section className="m-auto mt-[var(--subnav-h)] flex w-full max-w-screen-xl flex-col justify-center gap-5 px-4 pb-24 pt-8 sm:px-10">
         <DatabaseSelector queries={queries} />
         <Filters
           queries={queries}

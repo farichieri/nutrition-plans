@@ -51,5 +51,10 @@
     "prettier": "^2.8.7",
     "prettier-plugin-tailwindcss": "^0.2.7",
     "tailwindcss": "^3.3.1"
+  },
+  "browser": {
+    "fs": false,
+    "os": false,
+    "path": false
   }
 }

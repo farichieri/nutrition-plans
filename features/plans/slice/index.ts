@@ -6,11 +6,10 @@ import {
   PlanDateType,
 } from "@/features/plans/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Food, FoodGroup, FoodGroupArray } from "@/features/foods";
-import { getDietNutrition } from "@/utils/nutritionHelpers";
-import { getIsWeek, getToday } from "@/utils/dateFormat";
+import { Food, FoodGroup, FoodGroupArray } from "@/features/foods/types";
 import { PURGE } from "redux-persist";
 import { RootState } from "@/store/store";
+import { getDietNutrition, getIsWeek, getToday } from "@/utils";
 
 interface PlansSlice {
   date: string;
@@ -174,22 +173,22 @@ export const plansSlice = createSlice({
 });
 
 export const {
-  setDiet,
-  setPlansDate,
-  setIsGeneratingMeals,
-  setPlanType,
-  setIsEditingDiet,
-  setIsCreatingDiet,
   addFoodToDiet,
   removeFoodInDiet,
-  updateFoodInDiet,
-  updateDietNutrition,
-  setIsSavingDiet,
-  setIsLoadingDiet,
-  updateDietMealFoodsOrder,
   setDeleteDiet,
+  setDiet,
+  setIsCreatingDiet,
+  setIsEditingDiet,
+  setIsGeneratingMeals,
+  setIsLoadingDiet,
+  setIsSavingDiet,
   setPlanDateType,
+  setPlansDate,
+  setPlanType,
   toggleEatenFood,
+  updateDietMealFoodsOrder,
+  updateDietNutrition,
+  updateFoodInDiet,
 } = plansSlice.actions;
 
 export const selectPlansSlice = (state: RootState) => state.plans;
