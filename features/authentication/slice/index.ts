@@ -31,7 +31,7 @@ export const authSlice = createSlice({
     setUser: (state, action: PayloadAction<UserAccount | null>) => {
       state.user = action.payload;
       state.isVerifyingUser = false;
-      state.isSigningUser = false;
+      // state.isSigningUser = false;
     },
     setIsCreatingUser: (state, action: PayloadAction<boolean>) => {
       state.isCreatingUser = action.payload;

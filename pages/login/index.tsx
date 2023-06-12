@@ -17,7 +17,7 @@ export default function Page() {
     if (!user && !isVerifyingUser) {
       setIsLoading(false);
     }
-  }, [user, isVerifyingUser]);
+  }, [user, isVerifyingUser, router]);
 
   return (
     <SignLayout>

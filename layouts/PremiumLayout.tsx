@@ -1,10 +1,14 @@
-import { selectAuthSlice } from "@/features/authentication/slice";
+import {
+  selectAuthSlice,
+  setIsSigningUser,
+} from "@/features/authentication/slice";
 import { selectLayoutSlice, setSidebarOpen } from "@/store/slices/layoutSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 import BillingModal from "../components/Premium/Billing/BillingModal";
 import Head from "next/head";
 import Loader from "../components/Loader/Loader";
-import Login from "../features/authentication/components/Login";
 import PremiumNav from "./components/Nav/PremiumNav";
 import Settings from "../components/Premium/Settings/Settings";
 import Sidebar from "./components/Sidebar/PremiumSidebar";
@@ -16,6 +20,7 @@ interface Props {
 
 export default function PremiumLayout({ children }: Props) {
   const dispatch = useDispatch();
+  const router = useRouter();
   const { sidebarOpen, isBillingModalOpen, isSettingsOpen } =
     useSelector(selectLayoutSlice);
   const { user, isCreatingUser, isSigningUser } = useSelector(selectAuthSlice);
@@ -24,16 +29,21 @@ export default function PremiumLayout({ children }: Props) {
     dispatch(setSidebarOpen(!sidebarOpen));
   };
 
+  useEffect(() => {
+    if (!user) router.push("/login");
+    if (user) dispatch(setIsSigningUser(false));
+  }, [user, router]);
+
   return (
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Nutrition Plans</title>
       </Head>
-      {(isCreatingUser || isSigningUser) && <Loader />}
+      {(isCreatingUser || isSigningUser || !user) && <Loader />}
       {isSettingsOpen && <Settings />}
       {user && <WelcomeSteps />}
-      {user ? (
+      {user && (
         <div className="flex min-h-screen w-full flex-col">
           {isBillingModalOpen && <BillingModal />}
           <PremiumNav sidebarOpen={sidebarOpen} handleSidebar={handleSidebar} />
@@ -46,8 +56,6 @@ export default function PremiumLayout({ children }: Props) {
             {children}
           </div>
         </div>
-      ) : (
-        <Login />
       )}
     </>
   );

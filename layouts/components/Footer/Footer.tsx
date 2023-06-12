@@ -1,6 +1,6 @@
 import InstagramIcon from "@/assets/InstagramIcon";
+import ThemeSwitcher from "@/components/theme-switcher";
 import TwitterIcon from "@/assets/TwitterIcon";
-import ThemeSwitcher from "../../../components/theme-switcher";
 
 export default function Footer() {
   return (
@@ -9,6 +9,15 @@ export default function Footer() {
         <span className=" flex text-2xl font-bold ">Nutrition Plans</span>
         <div className="flex flex-col text-center text-sm">
           <span className="opacity-50">© 2023 Nutrition Plans Inc.</span>
+        </div>
+        <div className="text-xs sm:text-sm">
+          <span className="opacity-50">Need help? Email </span>
+          <a
+            className="duration-100 hover:text-green-500"
+            href="mailto:webmaster@example.com"
+          >
+            hello@nutritionplans.co
+          </a>
         </div>
         <div className="flex gap-2">
           <a

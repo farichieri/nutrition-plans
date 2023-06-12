@@ -1,7 +1,7 @@
 import { FC } from "react";
+import { selectLayoutSlice, setTheme } from "@/store/slices/layoutSlice";
 import { Theme } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
-import { selectLayoutSlice, setTheme } from "@/store/slices/layoutSlice";
 
 interface Props {
   withText: boolean;
@@ -30,7 +30,7 @@ const ThemeSwitcher: FC<Props> = ({ withText }) => {
       className="flex w-full items-center justify-between gap-1 transition-all"
     >
       {withText && <span>Theme</span>}
-      {theme == Theme.dark ? (
+      {theme === Theme.dark ? (
         <div className="flex items-center gap-2">
           {withText && <span>Dark</span>}
           <span className="material-icons-sharp md-18 text-yellow-500">

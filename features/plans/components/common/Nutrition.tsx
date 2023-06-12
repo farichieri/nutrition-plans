@@ -85,7 +85,7 @@ const Nutrition: FC<Props> = ({ nutrients, planID }) => {
                   Number(nut.value) >= Number(nut.min) &&
                   Number(nut.value) <= Number(nut.max);
                 return (
-                  <div className="flex items-baseline">
+                  <div className="flex items-baseline" key={nut.nutrient}>
                     <span className="flex basis-1/3 truncate capitalize">
                       {nut.nutrient}
                     </span>
