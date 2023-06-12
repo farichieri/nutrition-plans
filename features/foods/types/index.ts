@@ -228,9 +228,6 @@ export enum Macronutrients {
 
 export interface Recipe extends Food {}
 
-// Initials
-export const NewMeal: Recipe = NewFood;
-
 export const InitialScale: FoodScale = {
   id: null,
   is_default: false,

@@ -2,6 +2,7 @@ import {
   selectAuthSlice,
   setIsSigningUser,
 } from "@/features/authentication/slice";
+import { AppRoutes } from "@/utils";
 import { selectLayoutSlice, setSidebarOpen } from "@/store/slices/layoutSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -32,7 +33,8 @@ export default function PremiumLayout({ children }: Props) {
   useEffect(() => {
     if (!user) router.push("/login");
     if (user) dispatch(setIsSigningUser(false));
-  }, [user, router]);
+    if (isCreatingUser) router.push(AppRoutes.create_user);
+  }, [user, router, isCreatingUser]);
 
   return (
     <>

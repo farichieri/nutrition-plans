@@ -11,17 +11,16 @@ import {
   signInWithPopup,
   updateProfile,
 } from "firebase/auth";
-import { auth, provider } from "../../../services/firebase/firebase.config";
+import { auth, provider } from "@/services/firebase/firebase.config";
 import { DevTool } from "@hookform/devtools";
+import { GoogleLoginButton, SubmitButton } from "@/components/Buttons";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import GoogleLoginButton from "../../../components/Buttons/GoogleLogin";
 import Link from "next/link";
 import React, { FormEvent, useState } from "react";
-import SubmitButton from "../../../components/Buttons/SubmitButton";
 
 const schema = yup.object({
   email: yup
@@ -58,9 +57,6 @@ const Signup = () => {
   const [nameAdded, setNameAdded] = useState(false);
   const [emailOpen, setEmailOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [redirectRoute, setRedirectRoute] = useState(
-    router.asPath === "/app/billing" ? "/app/billing" : "/app"
-  );
 
   const handleLogInWithGoogle = async (data: FormValues) => {
     signInWithPopup(auth, provider)
@@ -74,10 +70,8 @@ const Signup = () => {
           });
           dispatch(setIsCreatingUser(true));
           await createNewUser(user);
-          dispatch(setIsCreatingUser(false));
         }
       })
-      .then(() => router.push(redirectRoute))
       .catch((error) => {
         dispatch(setLoginError());
         const errorCode = error.code;
@@ -96,10 +90,8 @@ const Signup = () => {
         if (additinalInfo?.isNewUser) {
           dispatch(setIsCreatingUser(true));
           await createNewUser(user);
-          dispatch(setIsCreatingUser(false));
         }
       })
-      .then(() => router.push(redirectRoute))
       .catch((error) => {
         const errorCode = error.code;
         setErrorMessage(AUTH_ERRORS[errorCode]);

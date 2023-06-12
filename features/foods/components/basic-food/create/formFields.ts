@@ -4,12 +4,7 @@ import {
   GlucemicStatusEnum,
   NutrientsEnum,
 } from "@/features/foods/types";
-import { NewFood } from "@/types/initialTypes";
-
-let foodKeys: any = {};
-Object.keys(NewFood).forEach((key) => {
-  foodKeys[key] = key;
-});
+import { FoodKeys } from "@/types/initialTypes";
 
 let nutrientKeys: any = {};
 Object.keys(NutrientsEnum).forEach((key) => {
@@ -23,18 +18,18 @@ let foodDigestionStatusKeys: any = Object.keys(DigestionStatusEnum);
 const calories = nutrientKeys.calories;
 const carbohydrates = nutrientKeys.carbohydrates;
 const fats = nutrientKeys.fats;
-const food_description = foodKeys.food_description;
-const food_name = foodKeys.food_name;
-const price = foodKeys.price;
-const brand = foodKeys.brand;
+const food_description = FoodKeys.food_description;
+const food_name = FoodKeys.food_name;
+const price = FoodKeys.price;
+const brand = FoodKeys.brand;
 const proteins = nutrientKeys.proteins;
-const serving_amount = foodKeys.serving_amount;
-const serving_amount_per_package = foodKeys.serving_amount_per_package;
-const serving_grams = foodKeys.serving_grams;
-const serving_name = foodKeys.serving_name;
-const food_category = foodKeys.food_category;
-const glucemic_status = foodKeys.glucemic_status;
-const digestion_status = foodKeys.digestion_status;
+const serving_amount = FoodKeys.serving_amount;
+const serving_amount_per_package = FoodKeys.serving_amount_per_package;
+const serving_grams = FoodKeys.serving_grams;
+const serving_name = FoodKeys.serving_name;
+const food_category = FoodKeys.food_category;
+const glucemic_status = FoodKeys.glucemic_status;
+const digestion_status = FoodKeys.digestion_status;
 
 const nameDescFields = [
   {
@@ -239,7 +234,7 @@ const brandField = {
   pattern: undefined,
 };
 
-const source = foodKeys.source;
+const source = FoodKeys.source;
 
 const sourceField = {
   labelText: "Source",

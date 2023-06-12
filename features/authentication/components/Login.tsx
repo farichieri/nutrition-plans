@@ -46,9 +46,6 @@ const Login = () => {
 
   const [errorMessage, setErrorMessage] = useState("");
   const [emailOpen, setEmailOpen] = useState(false);
-  const redirectRoute =
-    router.asPath === "/app/billing" ? "/app/billing" : "/app";
-  const createProfileRoute = "/app/create";
 
   const handleLogInWithGoogle = async () => {
     signInWithPopup(auth, provider)
@@ -59,7 +56,6 @@ const Login = () => {
           dispatch(setIsCreatingUser(true));
           const res = await createNewUser(user);
           if (res.result === "success") {
-            router.push(createProfileRoute);
             dispatch(setIsCreatingUser(false));
           }
         } else {
@@ -67,7 +63,6 @@ const Login = () => {
           const userRes = await generateUserObject(result.user);
           if (userRes.result === "success") {
             dispatch(setUser(userRes.data));
-            router.push(redirectRoute);
           } else {
             throw new Error("Not userRes found");
           }
@@ -90,7 +85,6 @@ const Login = () => {
             result.user && (await generateUserObject(result.user));
           if (userRes.result === "success") {
             dispatch(setUser(userRes.data));
-            router.push(redirectRoute);
           } else {
             throw new Error("Not userRes found");
           }

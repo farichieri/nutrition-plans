@@ -71,7 +71,7 @@ const AvatarDropDown: FC<Props> = ({ isApp }) => {
         </div>
         <div className="mx-4 my-2 h-0 border-b border-slate-500/30 duration-300"></div>
         <Link
-          href={!isApp ? "/app" : "/"}
+          href={!isApp ? "/app/today" : "/"}
           className={`pointer-events-auto flex w-full items-center gap-2 border-none bg-transparent px-4 py-2 opacity-60 hover:bg-slate-500/40 hover:opacity-100 `}
         >
           <span>{!isApp ? "App" : "Homepage"}</span>

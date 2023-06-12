@@ -6,13 +6,13 @@ import {
   UserFoodData,
   UserSteps,
   WeightGoal,
-} from "@/features/authentication";
+} from "@/features/authentication/types";
 import {
   Food,
   FoodNutrients,
   CompatiblePlans,
   FoodType,
-} from "@/features/foods";
+} from "@/features/foods/types";
 import { SubscriptionState } from "@/types";
 import { Progress } from "@/features/progress";
 
