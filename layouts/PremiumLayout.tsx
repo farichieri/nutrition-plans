@@ -21,8 +21,8 @@ interface Props {
 }
 
 export default function PremiumLayout({ children }: Props) {
-  const dispatch = useDispatch();
   const router = useRouter();
+  const dispatch = useDispatch();
   const { sidebarOpen, isBillingModalOpen, isSettingsOpen } =
     useSelector(selectLayoutSlice);
   const { user, isCreatingUser, isSigningUser } = useSelector(selectAuthSlice);

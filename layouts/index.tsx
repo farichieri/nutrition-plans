@@ -31,6 +31,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const { theme } = useSelector(selectLayoutSlice);
   const [_theme, setTheme] = useState<Theme | null>(null);
   const { user } = useSelector(selectAuthSlice);
+  const [isVerifyingVersion, setIsVerifyingVersion] = useState(true);
 
   useEffect(() => {
     if (user) {
@@ -55,27 +56,29 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }, [user]);
 
   useEffect(() => {
+    // Verify Version and then log log in.
     if (typeof window !== "undefined") {
-      const res = isAppVersionCorrect();
-      if (res.result === "success") {
-        // Verify User
-        onAuthStateChanged(auth, async (user) => {
-          if (user) {
-            const [userRes] = await Promise.all([generateUserObject(user)]);
-            if (userRes.result === "success") {
-              dispatch(setUser(userRes.data));
-            } else {
-              dispatch(setLoginError());
-            }
+      isAppVersionCorrect();
+      setIsVerifyingVersion(false);
+    }
+    if (!isVerifyingVersion) {
+      // Verify User
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          const [userRes] = await Promise.all([generateUserObject(user)]);
+          if (userRes.result === "success") {
+            dispatch(setUser(userRes.data));
           } else {
             dispatch(setLoginError());
           }
-        });
-      } else {
-        dispatch(setIsSigningUser(true));
-      }
+        } else {
+          dispatch(setLoginError());
+        }
+      });
+    } else {
+      dispatch(setIsSigningUser(true));
     }
-  }, []);
+  }, [isVerifyingVersion]);
 
   useEffect(() => {
     if (
