@@ -11,14 +11,15 @@ import {
   selectAuthSlice,
   setLoginError,
 } from "@/features/authentication";
+import {  Theme } from "@/types";
 import { auth } from "@/services/firebase/firebase.config";
 import { fetchProgress, setProgress } from "@/features/progress";
 import { Inter } from "next/font/google";
 import { onAuthStateChanged } from "firebase/auth";
 import { selectLayoutSlice } from "@/store/slices/layoutSlice";
-import { Theme } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import {isAppVersionCorrect} from '@/utils'
 import Head from "next/head";
 
 const font = Inter({
@@ -54,19 +55,24 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }, [user]);
 
   useEffect(() => {
-    dispatch(setIsVerifyingUser());
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        const [userRes] = await Promise.all([generateUserObject(user)]);
-        if (userRes.result === "success") {
-          dispatch(setUser(userRes.data));
-        } else {
-          dispatch(setLoginError());
-        }
-      } else {
-        dispatch(setLoginError());
+    if (typeof window !== "undefined") {
+      const res = isAppVersionCorrect();
+      if (res.result === "success") {
+        dispatch(setIsVerifyingUser());
+        onAuthStateChanged(auth, async (user) => {
+          if (user) {
+            const [userRes] = await Promise.all([generateUserObject(user)]);
+            if (userRes.result === "success") {
+              dispatch(setUser(userRes.data));
+            } else {
+              dispatch(setLoginError());
+            }
+          } else {
+            dispatch(setLoginError());
+          }
+        });
       }
-    });
+    }
   }, []);
 
   useEffect(() => {

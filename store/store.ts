@@ -30,7 +30,6 @@ export function createPersistStorage(): WebStorage {
       },
     };
   }
-
   return createWebStorage("local");
 }
 
@@ -41,7 +40,7 @@ const storage =
 
 const persistConfig = {
   key: "root",
-  version: 1,
+  version: 0,
   storage,
   whitelist: [
     "auth",

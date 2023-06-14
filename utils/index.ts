@@ -7,3 +7,4 @@ export * from "./helpers";
 export * from "./nutritionHelpers";
 export * from "./routes";
 export * from "./formHelpers";
+export * from "./appVersion";

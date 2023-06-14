@@ -23,8 +23,6 @@ const App = () => {
     }
   };
 
-  console.log({ user });
-
   useEffect(() => {
     checkUser();
   }, [user]);

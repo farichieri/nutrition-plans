@@ -35,7 +35,6 @@ export default function Page({ params }: { params: Props }) {
     }
   }, [diet?.diet_meals]);
 
-  if (!user) return <></>;
   return (
     <PremiumLayout>
       <section className="mt-[calc(1_*_var(--nav-h))] flex w-full select-none flex-col sm:mt-[var(--nav-h)]">

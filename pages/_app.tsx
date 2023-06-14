@@ -38,8 +38,7 @@ export default function App({ Component, pageProps }: AppProps) {
   }, [router.asPath]);
 
   useEffect(() => {
-    const handleStart = (url: string) => {
-      console.log(`Loading: ${url}`);
+    const handleStart = () => {
       NProgress.start();
     };
 
