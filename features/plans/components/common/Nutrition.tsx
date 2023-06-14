@@ -40,29 +40,82 @@ const Nutrition: FC<Props> = ({ nutrients, planID }) => {
       min: Number(nutrition_targets?.calories) - 100,
       max: Number(nutrition_targets?.calories) + 100,
       value: nutrients.calories,
+      isInRange: false,
+      diff: 0,
     },
     {
       nutrient: NutrientsEnum.carbohydrates,
       max: nutrition_targets?.carbohydrates.max,
       min: nutrition_targets?.carbohydrates.min,
       value: nutrients.carbohydrates,
+      isInRange: false,
+      diff: 0,
     },
     {
       nutrient: NutrientsEnum.fats,
       max: nutrition_targets?.fats.max,
       min: nutrition_targets?.fats.min,
       value: nutrients.fats,
+      isInRange: false,
+      diff: 0,
     },
     {
       nutrient: NutrientsEnum.proteins,
       max: nutrition_targets?.proteins.max,
       min: nutrition_targets?.proteins.min,
       value: nutrients.proteins,
+      isInRange: false,
+      diff: 0,
     },
   ];
 
+  const getIsInRange = (value: number, min: number, max: number): boolean => {
+    return value >= min && value <= max;
+  };
+  const getDifference = (value: number, min: number, max: number): number => {
+    if (value > max) {
+      return value - max;
+    } else if (value < min) {
+      return value - min;
+    } else {
+      return 0;
+    }
+  };
+  const completeTargetValues = () => {
+    NUTRIENT_TARGETS.map((nutrient, index) => {
+      NUTRIENT_TARGETS[index].isInRange = getIsInRange(
+        Number(nutrient.value),
+        Number(nutrient.min),
+        Number(nutrient.max)
+      );
+      NUTRIENT_TARGETS[index].diff = getDifference(
+        Number(nutrient.value),
+        Number(nutrient.min),
+        Number(nutrient.max)
+      );
+    });
+  };
+
+  completeTargetValues();
+
+  const addIsAllInRange = (): boolean => {
+    let result = true;
+    NUTRIENT_TARGETS.forEach((nutrient) => {
+      if (!nutrient.isInRange) {
+        result = false;
+      }
+    });
+    return result;
+  };
+
+  let isAllInRange = addIsAllInRange();
+
   return (
-    <div className="flex w-full flex-wrap items-center justify-center gap-10 px-5">
+    <div
+      className={`flex w-full flex-wrap items-center justify-center gap-10 ${
+        !isAllInRange ? "pr-10" : "pr-0"
+      }`}
+    >
       {openDetails && (
         <FoodNutritionDetail
           nutrients={nutrients}
@@ -81,9 +134,6 @@ const Nutrition: FC<Props> = ({ nutrients, planID }) => {
           <div className="flex w-full flex-col gap-2">
             <div className="flex flex-col divide-y border-b">
               {NUTRIENT_TARGETS.map((nut) => {
-                const isInRange =
-                  Number(nut.value) >= Number(nut.min) &&
-                  Number(nut.value) <= Number(nut.max);
                 return (
                   <div className="flex items-baseline" key={nut.nutrient}>
                     <span className="flex basis-1/3 truncate capitalize">
@@ -109,19 +159,19 @@ const Nutrition: FC<Props> = ({ nutrients, planID }) => {
                     <div className="relative ml-auto flex basis-1/12 items-center justify-end">
                       <span
                         className={` ${
-                          isInRange ? "text-green-500" : "text-red-500"
+                          nut.isInRange ? "text-green-500" : "text-red-500"
                         }`}
                       >
                         {nut.value || "-"}
                       </span>
-                      {Number(nut.value) >= Number(nut.max) && (
-                        <span className="absolute right-[-1.25rem] flex text-sm">
-                          🔻
+                      {Number(nut.value) > Number(nut.max) && (
+                        <span className="absolute right-[-2.75rem] flex text-sm text-red-500">
+                          🔻 {Number(nut.value) - Number(nut.max)}
                         </span>
                       )}
-                      {Number(nut.value) <= Number(nut.min) && (
-                        <span className="absolute right-[-1.25rem] flex text-sm">
-                          🔺
+                      {Number(nut.value) < Number(nut.min) && (
+                        <span className="absolute right-[-2.75rem] flex text-sm text-red-500">
+                          🔺 {Number(nut.value) - Number(nut.min)}
                         </span>
                       )}
                     </div>
@@ -162,6 +212,17 @@ const Nutrition: FC<Props> = ({ nutrients, planID }) => {
         >
           Detailed Nutrition
         </button>
+        <div>
+          {isAllInRange ? (
+            <span className="my-4 flex w-full justify-center text-green-500 ">
+              Good Job 💪! Nutrients target achieved.
+            </span>
+          ) : (
+            <span className="my-4 flex w-full justify-center text-red-500 ">
+              Review your macros.
+            </span>
+          )}
+        </div>
       </div>
     </div>
   );

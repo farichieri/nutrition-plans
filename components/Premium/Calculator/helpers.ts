@@ -23,8 +23,8 @@ const getNutritionTargets = (
   const protsMin = getMacro(calories, 4, Number(planData?.macros.proteins.min));
   const protsMax = getMacro(calories, 4, Number(planData?.macros.proteins.max));
 
-  const fatsMin = getMacro(calories, 4, Number(planData?.macros.fats.min));
-  const fatsMax = getMacro(calories, 4, Number(planData?.macros.fats.max));
+  const fatsMin = getMacro(calories, 9, Number(planData?.macros.fats.min));
+  const fatsMax = getMacro(calories, 9, Number(planData?.macros.fats.max));
 
   return {
     calories: calories,

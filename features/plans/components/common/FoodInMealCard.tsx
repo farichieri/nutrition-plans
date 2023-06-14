@@ -16,6 +16,7 @@ import Input from "@/components/Form/Input";
 import NutritionInput from "@/components/Form/NutritionInput";
 import RoundButton from "@/components/Buttons/RoundButton";
 import FormSelect from "@/components/Form/FormSelect";
+import { formatToFixed, round } from "@/utils";
 
 interface MealInCardProps {
   food: Food;
@@ -98,6 +99,8 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
     }
   };
 
+  const scaleFormatted = Math.round(food.scale_amount * 100) / 100;
+
   return (
     <div className="flex w-full gap-2">
       <span className="relative h-24 w-24 min-w-[96px]  sm:h-24 sm:w-24">
@@ -117,7 +120,7 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
             <span className="text-sm opacity-50">{food.food_description}</span>
           </div>
           <div className="flex flex-col">
-            <div className="flex w-full flex-wrap items-start gap-2">
+            <div className="flex w-full flex-wrap items-baseline gap-2">
               {isEditing ? (
                 <NutritionInput
                   handleChange={handleChange}
@@ -128,11 +131,11 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
                   step={"1"}
                   title={""}
                   type={"number"}
-                  value={food.scale_amount}
+                  value={scaleFormatted}
                   readOnly={!isEditing}
                 />
               ) : (
-                <span>{food.scale_amount}</span>
+                <span>{scaleFormatted}</span>
               )}
               {isEditing ? (
                 <FormSelect
@@ -147,7 +150,11 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
                   readOnly={!isEditing}
                 />
               ) : (
-                <span>{food.scale_name}</span>
+                <span className="text-sm capitalize">
+                  {`${food.scale_name.toLowerCase()}${
+                    scaleFormatted > 1 ? "s" : ""
+                  }`}
+                </span>
               )}
             </div>
             {food.note && (
