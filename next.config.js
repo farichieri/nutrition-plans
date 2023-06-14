@@ -1,8 +1,13 @@
+const packageJson = require("./package.json");
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   i18n: {
     locales: ["en"],
     defaultLocale: "en",
+  },
+  env: {
+    APP_VERSION: packageJson.version,
   },
   reactStrictMode: true,
   images: {
