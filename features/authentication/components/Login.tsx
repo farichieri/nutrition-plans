@@ -17,7 +17,6 @@ import { DevTool } from "@hookform/devtools";
 import { GoogleLoginButton, SubmitButton } from "@/components/Buttons";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/router";
 import { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -37,11 +36,11 @@ type FormValues = {
 
 const Login = () => {
   const dispatch = useDispatch();
-  const router = useRouter();
-  const { register, handleSubmit, control, formState } = useForm<FormValues>({
+  const form = useForm<FormValues>({
     defaultValues: { email: "", password: "" },
     resolver: yupResolver(schema),
   });
+  const { register, handleSubmit, control, formState } = form;
   const { errors, isSubmitting } = formState;
 
   const [errorMessage, setErrorMessage] = useState("");

@@ -5,34 +5,37 @@ import {
   getScaleOptions,
   mergeScales,
   selectFoodsSlice,
-  setRecipeState,
 } from "@/features/foods";
+import { useSelector } from "react-redux";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { FC, MouseEventHandler, useEffect, useState } from "react";
 import { FoodKeys } from "@/types/initialTypes";
 import { getNewAmount } from "@/utils/nutritionHelpers";
 import { reorderArr } from "@/utils/filter";
-import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import Input from "@/components/Form/Input";
 import NutritionInput from "@/components/Form/NutritionInput";
 import RoundButton from "@/components/Buttons/RoundButton";
-import Select from "@/components/Form/Select";
+import Select from "@/components/Form/FormSelect";
 import Spinner from "@/components/Loader/Spinner";
 
 interface IngredientProps {
   ingredient: Food;
   handleRemove: MouseEventHandler;
+  handleUpdateIngredients: Function;
 }
 
-const Ingredient: FC<IngredientProps> = ({ ingredient, handleRemove }) => {
+const Ingredient: FC<IngredientProps> = ({
+  ingredient,
+  handleRemove,
+  handleUpdateIngredients,
+}) => {
   const food = ingredient;
-  const dispatch = useDispatch();
-  const { recipeState } = useSelector(selectFoodsSlice);
+  const { newRecipeState } = useSelector(selectFoodsSlice);
   const scalesMerged = mergeScales(food);
   const options = getScaleOptions(scalesMerged);
 
-  if (!recipeState) return <>No State Provided</>;
+  if (!newRecipeState) return <>No State Provided</>;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -42,7 +45,7 @@ const Ingredient: FC<IngredientProps> = ({ ingredient, handleRemove }) => {
     const value = event.target.value;
     const valueF = type === "number" ? Number(value) : value;
 
-    const ingredients = { ...recipeState.ingredients };
+    const ingredients = { ...newRecipeState.ingredients };
     let ingredient = { ...ingredients[id] };
     let ingredientUpdated = { ...ingredient };
 
@@ -66,12 +69,7 @@ const Ingredient: FC<IngredientProps> = ({ ingredient, handleRemove }) => {
       };
     }
     ingredients[id] = ingredientUpdated;
-    dispatch(
-      setRecipeState({
-        ...recipeState,
-        ingredients: ingredients,
-      })
-    );
+    handleUpdateIngredients(ingredients);
   };
 
   if (!food.food_id) {
@@ -105,8 +103,6 @@ const Ingredient: FC<IngredientProps> = ({ ingredient, handleRemove }) => {
               <NutritionInput
                 handleChange={handleChange}
                 id={food.food_id}
-                isRequired={false}
-                labelFor={String(FoodKeys.scale_amount)}
                 labelText={""}
                 min={"0"}
                 name={String(FoodKeys.scale_amount)}
@@ -119,8 +115,6 @@ const Ingredient: FC<IngredientProps> = ({ ingredient, handleRemove }) => {
                 customClass={"h-full"}
                 handleChange={handleChange}
                 id={food.food_id}
-                isRequired={false}
-                labelFor={String(FoodKeys.scale_name)}
                 labelText={""}
                 name={String(FoodKeys.scale_name)}
                 title={"Scale Name"}
@@ -156,12 +150,13 @@ const Ingredient: FC<IngredientProps> = ({ ingredient, handleRemove }) => {
 
 interface Props {
   ingredients: IngredientGroup;
-  handleRemove: MouseEventHandler;
+  handleUpdateIngredients: Function;
 }
 
-const RecipeCreateIngredients: FC<Props> = ({ ingredients, handleRemove }) => {
-  const dispatch = useDispatch();
-  const { recipeState } = useSelector(selectFoodsSlice);
+const RecipeIngredients: FC<Props> = ({
+  ingredients,
+  handleUpdateIngredients,
+}) => {
   const ingArrSorted = Object.values(ingredients).sort(
     (a, b) => a.order - b.order
   );
@@ -194,12 +189,15 @@ const RecipeCreateIngredients: FC<Props> = ({ ingredients, handleRemove }) => {
         order: index,
       };
     });
-    dispatch(
-      setRecipeState({
-        ...recipeState,
-        ingredients: ingredientsUpdated,
-      })
-    );
+    handleUpdateIngredients(ingredientsUpdated);
+  };
+
+  const handleRemove = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    const id = (event.target as HTMLButtonElement).id;
+    const newIngredients = { ...ingredients };
+    delete newIngredients[id];
+    handleUpdateIngredients(newIngredients);
   };
 
   useEffect(() => {
@@ -209,7 +207,6 @@ const RecipeCreateIngredients: FC<Props> = ({ ingredients, handleRemove }) => {
     setIngsState(ingArrSorted);
   }, [ingredients]);
 
-  console.log({ ingsState });
   if (ingsState.length < 1) {
     return <></>;
   }
@@ -246,13 +243,13 @@ const RecipeCreateIngredients: FC<Props> = ({ ingredients, handleRemove }) => {
                             ingredient={ing}
                             key={ing.food_id}
                             handleRemove={handleRemove}
+                            handleUpdateIngredients={handleUpdateIngredients}
                           />
                         </div>
                       )}
                     </Draggable>
                   );
               })}
-
               {droppableProvided.placeholder}
             </div>
           )}
@@ -262,4 +259,4 @@ const RecipeCreateIngredients: FC<Props> = ({ ingredients, handleRemove }) => {
   );
 };
 
-export default RecipeCreateIngredients;
+export default RecipeIngredients;

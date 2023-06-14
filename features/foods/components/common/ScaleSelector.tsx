@@ -1,6 +1,5 @@
 import {
   Food,
-  NutritionMeasurements,
   getDefaultScale,
   getScaleOptions,
   mergeScales,
@@ -9,7 +8,7 @@ import { FC, useEffect, useState } from "react";
 import { getNewAmount } from "@/utils";
 import { useRouter } from "next/router";
 import NutritionInput from "@/components/Form/NutritionInput";
-import Select from "@/components/Form/Select";
+import FormSelect from "@/components/Form/FormSelect";
 
 interface Props {
   food: Food;
@@ -28,7 +27,6 @@ const ScaleSelector: FC<Props> = ({
 }) => {
   const [isNotOriginal, setIsNotOriginal] = useState(false);
   const router = useRouter();
-  const GRAMS = NutritionMeasurements.grams;
   const scalesMerged = mergeScales(food);
   const options = getScaleOptions(scalesMerged);
   const defaultScale = getDefaultScale(food.scales);
@@ -94,31 +92,29 @@ const ScaleSelector: FC<Props> = ({
     }
   }, [scale_amount, scale_name]);
 
+  console.log({ scale_name, scale_amount });
+
   return (
     <div className="flex w-full flex-col gap-2">
       <div className="flex w-full items-center justify-between gap-2">
         <NutritionInput
+          changed={false}
           handleChange={handleChange}
           id={"scale_amount"}
-          isRequired={false}
           key={"scale_amount"}
-          labelFor={"scale_amount"}
           labelText={"Scale Amount"}
-          min={"0"}
           name={"scale_amount"}
           step={"1"}
+          min={"0"}
           title={""}
           type={"number"}
           value={Number(Number(scale_amount).toFixed(2))}
         />
-        <Select
+        <FormSelect
           customClass={""}
           handleChange={handleChange}
           id={"scale_name"}
-          isRequired={false}
-          labelFor={"Amount"}
           labelText={"Scale name"}
-          name={"scale_name"}
           title={"Scale name"}
           options={options}
           value={scale_name}

@@ -1,67 +1,59 @@
 import {
   selectFoodsSlice,
-  setFoodOpened,
   Food,
-  setRecipeState,
   Ingredient,
   IngredientGroup,
+  setFoodModal,
 } from "@/features/foods";
 import { FC, useEffect, useState } from "react";
 import { FilterQueries } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
 import Filters from "@/components/Premium/SearchBar/Filters";
-import IngredientModal from "./IngredientModal";
+import IngredientModal from "../../Ingredients/IngredientModal";
 import RoundButton from "@/components/Buttons/RoundButton";
 import SearchBarCreate from "@/components/Premium/SearchBar/SearchBarCreate";
 import SearchedResults from "@/components/Premium/SearchBar/SearchedResults";
 
-interface Props {}
+interface Props {
+  handleUpdateIngredients: Function;
+}
 
-const IngredientsSelector: FC<Props> = () => {
+const IngredientsSelector: FC<Props> = ({ handleUpdateIngredients }) => {
   const dispatch = useDispatch();
-  const { foodsSearched, foodOpened } = useSelector(selectFoodsSlice);
-  const { food } = foodOpened;
+  const { foodsSearched, foodModal } = useSelector(selectFoodsSlice);
   const [searchResult, setSearchResult] = useState(foodsSearched);
   const [openIngredients, setOpenIngredients] = useState(false);
   const noData = Object.keys(searchResult).length < 1;
-  const { recipeState } = useSelector(selectFoodsSlice);
+  const { newRecipeState } = useSelector(selectFoodsSlice);
 
   useEffect(() => {
     setSearchResult(foodsSearched);
   }, [foodsSearched]);
 
   const handleOpenIngredient = (ingredient: Food) => {
-    dispatch(setFoodOpened(ingredient));
+    dispatch(setFoodModal(ingredient));
   };
 
   const handleCloseIngredient = () => {
-    dispatch(setFoodOpened(null));
+    dispatch(setFoodModal(null));
   };
 
   const [queries, setLocalQueries] = useState<FilterQueries>({});
 
-  const handleAddIngredient = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ): void => {
-    event.preventDefault();
-    if (!food) return;
+  const handleAddIngredient = (): void => {
+    if (!foodModal) return;
     const newIngredient: Ingredient = {
-      ...food,
-      scale_amount: foodOpened.food_scale.amount,
-      scale_name: foodOpened.food_scale.weightName,
+      ...foodModal,
+      scale_amount: foodModal.scale_amount,
+      scale_name: foodModal.scale_name,
     };
 
     const newIngredients: IngredientGroup = {
-      ...recipeState.ingredients,
-      [food.food_id as keyof Food]: newIngredient,
+      ...newRecipeState.ingredients,
+      [foodModal.food_id as keyof Food]: newIngredient,
     };
-    dispatch(
-      setRecipeState({
-        ...recipeState,
-        ingredients: newIngredients,
-      })
-    );
-    dispatch(setFoodOpened(null));
+    handleUpdateIngredients(newIngredients);
+    dispatch(setFoodModal(null));
   };
 
   return (
@@ -104,7 +96,7 @@ const IngredientsSelector: FC<Props> = () => {
       </div>
       {openIngredients && (
         <div className="relative flex flex-col gap-1 rounded-md">
-          {foodOpened.food && (
+          {foodModal && (
             <div className="absolute flex h-full w-full flex-col gap-1 overflow-auto rounded-md bg-gray-200 dark:bg-black">
               <div className="relative flex h-full flex-col gap-1 overflow-auto rounded-md border p-1">
                 <span
@@ -115,17 +107,19 @@ const IngredientsSelector: FC<Props> = () => {
                 </span>
                 <IngredientModal
                   handleClose={handleCloseIngredient}
-                  food={foodOpened.food}
+                  food={foodModal}
                   handleAdd={handleAddIngredient}
                 />
               </div>
             </div>
           )}
-          <SearchedResults
-            searchResult={searchResult}
-            handleClick={handleOpenIngredient}
-            queries={queries}
-          />
+          <div className="max-h-[50vh] overflow-auto border-y py-2">
+            <SearchedResults
+              searchResult={searchResult}
+              handleClick={handleOpenIngredient}
+              queries={queries}
+            />
+          </div>
         </div>
       )}
     </>

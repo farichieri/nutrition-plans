@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Food, FoodGroup } from "@/features/foods";
+import { Food, FoodGroup, Recipe } from "@/features/foods";
 import { NewFood } from "@/types/initialTypes";
 import { PURGE } from "redux-persist";
 import { RootState } from "@/store/store";
@@ -15,10 +15,10 @@ interface FoodsSlice {
       weightName: string;
     };
   };
-  foodState: Food;
+  newFoodState: Food;
   ingredientOpened: Food | null;
   mealState: Food;
-  recipeState: Food;
+  newRecipeState: Recipe;
   foodModal: Food | null;
 }
 
@@ -33,10 +33,10 @@ const initialState: FoodsSlice = {
       weightName: "",
     },
   },
-  foodState: NewFood,
+  newFoodState: NewFood,
   ingredientOpened: null,
   mealState: NewFood,
-  recipeState: NewFood,
+  newRecipeState: NewFood,
   foodModal: null,
 };
 
@@ -62,6 +62,12 @@ export const foodsSlice = createSlice({
       state.foodsSearched = allFoodsSearched;
       state.myFoodsSearched = myFoodsSearched;
     },
+    addNewFood: (state, action: PayloadAction<Food>) => {
+      const { food_id } = action.payload;
+      if (!food_id) return;
+      state.foodsSearched[food_id] = action.payload;
+      state.myFoodsSearched[food_id] = action.payload;
+    },
     setFoodOpened: (state, action: PayloadAction<Food | null>) => {
       state.foodOpened.food = action.payload;
     },
@@ -71,11 +77,37 @@ export const foodsSlice = createSlice({
     ) => {
       state.foodOpened.food_scale = action.payload;
     },
-    setFoodState: (state, action: PayloadAction<Food>) => {
-      state.foodState = action.payload;
+    setNewFoodState: (state, action: PayloadAction<Food>) => {
+      state.newFoodState = { ...action.payload };
     },
-    setRecipeState: (state, action: PayloadAction<Food>) => {
-      state.recipeState = action.payload;
+    updateNewFoodState: (
+      state,
+      action: PayloadAction<{ field: string; value: any }>
+    ) => {
+      const { field, value } = action.payload;
+      if (Array.isArray(value)) {
+        state.newFoodState[field] = [...value];
+      } else if (typeof value === "object") {
+        state.newFoodState[field] = { ...value };
+      } else {
+        state.newFoodState[field] = value;
+      }
+    },
+    updateNewRecipeState: (
+      state,
+      action: PayloadAction<{ field: string; value: any }>
+    ) => {
+      const { field, value } = action.payload;
+      if (Array.isArray(value)) {
+        state.newRecipeState[field] = [...value];
+      } else if (typeof value === "object") {
+        state.newRecipeState[field] = { ...value };
+      } else {
+        state.newRecipeState[field] = value;
+      }
+    },
+    setNewRecipeState: (state, action: PayloadAction<Food>) => {
+      state.newRecipeState = action.payload;
     },
     setMealState: (state, action: PayloadAction<Food>) => {
       state.mealState = action.payload;
@@ -107,16 +139,19 @@ export const foodsSlice = createSlice({
 });
 
 export const {
+  addNewFood,
+  setFoodModal,
+  setFoodModalScale,
   setFoodOpened,
   setFoodOpenedScale,
   setFoodsSearched,
-  setFoodState,
   setIngredientOpened,
   setIsSearchingFoods,
   setMealState,
-  setRecipeState,
-  setFoodModal,
-  setFoodModalScale,
+  setNewFoodState,
+  setNewRecipeState,
+  updateNewFoodState,
+  updateNewRecipeState,
 } = foodsSlice.actions;
 
 export const selectFoodsSlice = (state: RootState) => state.foods;

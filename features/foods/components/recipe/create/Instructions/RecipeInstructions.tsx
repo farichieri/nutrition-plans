@@ -1,61 +1,50 @@
-import {
-  Instruction,
-  selectFoodsSlice,
-  setRecipeState,
-} from "@/features/foods";
+import { Instruction } from "@/features/foods";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { FC, useEffect, useState } from "react";
 import { reorderArr } from "@/utils/filter";
-import { useDispatch, useSelector } from "react-redux";
 import RoundButton from "@/components/Buttons/RoundButton";
 
-const RecipeStep = ({ step }: { step: Instruction }) => {
-  const dispatch = useDispatch();
-  const { recipeState } = useSelector(selectFoodsSlice);
-
+interface InstructionProps {
+  instructions: Instruction[];
+  inst: Instruction;
+  handleUpdateInstructions: Function;
+}
+const InstructionC: FC<InstructionProps> = ({
+  instructions,
+  inst,
+  handleUpdateInstructions,
+}) => {
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     event.preventDefault();
     const name = event.target.name;
     const value = event.target.value;
     const id = event.target.id;
 
-    const instructions = [...recipeState.instructions];
     const ingredientExists = instructions.find(
       (ing) => ing.instruction_id === id
     );
 
     const ingredientUpdated: Instruction = {
-      ...step,
+      ...inst,
       [name]: value,
     };
 
     if (ingredientExists) {
       instructions[instructions.indexOf(ingredientExists)] = ingredientUpdated;
-      dispatch(
-        setRecipeState({
-          ...recipeState,
-          instructions: instructions,
-        })
-      );
+      handleUpdateInstructions(instructions);
     }
   };
 
   const handleRemove = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const id = (event.target as HTMLButtonElement).id;
-    const instructions = [...recipeState.instructions];
     const instructionExists = instructions.find(
       (ing) => ing.instruction_id === id
     );
 
     if (instructionExists) {
       instructions.splice(instructions.indexOf(instructionExists), 1);
-      dispatch(
-        setRecipeState({
-          ...recipeState,
-          instructions: instructions,
-        })
-      );
+      handleUpdateInstructions(instructions);
     }
   };
 
@@ -66,18 +55,18 @@ const RecipeStep = ({ step }: { step: Instruction }) => {
         autoComplete="off"
         autoCorrect="off"
         className="min-h-20 h-full max-h-32 w-full rounded-lg border bg-transparent p-2 text-sm outline-none  placeholder:opacity-50 focus-within:border-black dark:focus-within:border-white"
-        id={step.instruction_id}
+        id={inst.instruction_id}
         name="text"
         onChange={handleChange}
         placeholder="New Instruction..."
         spellCheck={false}
-        value={step.text}
+        value={inst.text}
       />
 
       <RoundButton
         customClass="w-10 h-10 p-1.5 my-auto ml-auto"
         onClick={handleRemove}
-        id={step.instruction_id}
+        id={inst.instruction_id}
       >
         <span className="material-icons pointer-events-none">delete</span>
       </RoundButton>
@@ -85,13 +74,15 @@ const RecipeStep = ({ step }: { step: Instruction }) => {
   );
 };
 
-interface Props {}
+interface Props {
+  handleUpdateInstructions: Function;
+  instructions: Instruction[];
+}
 
-const InstructionsCreate: FC<Props> = () => {
-  const { recipeState } = useSelector(selectFoodsSlice);
-  const instructions = recipeState.instructions;
-  const dispatch = useDispatch();
-
+const RecipeInstructions: FC<Props> = ({
+  handleUpdateInstructions,
+  instructions,
+}) => {
   const insArrSorted = [...instructions].sort((a, b) => a.order - b.order);
   const [ingsState, setIngsState] = useState<Instruction[]>(insArrSorted);
 
@@ -114,16 +105,10 @@ const InstructionsCreate: FC<Props> = () => {
   };
 
   const updateIngredientsOrder = async (ingsReordered: Instruction[]) => {
-    const instsUpdated = ingsReordered.map((inst, index) => {
+    const instructionsUpdated = ingsReordered.map((inst, index) => {
       return { ...inst, order: index };
     });
-
-    dispatch(
-      setRecipeState({
-        ...recipeState,
-        instructions: instsUpdated,
-      })
-    );
+    handleUpdateInstructions(instructionsUpdated);
   };
 
   useEffect(() => {
@@ -159,7 +144,12 @@ const InstructionsCreate: FC<Props> = () => {
                           <span className="material-icons-outlined opacity-50">
                             drag_handle
                           </span>
-                          <RecipeStep step={inst} key={inst.instruction_id} />
+                          <InstructionC
+                            instructions={instructions}
+                            inst={inst}
+                            key={inst.instruction_id}
+                            handleUpdateInstructions={handleUpdateInstructions}
+                          />
                         </div>
                       )}
                     </Draggable>
@@ -175,4 +165,4 @@ const InstructionsCreate: FC<Props> = () => {
   );
 };
 
-export default InstructionsCreate;
+export default RecipeInstructions;

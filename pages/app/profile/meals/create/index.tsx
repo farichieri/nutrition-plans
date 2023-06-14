@@ -1,7 +1,5 @@
 import {
-  selectMealsSlice,
-  setAddNewMealSetting,
-  setNewMealState,
+  createMealSetting,
   MealComplexities,
   MealComplexitiesType,
   MealCook,
@@ -10,9 +8,12 @@ import {
   MealSizes,
   MealSizesType,
   NewMealSetting,
+  selectMealsSlice,
+  setAddNewMealSetting,
+  setNewMealState,
   UserMeal,
-  createMealSetting,
 } from "@/features/meals";
+import { generateOptions } from "@/utils";
 import { selectAuthSlice } from "@/features/authentication";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
@@ -21,8 +22,7 @@ import FormAction from "@/components/Form/FormAction";
 import Input from "@/components/Form/Input";
 import MealsLayout from "@/layouts/MealsLayout";
 import Modal from "@/components/Modal/Modal";
-import Select from "@/components/Form/Select";
-import { generateOptions } from "@/utils";
+import FormSelect from "@/components/Form/FormSelect";
 
 export default function Page() {
   const dispatch = useDispatch();
@@ -124,8 +124,8 @@ export default function Page() {
                 <Input
                   handleChange={handleChange}
                   id={"name"}
+                  labelFor="id"
                   isRequired={true}
-                  labelFor={"name"}
                   labelText={"Meal Name"}
                   name={"name"}
                   title={"Meal Name"}
@@ -134,12 +134,11 @@ export default function Page() {
                 />
               </div>
               <div className="w-full flex-col">
-                <Select
+                <FormSelect
                   customClass={""}
                   handleChange={handleChange}
                   id={"size"}
                   isRequired={true}
-                  labelFor={"size"}
                   labelText={"Meal Size"}
                   name={"size"}
                   title={"Meal Size"}
@@ -148,12 +147,11 @@ export default function Page() {
                 />
               </div>
               <div className="w-full flex-col">
-                <Select
+                <FormSelect
                   customClass={""}
                   handleChange={handleChange}
                   id={"time"}
                   isRequired={true}
-                  labelFor={"time"}
                   labelText={"Available Time"}
                   name={"time"}
                   title={"Meal Time"}
@@ -162,12 +160,11 @@ export default function Page() {
                 />
               </div>
               <div className="w-full flex-col">
-                <Select
+                <FormSelect
                   customClass={""}
                   handleChange={handleChange}
                   id={"complexity"}
                   isRequired={true}
-                  labelFor={"complexity"}
                   labelText={"complexity"}
                   name={"complexity"}
                   title={"Meal Complexity"}
@@ -176,12 +173,11 @@ export default function Page() {
                 />
               </div>
               <div className="w-full flex-col">
-                <Select
+                <FormSelect
                   customClass={""}
                   handleChange={handleChange}
                   id={"cook"}
                   isRequired={true}
-                  labelFor={"cook"}
                   labelText={"cook"}
                   name={"cook"}
                   title={"Meal cook"}

@@ -1,18 +1,17 @@
-import {
-  Instruction,
-  selectFoodsSlice,
-  setRecipeState,
-} from "@/features/foods";
+import { Instruction } from "@/features/foods";
 import { FC, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { uuidv4 } from "@firebase/util";
 import RoundButton from "@/components/Buttons/RoundButton";
 
-interface Props {}
+interface Props {
+  handleUpdateInstructions: Function;
+  instructions: Instruction[];
+}
 
-const AddInstruction: FC<Props> = () => {
-  const dispatch = useDispatch();
-  const { recipeState } = useSelector(selectFoodsSlice);
+const AddInstruction: FC<Props> = ({
+  handleUpdateInstructions,
+  instructions,
+}) => {
   const [newInstruction, setNewInstruction] = useState<Instruction>({
     instruction_id: "",
     order: -1,
@@ -36,19 +35,12 @@ const AddInstruction: FC<Props> = () => {
       return;
     }
     const uuid = uuidv4();
+    const instructionsUpdated = [
+      ...instructions,
+      { ...newInstruction, instruction_id: uuid },
+    ];
+    handleUpdateInstructions(instructionsUpdated);
 
-    dispatch(
-      setRecipeState({
-        ...recipeState,
-        instructions: [
-          ...recipeState.instructions,
-          {
-            ...newInstruction,
-            instruction_id: uuid,
-          },
-        ],
-      })
-    );
     setNewInstruction({
       instruction_id: "",
       order: -1,

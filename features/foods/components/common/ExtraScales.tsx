@@ -75,21 +75,16 @@ const AddExtraScale: FC<AddExtraScaleProps> = ({
             value={newScaleState["scale_name"] || ""}
           />
           <NutritionInput
-            customClass={""}
+            changed={false}
             handleChange={handleChange}
             id={"scale_grams"}
-            isRequired={true}
-            key={"scale_grams"}
-            labelFor={"scale_grams"}
             labelText={"Equivalent weight in grams"}
+            name="scale_grams"
+            title="Scale Grams"
+            type="number"
             min={"0"}
-            name={"scale_grams"}
-            placeholder={""}
-            step={"0.1"}
-            title={"Scale Grams"}
-            type={"number"}
-            value={newScaleState["scale_grams"]}
             unit={"g"}
+            value={newScaleState["scale_grams"]}
           />
         </div>
         <div className="mt-4 flex w-full justify-center gap-2 border-t p-4 dark:border-white">

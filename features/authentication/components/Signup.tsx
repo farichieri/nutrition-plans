@@ -16,7 +16,6 @@ import { DevTool } from "@hookform/devtools";
 import { GoogleLoginButton, SubmitButton } from "@/components/Buttons";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/router";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Link from "next/link";
@@ -38,7 +37,6 @@ type FormValues = {
 };
 
 const Signup = () => {
-  const router = useRouter();
   const dispatch = useDispatch();
   const {
     register,

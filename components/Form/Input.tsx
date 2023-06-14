@@ -44,7 +44,7 @@ const Input: FC<Props> = ({
   readOnly,
 }) => {
   return (
-    <div className="my-1 flex flex-wrap items-center gap-4 sm:flex-nowrap ">
+    <div className="my-1 flex flex-wrap items-center gap-1 sm:flex-nowrap ">
       {labelText && (
         <label htmlFor={labelFor} className="not-sr-only w-full">
           {labelText}

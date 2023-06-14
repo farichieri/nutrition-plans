@@ -15,7 +15,7 @@ import Image from "next/image";
 import Input from "@/components/Form/Input";
 import NutritionInput from "@/components/Form/NutritionInput";
 import RoundButton from "@/components/Buttons/RoundButton";
-import Select from "@/components/Form/Select";
+import FormSelect from "@/components/Form/FormSelect";
 
 interface MealInCardProps {
   food: Food;
@@ -122,8 +122,6 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
                 <NutritionInput
                   handleChange={handleChange}
                   id={food.food_id}
-                  isRequired={false}
-                  labelFor={String(FoodKeys.scale_amount)}
                   labelText={""}
                   min={"0"}
                   name={String(FoodKeys.scale_amount)}
@@ -137,12 +135,10 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
                 <span>{food.scale_amount}</span>
               )}
               {isEditing ? (
-                <Select
+                <FormSelect
                   customClass={"h-full"}
                   handleChange={handleChange}
                   id={food.food_id}
-                  isRequired={false}
-                  labelFor={String(FoodKeys.scale_name)}
                   labelText={""}
                   name={String(FoodKeys.scale_name)}
                   title={"Scale Name"}

@@ -1,47 +1,14 @@
-import {
-  Food,
-  IngredientGroup,
-  setRecipeState,
-  setMealState,
-  FoodNutritionDetail,
-} from "@/features/foods";
-import { AppRoutes } from "@/utils/routes";
-import { FC, useEffect, useState } from "react";
-import { getIngredientsFoods } from "@/utils/foodsHelpers";
-import { getNutritionMerged } from "@/utils/nutritionHelpers";
-import { useDispatch } from "react-redux";
-import { useRouter } from "next/router";
+import { FoodNutrients, FoodNutritionDetail } from "@/features/foods";
+import { FC, useState } from "react";
 import PieGraph from "@/components/PieGraph/PieGraph";
 import Spinner from "@/components/Loader/Spinner";
 
 interface Props {
-  food?: Food;
-  meal?: Food;
-  ingredients?: IngredientGroup;
+  nutrients: FoodNutrients;
 }
 
-const IngredientsNutrition: FC<Props> = ({ food, meal, ingredients }) => {
-  const dispatch = useDispatch();
-  const router = useRouter();
+const RecipeNutrition: FC<Props> = ({ nutrients }) => {
   const [openDetails, setOpenDetails] = useState(false);
-  const nutrients = food?.nutrients || meal?.nutrients;
-  const isCreateMeal = router.asPath === AppRoutes.create_meal;
-  const isCreateRecipe = router.asPath === AppRoutes.create_recipe;
-
-  useEffect(() => {
-    if (isCreateMeal || isCreateRecipe) {
-      if (!nutrients || !ingredients) return;
-      const foods = getIngredientsFoods(ingredients);
-      const nutritionMerged = getNutritionMerged(foods);
-      if (Object.keys(nutritionMerged).length > 0) {
-        if (isCreateRecipe && food) {
-          dispatch(setRecipeState({ ...food, nutrients: nutritionMerged }));
-        } else if (isCreateMeal && meal) {
-          dispatch(setMealState({ ...meal, nutrients: nutritionMerged }));
-        }
-      }
-    }
-  }, [food?.ingredients, meal?.ingredients]);
 
   if (!nutrients) {
     return (
@@ -122,4 +89,4 @@ const IngredientsNutrition: FC<Props> = ({ food, meal, ingredients }) => {
   );
 };
 
-export default IngredientsNutrition;
+export default RecipeNutrition;

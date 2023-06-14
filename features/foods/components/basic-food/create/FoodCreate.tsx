@@ -1,41 +1,46 @@
 import {
+  fatsNutritionFields,
+  firstNutritionFields,
+  sugarNutritionFields,
+  vitsAndMinsNutritionFields,
+} from "./formFields";
+import {
   FoodNutrients,
   CompatiblePlans,
   FoodType,
   FoodKind,
   addFood,
   selectFoodsSlice,
-  setFoodState,
   FoodScales,
+  GlucemicStatusEnum,
+  FoodCategoriesEnum,
+  DigestionStatusEnum,
+  NutrientsEnum,
+  Food,
+  addNewFood,
+  setNewFoodState,
+  updateNewFoodState,
 } from "@/features/foods";
-import {
-  brandField,
-  fatsFields,
-  firstOptionalFields,
-  foodCategorySelect,
-  foodDigestionStatusSelect,
-  foodGlucemicStatusSelect,
-  nameDescFields,
-  servingSizeFields,
-  servingsPerPackage,
-  sourceField,
-  sugarFields,
-  vitsAndMinsFields,
-} from "./formFields";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { generateOptions } from "@/utils";
 import { NewFood } from "@/types/initialTypes";
+import { schema } from "./utils";
 import { selectAuthSlice } from "@/features/authentication/slice";
 import { useDispatch, useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
+import { yupResolver } from "@hookform/resolvers/yup";
 import Checkbox from "@/components/Form/Checkbox";
 import ExtraScales from "../../common/ExtraScales";
 import FormAction from "@/components/Form/FormAction";
+import FormInput from "@/components/Form/FormInput";
+import FormSelect from "@/components/Form/FormSelect";
 import Image from "next/image";
-import Input from "@/components/Form/Input";
 import NutritionInput from "@/components/Form/NutritionInput";
-import React, { FC, useState } from "react";
-import Select from "@/components/Form/Select";
+import React, { FC, useEffect, useState } from "react";
+import TranspLoader from "@/components/Loader/TranspLoader";
+
+interface FormValues extends Food {}
 
 interface Props {}
 
@@ -43,73 +48,37 @@ const FoodCreate: FC<Props> = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { user } = useSelector(selectAuthSlice);
-  const { foodState } = useSelector(selectFoodsSlice);
+  const { newFoodState } = useSelector(selectFoodsSlice);
   const [optionalsOpen, setOptionalsOpen] = useState<boolean>(false);
-  const foodCategory = foodCategorySelect;
-  const glucemicStatus = foodGlucemicStatusSelect;
-  const digestionStatus = foodDigestionStatusSelect;
-  const [isCreating, setIsCreating] = useState(false);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const type = event.target.type;
+  let foodCategoryOptions = Object.keys(FoodCategoriesEnum);
+  let foodGlucemicStatusOptions = Object.keys(GlucemicStatusEnum);
+  let foodDigestionStatusOptions = Object.keys(DigestionStatusEnum);
+
+  const form = useForm<FormValues>({
+    defaultValues: newFoodState,
+    resolver: yupResolver(schema),
+  });
+  const {
+    formState,
+    getValues,
+    handleSubmit,
+    register,
+    reset,
+    setValue,
+    watch,
+  } = form;
+  const { errors, isSubmitting } = formState;
+  const values = getValues();
+
+  const handleChangeNutrient = (event: React.ChangeEvent<HTMLInputElement>) => {
     const name = event.target.name;
-    const id = event.target.id;
     const value = event.target.value;
-    const valueF = type === "number" ? Number(value) : value;
-
-    if (name === "food_type") {
-      let foodTypes = { ...foodState.food_type };
-      let foodTypesUpdated = {
-        ...foodTypes,
-        [id]: !foodTypes[id as keyof FoodType],
-      };
-      dispatch(setFoodState({ ...foodState, food_type: foodTypesUpdated }));
-    } else if (name === "compatible_plans") {
-      let foodTypes = { ...foodState.compatible_plans };
-      let foodTypesUpdated = {
-        ...foodTypes,
-        [id]: !foodTypes[id as keyof CompatiblePlans],
-      };
-      dispatch(
-        setFoodState({ ...foodState, compatible_plans: foodTypesUpdated })
-      );
-    } else if (name === "nutrient") {
-      let nutrients = { ...foodState.nutrients };
-      let nutrientsUpdated = {
-        ...nutrients,
-        [id]: Number(valueF) > 0 ? Number(valueF) : 0,
-      };
-      dispatch(setFoodState({ ...foodState, nutrients: nutrientsUpdated }));
-    } else {
-      dispatch(setFoodState({ ...foodState, [id]: valueF }));
-    }
+    setValue(name as keyof FoodNutrients, Number(value));
   };
 
   const handleChangeScales = (newScales: FoodScales) => {
-    dispatch(setFoodState({ ...foodState, scales: [...newScales] }));
-  };
-
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    if (!user) return;
-    if (isCreating) return;
-    setIsCreating(true);
-    const res = await addFood(
-      foodState,
-      FoodKind.basic_food,
-      newImageFile,
-      user
-    );
-    if (res.result === "success") {
-      setNewImageFile(undefined);
-      dispatch(setFoodState(NewFood));
-      router.push(`/app/food/${res.data.food_id}`).then(() => {
-        alert("Food created successfully");
-      });
-    } else {
-      alert("Error creating food");
-    }
-    setIsCreating(false);
+    setValue("scales", [...newScales], { shouldDirty: true });
   };
 
   const [newImageFile, setNewImageFile] = useState<File | undefined>(undefined);
@@ -120,416 +89,376 @@ const FoodCreate: FC<Props> = () => {
       const file = files[0];
       if (!file) return;
       const blob = URL.createObjectURL(file);
-      dispatch(
-        setFoodState({
-          ...foodState,
-          image: blob,
-        })
-      );
+      setValue("image", blob);
       setNewImageFile(file);
+    }
+  };
+
+  const onSubmit = async (data: FormValues) => {
+    if (!user || isSubmitting) return;
+    const res = await addFood(data, FoodKind.basic_food, newImageFile, user);
+    if (res.result === "success") {
+      dispatch(setNewFoodState(NewFood));
+      setNewImageFile(undefined);
+      dispatch(addNewFood(res.data));
+      router.push(`/app/food/${res.data.food_id}`).then(() => {
+        alert("Food created successfully");
+      });
+    } else {
+      alert("Error creating food");
     }
   };
 
   const handleCancel = async (event: React.FormEvent) => {
     event.preventDefault();
-    dispatch(setFoodState(NewFood));
+    reset(NewFood);
     setNewImageFile(undefined);
+    dispatch(setNewFoodState(NewFood));
   };
 
+  let nutrientKeys: any = {};
+  Object.keys(NutrientsEnum).forEach((key) => {
+    nutrientKeys[key] = key;
+  });
+
+  const getNutritionInputs = (fields: string[]) => {
+    return fields.map((nutrient) => (
+      <NutritionInput
+        changed={watch(`nutrients.${nutrient as keyof FoodNutrients}`)}
+        error={errors.nutrients?.[nutrient as keyof FoodNutrients]?.message}
+        handleChange={handleChangeNutrient}
+        id={nutrient}
+        key={nutrient}
+        labelText={nutrient}
+        title={nutrient}
+        type="number"
+        value={values.nutrients[nutrient as keyof FoodNutrients]}
+        {...register(`nutrients.${nutrient as keyof FoodNutrients}`)}
+      />
+    ));
+  };
+
+  useEffect(() => {
+    const subscription = watch((formState, { name }) => {
+      if (name) {
+        const objName = name.split(".")[0];
+        const value = formState[objName];
+        dispatch(updateNewFoodState({ field: objName, value: value }));
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [dispatch, watch]);
+
   return (
-    <form className="flex w-full flex-col gap-2" onSubmit={handleSubmit}>
-      <div className="flex w-full flex-wrap  xl:divide-x">
-        <div className="mb-10 flex w-full max-w-xl flex-col gap-5 sm:px-4">
-          <div className="">
-            {nameDescFields.map((field) => (
-              <Input
-                customClass={""}
-                handleChange={handleChange}
-                id={field.id}
-                isRequired={field.isRequired}
-                key={field.id}
-                labelFor={field.labelFor}
-                labelText={field.labelText}
-                max={field.max}
-                min={field.min}
-                name={field.name}
-                pattern={field.pattern}
-                placeholder={field.placeholder}
-                step={field.step}
-                title={field.title}
-                type={field.type}
-                value={foodState[field.id]}
+    <>
+      {/* <DevTool control={control} /> */}
+      {isSubmitting && <TranspLoader text={"Creating Food..."} />}
+      <form
+        noValidate
+        className="flex w-full flex-col gap-2"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <div className="flex w-full flex-wrap  xl:divide-x">
+          <div className="mb-10 flex w-full max-w-xl flex-col gap-5 sm:px-4">
+            <div className="flex flex-col gap-2">
+              <FormInput
+                error={errors.food_name?.message}
+                id={"food_name"}
+                labelText="Food Name"
+                placeholder="Food Name"
+                title="Food Name"
+                type="text"
+                {...register("food_name")}
               />
-            ))}
-          </div>
-          <div className="flex flex-col gap-2">
-            <h1 className="text-xl">Image</h1>
-            <Image
-              src={foodState.image}
-              width={200}
-              height={200}
-              alt="Food Image"
-              className="m-auto h-[300px] w-[300px] rounded-lg object-cover sm:m-0"
-            />
-            <input
-              title="Upload a new photo"
-              type="file"
-              onChange={handleUploadImage}
-              accept="image/*"
-            />
-          </div>
+              <FormInput
+                error={errors.food_description?.message}
+                id={"food_description"}
+                labelText="Food Description"
+                placeholder="Food Description"
+                title="Food Description"
+                type="text"
+                {...register("food_description")}
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <h1 className="text-xl">Image</h1>
+              <Image
+                src={values.image}
+                width={200}
+                height={200}
+                alt="Food Image"
+                className="m-auto h-[300px] w-[300px] rounded-lg object-cover sm:m-0"
+              />
+              <input
+                title="Upload a new photo"
+                type="file"
+                onChange={handleUploadImage}
+                accept="image/*"
+              />
+              <div className="text-red-500">
+                <p>{errors.image?.message}</p>
+              </div>
+            </div>
 
-          <div className="">
-            <h1 className="text-xl">Serving size info</h1>
+            <div>
+              <h1 className="text-xl">Serving size info</h1>
+              <div className="flex flex-col gap-2">
+                <FormInput
+                  error={errors.nutrients?.calories?.message}
+                  id={"nutrients.calories"}
+                  labelText="Calories"
+                  placeholder="Calories"
+                  title="Calories"
+                  type="number"
+                  {...register("nutrients.calories", { valueAsNumber: true })}
+                />
+                <FormInput
+                  error={errors.nutrients?.carbohydrates?.message}
+                  id={"nutrients.carbohydrates"}
+                  labelText="Carbohydrates"
+                  placeholder="Carbohydrates"
+                  title="Carbohydrates"
+                  type="number"
+                  {...register("nutrients.carbohydrates", {
+                    valueAsNumber: true,
+                    min: 0,
+                  })}
+                />
+                <FormInput
+                  error={errors.nutrients?.fats?.message}
+                  id={"nutrients.fats"}
+                  labelText="Fats"
+                  placeholder="Fats"
+                  title="Fats"
+                  type="number"
+                  {...register("nutrients.fats", { valueAsNumber: true })}
+                />
+                <FormInput
+                  error={errors.nutrients?.proteins?.message}
+                  id={"nutrients.proteins"}
+                  labelText="Proteins"
+                  placeholder="Proteins"
+                  title="Proteins"
+                  type="number"
+                  {...register("nutrients.proteins", { valueAsNumber: true })}
+                />
+                <FormInput
+                  error={errors.serving_name?.message}
+                  id={"serving_name"}
+                  labelText="Scale Name (Customizable)"
+                  placeholder="Scale Name"
+                  title="Scale Name"
+                  type="text"
+                  {...register("serving_name")}
+                />
+                <FormInput
+                  error={errors.serving_grams?.message}
+                  id={"serving_grams"}
+                  labelText="Equivalent Weight In Grams"
+                  placeholder="Equivalent Weight In Grams"
+                  title="Equivalent Weight In Grams"
+                  type="number"
+                  {...register("serving_grams", { valueAsNumber: true })}
+                />
+              </div>
+            </div>
+
+            <div className="my-5">
+              <h1 className="text-xl">Extra scales {`(optional)`}</h1>
+              <div className="relative">
+                <ExtraScales
+                  scales={values.scales}
+                  handleChangeScales={handleChangeScales}
+                />
+              </div>
+            </div>
+            <div>
+              <FormSelect
+                error={errors.food_category?.message}
+                id={"food_category"}
+                labelText="Food Category"
+                options={generateOptions(foodCategoryOptions)}
+                placeholder="Food Category"
+                title="Food Category"
+                handleChange={() => {}}
+                {...register("food_category")}
+              />
+            </div>
+            <div>
+              <h1 className="text-xl">Food Type</h1>
+              <div className="flex flex-col gap-1">
+                {Object.keys(values.food_type).map((type) => {
+                  return (
+                    <Checkbox
+                      id={type}
+                      key={type}
+                      labelText={type}
+                      placeholder="Food Type"
+                      title="Food Type"
+                      {...register(`food_type.${type as keyof FoodType}`)}
+                    />
+                  );
+                })}
+              </div>
+              <div className="text-red-500">
+                <p>{errors.food_type?.message}</p>
+              </div>
+            </div>
+            <div>
+              <h1 className="text-xl">Compatible Plans</h1>
+              <div className="flex flex-col gap-1">
+                {Object.keys(values.compatible_plans).map((plan) => {
+                  return (
+                    <Checkbox
+                      id={plan}
+                      key={plan}
+                      labelText={plan}
+                      placeholder="Compatible Plans"
+                      title="Compatible Plans"
+                      {...register(
+                        `compatible_plans.${plan as keyof CompatiblePlans}`
+                      )}
+                    />
+                  );
+                })}
+              </div>
+              <div className="text-red-500">
+                <p>{errors.compatible_plans?.message}</p>
+              </div>
+            </div>
+
             <div className="">
-              {servingSizeFields.map((field) => (
+              <h1 className="text-xl">Optional Fields</h1>
+              <div className="flex flex-col gap-2">
+                <FormInput
+                  error={errors.serving_amount_per_package?.message}
+                  id={"serving_amount_per_package"}
+                  labelText="Servings Per Package"
+                  placeholder="Servings Per Package"
+                  title="Servings Per Package"
+                  type="number"
+                  {...register("serving_amount_per_package")}
+                />
                 <NutritionInput
-                  customClass={""}
-                  handleChange={handleChange}
-                  id={field.id}
-                  isRequired={field.isRequired}
-                  key={field.id}
-                  labelFor={field.labelFor}
-                  labelText={field.labelText}
-                  max={field.max}
-                  min={field.min}
-                  name={field.name}
-                  pattern={field.pattern}
-                  placeholder={field.placeholder}
-                  step={field.step}
-                  title={field.title}
-                  type={field.type}
-                  unit={field.unit}
-                  value={
-                    field.name === "nutrient"
-                      ? foodState["nutrients" as keyof FoodNutrients][field.id]
-                      : foodState[field.id]
-                  }
+                  changed={false}
+                  error={errors.price?.message}
+                  handleChange={() => {}}
+                  id={"price"}
+                  labelText="Price (optional)"
+                  title="Price"
+                  type="number"
+                  unit={"U$D"}
+                  value={values.price}
+                  {...register("price", { valueAsNumber: true })}
                 />
-              ))}
+                <FormInput
+                  error={errors.brand?.message}
+                  id={"brand"}
+                  labelText="Brand"
+                  placeholder="Brand"
+                  title="Brand"
+                  type="text"
+                  {...register("brand")}
+                />
+                <FormInput
+                  error={errors.source?.message}
+                  id={"source"}
+                  labelText="Source"
+                  placeholder="Source"
+                  title="Source"
+                  type="text"
+                  {...register("source")}
+                />
+                <FormSelect
+                  error={errors.glucemic_status?.message}
+                  handleChange={() => {}}
+                  id={"glucemic_status"}
+                  labelText="Glucemic Statis"
+                  options={generateOptions(foodGlucemicStatusOptions)}
+                  placeholder="Glucemic Statis"
+                  title="Glucemic Statis"
+                  {...register("glucemic_status")}
+                />
+                <FormSelect
+                  error={errors.digestion_status?.message}
+                  handleChange={() => {}}
+                  id={"digestion_status"}
+                  labelText="Digestion Status"
+                  options={generateOptions(foodDigestionStatusOptions)}
+                  placeholder="Digestion Status"
+                  title="Digestion Status"
+                  {...register("digestion_status")}
+                />
+              </div>
             </div>
           </div>
 
-          <div className="my-5">
-            <h1 className="text-xl">Extra scales {`(optional)`}</h1>
-            <div className="relative">
-              <ExtraScales
-                scales={foodState.scales}
-                handleChangeScales={handleChangeScales}
-              />
-            </div>
-          </div>
-
-          <div className="">
-            <h1 className="text-xl">Package Info</h1>
-            <div className="">
-              {servingsPerPackage.map((field) => (
-                <NutritionInput
-                  customClass={""}
-                  handleChange={handleChange}
-                  id={field.id}
-                  isRequired={field.isRequired}
-                  key={field.id}
-                  labelFor={field.labelFor}
-                  labelText={field.labelText}
-                  max={field.max}
-                  min={field.min}
-                  name={field.name}
-                  pattern={field.pattern}
-                  placeholder={field.placeholder}
-                  step={field.step}
-                  title={field.title}
-                  type={field.type}
-                  value={foodState[field.id]}
-                  unit={field.unit}
-                />
-              ))}
-            </div>
-          </div>
-          <Input
-            customClass={""}
-            handleChange={handleChange}
-            id={brandField.id}
-            isRequired={brandField.isRequired}
-            key={brandField.id}
-            labelFor={brandField.labelFor}
-            labelText={brandField.labelText}
-            max={brandField.max}
-            min={brandField.min}
-            name={brandField.name}
-            pattern={brandField.pattern}
-            placeholder={brandField.placeholder}
-            step={brandField.step}
-            title={brandField.title}
-            type={brandField.type}
-            value={foodState[brandField.id]}
-          />
-          <Input
-            customClass={""}
-            handleChange={handleChange}
-            id={sourceField.id}
-            isRequired={sourceField.isRequired}
-            key={sourceField.id}
-            labelFor={sourceField.labelFor}
-            labelText={sourceField.labelText}
-            max={sourceField.max}
-            min={sourceField.min}
-            name={sourceField.name}
-            pattern={sourceField.pattern}
-            placeholder={sourceField.placeholder}
-            step={sourceField.step}
-            title={sourceField.title}
-            type={sourceField.type}
-            value={foodState[sourceField.id]}
-          />
-          <div className="">
-            <h1 className="text-xl"></h1>
-            <div className="">
-              <Select
-                customClass={"capitalize"}
-                handleChange={handleChange}
-                id={foodCategory.id}
-                isRequired={foodCategory.isRequired}
-                labelFor={foodCategory.labelFor}
-                labelText={foodCategory.labelText}
-                name={foodCategory.name}
-                placeholder={foodCategory.placeholder}
-                title={foodCategory.title}
-                options={generateOptions(foodCategory.options)}
-                value={foodState[foodCategory.id]}
-              />
-            </div>
-          </div>
-          <div className="">
-            <h1 className="text-xl"></h1>
-            <div className="">
-              <Select
-                customClass={""}
-                handleChange={handleChange}
-                id={glucemicStatus.id}
-                isRequired={glucemicStatus.isRequired}
-                labelFor={glucemicStatus.labelFor}
-                labelText={glucemicStatus.labelText}
-                name={glucemicStatus.name}
-                placeholder={glucemicStatus.placeholder}
-                title={glucemicStatus.title}
-                options={generateOptions(glucemicStatus.options)}
-                value={foodState[glucemicStatus.id]}
-              />
-            </div>
-          </div>
-          <div className="">
-            <h1 className="text-xl"></h1>
-            <div className="">
-              <Select
-                customClass={""}
-                handleChange={handleChange}
-                id={digestionStatus.id}
-                isRequired={digestionStatus.isRequired}
-                labelFor={digestionStatus.labelFor}
-                labelText={digestionStatus.labelText}
-                name={digestionStatus.name}
-                placeholder={digestionStatus.placeholder}
-                title={digestionStatus.title}
-                options={generateOptions(digestionStatus.options)}
-                value={foodState[digestionStatus.id]}
-              />
-            </div>
-          </div>
-          <div className="">
-            <h1 className="text-xl">Food Type</h1>
-            <div className="">
-              {Object.keys(foodState.food_type).map((type) => (
-                <Checkbox
-                  key={type}
-                  customClass={""}
-                  handleChange={handleChange}
-                  id={type}
-                  isRequired={false}
-                  labelFor={type}
-                  labelText={type}
-                  name={"food_type"}
-                  title={type}
-                  value={foodState["food_type" as keyof FoodType][type]}
-                />
-              ))}
-            </div>
-          </div>
-          <div className="">
-            <h1 className="text-xl">Compatible Plans</h1>
-            <div className="">
-              {Object.keys(foodState.compatible_plans).map((type) => (
-                <Checkbox
-                  key={type}
-                  customClass={""}
-                  handleChange={handleChange}
-                  id={type}
-                  isRequired={false}
-                  labelFor={type}
-                  labelText={type}
-                  name={"compatible_plans"}
-                  title={type}
-                  value={
-                    foodState["compatible_plans" as keyof CompatiblePlans][type]
-                  }
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="flex w-full max-w-xl flex-col gap-5 sm:px-4">
-          <div className="flex flex-col rounded-md ">
-            <div
-              className="flex w-fit cursor-pointer items-center gap-5 "
-              onClick={() => setOptionalsOpen(!optionalsOpen)}
-            >
-              <h1 className="text-xl">Optional Nutrition Fields</h1>
-              <ChevronDownIcon
-                className={`h-5 w-5 duration-300 ease-in-out ${
-                  optionalsOpen && "-rotate-180 transform fill-green-500"
-                }`}
-              />
-            </div>
-            <div
-              className={`mt-5 flex flex-col gap-5 overflow-hidden pl-1 text-sm transition-[max-height] duration-1000 ease-in-out sm:text-base ${
-                optionalsOpen ? " max-h-[800vh]" : "max-h-0"
-              }`}
-            >
-              <div className="">
-                <h1 className="text-xl"></h1>
-                <div className="">
-                  {firstOptionalFields.map((field) => (
-                    <NutritionInput
-                      customClass={""}
-                      handleChange={handleChange}
-                      id={field.id}
-                      isRequired={field.isRequired}
-                      key={field.id}
-                      labelFor={field.labelFor}
-                      labelText={field.labelText}
-                      max={field.max}
-                      min={field.min}
-                      name={field.name}
-                      pattern={field.pattern}
-                      placeholder={field.placeholder}
-                      step={field.step}
-                      title={field.title}
-                      type={field.type}
-                      unit={field.unit}
-                      value={
-                        foodState["nutrients" as keyof FoodNutrients][field.id]
-                      }
-                    />
-                  ))}
+          <div className="flex w-full max-w-xl flex-col gap-5 sm:px-4">
+            <div className="w-full">
+              <div className="flex flex-col rounded-md ">
+                <div
+                  className="flex w-fit cursor-pointer items-center gap-5 "
+                  onClick={() => setOptionalsOpen(!optionalsOpen)}
+                >
+                  <h1 className="text-xl">Optional Nutrition Fields</h1>
+                  <ChevronDownIcon
+                    className={`h-5 w-5 duration-300 ease-in-out ${
+                      optionalsOpen && "-rotate-180 transform fill-green-500"
+                    }`}
+                  />
                 </div>
-              </div>
-              <div className="">
-                <h1 className="text-xl">Sugar types</h1>
-                <div className="">
-                  {sugarFields.map((field) => (
-                    <NutritionInput
-                      customClass={""}
-                      handleChange={handleChange}
-                      id={field.id}
-                      isRequired={field.isRequired}
-                      key={field.id}
-                      labelFor={field.labelFor}
-                      labelText={field.labelText}
-                      max={field.max}
-                      min={field.min}
-                      name={field.name}
-                      pattern={field.pattern}
-                      placeholder={field.placeholder}
-                      step={field.step}
-                      title={field.title}
-                      type={field.type}
-                      unit={field.unit}
-                      value={
-                        foodState["nutrients" as keyof FoodNutrients][field.id]
-                      }
-                    />
-                  ))}
-                </div>
-              </div>
-              <div className="">
-                <h1 className="text-xl">Fats types</h1>
-                <div className="">
-                  {fatsFields.map((field) => (
-                    <NutritionInput
-                      customClass={""}
-                      handleChange={handleChange}
-                      id={field.id}
-                      isRequired={field.isRequired}
-                      key={field.id}
-                      labelFor={field.labelFor}
-                      labelText={field.labelText}
-                      max={field.max}
-                      min={field.min}
-                      name={field.name}
-                      pattern={field.pattern}
-                      placeholder={field.placeholder}
-                      step={field.step}
-                      title={field.title}
-                      type={field.type}
-                      unit={field.unit}
-                      value={
-                        foodState["nutrients" as keyof FoodNutrients][field.id]
-                      }
-                    />
-                  ))}
-                </div>
-              </div>
-              <div className="">
-                <h1 className="text-xl">Vitamines and Minerals</h1>
-                <div className="">
-                  {vitsAndMinsFields.map((field) => (
-                    <NutritionInput
-                      customClass={""}
-                      handleChange={handleChange}
-                      id={field.id}
-                      isRequired={field.isRequired}
-                      key={field.id}
-                      labelFor={field.labelFor}
-                      labelText={field.labelText}
-                      max={field.max}
-                      min={field.min}
-                      name={field.name}
-                      pattern={field.pattern}
-                      placeholder={field.placeholder}
-                      step={field.step}
-                      title={field.title}
-                      type={field.type}
-                      unit={field.unit}
-                      value={
-                        foodState["nutrients" as keyof FoodNutrients][field.id]
-                      }
-                    />
-                  ))}
+                <div
+                  className={`mt-5 flex flex-col gap-5 overflow-hidden pl-1 text-sm transition-[max-height] duration-1000 ease-in-out sm:text-base ${
+                    optionalsOpen ? " max-h-[800vh]" : "max-h-0"
+                  }`}
+                >
+                  <div>
+                    <h1 className="text-xl"></h1>
+                    <div className="flex flex-col gap-1">
+                      {getNutritionInputs(firstNutritionFields)}
+                    </div>
+                  </div>
+                  <div>
+                    <h1 className="text-xl">Sugar types</h1>
+                    <div className="flex flex-col gap-1">
+                      {getNutritionInputs(sugarNutritionFields)}
+                    </div>
+                  </div>
+                  <div>
+                    <h1 className="text-xl">Fats types</h1>
+                    <div className="flex flex-col gap-1">
+                      {getNutritionInputs(fatsNutritionFields)}
+                    </div>
+                  </div>
+                  <div>
+                    <h1 className="text-xl">Vitamines and Minerals</h1>
+                    <div className="flex flex-col gap-1">
+                      {getNutritionInputs(vitsAndMinsNutritionFields)}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-
-      <div className="m-auto flex gap-2">
-        <FormAction
-          handleSubmit={handleCancel}
-          text="Discard"
-          action="submit"
-          type="Cancel"
-          isLoading={false}
-        />
-        <FormAction
-          handleSubmit={handleSubmit}
-          text="Create"
-          action="submit"
-          type="Submit"
-          isLoading={isCreating}
-        />
-      </div>
-    </form>
+        <div className="m-auto flex gap-2">
+          <FormAction
+            handleSubmit={handleCancel}
+            text="Discard"
+            action="submit"
+            type="Cancel"
+            isLoading={false}
+          />
+          <FormAction
+            handleSubmit={() => handleSubmit(onSubmit)}
+            text="Create"
+            action="submit"
+            type="Submit"
+            isLoading={isSubmitting}
+          />
+        </div>
+      </form>
+    </>
   );
 };
 export default FoodCreate;

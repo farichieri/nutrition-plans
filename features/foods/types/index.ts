@@ -1,5 +1,4 @@
 import { PlansEnum } from "@/types";
-import { NewFood } from "@/types/initialTypes";
 
 export interface Food {
   [id: string]: any;
@@ -89,6 +88,13 @@ export interface FoodType {
   is_dinner: boolean;
   is_lunch: boolean;
   is_snack: boolean;
+}
+
+export enum FoodTypesEnum {
+  is_breakfast = "is_breakfast",
+  is_dinner = "is_dinner",
+  is_lunch = "is_lunch",
+  is_snack = "is_snack",
 }
 
 export type CompatiblePlans = {

@@ -108,6 +108,7 @@ const getRecipeSize = (ingredients: IngredientGroup): number | null => {
 };
 
 const getNutritionMerged = (foods: FoodGroup): FoodNutrients => {
+  console.log(Object.keys(foods).length);
   if (Object.keys(foods).length < 1) {
     return NewFoodNutrients;
   }
@@ -117,17 +118,16 @@ const getNutritionMerged = (foods: FoodGroup): FoodNutrients => {
   Object.keys(foods).forEach((food_id) => {
     const food = foods[food_id];
     if (food_id && food) {
-      if (food) {
-        const ingredientNutrition: FoodNutrients = getIngredientNutrition(food);
-        for (let key in ingredientNutrition) {
-          const value = result[key as keyof FoodNutrients];
-          const newValue = ingredientNutrition[key as keyof FoodNutrients];
-          if (key in result) {
-            result[key as keyof FoodNutrients] =
-              value + newValue > 0 ? value + newValue : null;
-          } else {
-            result[key as keyof FoodNutrients] = newValue;
-          }
+      const ingredientNutrition: FoodNutrients = getIngredientNutrition(food);
+      console.log({ ingredientNutrition });
+      for (let key in ingredientNutrition) {
+        const value = result[key as keyof FoodNutrients];
+        const newValue = ingredientNutrition[key as keyof FoodNutrients];
+        if (key in result) {
+          result[key as keyof FoodNutrients] =
+            value + newValue > 0 ? value + newValue : null;
+        } else {
+          result[key as keyof FoodNutrients] = newValue;
         }
       }
     }

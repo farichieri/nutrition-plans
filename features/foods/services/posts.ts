@@ -18,6 +18,8 @@ const addFood = async (
     if (!food.food_name) throw new Error("No food_name provided");
     const docRef = doc(collection(db, "foods"));
 
+    console.log({ food });
+
     let img = DEFAULT_IMAGE;
     if (newImage) {
       const imgResponse = await uploadImage(newImage, docRef.id);
