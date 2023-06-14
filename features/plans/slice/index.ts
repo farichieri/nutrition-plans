@@ -49,7 +49,6 @@ export const plansSlice = createSlice({
       }
     },
     setDiet: (state, action: PayloadAction<Diet>) => {
-      console.log(action.payload);
       const { plan_date, plan_id } = action.payload;
       if (plan_date && plan_id) {
         state.diets[plan_date] = action.payload;
@@ -82,7 +81,6 @@ export const plansSlice = createSlice({
     },
     removeFoodInDiet: (state, action: PayloadAction<Food>) => {
       const { food_id, diet_meal_id, diet_id } = action.payload;
-      console.log(action.payload);
       if (!diet_meal_id || !diet_id || !food_id) return;
       delete state.diets[diet_id].diet_meals[diet_meal_id].diet_meal_foods[
         food_id

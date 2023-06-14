@@ -5,21 +5,21 @@ import {
   fetchMealsSettings,
 } from "@/features/meals";
 import {
-  setIsVerifyingUser,
   setUser,
   generateUserObject,
   selectAuthSlice,
   setLoginError,
+  setIsSigningUser,
 } from "@/features/authentication";
-import {  Theme } from "@/types";
 import { auth } from "@/services/firebase/firebase.config";
 import { fetchProgress, setProgress } from "@/features/progress";
 import { Inter } from "next/font/google";
+import { isAppVersionCorrect } from "@/utils";
 import { onAuthStateChanged } from "firebase/auth";
 import { selectLayoutSlice } from "@/store/slices/layoutSlice";
+import { Theme } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import {isAppVersionCorrect} from '@/utils'
 import Head from "next/head";
 
 const font = Inter({
@@ -58,7 +58,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     if (typeof window !== "undefined") {
       const res = isAppVersionCorrect();
       if (res.result === "success") {
-        dispatch(setIsVerifyingUser());
+        // Verify User
         onAuthStateChanged(auth, async (user) => {
           if (user) {
             const [userRes] = await Promise.all([generateUserObject(user)]);
@@ -71,6 +71,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             dispatch(setLoginError());
           }
         });
+      } else {
+        dispatch(setIsSigningUser(true));
       }
     }
   }, []);

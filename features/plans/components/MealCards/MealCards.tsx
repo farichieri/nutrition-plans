@@ -30,7 +30,6 @@ const MealCards: FC<Props> = ({ diet, date, user }) => {
 
   const onDragEnd = (result: any) => {
     const { source, destination } = result;
-    console.log({ result });
     if (!destination) return;
     if (
       source.index === destination.index &&

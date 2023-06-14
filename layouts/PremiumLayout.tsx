@@ -3,6 +3,7 @@ import {
   setIsSigningUser,
 } from "@/features/authentication/slice";
 import { AppRoutes } from "@/utils";
+import { Login } from "@/features/authentication";
 import { selectLayoutSlice, setSidebarOpen } from "@/store/slices/layoutSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -31,7 +32,6 @@ export default function PremiumLayout({ children }: Props) {
   };
 
   useEffect(() => {
-    if (!user) router.push("/login");
     if (user) dispatch(setIsSigningUser(false));
     if (isCreatingUser) router.push(AppRoutes.create_user);
   }, [user, router, isCreatingUser]);
@@ -42,10 +42,10 @@ export default function PremiumLayout({ children }: Props) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Nutrition Plans</title>
       </Head>
-      {(isCreatingUser || isSigningUser || !user) && <Loader />}
+      {(isCreatingUser || isSigningUser) && <Loader />}
       {isSettingsOpen && <Settings />}
       {user && <WelcomeSteps />}
-      {user && (
+      {user ? (
         <div className="flex min-h-screen w-full flex-col">
           {isBillingModalOpen && <BillingModal />}
           <PremiumNav sidebarOpen={sidebarOpen} handleSidebar={handleSidebar} />
@@ -58,6 +58,8 @@ export default function PremiumLayout({ children }: Props) {
             {children}
           </div>
         </div>
+      ) : (
+        <Login />
       )}
     </>
   );
