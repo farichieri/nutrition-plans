@@ -1,4 +1,4 @@
-const packageJson = require("./package.json");
+const { version } = require("./package.json");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -6,8 +6,8 @@ const nextConfig = {
     locales: ["en"],
     defaultLocale: "en",
   },
-  env: {
-    APP_VERSION: packageJson.version,
+  publicRuntimeConfig: {
+    version,
   },
   reactStrictMode: true,
   images: {

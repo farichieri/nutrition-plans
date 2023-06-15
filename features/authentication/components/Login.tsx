@@ -139,7 +139,6 @@ const Login = () => {
                     placeholder="Email Address"
                     type="email"
                     {...register("email")}
-                    // onChange={() => setErrorMessage("")}
                   />
                   <div className="text-red-500">
                     <p>{errors.email?.message}</p>
@@ -152,7 +151,6 @@ const Login = () => {
                     placeholder="Password"
                     type="password"
                     {...register("password")}
-                    // onChange={() => setErrorMessage("")}
                   />
                   <div className="text-red-500">
                     <p>{errors.password?.message}</p>

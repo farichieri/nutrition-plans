@@ -40,18 +40,11 @@ type FormValues = {
 
 const Signup = () => {
   const dispatch = useDispatch();
-  const {
-    register,
-    handleSubmit,
-    formState,
-    control,
-    getValues,
-    setError,
-    clearErrors,
-  } = useForm<FormValues>({
-    defaultValues: { email: "", password: "", displayName: "" },
-    resolver: yupResolver(schema),
-  });
+  const { register, handleSubmit, formState, control, getValues, setError } =
+    useForm<FormValues>({
+      defaultValues: { email: "", password: "", displayName: "" },
+      resolver: yupResolver(schema),
+    });
   const { errors, isSubmitting } = formState;
 
   const [nameAdded, setNameAdded] = useState(false);
@@ -137,7 +130,6 @@ const Signup = () => {
                 placeholder="Your Name"
                 type="text"
                 {...register("displayName")}
-                onChange={() => clearErrors("displayName")}
               />
               <div className="text-red-500">
                 <p>{errors.displayName?.message}</p>

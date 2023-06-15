@@ -1,9 +1,12 @@
 import { persistor } from "@/store/store";
 import { Result } from "@/types";
+import getConfig from "next/config";
+
+const { publicRuntimeConfig } = getConfig();
 
 const isAppVersionCorrect = (): Result<boolean, boolean> => {
   // App vershion must always exists.
-  const appVersion = String(process.env.APP_VERSION);
+  const appVersion = publicRuntimeConfig.version;
   const cachedAppVersion = localStorage.getItem("APP_VERSION");
   console.log({ appVersion, cachedAppVersion });
   if (appVersion === cachedAppVersion) return { result: "success", data: true };
