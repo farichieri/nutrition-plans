@@ -94,7 +94,7 @@ const NutritionInput: FC<Props> = forwardRef<HTMLInputElement, Props>(
             <label
               htmlFor={id}
               className={
-                ` w-full min-w-fit basis-1/2 text-base capitalize ` +
+                ` mr-1 w-full min-w-fit basis-1/2 text-base capitalize` +
                 customClass
               }
             >
@@ -119,7 +119,7 @@ const NutritionInput: FC<Props> = forwardRef<HTMLInputElement, Props>(
                 type={type}
                 disabled={readOnly}
                 onWheel={(event) => event.currentTarget.blur()}
-                value={value}
+                value={String(value)}
                 {...props}
               />
               {measurementUnit ||

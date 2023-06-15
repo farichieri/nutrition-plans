@@ -28,6 +28,7 @@ export interface Food {
   ingredients: IngredientGroup;
   instructions: Instruction[];
   is_deleted: boolean;
+  is_recommended: boolean;
   kind: FoodKind | null;
   major_ingredients: string | null;
   makes_leftovers: boolean;

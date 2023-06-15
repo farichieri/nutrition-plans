@@ -50,7 +50,7 @@ const FormSelect: FC<Props> = forwardRef<HTMLSelectElement, Props>(
         <div className=" flex flex-wrap items-center gap-0 sm:flex-nowrap">
           {labelText && (
             <label
-              className="not-sr-only w-full min-w-fit capitalize "
+              className="not-sr-only mr-1 w-full min-w-fit capitalize"
               htmlFor={id}
             >
               {labelText.replaceAll("_", " ")}

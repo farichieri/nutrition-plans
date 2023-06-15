@@ -17,7 +17,7 @@ interface Props {
   handleAdd: MouseEventHandler;
 }
 
-const IngredientModal: FC<Props> = ({ food, handleClose, handleAdd }) => {
+const FoodModal: FC<Props> = ({ food, handleClose, handleAdd }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -37,8 +37,8 @@ const IngredientModal: FC<Props> = ({ food, handleClose, handleAdd }) => {
 
   return (
     <Modal onClose={handleClose} customClass="rounded-none sm:rounded-3xl">
-      <div className="flex h-screen w-xl max-w-full flex-col items-center gap-5 overflow-auto p-4 sm:h-[90vh] sm:w-2xl">
-        <div className="mt-5 flex w-full items-start justify-start gap-2">
+      <div className="flex h-screen w-xl max-w-full flex-col items-center  overflow-auto  sm:h-[90vh] sm:w-2xl">
+        <div className="mt-5 flex w-full items-start justify-start gap-2 border-b p-4">
           <div className="relative flex h-40 w-full basis-1/2 sm:h-60 ">
             <Image
               src={food.image}
@@ -56,18 +56,20 @@ const IngredientModal: FC<Props> = ({ food, handleClose, handleAdd }) => {
             </span>
           </div>
         </div>
-        <CompatiblePlansC compatible_plans={food.compatible_plans} />
-        <AddFoodIngredient
-          food={food}
-          scale_amount={scale_amount}
-          handleAddIngredient={handleAdd}
-          scale_name={scale_name}
-          setLocalScale={setLocalScale}
-        />
-        <FoodNutrition food={food} amount={scale_amount} scale={scale_name} />
+        <div className="flex w-full flex-col gap-5 overflow-auto p-4">
+          <CompatiblePlansC compatible_plans={food.compatible_plans} />
+          <AddFoodIngredient
+            food={food}
+            scale_amount={scale_amount}
+            handleAddIngredient={handleAdd}
+            scale_name={scale_name}
+            setLocalScale={setLocalScale}
+          />
+          <FoodNutrition food={food} amount={scale_amount} scale={scale_name} />
+        </div>
       </div>
     </Modal>
   );
 };
 
-export default IngredientModal;
+export default FoodModal;

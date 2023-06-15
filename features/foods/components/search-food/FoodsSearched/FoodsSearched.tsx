@@ -1,7 +1,7 @@
-import { Food, getFoodsFiltered, selectFoodsSlice } from "@/features/foods";
 import { AppRoutes } from "@/utils/routes";
 import { FC } from "react";
 import { FilterQueries } from "@/types";
+import { Food, getFoodsFiltered, selectFoodsSlice } from "@/features/foods";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import FoodCard from "./FoodCard";

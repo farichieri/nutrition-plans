@@ -3,6 +3,7 @@ import { Food } from "@/features/foods/types";
 import Image from "next/image";
 import Link from "next/link";
 import AddToFavorite from "@/features/favorites/components/AddToFavorite";
+import { formatTwoDecimals } from "@/utils";
 
 interface Props {
   food: Food;
@@ -37,15 +38,15 @@ const FoodCard: FC<Props> = ({ food }) => {
         </div>
         <div className="flex w-full justify-between text-[var(--carbs-color)]">
           <span>Carbs:</span>
-          <span>{food.nutrients.carbohydrates}</span>
+          <span>{formatTwoDecimals(food.nutrients.carbohydrates)}</span>
         </div>
         <div className="flex w-full justify-between text-[var(--fats-color)]">
           <span>Fats:</span>
-          <span>{food.nutrients.fats}</span>
+          <span>{formatTwoDecimals(food.nutrients.fats)}</span>
         </div>
         <div className="flex w-full justify-between text-[var(--prots-color)]">
           <span>Proteins:</span>
-          <span>{food.nutrients.proteins}</span>
+          <span>{formatTwoDecimals(food.nutrients.proteins)}</span>
         </div>
       </div>
     </Link>

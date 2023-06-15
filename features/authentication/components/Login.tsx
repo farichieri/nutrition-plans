@@ -20,11 +20,13 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { emailRegex } from "@/utils";
 
 const schema = yup.object({
   email: yup
     .string()
     .email("Email format is not valid")
+    .matches(emailRegex, "Email format is not valid")
     .required("Email is required"),
   password: yup.string().required("Password is required"),
 });
@@ -137,7 +139,7 @@ const Login = () => {
                     placeholder="Email Address"
                     type="email"
                     {...register("email")}
-                    onChange={() => setErrorMessage("")}
+                    // onChange={() => setErrorMessage("")}
                   />
                   <div className="text-red-500">
                     <p>{errors.email?.message}</p>
@@ -150,7 +152,7 @@ const Login = () => {
                     placeholder="Password"
                     type="password"
                     {...register("password")}
-                    onChange={() => setErrorMessage("")}
+                    // onChange={() => setErrorMessage("")}
                   />
                   <div className="text-red-500">
                     <p>{errors.password?.message}</p>

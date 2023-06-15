@@ -192,6 +192,7 @@ export const NewFood: Food = {
   note: "",
   num_dislikes: 0,
   num_favorites: 0,
+  is_recommended: false,
   num_ingredients: 0,
   num_likes: 0,
   nutrients: NewFoodNutrients,

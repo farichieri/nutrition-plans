@@ -9,7 +9,7 @@ import InstructionsCreate from "./recipe/create/Instructions/RecipeInstructions"
 import RecipeCreate from "./recipe/create/RecipeCreate";
 
 import AddFoodIngredient from "./recipe/Ingredients/AddFoodIngredient";
-import IngredientModal from "./recipe/Ingredients/IngredientModal";
+import FoodModal from "./common/FoodModal";
 import Ingredients from "./recipe/Ingredients/Ingredients";
 import IngredientsNutrition from "./recipe/create/RecipeNutrition";
 import IngredientsSelector from "./recipe/create/Ingredients/IngredientsSelector";
@@ -35,7 +35,7 @@ export {
   FoodNutrition,
   FoodNutritionDetail,
   FoodsSearched,
-  IngredientModal,
+  FoodModal,
   Ingredients,
   IngredientsNutrition,
   IngredientsSelector,

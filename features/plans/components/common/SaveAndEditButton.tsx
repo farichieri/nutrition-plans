@@ -68,10 +68,10 @@ const SaveAndEditButton: FC<Props> = ({
   };
 
   return (
-    <div className="ml-auto flex items-center gap-2">
+    <div className="flex w-auto items-center justify-between gap-2 ">
       {isEditing && (
         <button
-          className="ml-auto flex items-center gap-1 rounded-md border border-red-500 px-3 py-1"
+          className="flex items-center gap-1 rounded-md border border-red-500 px-3 py-1"
           onClick={handleDelete}
         >
           Clear
@@ -80,7 +80,7 @@ const SaveAndEditButton: FC<Props> = ({
       )}
       {isEditing && (
         <button
-          className="ml-auto flex items-center gap-1 rounded-md border px-3 py-1"
+          className="flex items-center gap-1 rounded-md border px-3 py-1"
           onClick={cancelChanges}
         >
           Cancel
@@ -88,7 +88,7 @@ const SaveAndEditButton: FC<Props> = ({
         </button>
       )}
       <button
-        className="ml-auto flex items-center gap-1 rounded-md border px-3 py-1"
+        className="flex items-center gap-1 rounded-md border px-3 py-1"
         onClick={toggleButton}
       >
         {isEditing ? (

@@ -9,7 +9,7 @@ import { FC, useEffect, useState } from "react";
 import { FilterQueries } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
 import Filters from "@/components/Premium/SearchBar/Filters";
-import IngredientModal from "../../Ingredients/IngredientModal";
+import FoodModal from "../../../common/FoodModal";
 import RoundButton from "@/components/Buttons/RoundButton";
 import SearchBarCreate from "@/components/Premium/SearchBar/SearchBarCreate";
 import SearchedResults from "@/components/Premium/SearchBar/SearchedResults";
@@ -105,7 +105,7 @@ const IngredientsSelector: FC<Props> = ({ handleUpdateIngredients }) => {
                 >
                   close
                 </span>
-                <IngredientModal
+                <FoodModal
                   handleClose={handleCloseIngredient}
                   food={foodModal}
                   handleAdd={handleAddIngredient}

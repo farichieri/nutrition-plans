@@ -47,9 +47,6 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
     }
   };
 
-  const planVisited = (id: string) => router.asPath.split("/")[3] === `${id}`;
-  const planSelected = user?.plan_selected;
-
   const PROFILE_PAGES = [
     { name: "Progress", url: "/app/profile/progress", icon: "auto_graph" },
     {
@@ -161,8 +158,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
             href={`/app/today`}
             className={
               `${
-                planSelected &&
-                planVisited(planSelected) &&
+                router.pathname === "/app/[date]" &&
                 " bg-slate-500/30 font-semibold"
               } px-2` + fixedOptClass
             }

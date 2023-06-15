@@ -18,12 +18,12 @@ const FoodNutritionDetail: FC<Props> = ({ nutrients, handleClose }) => {
     <Modal onClose={handleClose}>
       <section className="flex h-auto max-h-[90vh] w-auto min-w-full max-w-[95vw] flex-col overflow-hidden px-2 py-4">
         <span className="px-2 text-3xl font-medium">Detailed Nutrition</span>
-        <div className="flex w-full justify-between px-2 pb-2 pt-4 text-xs font-medium s:text-sm sm:text-lg">
+        <div className="flex w-full justify-between border-b px-2 pb-2 pt-2 text-xs font-medium s:text-sm sm:text-lg">
           <span className="flex basis-1/3 justify-start">Nutrient</span>
           <span className="flex basis-1/3 justify-end">Amount</span>
           <span className="flex basis-1/3 justify-end">Daily Value</span>
         </div>
-        <div className="flex w-[40rem] max-w-full flex-col overflow-y-auto overflow-x-hidden px-2 text-xs s:text-sm sm:px-4">
+        <div className="flex w-[40rem] max-w-full flex-col overflow-y-auto overflow-x-hidden px-2 py-2 text-xs s:text-sm sm:px-4">
           {NutrientsGroup(nutrientsClacified.principals)}
           <span className="mb-1 pt-3 text-xl font-semibold">Sugars</span>
           {NutrientsGroup(nutrientsClacified.sugars)}

@@ -83,11 +83,13 @@ const MealCards: FC<Props> = ({ diet, date, user }) => {
 
   return (
     <div className="w-full">
-      <div className="mb-1 flex items-center gap-2">
-        <span className="material-icons-outlined text-green-500">
-          restaurant
-        </span>
-        <span className="text-2xl font-semibold">Meals</span>
+      <div className="mb-1 flex flex-wrap items-center justify-between gap-2">
+        <div className="flex h-9 items-center gap-1 ">
+          <span className="material-icons-outlined text-green-500">
+            restaurant
+          </span>
+          <span className="text-2xl font-semibold">Meals</span>
+        </div>
         <SaveAndEditButton
           diet={diet}
           isEditing={isEditing}

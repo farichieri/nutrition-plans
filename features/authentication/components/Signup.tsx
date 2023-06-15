@@ -13,6 +13,7 @@ import {
 } from "firebase/auth";
 import { auth, provider } from "@/services/firebase/firebase.config";
 import { DevTool } from "@hookform/devtools";
+import { emailRegex } from "@/utils";
 import { GoogleLoginButton, SubmitButton } from "@/components/Buttons";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
@@ -25,6 +26,7 @@ const schema = yup.object({
   email: yup
     .string()
     .email("Email format is not valid")
+    .matches(emailRegex, "Email format is not valid")
     .required("Email is required"),
   password: yup.string().required("Password is required"),
   displayName: yup.string().required("Please enter your name"),

@@ -100,7 +100,6 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
   };
 
   const scaleFormatted = Math.round(food.scale_amount * 100) / 100;
-
   return (
     <div className="flex w-full gap-2">
       <span className="relative h-24 w-24 min-w-[96px]  sm:h-24 sm:w-24">
@@ -126,7 +125,7 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
                   handleChange={handleChange}
                   id={food.food_id}
                   labelText={""}
-                  min={"0"}
+                  min={""}
                   name={String(FoodKeys.scale_amount)}
                   step={"1"}
                   title={""}

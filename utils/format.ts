@@ -8,4 +8,8 @@ const round = (value: number, step: number): number => {
   return Math.round(value * inv) / inv;
 };
 
-export { formatToFixed, round };
+const formatTwoDecimals = (num: number | null) => {
+  return Math.round(Number(Number(num) * 100)) / 100;
+};
+
+export { formatToFixed, round, formatTwoDecimals };

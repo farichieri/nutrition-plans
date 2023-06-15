@@ -4,9 +4,10 @@ import {
   FoodNutrients,
   FoodScales,
   IngredientGroup,
+  NutrientsEnum,
   NutritionMeasurements,
 } from "@/features/foods/types";
-import { formatToFixed } from "@/utils/format";
+import { formatToFixed, formatTwoDecimals } from "@/utils/format";
 import { GRAMS_IN_ONE_OZ } from "@/utils/constants";
 import { mergeScales } from "@/features/foods";
 import { NewFoodNutrients } from "@/types/initialTypes";
@@ -14,6 +15,16 @@ import { DietMealGroup } from "@/features/plans";
 
 const GRAMS = NutritionMeasurements.grams;
 const OZ = NutritionMeasurements.oz;
+
+const formatNutrient = (num: number, nutrient: NutrientsEnum): number => {
+  if (nutrient === NutrientsEnum.calories) {
+    return formatToFixed(num);
+  } else {
+    const numF = formatTwoDecimals(num);
+    console.log({ numF, num });
+    return numF;
+  }
+};
 
 const getNutritionValues = (
   food: Food,
@@ -28,7 +39,7 @@ const getNutritionValues = (
     const updateByServing = (servings: number) => {
       nutrientsUpdated[keyEv] =
         nutrientsUpdated[keyEv] !== null
-          ? formatToFixed(Number(food.nutrients[keyEv]) * servings)
+          ? formatNutrient(Number(food.nutrients[keyEv]) * servings, keyEv)
           : null;
     };
     if (scale_name === GRAMS) {

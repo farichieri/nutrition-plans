@@ -32,7 +32,7 @@ const FavoritesTypeSelector: FC<Props> = () => {
           onClick={handleSelect}
           className={fixedButtonClass + (isFavoritesFoods ? selectedClass : "")}
         >
-          Foods
+          Favorite Foods
         </button>
       </div>
     </div>

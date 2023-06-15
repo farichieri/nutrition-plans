@@ -1,6 +1,6 @@
 import {
   Food,
-  IngredientModal,
+  FoodModal,
   selectFoodsSlice,
   setFoodModal,
 } from "@/features/foods";
@@ -39,7 +39,7 @@ const AddFood: FC<Props> = ({ dietMeal }) => {
       {isOpen && (
         <Modal onClose={() => setIsOpen(false)}>
           {foodModal && (
-            <IngredientModal
+            <FoodModal
               food={foodModal}
               handleAdd={handleAddFood}
               handleClose={() => {
@@ -47,22 +47,24 @@ const AddFood: FC<Props> = ({ dietMeal }) => {
               }}
             />
           )}
-          <div className="max-h-[90vh] min-h-[20rem] w-xl max-w-[95vw] overflow-auto p-4">
-            <span className="text-xl font-semibold">
-              Add new food to <b>{dietMeal.diet_meal_name}</b>
-            </span>
-            <SearchBarCreate preFetch={false} />
-            <Filters
-              updateRoute={false}
-              queries={queries}
-              setLocalQueries={setLocalQueries}
-            />
-            <div className="mt-4">
-              <SearchedResults
-                searchResult={foodsSearched}
-                handleClick={handleOpenFood}
+          <div className="w-2xl max-w-[95vw]">
+            <div className="flex h-14 items-center justify-center gap-1 border-b text-sm font-semibold sm:text-xl">
+              <span>Add new food to</span> <b>{dietMeal.diet_meal_name}</b>
+            </div>
+            <div className="h-full max-h-[85vh] min-h-[20rem] overflow-auto p-4">
+              <SearchBarCreate preFetch={false} />
+              <Filters
+                updateRoute={false}
                 queries={queries}
+                setLocalQueries={setLocalQueries}
               />
+              <div className="mt-4">
+                <SearchedResults
+                  searchResult={foodsSearched}
+                  handleClick={handleOpenFood}
+                  queries={queries}
+                />
+              </div>
             </div>
           </div>
         </Modal>
