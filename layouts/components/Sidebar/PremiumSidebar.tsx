@@ -48,6 +48,7 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
   };
 
   const PROFILE_PAGES = [
+    { name: "Goal", url: "/app/profile/goal", icon: "emoji_events" },
     { name: "Progress", url: "/app/profile/progress", icon: "auto_graph" },
     {
       name: "Body Features",

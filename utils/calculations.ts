@@ -1,5 +1,6 @@
 import { FEET_TO_CM, INCHES_TO_CM, LIB_TO_KG } from "@/constants/measurements";
 import { MeasurementUnits, WeightUnits } from "@/types";
+import { formatTwoDecimals } from "./format";
 
 const cmsToFeet = ({ cms }: { cms: number }) => {
   let totalInches = cms / INCHES_TO_CM;
@@ -15,12 +16,13 @@ const cmsToInches = ({ cms }: { cms: number }): number => {
 };
 
 const kgsToLbs = ({ kgs }: { kgs: number }): number => {
-  let pounds = Math.round(kgs / LIB_TO_KG);
-  return pounds;
+  let pounds = kgs / LIB_TO_KG;
+  return Math.floor(formatTwoDecimals(pounds));
 };
 
 const lbsToKgs = ({ pounds }: { pounds: number }): number => {
-  return Math.round(pounds * LIB_TO_KG);
+  let kgs = pounds * LIB_TO_KG;
+  return Math.round(formatTwoDecimals(kgs));
 };
 
 const feetAndInchesToCMS = ({
@@ -80,11 +82,11 @@ const getWeightText = ({
   const { lbs, kgs } = WeightUnits;
   switch (from) {
     case metric:
-      return `${weight} ${kgs}`;
+      return `${formatTwoDecimals(weight)} ${kgs}`;
     case imperial:
-      return `${weight} ${lbs}`;
+      return `${formatTwoDecimals(weight)} ${lbs}`;
     default:
-      return `${weight}`;
+      return `${formatTwoDecimals(weight)}`;
   }
 };
 

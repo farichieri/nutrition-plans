@@ -1,9 +1,9 @@
-import ActionButton from "@/components/Buttons/ActionButton";
-import { updateUser } from "@/features/authentication/services";
 import {
   selectAuthSlice,
   setUpdateUser,
 } from "@/features/authentication/slice";
+import ActionButton from "@/components/Buttons/ActionButton";
+import { updateUser } from "@/features/authentication/services";
 import { ButtonType, MeasurementUnits } from "@/types";
 import { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,18 +17,14 @@ const General: FC<Props> = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
   const { user } = useSelector(selectAuthSlice);
-  const userMU = user?.body_data.measurement_unit;
-  const [MU, setMU] = useState(user?.body_data.measurement_unit);
+  const userMU = user?.measurement_unit;
+  const [MU, setMU] = useState(user?.measurement_unit);
 
   const handleSave = async () => {
     if (!user || !MU) return;
-    const body_data = { ...user.body_data };
     const userUpdated = {
       ...user,
-      body_data: {
-        ...body_data,
-        measurement_unit: MU,
-      },
+      measurement_unit: MU,
     };
     setIsSaving(true);
     const res = await updateUser(userUpdated);
@@ -58,7 +54,7 @@ const General: FC<Props> = () => {
           Measurement units:
         </span>
         <div className="flex flex-wrap gap-2">
-          {Object.keys(MeasurementUnits).map((type) => (
+          {Object.values(MeasurementUnits).map((type) => (
             <button
               className={`rounded-md border px-2 py-0.5 font-medium shadow-lg ${
                 MU === type

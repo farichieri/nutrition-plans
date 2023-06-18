@@ -27,13 +27,15 @@ export default function MealsLayout({ children }: Props) {
         customClass="top-[var(--subnav-h)]"
       />
       <section className="m-auto mt-[var(--subnav-h)] flex w-full max-w-screen-xl flex-col items-center justify-center gap-5 px-4 pb-4 pt-4 sm:px-10">
-        <UserMealsC meals={meals} />
-        {isLoadingMealsSettings ? (
-          <Spinner customClass="h-5 w-5" />
-        ) : (
-          <UserMealsSettings mealsSettings={mealsSettings} />
-        )}
-        {children}
+        <div className="flex w-full max-w-7xl flex-wrap justify-center gap-5 py-10">
+          <UserMealsC meals={meals} />
+          {isLoadingMealsSettings ? (
+            <Spinner customClass="h-5 w-5" />
+          ) : (
+            <UserMealsSettings mealsSettings={mealsSettings} />
+          )}
+          {children}
+        </div>
       </section>
     </PremiumLayout>
   );

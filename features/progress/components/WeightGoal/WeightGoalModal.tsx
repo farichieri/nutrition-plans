@@ -8,21 +8,26 @@ import {
 import { ButtonType } from "@/types";
 import { FC, useEffect, useState } from "react";
 import { formatISO } from "date-fns";
+import { getWeight, getWeightInKg, getWeightUnit } from "@/utils/calculations";
 import { setAddWeightGoalOpen } from "@/features/progress";
 import { useDispatch, useSelector } from "react-redux";
 import ActionButton from "@/components/Buttons/ActionButton";
 import Modal from "@/components/Modal/Modal";
 
 interface Props {
-  weightGoal: WeightGoal | undefined;
+  weightGoal: WeightGoal;
 }
 
 const WeightGoalModal: FC<Props> = ({ weightGoal }) => {
+  const dispatch = useDispatch();
   const [isSaving, setIsSaving] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
   const { user } = useSelector(selectAuthSlice);
-  const dispatch = useDispatch();
+
+  if (!user) return <></>;
+
+  const { measurement_unit } = user;
   const [weightGoalState, setWeightGoalState] = useState<WeightGoal>({
     created_at: weightGoal?.created_at || null,
     due_date: weightGoal?.due_date || null,
@@ -51,6 +56,10 @@ const WeightGoalModal: FC<Props> = ({ weightGoal }) => {
       ...user,
       weight_goal: {
         ...weightGoalState,
+        weight_goal_in_kg: getWeightInKg({
+          from: measurement_unit,
+          weight: Number(weightGoalState.weight_goal_in_kg),
+        }),
         created_at: formatISO(new Date()),
       },
     };
@@ -78,6 +87,21 @@ const WeightGoalModal: FC<Props> = ({ weightGoal }) => {
   };
 
   useEffect(() => {
+    let weightFormatted = 0;
+    if (measurement_unit) {
+      weightFormatted = getWeight({
+        to: measurement_unit,
+        weight: Number(weightGoalState.weight_goal_in_kg),
+      });
+    }
+    let weightGoalF: WeightGoal = {
+      ...weightGoalState,
+      weight_goal_in_kg: weightFormatted,
+    };
+    setWeightGoalState(weightGoalF);
+  }, [measurement_unit]);
+
+  useEffect(() => {
     if (JSON.stringify(weightGoal) !== JSON.stringify(weightGoalState)) {
       setIsDisabled(false);
     } else {
@@ -97,14 +121,18 @@ const WeightGoalModal: FC<Props> = ({ weightGoal }) => {
             value={String(weightGoalState?.due_date)}
             onChange={handleChange}
             name="due_date"
-            type="month"
-            className="w-full basis-3/4 rounded-md border bg-transparent px-2 py-0.5"
+            type="date"
+            className="w-full basis-3/4 rounded-md border bg-transparent px-2 py-2"
           />
         </div>
-        <div className="flex items-center gap-1">
+
+        <div className="relative flex items-center gap-1">
           <span className="basis-1/3">Weight:</span>
+          <span className="absolute right-2 select-none">
+            {getWeightUnit({ from: measurement_unit })}
+          </span>
           <input
-            className="flex w-full basis-3/4 rounded-md border bg-transparent px-2"
+            className="flex w-full basis-3/4 rounded-md border bg-transparent px-2 py-2"
             type="number"
             name="weight_goal_in_kg"
             placeholder="Weight"
@@ -135,6 +163,17 @@ const WeightGoalModal: FC<Props> = ({ weightGoal }) => {
           />
         </div>
       </div>
+      <style jsx>
+        {`
+          input[type="number"]::-webkit-outer-spin-button,
+          input[type="number"]::-webkit-inner-spin-button,
+          input[type="number"] {
+            -webkit-appearance: none;
+            margin: 0;
+            -moz-appearance: textfield !important;
+          }
+        `}
+      </style>
     </Modal>
   );
 };

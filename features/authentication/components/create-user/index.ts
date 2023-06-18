@@ -1,5 +1,4 @@
 import BodyFeatures from "./body-features/BodyFeatures";
-import FoodPreferences from "./FoodPreferences";
 import Goal from "./goal/Goal";
 import NewUserSteps from "./NewUserSteps";
 import NutritionTarget from "./NutritionTarget";
@@ -10,7 +9,6 @@ export {
   NewUserSteps,
   Goal,
   BodyFeatures,
-  FoodPreferences,
   NutritionTarget,
   PlanSelector,
   Results,

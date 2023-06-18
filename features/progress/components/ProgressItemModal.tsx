@@ -9,11 +9,12 @@ import {
 } from "@/features/progress";
 import { ButtonType } from "@/types";
 import { FC, useEffect, useState } from "react";
+import { getWeight, getWeightInKg, getWeightUnit } from "@/utils/calculations";
 import { selectAuthSlice } from "@/features/authentication/slice";
 import { useDispatch, useSelector } from "react-redux";
 import ActionButton from "@/components/Buttons/ActionButton";
 import Modal from "@/components/Modal/Modal";
-import { getWeight, getWeightUnit } from "@/utils/calculations";
+import { formatTwoDecimals } from "@/utils";
 
 interface Props {
   progressItem: ProgressItem;
@@ -31,23 +32,19 @@ const ProgressItemModal: FC<Props> = ({ progressItem }) => {
     useState<ProgressItem>(newProgressItem);
 
   useEffect(() => {
-    let weightFormatted;
-
+    let weightFormatted = 0;
     if (measurement_unit) {
       weightFormatted = getWeight({
         to: measurement_unit,
         weight: Number(progressItem.weight_in_kg),
       });
     }
-
     let progressItemF = {
-      created_at: progressItem.created_at,
-      date: progressItem.date,
-      weight_in_kg: weightFormatted || 0,
+      ...progressItem,
+      weight_in_kg: weightFormatted,
     };
-
     setProgressState(progressItemF);
-  }, []);
+  }, [measurement_unit, setProgressState]);
 
   if (!user || !measurement_unit) return <></>;
 
@@ -69,7 +66,10 @@ const ProgressItemModal: FC<Props> = ({ progressItem }) => {
     setIsSaving(true);
     const progressUpdated = {
       ...progressItem,
-      weight_in_kg: progressState.weight_in_kg,
+      weight_in_kg: getWeightInKg({
+        from: measurement_unit,
+        weight: Number(progressState.weight_in_kg),
+      }),
     };
     const res = await updateProgress(user, progressUpdated);
     if (res.result === "success") {
@@ -95,7 +95,7 @@ const ProgressItemModal: FC<Props> = ({ progressItem }) => {
         <span className="text-center text-xl font-semibold">Edit Progress</span>
         <div className="flex w-full items-center gap-1">
           <span className="basis-1/3">Date:</span>
-          <span className="basis-2/3">{progressItem.date}</span>
+          <span className="basis-2/3">{progressState.date}</span>
         </div>
         <div className="relative flex w-full items-center gap-1">
           <span className="basis-1/3">Weight:</span>
@@ -107,7 +107,7 @@ const ProgressItemModal: FC<Props> = ({ progressItem }) => {
             type="number"
             name="weight_in_kg"
             placeholder="Weight"
-            value={String(progressItem.weight_in_kg)}
+            value={String(formatTwoDecimals(progressState.weight_in_kg))}
             onChange={handleChange}
           />
         </div>

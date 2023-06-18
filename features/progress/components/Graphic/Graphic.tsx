@@ -14,7 +14,9 @@ import {
   Line,
   ReferenceLine,
 } from "recharts";
-import { formatToUSDate } from "@/utils";
+import { formatToUSDate, formatTwoDecimals } from "@/utils";
+import { getWeight, getWeightText, getWeightUnit } from "@/utils/calculations";
+import { MeasurementUnits } from "@/types";
 
 interface Props {}
 
@@ -22,17 +24,23 @@ const Graphic: FC<Props> = () => {
   const { user } = useSelector(selectAuthSlice);
   if (!user) return <>No user found.</>;
 
-  const { weight_goal, created_at } = user;
+  const { weight_goal, created_at, measurement_unit } = user;
   const { progress } = useSelector(selectProgressSlice);
+  const { body_data } = user.first_data;
 
-  const startDate = created_at && format(new Date(created_at), "MM-dd-yyyy");
-  const startDateF = startDate && formatToUSDate(new Date(startDate));
+  if (!created_at) return <></>;
+
+  const startDate = format(new Date(created_at), "MM-dd-yyyy");
+  const startDateF = formatToUSDate(new Date(startDate));
+
+  const userStartWeight = getWeight({
+    to: measurement_unit,
+    weight: formatTwoDecimals(Number(body_data.weight_in_kg)),
+  });
 
   const createData = () => {
     if (!startDate || !progress) return;
-    const { body_data } = user.first_data;
-    const userStartWeight = body_data.weight_in_kg;
-    const data = [
+    const data: { date: string; weight: null | number }[] = [
       {
         date: startDateF,
         weight: userStartWeight,
@@ -49,12 +57,18 @@ const Graphic: FC<Props> = () => {
     }
     Object.keys(progress).map((p) => {
       const finded = data.find((d) => d.date === progress[p].date);
+      const weight = formatTwoDecimals(
+        getWeight({
+          to: measurement_unit,
+          weight: Number(progress[p].weight_in_kg),
+        })
+      );
       if (finded) {
-        finded.weight = progress[p].weight;
+        finded.weight = weight;
       } else {
         data.push({
           date: progress[p].date,
-          weight: progress[p].weight,
+          weight: weight,
         });
       }
     });
@@ -66,6 +80,18 @@ const Graphic: FC<Props> = () => {
   };
 
   const data = createData();
+  const weightGoal = getWeight({
+    to: measurement_unit,
+    weight: Number(weight_goal.weight_goal_in_kg),
+  });
+
+  const weights = data?.map((w) => w.weight || userStartWeight) || [
+    userStartWeight,
+  ];
+  const maxWeightInData = Math.max(...weights);
+  const minWeightInData = Math.min(...weights);
+  const domainDiff = measurement_unit === MeasurementUnits.metric ? 20 : 50;
+  const domain = [maxWeightInData - domainDiff, minWeightInData + domainDiff];
 
   const CustomLabel = (props: any) => {
     return (
@@ -79,7 +105,7 @@ const Graphic: FC<Props> = () => {
           dominantBaseline="central"
           fontSize={12}
         >
-          Goal {weight_goal?.weight_goal_in_kg} kg
+          Goal {getWeightText({ weight: weightGoal, from: measurement_unit })}
         </text>
       </g>
     );
@@ -103,7 +129,7 @@ const Graphic: FC<Props> = () => {
           margin={{
             top: 20,
             right: 20,
-            left: 20,
+            left: 30,
             bottom: 20,
           }}
         >
@@ -115,13 +141,13 @@ const Graphic: FC<Props> = () => {
             tickSize={12}
           />
           <YAxis
-            unit="kg"
-            domain={[50, 100]}
+            unit={getWeightUnit({ from: measurement_unit })}
+            domain={domain}
             label={{
               value: "Weight",
               angle: -90,
               position: "insideLeft",
-              offset: -5,
+              offset: -20,
             }}
             tickCount={10}
           />
@@ -133,9 +159,9 @@ const Graphic: FC<Props> = () => {
             fill="#61eb0569"
           />
           <Line type="monotone" dataKey="value" stroke="red" dot={false} />
-          {weight_goal?.weight_goal_in_kg && (
+          {weightGoal && (
             <ReferenceLine
-              y={weight_goal?.weight_goal_in_kg}
+              y={weightGoal}
               label={CustomLabel}
               stroke="red"
               strokeWidth={1}

@@ -12,10 +12,12 @@ export default function Page() {
     <PremiumLayout>
       <SubPremiumNav title="Progress" customClass="top-[var(--subnav-h)]" />
       <section className="m-auto mt-[var(--subnav-h)] flex w-full max-w-screen-xl flex-col items-center justify-center gap-5 px-4 pb-4 pt-4 sm:px-10">
-        <Graphic />
-        <ProgressList />
-        <AddProgress />
-        <WeightGoal />
+        <div className="flex w-full max-w-7xl flex-wrap justify-center gap-5 py-10">
+          <Graphic />
+          <ProgressList />
+          <AddProgress />
+          {/* <WeightGoal /> */}
+        </div>
       </section>
     </PremiumLayout>
   );

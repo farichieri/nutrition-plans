@@ -8,8 +8,14 @@ import {
 } from "@/features/authentication";
 import { DevTool } from "@hookform/devtools";
 import { FC, useEffect } from "react";
-import { formatISO, parse } from "date-fns";
-import { getWeightInKg, lbsToKgs } from "@/utils/calculations";
+import { format, formatISO, parse } from "date-fns";
+import { formatToUSDate } from "@/utils";
+import {
+  getWeight,
+  getWeightInKg,
+  getWeightUnit,
+  lbsToKgs,
+} from "@/utils/calculations";
 import { MeasurementUnits, WeightUnits } from "@/types";
 import { schema } from "./schema";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,7 +25,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Collapsable from "@/components/Layout/Collapsable";
 import FormError from "@/components/Errors/FormError";
 import SubmitButton from "@/components/Buttons/SubmitButton";
-import { formatToUSDate } from "@/utils";
 
 interface FormValues {
   goalSelected: UserGoals | null;
@@ -32,19 +37,28 @@ interface Props {
 
 const Goal: FC<Props> = ({ handleContinue }) => {
   const dispatch = useDispatch();
-  const { user } = useSelector(selectAuthSlice);
   const router = useRouter();
-  const measurement_unit = user?.measurement_unit;
-  const isImperial = measurement_unit === MeasurementUnits.imperial;
-  const weightGoalInKg = isImperial
-    ? getWeightInKg({
-        from: MeasurementUnits.imperial,
-        weight: Number(user?.weight_goal.weight_goal_in_kg),
-      })
-    : user?.weight_goal.weight_goal_in_kg;
-  const hasGoal = Boolean(
-    user?.weight_goal.weight_goal_in_kg || user?.weight_goal.due_date
-  );
+  const { user } = useSelector(selectAuthSlice);
+
+  useEffect(() => {
+    register("goalSelected");
+  }, []);
+
+  if (!user) return <></>;
+
+  const { measurement_unit, goal, weight_goal } = user;
+  const { weight_goal_in_kg, due_date } = weight_goal;
+
+  const weightGoalFormatted = getWeight({
+    to: measurement_unit,
+    weight: Number(weight_goal_in_kg),
+  });
+
+  const dateParsed = due_date && parse(due_date, "MM-dd-yyyy", new Date());
+  const dueDateFormatted = dateParsed && format(new Date(dateParsed), "yyyy-MM-dd");
+
+  const hasGoal = Boolean(weight_goal_in_kg || user?.weight_goal.due_date);
+
   const isCreatingRoute = router.asPath === "/app/create";
 
   const {
@@ -58,11 +72,11 @@ const Goal: FC<Props> = ({ handleContinue }) => {
     watch,
   } = useForm<FormValues>({
     defaultValues: {
-      goalSelected: user?.goal || null,
+      goalSelected: goal || null,
       weight_goal: {
         created_at: null,
-        due_date: user?.weight_goal.due_date || null,
-        weight_goal_in_kg: weightGoalInKg || null,
+        due_date: dueDateFormatted || null,
+        weight_goal_in_kg: weightGoalFormatted || null,
       },
     },
     resolver: yupResolver(schema),
@@ -96,16 +110,9 @@ const Goal: FC<Props> = ({ handleContinue }) => {
   };
 
   const onSubmit = async (data: FormValues) => {
-    if (!user || isSubmitting) return;
+    if (isSubmitting) return;
     const { weight_goal } = data;
     const { weight_goal_in_kg } = weight_goal;
-
-    let weightInKg = weight_goal_in_kg;
-    if (isImperial) {
-      weightInKg = lbsToKgs({
-        pounds: Number(weight_goal_in_kg),
-      });
-    }
 
     // format Date if exists
     let date = weight_goal.due_date;
@@ -113,6 +120,11 @@ const Goal: FC<Props> = ({ handleContinue }) => {
       const dateParsed = parse(date, "yyyy-MM-dd", new Date());
       date = formatToUSDate(dateParsed);
     }
+
+    const weightInKg = getWeightInKg({
+      from: measurement_unit,
+      weight: Number(weight_goal_in_kg),
+    });
 
     const userUpdated: UserAccount = {
       ...user,
@@ -131,10 +143,6 @@ const Goal: FC<Props> = ({ handleContinue }) => {
     }
   };
 
-  useEffect(() => {
-    register("goalSelected");
-  }, []);
-
   return (
     <section className="flex h-full w-full max-w-3xl flex-col items-center justify-center gap-3 rounded-md border bg-white text-xs dark:bg-black s:text-sm sm:text-base">
       <DevTool control={control} />
@@ -145,7 +153,7 @@ const Goal: FC<Props> = ({ handleContinue }) => {
       >
         <div className="flex flex-col gap-10 p-5">
           <div className="flex items-center gap-2">
-            <span className="material-icons text-green-500 ">emoji_events</span>
+            <span className="material-icons text-green-500">emoji_events</span>
             <span className="w-full text-left text-xl font-semibold sm:text-3xl">
               Select my Goal
             </span>
@@ -181,31 +189,17 @@ const Goal: FC<Props> = ({ handleContinue }) => {
                 <div className="flex w-full max-w-sm flex-col items-center justify-center gap-2 py-4">
                   <div className="relative flex w-full items-center justify-between gap-2 ">
                     <label>Weight Goal: </label>
-                    {!isImperial ? (
-                      <>
-                        <span className="absolute right-2 select-none">
-                          {WeightUnits.kgs}
-                        </span>
-                        <input
-                          className="w-24 rounded-md border bg-transparent px-3 py-1.5"
-                          type="number"
-                          placeholder="kgs"
-                          {...register("weight_goal.weight_goal_in_kg")}
-                        />
-                      </>
-                    ) : (
-                      <>
-                        <span className="absolute right-2 select-none">
-                          {WeightUnits.lbs}
-                        </span>
-                        <input
-                          className="w-24 rounded-md border bg-transparent px-3 py-1.5"
-                          placeholder="lbs"
-                          type="number"
-                          {...register("weight_goal.weight_goal_in_kg")}
-                        />
-                      </>
-                    )}
+                    <>
+                      <span className="absolute right-2 select-none">
+                        {getWeightUnit({ from: measurement_unit })}
+                      </span>
+                      <input
+                        className="w-24 rounded-md border bg-transparent px-3 py-1.5"
+                        type="number"
+                        placeholder={getWeightUnit({ from: measurement_unit })}
+                        {...register("weight_goal.weight_goal_in_kg")}
+                      />
+                    </>
                   </div>
                   <div className="flex w-full items-center justify-between gap-2 ">
                     <label>Due date: </label>
@@ -219,8 +213,7 @@ const Goal: FC<Props> = ({ handleContinue }) => {
               }
             />
             <div>
-              {(values.weight_goal.weight_goal_in_kg ||
-                values.weight_goal.due_date) && (
+              {hasGoal && (
                 <button
                   className="mx-auto mt-2 flex items-center justify-center rounded-md border border-red-500 px-2 py-1 text-red-500 duration-300 hover:bg-slate-500/20"
                   onClick={handleRemoveWeightGoal}
