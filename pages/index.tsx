@@ -42,14 +42,14 @@ export default function Home({ plans }: Props) {
         </div>
         <div className="my-10 ">
           <Image
-            src="/images/general/cooking.jpg"
-            width={800}
+            src="/images/general/landing-img.png"
+            width={1200}
             height={1200}
             placeholder="blur"
-            blurDataURL={blurDataURL(800, 1200)}
+            blurDataURL={blurDataURL(1200, 1200)}
             alt="cooking"
             loading="lazy"
-            className="flex rounded-3xl shadow-lg dark:shadow-gray-400/20"
+            className="flex rounded-md border border-green-500/20 shadow-sm duration-300 hover:border-green-500/40 dark:shadow-gray-400/20"
           />
         </div>
       </div>

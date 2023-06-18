@@ -1,5 +1,6 @@
 import {
   selectLayoutSlice,
+  setIsSettingsOpen,
   setSidebarAdminOpen,
   setSidebarEvolutionOpen,
   setSidebarPlansOpen,
@@ -45,6 +46,11 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
     } else {
       dispatch(setSidebarAdminOpen(true));
     }
+  };
+
+  const handleOpenProfile = (event: React.MouseEvent) => {
+    event.preventDefault();
+    dispatch(setIsSettingsOpen(true));
   };
 
   const PROFILE_PAGES = [
@@ -110,6 +116,12 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
       url: "/app/profile/progress",
       pathname: ["/app/profile/progress"],
       icon: "auto_graph",
+    },
+    {
+      name: "Settings",
+      url: "",
+      pathname: [""],
+      icon: "settings",
     },
   ];
 
@@ -319,6 +331,17 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
                 {page.name}
               </Link>
             ))}
+          </div>
+          <div
+            className="flex w-full flex-col items-center gap-2"
+            onClick={handleOpenProfile}
+          >
+            <button className={`${fixedOptClass} `}>
+              <span className="material-icons md-24 text-green-500">
+                settings
+              </span>
+              <span>Settings</span>
+            </button>
           </div>
         </div>
         <div className="mx-auto flex w-full items-center justify-center px-2 py-1">

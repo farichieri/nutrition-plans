@@ -21,7 +21,6 @@ const formatNutrient = (num: number, nutrient: NutrientsEnum): number => {
     return formatToFixed(num);
   } else {
     const numF = formatTwoDecimals(num);
-    console.log({ numF, num });
     return numF;
   }
 };

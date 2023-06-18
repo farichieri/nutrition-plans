@@ -5,6 +5,7 @@ import {
 import { FC } from "react";
 import { FoodNutrients, NutrientsClasified } from "@/features/foods";
 import Modal from "@/components/Modal/Modal";
+import { formatTwoDecimals } from "@/utils";
 
 interface Props {
   nutrients: FoodNutrients;
@@ -53,7 +54,9 @@ const NutrientsGroup = (nutrients: NutrientsClasified) => {
     <>
       {Object.keys(nutrients).map((nut) => {
         const nutrientExtraData = getNutrientData(nut);
-        const value = Number(nutrients[nut as keyof FoodNutrients]);
+        const value = formatTwoDecimals(
+          Number(nutrients[nut as keyof FoodNutrients])
+        );
         const unit = nutrientExtraData?.unit;
         const requirement = nutrientExtraData?.requirement;
         const percentage =

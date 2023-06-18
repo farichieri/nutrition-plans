@@ -4,7 +4,7 @@ import {
   NutrientsEnum,
 } from "@/features/foods";
 import { FC, useState } from "react";
-import { formatToFixed } from "@/utils/format";
+import { formatToFixed, formatTwoDecimals } from "@/utils/format";
 import { getNutritionTargets } from "@/features/authentication/utils/getNutritionTargets";
 import { PlansEnum } from "@/types";
 import { selectAuthSlice } from "@/features/authentication";
@@ -169,7 +169,7 @@ const Nutrition: FC<Props> = ({ nutrients, planID }) => {
                             nut.isInRange ? "text-green-500" : ""
                           }`}
                         >
-                          {nut.value || "-"}
+                          {formatTwoDecimals(nut.value) || "-"}
                         </span>
                         <div className="absolute left-full">
                           {Number(nut.value) > Number(nut.max) && (

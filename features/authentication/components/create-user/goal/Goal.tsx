@@ -55,7 +55,8 @@ const Goal: FC<Props> = ({ handleContinue }) => {
   });
 
   const dateParsed = due_date && parse(due_date, "MM-dd-yyyy", new Date());
-  const dueDateFormatted = dateParsed && format(new Date(dateParsed), "yyyy-MM-dd");
+  const dueDateFormatted =
+    dateParsed && format(new Date(dateParsed), "yyyy-MM-dd");
 
   const hasGoal = Boolean(weight_goal_in_kg || user?.weight_goal.due_date);
 
@@ -144,7 +145,7 @@ const Goal: FC<Props> = ({ handleContinue }) => {
   };
 
   return (
-    <section className="flex h-full w-full max-w-3xl flex-col items-center justify-center gap-3 rounded-md border bg-white text-xs dark:bg-black s:text-sm sm:text-base">
+    <section className="flex h-full w-full max-w-3xl flex-col items-center justify-center gap-3 rounded-md border bg-white/90 text-xs dark:bg-black/50 s:text-sm sm:text-base">
       <DevTool control={control} />
       <form
         onSubmit={handleSubmit(onSubmit)}

@@ -199,7 +199,7 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
   };
 
   return (
-    <div className="flex h-full w-full max-w-xl flex-col items-center justify-center gap-3 rounded-md border bg-white text-xs dark:bg-black/50 s:text-sm sm:text-base">
+    <div className="flex h-full w-full max-w-xl flex-col items-center justify-center gap-3 rounded-md border bg-white/50 text-xs dark:bg-black/50 s:text-sm sm:text-base">
       <DevTool control={control} />
       <form
         noValidate

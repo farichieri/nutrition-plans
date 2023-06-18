@@ -65,12 +65,15 @@ export default function Page() {
   };
 
   return (
-    <section className="min-w-screen flex min-h-screen w-full flex-col items-center justify-start px-4 py-4">
-      <div className="ml-auto mr-4">
-        <ThemeSwitcher withText={false} />
+    <section className="min-w-screen app-bg dark:app-bg-dark flex min-h-screen w-full flex-col items-center justify-start px-4 py-4">
+      <div className="mb-5 flex w-full items-center justify-between">
+        <div className=""></div>
+        <span className="text-4xl font-bold">Nutrition Plans</span>
+        <div className=" mr-4">
+          <ThemeSwitcher withText={false} />
+        </div>
       </div>
-      <div className="flex w-full flex-col items-center justify-center gap-10">
-        <span className="text-2xl font-bold">Nutrition Plans</span>
+      <div className="flex w-full flex-col items-center justify-center gap-5">
         <span className="">
           Let&apos;s start your transformation,{" "}
           <b className="capitalize text-green-500">{user?.display_name}</b>!
