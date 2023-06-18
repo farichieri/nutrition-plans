@@ -5,7 +5,7 @@ export * from "./filter";
 export * from "./foodsHelpers";
 export * from "./format";
 export * from "./formHelpers";
-export * from "./formRegex";
+export * from "../constants/formRegex";
 export * from "./helpers";
 export * from "./nutritionHelpers";
 export * from "./routes";

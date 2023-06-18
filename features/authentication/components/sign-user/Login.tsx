@@ -14,13 +14,13 @@ import {
 } from "firebase/auth";
 import { auth, provider } from "@/services/firebase/firebase.config";
 import { DevTool } from "@hookform/devtools";
+import { emailRegex } from "@/constants";
 import { GoogleLoginButton, SubmitButton } from "@/components/Buttons";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { emailRegex } from "@/utils";
 
 const schema = yup.object({
   email: yup

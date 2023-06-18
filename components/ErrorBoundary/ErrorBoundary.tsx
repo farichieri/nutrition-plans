@@ -1,3 +1,4 @@
+import LandingLayout from "@/layouts/LandingLayout";
 import React, { Component, ErrorInfo, ReactNode } from "react";
 
 interface Props {
@@ -24,7 +25,11 @@ class ErrorBoundary extends Component<Props, State> {
 
   public render() {
     if (this.state.hasError) {
-      return <h1>Sorry... there was an error</h1>;
+      return (
+        <div className="fixed inset-0 flex items-center justify-center">
+          Sorry... there was an error
+        </div>
+      );
     }
 
     return this.props.children;

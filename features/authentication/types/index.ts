@@ -1,38 +1,38 @@
+import { MeasurementUnits, PlansEnum, SubscriptionState } from "@/types";
+
 export interface UserAccount {
   body_data: UserBodyData;
   created_at: string | undefined;
   display_name: string;
   email_address: string | null;
   first_data: UserCreatedData;
-  food_data: UserFoodData;
+  goal: UserGoals | null;
   is_admin: boolean;
   is_premium: boolean;
   is_profile_completed: boolean;
   lang: string;
   nutrition_targets: NutritionTargets;
   photo_url: string | null;
-  plan_selected: string | null;
+  plan_selected: PlansEnum | null;
   premium_plan: string | null;
   ratings: Ratings;
   user_id: string;
-  weight_goal: WeightGoal;
   user_step: UserSteps;
+  weight_goal: WeightGoal;
+  measurement_unit: MeasurementUnits;
 }
 export interface UserCreatedData {
   body_data: UserBodyData;
-  food_data: UserFoodData;
 }
 
 export interface UserBodyData {
-  activity: number | null;
+  activity: UserActivities | null;
   age: number | null;
   BMI: number | null;
   BMR: number | null;
-  gender: string | null;
-  goal: string | null;
+  gender: UserGenders | null;
   height_in_cm: number | null;
   kcals_recommended: number | null;
-  measurement_unit: string | null;
   weight_in_kg: number | null;
 }
 export interface UserFoodData {
@@ -40,9 +40,9 @@ export interface UserFoodData {
 }
 
 export interface WeightGoal {
-  weight_goal_in_kg: number | null;
   created_at: string | null;
   due_date: string | null;
+  weight_goal_in_kg: number | null;
 }
 
 export interface NutritionTargets {
@@ -76,3 +76,88 @@ export enum UserSteps {
   step_2 = "step_2",
   step_3 = "step_3",
 }
+
+export enum UserGoals {
+  lose_weight = "Lose weight",
+  maintain = "Maintain",
+  build_muscle = "Build Muscle",
+}
+
+export enum UserGenders {
+  male = "Male",
+  female = "Female",
+}
+
+export enum UserActivities {
+  little_or_not_exercise = 1.2,
+  light_exercise = 1.375,
+  moderate_exercise = 1.55,
+  very_active = 1.725,
+  extra_active = 1.9,
+}
+
+// Initials:
+export const newRatings: Ratings = {
+  food_rating: {
+    favorites: [],
+    likes: [],
+    dislikes: [],
+  },
+};
+
+export const newNutritionTargets: NutritionTargets = {
+  calories: null,
+  carbohydrates: {
+    min: null,
+    max: null,
+  },
+  proteins: {
+    min: null,
+    max: null,
+  },
+  fats: {
+    min: null,
+    max: null,
+  },
+};
+
+export const newBodyData: UserBodyData = {
+  activity: null,
+  age: null,
+  BMI: null,
+  BMR: null,
+  gender: null,
+  height_in_cm: null,
+  kcals_recommended: null,
+  weight_in_kg: null,
+};
+
+export const initialWeightGoal: WeightGoal = {
+  weight_goal_in_kg: null,
+  created_at: null,
+  due_date: null,
+};
+
+export const newAccount: UserAccount = {
+  body_data: newBodyData,
+  created_at: "",
+  display_name: "",
+  email_address: "",
+  goal: null,
+  is_admin: false,
+  is_premium: false,
+  is_profile_completed: false,
+  lang: "en",
+  nutrition_targets: newNutritionTargets,
+  photo_url: "",
+  plan_selected: null,
+  premium_plan: SubscriptionState.free,
+  ratings: newRatings,
+  measurement_unit: MeasurementUnits.imperial,
+  user_id: "",
+  user_step: UserSteps.step_1,
+  weight_goal: initialWeightGoal,
+  first_data: {
+    body_data: newBodyData,
+  },
+};

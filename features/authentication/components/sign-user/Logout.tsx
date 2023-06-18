@@ -2,10 +2,10 @@ import { auth } from "@/services/firebase/firebase.config";
 import { persistor } from "@/store/store";
 import { setProgress } from "@/features/progress";
 import { signOut } from "firebase/auth";
+import { SubmitButton } from "@/components/Buttons";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import SecondaryButton from "../../../components/Buttons/SubmitButton";
 
 const Logout = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -31,7 +31,7 @@ const Logout = () => {
 
   return (
     <div className="flex w-24 items-center text-sm">
-      <SecondaryButton
+      <SubmitButton
         className={""}
         onClick={handleLogout}
         content="Logout"

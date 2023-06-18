@@ -3,11 +3,11 @@ import {
   updateUser,
   selectAuthSlice,
   setUpdateUser,
+  initialWeightGoal,
 } from "@/features/authentication";
 import { ButtonType } from "@/types";
 import { FC, useEffect, useState } from "react";
 import { formatISO } from "date-fns";
-import { initialWeightGoal } from "@/types/initialTypes";
 import { setAddWeightGoalOpen } from "@/features/progress";
 import { useDispatch, useSelector } from "react-redux";
 import ActionButton from "@/components/Buttons/ActionButton";

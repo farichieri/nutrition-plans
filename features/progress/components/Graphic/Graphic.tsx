@@ -14,19 +14,22 @@ import {
   Line,
   ReferenceLine,
 } from "recharts";
+import { formatToUSDate } from "@/utils";
 
 interface Props {}
 
 const Graphic: FC<Props> = () => {
   const { user } = useSelector(selectAuthSlice);
-  const weight_goal = user?.weight_goal;
+  if (!user) return <>No user found.</>;
+
+  const { weight_goal, created_at } = user;
   const { progress } = useSelector(selectProgressSlice);
-  const startDate =
-    user?.created_at && format(new Date(user.created_at), "MM-dd-yyyy");
-  const startDateF = startDate && format(new Date(startDate), "MM-yyyy");
+
+  const startDate = created_at && format(new Date(created_at), "MM-dd-yyyy");
+  const startDateF = startDate && formatToUSDate(new Date(startDate));
 
   const createData = () => {
-    if (!user || !startDate || !progress) return;
+    if (!startDate || !progress) return;
     const { body_data } = user.first_data;
     const userStartWeight = body_data.weight_in_kg;
     const data = [
@@ -39,7 +42,7 @@ const Graphic: FC<Props> = () => {
     for (let i = 0; i <= 12; i++) {
       let newDdate = format(addMonths(date, 1), "MM-dd-yyyy");
       data.push({
-        date: format(new Date(newDdate), "MM-yyyy"),
+        date: formatToUSDate(new Date(newDdate)),
         weight: null,
       });
       date = new Date(newDdate);
@@ -56,8 +59,8 @@ const Graphic: FC<Props> = () => {
       }
     });
     return data.sort((a, b) => {
-      const first = formatISO(parse(String(a.date), "MM-yyyy", new Date()));
-      const second = formatISO(parse(String(b.date), "MM-yyyy", new Date()));
+      const first = formatISO(parse(String(a.date), "MM-dd-yyyy", new Date()));
+      const second = formatISO(parse(String(b.date), "MM-dd-yyyy", new Date()));
       return first.localeCompare(second);
     });
   };
@@ -107,7 +110,7 @@ const Graphic: FC<Props> = () => {
           <CartesianGrid stroke="none" />
           <XAxis
             dataKey="date"
-            label={{ value: "Date", position: "insideBottom", offset: -10 }}
+            label={{ value: "Date", position: "insideBottom", offset: -15 }}
             tickFormatter={formatXAxis}
             tickSize={12}
           />

@@ -1,4 +1,4 @@
-import BMRCalculator from "@/components/Premium/Calculator/BodyFeatures";
+import BMRCalculator from "@/features/authentication/components/create-user/body-features/BodyFeatures";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
 

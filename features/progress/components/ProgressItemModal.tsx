@@ -5,13 +5,15 @@ import {
   setDeleteProgress,
   setProgressOpen,
   setUpdateProgress,
+  newProgressItem,
 } from "@/features/progress";
-import { FC, useState } from "react";
-import { selectAuthSlice } from "@/features/authentication/slice";
 import { ButtonType } from "@/types";
+import { FC, useEffect, useState } from "react";
+import { selectAuthSlice } from "@/features/authentication/slice";
 import { useDispatch, useSelector } from "react-redux";
-import Modal from "@/components/Modal/Modal";
 import ActionButton from "@/components/Buttons/ActionButton";
+import Modal from "@/components/Modal/Modal";
+import { getWeight, getWeightUnit } from "@/utils/calculations";
 
 interface Props {
   progressItem: ProgressItem;
@@ -24,11 +26,30 @@ const ProgressItemModal: FC<Props> = ({ progressItem }) => {
   const { user } = useSelector(selectAuthSlice);
   const dispatch = useDispatch();
 
-  const [progressState, setProgressState] = useState<ProgressItem>({
-    created_at: progressItem.created_at,
-    date: progressItem.date,
-    weight: progressItem.weight,
-  });
+  const measurement_unit = user?.measurement_unit;
+  const [progressState, setProgressState] =
+    useState<ProgressItem>(newProgressItem);
+
+  useEffect(() => {
+    let weightFormatted;
+
+    if (measurement_unit) {
+      weightFormatted = getWeight({
+        to: measurement_unit,
+        weight: Number(progressItem.weight_in_kg),
+      });
+    }
+
+    let progressItemF = {
+      created_at: progressItem.created_at,
+      date: progressItem.date,
+      weight_in_kg: weightFormatted || 0,
+    };
+
+    setProgressState(progressItemF);
+  }, []);
+
+  if (!user || !measurement_unit) return <></>;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const name = event.target.name;
@@ -45,11 +66,10 @@ const ProgressItemModal: FC<Props> = ({ progressItem }) => {
   };
 
   const handleSave = async () => {
-    if (!user) return;
     setIsSaving(true);
     const progressUpdated = {
       ...progressItem,
-      weight: progressState.weight,
+      weight_in_kg: progressState.weight_in_kg,
     };
     const res = await updateProgress(user, progressUpdated);
     if (res.result === "success") {
@@ -60,7 +80,6 @@ const ProgressItemModal: FC<Props> = ({ progressItem }) => {
   };
 
   const handleDelete = async () => {
-    if (!user) return;
     setIsDeleting(true);
     const res = await deleteProgress(user, progressItem);
     if (res.result === "success") {
@@ -78,14 +97,17 @@ const ProgressItemModal: FC<Props> = ({ progressItem }) => {
           <span className="basis-1/3">Date:</span>
           <span className="basis-2/3">{progressItem.date}</span>
         </div>
-        <div className="flex w-full items-center gap-1">
+        <div className="relative flex w-full items-center gap-1">
           <span className="basis-1/3">Weight:</span>
+          <span className="absolute right-2 select-none">
+            {getWeightUnit({ from: measurement_unit })}
+          </span>
           <input
-            className="flex w-full basis-2/3 rounded-md border bg-transparent px-2"
+            className="flex w-full basis-2/3 rounded-md border bg-transparent px-1.5 py-2"
             type="number"
-            name="weight"
+            name="weight_in_kg"
             placeholder="Weight"
-            value={String(progressState.weight)}
+            value={String(progressItem.weight_in_kg)}
             onChange={handleChange}
           />
         </div>
@@ -112,6 +134,17 @@ const ProgressItemModal: FC<Props> = ({ progressItem }) => {
           />
         </div>
       </div>
+      <style jsx>
+        {`
+          input[type="number"]::-webkit-outer-spin-button,
+          input[type="number"]::-webkit-inner-spin-button,
+          input[type="number"] {
+            -webkit-appearance: none;
+            margin: 0;
+            -moz-appearance: textfield !important;
+          }
+        `}
+      </style>
     </Modal>
   );
 };

@@ -15,7 +15,10 @@ export enum MeasurementUnits {
   metric = "metric",
   imperial = "imperial",
 }
-
+export enum WeightUnits {
+  lbs = "lbs",
+  kgs = "kgs",
+}
 export enum PlansEnum {
   balanced = "balanced",
   gluten_free = "gluten_free",
@@ -23,7 +26,6 @@ export enum PlansEnum {
   vegetarian = "vegetarian",
   low_carb = "low_carb",
 }
-
 export enum FiltersEnum {
   q = "q",
   kind = "kind",
@@ -34,7 +36,6 @@ export enum FiltersEnum {
   carbs_range = "carbs_range",
   fats_range = "fats_range",
 }
-
 export enum FilterSortTypes {
   rating = "rating",
   higher_calories = "higher_calories",

@@ -5,7 +5,7 @@ import {
 } from "@/features/foods";
 import { FC, useState } from "react";
 import { formatToFixed } from "@/utils/format";
-import { getNutritionTargets } from "@/components/Premium/Calculator/helpers";
+import { getNutritionTargets } from "@/features/authentication/utils/getNutritionTargets";
 import { PlansEnum } from "@/types";
 import { selectAuthSlice } from "@/features/authentication";
 import { useSelector } from "react-redux";

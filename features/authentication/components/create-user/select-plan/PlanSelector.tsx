@@ -4,89 +4,116 @@ import {
   setUpdateUser,
   updateUser,
 } from "@/features/authentication";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 import { MEAL_PLANS } from "@/data/content";
+import { PlansEnum } from "@/types";
+import { schema } from "./schema";
 import { useDispatch, useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
+import { yupResolver } from "@hookform/resolvers/yup";
+import FormError from "@/components/Errors/FormError";
 import Image from "next/image";
 import SubmitButton from "@/components/Buttons/SubmitButton";
+import InfoMessage from "@/components/Layout/InfoMessage";
 
-interface Props {
-  handleSubmit: Function;
+interface FormValues {
+  planSelected: PlansEnum | null;
 }
 
-const PlanSelector: FC<Props> = ({ handleSubmit }) => {
+interface Props {
+  handleContinue: Function;
+}
+
+const PlanSelector: FC<Props> = ({ handleContinue }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { user } = useSelector(selectAuthSlice);
   const plan_selected = user?.plan_selected;
-  const [planSelected, setPlanSelected] = useState<string | null>(
-    plan_selected || null
-  );
-  const [isLoading, setIsLoading] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(true);
   const isCreatingRoute = router.asPath === "/app/create";
+
+  const {
+    control,
+    formState,
+    getValues,
+    handleSubmit,
+    trigger,
+    register,
+    setValue,
+    watch,
+  } = useForm<FormValues>({
+    defaultValues: {
+      planSelected: plan_selected || null,
+    },
+    resolver: yupResolver(schema),
+  });
+  const { errors, isSubmitting } = formState;
+  const values = getValues();
+  watch("planSelected");
 
   const handleSelect = (event: React.MouseEvent) => {
     event.preventDefault();
+    const name = (event.target as HTMLButtonElement).name;
     const id = (event.target as HTMLButtonElement).id;
-    setPlanSelected(id);
+    if (
+      Object.values(PlansEnum).includes(id as PlansEnum) &&
+      name === "planSelected"
+    ) {
+      setValue(name, id as PlansEnum, {
+        shouldDirty: true,
+        shouldTouch: true,
+      });
+      trigger(name);
+    }
   };
 
-  const onSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    if (!user) return;
-    setIsLoading(true);
+  const onSubmit = async (data: FormValues) => {
+    if (!user || isSubmitting) return;
     const userUpdated: UserAccount = {
       ...user,
-      plan_selected: planSelected,
+      plan_selected: data.planSelected,
     };
     const res = await updateUser(userUpdated);
     if (res.result === "success") {
       dispatch(setUpdateUser(userUpdated));
-      handleSubmit();
+      handleContinue();
     }
-    setIsLoading(false);
   };
 
   useEffect(() => {
-    if (isCreatingRoute && !planSelected) {
-      setIsDisabled(true);
-    } else if (
-      JSON.stringify(planSelected) !== JSON.stringify(plan_selected) ||
-      isCreatingRoute
-    ) {
-      setIsDisabled(false);
-    } else {
-      setIsDisabled(true);
-    }
-  }, [planSelected, plan_selected]);
+    register("planSelected");
+  }, []);
 
   return (
     <section className="flex w-full max-w-5xl select-none flex-col items-center justify-center gap-3 rounded-md border text-xs s:text-sm sm:text-base">
-      <form action="" className="flex w-full flex-col gap-5">
-        <div className="flex flex-col gap-3 p-5">
-          <div className="flex items-center">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        action=""
+        className="flex w-full flex-col gap-5"
+      >
+        <div className="flex flex-col gap-10 p-5">
+          <div className="flex items-center gap-2">
             <span className="material-icons text-green-500">restaurant</span>
-            <span className="w-full p-5 text-left text-3xl font-semibold">
+            <span className="w-full text-left text-xl font-semibold sm:text-3xl">
               Select my Nutrition Plan
             </span>
           </div>
-          <div className="flex w-full flex-wrap justify-center gap-2">
+          <div className="grid select-none grid-cols-fluid items-start justify-start ">
             {MEAL_PLANS.map((opt) => (
               <button
                 onClick={handleSelect}
-                className={`relative flex h-[auto] w-[auto] max-w-xs flex-col items-center justify-center overflow-hidden rounded-lg duration-300 hover:scale-105 ${
-                  planSelected === opt.id
+                className={`relative m-auto flex h-[auto] w-[auto] max-w-xs flex-col items-center justify-center overflow-hidden rounded-lg duration-300 hover:scale-105 ${
+                  values.planSelected === opt.id
                     ? "border-green-500/0 bg-green-500/0 text-green-500"
                     : "border-slate-400 bg-slate-300/0"
                 }`}
                 key={opt.id}
+                name="planSelected"
                 id={opt.id}
               >
                 <span
                   className={`material-icons ${
-                    planSelected === opt.id
+                    values.planSelected === opt.id
                       ? "text-green-500"
                       : "text-transparent"
                   }`}
@@ -99,23 +126,28 @@ const PlanSelector: FC<Props> = ({ handleSubmit }) => {
                 <Image
                   src={`/images/plans/${opt.id}.jpg`}
                   alt={opt.name}
-                  width={150}
-                  height={150}
+                  width={200}
+                  height={200}
                   className="pointer-events-none m-2 rounded-3xl shadow-[0_1px_5px_gray] dark:shadow-[0px_1px_5px_#4040408c]"
                 />
               </button>
             ))}
           </div>
+
+          <InfoMessage
+            message="Select one, but know that you will have access to all the plans in
+  your day to day!"
+          />
         </div>
         <div className="flex items-center justify-center border-t p-5">
+          <FormError message={errors.planSelected?.message} />
           <div className="ml-auto flex">
             <SubmitButton
               className={"m-auto h-9 w-24"}
-              onClick={onSubmit}
               loadMessage={"Loading..."}
               content={`${isCreatingRoute ? "Continue" : "Save"}`}
-              isLoading={isLoading}
-              isDisabled={isDisabled}
+              isLoading={isSubmitting}
+              isDisabled={isSubmitting}
             />
           </div>
         </div>

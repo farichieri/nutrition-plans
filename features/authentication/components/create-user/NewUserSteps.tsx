@@ -1,12 +1,11 @@
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 
 interface Props {
-  steps: Array<{ step: number; name: string }>;
+  steps: Array<{ step: number; name: string; icon: ReactNode }>;
   stepSelected: number;
-  setStepSelected: Function;
 }
 
-const NewUserSteps: FC<Props> = ({ steps, stepSelected, setStepSelected }) => {
+const NewUserSteps: FC<Props> = ({ steps, stepSelected }) => {
   return (
     <div className="flex gap-2">
       {steps.map((step) => (
@@ -16,13 +15,16 @@ const NewUserSteps: FC<Props> = ({ steps, stepSelected, setStepSelected }) => {
         >
           <span className="text-xs">Step {step.step}</span>
           <button
-            className={`shadow-g cursor-default rounded-md border px-1 py-1 text-xs capitalize text-white shadow-xl xs:px-2 xs:text-sm sm:px-3 sm:text-base ${
+            className={`shadow-g flex cursor-default flex-wrap items-center justify-center gap-1 rounded-md border px-1 py-1  text-white shadow-xl xs:px-2  sm:px-3  ${
               stepSelected === step.step
                 ? "border-green-500 bg-green-500/50"
                 : "bg-gray-500/50"
             }`}
           >
-            {step.name}
+            <span className="text-xs capitalize xs:text-sm sm:text-base">
+              {step.name}
+            </span>
+            {step.icon}
           </button>
         </div>
       ))}

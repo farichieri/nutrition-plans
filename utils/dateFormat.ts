@@ -138,4 +138,5 @@ export {
   getYesterday,
   isValidDate,
   restOneWeek,
+  formatToUSDate,
 };

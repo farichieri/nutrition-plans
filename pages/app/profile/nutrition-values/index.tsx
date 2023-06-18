@@ -1,5 +1,5 @@
 import PremiumLayout from "@/layouts/PremiumLayout";
-import Results from "@/components/Premium/Calculator/Results";
+import Results from "@/features/authentication/components/create-user/results/Results";
 import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
 
 export default function Page() {

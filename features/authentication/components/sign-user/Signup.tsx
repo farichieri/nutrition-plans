@@ -13,7 +13,7 @@ import {
 } from "firebase/auth";
 import { auth, provider } from "@/services/firebase/firebase.config";
 import { DevTool } from "@hookform/devtools";
-import { emailRegex } from "@/utils";
+import { emailRegex } from "@/constants";
 import { GoogleLoginButton, SubmitButton } from "@/components/Buttons";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
@@ -108,7 +108,6 @@ const Signup = () => {
   return (
     <div className="m-auto flex w-full max-w-sm select-none flex-col items-center justify-center gap-4 rounded-md p-4 py-10 sm:border sm:px-10">
       <DevTool control={control} />
-
       <div>
         <h1 className="text-center text-4xl font-bold">
           Create Your Nutrition&nbsp;Plans Account

@@ -1,9 +1,8 @@
-import { db } from "../../../services/firebase/firebase.config";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
-import { newAccount } from "@/types/initialTypes";
 import { PlansEnum, Result } from "@/types";
 import { User, deleteUser } from "firebase/auth";
-import { UserAccount } from "@/features/authentication";
+import { UserAccount, newAccount } from "@/features/authentication";
+import { db } from "@/services/firebase/firebase.config";
 
 const createNewUser = async (
   user: User
@@ -47,11 +46,12 @@ const generateUserObject = async (
       display_name: userData.display_name,
       email_address: userData.email_address,
       first_data: userData.first_data,
-      food_data: userData.food_data,
+      goal: userData.goal,
       is_admin: userData.is_admin,
       is_premium: userData.is_premium,
       is_profile_completed: userData.is_profile_completed,
       lang: userData.lang,
+      measurement_unit: userData.measurement_unit,
       nutrition_targets: userData.nutrition_targets,
       photo_url: userData.photo_url,
       plan_selected: userData.plan_selected,
@@ -72,11 +72,11 @@ const updateUser = async (
   user: UserAccount
 ): Promise<Result<UserAccount, unknown>> => {
   try {
-    console.log("updateUser");
     const userRef = doc(db, "users", user.user_id);
     await setDoc(userRef, user);
     return { result: "success", data: user };
   } catch (error) {
+    console.log("updateUser", { error });
     return { result: "error", error };
   }
 };

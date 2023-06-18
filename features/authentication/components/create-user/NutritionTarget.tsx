@@ -2,14 +2,16 @@ import { FC } from "react";
 import { MEAL_PLANS } from "@/data/content";
 import { selectAuthSlice } from "@/features/authentication/slice";
 import { useSelector } from "react-redux";
-import { getNutritionTargets } from "./helpers";
+import { getNutritionTargets } from "../../utils/getNutritionTargets";
+import { PlansEnum } from "@/types";
 
-interface Props {}
+interface Props {
+  calories: number;
+  plan_selected: PlansEnum;
+}
 
-const NutritionTarget: FC<Props> = () => {
+const NutritionTarget: FC<Props> = ({ calories, plan_selected }) => {
   const { user } = useSelector(selectAuthSlice);
-  const plan_selected = user?.plan_selected;
-  const calories = user?.nutrition_targets.calories;
   const planData = MEAL_PLANS.find((plan) => plan.id === plan_selected);
   const nutritionTargets =
     calories && plan_selected && getNutritionTargets(calories, plan_selected);

@@ -1,95 +1,13 @@
-import {
-  UserAccount,
-  NutritionTargets,
-  Ratings,
-  UserBodyData,
-  UserFoodData,
-  UserSteps,
-  WeightGoal,
-} from "@/features/authentication/types";
+import { NutritionTargets, WeightGoal } from "@/features/authentication/types";
 import {
   Food,
   FoodNutrients,
   CompatiblePlans,
   FoodType,
 } from "@/features/foods/types";
-import { SubscriptionState } from "@/types";
 import { Progress } from "@/features/progress";
 
 export const DEFAULT_IMAGE = "/images/foods/default_food.png";
-
-export const newBodyData: UserBodyData = {
-  activity: null,
-  age: null,
-  BMI: null,
-  BMR: null,
-  gender: null,
-  goal: null,
-  height_in_cm: null,
-  kcals_recommended: null,
-  measurement_unit: null,
-  weight_in_kg: null,
-};
-
-export const initialWeightGoal: WeightGoal = {
-  weight_goal_in_kg: null,
-  created_at: null,
-  due_date: null,
-};
-
-export const newFoodData: UserFoodData = {
-  compatible_plans: [],
-};
-
-export const newRagins: Ratings = {
-  food_rating: {
-    favorites: [],
-    likes: [],
-    dislikes: [],
-  },
-};
-
-export const newNutritionTargets: NutritionTargets = {
-  calories: null,
-  carbohydrates: {
-    min: null,
-    max: null,
-  },
-  proteins: {
-    min: null,
-    max: null,
-  },
-  fats: {
-    min: null,
-    max: null,
-  },
-};
-
-export const newAccount: UserAccount = {
-  body_data: newBodyData,
-  created_at: "",
-  display_name: "",
-  email_address: "",
-  food_data: newFoodData,
-  is_admin: false,
-  is_premium: false,
-  is_profile_completed: false,
-  lang: "en",
-  nutrition_targets: newNutritionTargets,
-  photo_url: "",
-  plan_selected: null,
-  premium_plan: SubscriptionState.free,
-  ratings: newRagins,
-  user_id: "",
-  user_step: UserSteps.step_1,
-  weight_goal: initialWeightGoal,
-  first_data: {
-    body_data: newBodyData,
-    food_data: newFoodData,
-  },
-};
-
-export const newProgress: Progress = {};
 
 // Food
 export const NewFoodType: FoodType = {

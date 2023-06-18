@@ -4,21 +4,21 @@ import { RootState } from "@/store/store";
 import { UserAccount } from "@/features/authentication";
 
 interface AuthState {
-  user: UserAccount | null;
-  isVerifyingUser: boolean;
-  isCreatingUser: boolean;
   error: string | null;
-  isSigningUser: boolean;
+  isCreatingUser: boolean;
   isSelectingPlan: boolean;
+  isSigningUser: boolean;
+  isVerifyingUser: boolean;
+  user: UserAccount | null;
 }
 
 const initialState: AuthState = {
-  user: null,
-  isVerifyingUser: false,
-  isCreatingUser: false,
   error: null,
-  isSigningUser: false,
+  isCreatingUser: false,
   isSelectingPlan: false,
+  isSigningUser: false,
+  isVerifyingUser: false,
+  user: null,
 };
 
 export const authSlice = createSlice({

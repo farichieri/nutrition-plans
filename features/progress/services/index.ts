@@ -8,16 +8,19 @@ import {
 } from "firebase/firestore";
 import { db } from "../../../services/firebase/firebase.config";
 import { Result } from "@/types";
-import { User } from "firebase/auth";
 import { UserAccount } from "@/features/authentication";
 import { ProgressItem, Progress } from "@/features/progress";
 
-const addProgress = async (user: UserAccount, progress: ProgressItem) => {
+const addProgress = async (
+  user: UserAccount,
+  progress: ProgressItem
+): Promise<Result<ProgressItem, unknown>> => {
   try {
     const docRef = doc(db, "users", user.user_id, "progress", progress.date);
     await setDoc(docRef, progress);
+    return { result: "success", data: progress };
   } catch (error) {
-    return { error: `Error creating Progress: ${error}` };
+    return { result: "error", error };
   }
 };
 
