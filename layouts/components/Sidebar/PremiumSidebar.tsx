@@ -23,8 +23,12 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { user } = useSelector(selectAuthSlice);
-  const { sidebarPlansOpen, sidebarEvolutionOpen, sidebarAdminOpen } =
-    useSelector(selectLayoutSlice);
+  const {
+    sidebarPlansOpen,
+    sidebarEvolutionOpen,
+    sidebarAdminOpen,
+    isSettingsOpen,
+  } = useSelector(selectLayoutSlice);
 
   const toggleAllPlans = () => {
     if (sidebarPlansOpen === true) {
@@ -117,12 +121,6 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
       pathname: ["/app/profile/progress"],
       icon: "auto_graph",
     },
-    {
-      name: "Settings",
-      url: "",
-      pathname: [""],
-      icon: "settings",
-    },
   ];
 
   const fixedOptClass =
@@ -159,6 +157,17 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
             <span className="text-xs font-light">{page.name}</span>
           </Link>
         ))}
+        <button
+          onClick={() => dispatch(setIsSettingsOpen(true))}
+          className={`${
+            isSettingsOpen && "bg-slate-500/30 font-semibold "
+          } text-md hover:opacity-7 flex w-full flex-col items-center gap-1 rounded-lg border border-transparent px-1.5 py-1 text-center text-base duration-300 hover:bg-slate-500/30 active:border-gray-400 dark:active:border-white sm:text-lg`}
+        >
+          <span className="material-icons md-24 notraslate text-green-500">
+            settings
+          </span>
+          <span className="text-xs font-light">Settings</span>
+        </button>
       </div>
 
       <div
@@ -336,7 +345,12 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
             className="flex w-full flex-col items-center gap-2"
             onClick={handleOpenProfile}
           >
-            <button className={`${fixedOptClass} `}>
+            <button
+              className={
+                `${isSettingsOpen && "bg-slate-500/30 font-semibold"}` +
+                fixedOptClass
+              }
+            >
               <span className="material-icons md-24 text-green-500">
                 settings
               </span>

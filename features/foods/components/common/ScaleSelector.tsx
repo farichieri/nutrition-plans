@@ -41,7 +41,7 @@ const ScaleSelector: FC<Props> = ({
     let newScale;
 
     if (id === "scale_amount") {
-      newAmount = value;
+      newAmount = Number(value);
       newScale = scale_name;
     }
     if (id === "scale_name") {
@@ -96,7 +96,7 @@ const ScaleSelector: FC<Props> = ({
 
   return (
     <div className="flex w-full flex-col gap-2">
-      <div className="flex w-full items-center justify-between gap-2">
+      <div className="flex w-full items-center justify-between gap-4">
         <NutritionInput
           changed={false}
           handleChange={handleChange}
@@ -104,11 +104,10 @@ const ScaleSelector: FC<Props> = ({
           key={"scale_amount"}
           labelText={"Scale Amount"}
           name={"scale_amount"}
-          step={"1"}
           min={"0"}
           title={""}
           type={"number"}
-          value={Number(Number(scale_amount).toFixed(2))}
+          value={Number(scale_amount)}
         />
         <FormSelect
           customClass={""}
@@ -120,7 +119,7 @@ const ScaleSelector: FC<Props> = ({
           value={scale_name}
         />
       </div>
-      <div className="flex h-10 justify-center">
+      <div className="m-2 flex justify-center">
         {isNotOriginal && (
           <button
             className="m-auto rounded-3xl border px-4 py-2 duration-300 hover:bg-slate-500/20"

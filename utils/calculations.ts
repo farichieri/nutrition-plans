@@ -17,12 +17,12 @@ const cmsToInches = ({ cms }: { cms: number }): number => {
 
 const kgsToLbs = ({ kgs }: { kgs: number }): number => {
   let pounds = kgs / LIB_TO_KG;
-  return Math.floor(formatTwoDecimals(pounds));
+  return formatTwoDecimals(pounds);
 };
 
 const lbsToKgs = ({ pounds }: { pounds: number }): number => {
   let kgs = pounds * LIB_TO_KG;
-  return Math.round(formatTwoDecimals(kgs));
+  return formatTwoDecimals(kgs);
 };
 
 const feetAndInchesToCMS = ({

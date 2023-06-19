@@ -85,13 +85,18 @@ const Graphic: FC<Props> = () => {
     weight: Number(weight_goal.weight_goal_in_kg),
   });
 
-  const weights = data?.map((w) => w.weight || userStartWeight) || [
-    userStartWeight,
-  ];
-  const maxWeightInData = Math.max(...weights);
-  const minWeightInData = Math.min(...weights);
-  const domainDiff = measurement_unit === MeasurementUnits.metric ? 20 : 50;
-  const domain = [maxWeightInData - domainDiff, minWeightInData + domainDiff];
+  const getDomain = () => {
+    const weights = data?.map((w) => w.weight || userStartWeight) || [
+      userStartWeight,
+    ];
+    weights.push(weightGoal);
+    const maxWeightInData = Math.max(...weights);
+    const minWeightInData = Math.min(...weights);
+    const domainDiff = measurement_unit === MeasurementUnits.metric ? 5 : 10;
+    return [minWeightInData - domainDiff, maxWeightInData + domainDiff];
+  };
+
+  const domain = getDomain();
 
   const CustomLabel = (props: any) => {
     return (
@@ -120,7 +125,7 @@ const Graphic: FC<Props> = () => {
   };
 
   return (
-    <div className="flex h-96 w-full max-w-5xl overflow-hidden bg-white dark:bg-black">
+    <div className="flex h-96 w-full max-w-5xl overflow-hidden ">
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart
           width={500}

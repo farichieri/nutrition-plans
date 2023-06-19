@@ -94,7 +94,7 @@ const Ingredient: FC<IngredientProps> = ({
           </span>
           <span className="text-sm">{foodIngredient.text}</span>
         </div>
-        <div className="flex items-center gap-0.5">
+        <div className="flex items-baseline gap-0.5">
           <span>{ingScaleAmount && Math.round(ingScaleAmount)}</span>
           <span className="capitalize">{foodIngredient.scale_name}</span>
           <span className="ml-5 text-sm opacity-50">

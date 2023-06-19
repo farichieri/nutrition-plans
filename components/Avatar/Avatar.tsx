@@ -51,7 +51,7 @@ const Avatar: FC<Props> = ({ width, height, changeable }) => {
     <>
       {!userImage ? (
         <div
-          className={`flex items-center justify-center rounded-full bg-gray-400 dark:bg-gray-700`}
+          className={`flex items-center justify-center rounded-full bg-red-700 text-white`}
         >
           <span className="flex h-full w-full items-center justify-center opacity-80">
             {fisrtNameWord}

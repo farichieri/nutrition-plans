@@ -12,7 +12,7 @@ interface Props {
 const SearchedResults: FC<Props> = ({ searchResult, handleClick, queries }) => {
   const foods = getFoodsFiltered(searchResult, queries);
   return (
-    <div className="flex flex-col gap-5">
+    <div className="grid max-w-screen-2xl select-none grid-cols-fluid_lg items-start justify-center gap-4 px-4 sm:px-0 lg:justify-start">
       {foods.map((food) => {
         return (
           <div

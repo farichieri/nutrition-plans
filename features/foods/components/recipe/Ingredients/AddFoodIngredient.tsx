@@ -19,7 +19,7 @@ const AddFoodIngredient: FC<Props> = ({
   if (!food?.food_id) return <>No food_id found</>;
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col">
       <ScaleSelector
         food={food}
         scale_amount={scale_amount}
@@ -29,7 +29,7 @@ const AddFoodIngredient: FC<Props> = ({
       />
       <button
         onClick={handleAddIngredient}
-        className="m-auto flex w-fit items-center gap-1 rounded-3xl border bg-green-600 py-1.5 pl-2 pr-4 duration-300 hover:bg-green-500 active:scale-95"
+        className="mx-auto flex w-fit items-center gap-1 rounded-3xl border bg-green-600 py-1.5 pl-2 pr-4 duration-300 hover:bg-green-500 active:scale-95"
       >
         <span className="material-icons pointer-events-none">add</span>
         <span className="pointer-events-none">Add</span>
