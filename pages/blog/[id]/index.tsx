@@ -26,7 +26,7 @@ export default function Page({ postData }: Props) {
           </span>
           <span>Back to Blog</span>
         </Link>
-        <div className="mb-10 flex flex-col items-center justify-center gap-6 border-b pb-14 pt-14">
+        <div className="mb-10 flex flex-col items-center justify-center gap-6 border-b pb-14 ">
           <h1 className="text-left text-3xl font-bold uppercase sm:text-4xl md:text-5xl lg:text-6xl">
             {postData.title}
           </h1>

@@ -28,6 +28,7 @@ import MealsLayout from "@/layouts/MealsLayout";
 import Modal from "@/components/Modal/Modal";
 import FormSelect from "@/components/Form/FormSelect";
 import { generateOptions } from "@/utils";
+import { toast } from "react-hot-toast";
 
 interface Props {
   mealID: string;
@@ -121,8 +122,9 @@ export default function Page({ mealID }: Props) {
         };
         await updateUserMeals();
         router.push(`/app/profile/meals`);
+        toast.success("Meal Template updated successfully.");
       } else {
-        alert("Error updating meal");
+        toast.error("Error updating Meal Template.");
       }
       setIsSaving(false);
     } catch (error) {
@@ -141,8 +143,9 @@ export default function Page({ mealID }: Props) {
         router.push("/app/profile/meals").then(() => {
           dispatch(setDeleteMealSetting(meal));
         });
+        toast.success("Meal Template deleted successfully.");
       } else {
-        alert("Error deleting meal");
+        toast.error("Error deleting Meal Template.");
       }
       setIsDeleting(false);
     } catch (error) {

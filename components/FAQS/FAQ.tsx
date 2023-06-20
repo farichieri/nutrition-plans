@@ -15,7 +15,7 @@ const FAQ: FC<Props> = ({ content, setOpen, open, index }) => {
     <div
       key={content.title}
       className={`flex w-full cursor-pointer select-none flex-col px-2 py-4 ${
-        open === index && "bg-gray-100/30 dark:bg-gray-500/20"
+        open === index && "bg-gray-300/30 dark:bg-gray-500/20"
       }`}
       onClick={() => setOpen(index === open ? null : index)}
     >

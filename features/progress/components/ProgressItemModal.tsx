@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ActionButton from "@/components/Buttons/ActionButton";
 import Modal from "@/components/Modal/Modal";
 import { formatTwoDecimals } from "@/utils";
+import { toast } from "react-hot-toast";
 
 interface Props {
   progressItem: ProgressItem;
@@ -75,6 +76,9 @@ const ProgressItemModal: FC<Props> = ({ progressItem }) => {
     if (res.result === "success") {
       dispatch(setUpdateProgress(progressUpdated));
       dispatch(setProgressOpen(null));
+      toast.success("Progress updated successfully");
+    } else {
+      toast.error("Error updating Progress");
     }
     setIsSaving(false);
   };
@@ -85,6 +89,9 @@ const ProgressItemModal: FC<Props> = ({ progressItem }) => {
     if (res.result === "success") {
       dispatch(setDeleteProgress(progressItem.date));
       dispatch(setProgressOpen(null));
+      toast.success("Progress deleted successfully");
+    } else {
+      toast.error("Error deleting Progress");
     }
     setIsDeleting(false);
   };

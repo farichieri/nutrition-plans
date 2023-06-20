@@ -23,6 +23,7 @@ import Input from "@/components/Form/Input";
 import MealsLayout from "@/layouts/MealsLayout";
 import Modal from "@/components/Modal/Modal";
 import FormSelect from "@/components/Form/FormSelect";
+import { toast } from "react-hot-toast";
 
 export default function Page() {
   const dispatch = useDispatch();
@@ -100,8 +101,9 @@ export default function Page() {
       dispatch(setNewMealState(NewMealSetting));
       dispatch(setAddNewMealSetting(res.mealSettingAdded));
       router.push(`/app/profile/meals`);
+      toast.success("Meal Template created successfully.");
     } else {
-      alert("Error creating recipe");
+      toast.error("Error creating Meal Template.");
     }
     setIsCreating(false);
   };

@@ -12,6 +12,7 @@ import { selectAuthSlice } from "@/features/authentication/slice";
 import { useDispatch, useSelector } from "react-redux";
 import { XCircleIcon } from "@heroicons/react/24/solid";
 import ActionButton from "@/components/Buttons/ActionButton";
+import { toast } from "react-hot-toast";
 
 interface Props {}
 
@@ -61,7 +62,7 @@ const AddProgress: FC<Props> = () => {
       }),
     };
     if (progress[date]) {
-      alert("Progress already exists");
+      toast.error("Progress already exists.\nTry updating it.");
       return;
     } else {
       setIsAdding(true);
@@ -72,6 +73,9 @@ const AddProgress: FC<Props> = () => {
           date: "",
           weight: "",
         });
+        toast.success("Progress added successfully.");
+      } else {
+        toast.error("Error updating your Goal");
       }
     }
     setIsAdding(false);

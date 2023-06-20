@@ -10,7 +10,11 @@ const Collapsable: FC<Props> = ({ showed, hidden, defaultState }) => {
   const [open, setOpen] = useState(defaultState);
 
   return (
-    <div className="flex w-full flex-col gap-1">
+    <div
+      className={`flex w-full flex-col gap-1 rounded-md px-4 py-2 ${
+        open ? "bg-gray-300/30 dark:bg-gray-500/20" : ""
+      }`}
+    >
       <div onClick={() => setOpen(!open)}>
         <div className="flex w-full cursor-pointer items-center justify-between">
           {showed}

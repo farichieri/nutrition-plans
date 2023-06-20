@@ -24,7 +24,7 @@ const UserMealsC: FC<Props> = ({ meals }) => {
   };
 
   return (
-    <div className="mx-auto flex w-full max-w-3xl flex-col gap-5 rounded-md border bg-white p-5 dark:bg-black">
+    <div className="mx-auto flex w-full max-w-3xl flex-col gap-5 rounded-md border bg-white/50 p-5 dark:bg-black/50">
       {confirmDelete && (
         <ConfirmDeleteMeal
           confirmDelete={confirmDelete}

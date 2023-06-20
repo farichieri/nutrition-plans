@@ -7,7 +7,6 @@ import {
   setUpdateUser,
   updateUser,
 } from "@/features/authentication";
-import { ACTIVITY_OPTIONS } from "@/constants";
 import {
   cmsToFeet,
   cmsToInches,
@@ -15,9 +14,9 @@ import {
   kgsToLbs,
   lbsToKgs,
 } from "@/utils/calculations";
+import { ACTIVITY_OPTIONS } from "@/constants";
 import { DevTool } from "@hookform/devtools";
 import { FC, useEffect, useState } from "react";
-import { LIB_TO_KG } from "@/constants/measurements";
 import { MeasurementUnits } from "@/types";
 import { schema } from "./schema";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,6 +25,7 @@ import { useRouter } from "next/router";
 import { yupResolver } from "@hookform/resolvers/yup";
 import FormError from "@/components/Errors/FormError";
 import SubmitButton from "@/components/Buttons/SubmitButton";
+import { toast } from "react-hot-toast";
 
 interface FormValues {
   activity: UserActivities | null;
@@ -57,7 +57,6 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
     register,
     setValue,
     trigger,
-    unregister,
     watch,
   } = useForm<FormValues>({
     defaultValues: {
@@ -173,7 +172,6 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
   }, []);
 
   const onSubmit = async (data: FormValues) => {
-    console.log({ data });
     if (!user || isSubmitting) return;
 
     let userUpdated: UserAccount = {
@@ -193,10 +191,25 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
     if (res.result === "success") {
       dispatch(setUpdateUser(userUpdated));
       handleContinue();
+      toast.success("Your Body Features have been updated successfully.");
     } else {
-      setError("Ups, something happened, please try again");
+      toast.error("Error updating your Body Features");
     }
   };
+
+  const [isDisabled, setIsDisabled] = useState(false);
+
+  // useEffect(() => {
+  //   if (
+  //     values.goalSelected === user.goal &&
+  //     values.weight_goal.weight_goal_in_kg === weightGoalFormatted &&
+  //     values.weight_goal.due_date === dueDateFormatted
+  //   ) {
+  //     setIsDisabled(true);
+  //   } else {
+  //     setIsDisabled(false);
+  //   }
+  // }, [setIsDisabled, values, watch]);
 
   return (
     <div className="flex h-full w-full max-w-xl flex-col items-center justify-center gap-3 rounded-md border bg-white/50 text-xs dark:bg-black/50 s:text-sm sm:text-base">
@@ -427,7 +440,7 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
               loadMessage={"Loading..."}
               content={`${isCreatingRoute ? "Continue" : "Save"}`}
               isLoading={isSubmitting}
-              isDisabled={isSubmitting}
+              isDisabled={isSubmitting || isDisabled}
             />
           </div>
         </div>

@@ -74,11 +74,11 @@ const AddToFavorite: FC<Props> = ({ food }) => {
         const res = await updateUser(userUpdated);
         if (res.result === "success") {
           dispatch(setUpdateUser(userUpdated));
-        }
-        if (isAlreadyFavorite) {
-          dispatch(removeFavoriteFood(food));
-        } else {
-          dispatch(addFavoriteFood(food));
+          if (isAlreadyFavorite) {
+            dispatch(removeFavoriteFood(food));
+          } else {
+            dispatch(addFavoriteFood(food));
+          }
         }
       }
     } catch (error) {

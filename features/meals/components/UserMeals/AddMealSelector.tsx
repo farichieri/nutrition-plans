@@ -9,6 +9,7 @@ import { selectAuthSlice } from "@/features/authentication";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "@/components/Modal/Modal";
 import SubmitButton from "@/components/Buttons/SubmitButton";
+import { toast } from "react-hot-toast";
 
 interface Props {
   isCreating: null | UserMeal;
@@ -40,8 +41,9 @@ const AddMealSelector: FC<Props> = ({
     if (!res?.error && res?.mealSettingAdded) {
       dispatch(setAddNewUserMeal(res.mealSettingAdded));
       setOpenSelector(false);
+      toast.success("Meal added successfully.");
     } else {
-      alert("Error creating recipe");
+      toast.error("Error adding meal.");
     }
     setIsCreating(null);
   };

@@ -11,6 +11,7 @@ import { updateMealsOrders } from "./utils";
 import { useDispatch, useSelector } from "react-redux";
 import ActionButton from "@/components/Buttons/ActionButton";
 import Modal from "@/components/Modal/Modal";
+import { toast } from "react-hot-toast";
 
 interface Props {
   confirmDelete: null | UserMeal;
@@ -38,8 +39,9 @@ const ConfirmDeleteMeal: FC<Props> = ({ confirmDelete, setConfirmDelete }) => {
         dispatch(setUserMeals(res.data));
         setConfirmDelete(null);
       }
+      toast.success("Meal deleted successfully.");
     } else {
-      alert("Error deleting meal");
+      toast.error("Error deleting meal.");
     }
     setIsDeleting(false);
   };

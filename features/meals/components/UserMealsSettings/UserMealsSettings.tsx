@@ -10,7 +10,7 @@ const UserMealsSettings: FC<Props> = ({ mealsSettings }) => {
   const noData = Object.keys(mealsSettings).length < 1;
 
   return (
-    <div className="mx-auto flex w-full max-w-3xl flex-col gap-5 rounded-md border bg-white p-5 dark:bg-black">
+    <div className="mx-auto flex w-full max-w-3xl flex-col gap-5 rounded-md border bg-white/50 p-5 dark:bg-black/50">
       <div className="flex flex-wrap items-baseline">
         <span className="text-2xl font-semibold">My Templates:</span>
       </div>

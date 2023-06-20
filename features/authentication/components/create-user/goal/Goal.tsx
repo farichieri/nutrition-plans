@@ -7,24 +7,20 @@ import {
   updateUser,
 } from "@/features/authentication";
 import { DevTool } from "@hookform/devtools";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { format, formatISO, parse } from "date-fns";
-import { formatToUSDate } from "@/utils";
-import {
-  getWeight,
-  getWeightInKg,
-  getWeightUnit,
-  lbsToKgs,
-} from "@/utils/calculations";
-import { MeasurementUnits, WeightUnits } from "@/types";
+import { AppRoutes, formatToUSDate } from "@/utils";
+import { getWeight, getWeightInKg, getWeightUnit } from "@/utils/calculations";
 import { schema } from "./schema";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/router";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Collapsable from "@/components/Layout/Collapsable";
 import FormError from "@/components/Errors/FormError";
 import SubmitButton from "@/components/Buttons/SubmitButton";
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/router";
+import InfoMessage from "@/components/Layout/InfoMessage";
 
 interface FormValues {
   goalSelected: UserGoals | null;
@@ -39,6 +35,7 @@ const Goal: FC<Props> = ({ handleContinue }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { user } = useSelector(selectAuthSlice);
+  const isCreatingRoute = router.asPath === AppRoutes.create_user;
 
   useEffect(() => {
     register("goalSelected");
@@ -57,10 +54,7 @@ const Goal: FC<Props> = ({ handleContinue }) => {
   const dateParsed = due_date && parse(due_date, "MM-dd-yyyy", new Date());
   const dueDateFormatted =
     dateParsed && format(new Date(dateParsed), "yyyy-MM-dd");
-
   const hasGoal = Boolean(weight_goal_in_kg || user?.weight_goal.due_date);
-
-  const isCreatingRoute = router.asPath === "/app/create";
 
   const {
     control,
@@ -141,8 +135,27 @@ const Goal: FC<Props> = ({ handleContinue }) => {
     if (res.result === "success") {
       dispatch(setUpdateUser(userUpdated));
       handleContinue();
+      if (!isCreatingRoute) {
+        toast.success("Your Goal has been updated successfully.");
+      }
+    } else {
+      toast.error("Error updating your Goal");
     }
   };
+
+  const [isDisabled, setIsDisabled] = useState(false);
+
+  useEffect(() => {
+    if (
+      values.goalSelected === user.goal &&
+      values.weight_goal.weight_goal_in_kg === weightGoalFormatted &&
+      values.weight_goal.due_date === dueDateFormatted
+    ) {
+      setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
+    }
+  }, [setIsDisabled, values, watch]);
 
   return (
     <section className="flex h-full w-full max-w-3xl flex-col items-center justify-center gap-3 rounded-md border bg-white/90 text-xs dark:bg-black/50 s:text-sm sm:text-base">
@@ -156,7 +169,7 @@ const Goal: FC<Props> = ({ handleContinue }) => {
           <div className="flex items-center gap-2">
             <span className="material-icons text-green-500">emoji_events</span>
             <span className="w-full text-left text-xl font-semibold sm:text-3xl">
-              Select my Goal
+              {isCreatingRoute ? "Select my Goal" : "Goal"}
             </span>
           </div>
           <div className="flex w-full flex-col items-center justify-center">
@@ -198,7 +211,9 @@ const Goal: FC<Props> = ({ handleContinue }) => {
                         className="w-24 rounded-md border bg-transparent px-3 py-1.5"
                         type="number"
                         placeholder={getWeightUnit({ from: measurement_unit })}
-                        {...register("weight_goal.weight_goal_in_kg")}
+                        {...register("weight_goal.weight_goal_in_kg", {
+                          valueAsNumber: true,
+                        })}
                       />
                     </>
                   </div>
@@ -224,6 +239,7 @@ const Goal: FC<Props> = ({ handleContinue }) => {
               )}
             </div>
           </div>
+          <InfoMessage message="Your Goal has an impact in your daily macronutrients." />
         </div>
         <div className="flex items-center justify-center border-t p-5">
           <FormError message={errors.goalSelected?.message} />
@@ -233,7 +249,7 @@ const Goal: FC<Props> = ({ handleContinue }) => {
               loadMessage={"Loading..."}
               content={`${isCreatingRoute ? "Continue" : "Save"}`}
               isLoading={isSubmitting}
-              isDisabled={isSubmitting}
+              isDisabled={isSubmitting || isDisabled}
             />
           </div>
         </div>

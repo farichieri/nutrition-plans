@@ -137,7 +137,7 @@ const Results: FC<Props> = ({ handleSubmit }) => {
   };
 
   return (
-    <section className="flex w-full max-w-5xl select-none flex-col items-center justify-center gap-3 rounded-md border text-xs s:text-sm sm:text-base">
+    <section className="flex w-full max-w-5xl select-none flex-col items-center justify-center gap-3 rounded-md border bg-white/50 text-xs dark:bg-black/50 s:text-sm sm:text-base">
       <form action="" className="flex w-full flex-col gap-5">
         <div className="flex flex-col gap-10 p-5">
           <div className="flex items-center gap-2">
@@ -146,19 +146,17 @@ const Results: FC<Props> = ({ handleSubmit }) => {
               {isCreatingRoute ? "Nutrition Values" : "Nutrition Values"}
             </span>
           </div>
-
+          <div>
+            <span>
+              In order to accomplish your goal of{" "}
+              <span className="text-green-500">{user.goal}</span> we have
+              calculated the next daily calories for your nutrition plan:{" "}
+            </span>
+            <span className="text-green-500">{kcals_recommended}</span>
+          </div>
           <div className="flex flex-col gap-4 font-medium">
-            <div>
-              <span>
-                In order to accomplish your goal of{" "}
-                <span className="text-green-500">{user.goal}</span> we have
-                calculated the next daily calories for your nutrition plan:{" "}
-              </span>
-              <span className="text-green-500">{kcals_recommended}</span>
-            </div>
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-1">
-                <span className="material-icons text-blue-400">info</span>
                 <div>
                   <span>Your BMR (Basal Metabolic Rate) is: </span>
                   <span className="text-green-500">{Math.round(BMR)} </span>
@@ -166,14 +164,12 @@ const Results: FC<Props> = ({ handleSubmit }) => {
                 </div>
               </div>
               <div className="flex items-center gap-1">
-                <span className="material-icons text-blue-400">info</span>
                 <div>
                   <span>Your BMI (Body Mass Index) is: </span>
                   <span className="text-green-500">{BMI}</span>
                 </div>
               </div>
               <div className="flex items-center gap-1">
-                <span className="material-icons text-blue-400">info</span>
                 <div>
                   <span>A BMI of {BMI} is stipulated to be: </span>
                   <span className="text-green-500">
@@ -184,7 +180,7 @@ const Results: FC<Props> = ({ handleSubmit }) => {
               </div>
             </div>
           </div>
-          <div className="py-5">
+          <div className="">
             <NutritionTarget
               calories={kcals_recommended}
               plan_selected={plan_selected}

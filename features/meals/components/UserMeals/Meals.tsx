@@ -1,10 +1,11 @@
-import { UserMeals, UserMealsArr, setUserMeals } from "@/features/meals";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { FC, useEffect, useState } from "react";
 import { reorderArr } from "@/utils/filter";
 import { selectAuthSlice } from "@/features/authentication";
-import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-hot-toast";
 import { updateMealsOrders } from "./utils";
+import { useDispatch, useSelector } from "react-redux";
+import { UserMeals, UserMealsArr, setUserMeals } from "@/features/meals";
 
 interface Props {
   meals: UserMeals;
@@ -40,6 +41,9 @@ const Meals: FC<Props> = ({ meals, handleConfirmDelete }) => {
       const res = await updateMealsOrders(mealsReordered, user);
       if (res.result === "success") {
         dispatch(setUserMeals(res.data));
+        toast.success("Meals order updated successfully");
+      } else {
+        toast.error("Error updating meals order");
       }
     }
   };
@@ -72,8 +76,11 @@ const Meals: FC<Props> = ({ meals, handleConfirmDelete }) => {
                           ref={draggableProvided.innerRef}
                           {...draggableProvided.draggableProps}
                           {...draggableProvided.dragHandleProps}
-                          className="flex items-center gap-2 px-4 py-2 hover:bg-slate-500/20 active:bg-slate-500/40"
+                          className="flex items-center gap-2 py-2 pl-2 pr-4 hover:bg-slate-500/20 active:bg-slate-500/40"
                         >
+                          <span className="material-icons-outlined mr-2 opacity-50">
+                            drag_handle
+                          </span>
                           <span className="text-xs opacity-50">
                             {meal.order + 1}
                           </span>

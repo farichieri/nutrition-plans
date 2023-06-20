@@ -110,8 +110,6 @@ const Nutrition: FC<Props> = ({ nutrients, planID }) => {
 
   let isAllInRange = addIsAllInRange();
 
-  console.log({ NUTRIENT_TARGETS });
-
   return (
     <div className="w-full">
       <div className="mb-1 flex h-9 items-center gap-2">
@@ -171,15 +169,15 @@ const Nutrition: FC<Props> = ({ nutrients, planID }) => {
                         >
                           {formatTwoDecimals(nut.value) || "-"}
                         </span>
-                        <div className="absolute left-full">
+                        <div className="absolute left-full ">
                           {Number(nut.value) > Number(nut.max) && (
-                            <span className="flex text-sm text-red-500">
-                              🔻{nut.diff}
+                            <span className="flex text-xs text-red-500">
+                              🔻{formatTwoDecimals(nut.diff)}
                             </span>
                           )}
                           {Number(nut.value) < Number(nut.min) && (
-                            <span className="flex text-sm text-red-500">
-                              🔺{nut.diff}
+                            <span className="flex text-xs text-red-500">
+                              🔺{formatTwoDecimals(nut.diff)}
                             </span>
                           )}
                         </div>

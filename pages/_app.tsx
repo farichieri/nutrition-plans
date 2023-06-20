@@ -8,6 +8,7 @@ import { persistor, store } from "@/store/store";
 import { Provider } from "react-redux";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import { Toaster } from "react-hot-toast";
 import Layout from "@/layouts";
 import NProgress from "nprogress";
 import type { AppProps } from "next/app";
@@ -62,6 +63,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <ErrorBoundary>
       <Provider store={store}>
         <PersistGate loading={<AppLoader />} persistor={persistor}>
+          <Toaster />
           <Layout>
             <Component {...pageProps} />
           </Layout>
