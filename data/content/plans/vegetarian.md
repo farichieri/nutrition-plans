@@ -30,7 +30,7 @@ Vegetarians also do not eat products that contain gelatin or rennin (an enzyme f
 - Vegetarian diet: Eliminate meat, fish, poultry, eggs and dairy products, as well as other products of animal origin, such as honey.
 - Flexitarian diet: a largely vegetarian diet that occasionally incorporates meat, fish, or poultry.
 
-#### **Benefits of a Vegetarian diet**
+## **Benefits of a Vegetarian diet**
 
 A well-planned vegetarian diet can provide you with all the nutrients you need. Reducing the amount of meat in your diet can improve your health. Eating a vegetarian diet can help you:
 
@@ -43,7 +43,7 @@ A well-planned vegetarian diet can provide you with all the nutrients you need. 
 - Fewer calories overall
 - More fiber, potassium, vitamin C, Vitamin E and magnesium
 
-#### **Possible Disadvantages**
+## **Possible Disadvantages**
 
 A complete vegetarian diet can be healthy and nutritious. However, it can also increase your risk of suffering from certain nutritional deficiencies if it is not well planned or if foods with critical nutrients for health are not consumed.
 
@@ -58,7 +58,7 @@ A nutritional deficiency of these key micronutrients can lead to symptoms such a
 
 Including a variety of fruits, vegetables, whole grains, protein sources, and fortified foods is an easy way to ensure you're getting adequate nutrition.
 
-#### **General Recommendations**
+## **General Recommendations**
 
 When following a vegetarian diet, keep the following in mind:
 

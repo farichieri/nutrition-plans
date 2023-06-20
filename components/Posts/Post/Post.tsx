@@ -3,6 +3,7 @@ import { FC } from "react";
 import { Post } from "@/types";
 import Date from "./Date/Date";
 import Link from "next/link";
+import { blurDataURL } from "@/components/Layout/BlurDataImage";
 
 interface Props {
   post: Post;
@@ -19,6 +20,8 @@ const Post: FC<Props> = ({ post }) => {
           src={post.image}
           alt={post.title}
           fill
+          placeholder="blur"
+          blurDataURL={blurDataURL(500, 500)}
           className="object-cover"
         />
       </span>

@@ -18,7 +18,7 @@ A proper diet is essential to enjoy good physical and mental health. Here are so
 
 ![What is the right nutrition plan for me](/images/posts/why-is-it-important-to-follow-a-healthy-diet/1.jpg)
 
-### **Basic principles to keep in mind:**
+## **Basic principles to keep in mind:**
 
 - My physical characteristics: Here it is important to adapt them to our age, height, sex or some specific conditions, such as allergies.
 - My objectives sought: Specify them, since they can be physical, health or simply ideological food objectives.
@@ -31,17 +31,13 @@ Do I want to learn to eat so that I can choose the foods I eat better and not ha
 
 ![What is the right nutrition plan for me](/images/posts/why-is-it-important-to-follow-a-healthy-diet/2.jpg)
 
-### **So how do I choose my eating plan once the above is determined?**
+## **So how do I choose my eating plan once the above is determined?**
 
-1. I analyze my nutritional and energy requirements according to the physical analysis and my physical activity.
-
-2. I identify the diet that I would like to carry out according to the food groups they contain and their benefits (See post: What are the most appropriate eating plans for health?
-
-3. I get the macronutrients I need and that the chosen plan contains. (See Post What are the macronutrients?
-
-4. I select the foods that I would like to consume and that are recommended and I choose how to distribute them daily.
-
-5. I analyze what money I have to be able to carry out my chosen diet and if I can carry it out while I'm alive.
+- I analyze my nutritional and energy requirements according to the physical analysis and my physical activity.
+- I identify the diet that I would like to carry out according to the food groups they contain and their benefits.
+- I get the macronutrients I need and that the chosen plan contains.
+- I select the foods that I would like to consume and that are recommended and I choose how to distribute them daily.
+- I analyze what money I have to be able to carry out my chosen diet and if I can carry it out while I'm alive.
 
 Ready! Now you can choose the eating plan that best suits you.
 

@@ -18,7 +18,7 @@ const Goals: FC<Props> = () => {
           <Link
             key={goal.name}
             href={goal.link}
-            className="min-w-fit rounded-3xl bg-green-500 px-3 py-1 text-xs font-semibold text-white shadow-inner xs:text-sm sm:text-base"
+            className="min-w-fit rounded-3xl border border-transparent bg-green-500 px-3 py-1 text-xs font-semibold text-white shadow-inner duration-100 hover:border-green-600 xs:text-sm sm:text-base"
           >
             {goal.name}
           </Link>

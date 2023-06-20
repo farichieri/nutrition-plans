@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import FAQ from "./FAQ";
 
 interface Props {
@@ -6,14 +6,20 @@ interface Props {
 }
 
 const FAQS: FC<Props> = ({ content }) => {
+  const [open, setOpen] = useState(-1);
+
   return (
-    <section className="flex w-full max-w-3xl flex-col items-center justify-center gap-14 py-24">
-      <h1 className="text-center text-4xl font-bold xl:text-5xl">
-        Frequently Asked Questions
-      </h1>
-      <div className="flex flex-col gap-8">
-        {content.map((faq) => (
-          <FAQ content={faq} key={faq.title} />
+    <section className="flex w-full max-w-2xl flex-col items-center justify-center gap-14  py-24">
+      <h1 className="text-center text-4xl font-bold xl:text-5xl">FAQs</h1>
+      <div className="flex flex-col divide-y overflow-auto rounded-md">
+        {content.map((faq, index) => (
+          <FAQ
+            content={faq}
+            key={faq.title}
+            index={index}
+            open={open}
+            setOpen={setOpen}
+          />
         ))}
       </div>
     </section>

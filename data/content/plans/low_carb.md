@@ -13,7 +13,7 @@ Reducing carbohydrates will help us regain the ability to use our fat reserves b
 
 Among other benefits found in this diet, we find the reduction of anxiety for food due to the existence of reduced appetite by consuming more foods high in protein and good quality fats.
 
-#### **Allowed foods**
+## **Allowed foods**
 
 The foods allowed on the Low Carb diet are:
 
@@ -31,7 +31,7 @@ The foods allowed on the Low Carb diet are:
 
 In the case of cheese, milk and yogurt, they can be included by controlling the quantities. Milk could be replaced by coconut or almond milk, for example, whose carbohydrate content is much lower. It is important to accompany the Low carb diet to ingest between 2 to 3 liters of water daily.
 
-#### **Moderately Allowed**
+## **Moderately Allowed**
 
 - Fruits with a medium glycemic index (oranges, tangerines, apples, pears, etc.)
 - Tubers (in a VERY restricted way potato, sweet potato, cassava, corn.)
@@ -39,7 +39,7 @@ In the case of cheese, milk and yogurt, they can be included by controlling the 
 - Low-processed dairy: goat cheeses
 - Dark chocolate: without sugar and with a percentage greater than 70%.
 
-#### **Forbidden food**
+## **Forbidden food**
 
 In this diet it is important to avoid all foods that have a high amount of carbohydrates. For this reason, the nutritional label of the food should be consulted before consuming it. Some examples of foods to avoid are:
 

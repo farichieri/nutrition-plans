@@ -6,6 +6,11 @@ export const FAQS_INDEX = [
     answer:
       "The plans available at this moment are: Vegetarian, Mediterranean, Low Carb, Gluten Free and Balanced",
   },
+  {
+    title: "Are you going to add more plans in the future?",
+    answer:
+      "Yes, we are planning to add Paleo, Keto, protein, vegan and more plans.",
+  },
 ];
 
 export const FAQS_PRICING = [

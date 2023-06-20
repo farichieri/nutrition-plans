@@ -6,7 +6,7 @@ const CallToAction = () => {
     <div className="flex flex-col items-center justify-center gap-4 py-24 text-center">
       <span className="text-4xl font-bold">Try Nutrition Plans today</span>
       <span>
-        Receive your first nutrition plan today and start your transformation
+        Get your first nutrition plan today and start your transformation
       </span>
       <div className="my-2 h-10">
         <Link href="/signup">

@@ -28,7 +28,7 @@ The fat composition of the Mediterranean diet presents the following characteris
 - Relatively high intake of short and medium chain fatty acids from goat and sheep milk cheese and yogurt.
 - Absence of trans fats from industrial foods (eg margarines, fast food and bakery products).
 
-#### **How to follow the diet**
+## **How to follow the diet**
 
 The Mediterranean diet is based on:
 
@@ -46,7 +46,7 @@ There is strong evidence showing that low-carb diets can help with weight loss a
 When following a low-carb Mediterranean diet, simply avoid foods higher in this macronutrient, such as bread, rice, potatoes, beets, and fruit with a lot of sugar (you can eat the above occasionally and in small amounts; We'll talk later about how to enter them).
 The good news is that you can still enjoy generous servings of protein, vegetables, and olive oil at every meal.
 
-#### **What to eat**
+## **What to eat**
 
 In most of your meals:
 
@@ -62,7 +62,7 @@ In most of your meals:
 - Legumes (up to half a cup a few times a week)
 - Lemons and limes: in small amounts for cooking or adding flavor to drinks
 
-#### **What to avoid:**
+## **What to avoid:**
 
 - Whole grains: bread, pasta, breakfast cereals, quinoa, and couscous.
 - Potatoes
@@ -73,7 +73,7 @@ In most of your meals:
 - Fruit juice
 - Fruits: plantains (or bananas), grapes, and most fruit except berries.
 
-#### **What to drink:**
+## **What to drink:**
 
 - Drink still or sparkling water with a splash of lemon or lime juice, or coffee or tea with a touch of milk.
 - Many people drink red wine with their meals as part of the Mediterranean lifestyle, but if you drink alcohol on the low carb version, try to choose dry wine over sweet red wine.

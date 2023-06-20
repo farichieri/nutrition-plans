@@ -1,8 +1,13 @@
 import { ArrowSmallLeftIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/router";
 import RoundButton from "./RoundButton";
+import { FC } from "react";
 
-const BackButton = () => {
+interface Props {
+  text?: string;
+}
+
+const BackButton: FC<Props> = ({ text }) => {
   const router = useRouter();
 
   return (
