@@ -30,6 +30,28 @@ export default function Document() {
         <meta property="og:description" content="Nutrition Plans" />
         <meta property="og:site_name" content="nutritionplans.co" />
         <meta property="og:title" content="Nutrition Plans" />
+
+        <meta
+          name="theme-color"
+          content="#fff"
+          media="(prefers-color-scheme: light)"
+        />
+        <meta
+          name="theme-color"
+          content="#000"
+          media="(prefers-color-scheme: dark)"
+        />
+
+        <meta
+          name="background-color"
+          content="#fff"
+          media="(prefers-color-scheme: light)"
+        />
+        <meta
+          name="background-color"
+          content="#000"
+          media="(prefers-color-scheme: dark)"
+        />
       </Head>
       <body>
         <Main />

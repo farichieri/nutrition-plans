@@ -14,10 +14,8 @@
       "type": "image/png"
     }
   ],
-  "background_color": "#ffffff",
   "description": "A Nutrition Plans app",
   "display": "standalone",
   "scope": "/",
-  "start_url": "/",
-  "theme_color": "#22c55e"
+  "start_url": "/app/today"
 }

@@ -121,8 +121,8 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
     },
     {
       name: "Progress",
-      url: "/app/profile/progress",
-      pathname: ["/app/profile/progress"],
+      url: "/app/progress",
+      pathname: ["/app/progress"],
       icon: "auto_graph",
     },
   ];
@@ -270,10 +270,10 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
 
         <div className="flex w-full flex-col items-center gap-2">
           <Link
-            href={"/app/profile/progress"}
+            href={"/app/progress"}
             className={
               `${
-                router.pathname === "/app/profile/progress" &&
+                router.pathname === "/app/progress" &&
                 " bg-slate-500/30 font-semibold"
               } px-2` + fixedOptClass
             }

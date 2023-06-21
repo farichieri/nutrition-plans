@@ -17,7 +17,7 @@ const App = () => {
         if (user.plan_selected) {
           router.push(`/app/today`);
         } else {
-          router.push(`/app/profile/progress`);
+          router.push(`/app/progress`);
         }
       }
     }
