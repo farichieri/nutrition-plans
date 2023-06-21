@@ -41,17 +41,6 @@ export default function Document() {
           content="#000"
           media="(prefers-color-scheme: dark)"
         />
-
-        <meta
-          name="background-color"
-          content="#fff"
-          media="(prefers-color-scheme: light)"
-        />
-        <meta
-          name="background-color"
-          content="#000"
-          media="(prefers-color-scheme: dark)"
-        />
       </Head>
       <body>
         <Main />

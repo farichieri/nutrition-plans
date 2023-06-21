@@ -15,6 +15,8 @@ import PremiumNav from "./components/Nav/PremiumNav";
 import Settings from "../components/Premium/Settings/Settings";
 import Sidebar from "./components/Sidebar/PremiumSidebar";
 import WelcomeSteps from "../components/WelcomeSteps/WelcomeSteps";
+import useOnlineStatus from "@/hooks/useOnlineStatus";
+import ConnectionError from "@/components/Layout/ConnectionError";
 
 interface Props {
   children: React.ReactNode;
@@ -26,6 +28,7 @@ export default function PremiumLayout({ children }: Props) {
   const { sidebarOpen, isBillingModalOpen, isSettingsOpen } =
     useSelector(selectLayoutSlice);
   const { user, isCreatingUser, isSigningUser } = useSelector(selectAuthSlice);
+  const isOnline = useOnlineStatus();
 
   const handleSidebar = () => {
     dispatch(setSidebarOpen(!sidebarOpen));
@@ -45,13 +48,14 @@ export default function PremiumLayout({ children }: Props) {
       {(isCreatingUser || isSigningUser) && <Loader />}
       {isSettingsOpen && <Settings />}
       {user && <WelcomeSteps />}
+      {!isOnline && <ConnectionError />}
       {user ? (
         <div className="flex min-h-screen w-full flex-col">
           {isBillingModalOpen && <BillingModal />}
           <PremiumNav sidebarOpen={sidebarOpen} handleSidebar={handleSidebar} />
           <Sidebar sidebarOpen={sidebarOpen} handleSidebar={handleSidebar} />
           <div
-            className={`flex flex-col pt-[var(--nav-h)] duration-0 ease-in-out ${
+            className={`flex flex-col bg-white pt-[var(--nav-h)] duration-0 ease-in-out dark:bg-black ${
               sidebarOpen ? "md:pl-56 " : "md:pl-20 "
             }`}
           >
