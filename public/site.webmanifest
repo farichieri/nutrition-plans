@@ -1,6 +1,7 @@
 {
-  "name": "",
-  "short_name": "",
+  "name": "Nutrition Plans",
+  "lang": "en",
+  "short_name": "Nutrition Plans",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
@@ -13,7 +14,10 @@
       "type": "image/png"
     }
   ],
-  "theme_color": "#ffffff",
   "background_color": "#ffffff",
-  "display": "standalone"
+  "description": "A Nutrition Plans app",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
+  "theme_color": "#22c55e"
 }
