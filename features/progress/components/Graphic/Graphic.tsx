@@ -1,8 +1,3 @@
-import { addMonths, format, formatISO, parse } from "date-fns";
-import { selectAuthSlice } from "@/features/authentication";
-import { selectProgressSlice } from "@/features/progress";
-import { useSelector } from "react-redux";
-import React, { FC } from "react";
 import {
   AreaChart,
   Area,
@@ -14,9 +9,21 @@ import {
   Line,
   ReferenceLine,
 } from "recharts";
-import { formatToUSDate, formatTwoDecimals } from "@/utils";
+import {
+  formatToUSDate,
+  formatTwoDecimals,
+  getDayAndMonth,
+  getMonthMMM,
+} from "@/utils";
+import { format, formatISO, parse } from "date-fns";
 import { getWeight, getWeightText, getWeightUnit } from "@/utils/calculations";
 import { MeasurementUnits } from "@/types";
+import { selectAuthSlice } from "@/features/authentication";
+import { selectProgressSlice } from "@/features/progress";
+import { useSelector } from "react-redux";
+import CustomLabel from "./CustomLabel";
+import CustomTooltip from "./CustomTooltip";
+import React, { FC } from "react";
 
 interface Props {}
 
@@ -30,6 +37,8 @@ const Graphic: FC<Props> = () => {
 
   if (!created_at) return <></>;
 
+  const weightUnit = getWeightUnit({ from: measurement_unit });
+
   const startDate = format(new Date(created_at), "MM-dd-yyyy");
   const startDateF = formatToUSDate(new Date(startDate));
 
@@ -38,23 +47,36 @@ const Graphic: FC<Props> = () => {
     weight: formatTwoDecimals(Number(body_data.weight_in_kg)),
   });
 
+  const weightGoal = getWeight({
+    to: measurement_unit,
+    weight: Number(weight_goal.weight_goal_in_kg),
+  });
+  const dueDateGoal = weight_goal.due_date;
+
   const createData = () => {
     if (!startDate || !progress) return;
-    const data: { date: string; weight: null | number }[] = [
+    const data: {
+      date: string;
+      weight: null | number;
+      isMonthRepresentation: boolean;
+    }[] = [
       {
         date: startDateF,
         weight: userStartWeight,
+        isMonthRepresentation: true,
       },
     ];
-    let date = new Date(startDate);
-    for (let i = 0; i <= 12; i++) {
-      let newDdate = format(addMonths(date, 1), "MM-dd-yyyy");
-      data.push({
-        date: formatToUSDate(new Date(newDdate)),
-        weight: null,
-      });
-      date = new Date(newDdate);
-    }
+    // let date = getStartOfMonth(startDate);
+    // for (let i = 0; i <= 12; i++) {
+    //   let newDdate = format(addMonths(date, 1), "MM-dd-yyyy");
+    //   console.log({ newDdate });
+    //   data.push({
+    //     date: formatToUSDate(new Date(newDdate)),
+    //     weight: null,
+    //     isMonthRepresentation: true,
+    //   });
+    //   date = new Date(newDdate);
+    // }
     Object.keys(progress).map((p) => {
       const finded = data.find((d) => d.date === progress[p].date);
       const weight = formatTwoDecimals(
@@ -69,9 +91,18 @@ const Graphic: FC<Props> = () => {
         data.push({
           date: progress[p].date,
           weight: weight,
+          isMonthRepresentation: false,
         });
       }
     });
+    if (weightGoal && dueDateGoal) {
+      data.push({
+        date: dueDateGoal,
+        weight: null,
+        isMonthRepresentation: false,
+      });
+    }
+
     return data.sort((a, b) => {
       const first = formatISO(parse(String(a.date), "MM-dd-yyyy", new Date()));
       const second = formatISO(parse(String(b.date), "MM-dd-yyyy", new Date()));
@@ -80,10 +111,6 @@ const Graphic: FC<Props> = () => {
   };
 
   const data = createData();
-  const weightGoal = getWeight({
-    to: measurement_unit,
-    weight: Number(weight_goal.weight_goal_in_kg),
-  });
 
   const getDomain = () => {
     const weights = data?.map((w) => w.weight || userStartWeight) || [
@@ -98,34 +125,22 @@ const Graphic: FC<Props> = () => {
 
   const domain = getDomain();
 
-  const CustomLabel = (props: any) => {
-    return (
-      <g>
-        <text
-          x={"50%"}
-          y={props.viewBox.y}
-          fill="gray"
-          textAnchor="start"
-          fontWeight={500}
-          dominantBaseline="central"
-          fontSize={12}
-        >
-          Goal {getWeightText({ weight: weightGoal, from: measurement_unit })}
-        </text>
-      </g>
-    );
+  const verifyRepresentation = (date: string) => {
+    return data?.find((d) => d.date === date)?.isMonthRepresentation;
   };
 
   const formatXAxis = (value: any) => {
-    if (value === startDateF || value.slice(0, 2) === "01") {
+    if (verifyRepresentation(value)) {
+      return getMonthMMM(value);
+    } else if (value === startDateF || value.slice(0, 2) === "01") {
       return value;
     } else {
-      return value.slice(0, 2);
+      return getDayAndMonth(value);
     }
   };
 
   return (
-    <div className="flex h-96 w-full max-w-5xl overflow-hidden ">
+    <div className="flex h-96 w-full max-w-5xl overflow-hidden">
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart
           width={500}
@@ -133,7 +148,7 @@ const Graphic: FC<Props> = () => {
           data={data}
           margin={{
             top: 20,
-            right: 20,
+            right: 30,
             left: 30,
             bottom: 20,
           }}
@@ -141,12 +156,16 @@ const Graphic: FC<Props> = () => {
           <CartesianGrid stroke="none" />
           <XAxis
             dataKey="date"
-            label={{ value: "Date", position: "insideBottom", offset: -15 }}
+            label={{
+              value: "Date",
+              position: "insideBottom",
+              offset: -20,
+            }}
             tickFormatter={formatXAxis}
             tickSize={12}
           />
           <YAxis
-            unit={getWeightUnit({ from: measurement_unit })}
+            unit={weightUnit}
             domain={domain}
             label={{
               value: "Weight",
@@ -156,7 +175,17 @@ const Graphic: FC<Props> = () => {
             }}
             tickCount={10}
           />
-          <Tooltip />
+          <Tooltip
+            content={(props) => (
+              <CustomTooltip
+                active={props.active}
+                payload={props.payload}
+                label={props.label}
+                weightUnit={weightUnit}
+              />
+            )}
+            cursor={{ fill: "transparent" }}
+          />
           <Area
             type="monotone"
             dataKey="weight"
@@ -167,12 +196,28 @@ const Graphic: FC<Props> = () => {
           {weightGoal && (
             <ReferenceLine
               y={weightGoal}
-              label={CustomLabel}
+              label={(props) => (
+                <CustomLabel
+                  props={props}
+                  text={`Goal ${getWeightText({
+                    weight: weightGoal,
+                    from: measurement_unit,
+                  })}`}
+                />
+              )}
               stroke="red"
               strokeWidth={1}
+              strokeDasharray="3 3"
             />
           )}
-          {/* <Customized component={CustomizedCross} /> */}
+          {weight_goal.due_date && (
+            <ReferenceLine
+              x={weight_goal.due_date}
+              stroke="red"
+              strokeWidth={1}
+              strokeDasharray="3 3"
+            />
+          )}
         </AreaChart>
       </ResponsiveContainer>
     </div>

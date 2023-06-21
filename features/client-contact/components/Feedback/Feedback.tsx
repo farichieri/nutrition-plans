@@ -4,6 +4,7 @@ import { postFeedback } from "@/features/client-contact";
 import { selectAuthSlice } from "@/features/authentication/slice";
 import { useSelector } from "react-redux";
 import SubmitButton from "../../../../components/Buttons/SubmitButton";
+import FormError from "@/components/Errors/FormError";
 
 interface Props {}
 
@@ -82,9 +83,10 @@ const Feedback: FC<Props> = () => {
                     className="h-full w-full resize-none rounded-lg border bg-transparent p-2 text-sm outline-none duration-300 placeholder:opacity-50 focus-within:border-black dark:focus-within:border-white"
                   />
                   {resError && (
-                    <span className="m-auto p-1 pt-2 text-sm text-red-500">
-                      {resError}
-                    </span>
+                    <FormError
+                      customClass="text-sm mx-auto"
+                      message={resError}
+                    />
                   )}
                 </div>
                 <div className="mt-auto flex w-full items-center justify-between border-t p-2">

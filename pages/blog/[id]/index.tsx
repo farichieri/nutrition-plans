@@ -61,6 +61,7 @@ export default function Page({ postData }: Props) {
                 />
               </div>
             ),
+            li: "li",
           }}
         >
           {postData.content}

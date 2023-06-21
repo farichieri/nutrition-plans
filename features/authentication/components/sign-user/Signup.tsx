@@ -21,6 +21,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Link from "next/link";
 import React, { FormEvent, useState } from "react";
+import FormError from "@/components/Errors/FormError";
 
 const schema = yup.object({
   email: yup
@@ -117,7 +118,7 @@ const Signup = () => {
         <form
           noValidate
           onSubmit={handleContinue}
-          className="flex w-full flex-col gap-0"
+          className="flex w-full flex-col gap-4"
         >
           <div className="flex w-full flex-col gap-1.5">
             <label htmlFor="displayName" className="text-xs opacity-60">
@@ -130,9 +131,7 @@ const Signup = () => {
                 type="text"
                 {...register("displayName")}
               />
-              <div className="text-red-500">
-                <p>{errors.displayName?.message}</p>
-              </div>
+              <FormError message={errors.displayName?.message} />
             </div>
           </div>
           <SubmitButton
@@ -176,10 +175,10 @@ const Signup = () => {
               <div className="flex w-full flex-col gap-3">
                 <form
                   noValidate
-                  className="relative flex flex-col items-center gap-0 rounded-md"
+                  className="relative flex flex-col items-center gap-5 rounded-md"
                   onSubmit={handleSubmit(onSubmit)}
                 >
-                  <div className="flex w-full flex-col">
+                  <div className="flex w-full flex-col gap-4">
                     <div className="flex w-full flex-col">
                       <input
                         className="rounded-md border border-gray-500/50 bg-transparent px-2 py-2.5 outline-none focus-within:border-black focus:bg-[var(--box-shadow)] dark:focus-within:border-white"
@@ -187,9 +186,8 @@ const Signup = () => {
                         type="email"
                         {...register("email")}
                       />
-                      <div className="text-red-500">
-                        <p>{errors.email?.message}</p>
-                      </div>
+
+                      <FormError message={errors.email?.message} />
                     </div>
 
                     <div className="flex w-full flex-col">
@@ -199,9 +197,7 @@ const Signup = () => {
                         type="password"
                         {...register("password")}
                       />
-                      <div className="text-red-500">
-                        <p>{errors.password?.message}</p>
-                      </div>
+                      <FormError message={errors.password?.message} />
                     </div>
                   </div>
                   <SubmitButton
@@ -217,11 +213,7 @@ const Signup = () => {
                     }
                   />
                 </form>
-                {errorMessage && (
-                  <span className="w-full text-center text-red-600">
-                    {errorMessage}
-                  </span>
-                )}
+                {errorMessage && <FormError message={errorMessage} />}
               </div>
               {emailOpen && (
                 <div className="tems-center flex w-full justify-center ">

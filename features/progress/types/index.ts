@@ -7,6 +7,8 @@ export interface Progress {
   [date: string]: ProgressItem;
 }
 
+export interface ProgressArray extends Array<ProgressItem> {}
+
 // initial
 export const newProgressItem: ProgressItem = {
   created_at: "",

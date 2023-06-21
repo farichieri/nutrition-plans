@@ -59,7 +59,6 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
 
   const PROFILE_PAGES = [
     { name: "Goal", url: "/app/profile/goal", icon: "emoji_events" },
-    { name: "Progress", url: "/app/profile/progress", icon: "auto_graph" },
     {
       name: "Body Features",
       url: "/app/profile/body-features",
@@ -69,6 +68,11 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
       name: "Nutrition Values",
       url: "/app/profile/nutrition-values",
       icon: "data_saver_off",
+    },
+    {
+      name: "Preferred Plan",
+      url: "/app/profile/preferred-plan",
+      icon: "verified",
     },
     {
       name: "Meals settings",
@@ -261,6 +265,23 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
           >
             <span className="material-icons md-24 text-green-500">search</span>
             <span>Search</span>
+          </Link>
+        </div>
+
+        <div className="flex w-full flex-col items-center gap-2">
+          <Link
+            href={"/app/profile/progress"}
+            className={
+              `${
+                router.pathname === "/app/profile/progress" &&
+                " bg-slate-500/30 font-semibold"
+              } px-2` + fixedOptClass
+            }
+          >
+            <span className="material-icons md-24 text-green-500">
+              auto_graph
+            </span>
+            <span>Progress</span>
           </Link>
         </div>
         <div className="flex flex-col gap-1">

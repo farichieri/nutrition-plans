@@ -9,6 +9,7 @@ import { PencilIcon } from "@heroicons/react/24/outline";
 import { selectAuthSlice } from "@/features/authentication/slice";
 import { useDispatch, useSelector } from "react-redux";
 import ProgressItemModal from "./ProgressItemModal";
+import { sortProgress } from "../utils/sortProgress";
 
 interface Props {}
 const ProgressList: FC<Props> = () => {
@@ -32,8 +33,8 @@ const ProgressList: FC<Props> = () => {
           <span>Weight</span>
           <span>Edit</span>
         </div>
-        {Object.keys(progress).map((p) => {
-          const progressWeight = progress[p].weight_in_kg;
+        {sortProgress(Object.values(progress)).map((p) => {
+          const progressWeight = p.weight_in_kg;
           if (!progressWeight) return;
           const weight = getWeight({
             to: measurement_unit,
@@ -42,18 +43,15 @@ const ProgressList: FC<Props> = () => {
           return (
             <div
               className="flex w-full cursor-pointer items-center justify-between gap-2 rounded-sm bg-transparent px-2 py-2 hover:bg-slate-500/20"
-              key={progress[p].date}
-              onClick={() => handleOpen(progress[p])}
+              key={p.date}
+              onClick={() => handleOpen(p)}
             >
-              <span>{progress[p].date}</span>
+              <span>{p.date}</span>
               <span>
                 {getWeightText({ from: measurement_unit, weight: weight })}
               </span>
               <span>
-                <PencilIcon
-                  className="h-4 w-4"
-                  onClick={() => handleOpen(progress[p])}
-                />
+                <PencilIcon className="h-4 w-4" onClick={() => handleOpen(p)} />
               </span>
             </div>
           );

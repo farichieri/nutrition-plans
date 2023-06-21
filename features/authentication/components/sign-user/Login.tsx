@@ -21,6 +21,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import FormError from "@/components/Errors/FormError";
 
 const schema = yup.object({
   email: yup
@@ -129,10 +130,10 @@ const Login = () => {
           <div className="flex w-full flex-col gap-3">
             <form
               noValidate
-              className="relative flex flex-col items-center rounded-md"
+              className="relative flex flex-col items-center gap-5 rounded-md"
               onSubmit={handleSubmit(onSubmit)}
             >
-              <div className="flex w-full flex-col">
+              <div className="flex w-full flex-col gap-4">
                 <div className="flex w-full flex-col">
                   <input
                     className="rounded-md border border-gray-500/50 bg-transparent px-2 py-2.5 outline-none focus-within:border-black focus:bg-[var(--box-shadow)] dark:focus-within:border-white"
@@ -140,9 +141,7 @@ const Login = () => {
                     type="email"
                     {...register("email")}
                   />
-                  <div className="text-red-500">
-                    <p>{errors.email?.message}</p>
-                  </div>
+                  <FormError message={errors.email?.message} />
                 </div>
 
                 <div className="flex w-full flex-col">
@@ -152,9 +151,7 @@ const Login = () => {
                     type="password"
                     {...register("password")}
                   />
-                  <div className="text-red-500">
-                    <p>{errors.password?.message}</p>
-                  </div>
+                  <FormError message={errors.password?.message} />
                 </div>
               </div>
               <SubmitButton
@@ -173,11 +170,7 @@ const Login = () => {
             </form>
           </div>
         )}
-        {errorMessage && (
-          <span className="w-full text-center text-red-600">
-            {errorMessage}
-          </span>
-        )}
+        {errorMessage && <FormError message={errorMessage} />}
         {emailOpen && (
           <div className="tems-center flex w-full justify-center">
             <button

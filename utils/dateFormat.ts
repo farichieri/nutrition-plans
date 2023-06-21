@@ -4,6 +4,7 @@ import {
   format,
   isValid,
   startOfWeek,
+  startOfMonth,
 } from "date-fns";
 
 // in date-fns
@@ -45,6 +46,11 @@ const getDatePlusDays = (date: string, days: number): string => {
 const getStartOfWeek = (date: string): string => {
   const result = startOfWeek(new Date(date), { weekStartsOn: MONDAY });
   return formatToUSDate(result);
+};
+
+const getStartOfMonth = (date: string): Date => {
+  const result = startOfMonth(new Date(date));
+  return result;
 };
 
 const restOneWeek = (date: string): string => {
@@ -103,6 +109,16 @@ const getMonthDate = (date: string): string => {
   return result;
 };
 
+const getMonthMMM = (date: string): string => {
+  const result = format(new Date(date), "MMM");
+  return result;
+};
+
+const getDayAndMonth = (date: string): string => {
+  const result = format(new Date(date), "MMM, d");
+  return result;
+};
+
 const getDaysOfWeek = (week: string): string[] | null => {
   try {
     const start = new Date(week.split("~")[0]);
@@ -123,14 +139,19 @@ const getIsToday = (date: string): boolean => date === getToday();
 
 export {
   addOneWeek,
+  formatToMonthDay,
   formatToShortDate,
+  formatToUSDate,
   getDatePlusDays,
+  getDayAndMonth,
   getDaysOfWeek,
   getIsToday,
   getIsWeek,
   getLastWeek,
   getMonthDate,
+  getMonthMMM,
   getNextWeek,
+  getStartOfMonth,
   getStartOfWeek,
   getThisWeek,
   getToday,
@@ -138,5 +159,4 @@ export {
   getYesterday,
   isValidDate,
   restOneWeek,
-  formatToUSDate,
 };

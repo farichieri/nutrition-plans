@@ -4,7 +4,7 @@ import {
   setUpdateUser,
   updateUser,
 } from "@/features/authentication";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { MEAL_PLANS } from "@/data/content";
 import { PlansEnum } from "@/types";
 import { schema } from "./schema";
@@ -14,8 +14,9 @@ import { useRouter } from "next/router";
 import { yupResolver } from "@hookform/resolvers/yup";
 import FormError from "@/components/Errors/FormError";
 import Image from "next/image";
-import SubmitButton from "@/components/Buttons/SubmitButton";
 import InfoMessage from "@/components/Layout/InfoMessage";
+import SubmitButton from "@/components/Buttons/SubmitButton";
+import { toast } from "react-hot-toast";
 
 interface FormValues {
   planSelected: PlansEnum | null;
@@ -29,11 +30,13 @@ const PlanSelector: FC<Props> = ({ handleContinue }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { user } = useSelector(selectAuthSlice);
+
+  if (!user) return <></>;
+
   const plan_selected = user?.plan_selected;
   const isCreatingRoute = router.asPath === "/app/create";
 
   const {
-    control,
     formState,
     getValues,
     handleSubmit,
@@ -77,12 +80,27 @@ const PlanSelector: FC<Props> = ({ handleContinue }) => {
     if (res.result === "success") {
       dispatch(setUpdateUser(userUpdated));
       handleContinue();
+      if (!isCreatingRoute) {
+        toast.success("Your Preferred Plan has been updated successfully.");
+      }
+    } else {
+      toast.error("Error updating your Preferred Plan");
     }
   };
 
   useEffect(() => {
     register("planSelected");
   }, []);
+
+  const [isDisabled, setIsDisabled] = useState(false);
+
+  useEffect(() => {
+    if (values.planSelected === user.plan_selected) {
+      setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
+    }
+  }, [setIsDisabled, values, watch]);
 
   return (
     <section className="flex w-full max-w-5xl select-none flex-col items-center justify-center gap-3 rounded-md border text-xs s:text-sm sm:text-base">
@@ -135,7 +153,7 @@ const PlanSelector: FC<Props> = ({ handleContinue }) => {
           </div>
 
           <InfoMessage
-            message="Select one, but know that you will have access to all the plans in
+            message="Select your preferred one as default, but know that you will have access to all the plans in
   your day to day!"
           />
         </div>
@@ -147,7 +165,7 @@ const PlanSelector: FC<Props> = ({ handleContinue }) => {
               loadMessage={"Loading..."}
               content={`${isCreatingRoute ? "Continue" : "Save"}`}
               isLoading={isSubmitting}
-              isDisabled={isSubmitting}
+              isDisabled={isSubmitting || isDisabled}
             />
           </div>
         </div>

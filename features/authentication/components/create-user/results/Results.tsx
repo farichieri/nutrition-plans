@@ -1,6 +1,5 @@
 import {
   UserAccount,
-  newBodyData,
   selectAuthSlice,
   setIsCreatingUser,
   setUpdateUser,
@@ -27,6 +26,8 @@ import { useRouter } from "next/router";
 import NutritionTarget from "../NutritionTarget";
 import SubmitButton from "@/components/Buttons/SubmitButton";
 import { formatToUSDate } from "@/utils";
+import { Tooltip } from "react-tooltip";
+import InfoTooltip from "@/components/Tooltip/InfoTooltip";
 
 interface Props {
   handleSubmit: Function;
@@ -157,6 +158,12 @@ const Results: FC<Props> = ({ handleSubmit }) => {
           <div className="flex flex-col gap-4 font-medium">
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-1">
+                <InfoTooltip
+                  id="BMR"
+                  message="The basal metabolic rate (BMR) is the amount of energy
+                    needed while resting in a temperate environment when the
+                    digestive system is inactive."
+                />
                 <div>
                   <span>Your BMR (Basal Metabolic Rate) is: </span>
                   <span className="text-green-500">{Math.round(BMR)} </span>
@@ -164,19 +171,26 @@ const Results: FC<Props> = ({ handleSubmit }) => {
                 </div>
               </div>
               <div className="flex items-center gap-1">
+                <InfoTooltip
+                  id="BMI"
+                  message="The body mass index (BMI) is a measure that uses your height and weight to work out if your weight is healthy."
+                />
                 <div>
                   <span>Your BMI (Body Mass Index) is: </span>
                   <span className="text-green-500">{BMI}</span>
                 </div>
               </div>
               <div className="flex items-center gap-1">
+                <InfoTooltip
+                  id="BMI-2"
+                  message="BMI doesn’t differentiate between lean body mass (the weight of everything in your body except fat) and fat mass. Because of this, a person can have a high BMI (by being muscular) but still have a very low fat mass and vice versa."
+                />
                 <div>
                   <span>A BMI of {BMI} is stipulated to be: </span>
                   <span className="text-green-500">
                     {BMISignificance(Number(BMI))}
                   </span>
                 </div>
-                {/* <span>BMI (body mass index), which is based on the height and weight of a person, is an inaccurate measure of body fat content and does not take into account muscle mass, bone density, overall body composition, and racial and sex differences,</span> */}
               </div>
             </div>
           </div>

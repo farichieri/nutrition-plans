@@ -1,9 +1,9 @@
 import { FC } from "react";
 import { MEAL_PLANS } from "@/data/content";
+import { PlansEnum } from "@/types";
 import { selectAuthSlice } from "@/features/authentication/slice";
 import { useSelector } from "react-redux";
-import { getNutritionTargets } from "../../utils/getNutritionTargets";
-import { PlansEnum } from "@/types";
+import { getNutritionTargets } from "../../utils";
 
 interface Props {
   calories: number;
@@ -20,12 +20,12 @@ const NutritionTarget: FC<Props> = ({ calories, plan_selected }) => {
 
   return (
     <div className="flex flex-col gap-1">
-      <span className="text-lg font-semibold">
+      <span className="text-lg font-semibold underline underline-offset-2">
         Macronutrients distribution in your{" "}
         <span className="text-xl font-bold text-green-500">
           {planData?.name}{" "}
         </span>
-        plan:
+        (selected) plan:
       </span>
       <div className="max-w-md divide-y px-2 xs:text-[10px] s:text-xs sm:text-base">
         <div className="flex items-center justify-between  py-2 font-semibold text-[var(--carbs-color)]">

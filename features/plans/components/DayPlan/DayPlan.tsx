@@ -76,9 +76,6 @@ const DayPlan: FC<Props> = ({ date }) => {
             </div>
           ) : (
             <div className="fixed inset-0 mt-auto flex h-screen w-screen flex-col justify-center">
-              <span className="mx-auto">
-                There is no plan for this day at the moment!
-              </span>
               <PlanGenerator date={date} />
             </div>
           )}

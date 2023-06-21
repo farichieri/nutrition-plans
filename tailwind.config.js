@@ -9,6 +9,7 @@ module.exports = {
   theme: {
     extend: {
       width: {
+        xxs: "16rem",
         xs: "20rem",
         sm: "24rem",
         md: "28rem",
@@ -31,6 +32,10 @@ module.exports = {
         "80vh": "80vh",
         "90vh": "90vh",
         full: "100vh",
+      },
+      maxWidth: {
+        xxs: "16rem",
+        xs: "20rem",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -60,6 +65,9 @@ module.exports = {
       gridTemplateColumns: {
         fluid: "repeat(auto-fit, minmax(15rem, 1fr))",
         fluid_lg: "repeat(auto-fit, minmax(25rem, 1fr))",
+      },
+      zIndex: {
+        100: 100,
       },
     },
   },
