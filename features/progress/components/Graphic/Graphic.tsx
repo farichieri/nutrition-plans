@@ -120,7 +120,10 @@ const Graphic: FC<Props> = () => {
     const maxWeightInData = Math.max(...weights);
     const minWeightInData = Math.min(...weights);
     const domainDiff = measurement_unit === MeasurementUnits.metric ? 5 : 10;
-    return [minWeightInData - domainDiff, maxWeightInData + domainDiff];
+    const min =
+      minWeightInData - domainDiff > 45 ? maxWeightInData + domainDiff : 45;
+    const max = maxWeightInData + domainDiff;
+    return [min, max];
   };
 
   const domain = getDomain();

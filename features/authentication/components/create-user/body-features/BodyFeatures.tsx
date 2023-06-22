@@ -26,6 +26,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import FormError from "@/components/Errors/FormError";
 import SubmitButton from "@/components/Buttons/SubmitButton";
 import { toast } from "react-hot-toast";
+import { AppRoutes } from "@/utils";
 
 interface FormValues {
   activity: UserActivities | null;
@@ -75,7 +76,7 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
   const { errors, isSubmitting } = formState;
   const values = getValues();
 
-  const isCreatingRoute = router.asPath === "/app/create";
+  const isCreatingRoute = router.asPath === AppRoutes.create_user;
   const [error, setError] = useState("");
 
   const watchMeasurementUnit = watch("measurement_unit");
@@ -191,9 +192,10 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
     if (res.result === "success") {
       dispatch(setUpdateUser(userUpdated));
       handleContinue();
-      toast.success("Your Body Features have been updated successfully.");
+      if (!isCreatingRoute)
+        toast.success("Your Body Features have been updated successfully.");
     } else {
-      toast.error("Error updating your Body Features");
+      if (!isCreatingRoute) toast.error("Error updating your Body Features");
     }
   };
 

@@ -7,11 +7,6 @@ const Loader = () => {
         Nutrition Plans
       </span>
       <Spinner customClass="h-10 w-10" />
-      {/* <div>
-        <span className="ml-2 inline-block h-3 w-3 animate-flash rounded-full bg-gray-700 dark:bg-gray-200"></span>
-        <span className="ml-2 inline-block h-3 w-3 animate-flash rounded-full bg-gray-700 [animation-delay:0.2s] dark:bg-gray-200"></span>
-        <span className="ml-2 inline-block h-3 w-3 animate-flash rounded-full bg-gray-700 [animation-delay:0.4s] dark:bg-gray-200"></span>
-      </div> */}
     </div>
   );
 };

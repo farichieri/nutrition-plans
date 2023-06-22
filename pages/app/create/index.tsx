@@ -65,7 +65,7 @@ export default function Page() {
   };
 
   return (
-    <section className="min-w-screen app-bg dark:app-bg-dark flex min-h-screen w-full flex-col items-center justify-start px-4 py-4">
+    <section className="min-w-screen flex min-h-screen w-full flex-col items-center justify-start px-4 py-4">
       <div className="mb-5 flex w-full items-center justify-between">
         <div className=""></div>
         <span className="text-4xl font-bold">Nutrition Plans</span>

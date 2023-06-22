@@ -24,7 +24,7 @@ export default function Page() {
     <SignLayout>
       {(isLoading || isSigningUser) && <Loader />}
       <Signup />
-      <div className="mt- mb-5 text-center text-base">
+      <div className="text-center text-base">
         <p>
           <span className="opacity-50">By joining, you agree to our </span>
           <Link href={"/terms"}>Terms of Service</Link>{" "}

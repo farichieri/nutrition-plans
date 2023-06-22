@@ -74,7 +74,7 @@ const AvatarDropDown: FC<Props> = ({ isApp }) => {
         {isApp ? (
           <span
             onClick={() => window.open("/", "_blank", "noreferrer")}
-            className={`flex w-full cursor-pointer items-center gap-2 border-none bg-transparent px-4 py-2 opacity-60  `}
+            className={`flex w-full cursor-pointer items-center gap-2 border-none bg-transparent px-4 py-2 opacity-60 hover:bg-slate-500/40 hover:opacity-100  `}
           >
             <span>Homepage</span>
             <span className="material-icons ml-auto">open_in_new</span>

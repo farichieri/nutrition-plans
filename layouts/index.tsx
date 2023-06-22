@@ -103,7 +103,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className={font.className}>
           <main
             translate="no"
-            className="min-w-screen app-bg dark:app-bg-dark flex min-h-screen flex-col items-center justify-between overflow-hidden "
+            className="min-w-screen flex min-h-screen flex-col items-center justify-between overflow-hidden "
           >
             {children}
           </main>

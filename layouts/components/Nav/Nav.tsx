@@ -127,7 +127,7 @@ const NavBar: FC<Props> = () => {
             openMenu ? "left-0" : "left-full"
           } absolute top-[var(--nav-h)] flex h-screen w-full flex-col items-center bg-white px-4 shadow-sm transition-all duration-300 dark:bg-black dark:shadow-cyan-100/20 lg:hidden `}
         >
-          <div className="flex w-full flex-col items-center justify-center gap-10 border-b text-lg font-normal">
+          <div className="flex w-full flex-col items-center justify-center gap-10 border-b text-base font-semibold">
             {user && (
               <div className="w-full divide-y border-b">
                 <div className="flex w-full items-center justify-between py-3 duration-300 hover:bg-slate-500/10 hover:opacity-100">
@@ -177,14 +177,14 @@ const NavBar: FC<Props> = () => {
           </div>
 
           <a
-            className="flex w-full justify-between border-b py-3 duration-300 hover:bg-slate-500/10 hover:opacity-100"
+            className="flex w-full justify-between border-b py-3 font-semibold duration-300 hover:bg-slate-500/10 hover:opacity-100"
             href="mailto:webmaster@example.com"
           >
             <span>Contact: </span>
             <span>hello@nutritionplans.co</span>
           </a>
           {!user && (
-            <div className="flex w-full items-center justify-center gap-2 border-b py-3 duration-300 hover:bg-slate-500/10 hover:opacity-100">
+            <div className="flex w-full items-center justify-center gap-2 border-b py-3 font-semibold duration-300 hover:bg-slate-500/10 hover:opacity-100">
               <ThemeSwitcher withText={true} />
             </div>
           )}
