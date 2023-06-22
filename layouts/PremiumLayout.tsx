@@ -9,14 +9,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import BillingModal from "../components/Premium/Billing/BillingModal";
+import ConnectionError from "@/components/Layout/ConnectionError";
 import Head from "next/head";
+import InstallModal from "@/components/InstallApp/InstallModal";
 import Loader from "../components/Loader/Loader";
 import PremiumNav from "./components/Nav/PremiumNav";
 import Settings from "../components/Premium/Settings/Settings";
 import Sidebar from "./components/Sidebar/PremiumSidebar";
-import WelcomeSteps from "../components/WelcomeSteps/WelcomeSteps";
 import useOnlineStatus from "@/hooks/useOnlineStatus";
-import ConnectionError from "@/components/Layout/ConnectionError";
+import WelcomeSteps from "../components/WelcomeSteps/WelcomeSteps";
 
 interface Props {
   children: React.ReactNode;
@@ -25,8 +26,12 @@ interface Props {
 export default function PremiumLayout({ children }: Props) {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { sidebarOpen, isBillingModalOpen, isSettingsOpen } =
-    useSelector(selectLayoutSlice);
+  const {
+    sidebarOpen,
+    isBillingModalOpen,
+    isSettingsOpen,
+    showInstallModal,
+  } = useSelector(selectLayoutSlice);
   const { user, isCreatingUser, isSigningUser } = useSelector(selectAuthSlice);
   const isOnline = useOnlineStatus();
 
@@ -49,6 +54,11 @@ export default function PremiumLayout({ children }: Props) {
       {isSettingsOpen && <Settings />}
       {user && <WelcomeSteps />}
       {!isOnline && <ConnectionError />}
+      {showInstallModal && (
+        <div className="sm:hidden">
+          <InstallModal />
+        </div>
+      )}
       {user ? (
         <div className="flex min-h-screen w-full flex-col">
           {isBillingModalOpen && <BillingModal />}

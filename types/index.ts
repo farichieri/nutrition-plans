@@ -92,6 +92,21 @@ export interface FilterQueries {
   sort?: string;
 }
 
+export interface BeforeInstallPromptEvent extends Event {
+  readonly platforms: string[];
+  readonly userChoice: Promise<{
+    outcome: "accepted" | "dismissed";
+    platform: string;
+  }>;
+  prompt(): Promise<void>;
+}
+
+declare global {
+  interface WindowEventMap {
+    beforeinstallprompt: BeforeInstallPromptEvent;
+  }
+}
+
 export type Result<T, E> =
   | { result: "success"; data: T }
   | { result: "error"; error: E };

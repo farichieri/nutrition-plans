@@ -61,7 +61,12 @@ export default function Page({ postData }: Props) {
                 />
               </div>
             ),
-            li: "li",
+            li: (props) => (
+              <li
+                className=" before:absolute before:-ml-4 before:inline-block before:text-gray-500 before:content-['–']"
+                {...props}
+              />
+            ),
           }}
         >
           {postData.content}

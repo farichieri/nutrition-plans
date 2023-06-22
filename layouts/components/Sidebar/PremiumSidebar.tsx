@@ -128,10 +128,10 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
   ];
 
   const fixedOptClass =
-    "text-md px-2 py-0.5 flex w-full items-center gap-1 rounded-lg text-base duration-300 hover:bg-slate-500/30 md:text-lg active:border-gray-400 dark:active:border-white border border-transparent";
+    "text-md px-2 py-1.5 flex w-full items-center gap-1 rounded-lg text-base duration-300 hover:bg-slate-500/30 md:text-lg active:border-gray-400 dark:active:border-white border border-transparent";
 
   const fixedSecOptClass =
-    "text-md pr-2 pl-4 py-0.5 flex w-full items-center gap-1 rounded-lg text-sm duration-300 hover:bg-slate-500/30 md:text-base active:border-gray-400 dark:active:border-white border border-transparent";
+    "text-md pr-2 pl-4 py-1 flex w-full items-center gap-1 rounded-lg text-sm duration-300 hover:bg-slate-500/30 md:text-base active:border-gray-400 dark:active:border-white border border-transparent";
 
   return (
     <>
@@ -185,8 +185,8 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
             className={
               `${
                 router.pathname === "/app/[date]" &&
-                " bg-slate-500/30 font-semibold"
-              } px-2` + fixedOptClass
+                " bg-slate-500/30 font-semibold "
+              } px-2 ` + fixedOptClass
             }
           >
             <span className="material-icons md-24 text-green-500">

@@ -24,36 +24,39 @@ export default function Page() {
         <span className="mb-8 text-5xl font-bold md:text-6xl lg:text-7xl">
           About
         </span>
-        <p className="">
-          We&apos;re a meal planning platform that allows you to discover
-          recipes and calculate your own meal plan that fits your goals and the
-          type of food you choose. We know that a meal plan is a great tool to
-          help you plan, and meal planning can help you stay on track no matter
-          what your nutrition goal is.
-        </p>
-        <p className="">
-          With a few simple steps - like putting together basic meals, making a
-          grocery list, shopping strategically and preparing food methodically -
-          meal planning becomes a useful tool to help you keep your energy up,
-          meet your nutrition goals, reduce food waste and save money.
-        </p>
-        <p className="">
-          We help you achieve your goals with the different meal plans you want
-          to create and the food choices you eat. We create meal plans that make
-          it easy for you to automate the week ahead. With our advanced search
-          and filter tools, you&apos;ll quickly find exactly what you&apos;re
-          looking for in your plan. You&apos;ll also get weekly tips from our
-          staff to help you reach your goals.
-        </p>
-        <p className="">
-          Planning healthy meals isn&apos;t difficult, but if you aren&apos;t
-          used to it, planning may take a little practice. The examples we give
-          should get you off to a good start. Don&apos;t be discouraged if you
-          don&apos;t follow the plan exactly; it&apos;s fine if you adapt it to
-          your lifestyle and needs. Do your best to incorporate healthy options
-          into your day: Vegetables, fruits, lean protein, beans and legumes,
-          and whole grains are always good choices.
-        </p>
+        <div>
+          <p className="">
+            We&apos;re a meal planning platform that allows you to discover
+            recipes and calculate your own meal plan that fits your goals and
+            the type of food you choose. We know that a meal plan is a great
+            tool to help you plan, and meal planning can help you stay on track
+            no matter what your nutrition goal is.
+          </p>
+          <p className="">
+            With a few simple steps - like putting together basic meals, making
+            a grocery list, shopping strategically and preparing food
+            methodically - meal planning becomes a useful tool to help you keep
+            your energy up, meet your nutrition goals, reduce food waste and
+            save money.
+          </p>
+          <p className="">
+            We help you achieve your goals with the different meal plans you
+            want to create and the food choices you eat. We create meal plans
+            that make it easy for you to automate the week ahead. With our
+            advanced search and filter tools, you&apos;ll quickly find exactly
+            what you&apos;re looking for in your plan. You&apos;ll also get
+            weekly tips from our staff to help you reach your goals.
+          </p>
+          <p className="">
+            Planning healthy meals isn&apos;t difficult, but if you aren&apos;t
+            used to it, planning may take a little practice. The examples we
+            give should get you off to a good start. Don&apos;t be discouraged
+            if you don&apos;t follow the plan exactly; it&apos;s fine if you
+            adapt it to your lifestyle and needs. Do your best to incorporate
+            healthy options into your day: Vegetables, fruits, lean protein,
+            beans and legumes, and whole grains are always good choices.
+          </p>
+        </div>
         <div className="my-10 flex w-full flex-col gap-5">
           <h1 className="text-5xl font-bold">Team</h1>
           <div className="flex flex-wrap gap-10 p-4">

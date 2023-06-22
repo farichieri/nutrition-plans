@@ -14,7 +14,7 @@ const FAQ: FC<Props> = ({ content, setOpen, open, index }) => {
   return (
     <div
       key={content.title}
-      className={`flex w-full cursor-pointer select-none flex-col px-2 py-4 ${
+      className={`flex w-full cursor-pointer select-none flex-col px-4 py-4 ${
         open === index && "bg-gray-300/30 dark:bg-gray-500/20"
       }`}
       onClick={() => setOpen(index === open ? null : index)}
@@ -30,7 +30,7 @@ const FAQ: FC<Props> = ({ content, setOpen, open, index }) => {
         </span>
       </div>
       <span
-        className={`overflow-hidden px-4 transition-[max-height] duration-300  ${
+        className={`overflow-hidden text-sm transition-[max-height] duration-300  ${
           open === index ? " max-h-96" : "max-h-0"
         }`}
       >

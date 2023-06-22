@@ -5,11 +5,13 @@ import PrimaryButton from "./PrimaryButton";
 import RoundButton from "./RoundButton";
 import SubmitButton from "./SubmitButton";
 import SubscribeButton from "./Subscribe";
+import InstallButton from "../InstallApp/InstallButton";
 
 export {
   ActionButton,
   BackButton,
   GoogleLoginButton,
+  InstallButton,
   PrimaryButton,
   RoundButton,
   SubmitButton,

@@ -1,7 +1,13 @@
 {
-  "name": "Nutrition Plans",
+  "background_color": "#fff",
+  "description": "Nutrition Plans helps you to achieve your nutrition goals creating custom meal plans adapted to your food preferences. Choose between Vegetarian, Vegan, Balanced, Mediterranean, Low Carb, Gluten Free and more plans!",
+  "display": "standalone",
   "lang": "en",
+  "name": "Nutrition Plans",
+  "scope": "/app",
   "short_name": "Nutrition Plans",
+  "start_url": "/app/today",
+  "theme_color": "#fff",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
@@ -13,11 +19,5 @@
       "sizes": "512x512",
       "type": "image/png"
     }
-  ],
-  "background_color": "#fff",
-  "description": "A Nutrition Plans app",
-  "display": "standalone",
-  "scope": "/",
-  "start_url": "/app/today",
-  "theme_color": "#fff"
+  ]
 }

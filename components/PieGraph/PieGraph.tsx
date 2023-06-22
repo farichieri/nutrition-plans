@@ -1,6 +1,6 @@
+import { FC } from "react";
 import { FoodNutrients } from "@/features/foods";
 import { ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recharts";
-import { FC } from "react";
 
 interface Props {
   nutrients: FoodNutrients;
@@ -64,9 +64,6 @@ const PieGraph: FC<Props> = ({ nutrients }) => {
         <tspan fontSize={12} fontWeight={400}>
           {`${(percent * 100).toFixed(0)}%`}
         </tspan>
-        {/* <tspan x={x + 10} y={y + 15} fontSize={12} fontWeight={400}>
-          {data[index].name}
-        </tspan> */}
       </text>
     );
   };
@@ -83,7 +80,11 @@ const PieGraph: FC<Props> = ({ nutrients }) => {
     <div className="m-auto flex h-56 w-48 max-w-xs overflow-hidden xs:w-full sm:h-52">
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
-          <Legend verticalAlign="bottom" align="center" />
+          <Legend
+            verticalAlign="bottom"
+            align="center"
+            style={{ content: "." }}
+          />
           <Pie
             data={data}
             cx="50%"

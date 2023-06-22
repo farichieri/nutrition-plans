@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Theme } from "@/types";
 import { RootState } from "@/store/store";
+import { Theme } from "@/types";
 
 // Define a type for the slice state
 interface LayoutState {
@@ -11,6 +11,7 @@ interface LayoutState {
   sidebarOpen: boolean;
   sidebarPlansOpen: boolean;
   theme: Theme;
+  showInstallModal: boolean;
 }
 
 // Define the initial state using that type
@@ -22,6 +23,7 @@ const initialState: LayoutState = {
   sidebarOpen: true,
   sidebarPlansOpen: true,
   theme: Theme.light,
+  showInstallModal: true,
 };
 
 export const layoutSlice = createSlice({
@@ -50,6 +52,9 @@ export const layoutSlice = createSlice({
     setIsBillingModalOpen: (state, action: PayloadAction<boolean>) => {
       state.isBillingModalOpen = action.payload;
     },
+    setBeforeInstallState: (state, action: PayloadAction<boolean>) => {
+      state.showInstallModal = action.payload;
+    },
   },
 });
 
@@ -61,6 +66,7 @@ export const {
   setSidebarOpen,
   setSidebarPlansOpen,
   setTheme,
+  setBeforeInstallState,
 } = layoutSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

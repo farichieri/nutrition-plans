@@ -102,9 +102,11 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
   const scaleFormatted = Math.round(food.scale_amount * 100) / 100;
   return (
     <div className="flex w-full gap-2">
-      <span className="material-icons-outlined m-auto opacity-50">
-        drag_handle
-      </span>
+      {isEditing && (
+        <span className="material-icons-outlined m-auto opacity-50">
+          drag_handle
+        </span>
+      )}
       <span className="relative h-24 w-24 min-w-[96px]  sm:h-24 sm:w-24">
         <Image
           src={food.image}

@@ -4,7 +4,7 @@ export const FAQS_INDEX = [
   {
     title: "What plans are available in Nutrition Plans?",
     answer:
-      "The plans available at this moment are: Vegetarian, Mediterranean, Low Carb, Gluten Free and Balanced",
+      "The plans available at this moment are: Vegetarian, Mediterranean, Low Carb, Gluten Free and Balanced.",
   },
   {
     title: "Are you going to add more plans in the future?",

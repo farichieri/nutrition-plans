@@ -123,13 +123,6 @@ h6 {
   font-size: 1rem;
 }
 
-ul > li::before {
-  content: "–";
-  display: inline-block;
-  position: absolute;
-  margin-left: -15px;
-  color: #666;
-}
 /* ul */
 ul {
   padding: 0;

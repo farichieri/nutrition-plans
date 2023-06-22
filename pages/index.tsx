@@ -24,14 +24,9 @@ export default function Home({ plans }: Props) {
             Nutrition plans that lead to results
           </h1>
           <div className="flex flex-col">
-            <span className="text-base font-semibold opacity-50 md:text-lg">
-              Choose your nutrition goals
-            </span>
-            <span className="text-base font-semibold opacity-50 md:text-lg">
-              Adapt your diet
-            </span>
-            <span className="text-base font-semibold opacity-50 md:text-lg">
-              Follow your progress
+            <span className="w-xxs text-base font-semibold opacity-50 md:text-lg">
+              Choose your nutrition goal, <br /> Adapt your diet, <br /> Follow
+              your progress
             </span>
           </div>
         </div>
