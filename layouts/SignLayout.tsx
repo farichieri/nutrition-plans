@@ -1,6 +1,6 @@
 import Footer from "./components/Footer/Footer";
 import Head from "next/head";
-import SignBar from "./components/Nav/SignBar";
+import NavBar from "./components/Nav/Nav";
 
 export default function SignLayout({
   children,
@@ -14,7 +14,7 @@ export default function SignLayout({
         <title>Nutrition Plans</title>
       </Head>
       <>
-        <SignBar />
+        <NavBar />
         <div className="flex h-full min-h-screen w-full max-w-5xl flex-col items-center px-4 ">
           {children}
         </div>

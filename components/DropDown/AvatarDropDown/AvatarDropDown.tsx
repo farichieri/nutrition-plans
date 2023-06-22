@@ -70,13 +70,26 @@ const AvatarDropDown: FC<Props> = ({ isApp }) => {
           </button>
         </div>
         <div className="mx-4 my-2 h-0 border-b border-slate-500/30 duration-300"></div>
-        <Link
-          href={!isApp ? "/app/today" : "/"}
-          className={`pointer-events-auto flex w-full items-center gap-2 border-none bg-transparent px-4 py-2 opacity-60 hover:bg-slate-500/40 hover:opacity-100 `}
-        >
-          <span>{!isApp ? "App" : "Homepage"}</span>
-          <span className="material-icons ml-auto">open_in_new</span>
-        </Link>
+
+        {isApp ? (
+          <span
+            onClick={() => window.open("/", "_blank", "noreferrer")}
+            className={`flex w-full cursor-pointer items-center gap-2 border-none bg-transparent px-4 py-2 opacity-60  `}
+          >
+            <span>Homepage</span>
+            <span className="material-icons ml-auto">open_in_new</span>
+          </span>
+        ) : (
+          <Link
+            href={"/app/today"}
+            className={`flex w-full items-center justify-between gap-2 border-none bg-transparent px-4 py-2 opacity-60 hover:bg-slate-500/40 hover:opacity-100 `}
+          >
+            <span>App</span>
+            <span className="material-icons-outlined text-green-500">
+              favorite
+            </span>
+          </Link>
+        )}
         <div className="flex hover:bg-slate-500/40">
           <button
             className={`flex w-full cursor-pointer items-center gap-2 border-none bg-transparent px-4 py-2 opacity-60 hover:opacity-100 `}

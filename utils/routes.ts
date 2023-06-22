@@ -8,4 +8,6 @@ export enum AppRoutes {
   search_foods = "/app/search",
   search_my_creations = "/app/search/my-creations",
   today = "/app/today",
+  login = "/login",
+  signup = "/signup",
 }
