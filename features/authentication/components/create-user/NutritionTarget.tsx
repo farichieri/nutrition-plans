@@ -1,9 +1,9 @@
 import { FC } from "react";
+import { getNutritionTargets, getWater } from "../../utils";
 import { MEAL_PLANS } from "@/data/content";
-import { PlansEnum } from "@/types";
+import { MeasurementUnits, PlansEnum, WaterUnits } from "@/types";
 import { selectAuthSlice } from "@/features/authentication/slice";
 import { useSelector } from "react-redux";
-import { getNutritionTargets } from "../../utils";
 
 interface Props {
   calories: number;
@@ -16,7 +16,21 @@ const NutritionTarget: FC<Props> = ({ calories, plan_selected }) => {
   const nutritionTargets =
     calories && plan_selected && getNutritionTargets(calories, plan_selected);
 
-  if (!user || !nutritionTargets) return <></>;
+  const weightInKg = user?.body_data.weight_in_kg;
+
+  if (!user || !nutritionTargets || !weightInKg) return <></>;
+
+  const { measurement_unit } = user;
+
+  const water = getWater({
+    measurement: user.measurement_unit,
+    weightInKg: weightInKg,
+  });
+
+  const waterUnit =
+    measurement_unit === MeasurementUnits.imperial
+      ? WaterUnits.floz
+      : WaterUnits.lts;
 
   return (
     <div className="flex flex-col gap-1">
@@ -67,6 +81,15 @@ const NutritionTarget: FC<Props> = ({ calories, plan_selected }) => {
               <span>{planData?.macros.fats.max}%</span>
             </div>
           </div>
+        </div>
+        <div className="w-full py-2">
+          <span>
+            We recommend you to drink{" "}
+            <b className="text-blue-300">
+              {water} {waterUnit}
+            </b>{" "}
+            of water a day.
+          </span>
         </div>
       </div>
     </div>

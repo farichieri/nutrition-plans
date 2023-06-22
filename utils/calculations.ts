@@ -1,4 +1,9 @@
-import { FEET_TO_CM, INCHES_TO_CM, LIB_TO_KG } from "@/constants/measurements";
+import {
+  FEET_TO_CM,
+  INCHES_TO_CM,
+  LIB_TO_KG,
+  L_TO_FO,
+} from "@/constants/measurements";
 import { MeasurementUnits, WeightUnits } from "@/types";
 import { formatTwoDecimals } from "./format";
 
@@ -23,6 +28,11 @@ const kgsToLbs = ({ kgs }: { kgs: number }): number => {
 const lbsToKgs = ({ pounds }: { pounds: number }): number => {
   let kgs = pounds * LIB_TO_KG;
   return formatTwoDecimals(kgs);
+};
+
+const ltsToFluidOnces = ({ lts }: { lts: number }): number => {
+  let fluidOnces = lts / L_TO_FO;
+  return formatTwoDecimals(fluidOnces);
 };
 
 const feetAndInchesToCMS = ({
@@ -106,4 +116,5 @@ export {
   getWeightText,
   getWeightUnit,
   getWeightInKg,
+  ltsToFluidOnces,
 };

@@ -19,14 +19,13 @@ import {
 } from "../../../utils/calculateBodyData";
 import { addProgress, ProgressItem, setAddProgress } from "@/features/progress";
 import { FC, useState } from "react";
-import { format, formatISO } from "date-fns";
+import {formatISO } from "date-fns";
 import { getNutritionTargets } from "../../../utils/getNutritionTargets";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import NutritionTarget from "../NutritionTarget";
 import SubmitButton from "@/components/Buttons/SubmitButton";
 import { formatToUSDate } from "@/utils";
-import { Tooltip } from "react-tooltip";
 import InfoTooltip from "@/components/Tooltip/InfoTooltip";
 
 interface Props {

@@ -19,6 +19,10 @@ export enum WeightUnits {
   lbs = "lbs",
   kgs = "kgs",
 }
+export enum WaterUnits {
+  lts = "lts",
+  floz = "fl oz",
+}
 export enum PlansEnum {
   balanced = "balanced",
   gluten_free = "gluten_free",
