@@ -3,16 +3,13 @@ import {
   setIsSettingsOpen,
   setSidebarAdminOpen,
   setSidebarEvolutionOpen,
-  setSidebarPlansOpen,
 } from "@/store/slices/layoutSlice";
-import { BaseDatesEnum } from "@/types/datesTypes";
 import { FC, MouseEventHandler } from "react";
-import { MEAL_PLANS } from "@/data/content";
-import { selectAuthSlice } from "@/features/authentication/slice";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import SubscribeButton from "../../../components/Buttons/Subscribe";
+import ToggleSidebar from "./ToggleSidebar";
 
 interface Props {
   sidebarOpen: boolean;
@@ -22,7 +19,6 @@ interface Props {
 const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { user } = useSelector(selectAuthSlice);
   const {
     sidebarPlansOpen,
     sidebarEvolutionOpen,
@@ -30,13 +26,6 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
     isSettingsOpen,
   } = useSelector(selectLayoutSlice);
 
-  const toggleAllPlans = () => {
-    if (sidebarPlansOpen === true) {
-      dispatch(setSidebarPlansOpen(false));
-    } else {
-      dispatch(setSidebarPlansOpen(true));
-    }
-  };
   const toggleEvolution = () => {
     if (sidebarEvolutionOpen === true) {
       dispatch(setSidebarEvolutionOpen(false));
@@ -88,16 +77,6 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
       url: "/app/create/recipe",
       icon: "add_circle",
     },
-    // {
-    //   name: "Create Meal",
-    //   url: "/app/admin/create/meal",
-    //   icon: "add",
-    // },
-    // {
-    //   name: "Create Diet Plan",
-    //   url: "/app/admin/create/diet",
-    //   icon: "add",
-    // },
   ];
 
   const COLLAPSED_PAGES = [
@@ -144,8 +123,11 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
       <div
         className={`${
           !sidebarOpen ? "sm:left-0" : "left-[-5rem]"
-        } fixed left-0 z-[70] hidden h-screen min-h-screen w-20 select-none flex-col gap-2 overflow-auto border-r bg-white/80 px-2 pb-5 pt-16 backdrop-blur-sm transition-all duration-0 ease-linear dark:border-slate-400/20 dark:bg-black/80 sm:gap-4 md:flex`}
+        } fixed left-0 z-[70] mt-2 hidden h-screen min-h-screen w-20 select-none flex-col gap-2 overflow-auto border-r bg-white/80 px-2 pb-5 backdrop-blur-sm transition-all duration-0 ease-linear dark:border-slate-400/20 dark:bg-black/80 sm:gap-4 md:flex`}
       >
+        <div className="flex w-full items-center justify-center ">
+          <ToggleSidebar />
+        </div>
         {COLLAPSED_PAGES.map((page) => (
           <Link
             key={page.name}
@@ -177,8 +159,15 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
       <div
         className={`${
           sidebarOpen ? "left-0" : "left-[-14rem]"
-        } fixed left-0 z-[70] flex h-screen min-h-screen w-56 select-none flex-col gap-1 overflow-auto border-r bg-white/80 px-2 pb-5 pt-16 backdrop-blur-sm transition-all duration-300 ease-in-out dark:border-slate-400/20 dark:bg-black/80 sm:gap-2 md:w-56 md:duration-0`}
+        } fixed left-0 z-[70] flex h-screen min-h-screen w-56 select-none flex-col gap-1 overflow-auto border-r bg-white/80 px-2 pb-5 pt-2 backdrop-blur-sm transition-all duration-300 ease-in-out dark:border-slate-400/20 dark:bg-black/80 sm:gap-2 md:w-56 md:duration-0`}
       >
+        <div className="flex w-full items-center pl-1 ">
+          <div className="hidden sm:flex">
+            <ToggleSidebar />
+          </div>
+          <span className="py-1 text-lg font-semibold">Nutrition Plans</span>
+        </div>
+
         <div className="flex w-full flex-col items-center gap-2">
           <Link
             href={`/app/today`}
@@ -195,47 +184,6 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
             <span>My Plan</span>
           </Link>
         </div>
-        {/* <div className="flex flex-col gap-1">
-          <div className={fixedOptClass} onClick={toggleAllPlans}>
-            <span className="material-icons md-24 text-green-500">
-              format_list_bulleted
-            </span>
-            <div className="flex w-full cursor-pointer items-center justify-between">
-              <span className="text-md sm:text-lg">All plans</span>
-              <span
-                className={`material-icons md-24 duration-200 ease-in-out ${
-                  sidebarPlansOpen && "-rotate-180 transform text-green-500"
-                }`}
-              >
-                expand_more
-              </span>
-            </div>
-          </div>
-          <div
-            className={`flex flex-col gap-1 overflow-hidden pl-1 text-sm transition-[max-height] duration-200 ease-linear sm:text-base ${
-              sidebarPlansOpen ? " max-h-[30rem]" : "max-h-0"
-            }`}
-          >
-            {MEAL_PLANS.map((plan) => (
-              <Link
-                href={`/app/plans/${plan.id}/${BaseDatesEnum.today}`}
-                key={plan.id}
-                className={
-                  `${
-                    planVisited(plan.id) && " bg-slate-500/30 font-semibold"
-                  } px-2` + fixedSecOptClass
-                }
-              >
-                {plan.name}
-                {plan.id === planSelected && (
-                  <span className={`material-icons ml-auto text-green-500`}>
-                    verified
-                  </span>
-                )}
-              </Link>
-            ))}
-          </div>
-        </div> */}
         <div className="flex w-full flex-col items-center gap-2">
           <Link
             href={"/app/favorites"}

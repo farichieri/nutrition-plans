@@ -10,6 +10,7 @@ interface AuthState {
   isSigningUser: boolean;
   isVerifyingUser: boolean;
   user: UserAccount | null;
+  showInstallModal: boolean;
 }
 
 const initialState: AuthState = {
@@ -19,6 +20,7 @@ const initialState: AuthState = {
   isSigningUser: false,
   isVerifyingUser: false,
   user: null,
+  showInstallModal: true,
 };
 
 export const authSlice = createSlice({
@@ -50,6 +52,9 @@ export const authSlice = createSlice({
       state.isSigningUser = false;
       state.isVerifyingUser = false;
     },
+    setBeforeInstallState: (state, action: PayloadAction<boolean>) => {
+      state.showInstallModal = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(PURGE, () => {
@@ -66,6 +71,7 @@ export const {
   setUpdateUser,
   setLoginError,
   setIsSelectingPlan,
+  setBeforeInstallState,
 } = authSlice.actions;
 
 export const selectAuthSlice = (state: RootState) => state.auth;

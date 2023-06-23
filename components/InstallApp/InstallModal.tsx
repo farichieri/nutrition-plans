@@ -1,9 +1,9 @@
 import { FC, useState } from "react";
-import { setBeforeInstallState } from "@/store/slices/layoutSlice";
 import { useDispatch } from "react-redux";
 import InstallButton from "./InstallButton";
 import Modal from "../Modal/Modal";
 import useBeforeInstallPrompt from "@/hooks/useBeforeInstallPrompt";
+import { setBeforeInstallState } from "@/features/authentication";
 
 interface Props {}
 

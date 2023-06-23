@@ -1,6 +1,6 @@
+import { setBeforeInstallState } from "@/features/authentication";
 import { BeforeInstallPromptEvent } from "@/types";
 import { FC } from "react";
-import { setBeforeInstallState } from "@/store/slices/layoutSlice";
 import { useDispatch } from "react-redux";
 
 interface Props {

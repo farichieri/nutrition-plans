@@ -64,9 +64,6 @@ const PlanGenerator: FC<Props> = ({ date }) => {
     dispatch(setIsCreatingDiet(false));
   };
 
-  console.log({ planSelected });
-  console.log({ plans });
-
   return (
     <div className="flex flex-col items-center justify-center gap-5 p-5">
       <div className="flex items-center gap-2">
@@ -82,7 +79,7 @@ const PlanGenerator: FC<Props> = ({ date }) => {
               value={plan}
               className={` rounded-none py-1 font-semibold capitalize text-black dark:bg-slate-500`}
             >
-              <span>{plan.replaceAll("_", " ")}</span>
+              {plan.replaceAll("_", " ")}
             </option>
           ))}
         </select>

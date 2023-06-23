@@ -1,5 +1,5 @@
+import { FC, ReactNode, useEffect, useState } from "react";
 import { selectLayoutSlice } from "@/store/slices/layoutSlice";
-import { FC, ReactNode } from "react";
 import { useSelector } from "react-redux";
 
 interface Props {
@@ -11,10 +11,40 @@ interface Props {
 const SubPremiumNav: FC<Props> = ({ children, customClass, title }) => {
   const { sidebarOpen } = useSelector(selectLayoutSlice);
 
+  const [show, setShow] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  const controlNavbar = () => {
+    if (typeof window !== "undefined") {
+      if (window.scrollY > lastScrollY) {
+        // if scroll down hide the navbar
+        setShow(false);
+      } else {
+        // if scroll up show the navbar
+        setShow(true);
+      }
+      // remember current page location to use in the next move
+      setLastScrollY(window.scrollY);
+    }
+  };
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.addEventListener("scroll", controlNavbar);
+
+      // cleanup function
+      return () => {
+        window.removeEventListener("scroll", controlNavbar);
+      };
+    }
+  }, [lastScrollY]);
+
   return (
-    <div
+    <nav
       className={
-        ` fixed right-0 z-[60] flex min-h-[var(--subnav-h)] w-screen items-center gap-4 border-b bg-white/80 px-1 backdrop-blur-lg dark:bg-black/80 xs:px-2 s:px-3 sm:gap-10 sm:px-4 ` +
+        `active ${
+          !show && "hidden"
+        } fixed right-0 z-[60] flex min-h-[var(--subnav-h)] w-screen items-center gap-4 border-b bg-white/80 px-1 backdrop-blur-lg dark:bg-black/80 xs:px-2 s:px-3 sm:gap-10 sm:px-4 ` +
         customClass +
         ` ${sidebarOpen ? "md:pl-60 " : "md:pl-24"} `
       }
@@ -25,7 +55,7 @@ const SubPremiumNav: FC<Props> = ({ children, customClass, title }) => {
         </span>
       )}
       {children}
-    </div>
+    </nav>
   );
 };
 
