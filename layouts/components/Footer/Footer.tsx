@@ -14,7 +14,7 @@ export default function Footer() {
           <span className="opacity-50">Need help? Email </span>
           <a
             className="duration-100 hover:text-green-500"
-            href="mailto:webmaster@example.com"
+            href="mailto:hello@nutritionplans.co"
           >
             hello@nutritionplans.co
           </a>

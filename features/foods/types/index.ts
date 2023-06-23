@@ -210,6 +210,8 @@ export enum FoodKind {
   "basic_food" = "basic_food",
   "recipe" = "recipe",
 }
+// "vitamin" = "vitamin",
+// "supplement" = "supplement"
 
 export enum GlucemicStatusEnum {
   low = "low",
