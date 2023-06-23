@@ -112,7 +112,7 @@ const PremiumSidebar: FC<Props> = () => {
     "text-md px-2 py-1.5 flex w-full items-center gap-1 rounded-lg text-base duration-300 hover:bg-slate-500/30 md:text-lg active:border-gray-400 dark:active:border-white border border-transparent";
 
   const fixedSecOptClass =
-    "text-md pr-2 pl-4 py-1 flex w-full items-center gap-1 rounded-lg text-sm duration-300 hover:bg-slate-500/30 md:text-base active:border-gray-400 dark:active:border-white border border-transparent";
+    "text-md pr-2 pl-4 my-0.5 py-1 flex w-full items-center gap-1 rounded-lg text-sm duration-300 hover:bg-slate-500/30 md:text-base active:border-gray-400 dark:active:border-white border border-transparent";
 
   useEffect(() => {
     console.log(window.innerWidth);
@@ -132,9 +132,9 @@ const PremiumSidebar: FC<Props> = () => {
       <div
         className={`${
           !sidebarOpen ? "sm:left-0" : "left-[-5rem]"
-        } fixed left-0 z-[70] mt-2 hidden h-screen min-h-screen w-20 select-none flex-col gap-2 overflow-auto border-r bg-white/80 px-2 pb-5 backdrop-blur-sm transition-all duration-0 ease-linear dark:border-slate-400/20 dark:bg-black/80 sm:gap-4 md:flex`}
+        } fixed left-0 z-[70] hidden h-screen min-h-screen w-20 select-none flex-col gap-2 overflow-auto border-r bg-white px-2 pb-5 backdrop-blur-sm transition-all duration-0 ease-linear dark:border-slate-400/20 dark:bg-black sm:gap-4 md:flex`}
       >
-        <div className="flex w-full items-center justify-center ">
+        <div className="flex w-full items-center justify-center border-b py-1">
           <ToggleSidebar />
         </div>
         {COLLAPSED_PAGES.map((page) => (
@@ -168,9 +168,9 @@ const PremiumSidebar: FC<Props> = () => {
       <div
         className={`${
           sidebarOpen ? "left-0" : "left-[-14rem]"
-        } fixed left-0 z-[70] flex h-screen min-h-screen w-56 select-none flex-col gap-1 overflow-auto border-r bg-white/80 px-2 pb-5 pt-2 backdrop-blur-sm transition-all duration-300 ease-in-out dark:border-slate-400/20 dark:bg-black/80 sm:gap-2 md:w-56 md:duration-0`}
+        } fixed left-0 z-[70] flex h-screen min-h-screen w-56 select-none flex-col gap-1 overflow-auto border-r bg-white px-2 pb-5 backdrop-blur-sm transition-all duration-300 ease-in-out dark:border-slate-400/20 dark:bg-black sm:gap-2 md:w-56 md:duration-0`}
       >
-        <div className="flex w-full items-center pl-1 ">
+        <div className="flex w-full items-center border-b py-1 pl-1">
           <div className="hidden md:flex">
             <ToggleSidebar />
           </div>
@@ -243,86 +243,95 @@ const PremiumSidebar: FC<Props> = () => {
             <span>Progress</span>
           </Link>
         </div>
-        <div className="flex flex-col gap-1">
-          <div className={fixedOptClass} onClick={toggleEvolution}>
-            <span className="material-icons md-24 text-green-500">person</span>
-            <div className="flex w-full cursor-pointer items-center justify-between">
-              <span className="text-md sm:text-lg">Profile</span>
-              <span
-                className={`material-icons md-24 duration-200 ease-in-out ${
-                  sidebarEvolutionOpen && "-rotate-180 transform text-green-500"
-                }`}
-              >
-                expand_more
+
+        <div className="flex flex-col divide-y border-t">
+          <div className="flex flex-col py-1">
+            <div className={fixedOptClass} onClick={toggleEvolution}>
+              <span className="material-icons md-24 text-green-500">
+                person
               </span>
+              <div className="flex w-full cursor-pointer items-center justify-between">
+                <span className="text-md sm:text-lg">Profile</span>
+                <span
+                  className={`material-icons md-24 duration-200 ease-in-out ${
+                    sidebarEvolutionOpen &&
+                    "-rotate-180 transform text-green-500"
+                  }`}
+                >
+                  expand_more
+                </span>
+              </div>
+            </div>
+            <div
+              className={`flex flex-col overflow-hidden pl-1 text-sm transition-[max-height] duration-200 ease-linear sm:text-base ${
+                sidebarEvolutionOpen ? " max-h-[30rem]" : "max-h-0"
+              }`}
+            >
+              {PROFILE_PAGES.map((page) => (
+                <Link
+                  key={page.name}
+                  href={page.url}
+                  className={
+                    `${
+                      router.asPath === page.url &&
+                      " bg-slate-500/30 font-semibold"
+                    }` + fixedSecOptClass
+                  }
+                >
+                  <span className="material-icons md-24 notraslate text-green-500">
+                    {page.icon}
+                  </span>
+
+                  {page.name}
+                </Link>
+              ))}
             </div>
           </div>
-          <div
-            className={`flex flex-col gap-1 overflow-hidden pl-1 text-sm transition-[max-height] duration-200 ease-linear sm:text-base ${
-              sidebarEvolutionOpen ? " max-h-[30rem]" : "max-h-0"
-            }`}
-          >
-            {PROFILE_PAGES.map((page) => (
-              <Link
-                key={page.name}
-                href={page.url}
-                className={
-                  `${
-                    router.asPath === page.url &&
-                    " bg-slate-500/30 font-semibold"
-                  }` + fixedSecOptClass
-                }
-              >
-                <span className="material-icons md-24 notraslate text-green-500">
-                  {page.icon}
-                </span>
 
-                {page.name}
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-1">
-          <div className={fixedOptClass} onClick={toggleAdmin}>
-            <span className="material-icons md-24 text-green-500">create</span>
-            <div className="flex w-full cursor-pointer items-center justify-between">
-              <span className="text-md  sm:text-lg">Create</span>
-              <span
-                className={`material-icons md-24 duration-200 ease-in-out ${
-                  sidebarAdminOpen && "-rotate-180 transform text-green-500"
-                }`}
-              >
-                expand_more
+          <div className="flex flex-col py-1">
+            <div className={fixedOptClass} onClick={toggleAdmin}>
+              <span className="material-icons md-24 text-green-500">
+                create
               </span>
+              <div className="flex w-full cursor-pointer items-center justify-between">
+                <span className="text-md  sm:text-lg">Create</span>
+                <span
+                  className={`material-icons md-24 duration-200 ease-in-out ${
+                    sidebarAdminOpen && "-rotate-180 transform text-green-500"
+                  }`}
+                >
+                  expand_more
+                </span>
+              </div>
+            </div>
+            <div
+              className={`flex flex-col overflow-hidden pl-1 text-sm transition-[max-height] duration-200 ease-linear sm:text-base ${
+                sidebarAdminOpen ? " max-h-[30rem]" : "max-h-0"
+              }`}
+            >
+              {ADMIN_PAGES.map((page) => (
+                <Link
+                  key={page.name}
+                  href={page.url}
+                  className={
+                    `${
+                      router.asPath === page.url &&
+                      "bg-slate-500/30 font-semibold"
+                    }` + fixedSecOptClass
+                  }
+                >
+                  <span className="material-icons md-24 notraslate text-green-500">
+                    {page.icon}
+                  </span>
+
+                  {page.name}
+                </Link>
+              ))}
             </div>
           </div>
-          <div
-            className={`flex flex-col gap-1 overflow-hidden pl-1 text-sm transition-[max-height] duration-200 ease-linear sm:text-base ${
-              sidebarAdminOpen ? " max-h-[30rem]" : "max-h-0"
-            }`}
-          >
-            {ADMIN_PAGES.map((page) => (
-              <Link
-                key={page.name}
-                href={page.url}
-                className={
-                  `${
-                    router.asPath === page.url &&
-                    "bg-slate-500/30 font-semibold"
-                  }` + fixedSecOptClass
-                }
-              >
-                <span className="material-icons md-24 notraslate text-green-500">
-                  {page.icon}
-                </span>
 
-                {page.name}
-              </Link>
-            ))}
-          </div>
           <div
-            className="flex w-full flex-col items-center gap-2"
+            className="flex w-full flex-col items-center gap-2 py-1"
             onClick={handleOpenProfile}
           >
             <button

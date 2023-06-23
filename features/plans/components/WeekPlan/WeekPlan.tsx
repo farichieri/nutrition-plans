@@ -59,7 +59,7 @@ const WeekPlan: FC<Props> = ({ dateInterval }) => {
           <Spinner customClass="h-6 w-6 m-auto" />
         </div>
       ) : (
-        <div className="grid w-full gap-5 sm:grid-cols-fluid_lg">
+        <div className="grid w-full gap-10 sm:grid-cols-fluid_lg sm:gap-5 ">
           {!week && "Invalid Week"}
           {week?.map((date) => {
             const diet = diets[date];
@@ -69,12 +69,12 @@ const WeekPlan: FC<Props> = ({ dateInterval }) => {
 
             return (
               <div
-                className="flex w-full flex-col items-center justify-center gap-2 rounded-sm border bg-gray-500/10 p-2"
+                className="flex w-full flex-col items-center justify-center gap-2 rounded-sm border bg-gray-500/10 p-2 "
                 key={date}
               >
-                <div className="flex w-full items-center justify-between border-b pb-1">
+                <div className="flex w-full items-center justify-between border-b  px-2 py-1">
                   <Link href={`/app/${urlDate}`}>
-                    <span className="mb-1 flex rounded-3xl border border-blue-500 bg-blue-500/50 px-2 py-1.5 font-semibold capitalize text-white hover:bg-blue-500/70">
+                    <span className="flex  py-1.5 font-semibold capitalize text-blue-400 underline hover:text-blue-500">
                       {dateF}
                     </span>
                   </Link>
@@ -88,14 +88,14 @@ const WeekPlan: FC<Props> = ({ dateInterval }) => {
                       <div className="flex w-full">
                         <ManualMeals diet={diet} date={date} user={user} />
                       </div>
-                      {diet && (
+                      {/* {diet && (
                         <div className="flex w-full items-end">
                           <Nutrition
                             nutrients={diet.diet_nutrition}
                             planID={planID}
                           />
                         </div>
-                      )}
+                      )} */}
                     </div>
                   </div>
                 ) : (

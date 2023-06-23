@@ -26,7 +26,7 @@ const MealCard: FC<Props> = ({ dietMeal, mealKcals, isEditing }) => {
   return (
     <div
       key={dietMeal.diet_meal_id}
-      className={`min-h-20 flex w-full flex-col divide-y overflow-auto rounded-md border ${
+      className={`min-h-20 flex w-full flex-col divide-y overflow-auto rounded-sm border ${
         allEaten ? "border-green-500 bg-green-500/20" : "bg-gray-500/20"
       }`}
     >
@@ -63,7 +63,9 @@ const MealCard: FC<Props> = ({ dietMeal, mealKcals, isEditing }) => {
             className="w-full divide-y overflow-hidden"
           >
             {dietMealFoodsArr.length < 1 ? (
-              <div className="h-1"></div>
+              <div className="">
+                <AddFood dietMeal={dietMeal} />
+              </div>
             ) : (
               dietMealFoodsArr.map((food, index) => {
                 if (!food.food_id) return <></>;

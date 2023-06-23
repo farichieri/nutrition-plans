@@ -26,7 +26,7 @@ const InstallButton: FC<Props> = ({ deferredPrompt }) => {
   return (
     <button
       onClick={handlePrompt}
-      className="rounded-3xl border border-green-500 bg-green-500 px-3 py-1.5 text-white"
+      className="rounded-md border border-green-500 bg-green-500/50 px-3 py-1.5 text-white hover:bg-green-500"
     >
       <span>Install App</span>
     </button>

@@ -27,7 +27,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import FormError from "@/components/Errors/FormError";
 import SubmitButton from "@/components/Buttons/SubmitButton";
 import { toast } from "react-hot-toast";
-import { AppRoutes } from "@/utils";
+import { AppRoutes, formatTwoDecimals } from "@/utils";
 
 interface FormValues {
   activity: UserActivities | null;
@@ -195,7 +195,7 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
         gender: gender,
         height_in_cm: centimeters,
         weight_in_kg: kilograms,
-        water_lts_recommended: lts,
+        water_lts_recommended: formatTwoDecimals(lts),
       },
     };
 

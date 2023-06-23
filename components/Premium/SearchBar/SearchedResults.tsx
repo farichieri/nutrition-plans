@@ -12,15 +12,15 @@ interface Props {
 const SearchedResults: FC<Props> = ({ searchResult, handleClick, queries }) => {
   const foods = getFoodsFiltered(searchResult, queries);
   return (
-    <div className="grid max-w-screen-2xl select-none grid-cols-fluid_lg items-start justify-center gap-4 px-4 sm:px-0 lg:justify-start">
+    <div className="grid max-w-screen-2xl select-none grid-cols-fluid_lg items-start justify-center gap-4 sm:px-0 lg:justify-start">
       {foods.map((food) => {
         return (
           <div
             onClick={() => handleClick(food)}
             key={food.food_id}
-            className="flex h-full cursor-pointer items-start gap-1 overflow-auto rounded-md border"
+            className=" flex h-full cursor-pointer items-start gap-1 overflow-auto rounded-md border"
           >
-            <span className="relative h-28 w-full basis-2/5">
+            <span className="relative h-20 w-full basis-1/5">
               <Image
                 src={food.image}
                 fill
@@ -32,9 +32,9 @@ const SearchedResults: FC<Props> = ({ searchResult, handleClick, queries }) => {
               <span className="text-lg font-semibold capitalize leading-4">
                 {food.food_name}
               </span>
-              <span className="text-xs leading-3 opacity-50">
+              {/* <span className="text-xs leading-3 opacity-50">
                 {food.food_description}
-              </span>
+              </span> */}
               <span className="text-xs capitalize text-green-500">
                 {food.kind?.replaceAll("_", " ")}
               </span>

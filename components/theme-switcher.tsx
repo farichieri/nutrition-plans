@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { selectLayoutSlice, setTheme } from "@/store/slices/layoutSlice";
 import { Theme } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,16 +34,12 @@ const ThemeSwitcher: FC<Props> = ({ withText }) => {
       {theme === Theme.dark ? (
         <div className="flex items-center gap-2">
           {withText && <span>Dark</span>}
-          <span className="material-icons-sharp md-18 text-yellow-500">
-            dark_mode
-          </span>
+          <MdDarkMode className="h-5 w-5 text-yellow-500" />
         </div>
       ) : (
         <div className="flex items-center gap-2">
           {withText && <span>Light</span>}
-          <span className="material-icons-sharp md-18 text-yellow-500">
-            light_mode
-          </span>
+          <MdLightMode className="h-5 w-5 text-yellow-500" />
         </div>
       )}
     </button>

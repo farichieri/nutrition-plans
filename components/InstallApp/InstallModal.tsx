@@ -26,7 +26,7 @@ const InstallModal: FC<Props> = () => {
         <div className="flex items-center gap-5">
           <button
             onClick={handleCancel}
-            className="rounded-3xl border border-red-500 bg-red-500 px-3 py-1.5 text-white"
+            className="rounded-md border border-red-500 bg-red-500/50 px-3 py-1.5 text-white hover:bg-red-500"
           >
             Discard
           </button>

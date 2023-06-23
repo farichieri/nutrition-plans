@@ -112,23 +112,23 @@ const Nutrition: FC<Props> = ({ nutrients, planID }) => {
 
   return (
     <div className="w-full">
-      <div className="mb-1 flex h-9 items-center gap-2">
-        <span className="material-icons-outlined md-24 text-green-500">
-          data_usage
-        </span>
-        <span className="text-2xl font-semibold">Nutrition</span>
-      </div>
+      {openDetails && (
+        <FoodNutritionDetail
+          nutrients={nutrients}
+          handleClose={() => setOpenDetails(false)}
+        />
+      )}
       <div
         className={`relative flex w-full flex-wrap items-center justify-center gap-10 rounded-md border p-4 ${
           !isAllInRange ? "bg-gray-500/20" : "border-green-500 bg-green-500/20 "
         }`}
       >
-        {openDetails && (
-          <FoodNutritionDetail
-            nutrients={nutrients}
-            handleClose={() => setOpenDetails(false)}
-          />
-        )}
+        <div className="mb-1 flex h-9 w-full items-center gap-2">
+          <span className="material-icons-outlined md-24 text-green-500">
+            data_usage
+          </span>
+          <span className="text-2xl font-semibold">Nutrition</span>
+        </div>
         <div className="flex w-full flex-col gap-0">
           <PieGraph nutrients={nutrients} />
           <div

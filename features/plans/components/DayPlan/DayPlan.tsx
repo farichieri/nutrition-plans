@@ -54,7 +54,7 @@ const DayPlan: FC<Props> = ({ date }) => {
       ) : (
         <>
           {diet ? (
-            <div className="mb-auto flex h-full flex-col gap-2 ">
+            <div className="mb-auto flex h-full flex-col gap-2">
               <span className="text-xl font-semibold capitalize text-green-500">
                 {planID?.replaceAll("_", " ")}
               </span>
