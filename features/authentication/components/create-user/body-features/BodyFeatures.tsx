@@ -2,6 +2,7 @@ import {
   UserAccount,
   UserActivities,
   UserGenders,
+  getWater,
   newBodyData,
   selectAuthSlice,
   setUpdateUser,
@@ -174,17 +175,27 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
 
   const onSubmit = async (data: FormValues) => {
     if (!user || isSubmitting) return;
+    const { activity, age, gender, centimeters, kilograms, measurement_unit } =
+      data;
+
+    if (!kilograms) return;
+
+    const lts = getWater({
+      weightInKg: kilograms,
+      measurement: measurement_unit,
+    });
 
     let userUpdated: UserAccount = {
       ...user,
-      measurement_unit: data.measurement_unit,
+      measurement_unit: measurement_unit,
       body_data: {
         ...body_data,
-        activity: Number(data.activity),
-        age: data.age,
-        gender: data.gender,
-        height_in_cm: data.centimeters,
-        weight_in_kg: data.kilograms,
+        activity: Number(activity),
+        age: age,
+        gender: gender,
+        height_in_cm: centimeters,
+        weight_in_kg: kilograms,
+        water_lts_recommended: lts,
       },
     };
 

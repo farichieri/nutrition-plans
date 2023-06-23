@@ -11,6 +11,7 @@ export interface UserAccount {
   is_premium: boolean;
   is_profile_completed: boolean;
   lang: string;
+  measurement_unit: MeasurementUnits;
   nutrition_targets: NutritionTargets;
   photo_url: string | null;
   plan_selected: PlansEnum | null;
@@ -19,7 +20,6 @@ export interface UserAccount {
   user_id: string;
   user_step: UserSteps;
   weight_goal: WeightGoal;
-  measurement_unit: MeasurementUnits;
 }
 export interface UserCreatedData {
   body_data: UserBodyData;
@@ -33,6 +33,7 @@ export interface UserBodyData {
   gender: UserGenders | null;
   height_in_cm: number | null;
   kcals_recommended: number | null;
+  water_lts_recommended: number;
   weight_in_kg: number | null;
 }
 export interface UserFoodData {
@@ -129,6 +130,7 @@ export const newBodyData: UserBodyData = {
   gender: null,
   height_in_cm: null,
   kcals_recommended: null,
+  water_lts_recommended: 0,
   weight_in_kg: null,
 };
 

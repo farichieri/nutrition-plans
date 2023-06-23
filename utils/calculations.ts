@@ -4,7 +4,7 @@ import {
   LIB_TO_KG,
   L_TO_FO,
 } from "@/constants/measurements";
-import { MeasurementUnits, WeightUnits } from "@/types";
+import { MeasurementUnits, WaterUnits, WeightUnits } from "@/types";
 import { formatTwoDecimals } from "./format";
 
 const cmsToFeet = ({ cms }: { cms: number }) => {
@@ -106,6 +106,30 @@ const getWeightUnit = ({ from }: { from: MeasurementUnits }): string => {
   else return "";
 };
 
+const convertWater = ({
+  to,
+  lts,
+}: {
+  to: MeasurementUnits;
+  lts: number;
+}): number => {
+  const { metric, imperial } = MeasurementUnits;
+  switch (to) {
+    case imperial:
+      return ltsToFluidOnces({ lts: lts });
+    case metric:
+      return lts;
+    default:
+      return lts;
+  }
+};
+
+const getWaterUnit = ({ from }: { from: MeasurementUnits }): string => {
+  if (from === MeasurementUnits.imperial) return WaterUnits.floz;
+  else if (from === MeasurementUnits.metric) return WaterUnits.lts;
+  else return "";
+};
+
 export {
   cmsToFeet,
   cmsToInches,
@@ -117,4 +141,6 @@ export {
   getWeightUnit,
   getWeightInKg,
   ltsToFluidOnces,
+  convertWater,
+  getWaterUnit,
 };

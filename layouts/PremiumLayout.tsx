@@ -32,10 +32,6 @@ export default function PremiumLayout({ children }: Props) {
     useSelector(selectAuthSlice);
   const isOnline = useOnlineStatus();
 
-  const handleSidebar = () => {
-    dispatch(setSidebarOpen(!sidebarOpen));
-  };
-
   useEffect(() => {
     if (user) dispatch(setIsSigningUser(false));
     if (isCreatingUser) router.push(AppRoutes.create_user);
@@ -59,8 +55,8 @@ export default function PremiumLayout({ children }: Props) {
       {user ? (
         <div className="flex min-h-screen w-full flex-col">
           {isBillingModalOpen && <BillingModal />}
-          <PremiumNav handleSidebar={handleSidebar} />
-          <Sidebar sidebarOpen={sidebarOpen} handleSidebar={handleSidebar} />
+          <PremiumNav />
+          <Sidebar />
           <div
             className={`flex flex-col bg-white pt-[var(--nav-h)] duration-0 ease-in-out dark:bg-black ${
               sidebarOpen ? "md:pl-56 " : "md:pl-20 "

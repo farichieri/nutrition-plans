@@ -6,6 +6,7 @@ import RoundButton from "./RoundButton";
 import SubmitButton from "./SubmitButton";
 import SubscribeButton from "./Subscribe";
 import InstallButton from "../InstallApp/InstallButton";
+import CheckButton from "./CheckButton";
 
 export {
   ActionButton,
@@ -16,4 +17,5 @@ export {
   RoundButton,
   SubmitButton,
   SubscribeButton,
+  CheckButton,
 };

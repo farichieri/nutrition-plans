@@ -76,6 +76,10 @@ const General: FC<Props> = () => {
                     <span>Weight:</span>
                     <span>Kilograms - kg</span>
                   </div>
+                  <div className="flex gap-1">
+                    <span>Water:</span>
+                    <span>Liters - lts</span>
+                  </div>
                 </div>
               ) : (
                 <div className="flex flex-col">
@@ -86,6 +90,10 @@ const General: FC<Props> = () => {
                   <div className="flex gap-1">
                     <span>Weight:</span>
                     <span>Pounds - lbs</span>
+                  </div>
+                  <div className="flex gap-1">
+                    <span>Water:</span>
+                    <span>Fluid Onces - fl oz</span>
                   </div>
                 </div>
               )}

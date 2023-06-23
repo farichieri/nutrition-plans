@@ -27,6 +27,7 @@ export interface Diet {
   diet_name_lowercase: string | null;
   diet_name: string | null;
   diet_nutrition: FoodNutrients;
+  diet_water: DietWater;
   plan_date: string | null;
   plan_id: PlansEnum | null;
   plan_type: PlanTypes;
@@ -57,7 +58,19 @@ export interface DietGroup {
   [id: string]: Diet;
 }
 
+export interface DietWater {
+  drunk: boolean;
+  litters_drunk: number;
+  litters_to_drink: number;
+}
+
 // Initials
+export const NewDietWater: DietWater = {
+  drunk: false,
+  litters_drunk: 0,
+  litters_to_drink: 0,
+};
+
 export const NewDiet: Diet = {
   date_available: null,
   date_created: null,
@@ -67,6 +80,7 @@ export const NewDiet: Diet = {
   diet_name_lowercase: null,
   diet_name: null,
   diet_nutrition: NewFoodNutrients,
+  diet_water: NewDietWater,
   plan_date: null,
   plan_id: null,
   plan_type: PlanTypes.manually,

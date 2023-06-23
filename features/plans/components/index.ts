@@ -8,17 +8,18 @@ import WeekPlan from "./WeekPlan/WeekPlan";
 import DayPlan from "./DayPlan/DayPlan";
 
 // common
-import DaySelector from "./common/DaySelector";
 import AddFood from "./common/AddFood";
+import DaySelector from "./common/DaySelector";
 import FoodInMealCard from "./common/FoodInMealCard";
 import MealCard from "./common/MealCard";
+import MealCards from "./MealCards/MealCards";
 import Nutrition from "./common/Nutrition";
 import PlanGenerator from "./common/PlanGenerator";
 import PlanGeneratorTypeSelector from "./common/PlanGenerator";
 import PlanSelector from "./common/PlanSelector";
 import ReGenerateMeals from "./common/ReGenerateMeals";
 import SaveAndEditButton from "./common/SaveAndEditButton";
-import MealCards from "./MealCards/MealCards";
+import Water from "./common/Water";
 
 export {
   AddFood,
@@ -27,12 +28,13 @@ export {
   FoodInMealCard,
   ManualMeals,
   MealCard,
+  MealCards,
   Nutrition,
   PlanGenerator,
   PlanGeneratorTypeSelector,
   PlanSelector,
   ReGenerateMeals,
   SaveAndEditButton,
+  Water,
   WeekPlan,
-  MealCards,
 };

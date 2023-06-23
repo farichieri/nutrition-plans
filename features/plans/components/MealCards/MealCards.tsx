@@ -4,6 +4,7 @@ import {
   MealCard,
   updateDietMealFoodsOrder,
   SaveAndEditButton,
+  Water,
 } from "@/features/plans";
 import {
   addToList,
@@ -98,28 +99,31 @@ const MealCards: FC<Props> = ({ diet, date, user }) => {
           user={user}
         />
       </div>
-      {dietMeals && (
-        <DragDropContext onDragEnd={onDragEnd}>
-          <div className="flex flex-col gap-2">
-            {Object.values(dietMeals)
-              .sort((a: any, b: any) => Number(a.order) - Number(b.order))
-              .map((dietMeal: DietMeal) => {
-                const nutritionMerged = getNutritionMerged(
-                  dietMeal.diet_meal_foods
-                );
-                const { calories } = nutritionMerged;
-                return (
-                  <MealCard
-                    isEditing={isEditing}
-                    dietMeal={dietMeal}
-                    mealKcals={Number(calories)}
-                    key={dietMeal.diet_meal_id}
-                  />
-                );
-              })}
-          </div>
-        </DragDropContext>
-      )}
+      <div className="flex flex-col gap-5">
+        {dietMeals && (
+          <DragDropContext onDragEnd={onDragEnd}>
+            <div className="flex flex-col gap-2">
+              {Object.values(dietMeals)
+                .sort((a: any, b: any) => Number(a.order) - Number(b.order))
+                .map((dietMeal: DietMeal) => {
+                  const nutritionMerged = getNutritionMerged(
+                    dietMeal.diet_meal_foods
+                  );
+                  const { calories } = nutritionMerged;
+                  return (
+                    <MealCard
+                      isEditing={isEditing}
+                      dietMeal={dietMeal}
+                      mealKcals={Number(calories)}
+                      key={dietMeal.diet_meal_id}
+                    />
+                  );
+                })}
+            </div>
+          </DragDropContext>
+        )}
+        <Water diet={diet} isEditing={isEditing} />
+      </div>
     </div>
   );
 };

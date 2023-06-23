@@ -1,11 +1,12 @@
 import {
+  Diet,
   fetchDietByDate,
-  selectPlansSlice,
-  setDiet,
-  setIsLoadingDiet,
   MealCards,
   Nutrition,
   PlanGenerator,
+  selectPlansSlice,
+  setDiet,
+  setIsLoadingDiet,
 } from "@/features/plans";
 import { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,7 +23,7 @@ const DayPlan: FC<Props> = ({ date }) => {
   const [loading, setLoading] = useState(true);
   const { diets, isLoadingDiet, isCreatingDiet } =
     useSelector(selectPlansSlice);
-  const diet = diets[date];
+  const diet: Diet = diets[date];
   const planID = diet?.plan_id;
 
   const getDayDiet = async (date: string, user: UserAccount) => {
@@ -42,6 +43,8 @@ const DayPlan: FC<Props> = ({ date }) => {
   }, [date]);
 
   if (!user) return <></>;
+
+  console.log({ diet });
   return (
     <div className="w-full">
       {isLoadingDiet || loading ? (
@@ -56,7 +59,7 @@ const DayPlan: FC<Props> = ({ date }) => {
                 {planID?.replaceAll("_", " ")}
               </span>
               <div className="grid w-full gap-10 sm:grid-cols-fluid_lg">
-                <div className="w-full rounded-md ">
+                <div className="flex w-full flex-col rounded-md">
                   <MealCards diet={diet} date={date} user={user} />
                 </div>
                 {diet && (

@@ -11,6 +11,7 @@ import { getDietNutrition, getNutritionValues } from "@/utils";
 import { MealComplexities, UserMeals, UserMealsArr } from "@/features/meals";
 import { PlansEnum } from "@/types";
 import { uuidv4 } from "@firebase/util";
+import { UserBodyData } from "@/features/authentication";
 
 const matchComplexity = (complexity: number, toEval: number): boolean => {
   switch (toEval) {
@@ -45,7 +46,8 @@ const maxComplexity = (toEval: number): number => {
 const buildDiet = (
   meals: DietMealGroupArr,
   plan_id: PlansEnum,
-  plan_type: PlanTypes
+  plan_type: PlanTypes,
+  userBodyData: UserBodyData
 ) => {
   const dietMeals: DietMealGroup = {};
   meals.forEach((meal) => {
@@ -53,6 +55,7 @@ const buildDiet = (
     dietMeals[meal.diet_meal_id as keyof DietMeal] = meal;
   });
   const nutrition = getDietNutrition(dietMeals);
+  const { water_lts_recommended } = userBodyData;
 
   const diet: Diet = {
     ...NewDiet,
@@ -67,6 +70,11 @@ const buildDiet = (
     plan_date: null,
     plan_id: plan_id,
     plan_type: plan_type,
+    diet_water: {
+      drunk: false,
+      litters_drunk: 0,
+      litters_to_drink: water_lts_recommended,
+    },
   };
 
   return diet;
@@ -110,10 +118,16 @@ const getMealCalories = (dietMealFoods: FoodGroup): number => {
 const createDiet = (
   meals: UserMeals,
   planID: PlansEnum,
-  plan_type: PlanTypes
+  plan_type: PlanTypes,
+  userBodyData: UserBodyData
 ): Diet => {
   const mealsGenerated = generateDietMeals(Object.values(meals));
-  const diet = buildDiet(Object.values(mealsGenerated), planID, plan_type);
+  const diet = buildDiet(
+    Object.values(mealsGenerated),
+    planID,
+    plan_type,
+    userBodyData
+  );
   return diet;
 };
 

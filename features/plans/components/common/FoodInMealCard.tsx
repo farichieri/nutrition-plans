@@ -6,17 +6,17 @@ import {
   updateDiet,
   Diet,
 } from "@/features/plans";
+import { CheckButton } from "@/components/Buttons";
 import { FC } from "react";
 import { Food, getScaleOptions, mergeScales } from "@/features/foods";
 import { FoodKeys } from "@/types/initialTypes";
 import { getNewAmount } from "@/utils/nutritionHelpers";
 import { useDispatch, useSelector } from "react-redux";
+import FormSelect from "@/components/Form/FormSelect";
 import Image from "next/image";
 import Input from "@/components/Form/Input";
 import NutritionInput from "@/components/Form/NutritionInput";
 import RoundButton from "@/components/Buttons/RoundButton";
-import FormSelect from "@/components/Form/FormSelect";
-import { formatToFixed, round } from "@/utils";
 
 interface MealInCardProps {
   food: Food;
@@ -107,7 +107,7 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
           drag_handle
         </span>
       )}
-      <span className="relative h-24 w-24 min-w-[96px]  sm:h-24 sm:w-24">
+      <span className="relative h-20 w-20 min-w-[80px]  sm:h-20 sm:w-20">
         <Image
           src={food.image}
           fill
@@ -116,15 +116,15 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
         />
       </span>
       <div className="flex h-auto w-full">
-        <div className="flex h-full w-full flex-col">
+        <div className="flex h-full w-full flex-col py-1">
           <div className="flex w-full max-w-max flex-col ">
-            <span className="text-base font-semibold capitalize">
+            <span className="text-base font-semibold capitalize leading-5">
               {food.food_name}
             </span>
-            <span className="text-sm opacity-50">{food.food_description}</span>
+            {/* <span className="text-sm opacity-50">{food.food_description}</span> */}
           </div>
-          <div className="flex flex-col">
-            <div className="flex w-full flex-wrap items-baseline gap-2">
+          <div className="flex h-full flex-col">
+            <div className="mt-auto  flex w-full flex-wrap items-baseline gap-1">
               {isEditing ? (
                 <NutritionInput
                   handleChange={handleChange}
@@ -156,7 +156,7 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
               ) : (
                 <span className="text-sm capitalize">
                   {`${food.scale_name.toLowerCase()}${
-                    scaleFormatted > 1 ? "s" : ""
+                    scaleFormatted > 1 ? "" : ""
                   }`}
                 </span>
               )}
@@ -187,18 +187,7 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
             <span className="material-icons pointer-events-none">delete</span>
           </RoundButton>
         ) : (
-          <RoundButton
-            customClass="w-10 h-10 p-1.5 my-auto ml-auto "
-            onClick={toggleDone}
-          >
-            {food.eaten ? (
-              <span className="material-icons text-green-500">
-                check_circle
-              </span>
-            ) : (
-              <span className="material-icons">radio_button_unchecked</span>
-            )}
-          </RoundButton>
+          <CheckButton onClick={toggleDone} checked={food.eaten} />
         )}
       </div>
     </div>

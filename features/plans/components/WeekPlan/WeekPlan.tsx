@@ -69,18 +69,18 @@ const WeekPlan: FC<Props> = ({ dateInterval }) => {
 
             return (
               <div
-                className="flex w-full flex-col items-center justify-center gap-2 rounded-md border bg-gray-500/10 p-2"
+                className="flex w-full flex-col items-center justify-center gap-2 rounded-sm border bg-gray-500/10 p-2"
                 key={date}
               >
-                <div className="flex w-full justify-between border-b pb-1">
-                  <span className="text-xl font-semibold capitalize text-green-500">
-                    {diet?.plan_id?.replaceAll("_", " ")}
-                  </span>
+                <div className="flex w-full items-center justify-between border-b pb-1">
                   <Link href={`/app/${urlDate}`}>
-                    <span className="font-semibold capitalize text-red-500">
+                    <span className="mb-1 flex rounded-3xl border border-blue-500 bg-blue-500/50 px-2 py-1.5 font-semibold capitalize text-white hover:bg-blue-500/70">
                       {dateF}
                     </span>
                   </Link>
+                  <span className="text-xl font-semibold capitalize text-green-500">
+                    {diet?.plan_id?.replaceAll("_", " ")}
+                  </span>
                 </div>
                 {diet ? (
                   <div className="mb-auto flex h-full w-full flex-col gap-2">

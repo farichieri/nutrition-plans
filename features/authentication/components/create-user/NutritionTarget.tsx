@@ -1,7 +1,8 @@
+import { convertWater, getWaterUnit } from "@/utils/calculations";
 import { FC } from "react";
-import { getNutritionTargets, getWater } from "../../utils";
+import { getNutritionTargets } from "../../utils";
 import { MEAL_PLANS } from "@/data/content";
-import { MeasurementUnits, PlansEnum, WaterUnits } from "@/types";
+import { PlansEnum } from "@/types";
 import { selectAuthSlice } from "@/features/authentication/slice";
 import { useSelector } from "react-redux";
 
@@ -19,18 +20,14 @@ const NutritionTarget: FC<Props> = ({ calories, plan_selected }) => {
   const weightInKg = user?.body_data.weight_in_kg;
 
   if (!user || !nutritionTargets || !weightInKg) return <></>;
-
+  const { water_lts_recommended } = user.body_data;
   const { measurement_unit } = user;
 
-  const water = getWater({
-    measurement: user.measurement_unit,
-    weightInKg: weightInKg,
+  const water = convertWater({
+    to: measurement_unit,
+    lts: water_lts_recommended || 0,
   });
-
-  const waterUnit =
-    measurement_unit === MeasurementUnits.imperial
-      ? WaterUnits.floz
-      : WaterUnits.lts;
+  const waterUnit = getWaterUnit({ from: measurement_unit });
 
   return (
     <div className="flex flex-col gap-1">

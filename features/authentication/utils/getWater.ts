@@ -12,7 +12,7 @@ const getWater = ({
     // return floz.
     const lts = weightInKg * 0.03;
     return ltsToFluidOnces({ lts: lts });
-  } else if (measurement === MeasurementUnits.metric) {
+  } else {
     // return lts.
     const lts = weightInKg * 0.03;
     return lts;

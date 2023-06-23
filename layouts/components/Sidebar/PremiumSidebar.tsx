@@ -3,27 +3,25 @@ import {
   setIsSettingsOpen,
   setSidebarAdminOpen,
   setSidebarEvolutionOpen,
+  setSidebarOpen,
 } from "@/store/slices/layoutSlice";
-import { FC, MouseEventHandler } from "react";
+import { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import SubscribeButton from "../../../components/Buttons/Subscribe";
 import ToggleSidebar from "./ToggleSidebar";
 
-interface Props {
-  sidebarOpen: boolean;
-  handleSidebar: MouseEventHandler;
-}
+interface Props {}
 
-const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
+const PremiumSidebar: FC<Props> = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const {
-    sidebarPlansOpen,
     sidebarEvolutionOpen,
     sidebarAdminOpen,
     isSettingsOpen,
+    sidebarOpen,
   } = useSelector(selectLayoutSlice);
 
   const toggleEvolution = () => {
@@ -44,6 +42,10 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
   const handleOpenProfile = (event: React.MouseEvent) => {
     event.preventDefault();
     dispatch(setIsSettingsOpen(true));
+  };
+
+  const handleSidebar = () => {
+    dispatch(setSidebarOpen(!sidebarOpen));
   };
 
   const PROFILE_PAGES = [
@@ -112,11 +114,18 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
   const fixedSecOptClass =
     "text-md pr-2 pl-4 py-1 flex w-full items-center gap-1 rounded-lg text-sm duration-300 hover:bg-slate-500/30 md:text-base active:border-gray-400 dark:active:border-white border border-transparent";
 
+  useEffect(() => {
+    console.log(window.innerWidth);
+    if (sidebarOpen && window.innerWidth < 640) {
+      dispatch(setSidebarOpen(false));
+    }
+  }, [router.asPath]);
+
   return (
     <>
       {sidebarOpen && (
         <div
-          className="fixed inset-0 z-[70] md:hidden"
+          className="fixed inset-0 z-[70] bg-black/30 md:hidden"
           onClick={handleSidebar}
         ></div>
       )}
@@ -162,10 +171,12 @@ const PremiumSidebar: FC<Props> = ({ sidebarOpen, handleSidebar }) => {
         } fixed left-0 z-[70] flex h-screen min-h-screen w-56 select-none flex-col gap-1 overflow-auto border-r bg-white/80 px-2 pb-5 pt-2 backdrop-blur-sm transition-all duration-300 ease-in-out dark:border-slate-400/20 dark:bg-black/80 sm:gap-2 md:w-56 md:duration-0`}
       >
         <div className="flex w-full items-center pl-1 ">
-          <div className="hidden sm:flex">
+          <div className="hidden md:flex">
             <ToggleSidebar />
           </div>
-          <span className="py-1 text-lg font-semibold">Nutrition Plans</span>
+          <span className="px-1 py-1 text-lg font-semibold">
+            Nutrition Plans
+          </span>
         </div>
 
         <div className="flex w-full flex-col items-center gap-2">

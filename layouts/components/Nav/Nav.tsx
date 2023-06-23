@@ -157,7 +157,6 @@ const NavBar: FC<Props> = () => {
                     className="flex w-full cursor-pointer items-center justify-between py-3 duration-300 hover:bg-slate-500/10 hover:opacity-100"
                   >
                     <span>Log Out</span>
-                    <span className="material-icons-outlined">login</span>
                   </div>
                 </div>
               </div>
@@ -178,10 +177,9 @@ const NavBar: FC<Props> = () => {
 
           <a
             className="flex w-full justify-between border-b py-3 font-semibold duration-300 hover:bg-slate-500/10 hover:opacity-100"
-            href="mailto:webmaster@example.com"
+            href="mailto:hello@nutritionplans.co"
           >
-            <span>Contact: </span>
-            <span>hello@nutritionplans.co</span>
+            <span>Contact</span>
           </a>
           {!user && (
             <div className="flex w-full items-center justify-center gap-2 border-b py-3 font-semibold duration-300 hover:bg-slate-500/10 hover:opacity-100">

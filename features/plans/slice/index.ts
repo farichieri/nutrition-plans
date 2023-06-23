@@ -4,6 +4,7 @@ import {
   PlanTypes,
   DietMeal,
   PlanDateType,
+  DietWater,
 } from "@/features/plans/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Food, FoodGroup, FoodGroupArray } from "@/features/foods/types";
@@ -135,6 +136,16 @@ export const plansSlice = createSlice({
         food_id
       ].eaten = value;
     },
+    toggleDrunkWater: (
+      state,
+      action: PayloadAction<{ diet: Diet; value: boolean }>
+    ) => {
+      const { diet, value } = action.payload;
+      const { diet_water, diet_id } = diet;
+      // const { drunk, litters_drunk, litters_to_drink } = diet_water;
+      if (!diet_id) return;
+      state.diets[diet_id].diet_water.drunk = value;
+    },
     setIsCreatingDiet: (state, action: PayloadAction<boolean>) => {
       state.isCreatingDiet = action.payload;
     },
@@ -183,6 +194,7 @@ export const {
   setPlanDateType,
   setPlansDate,
   setPlanType,
+  toggleDrunkWater,
   toggleEatenFood,
   updateDietMealFoodsOrder,
   updateDietNutrition,

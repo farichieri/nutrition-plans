@@ -41,7 +41,7 @@ export default function Page({ params }: { params: Props }) {
             <SubPremiumNav title={""} customClass="top-[var(--subnav-h)]">
               <DaySelector date={String(params.date)} />
             </SubPremiumNav>
-            <div className="flex min-h-[100vh] flex-col items-start justify-start gap-5 bg-white p-4 shadow-[0_1px_5px_lightgray] dark:bg-black dark:shadow-[0_1px_6px_#292929] sm:m-[0.5vw] sm:min-h-[calc(100vh_-_6rem_-_1vw)] sm:gap-5 sm:rounded-lg sm:border sm:p-8">
+            <div className="flex min-h-[100vh] flex-col items-start justify-start bg-white p-2 shadow-[0_1px_5px_lightgray] dark:bg-black dark:shadow-[0_1px_6px_#292929] sm:m-[0.5vw] sm:min-h-[calc(100vh_-_6rem_-_1vw)] sm:gap-5 sm:rounded-lg sm:border sm:p-4 lg:p-8 ">
               {getIsWeek(date) ? (
                 <WeekPlan dateInterval={date} />
               ) : (
