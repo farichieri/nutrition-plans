@@ -30,7 +30,7 @@ const FAQ: FC<Props> = ({ content, setOpen, open, index }) => {
         </span>
       </div>
       <span
-        className={`overflow-hidden text-sm transition-[max-height] duration-300  ${
+        className={`overflow-hidden pt-2 text-base transition-[max-height] duration-300  ${
           open === index ? " max-h-96" : "max-h-0"
         }`}
       >

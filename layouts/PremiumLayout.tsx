@@ -59,7 +59,7 @@ export default function PremiumLayout({ children }: Props) {
           <Sidebar />
           <div
             className={`flex flex-col bg-white pt-[var(--nav-h)] duration-0 ease-in-out dark:bg-black ${
-              sidebarOpen ? "md:pl-56 " : "md:pl-20 "
+              sidebarOpen ? "md:pl-64 " : "md:pl-20 "
             }`}
           >
             {children}

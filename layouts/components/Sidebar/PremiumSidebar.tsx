@@ -72,11 +72,16 @@ const PremiumSidebar: FC<Props> = () => {
     },
   ];
 
-  const ADMIN_PAGES = [
+  const CREATE_PAGES = [
     { name: "Food", url: "/app/create/food", icon: "add_circle" },
     {
       name: "Recipe",
       url: "/app/create/recipe",
+      icon: "add_circle",
+    },
+    {
+      name: "Supplements & Vitamins",
+      url: "/app/create/supplements-vitamins",
       icon: "add_circle",
     },
   ];
@@ -112,7 +117,7 @@ const PremiumSidebar: FC<Props> = () => {
     "text-md px-2 py-1.5 flex w-full items-center gap-1 rounded-lg text-base duration-300 hover:bg-slate-500/30 md:text-lg active:border-gray-400 dark:active:border-white border border-transparent";
 
   const fixedSecOptClass =
-    "text-md pr-2 pl-4 my-0.5 py-1 flex w-full items-center gap-1 rounded-lg text-sm duration-300 hover:bg-slate-500/30 md:text-base active:border-gray-400 dark:active:border-white border border-transparent";
+    "text-md pr-0 pl-3 my-0.5 py-1 flex w-full items-center gap-1 rounded-lg text-sm duration-300 hover:bg-slate-500/30 md:text-base active:border-gray-400 dark:active:border-white border border-transparent";
 
   useEffect(() => {
     console.log(window.innerWidth);
@@ -132,7 +137,7 @@ const PremiumSidebar: FC<Props> = () => {
       <div
         className={`${
           !sidebarOpen ? "sm:left-0" : "left-[-5rem]"
-        } fixed left-0 z-[70] hidden h-screen min-h-screen w-20 select-none flex-col gap-2 overflow-auto border-r bg-white px-2 pb-5 backdrop-blur-sm transition-all duration-0 ease-linear dark:border-slate-400/20 dark:bg-black sm:gap-4 md:flex`}
+        } fixed left-0 z-[70] hidden h-screen min-h-screen w-20 select-none flex-col gap-2 overflow-auto border-r bg-white px-2 pb-5 backdrop-blur-sm transition-all duration-0 dark:border-slate-400/20 dark:bg-black sm:gap-4 md:flex`}
       >
         <div className="flex w-full items-center justify-center border-b py-1">
           <ToggleSidebar />
@@ -167,8 +172,8 @@ const PremiumSidebar: FC<Props> = () => {
 
       <div
         className={`${
-          sidebarOpen ? "left-0" : "left-[-14rem]"
-        } fixed left-0 z-[70] flex h-screen min-h-screen w-56 select-none flex-col gap-1 overflow-auto border-r bg-white px-2 pb-5 backdrop-blur-sm transition-all duration-300 ease-in-out dark:border-slate-400/20 dark:bg-black sm:gap-2 md:w-56 md:duration-0`}
+          sidebarOpen ? "left-0" : "left-[-16rem]"
+        } fixed left-0 z-[70] flex h-screen min-h-screen w-64 select-none flex-col gap-1 overflow-auto border-r bg-white px-2 pb-5 font-semibold backdrop-blur-sm transition-all duration-300  dark:border-slate-400/20 dark:bg-black sm:gap-2 md:w-64 md:duration-0`}
       >
         <div className="flex w-full items-center border-b py-1 pl-1">
           <div className="hidden md:flex">
@@ -309,7 +314,7 @@ const PremiumSidebar: FC<Props> = () => {
                 sidebarAdminOpen ? " max-h-[30rem]" : "max-h-0"
               }`}
             >
-              {ADMIN_PAGES.map((page) => (
+              {CREATE_PAGES.map((page) => (
                 <Link
                   key={page.name}
                   href={page.url}

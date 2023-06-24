@@ -66,6 +66,7 @@ const WeekPlan: FC<Props> = ({ dateInterval }) => {
             const dateF = convertDateToDateString(date);
             const urlDate = convertDayToUrlDate(date);
             const planID = diet?.plan_id;
+            const calories = diet?.diet_nutrition?.calories;
 
             return (
               <div
@@ -78,6 +79,11 @@ const WeekPlan: FC<Props> = ({ dateInterval }) => {
                       {dateF}
                     </span>
                   </Link>
+                  {calories && (
+                    <span className="text-xs opacity-70">
+                      {calories} calories
+                    </span>
+                  )}
                   <span className="text-xl font-semibold capitalize text-green-500">
                     {diet?.plan_id?.replaceAll("_", " ")}
                   </span>

@@ -62,7 +62,7 @@ const MealCard: FC<Props> = ({ dietMeal, mealKcals, isEditing }) => {
             ref={droppableProvided.innerRef}
             className="w-full divide-y overflow-hidden"
           >
-            {dietMealFoodsArr.length < 1 ? (
+            {dietMealFoodsArr.length < 1 && !isEditing ? (
               <div className="">
                 <AddFood dietMeal={dietMeal} />
               </div>
