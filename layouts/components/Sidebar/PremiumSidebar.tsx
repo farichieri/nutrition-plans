@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import SubscribeButton from "../../../components/Buttons/Subscribe";
 import ToggleSidebar from "./ToggleSidebar";
+import Logo from "@/components/Logo/Logo";
 
 interface Props {}
 
@@ -180,7 +181,7 @@ const PremiumSidebar: FC<Props> = () => {
             <ToggleSidebar />
           </div>
           <span className="px-1 py-1 text-lg font-semibold">
-            Nutrition Plans
+            <Logo hideText={false} />
           </span>
         </div>
 
