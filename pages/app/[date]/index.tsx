@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
+import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 
 interface Props {
   date?: string;
@@ -37,18 +38,19 @@ export default function Page({ params }: { params: Props }) {
     <PremiumLayout>
       <section className="mt-[calc(1_*_var(--nav-h))] flex w-full select-none flex-col sm:mt-[var(--nav-h)]">
         {date && (
-          <div>
+          <>
+            <PremiumNav hideScrolling={false} title="my plan" />
             <SubPremiumNav title={""} customClass="top-[var(--subnav-h)]">
               <DaySelector date={String(params.date)} />
             </SubPremiumNav>
-            <div className="flex min-h-[100vh] flex-col items-start justify-start bg-white p-2 shadow-[0_1px_5px_lightgray] dark:bg-black dark:shadow-[0_1px_6px_#292929] sm:m-[0.5vw] sm:min-h-[calc(100vh_-_6rem_-_1vw)] sm:gap-5 sm:rounded-lg sm:border sm:p-4 lg:p-8 ">
+            <div className="p-2 sm:p-4 lg:p-5">
               {getIsWeek(date) ? (
                 <WeekPlan dateInterval={date} />
               ) : (
                 <DayPlan date={date} />
               )}
             </div>
-          </div>
+          </>
         )}
       </section>
     </PremiumLayout>

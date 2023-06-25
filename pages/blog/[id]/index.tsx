@@ -1,13 +1,14 @@
+import { blurDataURL } from "@/components/Layout/BlurDataImage";
 import { directories, getAllMDIDS, getAllMDData } from "@/utils/mds";
 import { Post } from "@/types";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import CallToAction from "@/components/CallToAction";
 import Date from "@/components/Posts/Post/Date/Date";
+import Head from "next/head";
 import Image from "next/image";
 import LandingLayout from "@/layouts/LandingLayout";
-import remarkGfm from "remark-gfm";
 import Link from "next/link";
-import { blurDataURL } from "@/components/Layout/BlurDataImage";
+import remarkGfm from "remark-gfm";
 
 interface Props {
   postData: Post;
@@ -16,6 +17,14 @@ interface Props {
 export default function Page({ postData }: Props) {
   return (
     <LandingLayout>
+      <Head>
+        <title>Nutrition Plans | {postData.title}</title>
+        <meta
+          property="og:title"
+          content={`Nutrition Plans | ${postData.title}`}
+          key="title"
+        />
+      </Head>
       <section className="flex max-w-4xl flex-col pb-24 pt-10">
         <Link
           href={"/blog"}

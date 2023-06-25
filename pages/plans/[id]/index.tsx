@@ -51,6 +51,12 @@ export default function Page({ planData, restOfPlans }: Props) {
                 />
               </div>
             ),
+            li: (props) => (
+              <li
+                className=" before:absolute before:-ml-4 before:inline-block before:text-gray-500 before:content-['–']"
+                {...props}
+              />
+            ),
           }}
         >
           {planData.content}

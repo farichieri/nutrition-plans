@@ -5,11 +5,14 @@ import {
 } from "@/features/foods";
 import { FC, useEffect, useState } from "react";
 import { FilterQueries } from "@/types";
+import { IoMdArrowBack } from "react-icons/io";
+import { MdSearch } from "react-icons/md";
 import { selectAuthSlice } from "@/features/authentication";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import RoundButton from "@/components/Buttons/RoundButton";
 import Spinner from "@/components/Loader/Spinner";
+import useWindowWidth from "@/hooks/useWindowWidth";
 
 interface Props {
   queries: FilterQueries;
@@ -21,6 +24,8 @@ const SearchBar: FC<Props> = ({ queries }) => {
   const { user } = useSelector(selectAuthSlice);
   const [searchInput, setSearchInput] = useState<string>(queries.q || "");
   const [isSearching, setIsSearching] = useState(false);
+  const [showSearchBar, setShowSearchBar] = useState(false);
+  const windowWidth = useWindowWidth();
 
   const fetchData = async (input: string) => {
     if (!user?.user_id) return;
@@ -71,31 +76,68 @@ const SearchBar: FC<Props> = ({ queries }) => {
     setSearchInput(value);
   };
 
+  useEffect(() => {
+    if (windowWidth > 768) {
+      setShowSearchBar(true);
+    }
+  }, [windowWidth]);
+
   return (
-    <form
-      action=""
-      className="relative mx-auto flex h-10 w-full max-w-md items-center gap-2 overflow-auto rounded-3xl border bg-slate-400/20 pl-4 shadow-sm focus-within:border-[darkgray] dark:bg-slate-500/10 dark:focus-within:border-white"
-    >
-      <span className="material-icons md-18">search</span>
-      <input
-        onChange={handleChange}
-        value={searchInput}
-        type="text"
-        placeholder="Search"
-        className="w-full bg-transparent px-2 outline-none"
-      />
-      {searchInput && (
-        <RoundButton
-          onClick={() => setSearchInput("")}
-          customClass="p-1 flex items-center justify-center  absolute right-2 "
+    <>
+      {showSearchBar ? (
+        <div
+          className={`${
+            windowWidth > 768 ? "relative" : "fixed"
+          } left-0 top-0 z-[100] flex h-full w-full items-center justify-center bg-white px-4  dark:bg-black`}
         >
-          <span className="material-icons md-18 ">close</span>
-        </RoundButton>
+          <div className="mr-2 flex cursor-pointer items-center justify-center md:hidden ">
+            <IoMdArrowBack
+              onClick={(e) => {
+                e.preventDefault();
+                setShowSearchBar(false);
+                setSearchInput("");
+              }}
+              className="text-2xl text-gray-400"
+            />
+          </div>
+          <form
+            action=""
+            className="relative mx-auto flex h-9 w-full max-w-md items-center gap-2 overflow-auto rounded-3xl border bg-slate-400/20 pl-4 shadow-sm focus-within:border-[darkgray] dark:bg-slate-500/10 dark:focus-within:border-white"
+          >
+            <MdSearch className="text-2xl text-gray-400" />
+            <input
+              onChange={handleChange}
+              value={searchInput}
+              type="text"
+              placeholder="Search"
+              className="w-full bg-transparent px-2 outline-none"
+              autoFocus
+            />
+            {searchInput && (
+              <RoundButton
+                onClick={() => setSearchInput("")}
+                customClass="p-1 flex items-center justify-center  absolute right-2 "
+              >
+                <span className="material-icons md-18 ">close</span>
+              </RoundButton>
+            )}
+            <div className="absolute right-10">
+              {isSearching && <Spinner customClass="h-4 w-4" />}
+            </div>
+          </form>
+        </div>
+      ) : (
+        <button
+          className="ml-auto flex h-10 w-10 cursor-pointer items-center justify-center"
+          onClick={(e) => {
+            e.preventDefault();
+            setShowSearchBar(true);
+          }}
+        >
+          <MdSearch className="text-2xl text-gray-400" />
+        </button>
       )}
-      <div className="absolute right-10">
-        {isSearching && <Spinner customClass="h-4 w-4" />}
-      </div>
-    </form>
+    </>
   );
 };
 

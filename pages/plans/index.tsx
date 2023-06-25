@@ -2,6 +2,7 @@ import { directories, getSortedData } from "@/utils/mds";
 import { PlansType } from "@/types";
 import LandingLayout from "@/layouts/LandingLayout";
 import Plans from "@/components/Plans/Plans";
+import Head from "next/head";
 
 interface Props {
   plans: PlansType;
@@ -10,6 +11,14 @@ interface Props {
 export default function Page({ plans }: Props) {
   return (
     <LandingLayout>
+      <Head>
+        <title>Plans | Nutrition Plans</title>
+        <meta
+          property="og:title"
+          content="Nutrition Plans | Plans Available"
+          key="title"
+        />
+      </Head>
       <section className="flex w-full max-w-5xl flex-col items-center pb-24 pt-16">
         <span className="mb-8 text-5xl font-bold md:text-6xl lg:text-7xl">
           Plans

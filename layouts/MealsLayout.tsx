@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import Spinner from "@/components/Loader/Spinner";
 import SubPremiumNav from "./components/Nav/SubPremiumNav";
+import PremiumNav from "./components/Nav/PremiumNav";
 
 interface Props {
   children: React.ReactNode;
@@ -22,12 +23,9 @@ export default function MealsLayout({ children }: Props) {
 
   return (
     <PremiumLayout>
-      <SubPremiumNav
-        title="Meals Settings"
-        customClass="top-[var(--subnav-h)]"
-      />
-      <section className="m-auto mt-[var(--subnav-h)] flex w-full max-w-screen-xl flex-col items-center justify-center gap-5 px-4 pb-4 pt-4 sm:px-10">
-        <div className="flex w-full max-w-7xl flex-wrap justify-center gap-5 py-10">
+      <PremiumNav hideScrolling={false} title="meals settings" />
+      <section className="m-auto flex w-full max-w-screen-xl flex-col items-center justify-center gap-5 px-4 pb-4 pt-4 sm:px-10">
+        <div className="flex w-full max-w-7xl flex-wrap justify-center gap-5 ">
           <UserMealsC meals={meals} />
           {isLoadingMealsSettings ? (
             <Spinner customClass="h-5 w-5" />

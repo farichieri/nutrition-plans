@@ -5,6 +5,7 @@ export enum AppRoutes {
   create_recipe = "/app/create/recipe",
   create_user = "/app/create",
   favorites_foods = "/app/favorites",
+  favorites_plans = "/app/favorites/plans",
   search_foods = "/app/search",
   search_my_creations = "/app/search/my-creations",
   today = "/app/today",

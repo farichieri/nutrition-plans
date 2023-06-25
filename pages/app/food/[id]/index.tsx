@@ -20,6 +20,8 @@ import Image from "next/image";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import Spinner from "@/components/Loader/Spinner";
 import AddToFavorite from "@/features/favorites/components/AddToFavorite";
+import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
+import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 
 export default function Page() {
   const router = useRouter();
@@ -66,7 +68,8 @@ export default function Page() {
       {food && (
         <section className="flex w-full select-none flex-col gap-[var(--nav-h)]">
           <div className="">
-            <div className="fixed left-auto top-[var(--nav-h)] z-[60] flex h-[var(--subnav-h)] w-screen items-center justify-between gap-4 border-b bg-white/80 px-4 backdrop-blur-lg dark:bg-black/80 sm:justify-start sm:gap-10">
+            <PremiumNav hideScrolling={false} />
+            <SubPremiumNav title={""} customClass="top-[var(--subnav-h)]">
               <BackButton />
               <span className="truncate text-ellipsis font-semibold sm:text-xl">
                 {food.food_name}
@@ -74,9 +77,10 @@ export default function Page() {
               <div className="flex items-center justify-between gap-1">
                 <AddToFavorite food={food} />
               </div>
-            </div>
+            </SubPremiumNav>
           </div>
-          <div className="flex min-h-[100vh] flex-col items-start justify-start gap-5 bg-white px-4 py-8 pb-4 shadow-[0_1px_5px_lightgray] dark:bg-black dark:shadow-[0_1px_6px_#292929] sm:m-[0.5vw] sm:min-h-[calc(100vh_-_6rem_-_1vw)] sm:gap-5 sm:rounded-lg sm:border sm:px-10">
+
+          <div className="p-2 sm:p-4 lg:p-8">
             <div className="divide grid w-full gap-10 sm:grid-cols-fluid_lg sm:gap-20">
               <div className="flex w-full flex-col gap-5 ">
                 <div className="flex w-full flex-col gap-5">

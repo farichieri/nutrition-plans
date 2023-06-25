@@ -1,4 +1,5 @@
 import PremiumLayout from "@/layouts/PremiumLayout";
+import Head from "next/head";
 
 export default function Page() {
   return (

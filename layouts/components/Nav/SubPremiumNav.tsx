@@ -1,6 +1,7 @@
 import { FC, ReactNode, useEffect, useState } from "react";
 import { selectLayoutSlice } from "@/store/slices/layoutSlice";
 import { useSelector } from "react-redux";
+import { BackButton } from "@/components/Buttons";
 
 interface Props {
   children?: ReactNode;
@@ -44,7 +45,7 @@ const SubPremiumNav: FC<Props> = ({ children, customClass, title }) => {
       className={
         `active ${
           !show && "hidden"
-        } fixed right-0 z-[60] flex min-h-[var(--subnav-h)] w-screen items-center gap-4 border-b bg-white/80 px-1 backdrop-blur-lg dark:bg-black/80 xs:px-2 s:px-3 sm:gap-10 sm:px-4 ` +
+        } fixed right-0 z-[60] flex min-h-[var(--subnav-h)] w-full items-center gap-4 bg-white/80 px-1 backdrop-blur-lg dark:bg-black/80 xs:px-2 s:px-3 sm:gap-10 sm:px-4 ` +
         customClass +
         ` ${sidebarOpen ? "md:pl-[17rem] " : "md:pl-24"} `
       }

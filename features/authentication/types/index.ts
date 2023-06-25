@@ -64,9 +64,16 @@ export interface NutritionTargets {
 
 export interface Ratings {
   food_rating: FoodRating;
+  plans_rating: PlansRating;
 }
 
 export interface FoodRating {
+  favorites: string[];
+  likes: string[];
+  dislikes: string[];
+}
+
+export interface PlansRating {
   favorites: string[];
   likes: string[];
   dislikes: string[];
@@ -100,6 +107,11 @@ export enum UserActivities {
 // Initials:
 export const newRatings: Ratings = {
   food_rating: {
+    favorites: [],
+    likes: [],
+    dislikes: [],
+  },
+  plans_rating: {
     favorites: [],
     likes: [],
     dislikes: [],

@@ -172,7 +172,7 @@ const Filters: FC<Props> = ({ queries, updateRoute, setLocalQueries }) => {
   };
 
   return (
-    <div className="flex w-full flex-col items-start justify-center gap-5 border-b pb-5">
+    <div className="flex w-full flex-col items-start justify-center gap-5 border-b pb-2">
       <RoundButton
         onClick={handleOpenFilters}
         customClass={`px-3 py-1.5 ${openFilters && "!border-slate-500/30"}`}

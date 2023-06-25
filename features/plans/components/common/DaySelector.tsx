@@ -134,7 +134,7 @@ const DaySelector: FC<Props> = ({ date }) => {
               <span className="material-icons-outlined md-24">arrow_left</span>
             </RoundButton>
           </Link>
-          <span className="opacity-65 flex w-full min-w-max justify-center text-base capitalize  text-green-500 sm:text-xl md:text-2xl lg:w-96 lg:text-3xl">
+          <span className="opacity-65 flex w-full min-w-max justify-center text-base font-medium capitalize text-green-500 sm:text-xl md:text-2xl lg:w-96">
             {convertDateToDateString(dateF)}
           </span>
           <Link href={nextRoute()}>

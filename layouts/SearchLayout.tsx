@@ -3,8 +3,8 @@ import { FoodsSearched } from "@/features/foods";
 import DatabaseSelector from "@/components/Premium/SearchBar/DatabaseSelector";
 import Filters from "@/components/Premium/SearchBar/Filters";
 import PremiumLayout from "@/layouts/PremiumLayout";
+import PremiumNav from "./components/Nav/PremiumNav";
 import SearchBar from "@/components/Premium/SearchBar/SearchBar";
-import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
 
 interface Props {
   queries: FilterQueries;
@@ -14,10 +14,10 @@ interface Props {
 export default function SearchLayout({ queries }: Props) {
   return (
     <PremiumLayout>
-      <SubPremiumNav title="" customClass="top-[var(--subnav-h)] border-b h-14">
+      <PremiumNav hideScrolling={false}>
         <SearchBar queries={queries} />
-      </SubPremiumNav>
-      <section className="m-auto mt-[var(--subnav-h)] flex w-full max-w-screen-xl flex-col justify-center gap-5 px-4 pb-24 pt-8 sm:px-10">
+      </PremiumNav>
+      <section className="m-auto flex w-full max-w-screen-xl flex-col justify-center gap-2 px-4 pb-24 pt-4 sm:px-5">
         <DatabaseSelector queries={queries} />
         <Filters
           queries={queries}
