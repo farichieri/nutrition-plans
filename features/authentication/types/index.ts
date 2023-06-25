@@ -64,8 +64,8 @@ export interface NutritionTargets {
 
 export interface Ratings {
   food_rating: FoodRating;
-  plans_rating: PlansRating;
 }
+// plans_rating: PlansRating;
 
 export interface FoodRating {
   favorites: string[];
@@ -111,12 +111,12 @@ export const newRatings: Ratings = {
     likes: [],
     dislikes: [],
   },
-  plans_rating: {
-    favorites: [],
-    likes: [],
-    dislikes: [],
-  },
 };
+// plans_rating: {
+//   favorites: [],
+//   likes: [],
+//   dislikes: [],
+// },
 
 export const newNutritionTargets: NutritionTargets = {
   calories: null,
