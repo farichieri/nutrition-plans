@@ -104,7 +104,7 @@ const PlanSelector: FC<Props> = ({ handleContinue }) => {
   }, [setIsDisabled, values, watch]);
 
   return (
-    <section className="flex w-full max-w-5xl select-none flex-col items-center justify-center gap-3 rounded-md border text-xs s:text-sm sm:text-base">
+    <section className="flex bg-white/50 dark:bg-black/50 w-full max-w-5xl select-none flex-col items-center justify-center gap-3 rounded-md border text-xs s:text-sm sm:text-base">
       <form
         onSubmit={handleSubmit(onSubmit)}
         action=""

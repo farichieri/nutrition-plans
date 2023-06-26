@@ -1,12 +1,12 @@
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { FC, useEffect, useState } from "react";
+import { MdDelete, MdDragHandle } from "react-icons/md";
 import { reorderArr } from "@/utils/filter";
 import { selectAuthSlice } from "@/features/authentication";
 import { toast } from "react-hot-toast";
 import { updateMealsOrders } from "./utils";
 import { useDispatch, useSelector } from "react-redux";
 import { UserMeals, UserMealsArr, setUserMeals } from "@/features/meals";
-import { MdDelete, MdDragHandle } from "react-icons/md";
 
 interface Props {
   meals: UserMeals;

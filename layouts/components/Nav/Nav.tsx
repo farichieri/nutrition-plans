@@ -59,7 +59,7 @@ const NavBar: FC<Props> = () => {
   ];
 
   return (
-    <nav className="fixed top-0 z-50 flex w-full select-none items-center justify-center bg-white/50 px-4 backdrop-blur-md dark:bg-black/50 ">
+    <nav className="dark: fixed top-0 z-50 flex w-full select-none items-center justify-center  bg-white/40 px-4 backdrop-blur-md dark:bg-[#11101070] ">
       <div className="z-50 flex h-[var(--nav-h)] w-full max-w-5xl items-center justify-between gap-4 border-b border-gray-500/20 px-2 dark:border-cyan-100/20">
         <div className="flex w-fit min-w-fit basis-1/3 justify-start font-bold xxs:text-sm xs:text-base sm:text-2xl">
           <Link href={"/"}>
@@ -129,7 +129,7 @@ const NavBar: FC<Props> = () => {
         <div
           className={`${
             openMenu ? "left-0" : "left-full"
-          } absolute top-[var(--nav-h)] flex h-screen w-full flex-col items-center bg-white px-4 shadow-sm transition-all duration-300 dark:bg-black dark:shadow-cyan-100/20 lg:hidden `}
+          } absolute top-[var(--nav-h)] flex h-screen w-full flex-col items-center bg-primary-color px-4 shadow-sm transition-all duration-300 dark:shadow-cyan-100/20 lg:hidden `}
         >
           <div className="flex w-full flex-col items-center justify-center gap-10 border-b text-base font-semibold">
             {user && (

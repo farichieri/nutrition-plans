@@ -111,10 +111,11 @@ const MealCards: FC<Props> = ({ diet, date, user }) => {
                   const { calories } = nutritionMerged;
                   return (
                     <MealCard
-                      isEditing={isEditing}
                       dietMeal={dietMeal}
-                      mealKcals={Number(calories)}
+                      isEditing={isEditing}
                       key={dietMeal.diet_meal_id}
+                      mealKcals={Number(calories)}
+                      setIsEditing={setIsEditing}
                     />
                   );
                 })}

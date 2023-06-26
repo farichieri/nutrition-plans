@@ -7,17 +7,22 @@ import {
 import { Draggable, Droppable } from "@hello-pangea/dnd";
 import { FC } from "react";
 import { FoodGroupArray } from "@/features/foods";
-import Link from "next/link";
-import { CheckButton } from "@/components/Buttons";
 import { MdCheckCircle, MdRadioButtonUnchecked } from "react-icons/md";
+import Link from "next/link";
 
 interface Props {
   dietMeal: DietMeal;
   mealKcals: number;
   isEditing: boolean;
+  setIsEditing: Function;
 }
 
-const MealCard: FC<Props> = ({ dietMeal, mealKcals, isEditing }) => {
+const MealCard: FC<Props> = ({
+  dietMeal,
+  mealKcals,
+  isEditing,
+  setIsEditing,
+}) => {
   const dietMealFoodsArr: FoodGroupArray = Object.values(
     dietMeal.diet_meal_foods
   ).sort((a, b) => a.order - b.order);
@@ -63,9 +68,9 @@ const MealCard: FC<Props> = ({ dietMeal, mealKcals, isEditing }) => {
             className="w-full divide-y overflow-hidden"
           >
             {dietMealFoodsArr.length < 1 && !isEditing ? (
-              <div className="">
-                <AddFood dietMeal={dietMeal} />
-              </div>
+              <span className="m-2 flex h-10 text-sm opacity-50">
+                No foods added yet.
+              </span>
             ) : (
               dietMealFoodsArr.map((food, index) => {
                 if (!food.food_id) return <></>;

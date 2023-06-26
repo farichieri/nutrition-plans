@@ -88,7 +88,7 @@ const SearchBar: FC<Props> = ({ queries }) => {
         <div
           className={`${
             windowWidth > 768 ? "relative" : "fixed"
-          } left-0 top-0 z-[100] flex h-full w-full items-center justify-center bg-white px-4  dark:bg-black`}
+          } left-0 top-0 z-[100] flex h-full w-full items-center justify-center px-4 bg-primary-color`}
         >
           <div className="mr-2 flex cursor-pointer items-center justify-center md:hidden ">
             <IoMdArrowBack

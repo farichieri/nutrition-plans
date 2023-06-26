@@ -36,7 +36,7 @@ const PlanSelector: FC<Props> = ({ planID }) => {
     <div className="flex w-fit min-w-fit items-center">
       {!(user?.plan_selected === planID) ? (
         <button
-          className="min-w-fit rounded-3xl border border-green-500 px-4 py-1 duration-300 hover:bg-green-500/50 active:bg-green-500/20"
+          className="min-w-fit rounded-3xl border border-green-500 bg-white/50 px-4 py-1 duration-300 hover:bg-green-500/50 active:bg-green-500/20 dark:bg-black/50"
           onClick={selectPlan}
         >
           {isSelectingPlan ? (

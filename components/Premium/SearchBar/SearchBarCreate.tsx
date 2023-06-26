@@ -78,6 +78,7 @@ const SearchBarCreate: FC<Props> = ({ onFocus, preFetch }) => {
           placeholder="Search Food"
           className=" w-full bg-transparent px-2 outline-none"
           onFocus={handleFocus}
+          autoFocus
         />
         <div className="absolute right-5">
           {isSearching && <Spinner customClass="h-4 w-4" />}

@@ -62,7 +62,7 @@ const Feedback: FC<Props> = () => {
       </button>
       {feedbackOpen && (
         <>
-          <div className="absolute right-0 top-[var(--nav-h)] z-[100] -mt-1 flex h-48 w-full max-w-xs flex-col rounded-md border bg-white dark:bg-black xs:right-5 md:right-10 lg:right-20">
+          <div className="absolute right-0 top-[var(--nav-h)] z-[100] -mt-1 flex h-48 w-full max-w-xs flex-col rounded-md border bg-tertiary-color xs:right-5 md:right-10 lg:right-20">
             {resSuccess ? (
               <div className="flex h-full w-full flex-col items-center justify-center gap-0.5">
                 <CheckCircleIcon className="h-7 w-7 fill-green-500" />

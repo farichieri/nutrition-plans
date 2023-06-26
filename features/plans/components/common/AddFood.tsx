@@ -5,7 +5,7 @@ import {
   setFoodModal,
 } from "@/features/foods";
 import { DietMeal, addFoodToDiet } from "@/features/plans";
-import { FC, useState } from "react";
+import { FC, MouseEvent, useState } from "react";
 import { FilterQueries } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
 import Filters from "@/components/Premium/SearchBar/Filters";
@@ -32,6 +32,11 @@ const AddFood: FC<Props> = ({ dietMeal }) => {
     dispatch(addFoodToDiet({ food: foodModal, dietMeal }));
     dispatch(setFoodModal(null));
     setIsOpen(false);
+  };
+
+  const handleOpen = (event: MouseEvent) => {
+    event.preventDefault();
+    setIsOpen(true);
   };
 
   return (
@@ -70,10 +75,7 @@ const AddFood: FC<Props> = ({ dietMeal }) => {
         </Modal>
       )}
       <button
-        onClick={(e) => {
-          e.preventDefault();
-          setIsOpen(true);
-        }}
+        onClick={handleOpen}
         className="mr-auto flex rounded-md border px-4 py-1 duration-100 hover:border-green-500 hover:bg-green-800 active:bg-green-600"
       >
         Add Food

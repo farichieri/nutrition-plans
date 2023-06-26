@@ -24,7 +24,9 @@ html {
 } */
 
 :root {
-  --foreground-rgb: 0, 0, 0;
+  --primary-color: #fff;
+  --secondary-color: #000;
+  --tertiary-color: #fff;
   --background-start-rgb: 255, 255, 255;
   --background-end-rgb: 255, 255, 255;
   --nav-h: 3rem;
@@ -36,20 +38,17 @@ html {
 }
 
 :root.dark {
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 0, 0, 0;
-  --background-end-rgb: 0, 0, 0;
+  --primary-color: #111010;
+  --secondary-color: #fff;
+  --tertiary-color: #282828;
+  --background-start-rgb: #111010;
+  --background-end-rgb: #111010;
   --border-color: rgb(58, 58, 58);
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  color: var(--secondary-color);
+  background-color: var(--primary-color);
 }
 
 *,

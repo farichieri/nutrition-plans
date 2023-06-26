@@ -162,7 +162,7 @@ const PremiumSidebar: FC<Props> = () => {
       <div
         className={`${
           !sidebarOpen ? "sm:left-0" : "left-[-5rem]"
-        } fixed left-0 z-[70] hidden h-screen min-h-screen w-20 select-none flex-col gap-2 overflow-auto  bg-white px-2 pb-5 backdrop-blur-sm transition-all duration-0 dark:border-slate-400/20 dark:bg-black sm:gap-4 md:flex`}
+        } fixed left-0 z-[70] hidden h-screen min-h-screen w-20 select-none flex-col gap-2 overflow-auto bg-primary-color px-2 pb-5 backdrop-blur-sm transition-all duration-0 dark:border-slate-400/20 sm:gap-4 md:flex`}
       >
         <div className="flex w-full items-center justify-center py-1">
           <ToggleSidebar />
@@ -193,7 +193,7 @@ const PremiumSidebar: FC<Props> = () => {
       <div
         className={`${
           sidebarOpen ? "left-0" : "left-[-16rem]"
-        } fixed left-0 z-[70] flex h-screen min-h-screen w-64 select-none flex-col gap-1 overflow-auto  bg-white px-2 pb-5 font-semibold backdrop-blur-sm transition-all duration-300  dark:border-slate-400/20 dark:bg-black sm:gap-2 md:w-64 md:duration-0`}
+        } fixed left-0 z-[70] flex h-screen min-h-screen w-64 select-none flex-col gap-1 overflow-auto bg-primary-color px-2 pb-5 font-semibold backdrop-blur-sm transition-all duration-300 dark:border-slate-400/20 sm:gap-2 md:w-64 md:duration-0`}
       >
         <div className="flex w-full items-center py-1 pl-1">
           <div className="hidden md:flex">
