@@ -16,13 +16,13 @@ import { auth, provider } from "@/services/firebase/firebase.config";
 import { DevTool } from "@hookform/devtools";
 import { emailRegex } from "@/constants";
 import { GoogleLoginButton, SubmitButton } from "@/components/Buttons";
+import { MdOutlineEmail, MdTrendingFlat } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import FormError from "@/components/Errors/FormError";
-import { MdOutlineEmail, MdTrendingFlat } from "react-icons/md";
 
 const schema = yup.object({
   email: yup
@@ -57,10 +57,7 @@ const Login = () => {
         if (additinalInfo?.isNewUser) {
           const user = result.user;
           dispatch(setIsCreatingUser(true));
-          const res = await createNewUser(user);
-          if (res.result === "success") {
-            dispatch(setIsCreatingUser(false));
-          }
+          await createNewUser(user);
         } else {
           dispatch(setIsSigningUser(true));
           const userRes = await generateUserObject(result.user);

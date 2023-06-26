@@ -17,7 +17,7 @@ export default function SearchLayout({ queries }: Props) {
       <PremiumNav hideScrolling={false}>
         <SearchBar queries={queries} />
       </PremiumNav>
-      <section className="m-auto flex w-full max-w-screen-xl flex-col justify-center gap-2 px-4 pb-24 pt-4 sm:px-5">
+      <section className="m-auto flex w-full max-w-screen-2xl flex-col justify-center gap-2 px-4 pb-24 pt-4 sm:px-5">
         <DatabaseSelector queries={queries} />
         <Filters
           queries={queries}

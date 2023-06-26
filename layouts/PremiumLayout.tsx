@@ -4,7 +4,7 @@ import {
 } from "@/features/authentication/slice";
 import { AppRoutes } from "@/utils";
 import { Login } from "@/features/authentication";
-import { selectLayoutSlice, setSidebarOpen } from "@/store/slices/layoutSlice";
+import { selectLayoutSlice } from "@/store/slices/layoutSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
@@ -13,7 +13,6 @@ import ConnectionError from "@/components/Layout/ConnectionError";
 import Head from "next/head";
 import InstallModal from "@/components/InstallApp/InstallModal";
 import Loader from "../components/Loader/Loader";
-import PremiumNav from "./components/Nav/PremiumNav";
 import Settings from "../components/Premium/Settings/Settings";
 import Sidebar from "./components/Sidebar/PremiumSidebar";
 import useOnlineStatus from "@/hooks/useOnlineStatus";

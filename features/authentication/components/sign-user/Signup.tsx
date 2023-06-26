@@ -15,14 +15,14 @@ import { auth, provider } from "@/services/firebase/firebase.config";
 import { DevTool } from "@hookform/devtools";
 import { emailRegex } from "@/constants";
 import { GoogleLoginButton, SubmitButton } from "@/components/Buttons";
+import { MdOutlineEmail, MdTrendingFlat } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import FormError from "@/components/Errors/FormError";
 import Link from "next/link";
 import React, { FormEvent, useState } from "react";
-import FormError from "@/components/Errors/FormError";
-import { MdOutlineEmail, MdTrendingFlat } from "react-icons/md";
 
 const schema = yup.object({
   email: yup

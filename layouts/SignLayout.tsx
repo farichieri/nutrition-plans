@@ -15,7 +15,7 @@ export default function SignLayout({
       </Head>
       <>
         <NavBar />
-        <div className="app-bg dark:app-bg-dark flex h-full min-h-screen w-full flex-col items-center px-4 ">
+        <div className="flex h-full min-h-screen w-full flex-col items-center bg-primary-color px-4 ">
           {children}
         </div>
         <Footer />

@@ -143,7 +143,7 @@ const Graphic: FC<Props> = () => {
   };
 
   return (
-    <div className="flex h-96 w-full max-w-5xl overflow-hidden">
+    <div className="flex h-96 w-full overflow-hidden">
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart
           width={500}
