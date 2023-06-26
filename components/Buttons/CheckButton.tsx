@@ -1,5 +1,6 @@
 import { FC, MouseEventHandler } from "react";
 import RoundButton from "./RoundButton";
+import { MdCheckCircle, MdRadioButtonUnchecked } from "react-icons/md";
 
 interface Props {
   onClick: MouseEventHandler;
@@ -13,9 +14,9 @@ const CheckButton: FC<Props> = ({ onClick, checked }) => {
       onClick={onClick}
     >
       {checked ? (
-        <span className="material-icons text-green-500">check_circle</span>
+        <MdCheckCircle className="h-6 w-6 text-green-500" />
       ) : (
-        <span className="material-icons">radio_button_unchecked</span>
+        <MdRadioButtonUnchecked className="h-6 w-6 text-gray-500" />
       )}
     </RoundButton>
   );

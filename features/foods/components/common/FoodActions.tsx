@@ -9,6 +9,7 @@ import {
 import { updateUser } from "@/features/authentication/services";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "@/components/Loader/Spinner";
+import { MdThumbDown, MdThumbUp } from "react-icons/md";
 
 interface Props {
   foodID: string;
@@ -116,13 +117,11 @@ const FoodActions: FC<Props> = ({ foodID }) => {
         {isLiking ? (
           <Spinner customClass={` h-5 w-5  ${isLiked && "text-green-500"}`} />
         ) : (
-          <span
-            className={`material-icons md-18 pointer-events-none m-auto ${
+          <MdThumbUp
+            className={`pointer-events-none m-auto h-5 w-5 ${
               isLiked && "text-green-500"
             }`}
-          >
-            thumb_up
-          </span>
+          />
         )}
       </button>
       <button
@@ -137,13 +136,11 @@ const FoodActions: FC<Props> = ({ foodID }) => {
             customClass={` h-5 w-5  ${isDisliked && "text-green-500"}`}
           />
         ) : (
-          <span
-            className={`material-icons md-18 pointer-events-none m-auto ${
+          <MdThumbDown
+            className={`pointer-events-none m-auto h-5 w-5 ${
               isDisliked && "text-green-500"
             }`}
-          >
-            thumb_down
-          </span>
+          />
         )}
       </button>
     </div>

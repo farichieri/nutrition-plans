@@ -6,7 +6,7 @@ import {
 import { FC, useEffect, useState } from "react";
 import { FilterQueries } from "@/types";
 import { IoMdArrowBack } from "react-icons/io";
-import { MdSearch } from "react-icons/md";
+import { MdClose, MdSearch } from "react-icons/md";
 import { selectAuthSlice } from "@/features/authentication";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
@@ -118,7 +118,7 @@ const SearchBar: FC<Props> = ({ queries }) => {
                 onClick={() => setSearchInput("")}
                 customClass="p-1 flex items-center justify-center  absolute right-2 "
               >
-                <span className="material-icons md-18 ">close</span>
+                <MdClose className="h-5 w-5 text-gray-400" />
               </RoundButton>
             )}
             <div className="absolute right-10">

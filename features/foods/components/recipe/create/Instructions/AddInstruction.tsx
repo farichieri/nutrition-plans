@@ -2,6 +2,7 @@ import { Instruction } from "@/features/foods";
 import { FC, useState } from "react";
 import { uuidv4 } from "@firebase/util";
 import RoundButton from "@/components/Buttons/RoundButton";
+import { MdAdd } from "react-icons/md";
 
 interface Props {
   handleUpdateInstructions: Function;
@@ -66,7 +67,7 @@ const AddInstruction: FC<Props> = ({
         onClick={handleAddInstruction}
       >
         <span className="text-sm">Add</span>
-        <span className="material-icons md-18 pointer-events-none">add</span>
+        <MdAdd className="h-5 w-5" />
       </RoundButton>
     </div>
   );

@@ -6,6 +6,7 @@ import {
 } from "@/types";
 import { FC, useState } from "react";
 import { FoodKind } from "@/features/foods";
+import { MdArrowRight, MdClose, MdTune } from "react-icons/md";
 import { useRouter } from "next/router";
 import RoundButton from "@/components/Buttons/RoundButton";
 
@@ -177,7 +178,7 @@ const Filters: FC<Props> = ({ queries, updateRoute, setLocalQueries }) => {
         onClick={handleOpenFilters}
         customClass={`px-3 py-1.5 ${openFilters && "!border-slate-500/30"}`}
       >
-        <span className="material-icons-outlined">tune</span> Filters
+        <MdTune className="pointer-events-none mr-1 h-6 w-6" /> Filters
       </RoundButton>
       {openFilters && (
         <div className="flex w-full flex-wrap justify-between ">
@@ -203,9 +204,7 @@ const Filters: FC<Props> = ({ queries, updateRoute, setLocalQueries }) => {
                       value={plan}
                       className="flex items-center"
                     >
-                      <span className="material-icons md-14 pointer-events-none ">
-                        close
-                      </span>
+                      <MdClose className="pointer-events-none h-4 w-4 " />
                     </button>
                   )}
                 </div>
@@ -234,9 +233,7 @@ const Filters: FC<Props> = ({ queries, updateRoute, setLocalQueries }) => {
                       value={kind}
                       className="flex items-center"
                     >
-                      <span className="material-icons md-14 pointer-events-none ">
-                        close
-                      </span>
+                      <MdClose className="pointer-events-none h-4 w-4 " />
                     </button>
                   )}
                 </div>
@@ -289,9 +286,7 @@ const Filters: FC<Props> = ({ queries, updateRoute, setLocalQueries }) => {
                         name={filterEnum}
                         customClass="h-5 w-5"
                       >
-                        <span className="material-icons-outlined md-18 pointer-events-none">
-                          arrow_right
-                        </span>
+                        <MdArrowRight className="pointer-events-none h-5 w-5 " />
                       </RoundButton>
                     </div>
                   ) : (
@@ -319,9 +314,7 @@ const Filters: FC<Props> = ({ queries, updateRoute, setLocalQueries }) => {
                         />
                       </div>
                       <RoundButton onClick={handleRemove} name={filterEnum}>
-                        <span className="material-icons-outlined md-14 pointer-events-none">
-                          close
-                        </span>
+                        <MdClose className="pointer-events-none h-4 w-4 " />
                       </RoundButton>
                     </div>
                   )}

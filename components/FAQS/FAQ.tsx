@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { MdExpandMore } from "react-icons/md";
 
 interface Props {
   setOpen: Function;
@@ -21,13 +22,11 @@ const FAQ: FC<Props> = ({ content, setOpen, open, index }) => {
     >
       <div className="relative flex w-full items-center justify-between ">
         <span className="text-xl font-semibold">{content.title}</span>
-        <span
-          className={`material-icons md-24 duration-200 ease-in-out ${
+        <MdExpandMore
+          className={`h-6 w-6 duration-200 ease-in-out ${
             open === index && "-rotate-180 transform text-green-500"
           }`}
-        >
-          expand_more
-        </span>
+        />
       </div>
       <span
         className={`overflow-hidden pt-2 text-base transition-[max-height] duration-300  ${

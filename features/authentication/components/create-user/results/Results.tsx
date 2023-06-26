@@ -19,7 +19,7 @@ import {
 } from "../../../utils/calculateBodyData";
 import { addProgress, ProgressItem, setAddProgress } from "@/features/progress";
 import { FC, useState } from "react";
-import {formatISO } from "date-fns";
+import { formatISO } from "date-fns";
 import { getNutritionTargets } from "../../../utils/getNutritionTargets";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
@@ -27,6 +27,7 @@ import NutritionTarget from "../NutritionTarget";
 import SubmitButton from "@/components/Buttons/SubmitButton";
 import { formatToUSDate } from "@/utils";
 import InfoTooltip from "@/components/Tooltip/InfoTooltip";
+import { BiSolidPieChartAlt2 } from "react-icons/bi";
 
 interface Props {
   handleSubmit: Function;
@@ -141,7 +142,7 @@ const Results: FC<Props> = ({ handleSubmit }) => {
       <form action="" className="flex w-full flex-col gap-5">
         <div className="flex flex-col gap-10 p-5">
           <div className="flex items-center gap-2">
-            <span className="material-icons text-green-500">data_usage</span>
+            <BiSolidPieChartAlt2 className="h-6 w-6 text-green-500" />
             <span className="w-full text-left text-xl font-semibold sm:text-3xl">
               {isCreatingRoute ? "Nutrition Values" : "Nutrition Values"}
             </span>

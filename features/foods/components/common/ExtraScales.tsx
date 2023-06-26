@@ -6,6 +6,7 @@ import Input from "@/components/Form/Input";
 import NutritionInput from "@/components/Form/NutritionInput";
 import React, { FC, MouseEventHandler, useState } from "react";
 import RoundButton from "@/components/Buttons/RoundButton";
+import { MdDelete, MdDragHandle } from "react-icons/md";
 
 interface AddExtraScaleProps {
   handleChangeScales: Function;
@@ -178,9 +179,7 @@ const ExtraScales: FC<Props> = ({ scales, handleChangeScales }) => {
                             {...draggableProvided.dragHandleProps}
                             className="flex select-none items-center gap-2 px-0 py-2 hover:bg-slate-500/20 active:bg-slate-500/40"
                           >
-                            <span className="material-icons-outlined opacity-50">
-                              drag_handle
-                            </span>
+                            <MdDragHandle className="h-6 w-6 opacity-50" />
                             <div
                               className="my-2 flex w-full justify-between rounded-md border"
                               key={index}
@@ -197,9 +196,7 @@ const ExtraScales: FC<Props> = ({ scales, handleChangeScales }) => {
                                   onClick={handleRemove}
                                   id={String(index)}
                                 >
-                                  <span className="material-icons pointer-events-none">
-                                    delete
-                                  </span>
+                                  <MdDelete className="h-6 w-6" />
                                 </RoundButton>
                               </div>
                             </div>

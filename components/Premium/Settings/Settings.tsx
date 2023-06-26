@@ -5,6 +5,7 @@ import General from "./options/General";
 import Modal from "@/components/Modal/Modal";
 import React, { FC, useState } from "react";
 import Subscription from "./options/Subscription";
+import { MdAccountCircle, MdLoyalty, MdSettings } from "react-icons/md";
 
 interface Props {}
 
@@ -14,17 +15,17 @@ const Settings: FC<Props> = () => {
 
   const settingOptions = [
     {
-      icon: <span className="material-icons-sharp">account_circle</span>,
+      icon: <MdAccountCircle className=" h-6 w-6" />,
       option: "account",
       component: <Account setSettingSelected={setSettingSelected} />,
     },
     {
-      icon: <span className="material-icons">loyalty</span>,
+      icon: <MdLoyalty className=" h-6 w-6" />,
       option: "subscription",
       component: <Subscription setSettingSelected={setSettingSelected} />,
     },
     {
-      icon: <span className="material-icons">settings</span>,
+      icon: <MdSettings className=" h-6 w-6" />,
       option: "general",
       component: <General setSettingSelected={setSettingSelected} />,
     },

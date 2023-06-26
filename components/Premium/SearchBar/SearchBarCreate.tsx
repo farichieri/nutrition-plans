@@ -7,6 +7,7 @@ import { selectAuthSlice } from "@/features/authentication";
 import { useDispatch, useSelector } from "react-redux";
 import React, { FC, useEffect, useState } from "react";
 import Spinner from "@/components/Loader/Spinner";
+import { MdSearch } from "react-icons/md";
 
 interface Props {
   onFocus?: Function;
@@ -69,7 +70,7 @@ const SearchBarCreate: FC<Props> = ({ onFocus, preFetch }) => {
         action=""
         className="relative flex h-10 w-fit items-center gap-2 overflow-auto rounded-3xl border bg-slate-400/20 pl-4 shadow-sm focus-within:border-[darkgray] dark:bg-slate-500/10 dark:focus-within:border-white"
       >
-        <span className="material-icons md-18">search</span>
+        <MdSearch className="h-6 w-6 text-slate-400" />
         <input
           onChange={handleChange}
           value={searchInput}

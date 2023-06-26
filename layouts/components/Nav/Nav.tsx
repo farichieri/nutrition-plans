@@ -14,6 +14,7 @@ import AvatarDropDown from "@/components/DropDown/AvatarDropDown/AvatarDropDown"
 import Link from "next/link";
 import ThemeSwitcher from "@/components/theme-switcher";
 import Logo from "@/components/Logo/Logo";
+import { MdFavorite } from "react-icons/md";
 
 interface Props {}
 
@@ -145,9 +146,7 @@ const NavBar: FC<Props> = () => {
                   <Link href="/app/today">
                     <div className="flex w-full items-center justify-between py-3 duration-300 hover:bg-slate-500/10 hover:opacity-100">
                       <span>App</span>
-                      <span className="material-icons-outlined text-green-500">
-                        favorite
-                      </span>
+                      <MdFavorite className="h-6 w-6 text-green-500" />
                     </div>
                   </Link>
 

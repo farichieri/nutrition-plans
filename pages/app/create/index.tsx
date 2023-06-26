@@ -1,3 +1,9 @@
+import {
+  MdDescription,
+  MdEmojiEvents,
+  MdFlag,
+  MdSettingsAccessibility,
+} from "react-icons/md";
 import { NewUserSteps } from "@/features/authentication";
 import { selectAuthSlice } from "@/features/authentication/slice";
 import { useEffect, useState } from "react";
@@ -28,28 +34,22 @@ export default function Page() {
     {
       step: 1,
       name: "Body",
-      icon: (
-        <span className="material-icons text-green-500 ">
-          settings_accessibility
-        </span>
-      ),
+      icon: <MdSettingsAccessibility className="h-6 w-6 text-green-500" />,
     },
     {
       step: 2,
       name: "Goal",
-      icon: (
-        <span className="material-icons text-green-500 ">emoji_events</span>
-      ),
+      icon: <MdEmojiEvents className="h-6 w-6 text-green-500" />,
     },
     {
       step: 3,
       name: "Plan",
-      icon: <span className="material-icons text-green-500 ">description</span>,
+      icon: <MdDescription className="h-6 w-6 text-green-500" />,
     },
     {
       step: 4,
       name: "Start",
-      icon: <span className="material-icons text-green-500 ">flag</span>,
+      icon: <MdFlag className="h-6 w-6 text-green-500" />,
     },
   ];
   const [stepSelected, setStepSelected] = useState(1);

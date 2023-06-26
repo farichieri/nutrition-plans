@@ -22,6 +22,7 @@ import * as yup from "yup";
 import Link from "next/link";
 import React, { FormEvent, useState } from "react";
 import FormError from "@/components/Errors/FormError";
+import { MdOutlineEmail, MdTrendingFlat } from "react-icons/md";
 
 const schema = yup.object({
   email: yup
@@ -164,9 +165,7 @@ const Signup = () => {
                 className="flex cursor-pointer items-center gap-0.5 border-b border-transparent text-blue-500 hover:border-blue-500"
               >
                 <span className="">Continue with Email</span>
-                <span className="material-icons-outlined md-14 ">
-                  trending_flat
-                </span>
+                <MdTrendingFlat className="h-5 w-5 " />
               </button>
             </div>
           )}
@@ -206,11 +205,7 @@ const Signup = () => {
                     content={`Continue with Email`}
                     isLoading={isSubmitting}
                     isDisabled={isSubmitting}
-                    icon={
-                      <span className="material-icons-outlined md-24 pr-2">
-                        email
-                      </span>
-                    }
+                    icon={<MdOutlineEmail className="mr-1 h-6 w-6" />}
                   />
                 </form>
                 {errorMessage && <FormError message={errorMessage} />}
@@ -221,9 +216,8 @@ const Signup = () => {
                     onClick={() => setEmailOpen(false)}
                     className="flex cursor-pointer items-center gap-0.5 border-b border-transparent text-blue-500 hover:border-blue-500"
                   >
-                    <span className="material-icons-outlined md-14 -rotate-180 transform">
-                      trending_flat
-                    </span>
+                    <MdTrendingFlat className="h-5 w-5 -rotate-180 transform" />
+
                     <span className="">Other signup options</span>
                   </button>
                 </div>

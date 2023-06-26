@@ -17,6 +17,7 @@ import Image from "next/image";
 import Input from "@/components/Form/Input";
 import NutritionInput from "@/components/Form/NutritionInput";
 import RoundButton from "@/components/Buttons/RoundButton";
+import { MdDelete, MdDragHandle } from "react-icons/md";
 
 interface MealInCardProps {
   food: Food;
@@ -101,13 +102,11 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
 
   const scaleFormatted = Math.round(food.scale_amount * 100) / 100;
   return (
-    <div className="flex w-full gap-2">
+    <div className="flex w-full gap-1">
       {isEditing && (
-        <span className="material-icons-outlined m-auto opacity-50">
-          drag_handle
-        </span>
+        <MdDragHandle className="m-auto h-6 w-6 min-w-fit opacity-50" />
       )}
-      <span className="relative h-20 w-20 min-w-[80px]  sm:h-20 sm:w-20">
+      <span className="relative h-20 w-20 min-w-[80px] sm:h-20 sm:w-20">
         <Image
           src={food.image}
           fill
@@ -184,7 +183,7 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
             onClick={handleRemove}
             id={food.food_id}
           >
-            <span className="material-icons pointer-events-none">delete</span>
+            <MdDelete className="h-6 w-6" />
           </RoundButton>
         ) : (
           <CheckButton onClick={toggleDone} checked={food.eaten} />

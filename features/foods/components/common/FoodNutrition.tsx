@@ -10,6 +10,7 @@ import FoodNutritionDetail from "./FoodNutritionDetail";
 import Link from "next/link";
 import PieGraph from "@/components/PieGraph/PieGraph";
 import React, { FC, useEffect, useState } from "react";
+import { BiSolidPieChartAlt2 } from "react-icons/bi";
 
 interface Props {
   food: Food;
@@ -57,9 +58,7 @@ const FoodNutrition: FC<Props> = ({ food, amount, scale }) => {
       <div className="flex w-full  flex-col gap-2">
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center justify-start gap-2">
-            <span className="material-icons-outlined text-green-500">
-              data_usage
-            </span>
+            <BiSolidPieChartAlt2 className="h-6 w-6 text-green-500" />
             <span className="text-2xl font-semibold">Nutrition Values</span>
           </div>
           {food.source && (

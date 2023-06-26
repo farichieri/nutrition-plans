@@ -17,6 +17,7 @@ import Image from "next/image";
 import InfoMessage from "@/components/Layout/InfoMessage";
 import SubmitButton from "@/components/Buttons/SubmitButton";
 import { toast } from "react-hot-toast";
+import { MdRestaurant, MdVerified } from "react-icons/md";
 
 interface FormValues {
   planSelected: PlansEnum | null;
@@ -111,7 +112,7 @@ const PlanSelector: FC<Props> = ({ handleContinue }) => {
       >
         <div className="flex flex-col gap-10 p-5">
           <div className="flex items-center gap-2">
-            <span className="material-icons text-green-500">restaurant</span>
+            <MdRestaurant className="h-6 w-6 text-green-500" />
             <span className="w-full text-left text-xl font-semibold sm:text-3xl">
               Select my Nutrition Plan
             </span>
@@ -129,15 +130,13 @@ const PlanSelector: FC<Props> = ({ handleContinue }) => {
                 name="planSelected"
                 id={opt.id}
               >
-                <span
-                  className={`material-icons ${
+                <MdVerified
+                  className={`h-6 w-6 ${
                     values.planSelected === opt.id
                       ? "text-green-500"
                       : "text-transparent"
                   }`}
-                >
-                  verified
-                </span>
+                />
                 <span className="flex w-full items-center justify-center text-center text-xl font-bold">
                   {opt.name}
                 </span>

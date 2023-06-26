@@ -1,6 +1,5 @@
 import "nprogress/nprogress.css";
 import "@/styles/globals.css";
-import "material-icons/iconfont/material-icons.css";
 import { auth } from "@/services/firebase/firebase.config";
 import { getAnalytics, logEvent, setUserId } from "firebase/analytics";
 import { PersistGate } from "redux-persist/integration/react";

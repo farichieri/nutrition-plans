@@ -1,4 +1,5 @@
 import { FC, ReactNode, useState } from "react";
+import { MdExpandMore } from "react-icons/md";
 
 interface Props {
   showed: ReactNode;
@@ -18,13 +19,11 @@ const Collapsable: FC<Props> = ({ showed, hidden, defaultState }) => {
       <div onClick={() => setOpen(!open)}>
         <div className="flex w-full cursor-pointer items-center justify-between">
           {showed}
-          <span
-            className={`material-icons md-24 duration-200 ease-in-out ${
+          <MdExpandMore
+            className={`h-6 w-6 duration-200 ease-in-out ${
               open && "-rotate-180 transform text-green-500"
             }`}
-          >
-            expand_more
-          </span>
+          />
         </div>
       </div>
       <div

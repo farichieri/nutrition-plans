@@ -8,6 +8,7 @@ import { FC } from "react";
 import { PlansEnum } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "@/components/Loader/Spinner";
+import { MdVerified } from "react-icons/md";
 
 interface Props {
   planID: PlansEnum;
@@ -48,9 +49,7 @@ const PlanSelector: FC<Props> = ({ planID }) => {
           )}
         </button>
       ) : (
-        <span className={`material-icons ml-auto text-green-500`}>
-          verified
-        </span>
+        <MdVerified className={`ml-auto h-6 w-6 text-green-500`} />
       )}
     </div>
   );

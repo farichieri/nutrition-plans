@@ -17,6 +17,7 @@ import { FC, useState } from "react";
 import { FoodGroupArray } from "@/features/foods";
 import { useDispatch } from "react-redux";
 import { UserAccount } from "@/features/authentication";
+import { MdRestaurant } from "react-icons/md";
 
 interface Props {
   diet: Diet;
@@ -86,9 +87,7 @@ const MealCards: FC<Props> = ({ diet, date, user }) => {
     <div className="w-full">
       <div className="mb-1 flex flex-wrap items-center justify-between gap-2">
         <div className="flex h-9 items-center gap-1 ">
-          <span className="material-icons-outlined text-green-500">
-            restaurant
-          </span>
+          <MdRestaurant className="h-6 w-6 text-green-500" />
           <span className="text-2xl font-semibold">Meals</span>
         </div>
         <SaveAndEditButton

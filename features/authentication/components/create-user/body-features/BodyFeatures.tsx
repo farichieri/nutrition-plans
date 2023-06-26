@@ -28,6 +28,7 @@ import FormError from "@/components/Errors/FormError";
 import SubmitButton from "@/components/Buttons/SubmitButton";
 import { toast } from "react-hot-toast";
 import { AppRoutes, formatTwoDecimals } from "@/utils";
+import { MdSettingsAccessibility } from "react-icons/md";
 
 interface FormValues {
   activity: UserActivities | null;
@@ -234,9 +235,7 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
       >
         <div className="flex flex-col gap-10 p-5">
           <div className="flex items-center gap-2">
-            <span className="material-icons text-green-500">
-              settings_accessibility
-            </span>
+            <MdSettingsAccessibility className="h-6 w-6 text-green-500" />
             <span className="w-full text-left text-xl font-semibold sm:text-3xl">
               My Body features
             </span>

@@ -3,6 +3,7 @@ import {
   FoodNutritionDetail,
   NutrientsEnum,
 } from "@/features/foods";
+import { BiSolidPieChartAlt2 } from "react-icons/bi";
 import { FC, useState } from "react";
 import { formatToFixed, formatTwoDecimals } from "@/utils/format";
 import { getNutritionTargets } from "@/features/authentication/utils/getNutritionTargets";
@@ -124,9 +125,7 @@ const Nutrition: FC<Props> = ({ nutrients, planID }) => {
         }`}
       >
         <div className="mb-1 flex h-9 w-full items-center gap-2">
-          <span className="material-icons-outlined md-24 text-green-500">
-            data_usage
-          </span>
+          <BiSolidPieChartAlt2 className="h-6 w-6 text-green-500" />
           <span className="text-2xl font-semibold">Nutrition</span>
         </div>
         <div className="flex w-full flex-col gap-0">

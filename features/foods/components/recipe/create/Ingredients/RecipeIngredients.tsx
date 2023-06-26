@@ -18,6 +18,7 @@ import NutritionInput from "@/components/Form/NutritionInput";
 import RoundButton from "@/components/Buttons/RoundButton";
 import Select from "@/components/Form/FormSelect";
 import Spinner from "@/components/Loader/Spinner";
+import { MdDelete, MdDragHandle } from "react-icons/md";
 
 interface IngredientProps {
   ingredient: Food;
@@ -141,7 +142,7 @@ const Ingredient: FC<IngredientProps> = ({
           onClick={handleRemove}
           id={food.food_id}
         >
-          <span className="material-icons pointer-events-none">delete</span>
+          <MdDelete className="h-6 w-6 opacity-50" />
         </RoundButton>
       </div>
     </div>
@@ -236,9 +237,7 @@ const RecipeIngredients: FC<Props> = ({
                           {...draggableProvided.dragHandleProps}
                           className="flex items-center gap-2 px-0 py-2 hover:bg-slate-500/20 active:bg-slate-500/40"
                         >
-                          <span className="material-icons-outlined opacity-50">
-                            drag_handle
-                          </span>
+                          <MdDragHandle className="h-6 w-6 opacity-50" />
                           <Ingredient
                             ingredient={ing}
                             key={ing.food_id}

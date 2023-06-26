@@ -6,6 +6,7 @@ import { toast } from "react-hot-toast";
 import { updateMealsOrders } from "./utils";
 import { useDispatch, useSelector } from "react-redux";
 import { UserMeals, UserMealsArr, setUserMeals } from "@/features/meals";
+import { MdDelete, MdDragHandle } from "react-icons/md";
 
 interface Props {
   meals: UserMeals;
@@ -78,21 +79,17 @@ const Meals: FC<Props> = ({ meals, handleConfirmDelete }) => {
                           {...draggableProvided.dragHandleProps}
                           className="flex items-center gap-2 py-2 pl-2 pr-4 hover:bg-slate-500/20 active:bg-slate-500/40"
                         >
-                          <span className="material-icons-outlined mr-2 opacity-50">
-                            drag_handle
-                          </span>
+                          <MdDragHandle className="mr-2 h-6 w-6 opacity-50" />
                           <span className="text-xs opacity-50">
                             {meal.order + 1}
                           </span>
                           <span className=" capitalize text-green-500">
                             {meal.name}
                           </span>
-                          <span
+                          <MdDelete
                             onClick={() => handleConfirmDelete(meal)}
-                            className="material-icons ml-auto cursor-pointer"
-                          >
-                            delete
-                          </span>
+                            className="ml-auto h-6 w-6 cursor-pointer"
+                          />
                         </div>
                       )}
                     </Draggable>

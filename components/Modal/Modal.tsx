@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import RoundButton from "../Buttons/RoundButton";
+import { MdClose } from "react-icons/md";
 
 const Modal = ({
   children,
@@ -31,7 +32,7 @@ const Modal = ({
           onClick={handleCloseModal}
           customClass=" p-1.5 h-10 w-10 absolute right-2 top-2"
         >
-          <span className="material-icons-outlined">close</span>{" "}
+          <MdClose className="h-6 w-6" />
         </RoundButton>
         {children}
       </div>

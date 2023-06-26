@@ -13,6 +13,7 @@ import FoodModal from "../../../common/FoodModal";
 import RoundButton from "@/components/Buttons/RoundButton";
 import SearchBarCreate from "@/components/Premium/SearchBar/SearchBarCreate";
 import SearchedResults from "@/components/Premium/SearchBar/SearchedResults";
+import { MdClose, MdCloseFullscreen, MdOpenInFull } from "react-icons/md";
 
 interface Props {
   handleUpdateIngredients: Function;
@@ -78,7 +79,7 @@ const IngredientsSelector: FC<Props> = ({ handleUpdateIngredients }) => {
                 }}
                 customClass="h-10 w-10 ml-auto mt-4"
               >
-                <span className="material-icons">open_in_full</span>
+                <MdOpenInFull className="h-6 w-6" />
               </RoundButton>
             ) : (
               <RoundButton
@@ -88,7 +89,7 @@ const IngredientsSelector: FC<Props> = ({ handleUpdateIngredients }) => {
                 }}
                 customClass="h-10 w-10 ml-auto mt-4"
               >
-                <span className="material-icons">close_fullscreen</span>
+                <MdCloseFullscreen className="h-6 w-6" />
               </RoundButton>
             )}
           </>
@@ -99,12 +100,7 @@ const IngredientsSelector: FC<Props> = ({ handleUpdateIngredients }) => {
           {foodModal && (
             <div className="absolute flex h-full w-full flex-col gap-1 overflow-auto rounded-md bg-gray-200 dark:bg-black">
               <div className="relative flex h-full flex-col gap-1 overflow-auto rounded-md border p-1">
-                <span
-                  onClick={handleCloseIngredient}
-                  className="material-icons ml-auto cursor-pointer"
-                >
-                  close
-                </span>
+                <MdClose onClick={handleCloseIngredient} className=" ml-auto h-6 w-6 cursor-pointer" />
                 <FoodModal
                   handleClose={handleCloseIngredient}
                   food={foodModal}

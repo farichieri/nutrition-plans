@@ -35,6 +35,7 @@ import Instructions from "./Instructions";
 import NutritionInput from "@/components/Form/NutritionInput";
 import Ingredients from "./Ingredients";
 import TranspLoader from "@/components/Loader/TranspLoader";
+import { BiSolidPieChartAlt2 } from "react-icons/bi";
 
 interface FormValues extends Recipe {}
 
@@ -288,9 +289,7 @@ const RecipeCreate: FC<Props> = () => {
           <div className="flex w-full max-w-xl flex-col gap-5 sm:px-4">
             <div className="flex max-w-xl flex-col gap-2 rounded-md border p-2">
               <div className="flex items-center gap-1">
-                <span className="material-icons-outlined text-green-500">
-                  data_usage
-                </span>
+                <BiSolidPieChartAlt2 className="h-6 w-6 text-green-500" />
                 <span className="text-2xl font-semibold">Nutrition Values</span>
               </div>
               <RecipeNutrition nutrients={values.nutrients} />

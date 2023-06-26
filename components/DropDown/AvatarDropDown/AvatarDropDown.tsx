@@ -12,6 +12,7 @@ import DropDown from "../DropDown";
 import Link from "next/link";
 import SubscribeButton from "@/components/Buttons/Subscribe";
 import ThemeSwitcher from "@/components/theme-switcher";
+import { MdAccountCircle, MdFavorite, MdOpenInNew } from "react-icons/md";
 
 interface Props {
   isApp: boolean;
@@ -66,7 +67,7 @@ const AvatarDropDown: FC<Props> = ({ isApp }) => {
             className={`flex w-full cursor-pointer items-center gap-2 border-none bg-transparent px-4 py-2 opacity-60 hover:bg-slate-500/40 hover:opacity-100  `}
           >
             <span>Account</span>
-            <span className="material-icons ml-auto">account_circle</span>
+            <MdAccountCircle className="ml-auto h-6 w-6" />
           </button>
         </div>
         <div className="mx-4 my-2 h-0 border-b border-slate-500/30 duration-300"></div>
@@ -77,7 +78,7 @@ const AvatarDropDown: FC<Props> = ({ isApp }) => {
             className={`flex w-full cursor-pointer items-center gap-2 border-none bg-transparent px-4 py-2 opacity-60 hover:bg-slate-500/40 hover:opacity-100  `}
           >
             <span>Homepage</span>
-            <span className="material-icons ml-auto">open_in_new</span>
+            <MdOpenInNew className="ml-auto h-6 w-6" />
           </span>
         ) : (
           <Link
@@ -85,9 +86,8 @@ const AvatarDropDown: FC<Props> = ({ isApp }) => {
             className={`flex w-full items-center justify-between gap-2 border-none bg-transparent px-4 py-2 opacity-60 hover:bg-slate-500/40 hover:opacity-100 `}
           >
             <span>App</span>
-            <span className="material-icons-outlined text-green-500">
-              favorite
-            </span>
+
+            <MdFavorite className="ml-auto h-6 w-6 text-green-500" />
           </Link>
         )}
         <div className="flex hover:bg-slate-500/40">

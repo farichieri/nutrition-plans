@@ -3,6 +3,7 @@ import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { FC, useEffect, useState } from "react";
 import { reorderArr } from "@/utils/filter";
 import RoundButton from "@/components/Buttons/RoundButton";
+import { MdDelete, MdDragHandle } from "react-icons/md";
 
 interface InstructionProps {
   instructions: Instruction[];
@@ -68,7 +69,7 @@ const InstructionC: FC<InstructionProps> = ({
         onClick={handleRemove}
         id={inst.instruction_id}
       >
-        <span className="material-icons pointer-events-none">delete</span>
+        <MdDelete className="pointer-events-none h-6 w-6" />
       </RoundButton>
     </div>
   );
@@ -139,11 +140,9 @@ const RecipeInstructions: FC<Props> = ({
                           ref={draggableProvided.innerRef}
                           {...draggableProvided.draggableProps}
                           {...draggableProvided.dragHandleProps}
-                          className="flex items-center gap-2  py-2 hover:bg-slate-500/20 active:bg-slate-500/40"
+                          className="flex items-center gap-1  py-2 hover:bg-slate-500/20 active:bg-slate-500/40"
                         >
-                          <span className="material-icons-outlined opacity-50">
-                            drag_handle
-                          </span>
+                          <MdDragHandle className="h-6 w-6 opacity-50" />
                           <InstructionC
                             instructions={instructions}
                             inst={inst}

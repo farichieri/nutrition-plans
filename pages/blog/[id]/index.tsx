@@ -9,6 +9,7 @@ import Image from "next/image";
 import LandingLayout from "@/layouts/LandingLayout";
 import Link from "next/link";
 import remarkGfm from "remark-gfm";
+import { MdTrendingFlat } from "react-icons/md";
 
 interface Props {
   postData: Post;
@@ -30,9 +31,7 @@ export default function Page({ postData }: Props) {
           href={"/blog"}
           className="flex items-center gap-1 opacity-50 duration-100 hover:opacity-100"
         >
-          <span className="material-icons-outlined md-14 -rotate-180 transform">
-            trending_flat
-          </span>
+          <MdTrendingFlat className="h-5 w-5 -rotate-180 transform" />
           <span>Back to Blog</span>
         </Link>
         <div className="mb-10 flex flex-col items-center justify-center gap-6 border-b pb-14 ">

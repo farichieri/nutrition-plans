@@ -1,6 +1,6 @@
 {
   "name": "nutrition-plans",
-  "version": "0.1.15",
+  "version": "0.1.16",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -26,7 +26,6 @@
     "eslint-config-next": "13.3.0",
     "firebase": "^9.19.1",
     "gray-matter": "^4.0.3",
-    "material-icons": "^1.13.6",
     "next": "13.3.0",
     "nprogress": "^0.2.0",
     "react": "18.2.0",

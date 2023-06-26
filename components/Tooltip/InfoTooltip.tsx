@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { MdInfo } from "react-icons/md";
 import { Tooltip } from "react-tooltip";
 
 interface Props {
@@ -10,9 +11,7 @@ interface Props {
 const InfoTooltip: FC<Props> = ({ message, id, customClass }) => {
   return (
     <>
-      <span className="material-icons md-22 flex text-slate-500" id={id}>
-        info
-      </span>
+      <MdInfo id={id} className="h-6 w-6 text-slate-500" />
       <Tooltip anchorSelect={`#${id}`} className={`z-100 ${customClass}`}>
         <div className="max-w-xs sm:max-w-sm">{message}</div>
       </Tooltip>

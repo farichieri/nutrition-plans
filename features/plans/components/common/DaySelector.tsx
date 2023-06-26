@@ -20,6 +20,7 @@ import { FC, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Link from "next/link";
 import RoundButton from "@/components/Buttons/RoundButton";
+import { MdArrowBack, MdArrowLeft, MdArrowRight } from "react-icons/md";
 
 interface Props {
   date: string;
@@ -131,7 +132,7 @@ const DaySelector: FC<Props> = ({ date }) => {
         <div className="flex w-full max-w-sm items-center justify-center xs:gap-5 lg:w-auto">
           <Link href={backRoute()}>
             <RoundButton customClass="p-1.5 sm:h-10 sm:w-10 h-6 w-6">
-              <span className="material-icons-outlined md-24">arrow_left</span>
+              <MdArrowLeft className="h-6 w-6" />
             </RoundButton>
           </Link>
           <span className="opacity-65 flex w-full min-w-max justify-center text-base font-medium capitalize text-green-500 sm:text-xl md:text-2xl lg:w-96">
@@ -139,7 +140,7 @@ const DaySelector: FC<Props> = ({ date }) => {
           </span>
           <Link href={nextRoute()}>
             <RoundButton customClass="p-1.5 sm:h-10 sm:w-10 h-6 w-6">
-              <span className="material-icons-outlined md-24">arrow_right</span>
+              <MdArrowRight className="h-6 w-6" />
             </RoundButton>
           </Link>
         </div>

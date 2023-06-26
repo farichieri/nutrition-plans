@@ -1,17 +1,33 @@
 import {
+  MdAddCircle,
+  MdAutoGraph,
+  MdCreate,
+  MdDescription,
+  MdEmojiEvents,
+  MdExpandMore,
+  MdFavorite,
+  MdPerson,
+  MdRestaurantMenu,
+  MdSearch,
+  MdSettings,
+  MdSettingsAccessibility,
+  MdVerified,
+} from "react-icons/md";
+import {
   selectLayoutSlice,
   setIsSettingsOpen,
   setSidebarAdminOpen,
   setSidebarEvolutionOpen,
   setSidebarOpen,
 } from "@/store/slices/layoutSlice";
+import { BiSolidPieChartAlt2 } from "react-icons/bi";
 import { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import Logo from "@/components/Logo/Logo";
 import SubscribeButton from "../../../components/Buttons/Subscribe";
 import ToggleSidebar from "./ToggleSidebar";
-import Logo from "@/components/Logo/Logo";
 
 interface Props {}
 
@@ -50,40 +66,48 @@ const PremiumSidebar: FC<Props> = () => {
   };
 
   const PROFILE_PAGES = [
-    { name: "Goal", url: "/app/profile/goal", icon: "emoji_events" },
+    {
+      name: "Goal",
+      url: "/app/profile/goal",
+      icon: <MdEmojiEvents className="h-6 w-6 text-green-500" />,
+    },
     {
       name: "Body Features",
       url: "/app/profile/body-features",
-      icon: "settings_accessibility",
+      icon: <MdSettingsAccessibility className="h-6 w-6 text-green-500" />,
     },
     {
       name: "Nutrition Values",
       url: "/app/profile/nutrition-values",
-      icon: "data_saver_off",
+      icon: <BiSolidPieChartAlt2 className="h-6 w-6 text-green-500" />,
     },
     {
       name: "Preferred Plan",
       url: "/app/profile/preferred-plan",
-      icon: "verified",
+      icon: <MdVerified className="h-6 w-6 text-green-500" />,
     },
     {
       name: "Meals settings",
       url: "/app/profile/meals",
-      icon: "restaurant_menu",
+      icon: <MdRestaurantMenu className="h-6 w-6 text-green-500" />,
     },
   ];
 
   const CREATE_PAGES = [
-    { name: "Food", url: "/app/create/food", icon: "add_circle" },
+    {
+      name: "Food",
+      url: "/app/create/food",
+      icon: <MdAddCircle className="h-6 w-6 text-green-500" />,
+    },
     {
       name: "Recipe",
       url: "/app/create/recipe",
-      icon: "add_circle",
+      icon: <MdAddCircle className="h-6 w-6 text-green-500" />,
     },
     {
       name: "Supplements & Vitamins",
       url: "/app/create/supplements-vitamins",
-      icon: "add_circle",
+      icon: <MdAddCircle className="h-6 w-6 text-green-500" />,
     },
   ];
 
@@ -92,25 +116,25 @@ const PremiumSidebar: FC<Props> = () => {
       name: "My Plan",
       url: `/app/today`,
       pathname: ["/app/[date]"],
-      icon: "description",
+      icon: <MdDescription className="h-6 w-6 text-green-500" />,
     },
     {
       name: "Favorites",
       url: "/app/favorites",
       pathname: ["/app/favorites"],
-      icon: "favorite",
+      icon: <MdFavorite className="h-6 w-6 text-green-500" />,
     },
     {
       name: "Search",
       url: "/app/search",
       pathname: ["/app/search", "/app/search/my-creations"],
-      icon: "search",
+      icon: <MdSearch className="h-6 w-6 text-green-500" />,
     },
     {
       name: "Progress",
       url: "/app/progress",
       pathname: ["/app/progress"],
-      icon: "auto_graph",
+      icon: <MdAutoGraph className="h-6 w-6 text-green-500" />,
     },
   ];
 
@@ -151,9 +175,7 @@ const PremiumSidebar: FC<Props> = () => {
               page.pathname.includes(router.pathname) && "bg-slate-500/30  "
             } text-md hover:opacity-7 flex w-full flex-col items-center gap-1 rounded-lg border border-transparent px-1.5 py-1 text-center text-base font-medium duration-300 hover:bg-slate-500/30 active:border-gray-400 dark:active:border-white sm:text-lg`}
           >
-            <span className="material-icons md-24 notraslate text-green-500">
-              {page.icon}
-            </span>
+            {page.icon}
             <span className="text-xs">{page.name}</span>
           </Link>
         ))}
@@ -163,9 +185,7 @@ const PremiumSidebar: FC<Props> = () => {
             isSettingsOpen && "bg-slate-500/30 font-semibold "
           } text-md hover:opacity-7 flex w-full flex-col items-center gap-1 rounded-lg border border-transparent px-1.5 py-1 text-center text-base duration-300 hover:bg-slate-500/30 active:border-gray-400 dark:active:border-white sm:text-lg`}
         >
-          <span className="material-icons md-24 notraslate text-green-500">
-            settings
-          </span>
+          <MdSettings className="h-6 w-6 text-green-500" />
           <span className="text-xs font-light">Settings</span>
         </button>
       </div>
@@ -194,9 +214,7 @@ const PremiumSidebar: FC<Props> = () => {
               } px-2 ` + fixedOptClass
             }
           >
-            <span className="material-icons md-24 text-green-500">
-              description
-            </span>
+            <MdDescription className="h-6 w-6 text-green-500" />
             <span>My Plan</span>
           </Link>
         </div>
@@ -210,9 +228,8 @@ const PremiumSidebar: FC<Props> = () => {
               } px-2` + fixedOptClass
             }
           >
-            <span className="material-icons md-24 text-green-500">
-              favorite
-            </span>
+            <MdFavorite className="h-6 w-6 text-green-500" />
+
             <span>Favorites</span>
           </Link>
         </div>
@@ -227,7 +244,7 @@ const PremiumSidebar: FC<Props> = () => {
               } px-2` + fixedOptClass
             }
           >
-            <span className="material-icons md-24 text-green-500">search</span>
+            <MdSearch className="h-6 w-6 text-green-500" />
             <span>Search</span>
           </Link>
         </div>
@@ -242,9 +259,7 @@ const PremiumSidebar: FC<Props> = () => {
               } px-2` + fixedOptClass
             }
           >
-            <span className="material-icons md-24 text-green-500">
-              auto_graph
-            </span>
+            <MdAutoGraph className="h-6 w-6 text-green-500" />
             <span>Progress</span>
           </Link>
         </div>
@@ -252,19 +267,15 @@ const PremiumSidebar: FC<Props> = () => {
         <div className="flex flex-col divide-y border-t">
           <div className="flex flex-col py-1">
             <div className={fixedOptClass} onClick={toggleEvolution}>
-              <span className="material-icons md-24 text-green-500">
-                person
-              </span>
+              <MdPerson className="h-6 w-6 text-green-500" />
               <div className="flex w-full cursor-pointer items-center justify-between">
                 <span className="text-md sm:text-lg">Profile</span>
-                <span
-                  className={`material-icons md-24 duration-200 ease-in-out ${
+                <MdExpandMore
+                  className={`duration-200 ease-in-out ${
                     sidebarEvolutionOpen &&
-                    "-rotate-180 transform text-green-500"
+                    "h-6 w-6 -rotate-180 transform text-green-500"
                   }`}
-                >
-                  expand_more
-                </span>
+                />
               </div>
             </div>
             <div
@@ -283,10 +294,7 @@ const PremiumSidebar: FC<Props> = () => {
                     }` + fixedSecOptClass
                   }
                 >
-                  <span className="material-icons md-24 notraslate text-green-500">
-                    {page.icon}
-                  </span>
-
+                  {page.icon}
                   {page.name}
                 </Link>
               ))}
@@ -295,18 +303,15 @@ const PremiumSidebar: FC<Props> = () => {
 
           <div className="flex flex-col py-1">
             <div className={fixedOptClass} onClick={toggleAdmin}>
-              <span className="material-icons md-24 text-green-500">
-                create
-              </span>
+              <MdCreate className="h-6 w-6 text-green-500" />
               <div className="flex w-full cursor-pointer items-center justify-between">
                 <span className="text-md  sm:text-lg">Create</span>
-                <span
-                  className={`material-icons md-24 duration-200 ease-in-out ${
-                    sidebarAdminOpen && "-rotate-180 transform text-green-500"
+                <MdExpandMore
+                  className={`duration-200 ease-in-out ${
+                    sidebarAdminOpen &&
+                    "h-6 w-6 -rotate-180 transform text-green-500"
                   }`}
-                >
-                  expand_more
-                </span>
+                />
               </div>
             </div>
             <div
@@ -325,10 +330,7 @@ const PremiumSidebar: FC<Props> = () => {
                     }` + fixedSecOptClass
                   }
                 >
-                  <span className="material-icons md-24 notraslate text-green-500">
-                    {page.icon}
-                  </span>
-
+                  {page.icon}
                   {page.name}
                 </Link>
               ))}
@@ -345,9 +347,7 @@ const PremiumSidebar: FC<Props> = () => {
                 fixedOptClass
               }
             >
-              <span className="material-icons md-24 text-green-500">
-                settings
-              </span>
+              <MdSettings className="h-6 w-6 text-green-500" />
               <span>Settings</span>
             </button>
           </div>

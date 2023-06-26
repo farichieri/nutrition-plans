@@ -21,6 +21,7 @@ import SubmitButton from "@/components/Buttons/SubmitButton";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
 import InfoMessage from "@/components/Layout/InfoMessage";
+import { MdEmojiEvents } from "react-icons/md";
 
 interface FormValues {
   goalSelected: UserGoals | null;
@@ -167,7 +168,7 @@ const Goal: FC<Props> = ({ handleContinue }) => {
       >
         <div className="flex flex-col gap-10 p-5">
           <div className="flex items-center gap-2">
-            <span className="material-icons text-green-500">emoji_events</span>
+            <MdEmojiEvents className="h-6 w-6 text-green-500" />
             <span className="w-full text-left text-xl font-semibold sm:text-3xl">
               {isCreatingRoute ? "Select my Goal" : "Goal"}
             </span>

@@ -8,6 +8,8 @@ import { Draggable, Droppable } from "@hello-pangea/dnd";
 import { FC } from "react";
 import { FoodGroupArray } from "@/features/foods";
 import Link from "next/link";
+import { CheckButton } from "@/components/Buttons";
+import { MdCheckCircle, MdRadioButtonUnchecked } from "react-icons/md";
 
 interface Props {
   dietMeal: DietMeal;
@@ -46,11 +48,9 @@ const MealCard: FC<Props> = ({ dietMeal, mealKcals, isEditing }) => {
         {!isEditing && (
           <div className="flex items-center">
             {allEaten ? (
-              <span className="material-icons text-green-500">
-                check_circle
-              </span>
+              <MdCheckCircle className="h-6 w-6 text-green-500" />
             ) : (
-              <span className="material-icons">radio_button_unchecked</span>
+              <MdRadioButtonUnchecked className="h-6 w-6 text-gray-500" />
             )}
           </div>
         )}

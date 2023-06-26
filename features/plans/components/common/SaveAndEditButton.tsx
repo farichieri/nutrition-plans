@@ -10,7 +10,7 @@ import { FC, useState } from "react";
 import { useDispatch } from "react-redux";
 import { UserAccount } from "@/features/authentication";
 import Spinner from "@/components/Loader/Spinner";
-
+import { LuFileEdit, LuSave } from "react-icons/lu";
 interface Props {
   diet: Diet;
   date: string;
@@ -94,10 +94,10 @@ const SaveAndEditButton: FC<Props> = ({
         {isEditing ? (
           <div className="flex items-center gap-1">
             Save
-            <span className="material-icons-outlined">save</span>
+            <LuSave className="h-5 w-5" />
           </div>
         ) : (
-          <span className="material-icons-outlined">edit</span>
+          <LuFileEdit className="h-5 w-5" />
         )}
         {isSaving && <Spinner customClass="h-4 w-4" />}
       </button>

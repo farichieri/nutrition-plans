@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { PlansEnum } from "@/types";
+import { MdDone } from "react-icons/md";
 
 interface Props {
   compatible_plans: any;
@@ -20,9 +21,7 @@ const CompatiblePlansC: FC<Props> = ({ compatible_plans }) => {
           <span className={`capitalize ${isPlan(plan) ? "" : ""}`}>
             {plan.replaceAll("_", " ")}
           </span>
-          {isPlan(plan) && (
-            <span className="material-icons-outlined text-green-500">done</span>
-          )}
+          {isPlan(plan) && <MdDone className="block h-6 w-6 min-w-fit" />}
         </div>
       ))}
     </div>

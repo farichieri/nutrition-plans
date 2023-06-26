@@ -15,6 +15,7 @@ import { FC, useState } from "react";
 import { Food } from "@/features/foods";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "@/components/Loader/Spinner";
+import { MdFavorite } from "react-icons/md";
 
 interface Props {
   food: Food;
@@ -99,13 +100,11 @@ const AddToFavorite: FC<Props> = ({ food }) => {
       {isFavoriting ? (
         <Spinner customClass={` h-5 w-5  ${isFavorite && "text-green-500"}`} />
       ) : (
-        <span
-          className={`material-icons-outlined md-18 pointer-events-none  ${
+        <MdFavorite
+          className={`pointer-events-none h-6 w-6  ${
             isFavorite && "text-green-500"
           }`}
-        >
-          favorite
-        </span>
+        />
       )}
     </button>
   );
