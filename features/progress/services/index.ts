@@ -27,7 +27,6 @@ const addProgress = async (
 const fetchProgress = async (
   user: UserAccount
 ): Promise<Result<Progress, unknown>> => {
-  console.log("fetchProgress");
   try {
     let data: Progress = {};
     const progressRef = query(
@@ -63,7 +62,6 @@ const updateProgress = async (
   progress: ProgressItem
 ): Promise<Result<ProgressItem, unknown>> => {
   try {
-    console.log(progress);
     const docRef = doc(db, "users", user.user_id, "progress", progress.date);
     await setDoc(docRef, progress);
     return { result: "success", data: progress };

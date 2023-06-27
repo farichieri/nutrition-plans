@@ -102,7 +102,7 @@ const AddToFavorite: FC<Props> = ({ food }) => {
       ) : (
         <MdFavorite
           className={`pointer-events-none h-6 w-6  ${
-            isFavorite && "text-green-500"
+            isFavorite ? "text-green-500" : "text-gray-400 dark:text-gray-300"
           }`}
         />
       )}

@@ -21,7 +21,9 @@ const CompatiblePlansC: FC<Props> = ({ compatible_plans }) => {
           <span className={`capitalize ${isPlan(plan) ? "" : ""}`}>
             {plan.replaceAll("_", " ")}
           </span>
-          {isPlan(plan) && <MdDone className="block h-6 w-6 min-w-fit" />}
+          {isPlan(plan) && (
+            <MdDone className="block h-6 w-6 min-w-fit text-green-500" />
+          )}
         </div>
       ))}
     </div>

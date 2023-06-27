@@ -2,6 +2,7 @@ import { FoodNutrients, FoodNutritionDetail } from "@/features/foods";
 import { FC, useState } from "react";
 import PieGraph from "@/components/PieGraph/PieGraph";
 import Spinner from "@/components/Loader/Spinner";
+import { formatTwoDecimals } from "@/utils";
 
 interface Props {
   nutrients: FoodNutrients;
@@ -43,15 +44,15 @@ const RecipeNutrition: FC<Props> = ({ nutrients }) => {
             </div>
             <div className="flex w-full justify-between">
               <span>Carbs:</span>
-              <span>{nutrients.carbohydrates || "-"}</span>
+              <span>{formatTwoDecimals(nutrients.carbohydrates) || "-"}</span>
             </div>
             <div className="flex w-full justify-between">
               <span>Fats:</span>
-              <span>{nutrients.fats || "-"}</span>
+              <span>{formatTwoDecimals(nutrients.fats) || "-"}</span>
             </div>
             <div className="flex w-full justify-between">
               <span>Proteins:</span>
-              <span>{nutrients.proteins || "-"}</span>
+              <span>{formatTwoDecimals(nutrients.proteins) || "-"}</span>
             </div>
           </div>
         </div>
@@ -59,23 +60,25 @@ const RecipeNutrition: FC<Props> = ({ nutrients }) => {
         <div className="flex flex-col">
           <div className="flex w-full justify-between">
             <span>Fiber:</span>
-            <span>{nutrients.fiber || "-"}</span>
+            <span>{formatTwoDecimals(nutrients.fiber) || "-"}</span>
           </div>
           <div className="flex w-full justify-between">
             <span>Net carbs:</span>
             <span>
-              {Number(nutrients.carbohydrates) - Number(nutrients.fiber) || "-"}
+              {formatTwoDecimals(
+                Number(nutrients.carbohydrates) - Number(nutrients.fiber)
+              ) || "-"}
             </span>
           </div>
         </div>
         <div className="flex flex-col">
           <div className="flex w-full justify-between">
             <span>Sodium:</span>
-            <span>{nutrients.sodium || "-"}</span>
+            <span>{formatTwoDecimals(nutrients.sodium) || "-"}</span>
           </div>
           <div className="flex w-full justify-between">
             <span>Cholesterol:</span>
-            <span>{nutrients.cholesterol || "-"}</span>
+            <span>{formatTwoDecimals(nutrients.cholesterol) || "-"}</span>
           </div>
         </div>
         <button

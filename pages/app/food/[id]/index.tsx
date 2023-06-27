@@ -15,13 +15,13 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import AddToFavorite from "@/features/favorites/components/AddToFavorite";
 import BackButton from "@/components/Buttons/BackButton";
 import Image from "next/image";
 import PremiumLayout from "@/layouts/PremiumLayout";
-import Spinner from "@/components/Loader/Spinner";
-import AddToFavorite from "@/features/favorites/components/AddToFavorite";
-import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
 import PremiumNav from "@/layouts/components/Nav/PremiumNav";
+import Spinner from "@/components/Loader/Spinner";
+import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
 
 export default function Page() {
   const router = useRouter();
@@ -87,7 +87,7 @@ export default function Page() {
                     alt={`${food.food_name}`}
                     width={500}
                     height={500}
-                    className="m-auto h-[300px] w-[300px] rounded-lg object-cover"
+                    className="m-auto h-[300px] w-[300px] rounded-lg border border-gray-300/50 object-cover dark:border-gray-500"
                   />
                   <span className="text-center opacity-50">
                     {food.food_description}

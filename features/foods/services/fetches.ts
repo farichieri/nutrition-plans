@@ -5,34 +5,38 @@ import {
   getCountFromServer,
   getDoc,
   getDocs,
-  limit,
   query,
   where,
 } from "firebase/firestore";
+import { ALGOLIA_FOODS_INDEX_NAME, algoliaClient } from "@/lib/algolia";
+import { db } from "@/services/firebase/firebase.config";
 import { Food, FoodGroup } from "@/features/foods";
 import { Result } from "@/types";
-import { db } from "@/services/firebase/firebase.config";
 
 const fetchCuratedFoods = async ({
-  food_name_lowercase,
+  food_name,
 }: {
-  food_name_lowercase: string;
+  food_name: string;
 }): Promise<Result<FoodGroup, unknown>> => {
-  console.log(`Fetching CuratedFoods by name: '${food_name_lowercase}'`);
+  console.log(`Fetching CuratedFoods by name: '${food_name}'`);
+  // I'm sorting and filtering by the returned value.
   try {
     let data: FoodGroup = {};
-    const foodsRef = collection(db, "foods");
-    let q = query(
-      foodsRef,
-      where("food_name_lowercase", ">=", `${food_name_lowercase}`),
-      where("food_name_lowercase", "<=", `${food_name_lowercase}z`),
-      where("curated", "==", true),
-      limit(40)
-    );
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((food: any) => {
-      data[food.id] = food.data();
+    const index = algoliaClient.initIndex(ALGOLIA_FOODS_INDEX_NAME);
+    const res = await index.search(food_name, {
+      filters: "curated:true",
+      hitsPerPage: 40,
     });
+    console.log({ res });
+    if (res.hits.length === 0) {
+      throw new Error("No foods found");
+    }
+
+    res.hits.forEach((food: any) => {
+      data[food.objectID] = food;
+    });
+
+    console.log("fetchCuratedFoods", { data });
     return { result: "success", data };
   } catch (error) {
     console.log({ error: `Error fetching Food: ${error}` });
@@ -41,28 +45,27 @@ const fetchCuratedFoods = async ({
 };
 
 const fetchUserFoods = async ({
-  food_name_lowercase,
+  food_name,
   uploader_id,
 }: {
-  food_name_lowercase: string;
+  food_name: string;
   uploader_id?: string;
 }): Promise<Result<FoodGroup, unknown>> => {
-  console.log(`Fetching UserFoods by name: '${food_name_lowercase}'`);
+  console.log(`Fetching UserFoods by name: '${food_name}'`);
+  // I'm sorting and filtering by the returned value.
   try {
-    console.log({ food_name_lowercase });
     let data: FoodGroup = {};
-    const foodsRef = collection(db, "foods");
-    let q = query(
-      foodsRef,
-      where("food_name_lowercase", ">=", `${food_name_lowercase}`),
-      where("food_name_lowercase", "<=", `${food_name_lowercase}z`),
-      where("uploader_id", "==", `${uploader_id}`),
-      limit(40)
-    );
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((food: any) => {
-      data[food.id] = food.data();
+    const index = algoliaClient.initIndex(ALGOLIA_FOODS_INDEX_NAME);
+    const res = await index.search(food_name, {
+      filters: `uploader_id:${uploader_id}`,
+      hitsPerPage: 40,
     });
+
+    res.hits.forEach((food: any) => {
+      data[food.objectID] = food;
+    });
+
+    console.log("fetchUserFoods", { data });
     return { result: "success", data };
   } catch (error) {
     console.log({ error: `Error fetching Food: ${error}` });
@@ -71,27 +74,35 @@ const fetchUserFoods = async ({
 };
 
 const fetchFoods = async ({
-  food_name_lowercase,
+  food_name,
   uploader_id,
 }: {
-  food_name_lowercase: string;
+  food_name: string;
   uploader_id?: string;
 }): Promise<Result<FoodGroup, unknown>> => {
-  console.log(`Fetching Foods by name: '${food_name_lowercase}'`);
+  console.log(`Fetching Foods by name: '${food_name}'`);
   try {
-    console.log({ food_name_lowercase });
+    console.log({ food_name });
     let data: FoodGroup = {};
 
     const [curatedFoodsRes, userFoodsRes] = await Promise.all([
-      fetchCuratedFoods({ food_name_lowercase }),
-      fetchUserFoods({ food_name_lowercase, uploader_id }),
+      fetchCuratedFoods({ food_name }),
+      fetchUserFoods({ food_name, uploader_id }),
     ]);
 
     if (
       curatedFoodsRes.result === "success" &&
       userFoodsRes.result === "success"
     ) {
-      data = { ...curatedFoodsRes.data, ...userFoodsRes.data };
+      const resData = { ...curatedFoodsRes.data, ...userFoodsRes.data };
+      const algoliaIDs = Object.keys(resData);
+      const firebaseDocs = await fetchFoodsByIDS(algoliaIDs);
+
+      if (firebaseDocs.result === "success") {
+        data = firebaseDocs.data;
+      } else {
+        throw new Error("Error fetching foods.");
+      }
     } else {
       throw new Error("Error fetching foods.");
     }

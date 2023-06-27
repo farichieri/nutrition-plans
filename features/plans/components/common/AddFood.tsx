@@ -76,7 +76,7 @@ const AddFood: FC<Props> = ({ dietMeal }) => {
       )}
       <button
         onClick={handleOpen}
-        className="mr-auto flex rounded-md border px-4 py-1 duration-100 hover:border-green-500 hover:bg-green-800 active:bg-green-600"
+        className="mr-auto flex rounded-md border border-green-500 bg-green-500/50 px-4 py-1 duration-100 hover:border-green-500 hover:bg-green-800 active:bg-green-600"
       >
         Add Food
       </button>

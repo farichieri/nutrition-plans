@@ -22,7 +22,6 @@ import { UserAccount } from "@/features/authentication";
 const fetchMeals = async (
   userID: string
 ): Promise<Result<UserMeals, unknown>> => {
-  console.log("Fetching Meals");
   try {
     let data: UserMeals = {};
     const userMealsRef = query(collection(db, "users", userID, "meals"));
@@ -40,7 +39,6 @@ const fetchMeals = async (
 const fetchMealsSettings = async (
   userID: string
 ): Promise<Result<UserMeals, unknown>> => {
-  console.log("Fetching MealsSettings");
   try {
     let data: MealsSettings = {};
     const userMealsSettingsRef = query(

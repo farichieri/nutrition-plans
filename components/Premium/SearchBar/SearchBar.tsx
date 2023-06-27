@@ -31,11 +31,13 @@ const SearchBar: FC<Props> = ({ queries }) => {
     if (!user?.user_id) return;
     setIsSearching(true);
     const res = await fetchFoods({
-      food_name_lowercase: input,
+      food_name: input,
       uploader_id: user?.user_id,
     });
     if (res.result === "success") {
       dispatch(setFoodsSearched({ foods: res.data, user_id: user.user_id }));
+    } else {
+      dispatch(setFoodsSearched({ foods: {}, user_id: user.user_id }));
     }
     setIsSearching(false);
     dispatch(setIsSearchingFoods(false));
@@ -88,7 +90,7 @@ const SearchBar: FC<Props> = ({ queries }) => {
         <div
           className={`${
             windowWidth > 768 ? "relative" : "fixed"
-          } left-0 top-0 z-[100] flex h-full w-full items-center justify-center px-4 bg-primary-color`}
+          } left-0 top-0 z-[100] flex h-full w-full items-center justify-center bg-primary-color px-4`}
         >
           <div className="mr-2 flex cursor-pointer items-center justify-center md:hidden ">
             <IoMdArrowBack

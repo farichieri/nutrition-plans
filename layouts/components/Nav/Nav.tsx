@@ -46,16 +46,16 @@ const NavBar: FC<Props> = () => {
 
   const PAGES = [
     { name: "Plans", url: "/plans" },
-    { name: "Pricing", url: "/pricing" },
-    { name: "About", url: "/about" },
     { name: "Blog", url: "/blog" },
+    { name: "About", url: "/about" },
+    { name: "Pricing", url: "/pricing" },
   ];
 
   const MOBILE_PAGES = [
-    { name: "Blog", url: "/blog", onClick: handleMenu },
     { name: "Plans", url: "/plans", onClick: handleMenu },
-    { name: "Pricing", url: "/pricing", onClick: handleMenu },
+    { name: "Blog", url: "/blog", onClick: handleMenu },
     { name: "About", url: "/about", onClick: handleMenu },
+    { name: "Pricing", url: "/pricing", onClick: handleMenu },
   ];
 
   return (

@@ -18,8 +18,6 @@ const addFood = async (
     if (!food.food_name) throw new Error("No food_name provided");
     const docRef = doc(collection(db, "foods"));
 
-    console.log({ food });
-
     let img = DEFAULT_IMAGE;
     if (newImage) {
       const imgResponse = await uploadImage(newImage, docRef.id);
@@ -33,9 +31,20 @@ const addFood = async (
     if (result === "error") throw new Error("Error getting index");
     const index = indexResponse.data;
 
-    const numIngredients = Object.keys(food.ingredients).length;
+    const ingredients = food.ingredients;
+    const numIngredients = Object.keys(ingredients).length;
     const complexity =
       1 + numIngredients + food.prep_time + food.cook_time * 0.2;
+
+    // Add the ingredients names and descriptions to the food:
+    let ingredients_names: string[] = [];
+    let ingredients_descriptions: string[] = [];
+    if (numIngredients > 0) {
+      for (let key in ingredients) {
+        ingredients_names.push(ingredients[key].food_name!);
+        ingredients_descriptions.push(ingredients[key].food_description!);
+      }
+    }
 
     // Add the default scale:
     const newScales = [...food.scales];
@@ -58,15 +67,18 @@ const addFood = async (
       food_name_lowercase: food.food_name.toLowerCase(),
       image: img,
       index: index,
+      ingredients_descriptions: ingredients_descriptions,
+      ingredients_names: ingredients_names,
       kind: kind,
       num_ingredients: numIngredients,
       nutrients: { ...food.nutrients },
+      scale_amount: scale_amount,
+      scale_name: scale_name,
       scales: newScales,
       total_time: food.cook_time + food.prep_time,
       uploader_id: user.user_id,
-      scale_name: scale_name,
-      scale_amount: scale_amount,
     };
+    console.log({ newFood });
     await setDoc(docRef, newFood);
     return { result: "success", data: newFood };
   } catch (error) {

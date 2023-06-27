@@ -14,7 +14,9 @@ import {
   updateNewRecipeState,
   IngredientGroup,
   Instruction,
+  addNewFood,
 } from "@/features/foods";
+import { BiSolidPieChartAlt2 } from "react-icons/bi";
 import { FC, useEffect, useState } from "react";
 import { generateOptions } from "@/utils";
 import { getNutritionMerged, getRecipeSize } from "@/utils/nutritionHelpers";
@@ -30,12 +32,11 @@ import FormAction from "@/components/Form/FormAction";
 import FormInput from "@/components/Form/FormInput";
 import FormSelect from "@/components/Form/FormSelect";
 import Image from "next/image";
-import RecipeNutrition from "./RecipeNutrition";
+import Ingredients from "./Ingredients";
 import Instructions from "./Instructions";
 import NutritionInput from "@/components/Form/NutritionInput";
-import Ingredients from "./Ingredients";
+import RecipeNutrition from "./RecipeNutrition";
 import TranspLoader from "@/components/Loader/TranspLoader";
-import { BiSolidPieChartAlt2 } from "react-icons/bi";
 
 interface FormValues extends Recipe {}
 
@@ -100,6 +101,7 @@ const RecipeCreate: FC<Props> = () => {
     if (res.result === "success") {
       setNewImageFile(undefined);
       dispatch(setNewRecipeState(NewFood));
+      dispatch(addNewFood(res.data));
       alert("Recipe created successfully");
       router.push(`/app/food/${res.data.food_id}`);
     } else {
@@ -259,7 +261,7 @@ const RecipeCreate: FC<Props> = () => {
                   })}
                 </div>
                 <div className="text-red-500">
-                  <p>{errors.food_type?.message}</p>
+                  <span>{errors.food_type?.message}</span>
                 </div>
               </div>
               <div>
@@ -281,7 +283,7 @@ const RecipeCreate: FC<Props> = () => {
                   })}
                 </div>
                 <div className="text-red-500">
-                  <p>{errors.compatible_plans?.message}</p>
+                  <span>{errors.compatible_plans?.message}</span>
                 </div>
               </div>
             </div>
@@ -301,7 +303,7 @@ const RecipeCreate: FC<Props> = () => {
                 handleUpdateIngredients={handleUpdateIngredients}
               />
               <div className="text-red-500">
-                <p>{errors?.ingredients?.message?.toString()}</p>
+                <span>{errors?.ingredients?.message?.toString()}</span>
               </div>
             </div>
             <div className="flex max-w-xl flex-col gap-2 rounded-md border p-2">

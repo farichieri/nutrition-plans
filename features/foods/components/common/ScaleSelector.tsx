@@ -92,8 +92,6 @@ const ScaleSelector: FC<Props> = ({
     }
   }, [scale_amount, scale_name]);
 
-  console.log({ scale_name, scale_amount });
-
   return (
     <div className="flex w-full flex-col gap-2">
       <div className="flex w-full items-center justify-between gap-4">

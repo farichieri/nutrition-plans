@@ -25,6 +25,8 @@ export interface Food {
   glucemic_status: GlucemicStatusEnum | null;
   image: string;
   index: number;
+  ingredients_descriptions: string[];
+  ingredients_names: string[];
   ingredients: IngredientGroup;
   instructions: Instruction[];
   is_deleted: boolean;

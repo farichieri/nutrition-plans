@@ -3,11 +3,11 @@ import {
   selectFoodsSlice,
   setFoodsSearched,
 } from "@/features/foods";
+import { MdSearch } from "react-icons/md";
 import { selectAuthSlice } from "@/features/authentication";
 import { useDispatch, useSelector } from "react-redux";
 import React, { FC, useEffect, useState } from "react";
 import Spinner from "@/components/Loader/Spinner";
-import { MdSearch } from "react-icons/md";
 
 interface Props {
   onFocus?: Function;
@@ -27,11 +27,13 @@ const SearchBarCreate: FC<Props> = ({ onFocus, preFetch }) => {
     if (!user?.user_id) return;
     setIsSearching(true);
     const res = await fetchFoods({
-      food_name_lowercase: input,
+      food_name: input,
       uploader_id: user?.user_id,
     });
     if (res.result === "success") {
       dispatch(setFoodsSearched({ foods: res.data, user_id: user.user_id }));
+    } else {
+      dispatch(setFoodsSearched({ foods: {}, user_id: user.user_id }));
     }
     setIsSearching(false);
     // dispatch(setIsSearchingFoods(false));

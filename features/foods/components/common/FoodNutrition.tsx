@@ -45,8 +45,6 @@ const FoodNutrition: FC<Props> = ({ food, amount, scale }) => {
     return <div>Loading...</div>;
   }
 
-  console.log({ nutrients });
-
   return (
     <div className="flex w-full justify-center">
       {openDetails && (

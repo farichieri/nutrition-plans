@@ -59,7 +59,7 @@ const IngredientsSelector: FC<Props> = ({ handleUpdateIngredients }) => {
 
   return (
     <>
-      <div className="flex w-full flex-col p-4">
+      <div className="flex w-full flex-col">
         <SearchBarCreate
           onFocus={() => setOpenIngredients(true)}
           preFetch={false}
@@ -96,11 +96,14 @@ const IngredientsSelector: FC<Props> = ({ handleUpdateIngredients }) => {
         )}
       </div>
       {openIngredients && (
-        <div className="relative flex flex-col gap-1 rounded-md">
+        <div className="relative flex w-full flex-col rounded-md ">
           {foodModal && (
             <div className="absolute flex h-full w-full flex-col gap-1 overflow-auto rounded-md bg-gray-200 dark:bg-black">
               <div className="relative flex h-full flex-col gap-1 overflow-auto rounded-md border p-1">
-                <MdClose onClick={handleCloseIngredient} className=" ml-auto h-6 w-6 cursor-pointer" />
+                <MdClose
+                  onClick={handleCloseIngredient}
+                  className=" ml-auto h-6 w-6 cursor-pointer"
+                />
                 <FoodModal
                   handleClose={handleCloseIngredient}
                   food={foodModal}
@@ -109,7 +112,7 @@ const IngredientsSelector: FC<Props> = ({ handleUpdateIngredients }) => {
               </div>
             </div>
           )}
-          <div className="max-h-[50vh] overflow-auto border-y py-2">
+          <div className="flex max-h-[50vh] w-full flex-col gap-1 overflow-auto border-y py-2">
             <SearchedResults
               searchResult={searchResult}
               handleClick={handleOpenIngredient}
