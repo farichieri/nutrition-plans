@@ -8,6 +8,7 @@ import { FC, useState } from "react";
 import { StartsOfWeek } from "@/types";
 import { SubmitButton } from "@/components/Buttons";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-hot-toast";
 
 interface Props {}
 
@@ -31,10 +32,12 @@ const SetStartOfWeek: FC<Props> = () => {
       const res = await updateUser(userUpdated);
       if (res.result === "success") {
         dispatch(setUpdateUser(userUpdated));
+        toast.success("Start of week updated");
       }
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
+      toast.error("Error updating start of week");
     }
   };
 
@@ -74,6 +77,9 @@ const SetStartOfWeek: FC<Props> = () => {
         </div>
       </BoxMainContent>
       <BoxBottomBar>
+        <span className="text-sm opacity-50">
+          Choose your preferred Start Of Week
+        </span>
         <SubmitButton
           className={"ml-auto h-9 w-16 text-sm"}
           onClick={handleSubmit}

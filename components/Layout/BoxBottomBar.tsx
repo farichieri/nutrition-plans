@@ -5,7 +5,7 @@ interface Props {
 }
 const BoxBottomBar: FC<Props> = ({ children }) => {
   return (
-    <div className="flex w-full justify-between border-t bg-slate-300/20 p-4 dark:bg-gray-500/10">
+    <div className="flex min-h-[53px] w-full items-center justify-between border-t bg-slate-300/20 px-4 py-2 dark:bg-gray-600/30">
       {children}
     </div>
   );

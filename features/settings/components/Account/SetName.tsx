@@ -1,50 +1,81 @@
+import {
+  selectAuthSlice,
+  setUpdateUser,
+  updateUser,
+} from "@/features/authentication";
 import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
-import { FC, useState } from "react";
-import { selectAuthSlice } from "@/features/authentication";
+import { FC, FormEvent, useState } from "react";
 import { SubmitButton } from "@/components/Buttons";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-hot-toast";
 
 interface Props {}
 
 const SetName: FC<Props> = () => {
+  const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
   const [isLoading, setIsLoading] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(true);
+  const [input, setInput] = useState(user?.display_name || "");
 
-  const handleSubmit = () => {};
+  if (!user) return <></>;
+
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+    try {
+      setIsLoading(true);
+      const userUpdated = {
+        ...user,
+        display_name: input,
+      };
+      const res = await updateUser(userUpdated);
+      if (res.result === "success") {
+        dispatch(setUpdateUser(userUpdated));
+        toast.success("Name updated successfully");
+      }
+    } catch (error) {
+      toast.error("Failed to update name");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <Box>
-      <BoxMainContent>
-        <div className="flex flex-col gap-5">
-          <span className="text-3xl font-semibold">Your Name</span>
-          <span>
-            Please enter your full name, or a display name you are comfortable
-            with.
-          </span>
+      <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
+        <BoxMainContent>
+          <div className="flex flex-col gap-5">
+            <span className="text-3xl font-semibold">Your Name</span>
+            <span>
+              Please enter your full name, or a display name you are comfortable
+              with.
+            </span>
+            <div>
+              <input
+                className="text-ellipsis rounded-md border bg-transparent px-2 py-2 outline-none "
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                autoCorrect="off"
+                autoComplete="off"
+                autoCapitalize="off"
+              />
+            </div>
+          </div>
+        </BoxMainContent>
+        <BoxBottomBar>
+          <span className="text-sm opacity-50"></span>{" "}
           <div>
-            <input
-              className="cursor-default text-ellipsis rounded-md border bg-transparent px-2 py-2 outline-none "
-              type="text"
-              value={String(user?.display_name)}
-              readOnly
+            <SubmitButton
+              className={"h-9 w-16 text-sm"}
+              onClick={handleSubmit}
+              loadMessage={""}
+              content="Save"
+              isLoading={isLoading}
+              isDisabled={input === user.display_name || !input}
             />
           </div>
-        </div>
-      </BoxMainContent>
-      <BoxBottomBar>
-        <span className="text-sm opacity-50"></span>
-        <div>
-          <SubmitButton
-            className={"h-9 w-16 text-sm"}
-            onClick={handleSubmit}
-            loadMessage={""}
-            content="Save"
-            isLoading={isLoading}
-            isDisabled={isDisabled}
-          />
-        </div>
-      </BoxBottomBar>
+        </BoxBottomBar>
+      </form>
     </Box>
   );
 };

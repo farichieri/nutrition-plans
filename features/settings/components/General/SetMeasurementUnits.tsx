@@ -3,11 +3,12 @@ import {
   setUpdateUser,
 } from "@/features/authentication/slice";
 import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
-import { ButtonType, MeasurementUnits } from "@/types";
 import { FC, useEffect, useState } from "react";
+import { MeasurementUnits } from "@/types";
+import { SubmitButton } from "@/components/Buttons";
+import { toast } from "react-hot-toast";
 import { updateUser } from "@/features/authentication/services";
 import { useDispatch, useSelector } from "react-redux";
-import ActionButton from "@/components/Buttons/ActionButton";
 
 interface Props {}
 
@@ -21,21 +22,23 @@ const SetMeasurementUnits: FC<Props> = () => {
 
   const handleSave = async () => {
     if (!user || !MU) return;
-    const userUpdated = {
-      ...user,
-      measurement_unit: MU,
-    };
-    setIsSaving(true);
-    const res = await updateUser(userUpdated);
-    if (res.result === "success") {
-      dispatch(setUpdateUser(userUpdated));
+    try {
+      const userUpdated = {
+        ...user,
+        measurement_unit: MU,
+      };
+      setIsSaving(true);
+      const res = await updateUser(userUpdated);
+      if (res.result === "success") {
+        dispatch(setUpdateUser(userUpdated));
+        toast.success("Measurement units updated successfully");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to update measurement units");
+    } finally {
+      setIsSaving(false);
     }
-    setIsSaving(false);
-  };
-
-  const handleCancel = (event: React.MouseEvent) => {
-    event.preventDefault();
-    setMU(userMU);
   };
 
   useEffect(() => {
@@ -57,8 +60,8 @@ const SetMeasurementUnits: FC<Props> = () => {
               <button
                 className={`rounded-md border px-2 py-0.5 font-medium shadow-lg ${
                   MU === type
-                    ? "border-green-500 bg-green-500/50 text-white shadow-inner"
-                    : "border-slate-400 bg-slate-300/50 text-black"
+                    ? "border-green-500 bg-green-500/50 shadow-inner"
+                    : " bg-slate-300/20 "
                 }`}
                 key={type}
                 value={type}
@@ -66,33 +69,33 @@ const SetMeasurementUnits: FC<Props> = () => {
               >
                 <span className="text-xl font-semibold capitalize">{type}</span>
                 {type === MeasurementUnits.metric ? (
-                  <div className="flex flex-col">
-                    <div className="flex items-center gap-1">
-                      <span className="text-sm">Height:</span>
-                      <span>Centimeter - cm</span>
+                  <div className="flex w-32 flex-col">
+                    <div className="flex items-center justify-between gap-1">
+                      <span className="text-sm opacity-70">Height:</span>
+                      <span>cm</span>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <span className="text-sm">Weight:</span>
-                      <span>Kilograms - kg</span>
+                    <div className="flex items-center justify-between gap-1">
+                      <span className="text-sm opacity-70">Weight:</span>
+                      <span>kg</span>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <span className="text-sm">Water:</span>
-                      <span>Liters - lts</span>
+                    <div className="flex items-center justify-between gap-1">
+                      <span className="text-sm opacity-70">Water:</span>
+                      <span>lts</span>
                     </div>
                   </div>
                 ) : (
-                  <div className="flex flex-col">
-                    <div className="flex items-center gap-1">
-                      <span className="text-sm">Height:</span>
-                      <span>Inches and feets</span>
+                  <div className="flex w-32 flex-col">
+                    <div className="flex items-center justify-between gap-1">
+                      <span className="text-sm opacity-70">Height:</span>
+                      <span>in & ft</span>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <span className="text-sm">Weight:</span>
-                      <span>Pounds - lbs</span>
+                    <div className="flex items-center justify-between gap-1">
+                      <span className="text-sm opacity-70">Weight:</span>
+                      <span>lbs</span>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <span className="text-sm">Water:</span>
-                      <span>Fluid Onces - fl oz</span>
+                    <div className="flex items-center justify-between gap-1">
+                      <span className="text-sm opacity-70">Water:</span>
+                      <span>fl oz</span>
                     </div>
                   </div>
                 )}
@@ -103,16 +106,17 @@ const SetMeasurementUnits: FC<Props> = () => {
       </BoxMainContent>
 
       <BoxBottomBar>
+        <span className="text-sm opacity-50">
+          Choose your preferred Measurement Units
+        </span>
         <div className="ml-auto flex items-center justify-center gap-2">
-          <ActionButton
-            loadMessage="Saving..."
+          <SubmitButton
+            className={"h-9 w-16 text-sm"}
+            onClick={handleSave}
+            loadMessage={""}
             content="Save"
             isLoading={isSaving}
             isDisabled={isDisabled}
-            type={ButtonType.save}
-            className="w-full"
-            onClick={handleSave}
-            action="submit"
           />
         </div>
       </BoxBottomBar>

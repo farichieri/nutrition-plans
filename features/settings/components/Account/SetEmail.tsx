@@ -30,7 +30,9 @@ const SetEmail: FC<Props> = () => {
         </div>
       </BoxMainContent>
       <BoxBottomBar>
-        <span className="text-sm opacity-50"></span>
+        <span className="text-sm opacity-50">
+          It is not possible to update your email for now
+        </span>
         <div>
           <SubmitButton
             className={"h-9 w-16 text-sm"}
