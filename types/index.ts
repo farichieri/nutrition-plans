@@ -45,6 +45,10 @@ export enum FilterSortTypes {
   higher_calories = "higher_calories",
   lower_calories = "lower_calories",
 }
+export enum StartsOfWeek {
+  sunday = "sunday",
+  monday = "monday",
+}
 
 // Posts
 export interface Post {

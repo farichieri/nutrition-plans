@@ -6,7 +6,6 @@ import {
   setDiet,
   setIsLoadingDiet,
   ManualMeals,
-  Nutrition,
   PlanGenerator,
 } from "@/features/plans";
 import { FC, useEffect } from "react";
@@ -51,7 +50,7 @@ const WeekPlan: FC<Props> = ({ dateInterval }) => {
     }
   }, [dateInterval]);
 
-  if (!user) return <></>;
+  if (!user || !user.startOfWeek) return <></>;
   return (
     <div className="w-full">
       {isLoadingDiet ? (
@@ -63,7 +62,10 @@ const WeekPlan: FC<Props> = ({ dateInterval }) => {
           {!week && "Invalid Week"}
           {week?.map((date) => {
             const diet = diets[date];
-            const dateF = convertDateToDateString(date);
+            const dateF = convertDateToDateString({
+              date,
+              userStartOfWeek: user?.startOfWeek,
+            });
             const urlDate = convertDayToUrlDate(date);
             const planID = diet?.plan_id;
             const calories = diet?.diet_nutrition?.calories;

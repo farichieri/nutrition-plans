@@ -37,7 +37,7 @@ const SubmitButton = ({
       {isLoading ? (
         <Spinner customClass="h-5 w-5" />
       ) : (
-        <div className="flex w-full items-center justify-center text-white">
+        <div className="flex w-full items-center justify-center">
           {icon && icon}
           <span>{content}</span>
         </div>

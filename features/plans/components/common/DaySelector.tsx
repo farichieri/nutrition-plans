@@ -17,10 +17,12 @@ import {
 } from "@/features/plans";
 import { BaseDatesEnum } from "@/types/datesTypes";
 import { FC, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { MdArrowLeft, MdArrowRight } from "react-icons/md";
+import { selectAuthSlice } from "@/features/authentication";
+import { StartsOfWeek } from "@/types";
+import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import RoundButton from "@/components/Buttons/RoundButton";
-import { MdArrowBack, MdArrowLeft, MdArrowRight } from "react-icons/md";
 
 interface Props {
   date: string;
@@ -33,18 +35,35 @@ const selectedClass = "after:origin-bottom-left after:scale-x-100";
 
 const DaySelector: FC<Props> = ({ date }) => {
   const dispatch = useDispatch();
-  const tomorrow = getTomorrow();
-  const yesterday = getYesterday();
-  const nextWeek = getNextWeek();
-  const lastWeek = getLastWeek();
-  const todayRoute = `/app/${BaseDatesEnum.today}`;
-  const thisWeekRoute = `/app/${BaseDatesEnum.this_week}`;
-
-  const dateF = String(getRealDate(date));
+  const { user } = useSelector(selectAuthSlice);
+  const dateF = String(
+    getRealDate({
+      date,
+      userStartOfWeek: StartsOfWeek[user?.startOfWeek || "sunday"],
+    })
+  );
   const isWeek = getIsWeek(dateF);
   const isToday = getIsToday(dateF);
   const weekDates = isWeek && String(dateF).split("~");
-  const startOfWeek = weekDates && getStartOfWeek(weekDates[0]);
+
+  useEffect(() => {
+    dispatch(setPlansDate(dateF));
+  }, [dateF]);
+
+  if (!user || !user.startOfWeek) return <></>;
+  const { startOfWeek } = user;
+
+  const startWeek =
+    weekDates &&
+    getStartOfWeek({ date: weekDates[0], userStartOfWeek: startOfWeek });
+
+  const tomorrow = getTomorrow();
+  const yesterday = getYesterday();
+  const nextWeek = getNextWeek({ userStartOfWeek: startOfWeek });
+  const lastWeek = getLastWeek({ userStartOfWeek: startOfWeek });
+
+  const todayRoute = `/app/${BaseDatesEnum.today}`;
+  const thisWeekRoute = `/app/${BaseDatesEnum.this_week}`;
 
   const backRoute = () => {
     let baseURL = `/app/`;
@@ -60,18 +79,22 @@ const DaySelector: FC<Props> = ({ date }) => {
       case BaseDatesEnum.next_week:
         return baseURL + BaseDatesEnum.this_week;
       case BaseDatesEnum.last_week:
-        if (startOfWeek) {
-          return baseURL + restOneWeek(startOfWeek);
+        if (startWeek) {
+          return (
+            baseURL +
+            restOneWeek({ date: startWeek, userStartOfWeek: startOfWeek })
+          );
         } else {
           return baseURL + BaseDatesEnum.this_week;
         }
       default:
-        if (isWeek && startOfWeek) {
+        if (isWeek && startWeek) {
           return (
             baseURL +
-            (restOneWeek(startOfWeek) === nextWeek
+            (restOneWeek({ date: startWeek, userStartOfWeek: startOfWeek }) ===
+            nextWeek
               ? BaseDatesEnum.next_week
-              : restOneWeek(startOfWeek))
+              : restOneWeek({ date: startWeek, userStartOfWeek: startOfWeek }))
           );
         } else {
           return (
@@ -96,20 +119,24 @@ const DaySelector: FC<Props> = ({ date }) => {
       case BaseDatesEnum.this_week:
         return baseURL + BaseDatesEnum.next_week;
       case BaseDatesEnum.next_week:
-        if (startOfWeek) {
-          return baseURL + addOneWeek(startOfWeek);
+        if (startWeek) {
+          return (
+            baseURL +
+            addOneWeek({ date: startWeek, userStartOfWeek: startOfWeek })
+          );
         } else {
           return baseURL + BaseDatesEnum.this_week;
         }
       case BaseDatesEnum.last_week:
         return baseURL + BaseDatesEnum.this_week;
       default:
-        if (isWeek && startOfWeek) {
+        if (isWeek && startWeek) {
           return (
             baseURL +
-            (addOneWeek(startOfWeek) === lastWeek
+            (addOneWeek({ date: startWeek, userStartOfWeek: startOfWeek }) ===
+            lastWeek
               ? BaseDatesEnum.last_week
-              : addOneWeek(startOfWeek))
+              : addOneWeek({ date: startWeek, userStartOfWeek: startOfWeek }))
           );
         } else {
           return (
@@ -122,25 +149,24 @@ const DaySelector: FC<Props> = ({ date }) => {
     }
   };
 
-  useEffect(() => {
-    dispatch(setPlansDate(dateF));
-  }, [dateF]);
-
   return (
     <div className="m-auto flex w-full justify-between px-1 xs:px-2 s:px-3 sm:px-4 lg:px-10">
       <div className="ml-2 flex flex-col items-center justify-center">
         <div className="flex w-full max-w-sm items-center justify-center xs:gap-5 lg:w-auto">
           <Link href={backRoute()}>
             <RoundButton customClass="p-1.5 sm:h-10 sm:w-10 h-6 w-6">
-              <MdArrowLeft className="h-6 w-6" />
+              <MdArrowLeft className="h-6 w-6 min-w-fit" />
             </RoundButton>
           </Link>
           <span className="opacity-65 flex w-full min-w-max justify-center text-base font-medium capitalize text-green-500 sm:text-xl md:text-2xl lg:w-96">
-            {convertDateToDateString(dateF)}
+            {convertDateToDateString({
+              date: dateF,
+              userStartOfWeek: startOfWeek,
+            })}
           </span>
           <Link href={nextRoute()}>
             <RoundButton customClass="p-1.5 sm:h-10 sm:w-10 h-6 w-6">
-              <MdArrowRight className="h-6 w-6" />
+              <MdArrowRight className="h-6 w-6 min-w-fit" />
             </RoundButton>
           </Link>
         </div>

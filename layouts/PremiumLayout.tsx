@@ -13,7 +13,6 @@ import ConnectionError from "@/components/Layout/ConnectionError";
 import Head from "next/head";
 import InstallModal from "@/components/InstallApp/InstallModal";
 import Loader from "../components/Loader/Loader";
-import Settings from "../components/Premium/Settings/Settings";
 import Sidebar from "./components/Sidebar/PremiumSidebar";
 import useOnlineStatus from "@/hooks/useOnlineStatus";
 import WelcomeSteps from "../components/WelcomeSteps/WelcomeSteps";
@@ -43,7 +42,6 @@ export default function PremiumLayout({ children }: Props) {
         <title>Nutrition Plans</title>
       </Head>
       {(isCreatingUser || isSigningUser) && <Loader />}
-      {isSettingsOpen && <Settings />}
       {user && <WelcomeSteps />}
       {!isOnline && <ConnectionError />}
       {showInstallModal && (

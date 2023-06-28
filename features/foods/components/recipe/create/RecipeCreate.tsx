@@ -23,6 +23,7 @@ import { getNutritionMerged, getRecipeSize } from "@/utils/nutritionHelpers";
 import { NewFood } from "@/types/initialTypes";
 import { schema } from "./utils";
 import { selectAuthSlice } from "@/features/authentication";
+import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
@@ -46,6 +47,7 @@ const RecipeCreate: FC<Props> = () => {
   const router = useRouter();
   const { newRecipeState } = useSelector(selectFoodsSlice);
   const { user } = useSelector(selectAuthSlice);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const form = useForm<FormValues>({
     defaultValues: newRecipeState,
@@ -93,6 +95,7 @@ const RecipeCreate: FC<Props> = () => {
     if (!user || isSubmitting) return;
     const recipeGrams = getRecipeSize(data.ingredients);
     if (!recipeGrams) return;
+    setIsLoading(true);
     const newFood: Recipe = {
       ...data,
       serving_grams: recipeGrams,
@@ -102,10 +105,11 @@ const RecipeCreate: FC<Props> = () => {
       setNewImageFile(undefined);
       dispatch(setNewRecipeState(NewFood));
       dispatch(addNewFood(res.data));
-      alert("Recipe created successfully");
       router.push(`/app/food/${res.data.food_id}`);
+      toast.success("Recipe created successfully");
     } else {
-      alert("Error creating recipe");
+      toast.error("Error creating Recipe");
+      setIsLoading(false);
     }
   };
 
@@ -129,7 +133,9 @@ const RecipeCreate: FC<Props> = () => {
 
   return (
     <>
-      {isSubmitting && <TranspLoader text={"Creating Recipe..."} />}
+      {(isSubmitting || isLoading) && (
+        <TranspLoader text={"Creating Recipe..."} />
+      )}
 
       <form
         noValidate

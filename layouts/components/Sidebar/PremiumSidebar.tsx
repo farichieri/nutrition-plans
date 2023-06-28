@@ -15,7 +15,6 @@ import {
 } from "react-icons/md";
 import {
   selectLayoutSlice,
-  setIsSettingsOpen,
   setSidebarAdminOpen,
   setSidebarEvolutionOpen,
   setSidebarOpen,
@@ -34,12 +33,8 @@ interface Props {}
 const PremiumSidebar: FC<Props> = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const {
-    sidebarEvolutionOpen,
-    sidebarAdminOpen,
-    isSettingsOpen,
-    sidebarOpen,
-  } = useSelector(selectLayoutSlice);
+  const { sidebarEvolutionOpen, sidebarAdminOpen, sidebarOpen } =
+    useSelector(selectLayoutSlice);
 
   const toggleEvolution = () => {
     if (sidebarEvolutionOpen === true) {
@@ -54,11 +49,6 @@ const PremiumSidebar: FC<Props> = () => {
     } else {
       dispatch(setSidebarAdminOpen(true));
     }
-  };
-
-  const handleOpenProfile = (event: React.MouseEvent) => {
-    event.preventDefault();
-    dispatch(setIsSettingsOpen(true));
   };
 
   const handleSidebar = () => {
@@ -136,6 +126,17 @@ const PremiumSidebar: FC<Props> = () => {
       pathname: ["/app/progress"],
       icon: <MdAutoGraph className="h-6 w-6 text-green-500" />,
     },
+    {
+      name: "Settings",
+      url: "/app/settings",
+      pathname: [
+        "/app/settings",
+        "/app/settings/general",
+        "/app/settings/billing",
+        "/app/settings/account",
+      ],
+      icon: <MdSettings className="h-6 w-6 text-green-500" />,
+    },
   ];
 
   const fixedOptClass =
@@ -179,15 +180,6 @@ const PremiumSidebar: FC<Props> = () => {
             <span className="text-xs">{page.name}</span>
           </Link>
         ))}
-        <button
-          onClick={() => dispatch(setIsSettingsOpen(true))}
-          className={`${
-            isSettingsOpen && "bg-slate-500/30 font-semibold "
-          } text-md hover:opacity-7 flex w-full flex-col items-center gap-1 rounded-lg border border-transparent px-1.5 py-1 text-center text-base duration-300 hover:bg-slate-500/30 active:border-gray-400 dark:active:border-white sm:text-lg`}
-        >
-          <MdSettings className="h-6 w-6 text-green-500" />
-          <span className="text-xs font-light">Settings</span>
-        </button>
       </div>
 
       <div
@@ -337,20 +329,18 @@ const PremiumSidebar: FC<Props> = () => {
             </div>
           </div>
 
-          <div
-            className="flex w-full flex-col items-center gap-2 py-1"
-            onClick={handleOpenProfile}
+          <Link
+            href={"/app/settings"}
+            className={
+              `${
+                router.asPath.includes("settings") &&
+                " bg-slate-500/30 font-semibold"
+              } px-2` + fixedOptClass
+            }
           >
-            <button
-              className={
-                `${isSettingsOpen && "bg-slate-500/30 font-semibold"}` +
-                fixedOptClass
-              }
-            >
-              <MdSettings className="h-6 w-6 text-green-500" />
-              <span>Settings</span>
-            </button>
-          </div>
+            <MdSettings className="h-6 w-6 text-green-500" />
+            <span>Settings</span>
+          </Link>
         </div>
         <div className="mx-auto flex w-full items-center justify-center px-2 py-1">
           <SubscribeButton />

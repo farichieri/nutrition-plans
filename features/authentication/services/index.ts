@@ -57,6 +57,7 @@ const generateUserObject = async (
       plan_selected: userData.plan_selected,
       premium_plan: userData.premium_plan,
       ratings: userData.ratings,
+      startOfWeek: userData.startOfWeek,
       user_id: userData.user_id,
       user_step: userData.user_step,
       weight_goal: userData.weight_goal,

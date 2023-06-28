@@ -87,7 +87,7 @@ export default function Page() {
                     alt={`${food.food_name}`}
                     width={500}
                     height={500}
-                    className="m-auto h-[300px] w-[300px] rounded-lg border border-gray-300/50 object-cover dark:border-gray-500"
+                    className="m-auto h-[300px] w-[300px] rounded-lg border border-gray-300/50 object-cover dark:border-transparent"
                   />
                   <span className="text-center opacity-50">
                     {food.food_description}

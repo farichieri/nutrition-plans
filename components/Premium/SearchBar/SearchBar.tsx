@@ -69,7 +69,7 @@ const SearchBar: FC<Props> = ({ queries }) => {
   }, [searchInput]);
 
   useEffect(() => {
-    fetchData((queries.q || "").toLocaleLowerCase());
+    fetchData((queries.q || " ").toLocaleLowerCase());
   }, [queries.q]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

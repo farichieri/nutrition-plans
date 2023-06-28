@@ -1,4 +1,9 @@
-import { MeasurementUnits, PlansEnum, SubscriptionState } from "@/types";
+import {
+  MeasurementUnits,
+  PlansEnum,
+  StartsOfWeek,
+  SubscriptionState,
+} from "@/types";
 
 export interface UserAccount {
   body_data: UserBodyData;
@@ -20,6 +25,7 @@ export interface UserAccount {
   user_id: string;
   user_step: UserSteps;
   weight_goal: WeightGoal;
+  startOfWeek: StartsOfWeek;
 }
 export interface UserCreatedData {
   body_data: UserBodyData;
@@ -171,6 +177,7 @@ export const newAccount: UserAccount = {
   user_id: "",
   user_step: UserSteps.step_1,
   weight_goal: initialWeightGoal,
+  startOfWeek: StartsOfWeek.sunday,
   first_data: {
     body_data: newBodyData,
   },

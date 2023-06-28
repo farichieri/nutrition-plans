@@ -9,8 +9,8 @@ interface AuthState {
   isSelectingPlan: boolean;
   isSigningUser: boolean;
   isVerifyingUser: boolean;
-  user: UserAccount | null;
   showInstallModal: boolean;
+  user: UserAccount | null;
 }
 
 const initialState: AuthState = {
@@ -19,8 +19,8 @@ const initialState: AuthState = {
   isSelectingPlan: false,
   isSigningUser: false,
   isVerifyingUser: false,
-  user: null,
   showInstallModal: true,
+  user: null,
 };
 
 export const authSlice = createSlice({
@@ -64,14 +64,14 @@ export const authSlice = createSlice({
 });
 
 export const {
-  setIsVerifyingUser,
-  setUser,
-  setIsCreatingUser,
-  setIsSigningUser,
-  setUpdateUser,
-  setLoginError,
-  setIsSelectingPlan,
   setBeforeInstallState,
+  setIsCreatingUser,
+  setIsSelectingPlan,
+  setIsSigningUser,
+  setIsVerifyingUser,
+  setLoginError,
+  setUpdateUser,
+  setUser,
 } = authSlice.actions;
 
 export const selectAuthSlice = (state: RootState) => state.auth;

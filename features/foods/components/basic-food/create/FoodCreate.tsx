@@ -39,6 +39,7 @@ import Image from "next/image";
 import NutritionInput from "@/components/Form/NutritionInput";
 import React, { FC, useEffect, useState } from "react";
 import TranspLoader from "@/components/Loader/TranspLoader";
+import { toast } from "react-hot-toast";
 
 interface FormValues extends Food {}
 
@@ -50,6 +51,7 @@ const FoodCreate: FC<Props> = () => {
   const { user } = useSelector(selectAuthSlice);
   const { newFoodState } = useSelector(selectFoodsSlice);
   const [optionalsOpen, setOptionalsOpen] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   let foodCategoryOptions = Object.keys(FoodCategoriesEnum);
   let foodGlucemicStatusOptions = Object.keys(GlucemicStatusEnum);
@@ -95,17 +97,18 @@ const FoodCreate: FC<Props> = () => {
   };
 
   const onSubmit = async (data: FormValues) => {
-    if (!user || isSubmitting) return;
+    if (!user || isSubmitting || isLoading) return;
+    setIsLoading(true);
     const res = await addFood(data, FoodKind.basic_food, newImageFile, user);
     if (res.result === "success") {
       dispatch(setNewFoodState(NewFood));
       setNewImageFile(undefined);
       dispatch(addNewFood(res.data));
-      router.push(`/app/food/${res.data.food_id}`).then(() => {
-        alert("Food created successfully");
-      });
+      router.push(`/app/food/${res.data.food_id}`);
+      toast.success("Food created successfully");
     } else {
-      alert("Error creating food");
+      toast.error("Error creating food");
+      setIsLoading(false);
     }
   };
 
@@ -152,7 +155,9 @@ const FoodCreate: FC<Props> = () => {
   return (
     <>
       {/* <DevTool control={control} /> */}
-      {isSubmitting && <TranspLoader text={"Creating Food..."} />}
+      {(isSubmitting || isLoading) && (
+        <TranspLoader text={"Creating Food..."} />
+      )}
       <form
         noValidate
         className="flex w-full flex-col gap-2"

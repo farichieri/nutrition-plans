@@ -3,16 +3,14 @@ import FavoritesTypeSelector from "@/features/favorites/components/FavoritesType
 import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 
-const App = () => {
+export default function Page() {
   return (
     <PremiumLayout>
-      <PremiumNav hideScrolling={false} title="favorites" />
+      <PremiumNav hideScrolling={false} title="" />
       <section className="m-auto flex w-full max-w-screen-2xl flex-col justify-center gap-5 px-4 pb-24 pt-4 sm:px-5 sm:pt-4">
         <FavoritesTypeSelector />
         <Favorites />
       </section>
     </PremiumLayout>
   );
-};
-
-export default App;
+}

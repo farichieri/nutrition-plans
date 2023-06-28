@@ -3,13 +3,29 @@ import {
   eachDayOfInterval,
   format,
   isValid,
-  startOfWeek,
   startOfMonth,
+  startOfWeek,
 } from "date-fns";
+import { StartsOfWeek } from "@/types";
 
 // in date-fns
 const SUNDAY = 0;
 const MONDAY = 1;
+
+const getStartOfWeekNumber = ({
+  userStartOfWeek,
+}: {
+  userStartOfWeek: StartsOfWeek;
+}) => {
+  switch (userStartOfWeek) {
+    case StartsOfWeek.sunday:
+      return SUNDAY;
+    case StartsOfWeek.monday:
+      return MONDAY;
+    default:
+      return SUNDAY;
+  }
+};
 
 const isValidDate = (date: string): boolean => {
   let result = true;
@@ -43,8 +59,17 @@ const getDatePlusDays = (date: string, days: number): string => {
   return formatToUSDate(result);
 };
 
-const getStartOfWeek = (date: string): string => {
-  const result = startOfWeek(new Date(date), { weekStartsOn: MONDAY });
+const getStartOfWeek = ({
+  date,
+  userStartOfWeek,
+}: {
+  date: string;
+  userStartOfWeek: StartsOfWeek;
+}): string => {
+  const startOfWeekNumber = getStartOfWeekNumber({ userStartOfWeek });
+  const result = startOfWeek(new Date(date), {
+    weekStartsOn: startOfWeekNumber,
+  });
   return formatToUSDate(result);
 };
 
@@ -53,8 +78,14 @@ const getStartOfMonth = (date: string): Date => {
   return result;
 };
 
-const restOneWeek = (date: string): string => {
-  const startWeek = getStartOfWeek(date);
+const restOneWeek = ({
+  date,
+  userStartOfWeek,
+}: {
+  date: string;
+  userStartOfWeek: StartsOfWeek;
+}): string => {
+  const startWeek = getStartOfWeek({ date, userStartOfWeek });
   const result = `${getDatePlusDays(startWeek, -7)}~${getDatePlusDays(
     startWeek,
     -1
@@ -62,8 +93,14 @@ const restOneWeek = (date: string): string => {
   return result;
 };
 
-const addOneWeek = (date: string): string => {
-  const startWeek = getStartOfWeek(date);
+const addOneWeek = ({
+  date,
+  userStartOfWeek,
+}: {
+  date: string;
+  userStartOfWeek: StartsOfWeek;
+}): string => {
+  const startWeek = getStartOfWeek({ date, userStartOfWeek });
   const result = `${getDatePlusDays(startWeek, 7)}~${getDatePlusDays(
     startWeek,
     13
@@ -88,20 +125,32 @@ const getYesterday = (): string => {
   return result;
 };
 
-const getThisWeek = (): string => {
-  const startWeek = getStartOfWeek(getToday());
+const getThisWeek = ({
+  userStartOfWeek,
+}: {
+  userStartOfWeek: StartsOfWeek;
+}): string => {
+  const startWeek = getStartOfWeek({ date: getToday(), userStartOfWeek });
   const result = `${startWeek}~${getDatePlusDays(startWeek, 6)}`;
   return result;
 };
 
-const getNextWeek = (): string => {
-  const startWeek = getStartOfWeek(getToday());
-  return addOneWeek(startWeek);
+const getNextWeek = ({
+  userStartOfWeek,
+}: {
+  userStartOfWeek: StartsOfWeek;
+}): string => {
+  const startWeek = getStartOfWeek({ date: getToday(), userStartOfWeek });
+  return addOneWeek({ date: startWeek, userStartOfWeek });
 };
 
-const getLastWeek = (): string => {
-  const startWeek = getStartOfWeek(getToday());
-  return restOneWeek(startWeek);
+const getLastWeek = ({
+  userStartOfWeek,
+}: {
+  userStartOfWeek: StartsOfWeek;
+}): string => {
+  const startWeek = getStartOfWeek({ date: getToday(), userStartOfWeek });
+  return restOneWeek({ date: startWeek, userStartOfWeek });
 };
 
 const getMonthDate = (date: string): string => {

@@ -19,14 +19,13 @@ export default function Page() {
   const { user } = useSelector(selectAuthSlice);
   const router = useRouter();
 
-  console.log({ user });
-
   useEffect(() => {
     if (!user) {
       router.push("/signup");
-    }
-    if (user?.is_profile_completed) {
-      router.push("/app");
+    } else {
+      if (user.is_profile_completed) {
+        router.push("/app/today");
+      }
     }
   }, [user, router]);
 

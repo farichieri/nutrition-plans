@@ -47,16 +47,14 @@ const Favorites: FC<Props> = () => {
   }
 
   return (
-    <div>
-      <div className="grid max-w-screen-2xl select-none grid-cols-fluid items-start justify-center gap-4 px-4 sm:px-0 lg:justify-start">
-        {noData ? (
-          <div className="m-auto">No favorites found 😔</div>
-        ) : (
-          sortFavorites(Object.values(favoriteFoods)).map((food) => (
-            <FoodCard food={food} key={food.food_id} />
-          ))
-        )}
-      </div>
+    <div className="grid max-w-screen-2xl select-none grid-cols-fluid items-start justify-center gap-4 px-0 sm:px-0 lg:justify-start">
+      {noData ? (
+        <div className="m-auto">No favorites found 😔</div>
+      ) : (
+        sortFavorites(Object.values(favoriteFoods)).map((food) => (
+          <FoodCard food={food} key={food.food_id} />
+        ))
+      )}
     </div>
   );
 };

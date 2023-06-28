@@ -1,7 +1,5 @@
 import { AppRoutes } from "@/utils";
 import { FC, ReactNode, useEffect, useState } from "react";
-import { selectLayoutSlice } from "@/store/slices/layoutSlice";
-import { useSelector } from "react-redux";
 import AvatarDropDown from "@/components/DropDown/AvatarDropDown/AvatarDropDown";
 import Feedback from "@/features/client-contact/components/Feedback/Feedback";
 import Link from "next/link";
@@ -18,7 +16,6 @@ interface Props {
 const PremiumNav: FC<Props> = ({ children, title, hideScrolling }) => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [show, setShow] = useState(true);
-  const { sidebarOpen } = useSelector(selectLayoutSlice);
   const windowWidth = useWindowWidth();
 
   const controlNavbar = () => {
@@ -47,7 +44,7 @@ const PremiumNav: FC<Props> = ({ children, title, hideScrolling }) => {
         !show && hideScrolling && "hidden"
       } fixed left-0 top-0 z-[65] flex w-full  select-none items-center justify-center`}
     >
-      <div className="flex h-[var(--nav-h)] w-full items-center justify-between gap-2 bg-primary-color backdrop-blur-sm dark:border-slate-400/20 dark:shadow-cyan-100/10 xs:gap-4 ">
+      <div className="flex h-[var(--nav-h)] w-full items-center justify-between gap-2 bg-primary-color backdrop-blur-sm dark:border-slate-400/20 dark:shadow-cyan-100/10 xs:gap-4">
         <div className="text-md flex w-fit min-w-fit basis-1/3 cursor-pointer items-center justify-start font-semibold sm:text-2xl md:ml-20">
           <div className="px-2 md:hidden">
             <ToggleSidebar />
@@ -62,7 +59,7 @@ const PremiumNav: FC<Props> = ({ children, title, hideScrolling }) => {
           </span>
         )}
         <div className="w-full ">{children}</div>
-        <div className="flex w-fit min-w-fit basis-1/3 items-center justify-end gap-2 pr-2 text-xs xs:gap-4 sm:gap-10 sm:pr-5 sm:text-xl xl:pr-10">
+        <div className="flex w-fit min-w-fit basis-1/3 items-center justify-end gap-2 pr-4 text-xs xs:gap-4 sm:gap-10 sm:pr-5 sm:text-xl xl:pr-10">
           <Feedback />
           <AvatarDropDown isApp={true} />
         </div>

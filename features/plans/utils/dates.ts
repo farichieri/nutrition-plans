@@ -11,6 +11,7 @@ import {
   isValidDate,
 } from "@/utils/dateFormat";
 import { BaseDatesEnum } from "@/types/datesTypes";
+import { StartsOfWeek } from "@/types";
 
 const isValidStringFormat = (date: string): boolean => {
   switch (date) {
@@ -26,7 +27,13 @@ const isValidStringFormat = (date: string): boolean => {
   }
 };
 
-const getRealDate = (date: string): string => {
+const getRealDate = ({
+  date,
+  userStartOfWeek,
+}: {
+  date: string;
+  userStartOfWeek: StartsOfWeek;
+}): string => {
   switch (date) {
     case BaseDatesEnum.today:
       return getToday();
@@ -35,11 +42,11 @@ const getRealDate = (date: string): string => {
     case BaseDatesEnum.yesterday:
       return getYesterday();
     case BaseDatesEnum.this_week:
-      return getThisWeek();
+      return getThisWeek({ userStartOfWeek });
     case BaseDatesEnum.next_week:
-      return getNextWeek();
+      return getNextWeek({ userStartOfWeek });
     case BaseDatesEnum.last_week:
-      return getLastWeek();
+      return getLastWeek({ userStartOfWeek });
     default:
       if (!isValidDate(date)) {
         return getToday();
@@ -65,15 +72,21 @@ const convertDayToUrlDate = (date: string) => {
   }
 };
 
-const convertDateToDateString = (date: string) => {
+const convertDateToDateString = ({
+  date,
+  userStartOfWeek,
+}: {
+  date: string;
+  userStartOfWeek: StartsOfWeek;
+}) => {
   const isToday = getToday();
   const isTomorrow = getTomorrow();
   const isYesterday = getYesterday();
-  const isNextWeek = getNextWeek();
-  const isLastWeek = getLastWeek();
-  const isThisWeek = getThisWeek();
+  const isNextWeek = getNextWeek({ userStartOfWeek });
+  const isLastWeek = getLastWeek({ userStartOfWeek });
+  const isThisWeek = getThisWeek({ userStartOfWeek });
 
-  const dateF = String(getRealDate(date));
+  const dateF = String(getRealDate({ date, userStartOfWeek }));
   const isWeek = getIsWeek(dateF);
   const weekDates = isWeek && String(dateF).split("~");
 
