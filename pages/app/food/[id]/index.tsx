@@ -34,17 +34,17 @@ export default function Page() {
 
   useEffect(() => {
     if (typeof id === "string") {
-      if (!foodsSearched[id]) {
-        const fetchFoodID = async () => {
-          const res = await fetchFoodByID(id);
-          if (res.result === "success") {
-            dispatch(setFoodOpened(res.data));
-          }
-        };
-        fetchFoodID();
-      } else {
-        dispatch(setFoodOpened(foodsSearched[id]));
-      }
+      // if (!foodsSearched[id]) {
+      const fetchFoodID = async () => {
+        const res = await fetchFoodByID(id);
+        if (res.result === "success") {
+          dispatch(setFoodOpened(res.data));
+        }
+      };
+      fetchFoodID();
+      // } else {
+      //   dispatch(setFoodOpened(foodsSearched[id]));
+      // }
     }
   }, [id, foodsSearched, dispatch]);
 

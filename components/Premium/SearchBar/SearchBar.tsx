@@ -27,11 +27,11 @@ const SearchBar: FC<Props> = ({ queries }) => {
   const [showSearchBar, setShowSearchBar] = useState(false);
   const windowWidth = useWindowWidth();
 
-  const fetchData = async (input: string) => {
+  const fetchData = async ({ queries }: { queries: FilterQueries }) => {
     if (!user?.user_id) return;
     setIsSearching(true);
     const res = await fetchFoods({
-      food_name: input,
+      queries: queries,
       uploader_id: user?.user_id,
     });
     if (res.result === "success") {
@@ -64,13 +64,13 @@ const SearchBar: FC<Props> = ({ queries }) => {
           });
         }
       }
-    }, 500);
+    }, 0);
     return () => clearTimeout(timer);
   }, [searchInput]);
 
   useEffect(() => {
-    fetchData((queries.q || " ").toLocaleLowerCase());
-  }, [queries.q]);
+    fetchData({ queries });
+  }, [queries]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();

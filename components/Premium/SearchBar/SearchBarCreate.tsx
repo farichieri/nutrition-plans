@@ -27,7 +27,7 @@ const SearchBarCreate: FC<Props> = ({ onFocus, preFetch }) => {
     if (!user?.user_id) return;
     setIsSearching(true);
     const res = await fetchFoods({
-      food_name: input,
+      queries: { q: input },
       uploader_id: user?.user_id,
     });
     if (res.result === "success") {
@@ -47,7 +47,7 @@ const SearchBarCreate: FC<Props> = ({ onFocus, preFetch }) => {
 
       const timer = setTimeout(() => {
         fetchData(searchInput.toLowerCase());
-      }, 500);
+      }, 0);
 
       return () => clearTimeout(timer);
     }

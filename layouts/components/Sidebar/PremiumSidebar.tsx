@@ -140,10 +140,10 @@ const PremiumSidebar: FC<Props> = () => {
   ];
 
   const fixedOptClass =
-    "text-md px-2 py-1.5 flex w-full items-center gap-1 rounded-lg text-base duration-300 hover:bg-slate-500/30 md:text-lg active:border-gray-400 dark:active:border-white border border-transparent";
+    " text-md px-2 py-1.5 flex w-full items-center gap-1 rounded-lg text-base duration-300 hover:bg-slate-500/30 md:text-lg active:border-gray-400 dark:active:border-white border border-transparent ";
 
   const fixedSecOptClass =
-    "text-md pr-0 pl-3 my-0.5 py-1 flex w-full items-center gap-1 rounded-lg text-sm duration-300 hover:bg-slate-500/30 md:text-base active:border-gray-400 dark:active:border-white border border-transparent";
+    " text-md pr-0 pl-3 my-0.5 py-1 flex w-full items-center gap-1 rounded-lg text-sm duration-300 hover:bg-slate-500/30 md:text-base active:border-gray-400 dark:active:border-white border border-transparent ";
 
   useEffect(() => {
     console.log(window.innerWidth);
@@ -334,8 +334,8 @@ const PremiumSidebar: FC<Props> = () => {
             className={
               `${
                 router.asPath.includes("settings") &&
-                " bg-slate-500/30 font-semibold"
-              } px-2` + fixedOptClass
+                " border bg-slate-500/30 font-semibold"
+              } px-2 ` + fixedOptClass
             }
           >
             <MdSettings className="h-6 w-6 text-green-500" />

@@ -41,7 +41,7 @@ const SettingsNav: FC<Props> = ({}) => {
               <Link
                 href={page.path}
                 key={page.path}
-                className={`flex items-center justify-center rounded-md px-2 py-2 capitalize duration-100 hover:bg-slate-500/20 hover:opacity-100 ${
+                className={`flex w-full items-center justify-start rounded-md px-2 py-2 capitalize duration-100 hover:bg-slate-500/20 hover:opacity-100 ${
                   page.match.includes(router.asPath)
                     ? "opacity-100"
                     : "opacity-50"

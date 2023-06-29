@@ -39,4 +39,15 @@ const getFoodsFiltered = (
   return foodsSorted;
 };
 
-export { getFoodsFiltered };
+const getFoodsSorted = (
+  foodsToSort: FoodGroup,
+  queries: FilterQueries
+): FoodGroupArray => {
+  const foodsSorted: FoodGroupArray = queries.sort
+    ? sortFoodsSearched(Object.values(foodsToSort), queries.sort)
+    : sortFoodsSearched(Object.values(foodsToSort), FilterSortTypes.rating);
+
+  return foodsSorted;
+};
+
+export { getFoodsFiltered, getFoodsSorted };

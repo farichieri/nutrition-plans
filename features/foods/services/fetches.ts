@@ -8,32 +8,36 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { ALGOLIA_FOODS_INDEX_NAME, algoliaClient } from "@/lib/algolia";
 import { db } from "@/services/firebase/firebase.config";
+import { FilterQueries, Result } from "@/types";
 import { Food, FoodGroup } from "@/features/foods";
-import { Result } from "@/types";
+import { searchClient } from "@/lib/typesense";
+import getSearchParameters from "../utils/getSearchParameters";
 
 const fetchCuratedFoods = async ({
-  food_name,
+  queries,
 }: {
-  food_name: string;
+  queries: FilterQueries;
 }): Promise<Result<FoodGroup, unknown>> => {
-  console.log(`Fetching CuratedFoods by name: '${food_name}'`);
-  // I'm sorting and filtering by the returned value.
   try {
     let data: FoodGroup = {};
-    const index = algoliaClient.initIndex(ALGOLIA_FOODS_INDEX_NAME);
-    const res = await index.search(food_name, {
-      filters: "curated:true",
-      hitsPerPage: 40,
-    });
-    console.log({ res });
-    if (res.hits.length === 0) {
-      throw new Error("No foods found");
+
+    const searchParameters = getSearchParameters({ queries, curated: true });
+    console.log("asd", { searchParameters });
+
+    const res = await searchClient
+      .collections("foods")
+      .documents()
+      .search(searchParameters, {});
+
+    const { hits } = res;
+    if (!hits) {
+      throw new Error("Error fetching foods.");
     }
 
-    res.hits.forEach((food: any) => {
-      data[food.objectID] = food;
+    hits.forEach((hit: any) => {
+      const { document } = hit;
+      data[document.food_id] = document;
     });
 
     console.log("fetchCuratedFoods", { data });
@@ -45,24 +49,33 @@ const fetchCuratedFoods = async ({
 };
 
 const fetchUserFoods = async ({
-  food_name,
+  queries,
   uploader_id,
 }: {
-  food_name: string;
+  queries: FilterQueries;
   uploader_id?: string;
 }): Promise<Result<FoodGroup, unknown>> => {
-  console.log(`Fetching UserFoods by name: '${food_name}'`);
-  // I'm sorting and filtering by the returned value.
   try {
     let data: FoodGroup = {};
-    const index = algoliaClient.initIndex(ALGOLIA_FOODS_INDEX_NAME);
-    const res = await index.search(food_name, {
-      filters: `uploader_id:${uploader_id}`,
-      hitsPerPage: 40,
-    });
 
-    res.hits.forEach((food: any) => {
-      data[food.objectID] = food;
+    const searchParameters = getSearchParameters({ queries, uploader_id });
+    console.log("wessd", { searchParameters });
+
+    const res = await searchClient
+      .collections("foods")
+      .documents()
+      .search(searchParameters, {});
+
+    console.log({ res });
+
+    const { hits } = res;
+    if (!hits) {
+      throw new Error("Error fetching foods.");
+    }
+
+    hits.forEach((hit: any) => {
+      const { document } = hit;
+      data[document.food_id] = document;
     });
 
     console.log("fetchUserFoods", { data });
@@ -74,20 +87,18 @@ const fetchUserFoods = async ({
 };
 
 const fetchFoods = async ({
-  food_name,
+  queries,
   uploader_id,
 }: {
-  food_name: string;
+  queries: FilterQueries;
   uploader_id?: string;
 }): Promise<Result<FoodGroup, unknown>> => {
-  console.log(`Fetching Foods by name: '${food_name}'`);
   try {
-    console.log({ food_name });
     let data: FoodGroup = {};
 
     const [curatedFoodsRes, userFoodsRes] = await Promise.all([
-      fetchCuratedFoods({ food_name }),
-      fetchUserFoods({ food_name, uploader_id }),
+      fetchCuratedFoods({ queries }),
+      fetchUserFoods({ queries, uploader_id }),
     ]);
 
     if (
@@ -95,14 +106,16 @@ const fetchFoods = async ({
       userFoodsRes.result === "success"
     ) {
       const resData = { ...curatedFoodsRes.data, ...userFoodsRes.data };
-      const algoliaIDs = Object.keys(resData);
-      const firebaseDocs = await fetchFoodsByIDS(algoliaIDs);
+      data = resData;
+      // console.log({resData})
+      // const typesenseIDS = Object.keys(resData);
+      // const firebaseDocs = await fetchFoodsByIDS(typesenseIDS);
 
-      if (firebaseDocs.result === "success") {
-        data = firebaseDocs.data;
-      } else {
-        throw new Error("Error fetching foods.");
-      }
+      // if (firebaseDocs.result === "success") {
+      //   data = firebaseDocs.data;
+      // } else {
+      //   throw new Error("Error fetching foods.");
+      // }
     } else {
       throw new Error("Error fetching foods.");
     }

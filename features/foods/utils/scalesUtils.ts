@@ -42,6 +42,6 @@ const getScaleOptions = (scalesMerged: FoodScales) => {
 };
 
 const getDefaultScale = (scales: FoodScales): FoodScale =>
-  scales.find((s) => s.is_default === true) || scales[0];
+  scales?.find((s) => s.is_default === true) || scales[0];
 
 export { mergeScales, getScaleOptions, getDefaultScale };
