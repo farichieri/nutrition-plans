@@ -21,8 +21,10 @@ const InstallModal: FC<Props> = () => {
 
   return (
     <Modal onClose={() => setCloseModal(false)}>
-      <div className="flex w-[90vw] flex-col items-center justify-center gap-2 px-4 py-10">
-        <span className="font-semibold">App available for download!</span>
+      <div className="flex flex-col items-center justify-center gap-5 px-10 py-10">
+        <span className="text-xl font-semibold">
+          App available for download!
+        </span>
         <div className="flex items-center gap-5">
           <button
             onClick={handleCancel}

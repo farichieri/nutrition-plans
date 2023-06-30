@@ -33,7 +33,7 @@ const FoodsSearched: FC<Props> = ({ queries }) => {
   const foods = getFoodsSorted(foodsToSort, queries);
 
   return (
-    <div className="grid max-w-screen-2xl select-none grid-cols-fluid items-start justify-center gap-3 px-0 sm:px-0 lg:justify-start">
+    <div className="grid max-w-screen-2xl select-none grid-cols-fluid items-start justify-center gap-2 px-0 sm:px-0 lg:justify-start">
       {foods.map((food: Food) => {
         return <FoodCard food={food} key={food.food_id} />;
       })}

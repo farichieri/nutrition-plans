@@ -181,22 +181,24 @@ th {
   }
 }
 
-.ais-Hits {
-  width: 100%;
-  display: flex;
+.react-datepicker-wrapper {
+  user-select: none;
+  -webkit-user-select: none; /* Safari */
 }
 
-.ais-Hits-list {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
+.react-datepicker__input-container input {
+  background-color: rgba(0, 128, 0, 0.17);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-.ais-Pagination-list {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
+/* .react-datepicker {
+  border: 1px solid green !important;
 }
+
+.react-datepicker__month-container {
+}
+
+.react-datepicker__header {
+} */

@@ -24,7 +24,7 @@ const Modal = ({
       ></div>
       <div
         className={
-          ` relative z-[100] m-auto max-w-[100vw] overflow-hidden rounded-3xl border bg-tertiary-color ` +
+          ` relative z-[100] m-auto max-w-[100vw] overflow-hidden rounded-xl border bg-tertiary-color ` +
           customClass
         }
       >

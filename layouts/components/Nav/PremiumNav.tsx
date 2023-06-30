@@ -17,6 +17,7 @@ const PremiumNav: FC<Props> = ({ children, title, hideScrolling }) => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [show, setShow] = useState(true);
   const windowWidth = useWindowWidth();
+  const isMobile = windowWidth < 640;
 
   const controlNavbar = () => {
     if (typeof window !== "undefined") {
@@ -46,11 +47,9 @@ const PremiumNav: FC<Props> = ({ children, title, hideScrolling }) => {
     >
       <div className="flex h-[var(--nav-h)] w-full items-center justify-between gap-2 bg-primary-color backdrop-blur-sm dark:border-slate-400/20 dark:shadow-cyan-100/10 xs:gap-4">
         <div className="text-md flex w-fit min-w-fit basis-1/3 cursor-pointer items-center justify-start font-semibold sm:text-2xl md:ml-20">
-          <div className="px-2 md:hidden">
-            <ToggleSidebar />
-          </div>
+          <div className="px-2 md:hidden">{!isMobile && <ToggleSidebar />}</div>
           <Link href={AppRoutes.today}>
-            <Logo hideText={windowWidth < 640} />
+            <Logo hideText={isMobile} />
           </Link>
         </div>
         {title && (

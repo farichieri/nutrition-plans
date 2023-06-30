@@ -172,7 +172,7 @@ export enum NutritionMeasurements {
 export enum FoodCategoriesEnum {
   baked_products = "Baked Products",
   beef_products = "Beef Products",
-  beverages = "beverages",
+  beverages = "Beverages",
   cereal_grains_and_pasta = "Cereal Grains and Pasta",
   dairy_and_eggs_products = "Dairy and Eggs Products",
   fats_and_oils = "Fats and Oils",
@@ -186,7 +186,7 @@ export enum FoodCategoriesEnum {
   sausages_and_luncheon_meats = "Sausages and Luncheon Meats",
   soups_sauces_and_gravies = "Soups, Sauces, and Gravies",
   spices_and_herbs = "Spices and Herbs",
-  sweets = "sweets",
+  sweets = "Sweets",
   vegetables_and_vegetable_products = "Vegetables and Vegetable Products",
 }
 

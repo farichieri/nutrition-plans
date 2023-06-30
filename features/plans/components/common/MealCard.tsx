@@ -33,7 +33,7 @@ const MealCard: FC<Props> = ({
   return (
     <div
       key={dietMeal.diet_meal_id}
-      className={`min-h-20 flex w-full flex-col divide-y overflow-auto rounded-sm border ${
+      className={`min-h-20 flex w-full flex-col divide-y overflow-auto rounded-xl border ${
         allEaten ? "border-green-500 bg-green-500/20" : "bg-gray-500/20"
       }`}
     >

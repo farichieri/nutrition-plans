@@ -120,7 +120,7 @@ const Nutrition: FC<Props> = ({ nutrients, planID }) => {
         />
       )}
       <div
-        className={`relative flex w-full flex-wrap items-center justify-center gap-10 rounded-md border p-4 ${
+        className={`relative flex w-full flex-wrap items-center justify-center gap-10 rounded-xl border p-4 ${
           !isAllInRange ? "bg-gray-500/20" : "border-green-500 bg-green-500/20 "
         }`}
       >
