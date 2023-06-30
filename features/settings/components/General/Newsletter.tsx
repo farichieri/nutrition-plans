@@ -5,19 +5,19 @@ import {
 } from "@/features/authentication";
 import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
 import { FC, useState } from "react";
-import { StartsOfWeek } from "@/types";
+import { NewsletterChoices } from "@/types";
 import { SubmitButton } from "@/components/Buttons";
-import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
 
 interface Props {}
 
-const SetStartOfWeek: FC<Props> = () => {
+const Newsletter: FC<Props> = () => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
   const [isLoading, setIsLoading] = useState(false);
-  const [weekSelected, setWeekSelected] = useState<StartsOfWeek>(
-    user?.startOfWeek || StartsOfWeek.sunday
+  const [userChoice, setUserChoice] = useState<NewsletterChoices>(
+    user?.newsletter || NewsletterChoices.yes
   );
 
   if (!user) return <></>;
@@ -27,17 +27,20 @@ const SetStartOfWeek: FC<Props> = () => {
       setIsLoading(true);
       const userUpdated = {
         ...user,
-        startOfWeek: weekSelected,
+        Newsletter: userChoice,
       };
       const res = await updateUser(userUpdated);
       if (res.result === "success") {
         dispatch(setUpdateUser(userUpdated));
-        toast.success("Start of week updated");
+        toast.success("Newsletter choice updated");
+      } else {
+        throw Error;
       }
       setIsLoading(false);
     } catch (error) {
+      toast.error("Error updating my newsletter choice");
+    } finally {
       setIsLoading(false);
-      toast.error("Error updating start of week");
     }
   };
 
@@ -45,29 +48,26 @@ const SetStartOfWeek: FC<Props> = () => {
     <Box>
       <BoxMainContent>
         <div className="flex flex-col items-start gap-5">
-          <span className="text-3xl font-semibold">Start Of Week</span>
-          <div className="flex flex-col justify-start gap-1">
-            {Object.values(StartsOfWeek).map((startOfWeek) => {
+          <span className="text-3xl font-semibold">Newsletter</span>
+          <div className="flex flex-col gap-1">
+            {Object.values(NewsletterChoices).map((choice) => {
               return (
                 <div
-                  key={startOfWeek}
+                  key={choice}
                   className="flex items-center justify-between gap-5"
                 >
-                  <label
-                    htmlFor={startOfWeek}
-                    className="cursor-pointer capitalize"
-                  >
-                    {startOfWeek}
+                  <label htmlFor={choice} className="cursor-pointer capitalize">
+                    {choice}
                   </label>
                   <input
                     className="cursor-pointer accent-green-500"
                     type="checkbox"
-                    id={startOfWeek}
-                    name="startOfWeek"
-                    value={startOfWeek}
-                    checked={weekSelected === startOfWeek}
+                    id={choice}
+                    name="choice"
+                    value={choice}
+                    checked={userChoice === choice}
                     onChange={() => {
-                      setWeekSelected(startOfWeek);
+                      setUserChoice(choice);
                     }}
                   />
                 </div>
@@ -78,7 +78,7 @@ const SetStartOfWeek: FC<Props> = () => {
       </BoxMainContent>
       <BoxBottomBar>
         <span className="text-sm opacity-50">
-          Choose your preferred Start Of Week
+          Select Yes if you want to receive our newsletter in your email
         </span>
         <SubmitButton
           className={"ml-auto h-9 w-16 text-sm"}
@@ -86,11 +86,11 @@ const SetStartOfWeek: FC<Props> = () => {
           loadMessage={""}
           content="Save"
           isLoading={isLoading}
-          isDisabled={weekSelected === user?.startOfWeek}
+          isDisabled={userChoice === user.newsletter}
         />
       </BoxBottomBar>
     </Box>
   );
 };
 
-export default SetStartOfWeek;
+export default Newsletter;

@@ -14,7 +14,6 @@ const WelcomeSteps: FC<Props> = ({}) => {
     switch (step) {
       case UserSteps.step_1:
         return <StepOne user={user} />;
-
       default:
         break;
     }

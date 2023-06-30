@@ -1,5 +1,6 @@
 import {
   MeasurementUnits,
+  NewsletterChoices,
   PlansEnum,
   StartsOfWeek,
   SubscriptionState,
@@ -26,6 +27,7 @@ export interface UserAccount {
   user_step: UserSteps;
   weight_goal: WeightGoal;
   startOfWeek: StartsOfWeek;
+  newsletter: NewsletterChoices;
 }
 export interface UserCreatedData {
   body_data: UserBodyData;
@@ -178,6 +180,7 @@ export const newAccount: UserAccount = {
   user_step: UserSteps.step_1,
   weight_goal: initialWeightGoal,
   startOfWeek: StartsOfWeek.sunday,
+  newsletter: NewsletterChoices.yes,
   first_data: {
     body_data: newBodyData,
   },

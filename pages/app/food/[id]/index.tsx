@@ -54,8 +54,8 @@ export default function Page() {
         <SubPremiumNav title={""}>
           <BackButton />
         </SubPremiumNav>
-        <div className="fixed inset-0 flex h-screen w-screen items-center justify-center">
-          <Spinner customClass="w-10 h-10 m-auto" />
+        <div className="fixed inset-0 flex h-screen w-screen items-center justify-center opacity-50">
+          <Spinner customClass="w-5 h-5 m-auto" />
         </div>
       </PremiumLayout>
     );

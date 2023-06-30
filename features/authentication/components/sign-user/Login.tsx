@@ -79,6 +79,7 @@ const Login = () => {
     await signInWithEmailAndPassword(auth, data.email, data.password)
       .then(async (result) => {
         const user = result.user;
+        console.log({ user });
         if (user) {
           dispatch(setIsSigningUser(true));
           const userRes =

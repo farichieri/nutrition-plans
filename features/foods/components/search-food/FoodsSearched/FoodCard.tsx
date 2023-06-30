@@ -22,7 +22,7 @@ const FoodCard: FC<Props> = ({ food }) => {
     <Link
       href={`/app/food/${food.food_id}`}
       key={food.food_id}
-      className="flex flex-col items-center overflow-auto rounded-lg border bg-white shadow-sm shadow-[#00000028] duration-300 hover:border-black/20 hover:shadow-xl dark:bg-slate-400/10 dark:hover:border-white/50 sm:max-w-[25rem] "
+      className="flex flex-col items-center overflow-auto rounded-lg border bg-white shadow-sm shadow-[#00000028] duration-300 hover:border-black/20 hover:shadow-xl dark:bg-slate-400/10 dark:hover:border-white/50 sm:max-w-[20rem] "
     >
       <span className="relative h-40 w-full border-b sm:h-40">
         <Image

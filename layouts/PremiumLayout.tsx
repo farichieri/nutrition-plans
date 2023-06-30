@@ -24,15 +24,14 @@ interface Props {
 export default function PremiumLayout({ children }: Props) {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { sidebarOpen, isBillingModalOpen, isSettingsOpen } =
-    useSelector(selectLayoutSlice);
+  const { sidebarOpen, isBillingModalOpen } = useSelector(selectLayoutSlice);
   const { user, isCreatingUser, isSigningUser, showInstallModal } =
     useSelector(selectAuthSlice);
   const isOnline = useOnlineStatus();
-
   useEffect(() => {
     if (user) dispatch(setIsSigningUser(false));
-    if (isCreatingUser) router.push(AppRoutes.create_user);
+    if (isCreatingUser || !user?.is_profile_completed)
+      router.push(AppRoutes.create_user);
   }, [user, router, isCreatingUser]);
 
   return (
@@ -42,7 +41,7 @@ export default function PremiumLayout({ children }: Props) {
         <title>Nutrition Plans</title>
       </Head>
       {(isCreatingUser || isSigningUser) && <Loader />}
-      {user && <WelcomeSteps />}
+      {user && user.is_profile_completed && <WelcomeSteps />}
       {!isOnline && <ConnectionError />}
       {showInstallModal && (
         <div className="sm:hidden">
@@ -52,7 +51,6 @@ export default function PremiumLayout({ children }: Props) {
       {user ? (
         <div className="flex min-h-screen w-full flex-col">
           {isBillingModalOpen && <BillingModal />}
-          {/* <PremiumNav /> */}
           <Sidebar />
           <div
             className={`flex flex-col pt-[var(--nav-h)] duration-0 ease-in-out ${

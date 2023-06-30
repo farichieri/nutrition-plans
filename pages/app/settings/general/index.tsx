@@ -1,4 +1,5 @@
 import {
+  Newsletter,
   SetMeasurementUnits,
   SetStartOfWeek,
 } from "@/features/settings/components/General";
@@ -10,6 +11,7 @@ export default function Page() {
       <div className="flex flex-col gap-10">
         <SetMeasurementUnits />
         <SetStartOfWeek />
+        <Newsletter />
       </div>
     </SettingsLayout>
   );

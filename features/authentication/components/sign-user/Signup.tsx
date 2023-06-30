@@ -53,7 +53,9 @@ const Signup = () => {
   const [emailOpen, setEmailOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const handleLogInWithGoogle = async (data: FormValues) => {
+  const handleLogInWithGoogle = async () => {
+    const values = getValues();
+
     signInWithPopup(auth, provider)
       .then(async (result) => {
         const additinalInfo = getAdditionalUserInfo(result);
@@ -61,7 +63,7 @@ const Signup = () => {
         if (additinalInfo?.isNewUser) {
           const user = result.user;
           await updateProfile(user, {
-            displayName: data.displayName,
+            displayName: values.displayName,
           });
           dispatch(setIsCreatingUser(true));
           await createNewUser(user);
@@ -154,7 +156,7 @@ const Signup = () => {
       {nameAdded && (
         <>
           {!emailOpen && (
-            <GoogleLoginButton onClick={handleSubmit(handleLogInWithGoogle)}>
+            <GoogleLoginButton onClick={handleLogInWithGoogle}>
               Continue with Google
             </GoogleLoginButton>
           )}

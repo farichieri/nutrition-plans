@@ -19,6 +19,13 @@ const createNewUser = async (
       user_id: user.uid,
     };
     await setDoc(newUserRef, newUser);
+    await fetch("/api/welcome/email", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email_address: user.email }),
+    });
     return { result: "success", data: newUser };
   } catch (error) {
     try {
@@ -61,6 +68,7 @@ const generateUserObject = async (
       user_id: userData.user_id,
       user_step: userData.user_step,
       weight_goal: userData.weight_goal,
+      newsletter: userData.newsletter,
     };
     return { result: "success", data: userAccount };
   } catch (error) {

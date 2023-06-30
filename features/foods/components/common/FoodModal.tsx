@@ -3,13 +3,15 @@ import {
   CompatiblePlansC,
   Food,
   FoodNutrition,
+  fetchFoodByID,
   setFoodModal,
   setFoodModalScale,
 } from "@/features/foods";
-import { FC, MouseEventHandler, useEffect } from "react";
+import { FC, MouseEventHandler, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import Image from "next/image";
 import Modal from "@/components/Modal/Modal";
+import Spinner from "@/components/Loader/Spinner";
 
 interface Props {
   food: Food;
@@ -19,10 +21,30 @@ interface Props {
 
 const FoodModal: FC<Props> = ({ food, handleClose, handleAdd }) => {
   const dispatch = useDispatch();
+  const { food_id } = food;
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(setFoodModal(food));
-  }, [food]);
+    // Fetch the food from firestore
+    if (!food_id) return;
+    const fetchFoodID = async () => {
+      const res = await fetchFoodByID(food_id);
+      if (res.result === "success") {
+        dispatch(setFoodModal(res.data));
+        setIsLoading(false);
+      }
+    };
+    fetchFoodID();
+  }, [food_id, dispatch]);
+
+  const { scale_amount, scale_name } = food;
+
+  if (!food_id || isLoading)
+    return (
+      <div className="absolute inset-0 z-100 flex h-full w-full items-center justify-center bg-black/50">
+        <Spinner customClass="h-5 w-5" />
+      </div>
+    );
 
   const setLocalScale = (scale_amount: number, scale_name: string) => {
     dispatch(
@@ -32,8 +54,6 @@ const FoodModal: FC<Props> = ({ food, handleClose, handleAdd }) => {
       })
     );
   };
-
-  const { scale_amount, scale_name } = food;
 
   return (
     <Modal onClose={handleClose} customClass="rounded-none sm:rounded-3xl">

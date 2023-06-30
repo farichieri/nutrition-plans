@@ -49,6 +49,10 @@ export enum StartsOfWeek {
   sunday = "sunday",
   monday = "monday",
 }
+export enum NewsletterChoices {
+  "yes" = "yes",
+  "no" = "no",
+}
 
 // Posts
 export interface Post {

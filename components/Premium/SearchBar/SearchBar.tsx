@@ -64,7 +64,7 @@ const SearchBar: FC<Props> = ({ queries }) => {
           });
         }
       }
-    }, 0);
+    }, 500);
     return () => clearTimeout(timer);
   }, [searchInput]);
 
