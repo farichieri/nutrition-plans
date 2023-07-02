@@ -18,7 +18,7 @@ const SettingsNav: FC<Props> = ({}) => {
       {isMobile && isSettingsRoute ? (
         <nav className="fixed inset-0 z-[60] flex flex-col items-center bg-primary-color pt-[var(--nav-h)]">
           <div className="flex w-full justify-center border-b py-8 text-2xl font-semibold">
-            Personal Settings Account
+            Settings
           </div>
           <div className="flex w-full max-w-[95vw] flex-col divide-y border-b">
             {PAGES.map((page) => (
@@ -36,7 +36,7 @@ const SettingsNav: FC<Props> = ({}) => {
         </nav>
       ) : (
         <nav className="flex h-full flex-col gap-1 ">
-          <div className="hidden w-[15rem] flex-col sm:flex">
+          <div className="hidden w-[10rem] flex-col lg:flex">
             {PAGES.map((page) => (
               <Link
                 href={page.path}

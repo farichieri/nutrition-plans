@@ -5,10 +5,10 @@ import {
   updateUserPlan,
 } from "@/features/authentication";
 import { FC } from "react";
+import { MdVerified } from "react-icons/md";
 import { PlansEnum } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "@/components/Loader/Spinner";
-import { MdVerified } from "react-icons/md";
 
 interface Props {
   planID: PlansEnum;

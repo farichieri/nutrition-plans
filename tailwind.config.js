@@ -68,8 +68,10 @@ module.exports = {
         flash: "flash 1.4s infinite linear",
       },
       gridTemplateColumns: {
-        fluid: "repeat(auto-fit, minmax(13rem, 1fr))",
         fluid_lg: "repeat(auto-fit, minmax(25rem, 1fr))",
+        fluid_sm: "repeat(auto-fit, minmax(10rem, 1fr))",
+        fluid_xs: "repeat(auto-fit, minmax(8rem, 1fr))",
+        fluid: "repeat(auto-fit, minmax(12rem, 1fr))",
       },
       zIndex: {
         100: 100,

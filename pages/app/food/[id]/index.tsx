@@ -1,16 +1,16 @@
 import {
+  CompatiblePlansC,
   fetchFoodByID,
   Food,
   FoodActions,
   FoodKind,
   FoodNutrition,
+  getDefaultScale,
   Ingredients,
   Instructions,
+  ScaleSelector,
   selectFoodsSlice,
   setFoodOpened,
-  CompatiblePlansC,
-  ScaleSelector,
-  getDefaultScale,
 } from "@/features/foods";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -87,7 +87,7 @@ export default function Page() {
                     alt={`${food.food_name}`}
                     width={500}
                     height={500}
-                    className="m-auto h-[300px] w-[300px] rounded-lg border border-gray-300/50 object-cover dark:border-transparent"
+                    className="m-auto h-[300px] w-full rounded-lg border border-gray-300/50 object-cover dark:border-transparent sm:w-[300px]"
                   />
                   <span className="text-center opacity-50">
                     {food.food_description}

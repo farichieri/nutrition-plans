@@ -5,9 +5,11 @@ import {
   updateUser,
 } from "@/features/authentication";
 import { FC, useEffect, useState } from "react";
+import { MdRestaurant, MdVerified } from "react-icons/md";
 import { MEAL_PLANS } from "@/data/content";
 import { PlansEnum } from "@/types";
 import { schema } from "./schema";
+import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
@@ -16,8 +18,8 @@ import FormError from "@/components/Errors/FormError";
 import Image from "next/image";
 import InfoMessage from "@/components/Layout/InfoMessage";
 import SubmitButton from "@/components/Buttons/SubmitButton";
-import { toast } from "react-hot-toast";
-import { MdRestaurant, MdVerified } from "react-icons/md";
+import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
+import { blurDataURL } from "@/components/Layout/BlurDataImage";
 
 interface FormValues {
   planSelected: PlansEnum | null;
@@ -104,59 +106,62 @@ const PlanSelector: FC<Props> = ({ handleContinue }) => {
   }, [setIsDisabled, values, watch]);
 
   return (
-    <section className="flex bg-white/50 dark:bg-black/50 w-full max-w-5xl select-none flex-col items-center justify-center gap-3 rounded-md border text-xs s:text-sm sm:text-base">
+    <Box customClass="max-w-4xl">
       <form
         onSubmit={handleSubmit(onSubmit)}
         action=""
         className="flex w-full flex-col gap-5"
       >
-        <div className="flex flex-col gap-10 p-5">
-          <div className="flex items-center gap-2">
-            <MdRestaurant className="h-6 w-6 text-green-500" />
-            <span className="w-full text-left text-xl font-semibold sm:text-3xl">
-              Select my Nutrition Plan
-            </span>
-          </div>
-          <div className="grid select-none grid-cols-fluid items-start justify-start ">
-            {MEAL_PLANS.map((opt) => (
-              <button
-                onClick={handleSelect}
-                className={`relative m-auto flex h-[auto] w-[auto] max-w-xs flex-col items-center justify-center overflow-hidden rounded-lg duration-300 hover:scale-105 ${
-                  values.planSelected === opt.id
-                    ? "border-green-500/0 bg-green-500/0 text-green-500"
-                    : "border-slate-400 bg-slate-300/0"
-                }`}
-                key={opt.id}
-                name="planSelected"
-                id={opt.id}
-              >
-                <MdVerified
-                  className={`h-6 w-6 ${
+        <BoxMainContent>
+          <div className="flex w-full flex-col gap-5">
+            <div className="flex items-center gap-2">
+              <MdRestaurant className="h-6 w-6 text-green-500" />
+              <span className="w-full text-left text-xl font-semibold sm:text-3xl">
+                Select my Nutrition Plan
+              </span>
+            </div>
+            <div className="grid select-none grid-cols-fluid_xs items-start justify-start gap-2 sm:grid-cols-fluid_sm ">
+              {MEAL_PLANS.map((opt) => (
+                <button
+                  onClick={handleSelect}
+                  className={`relative m-auto flex h-[auto] w-[auto] max-w-xs flex-col items-center justify-center overflow-hidden rounded-lg duration-300 hover:scale-105 ${
                     values.planSelected === opt.id
-                      ? "text-green-500"
-                      : "text-transparent"
+                      ? "border-green-500/0 bg-green-500/0 text-green-500"
+                      : "border-slate-400 bg-slate-300/0"
                   }`}
-                />
-                <span className="flex w-full items-center justify-center text-center text-xl font-bold">
-                  {opt.name}
-                </span>
-                <Image
-                  src={`/images/plans/${opt.id}.jpg`}
-                  alt={opt.name}
-                  width={200}
-                  height={200}
-                  className="pointer-events-none m-2 rounded-3xl shadow-[0_1px_5px_gray] dark:shadow-[0px_1px_5px_#4040408c]"
-                />
-              </button>
-            ))}
-          </div>
-
-          <InfoMessage
-            message="Select your preferred one as default, but know that you will have access to all the plans in
+                  key={opt.id}
+                  name="planSelected"
+                  id={opt.id}
+                >
+                  <MdVerified
+                    className={`h-6 w-6 ${
+                      values.planSelected === opt.id
+                        ? "text-green-500"
+                        : "hidden text-transparent"
+                    }`}
+                  />
+                  <span className="mb-1 flex w-full items-center justify-center text-center text-base font-bold sm:text-xl">
+                    {opt.name}
+                  </span>
+                  <span className="pointer-events-none relative h-32 w-32 sm:h-40 sm:w-40 ">
+                    <Image
+                      src={`/images/plans/${opt.id}.jpg`}
+                      alt={opt.name}
+                      fill
+                      blurDataURL={blurDataURL(160, 160)}
+                      className="rounded-3xl object-cover shadow-[0_1px_5px_gray] dark:shadow-[0px_1px_5px_#4040408c]"
+                    />
+                  </span>
+                </button>
+              ))}
+            </div>
+            <InfoMessage
+              message="Select your preferred one as default, but know that you will have access to all the plans in
   your day to day!"
-          />
-        </div>
-        <div className="flex items-center justify-center border-t p-5">
+            />
+          </div>
+        </BoxMainContent>
+        <BoxBottomBar>
           <FormError message={errors.planSelected?.message} />
           <div className="ml-auto flex">
             <SubmitButton
@@ -167,9 +172,9 @@ const PlanSelector: FC<Props> = ({ handleContinue }) => {
               isDisabled={isSubmitting || isDisabled}
             />
           </div>
-        </div>
+        </BoxBottomBar>
       </form>
-    </section>
+    </Box>
   );
 };
 

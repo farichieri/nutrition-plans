@@ -10,7 +10,7 @@ interface Props {
 export default function ProfileLayout({ children }: Props) {
   return (
     <PremiumLayout>
-      <section className="m-auto flex h-full w-full max-w-screen-xl flex-col items-center justify-center pb-24 ">
+      <section className="m-auto flex h-full w-full max-w-screen-xl flex-col items-center justify-center  ">
         <PremiumNav hideScrolling={false} />
         <div className="flex w-full justify-center border-y py-2 text-2xl font-semibold sm:mb-5 sm:hidden">
           <Link

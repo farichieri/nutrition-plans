@@ -30,6 +30,7 @@ html {
   --background-start-rgb: 255, 255, 255;
   --background-end-rgb: 255, 255, 255;
   --nav-h: 3rem;
+  --mobile-sidenav-h: 54px;
   --subnav-h: 3rem;
   --border-color: lightgray;
   --carbs-color: #976802;

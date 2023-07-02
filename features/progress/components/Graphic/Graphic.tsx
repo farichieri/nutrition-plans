@@ -150,33 +150,23 @@ const Graphic: FC<Props> = () => {
           height={400}
           data={data}
           margin={{
-            top: 20,
-            right: 30,
-            left: 30,
-            bottom: 20,
+            top: 0,
+            right: 0,
+            left: -10,
+            bottom: 0,
           }}
         >
           <CartesianGrid stroke="none" />
-          <XAxis
-            dataKey="date"
-            label={{
-              value: "Date",
-              position: "insideBottom",
-              offset: -20,
-            }}
-            tickFormatter={formatXAxis}
-            tickSize={12}
-          />
+          <XAxis dataKey="date" tickFormatter={formatXAxis} tickSize={12} />
           <YAxis
             unit={weightUnit}
             domain={domain}
-            label={{
-              value: "Weight",
-              angle: -90,
-              position: "insideLeft",
-              offset: -20,
-            }}
             tickCount={10}
+            style={{ fontSize: "0.8rem" }}
+            tickFormatter={(value) => {
+              console.log({ value });
+              return value.toFixed(0);
+            }}
           />
           <Tooltip
             content={(props) => (

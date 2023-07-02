@@ -31,21 +31,21 @@ const PremiumSidebar: FC<Props> = () => {
   return (
     <>
       {isMobile ? (
-        <div className="fixed bottom-0 z-[9999] flex w-full items-center border border-black bg-black">
+        <div className="fixed bottom-0 z-[9999] flex w-full items-center border-t bg-black/90">
           <MobilePages />
         </div>
       ) : (
         <>
           {sidebarOpen && (
             <div
-              className="fixed inset-0 z-[70] bg-black/30 md:hidden"
+              className="fixed inset-0 z-[70] bg-black/30 lg:hidden"
               onClick={handleSidebar}
             ></div>
           )}
           <div
             className={`${
-              !sidebarOpen ? "sm:left-0" : "left-[-5rem]"
-            } fixed left-0 z-[70] hidden h-screen min-h-screen w-20 select-none flex-col gap-2 overflow-auto bg-primary-color px-2 pb-5 backdrop-blur-sm transition-all duration-0 dark:border-slate-400/20 sm:gap-4 md:flex`}
+              !sidebarOpen ? "lg:left-0" : "left-[-5rem]"
+            } fixed left-0 z-[70] hidden h-screen min-h-screen w-20 select-none flex-col gap-2 overflow-auto bg-primary-color px-2 pb-5 backdrop-blur-sm transition-all duration-0 dark:border-slate-400/20 sm:gap-4 lg:flex`}
           >
             <div className="flex w-full items-center justify-center py-1">
               <ToggleSidebar />
@@ -56,10 +56,10 @@ const PremiumSidebar: FC<Props> = () => {
           <div
             className={`${
               sidebarOpen ? "left-0" : "left-[-16rem]"
-            } fixed left-0 z-[70] flex h-screen min-h-screen w-64 select-none flex-col gap-1 overflow-auto bg-primary-color px-2 pb-5 font-semibold backdrop-blur-sm transition-all duration-300 dark:border-slate-400/20 sm:gap-2 md:w-64 md:duration-0`}
+            } fixed left-0 z-[70] flex h-screen min-h-screen w-64 select-none flex-col gap-1 overflow-auto bg-primary-color px-2 pb-5 font-semibold backdrop-blur-sm transition-all duration-300 dark:border-slate-400/20 sm:gap-2 lg:w-64 lg:duration-0`}
           >
             <div className="flex w-full items-center py-1 pl-1">
-              <div className="hidden md:flex">
+              <div className="hidden lg:flex">
                 <ToggleSidebar />
               </div>
               <span className="py-1 pl-3 text-lg font-semibold">

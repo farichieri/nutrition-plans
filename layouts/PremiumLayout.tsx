@@ -16,6 +16,7 @@ import Loader from "../components/Loader/Loader";
 import Sidebar from "./components/Sidebar/PremiumSidebar";
 import useOnlineStatus from "@/hooks/useOnlineStatus";
 import WelcomeSteps from "../components/WelcomeSteps/WelcomeSteps";
+import useWindowWidth from "@/hooks/useWindowWidth";
 
 interface Props {
   children: React.ReactNode;
@@ -28,6 +29,9 @@ export default function PremiumLayout({ children }: Props) {
   const { user, isCreatingUser, isSigningUser, showInstallModal } =
     useSelector(selectAuthSlice);
   const isOnline = useOnlineStatus();
+  const windowWidth = useWindowWidth();
+  const isMobile = windowWidth < 640;
+
   useEffect(() => {
     if (user) dispatch(setIsSigningUser(false));
     if (isCreatingUser || !user?.is_profile_completed)
@@ -54,8 +58,8 @@ export default function PremiumLayout({ children }: Props) {
           <Sidebar />
           <div
             className={`flex flex-col pt-[var(--nav-h)] duration-0 ease-in-out ${
-              sidebarOpen ? "md:pl-64 " : "md:pl-20 "
-            }`}
+              sidebarOpen ? "lg:pl-64 " : "lg:pl-20 "
+            } ${isMobile ? "pb-[var(--mobile-sidenav-h)]" : ""}`}
           >
             {children}
           </div>

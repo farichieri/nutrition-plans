@@ -41,7 +41,7 @@ const ProfileNav: FC<Props> = ({}) => {
       icon: <MdVerified className="h-6 w-6 text-green-500" />,
     },
     {
-      name: "Meals settings",
+      name: "Meals configuration",
       url: "/app/profile/meals",
       icon: <MdRestaurantMenu className="h-6 w-6 text-green-500" />,
     },

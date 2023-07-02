@@ -91,9 +91,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)
     ) {
       document.documentElement.classList.add("dark");
+      document.documentElement
+        .querySelector('meta[name="theme-color"]')
+        ?.setAttribute("content", "#111010");
       setTheme(Theme.dark);
     } else {
       document.documentElement.classList.add("light");
+      document.documentElement
+        .querySelector('meta[name="theme-color"]')
+        ?.setAttribute("content", "#fff");
       setTheme(Theme.light);
     }
   }, [theme]);

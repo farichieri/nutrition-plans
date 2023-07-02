@@ -23,7 +23,6 @@ const fetchCuratedFoods = async ({
     let data: FoodGroup = {};
 
     const searchParameters = getSearchParameters({ queries, curated: true });
-    console.log("asd", { searchParameters });
 
     const res = await searchClient
       .collections("foods")
@@ -59,14 +58,11 @@ const fetchUserFoods = async ({
     let data: FoodGroup = {};
 
     const searchParameters = getSearchParameters({ queries, uploader_id });
-    console.log("wessd", { searchParameters });
 
     const res = await searchClient
       .collections("foods")
       .documents()
       .search(searchParameters, {});
-
-    console.log({ res });
 
     const { hits } = res;
     if (!hits) {

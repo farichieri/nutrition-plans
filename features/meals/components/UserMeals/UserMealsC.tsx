@@ -5,6 +5,7 @@ import {
   ConfirmDeleteMeal,
   AddMealSelector,
 } from "@/features/meals";
+import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
 import { FC, useState } from "react";
 import SubmitButton from "@/components/Buttons/SubmitButton";
 
@@ -24,40 +25,42 @@ const UserMealsC: FC<Props> = ({ meals }) => {
   };
 
   return (
-    <div className="mx-auto flex w-full max-w-3xl flex-col gap-5 rounded-md border bg-white/50 p-5 dark:bg-black/50">
-      {confirmDelete && (
-        <ConfirmDeleteMeal
-          confirmDelete={confirmDelete}
-          setConfirmDelete={setConfirmDelete}
-        />
-      )}
-      {openSelector && (
-        <AddMealSelector
-          isCreating={isCreating}
-          index={length}
-          setIsCreating={setIsCreating}
-          setOpenSelector={setOpenSelector}
-        />
-      )}
-      <div>
-        <span className="text-2xl font-semibold">My meals:</span>
-      </div>
-      {noData ? (
-        <div>No meals found</div>
-      ) : (
-        <Meals meals={meals} handleConfirmDelete={handleConfirmDelete} />
-      )}
-      <div className="ml-auto">
+    <Box customClass="max-w-3xl">
+      <BoxMainContent customClass="flex-col gap-5">
+        {confirmDelete && (
+          <ConfirmDeleteMeal
+            confirmDelete={confirmDelete}
+            setConfirmDelete={setConfirmDelete}
+          />
+        )}
+        {openSelector && (
+          <AddMealSelector
+            isCreating={isCreating}
+            index={length}
+            setIsCreating={setIsCreating}
+            setOpenSelector={setOpenSelector}
+          />
+        )}
+        <div>
+          <span className="text-2xl font-semibold">My meals:</span>
+        </div>
+        {noData ? (
+          <div>No meals found</div>
+        ) : (
+          <Meals meals={meals} handleConfirmDelete={handleConfirmDelete} />
+        )}
+      </BoxMainContent>
+      <BoxBottomBar>
         <SubmitButton
-          className={"flex h-8 w-32 text-sm"}
+          className={"ml-auto flex h-8 w-32 text-sm"}
           onClick={() => setOpenSelector(true)}
           loadMessage={""}
           content="Add Meal"
           isLoading={false}
           isDisabled={false}
         />
-      </div>
-    </div>
+      </BoxBottomBar>
+    </Box>
   );
 };
 

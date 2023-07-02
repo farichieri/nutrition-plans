@@ -22,6 +22,7 @@ import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
 import InfoMessage from "@/components/Layout/InfoMessage";
 import { MdEmojiEvents } from "react-icons/md";
+import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
 
 interface FormValues {
   goalSelected: UserGoals | null;
@@ -159,14 +160,14 @@ const Goal: FC<Props> = ({ handleContinue }) => {
   }, [setIsDisabled, values, watch]);
 
   return (
-    <section className="flex h-full w-full max-w-3xl flex-col items-center justify-center gap-3 rounded-md border bg-white/90 text-xs dark:bg-black/50 s:text-sm sm:text-base">
+    <Box customClass="max-w-2xl">
       <DevTool control={control} />
       <form
         onSubmit={handleSubmit(onSubmit)}
         action=""
         className="flex w-full flex-col gap-5"
       >
-        <div className="flex flex-col gap-10 p-5">
+        <BoxMainContent customClass="flex-col gap-10">
           <div className="flex items-center gap-2">
             <MdEmojiEvents className="h-6 w-6 text-green-500" />
             <span className="w-full text-left text-xl font-semibold sm:text-3xl">
@@ -211,7 +212,9 @@ const Goal: FC<Props> = ({ handleContinue }) => {
                       <input
                         className="w-24 rounded-md border bg-transparent px-3 py-1.5"
                         type="number"
-                        placeholder={getWeightUnit({ from: measurement_unit })}
+                        placeholder={getWeightUnit({
+                          from: measurement_unit,
+                        })}
                         {...register("weight_goal.weight_goal_in_kg", {
                           valueAsNumber: true,
                         })}
@@ -241,8 +244,8 @@ const Goal: FC<Props> = ({ handleContinue }) => {
             </div>
           </div>
           <InfoMessage message="Your Goal has an impact in your daily macronutrients." />
-        </div>
-        <div className="flex items-center justify-center border-t p-5">
+        </BoxMainContent>
+        <BoxBottomBar>
           <FormError message={errors.goalSelected?.message} />
           <div className="ml-auto flex">
             <SubmitButton
@@ -253,7 +256,7 @@ const Goal: FC<Props> = ({ handleContinue }) => {
               isDisabled={isSubmitting || isDisabled}
             />
           </div>
-        </div>
+        </BoxBottomBar>
       </form>
       <style jsx>
         {`
@@ -266,7 +269,7 @@ const Goal: FC<Props> = ({ handleContinue }) => {
           }
         `}
       </style>
-    </section>
+    </Box>
   );
 };
 

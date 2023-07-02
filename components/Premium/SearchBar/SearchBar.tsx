@@ -82,7 +82,7 @@ const SearchBar: FC<Props> = ({ queries }) => {
   };
 
   useEffect(() => {
-    if (windowWidth > 768) {
+    if (windowWidth > 1024) {
       setShowSearchBar(true);
     }
   }, [windowWidth]);

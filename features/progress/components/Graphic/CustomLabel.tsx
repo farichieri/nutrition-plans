@@ -1,4 +1,3 @@
-import { getWeightText } from "@/utils/calculations";
 import { FC } from "react";
 
 interface Props {
@@ -16,7 +15,7 @@ const CustomLabel: FC<Props> = ({ props, text }) => {
         textAnchor="start"
         fontWeight={500}
         dominantBaseline="central"
-        fontSize={12}
+        fontSize={14}
       >
         {text}
       </text>

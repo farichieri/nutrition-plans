@@ -27,7 +27,7 @@ const SubmitButton = ({
       className={`flex min-w-[4rem] select-none items-center justify-center rounded-md border px-4 duration-100  ${className} ${
         isDisabled
           ? "cursor-not-allowed border bg-transparent opacity-70"
-          : "border border-green-500 bg-green-500 opacity-100 hover:bg-green-600 active:scale-95 active:shadow-[0_0_10px_gray]"
+          : "border border-green-500 bg-green-500 opacity-100 hover:bg-green-600 active:shadow-[0_0_10px_gray]"
       }`}
       type={type}
       onSubmit={onSubmit}

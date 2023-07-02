@@ -29,6 +29,7 @@ import SubmitButton from "@/components/Buttons/SubmitButton";
 import { toast } from "react-hot-toast";
 import { AppRoutes, formatTwoDecimals } from "@/utils";
 import { MdSettingsAccessibility } from "react-icons/md";
+import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
 
 interface FormValues {
   activity: UserActivities | null;
@@ -226,14 +227,14 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
   // }, [setIsDisabled, values, watch]);
 
   return (
-    <div className="flex h-full w-full max-w-xl flex-col items-center justify-center gap-3 rounded-md border bg-white/50 text-xs dark:bg-black/50 s:text-sm sm:text-base">
+    <Box customClass="max-w-xl">
       <DevTool control={control} />
       <form
         noValidate
         onSubmit={handleSubmit(onSubmit)}
-        className="flex w-full max-w-xl flex-col gap-5"
+        className="flex w-full flex-col gap-5"
       >
-        <div className="flex flex-col gap-10 p-5">
+        <BoxMainContent customClass="flex-col gap-10">
           <div className="flex items-center gap-2">
             <MdSettingsAccessibility className="h-6 w-6 text-green-500" />
             <span className="w-full text-left text-xl font-semibold sm:text-3xl">
@@ -439,8 +440,8 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
               </div>
             </div>
           </div>
-        </div>
-        <div className="flex items-center justify-center border-t p-5">
+        </BoxMainContent>
+        <BoxBottomBar>
           {error && (
             <span className="text-center font-medium text-red-400">
               {error}
@@ -455,7 +456,7 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
               isDisabled={isSubmitting || isDisabled}
             />
           </div>
-        </div>
+        </BoxBottomBar>
       </form>
       <style jsx>
         {`
@@ -480,7 +481,7 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
           }
         `}
       </style>
-    </div>
+    </Box>
   );
 };
 
