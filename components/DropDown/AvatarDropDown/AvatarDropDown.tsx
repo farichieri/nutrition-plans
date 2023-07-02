@@ -3,7 +3,6 @@ import { FC, useState } from "react";
 import { MdFavorite, MdOpenInNew, MdSettings } from "react-icons/md";
 import { persistor } from "@/store/store";
 import { selectAuthSlice } from "@/features/authentication";
-import { setIsSettingsOpen } from "@/store/slices/layoutSlice";
 import { setProgress } from "@/features/progress";
 import { signOut } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
@@ -38,17 +37,11 @@ const AvatarDropDown: FC<Props> = ({ isApp }) => {
     });
   };
 
-  const handleOpenProfile = (event: React.MouseEvent) => {
-    event.preventDefault();
-    dispatch(setIsSettingsOpen(true));
-    setCloseDrop(true);
-  };
-
   return (
     <DropDown
       closeDrop={closeDrop}
       setCloseDrop={setCloseDrop}
-      btnText={<Avatar changeable={false} width={30} height={30} />}
+      btnText={<Avatar width={30} height={30} />}
     >
       <div className="w-60 py-2">
         <div className="flex flex-col items-start justify-center px-4 py-2 opacity-60">

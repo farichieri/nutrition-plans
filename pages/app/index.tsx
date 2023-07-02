@@ -9,23 +9,15 @@ const App = () => {
   const { user } = useSelector(selectAuthSlice);
   const router = useRouter();
 
-  const checkUser = () => {
+  useEffect(() => {
     if (user) {
-      if (!user.is_profile_completed) {
-        router.push("/app/create");
+      if (user.plan_selected) {
+        router.push(`/app/today`);
       } else {
-        if (user.plan_selected) {
-          router.push(`/app/today`);
-        } else {
-          router.push(`/app/progress`);
-        }
+        router.push(`/app/progress`);
       }
     }
-  };
-
-  useEffect(() => {
-    checkUser();
-  }, [user]);
+  }, [user, router]);
 
   return (
     <PremiumLayout>

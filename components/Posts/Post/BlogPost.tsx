@@ -1,15 +1,15 @@
-import Image from "next/image";
+import { blurDataURL } from "@/components/Layout/BlurDataImage";
 import { FC } from "react";
 import { Post } from "@/types";
 import Date from "./Date/Date";
+import Image from "next/image";
 import Link from "next/link";
-import { blurDataURL } from "@/components/Layout/BlurDataImage";
 
 interface Props {
   post: Post;
 }
 
-const Post: FC<Props> = ({ post }) => {
+const BlogPost: FC<Props> = ({ post }) => {
   return (
     <Link
       href={`/blog/${post.id}`}
@@ -40,4 +40,4 @@ const Post: FC<Props> = ({ post }) => {
   );
 };
 
-export default Post;
+export default BlogPost;

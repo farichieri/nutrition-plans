@@ -20,7 +20,7 @@ const DropDown: FC<Props> = ({
       setOpen(false);
       setCloseDrop(false);
     }
-  }, [closeDrop, open]);
+  }, [closeDrop, open, setCloseDrop]);
 
   return (
     <div className="relative flex items-center justify-center">

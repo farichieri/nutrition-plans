@@ -139,7 +139,7 @@ const NavBar: FC<Props> = () => {
                     <span>{user.display_name}</span>
                     <span>{user.email_address}</span>
                   </div>
-                  <Avatar width={30} height={30} changeable={false} />
+                  <Avatar width={30} height={30} />
                 </div>
 
                 <div className="w-full divide-y ">

@@ -18,7 +18,7 @@ export default function Page() {
     if (user && !isCreatingUser) router.push(AppRoutes.today);
     if (user && isCreatingUser) router.push(AppRoutes.create_user);
     if (!user && !isVerifyingUser) setIsLoading(false);
-  }, [user, isVerifyingUser, isCreatingUser]);
+  }, [user, isVerifyingUser, isCreatingUser, router]);
 
   return (
     <SignLayout>

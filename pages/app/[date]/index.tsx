@@ -38,7 +38,7 @@ export default function Page({ params }: { params: Props }) {
         dispatch(updateDietNutrition({ diet_id }));
       }
     }
-  }, [diet?.diet_meals]);
+  }, [diet, dispatch]);
 
   return (
     <PremiumLayout>

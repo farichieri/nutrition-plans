@@ -1,14 +1,13 @@
 import {
-  MdAccountCircle,
   MdAutoGraph,
   MdDescription,
   MdFavorite,
   MdPerson,
-  MdSearch,
 } from "react-icons/md";
 import { FC } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { RiSearchLine } from "react-icons/ri";
 
 interface Props {}
 
@@ -38,7 +37,7 @@ const MobilePages: FC<Props> = () => {
       name: "Search",
       url: "/app/search",
       pathname: ["/app/search", "/app/search/my-creations"],
-      icon: <MdSearch className="h-5 w-5 " />,
+      icon: <RiSearchLine className="h-5 w-5 " />,
     },
     {
       name: "Profile",
@@ -58,7 +57,7 @@ const MobilePages: FC<Props> = () => {
             page.pathname.includes(router.pathname)
               ? "opacity-100  "
               : "opacity-50"
-          } text-md hover:opacity-7 flex w-full flex-col items-center justify-end gap-0 border border-transparent text-center text-base font-extralight  text-white duration-300 active:border-gray-400 dark:active:border-white `}
+          } text-md hover:opacity-7 flex w-full flex-col items-center justify-end gap-0 border border-transparent py-1 text-center text-base font-light text-white duration-300 `}
         >
           <span
             className={`${

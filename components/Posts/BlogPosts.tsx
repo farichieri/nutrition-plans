@@ -1,19 +1,19 @@
 import { FC } from "react";
 import { Posts } from "@/types";
-import Post from "./Post/Post";
+import BlogPost from "./Post/BlogPost";
 
 interface Props {
   posts: Posts;
 }
 
-const Posts: FC<Props> = ({ posts }) => {
+const BlogPosts: FC<Props> = ({ posts }) => {
   return (
     <div className="flex w-full flex-col gap-10 ">
       {posts.map((post) => (
-        <Post key={post.id} post={post} />
+        <BlogPost key={post.id} post={post} />
       ))}
     </div>
   );
 };
 
-export default Posts;
+export default BlogPosts;

@@ -50,10 +50,7 @@ const NutritionInput: FC<Props> = forwardRef<HTMLInputElement, Props>(
     ref
   ) => {
     const [percentage, setPercentage] = useState<number>(0);
-    const nutritionData = useMemo(
-      () => getNutrientMeasurementUnit(id),
-      [percentage, value]
-    );
+    const nutritionData = useMemo(() => getNutrientMeasurementUnit(id), [id]);
     const measurementUnit = nutritionData?.unit;
     const requirement = nutritionData?.requirement;
 
@@ -85,7 +82,7 @@ const NutritionInput: FC<Props> = forwardRef<HTMLInputElement, Props>(
         const newPercentage = (Number(value) / requirement) * 100;
         setPercentage(newPercentage);
       }
-    }, [changed]);
+    }, [changed, requirement, value]);
 
     return (
       <>

@@ -55,7 +55,7 @@ const Confetti = () => {
 
   useEffect(() => {
     fire();
-  }, []);
+  }, [fire]);
 
   return (
     <>

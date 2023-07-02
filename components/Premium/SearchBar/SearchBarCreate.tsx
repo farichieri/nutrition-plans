@@ -6,7 +6,7 @@ import {
 import { MdSearch } from "react-icons/md";
 import { selectAuthSlice } from "@/features/authentication";
 import { useDispatch, useSelector } from "react-redux";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import Spinner from "@/components/Loader/Spinner";
 
 interface Props {
@@ -23,21 +23,23 @@ const SearchBarCreate: FC<Props> = ({ onFocus, preFetch }) => {
   const [isSearching, setIsSearching] = useState(false);
   const noData = Object.values(foodsSearched).length === 0;
 
-  const fetchData = async (input: string) => {
-    if (!user?.user_id) return;
-    setIsSearching(true);
-    const res = await fetchFoods({
-      queries: { q: input },
-      uploader_id: user?.user_id,
-    });
-    if (res.result === "success") {
-      dispatch(setFoodsSearched({ foods: res.data, user_id: user.user_id }));
-    } else {
-      dispatch(setFoodsSearched({ foods: {}, user_id: user.user_id }));
-    }
-    setIsSearching(false);
-    // dispatch(setIsSearchingFoods(false));
-  };
+  const fetchData = useCallback(
+    async (input: string) => {
+      if (!user?.user_id) return;
+      setIsSearching(true);
+      const res = await fetchFoods({
+        queries: { q: input },
+        uploader_id: user?.user_id,
+      });
+      if (res.result === "success") {
+        dispatch(setFoodsSearched({ foods: res.data, user_id: user.user_id }));
+      } else {
+        dispatch(setFoodsSearched({ foods: {}, user_id: user.user_id }));
+      }
+      setIsSearching(false);
+    },
+    [dispatch, user?.user_id]
+  );
 
   useEffect(() => {
     if (preFetch || (isFocused && noData) || (!preFetch && isFocused)) {
@@ -51,7 +53,7 @@ const SearchBarCreate: FC<Props> = ({ onFocus, preFetch }) => {
 
       return () => clearTimeout(timer);
     }
-  }, [searchInput, isFocused]);
+  }, [searchInput, isFocused, fetchData, noData, preFetch]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();

@@ -3,7 +3,7 @@ import {
   setFoodsSearched,
   setIsSearchingFoods,
 } from "@/features/foods";
-import { FC, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { FilterQueries } from "@/types";
 import { IoMdArrowBack } from "react-icons/io";
 import { MdClose, MdSearch } from "react-icons/md";
@@ -27,21 +27,24 @@ const SearchBar: FC<Props> = ({ queries }) => {
   const [showSearchBar, setShowSearchBar] = useState(false);
   const windowWidth = useWindowWidth();
 
-  const fetchData = async ({ queries }: { queries: FilterQueries }) => {
-    if (!user?.user_id) return;
-    setIsSearching(true);
-    const res = await fetchFoods({
-      queries: queries,
-      uploader_id: user?.user_id,
-    });
-    if (res.result === "success") {
-      dispatch(setFoodsSearched({ foods: res.data, user_id: user.user_id }));
-    } else {
-      dispatch(setFoodsSearched({ foods: {}, user_id: user.user_id }));
-    }
-    setIsSearching(false);
-    dispatch(setIsSearchingFoods(false));
-  };
+  const fetchData = useCallback(
+    async ({ queries }: { queries: FilterQueries }) => {
+      if (!user?.user_id) return;
+      setIsSearching(true);
+      const res = await fetchFoods({
+        queries: queries,
+        uploader_id: user?.user_id,
+      });
+      if (res.result === "success") {
+        dispatch(setFoodsSearched({ foods: res.data, user_id: user.user_id }));
+      } else {
+        dispatch(setFoodsSearched({ foods: {}, user_id: user.user_id }));
+      }
+      setIsSearching(false);
+      dispatch(setIsSearchingFoods(false));
+    },
+    [dispatch, user?.user_id]
+  );
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -70,7 +73,7 @@ const SearchBar: FC<Props> = ({ queries }) => {
 
   useEffect(() => {
     fetchData({ queries });
-  }, [queries]);
+  }, [queries, fetchData]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();

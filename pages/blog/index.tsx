@@ -1,9 +1,9 @@
-import LandingLayout from "@/layouts/LandingLayout";
-import Posts from "@/components/Posts/Posts";
-import { Posts as PostsType } from "@/types";
 import { directories, getSortedData } from "@/utils/mds";
-import Head from "next/head";
+import { Posts as PostsType } from "@/types";
+import BlogPosts from "@/components/Posts/BlogPosts";
 import CallToAction from "@/components/CallToAction";
+import Head from "next/head";
+import LandingLayout from "@/layouts/LandingLayout";
 
 interface Props {
   posts: PostsType;
@@ -20,7 +20,7 @@ export default function Blog({ posts }: Props) {
         <span className="mb-8 text-5xl font-bold md:text-6xl lg:text-7xl">
           Blog
         </span>
-        <Posts posts={posts} />
+        <BlogPosts posts={posts} />
         <CallToAction />
       </section>
     </LandingLayout>

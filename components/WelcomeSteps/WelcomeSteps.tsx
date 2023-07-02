@@ -5,7 +5,7 @@ import StepOne from "./StepOne";
 
 interface Props {}
 
-const WelcomeSteps: FC<Props> = ({}) => {
+const WelcomeSteps: FC<Props> = () => {
   const { user } = useSelector(selectAuthSlice);
   const step = user?.user_step;
 
