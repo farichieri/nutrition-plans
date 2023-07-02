@@ -5,8 +5,8 @@ import {
 } from "@/features/meals";
 import { selectAuthSlice } from "@/features/authentication";
 import { useSelector } from "react-redux";
-import Spinner from "@/components/Loader/Spinner";
 import ProfileLayout from "./ProfileLayout";
+import Spinner from "@/components/Loader/Spinner";
 
 interface Props {
   children: React.ReactNode;
