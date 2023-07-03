@@ -1,19 +1,32 @@
 import { ArrowSmallLeftIcon } from "@heroicons/react/24/solid";
-import { useRouter } from "next/router";
-import RoundButton from "./RoundButton";
 import { FC } from "react";
+import { useRouter } from "next/router";
+import Link from "next/link";
+import RoundButton from "./RoundButton";
 
 interface Props {
-  text?: string;
+  route?: string;
+  customClass?: string;
 }
 
-const BackButton: FC<Props> = ({ text }) => {
+const BackButton: FC<Props> = ({ route, customClass }) => {
   const router = useRouter();
 
   return (
-    <RoundButton onClick={() => router.back()} customClass="p-1.5 h-10 w-10">
-      <ArrowSmallLeftIcon className="h-6 w-6 text-green-500" />
-    </RoundButton>
+    <>
+      {route ? (
+        <Link href={route} className={`h-10 w-10 p-1.5 ${customClass}`}>
+          <ArrowSmallLeftIcon className="h-6 w-6 text-green-500" />
+        </Link>
+      ) : (
+        <RoundButton
+          onClick={() => router.back()}
+          customClass={`h-10 w-10 p-1.5 ${customClass}`}
+        >
+          <ArrowSmallLeftIcon className="h-6 w-6 text-green-500" />
+        </RoundButton>
+      )}
+    </>
   );
 };
 

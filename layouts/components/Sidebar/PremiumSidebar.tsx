@@ -16,14 +16,14 @@ const PremiumSidebar: FC<Props> = () => {
   const router = useRouter();
   const { sidebarOpen } = useSelector(selectLayoutSlice);
   const windowWidth = useWindowWidth();
-  const isMobile = windowWidth < 640;
+  const isMobile = windowWidth < 1024;
 
   const handleSidebar = () => {
     dispatch(setSidebarOpen(!sidebarOpen));
   };
 
   useEffect(() => {
-    if (sidebarOpen && window.innerWidth < 640) {
+    if (sidebarOpen && window.innerWidth < 1024) {
       dispatch(setSidebarOpen(false));
     }
   }, [router.asPath]);

@@ -1,6 +1,6 @@
 import { auth } from "@/services/firebase/firebase.config";
 import { FC, useState } from "react";
-import { MdFavorite, MdOpenInNew, MdSettings } from "react-icons/md";
+import { MdFavorite, MdOpenInNew, MdPerson, MdSettings } from "react-icons/md";
 import { persistor } from "@/store/store";
 import { selectAuthSlice } from "@/features/authentication";
 import { setProgress } from "@/features/progress";
@@ -50,11 +50,14 @@ const AvatarDropDown: FC<Props> = ({ isApp }) => {
         </div>
         <div className="mx-4 my-2 h-0 border-b border-slate-500/30 duration-300"></div>
 
-        <div className="flex w-full gap-2 px-4 py-2 opacity-60 hover:bg-slate-500/40 hover:opacity-100">
-          <ThemeSwitcher withText={true} />
-        </div>
+        <Link
+          href={"/app/profile"}
+          className={`flex w-full cursor-pointer items-center gap-2 border-none bg-transparent px-4 py-2 opacity-60 hover:bg-slate-500/40 hover:opacity-100  `}
+        >
+          <span>Profile</span>
+          <MdPerson className="ml-auto h-6 w-6" />
+        </Link>
         <div className="mx-4 my-2 h-0 border-b border-slate-500/30 duration-300"></div>
-
         <Link
           href={"/app/settings"}
           className={`flex w-full cursor-pointer items-center gap-2 border-none bg-transparent px-4 py-2 opacity-60 hover:bg-slate-500/40 hover:opacity-100  `}
@@ -62,6 +65,10 @@ const AvatarDropDown: FC<Props> = ({ isApp }) => {
           <span>Settings</span>
           <MdSettings className="ml-auto h-6 w-6" />
         </Link>
+        <div className="mx-4 my-2 h-0 border-b border-slate-500/30 duration-300"></div>
+        <div className="flex w-full gap-2 px-4 py-2 opacity-60 hover:bg-slate-500/40 hover:opacity-100">
+          <ThemeSwitcher withText={true} />
+        </div>
         <div className="mx-4 my-2 h-0 border-b border-slate-500/30 duration-300"></div>
 
         {isApp ? (

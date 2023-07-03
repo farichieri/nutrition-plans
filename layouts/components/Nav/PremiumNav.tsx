@@ -7,6 +7,7 @@ import Link from "next/link";
 import Logo from "@/components/Logo/Logo";
 import ToggleSidebar from "@/layouts/components/Sidebar/ToggleSidebar";
 import useWindowWidth from "@/hooks/useWindowWidth";
+import { SubscribeButton } from "@/components/Buttons";
 
 interface Props {
   children?: ReactNode;
@@ -60,6 +61,7 @@ const PremiumNav: FC<Props> = ({ children, title, hideScrolling }) => {
         )}
         <div className="w-full ">{children}</div>
         <div className="flex w-fit min-w-fit basis-1/3 items-center justify-end gap-2 pr-4 text-xs xs:gap-4 sm:gap-10 sm:pr-5 sm:text-xl xl:pr-10">
+          <SubscribeButton />
           <Feedback />
           {isMobile ? (
             <Link href={AppRoutes.nav_menu}>

@@ -153,43 +153,7 @@ const WebPages: FC<Props> = () => {
         </Link>
       ))}
 
-      <div className="flex flex-col divide-y border-t">
-        <div className="flex flex-col py-1">
-          <div className={fixedOptClass} onClick={toggleEvolution}>
-            <MdPerson className="h-6 w-6 text-green-500" />
-            <div className="flex w-full cursor-pointer items-center justify-between">
-              <span className="text-md sm:text-lg">Profile</span>
-              <MdExpandMore
-                className={`duration-200 ease-in-out ${
-                  sidebarEvolutionOpen &&
-                  "h-6 w-6 -rotate-180 transform text-green-500"
-                }`}
-              />
-            </div>
-          </div>
-          <div
-            className={`flex flex-col overflow-hidden pl-1 text-sm transition-[max-height] duration-200 ease-linear sm:text-base ${
-              sidebarEvolutionOpen ? " max-h-[30rem]" : "max-h-0"
-            }`}
-          >
-            {PROFILE_PAGES.map((page) => (
-              <Link
-                key={page.name}
-                href={page.url}
-                className={
-                  `${
-                    router.asPath === page.url &&
-                    " bg-slate-500/30 font-semibold"
-                  }` + fixedSecOptClass
-                }
-              >
-                {page.icon}
-                {page.name}
-              </Link>
-            ))}
-          </div>
-        </div>
-
+      <div className="flex flex-col divide-y border-y pb-1">
         <div className="flex flex-col py-1">
           <div className={fixedOptClass} onClick={toggleAdmin}>
             <MdCreate className="h-6 w-6 text-green-500" />
@@ -226,12 +190,48 @@ const WebPages: FC<Props> = () => {
           </div>
         </div>
 
+        <div className="flex flex-col py-1">
+          <div className={fixedOptClass} onClick={toggleEvolution}>
+            <MdPerson className="h-6 w-6 text-green-500" />
+            <div className="flex w-full cursor-pointer items-center justify-between">
+              <span className="text-md sm:text-lg">Profile</span>
+              <MdExpandMore
+                className={`duration-200 ease-in-out ${
+                  sidebarEvolutionOpen &&
+                  "h-6 w-6 -rotate-180 transform text-green-500"
+                }`}
+              />
+            </div>
+          </div>
+          <div
+            className={`flex flex-col overflow-hidden border-b pb-1 pl-1 text-sm transition-[max-height] duration-200 ease-linear sm:text-base ${
+              sidebarEvolutionOpen ? " max-h-[30rem]" : "max-h-0"
+            }`}
+          >
+            {PROFILE_PAGES.map((page) => (
+              <Link
+                key={page.name}
+                href={page.url}
+                className={
+                  `${
+                    router.asPath === page.url &&
+                    " bg-slate-500/30 font-semibold"
+                  }` + fixedSecOptClass
+                }
+              >
+                {page.icon}
+                {page.name}
+              </Link>
+            ))}
+          </div>
+        </div>
+
         <Link
           href={"/app/settings"}
           className={
             `${
               router.asPath.includes("settings") &&
-              " border bg-slate-500/30 font-semibold"
+              " bg-slate-500/30 font-semibold"
             } px-2 ` + fixedOptClass
           }
         >

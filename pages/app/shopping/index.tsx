@@ -10,7 +10,7 @@ export default function Page(): Props {
     <PremiumLayout>
       <PremiumNav hideScrolling={false} />
       <section className="flex w-full flex-col gap-5 p-4 sm:px-8">
-        <div className="flex items-center gap-5">
+        <div className="flex flex-wrap items-center gap-1">
           <span className="text-2xl font-medium">Shopping List of:</span>
           <DateSelector />
         </div>

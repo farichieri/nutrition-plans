@@ -67,7 +67,7 @@ const SearchBar: FC<Props> = ({ queries }) => {
           });
         }
       }
-    }, 500);
+    }, 200);
     return () => clearTimeout(timer);
   }, [searchInput]);
 
@@ -92,10 +92,10 @@ const SearchBar: FC<Props> = ({ queries }) => {
       {showSearchBar ? (
         <div
           className={`${
-            windowWidth > 768 ? "relative" : "fixed"
+            windowWidth > 1024 ? "relative" : "fixed"
           } left-0 top-0 z-[100] flex h-full w-full items-center justify-center bg-primary-color px-4`}
         >
-          <div className="mr-2 flex cursor-pointer items-center justify-center md:hidden ">
+          <div className="mr-2 flex cursor-pointer items-center justify-center lg:hidden ">
             <IoMdArrowBack
               onClick={(e) => {
                 e.preventDefault();

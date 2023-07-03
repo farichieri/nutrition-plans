@@ -53,7 +53,7 @@ const SearchBarCreate: FC<Props> = ({ onFocus, preFetch }) => {
 
       return () => clearTimeout(timer);
     }
-  }, [searchInput, isFocused, fetchData, noData, preFetch]);
+  }, [searchInput, isFocused, fetchData, preFetch]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();

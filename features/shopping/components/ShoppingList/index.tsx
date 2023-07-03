@@ -6,7 +6,7 @@ interface Props {}
 
 const ShoppingList: FC<Props> = () => {
   return (
-    <div className="flex max-w-xl flex-col gap-1">
+    <div className="flex max-w-5xl flex-col gap-1">
       {Object.values(FoodCategoriesEnum).map((category) => {
         return (
           <div key={category}>

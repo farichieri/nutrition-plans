@@ -40,6 +40,12 @@ const CollapsedPages: FC<Props> = () => {
       pathname: ["/app/progress"],
       icon: <MdAutoGraph className="h-6 w-6 text-green-500" />,
     },
+    {
+      name: "Shopping",
+      url: "/app/shopping",
+      pathname: ["/app/shopping"],
+      icon: <MdShoppingCart className="h-6 w-6 text-green-500" />,
+    },
   ];
 
   return (

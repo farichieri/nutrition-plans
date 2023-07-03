@@ -30,7 +30,7 @@ export default function PremiumLayout({ children }: Props) {
     useSelector(selectAuthSlice);
   const isOnline = useOnlineStatus();
   const windowWidth = useWindowWidth();
-  const isMobile = windowWidth < 640;
+  const isMobile = windowWidth < 1024;
 
   useEffect(() => {
     if (user) dispatch(setIsSigningUser(false));

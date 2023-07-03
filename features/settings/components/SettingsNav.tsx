@@ -1,3 +1,5 @@
+import { AppRoutes } from "@/utils";
+import { BackButton } from "@/components/Buttons";
 import { FC } from "react";
 import { MdArrowBackIosNew } from "react-icons/md";
 import { MdManageAccounts, MdPayment, MdSettingsCell } from "react-icons/md";
@@ -10,7 +12,7 @@ interface Props {}
 const SettingsNav: FC<Props> = ({}) => {
   const router = useRouter();
   const windowWidth = useWindowWidth();
-  const isMobile = windowWidth < 640;
+  const isMobile = windowWidth < 1024;
   const isSettingsRoute = router.asPath === "/app/settings";
 
   const PROFILE_PAGES = [
@@ -35,6 +37,10 @@ const SettingsNav: FC<Props> = ({}) => {
     <>
       {isMobile && isSettingsRoute ? (
         <nav className="fixed inset-0 z-[60] flex flex-col items-center bg-primary-color pt-[var(--nav-h)]">
+          <BackButton
+            route={AppRoutes.nav_menu}
+            customClass="top-2 left-2 absolute"
+          />
           <div className="flex w-full justify-center border-b py-8 text-2xl font-semibold">
             Settings
           </div>

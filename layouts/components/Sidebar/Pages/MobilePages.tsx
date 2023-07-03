@@ -1,13 +1,13 @@
 import {
   MdAutoGraph,
-  MdDescription,
   MdFavorite,
-  MdPerson,
+  MdHomeFilled,
+  MdShoppingCart,
 } from "react-icons/md";
 import { FC } from "react";
+import { RiSearchLine } from "react-icons/ri";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { RiSearchLine } from "react-icons/ri";
 
 interface Props {}
 
@@ -16,10 +16,10 @@ const MobilePages: FC<Props> = () => {
 
   const COLLAPSED_PAGES = [
     {
-      name: "Plan",
+      name: "Home",
       url: `/app/today`,
       pathname: ["/app/[date]"],
-      icon: <MdDescription className="h-5 w-5 " />,
+      icon: <MdHomeFilled className="h-5 w-5 " />,
     },
     {
       name: "Favorites",
@@ -40,10 +40,10 @@ const MobilePages: FC<Props> = () => {
       icon: <RiSearchLine className="h-5 w-5 " />,
     },
     {
-      name: "Profile",
-      url: "/app/profile",
-      pathname: ["/app/profile"],
-      icon: <MdPerson className="h-5 w-5 " />,
+      name: "Shopping",
+      url: "/app/shopping",
+      pathname: ["/app/shopping"],
+      icon: <MdShoppingCart className="h-5 w-5 " />,
     },
   ];
 
