@@ -170,9 +170,7 @@ const DaySelector: FC<Props> = ({ date }) => {
             </RoundButton>
           </Link>
         </div>
-        {/* <span className="text-xs opacity-50">{dateF}</span> */}
       </div>
-
       <div className="flex items-center gap-5 sm:gap-10 ">
         <Link
           href={todayRoute}

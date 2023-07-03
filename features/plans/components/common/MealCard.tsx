@@ -34,7 +34,9 @@ const MealCard: FC<Props> = ({
     <div
       key={dietMeal.diet_meal_id}
       className={`min-h-20 flex w-full flex-col divide-y overflow-auto rounded-xl border ${
-        allEaten ? "border-green-500 bg-green-500/20" : "bg-gray-500/20"
+        allEaten
+          ? "border-green-500 bg-green-500/20"
+          : "bg-white dark:bg-gray-500/20"
       }`}
     >
       <div className="flex items-center gap-5 px-2 py-1 text-center">
@@ -86,7 +88,7 @@ const MealCard: FC<Props> = ({
                         ref={draggableProvided.innerRef}
                         {...draggableProvided.draggableProps}
                         {...draggableProvided.dragHandleProps}
-                        className={`flex w-full items-center gap-1 px-0 hover:bg-slate-500/20 active:bg-slate-500/50 `}
+                        className={`flex w-full items-center gap-1 px-0 hover:bg-slate-500/20  active:bg-slate-500/50 `}
                       >
                         {isEditing ? (
                           <FoodInMealCard food={food} isEditing={isEditing} />

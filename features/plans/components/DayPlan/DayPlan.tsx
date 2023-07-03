@@ -20,14 +20,16 @@ interface Props {
 const DayPlan: FC<Props> = ({ date }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
-  const [loading, setLoading] = useState(true);
+  const [isGeneratingPlan, setIsGeneratingPlan] = useState(false);
   const { diets, isLoadingDiet, isCreatingDiet } =
     useSelector(selectPlansSlice);
   const diet: Diet = diets[date];
   const planID = diet?.plan_id;
 
   const getDayDiet = async (date: string, user: UserAccount) => {
-    dispatch(setIsLoadingDiet(true));
+    if (!diet) {
+      dispatch(setIsLoadingDiet(true));
+    }
     const res = await fetchDietByDate({ date, user });
     if (res.result === "success") {
       dispatch(setDiet(res.data));
@@ -39,7 +41,7 @@ const DayPlan: FC<Props> = ({ date }) => {
     if (user) {
       getDayDiet(date, user);
     }
-    setLoading(false);
+    setIsGeneratingPlan(false);
   }, [date]);
 
   if (!user) return <></>;
@@ -47,7 +49,7 @@ const DayPlan: FC<Props> = ({ date }) => {
   console.log({ diet });
   return (
     <div className="w-full">
-      {isLoadingDiet || loading ? (
+      {isGeneratingPlan || isLoadingDiet ? (
         <div className="fixed inset-0 mt-auto flex h-screen w-screen justify-center">
           <Spinner customClass="h-6 w-6 m-auto" />
         </div>
@@ -79,7 +81,10 @@ const DayPlan: FC<Props> = ({ date }) => {
             </div>
           ) : (
             <div className="fixed inset-0 mt-auto flex h-screen w-screen flex-col justify-center">
-              <PlanGenerator date={date} />
+              <PlanGenerator
+                date={date}
+                setIsGeneratingPlan={setIsGeneratingPlan}
+              />
             </div>
           )}
         </>

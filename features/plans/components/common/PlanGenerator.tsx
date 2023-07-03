@@ -5,7 +5,6 @@ import {
   createDiet,
   postDietToUserDiets,
   setDiet,
-  setIsCreatingDiet,
 } from "@/features/plans";
 import { PlansEnum } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,9 +14,10 @@ import React, { ChangeEvent, FC, useState } from "react";
 
 interface Props {
   date: string;
+  setIsGeneratingPlan: Function;
 }
 
-const PlanGenerator: FC<Props> = ({ date }) => {
+const PlanGenerator: FC<Props> = ({ date, setIsGeneratingPlan }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
   const { meals } = useSelector(selectMealsSlice);
@@ -54,7 +54,7 @@ const PlanGenerator: FC<Props> = ({ date }) => {
     meals: UserMeals,
     plan_type: PlanTypes
   ) => {
-    dispatch(setIsCreatingDiet(true));
+    setIsGeneratingPlan(true);
     const diet: Diet = createDiet(meals, planID, plan_type, user.body_data);
     const res = await postDietToUserDiets({
       diet,
@@ -65,12 +65,12 @@ const PlanGenerator: FC<Props> = ({ date }) => {
     if (res.result === "success") {
       dispatch(setDiet(res.data));
     }
-    dispatch(setIsCreatingDiet(false));
+    setIsGeneratingPlan(false);
   };
 
   return (
     <div className="flex flex-col items-center justify-center gap-5 p-5">
-      <div className="flex items-center gap-2">
+      <div className="m-auto flex flex-wrap items-center justify-center gap-2">
         <span className="text-lg font-semibold">Generate Plan:</span>
         <select
           value={planSelected}

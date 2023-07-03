@@ -1,9 +1,8 @@
 import {
   MdAutoGraph,
-  MdDescription,
   MdFavorite,
+  MdHomeFilled,
   MdSearch,
-  MdSettings,
   MdShoppingCart,
 } from "react-icons/md";
 import { FC } from "react";
@@ -17,10 +16,10 @@ const CollapsedPages: FC<Props> = () => {
 
   const COLLAPSED_PAGES = [
     {
-      name: "Plan",
+      name: "Home",
       url: `/app/today`,
       pathname: ["/app/[date]"],
-      icon: <MdDescription className="h-6 w-6 text-green-500" />,
+      icon: <MdHomeFilled className="h-6 w-6 text-green-500" />,
     },
     {
       name: "Favorites",

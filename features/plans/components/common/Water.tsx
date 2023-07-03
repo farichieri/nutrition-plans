@@ -48,7 +48,9 @@ const Water: FC<Props> = ({ diet, isEditing }) => {
   return (
     <div
       className={`flex items-center gap-1 rounded-xl border-b  ${
-        drunk ? "border-blue-300 bg-blue-300/30 " : "bg-gray-500/20"
+        drunk
+          ? "border-blue-300 bg-blue-300/30 "
+          : "bg-white dark:bg-gray-500/20"
       }`}
     >
       <div className="flex w-full items-center justify-between">
