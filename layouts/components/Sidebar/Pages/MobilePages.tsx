@@ -55,7 +55,7 @@ const MobilePages: FC<Props> = () => {
           href={page.url}
           className={`${
             page.pathname.includes(router.pathname)
-              ? "opacity-100  "
+              ? "opacity-100"
               : "opacity-50"
           } text-md hover:opacity-7 flex h-[var(--mobile-sidenav-h)] w-full flex-col items-center justify-center text-center text-base font-light text-white duration-300 `}
         >

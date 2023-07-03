@@ -1,5 +1,6 @@
 import { AppRoutes } from "@/utils";
 import { FC, ReactNode, useEffect, useState } from "react";
+import Avatar from "@/components/Avatar/Avatar";
 import AvatarDropDown from "@/components/DropDown/AvatarDropDown/AvatarDropDown";
 import Feedback from "@/features/client-contact/components/Feedback/Feedback";
 import Link from "next/link";
@@ -17,7 +18,7 @@ const PremiumNav: FC<Props> = ({ children, title, hideScrolling }) => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [show, setShow] = useState(true);
   const windowWidth = useWindowWidth();
-  const isMobile = windowWidth < 640;
+  const isMobile = windowWidth < 1024;
 
   const controlNavbar = () => {
     if (typeof window !== "undefined") {
@@ -60,7 +61,13 @@ const PremiumNav: FC<Props> = ({ children, title, hideScrolling }) => {
         <div className="w-full ">{children}</div>
         <div className="flex w-fit min-w-fit basis-1/3 items-center justify-end gap-2 pr-4 text-xs xs:gap-4 sm:gap-10 sm:pr-5 sm:text-xl xl:pr-10">
           <Feedback />
-          <AvatarDropDown isApp={true} />
+          {isMobile ? (
+            <Link href={AppRoutes.nav_menu}>
+              <Avatar height={30} width={30} />
+            </Link>
+          ) : (
+            <AvatarDropDown isApp={true} />
+          )}
         </div>
       </div>
     </nav>

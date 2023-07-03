@@ -31,7 +31,7 @@ const PremiumSidebar: FC<Props> = () => {
   return (
     <>
       {isMobile ? (
-        <div className="fixed bottom-0 z-[9999] flex w-full items-center border-t bg-black/90">
+        <div className="fixed bottom-0 z-[150] flex w-full items-center border-t bg-black/90">
           <MobilePages />
         </div>
       ) : (

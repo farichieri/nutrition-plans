@@ -1,3 +1,4 @@
+import { blurDataURL } from "../Layout/BlurDataImage";
 import { FC } from "react";
 import { selectAuthSlice } from "@/features/authentication/slice";
 import { useSelector } from "react-redux";
@@ -28,11 +29,11 @@ const Avatar: FC<Props> = ({ width, height }) => {
           className={`relative flex items-center justify-center rounded-full `}
         >
           <Image
-            className="flex items-center justify-center overflow-auto rounded-full"
+            className="flex h-full w-full items-center justify-center overflow-auto rounded-full object-cover"
             alt="Avatar"
             src={userImage}
-            width={width}
-            height={height}
+            fill
+            blurDataURL={blurDataURL(height, width)}
           />
         </div>
       )}

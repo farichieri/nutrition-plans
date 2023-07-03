@@ -155,10 +155,7 @@ const PlanSelector: FC<Props> = ({ handleContinue }) => {
                 </button>
               ))}
             </div>
-            <InfoMessage
-              message="Select your preferred one as default, but know that you will have access to all the plans in
-  your day to day!"
-            />
+            <InfoMessage message="Select your preferred one as default" />
           </div>
         </BoxMainContent>
         <BoxBottomBar>

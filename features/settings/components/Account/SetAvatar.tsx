@@ -8,6 +8,7 @@ import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import Spinner from "@/components/Loader/Spinner";
+import { blurDataURL } from "@/components/Layout/BlurDataImage";
 
 interface Props {}
 
@@ -93,11 +94,11 @@ const SetAvatar: FC<Props> = () => {
                   accept="image/*"
                 />
                 <Image
-                  className="flex items-center justify-center overflow-auto rounded-full"
+                  className="pointer-events-none flex items-center justify-center overflow-auto rounded-full object-cover"
                   alt="Avatar"
                   src={userImage}
-                  width={100}
-                  height={100}
+                  fill
+                  blurDataURL={blurDataURL(100, 100)}
                 />
               </div>
             )}

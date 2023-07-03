@@ -1,22 +1,24 @@
 import {
   MdEmojiEvents,
   MdRestaurantMenu,
+  MdSettings,
   MdSettingsAccessibility,
   MdVerified,
 } from "react-icons/md";
 import { BiSolidPieChartAlt2 } from "react-icons/bi";
 import { FC } from "react";
 import { MdArrowBackIosNew } from "react-icons/md";
+import { selectAuthSlice } from "@/features/authentication";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import Avatar from "@/components/Avatar/Avatar";
 import Link from "next/link";
-import useWindowWidth from "@/hooks/useWindowWidth";
 
 interface Props {}
 
-const ProfileNav: FC<Props> = ({}) => {
+const ProfileNav: FC<Props> = () => {
   const router = useRouter();
-  const windowWidth = useWindowWidth();
-  const isMobile = windowWidth < 640;
+  const { user } = useSelector(selectAuthSlice);
   const isProfileRoute = router.asPath === "/app/profile";
 
   const PROFILE_PAGES = [
@@ -45,6 +47,12 @@ const ProfileNav: FC<Props> = ({}) => {
       url: "/app/profile/meals",
       icon: <MdRestaurantMenu className="h-6 w-6 text-green-500" />,
     },
+    {
+      name: "Settings",
+      url: "/app/settings",
+      pathname: ["/app/settings"],
+      icon: <MdSettings className="h-6 w-6 text-green-500" />,
+    },
   ];
 
   return (
@@ -53,16 +61,22 @@ const ProfileNav: FC<Props> = ({}) => {
         Profile
       </div>
       <div className="flex w-full max-w-[95vw] flex-col divide-y border-b">
+        <div className="flex items-center justify-between  py-2">
+          <div className="flex flex-col items-start justify-center  opacity-60">
+            <span className="opacity-100">{user?.display_name}</span>
+            <span className="opacity-70">{user?.email_address}</span>
+          </div>
+          <Avatar width={75} height={75} />
+        </div>
         {isProfileRoute ? (
           PROFILE_PAGES.map((page) => {
             return (
               <Link
                 href={page.url}
                 key={page.url}
-                className={`flex w-full items-center justify-start px-2 py-5 text-xl font-medium capitalize duration-100 hover:bg-slate-500/20 hover:opacity-100 ${
-                  router.asPath === page.url ? "opacity-100" : "opacity-50"
-                }`}
+                className={`flex w-full items-center justify-start gap-4 px-2 py-5 text-xl font-medium capitalize duration-100 hover:bg-slate-500/20 hover:opacity-100 `}
               >
+                {page.icon}
                 {page.name}
               </Link>
             );

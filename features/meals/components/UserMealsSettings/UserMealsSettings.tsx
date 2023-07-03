@@ -37,7 +37,7 @@ const UserMealsSettings: FC<Props> = ({ mealsSettings }) => {
       <BoxBottomBar>
         <Link
           href={"/app/profile/meals/create"}
-          className="ml-auto w-fit rounded-md border border-green-500 bg-green-500 px-3 py-1.5 duration-100 hover:bg-green-600 active:scale-95 active:shadow-[0_0_10px_gray]"
+          className="ml-auto w-fit rounded-md border border-green-500 bg-green-500 px-3 py-1.5 duration-100 hover:bg-green-600 active:shadow-[0_0_10px_gray]"
         >
           Create meal setting
         </Link>

@@ -19,7 +19,8 @@ import {
   setSidebarAdminOpen,
   setSidebarEvolutionOpen,
 } from "@/store/slices/layoutSlice";
-import { BiSolidPieChartAlt2 } from "react-icons/bi";
+import { BiFoodMenu, BiSolidPieChartAlt2 } from "react-icons/bi";
+import { PiBowlFoodFill, PiPillFill } from "react-icons/pi";
 import { FC } from "react";
 import { SubscribeButton } from "@/components/Buttons";
 import { useDispatch, useSelector } from "react-redux";
@@ -81,17 +82,17 @@ const WebPages: FC<Props> = () => {
     {
       name: "Food",
       url: "/app/create/food",
-      icon: <MdAddCircle className="h-6 w-6 text-green-500" />,
+      icon: <PiBowlFoodFill className="h-6 w-6 text-green-500" />,
     },
     {
       name: "Recipe",
       url: "/app/create/recipe",
-      icon: <MdAddCircle className="h-6 w-6 text-green-500" />,
+      icon: <BiFoodMenu className="h-6 w-6 text-green-500" />,
     },
     {
       name: "Supplements & Vitamins",
       url: "/app/create/supplements-vitamins",
-      icon: <MdAddCircle className="h-6 w-6 text-green-500" />,
+      icon: <PiPillFill className="h-6 w-6 text-green-500" />,
     },
   ];
 

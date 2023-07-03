@@ -21,10 +21,13 @@ const PlanGenerator: FC<Props> = ({ date }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
   const { meals } = useSelector(selectMealsSlice);
-  const plans = Object.keys(PlansEnum);
   const [planSelected, setPlanSelected] = useState<PlansEnum>(
-    PlansEnum.balanced
+    user?.plan_selected || PlansEnum.balanced
   );
+  const plans = [
+    planSelected,
+    ...Object.values(PlansEnum).filter((p) => p !== planSelected),
+  ];
 
   if (!user) return <></>;
 
