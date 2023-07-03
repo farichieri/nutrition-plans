@@ -47,7 +47,7 @@ export default function Page({ params }: { params: Props }) {
           <>
             <PremiumNav hideScrolling={false} title="" />
             <SubPremiumNav title={""} customClass="top-[var(--subnav-h)]">
-              <DaySelector date={String(params.date)} />
+              <DaySelector date={String(params.date)} baseURL={"/app/"} />
             </SubPremiumNav>
             <div className="p-2 sm:p-4 lg:p-5">
               {getIsWeek(date) ? (

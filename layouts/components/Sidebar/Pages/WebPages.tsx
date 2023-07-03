@@ -122,8 +122,8 @@ const WebPages: FC<Props> = () => {
     },
     {
       name: "Shopping",
-      url: "/app/shopping",
-      pathname: ["/app/shopping"],
+      url: "/app/shopping/today",
+      pathname: ["/app/shopping/[date]"],
       icon: <MdShoppingCart className="h-6 w-6 text-green-500" />,
     },
   ];

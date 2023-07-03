@@ -27,7 +27,7 @@ const WeekPlan: FC<Props> = ({ dateInterval }) => {
         <div className="grid w-full gap-10 sm:grid-cols-fluid_md sm:gap-5 ">
           {!week && "Invalid Week"}
           {week?.map((date) => {
-            return <Plan date={date} />;
+            return <Plan date={date} key={date} />;
           })}
         </div>
       )}

@@ -167,4 +167,5 @@ export {
   getNewAmount,
   getRecipeSize,
   getDietNutrition,
+  getDietFoods,
 };

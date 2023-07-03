@@ -7,9 +7,10 @@ export enum AppRoutes {
   favorites_foods = "/app/favorites",
   favorites_plans = "/app/favorites/plans",
   login = "/login",
+  nav_menu = "/app/nav-menu",
   search_foods = "/app/search",
   search_my_creations = "/app/search/my-creations",
   signup = "/signup",
   today = "/app/today",
-  nav_menu = "/app/nav-menu",
+  shopping = "/app/shopping/today",
 }

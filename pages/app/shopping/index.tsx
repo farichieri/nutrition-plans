@@ -1,19 +1,25 @@
-import DateSelector from "@/components/DateSelector";
 import { ShoppingList } from "@/features/shopping";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 
 interface Props {}
 
 export default function Page(): Props {
+  const router = useRouter();
+  useEffect(() => {
+    router.push("/app/shopping/today");
+  }, [router]);
   return (
     <PremiumLayout>
       <PremiumNav hideScrolling={false} />
       <section className="flex w-full flex-col gap-5 p-4 sm:px-8">
-        <div className="flex flex-wrap items-center gap-1">
+        {/* <div className="flex flex-wrap items-center gap-1">
           <span className="text-2xl font-medium">Shopping List of:</span>
           <DateSelector />
-        </div>
+        </div> */}
+
         {/* <div className="flex flex-col justify-start">
           <span>I must select a date range to see the foods list.</span>
           <span>

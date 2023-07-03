@@ -41,8 +41,8 @@ const MobilePages: FC<Props> = () => {
     },
     {
       name: "Shopping",
-      url: "/app/shopping",
-      pathname: ["/app/shopping"],
+      url: "/app/shopping/today",
+      pathname: ["/app/shopping/[date]"],
       icon: <MdShoppingCart className="h-5 w-5 " />,
     },
   ];

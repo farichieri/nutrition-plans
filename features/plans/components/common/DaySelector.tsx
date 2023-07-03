@@ -26,6 +26,7 @@ import RoundButton from "@/components/Buttons/RoundButton";
 
 interface Props {
   date: string;
+  baseURL: string;
 }
 
 const fixedButtonClass =
@@ -33,7 +34,7 @@ const fixedButtonClass =
 
 const selectedClass = "after:origin-bottom-left after:scale-x-100";
 
-const DaySelector: FC<Props> = ({ date }) => {
+const DaySelector: FC<Props> = ({ date, baseURL }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
   const dateF = String(
@@ -62,11 +63,10 @@ const DaySelector: FC<Props> = ({ date }) => {
   const nextWeek = getNextWeek({ userStartOfWeek: startOfWeek });
   const lastWeek = getLastWeek({ userStartOfWeek: startOfWeek });
 
-  const todayRoute = `/app/${BaseDatesEnum.today}`;
-  const thisWeekRoute = `/app/${BaseDatesEnum.this_week}`;
+  const todayRoute = `${baseURL}${BaseDatesEnum.today}`;
+  const thisWeekRoute = `${baseURL}${BaseDatesEnum.this_week}`;
 
   const backRoute = () => {
-    let baseURL = `/app/`;
     switch (date) {
       case BaseDatesEnum.today:
         return baseURL + BaseDatesEnum.yesterday;
@@ -108,7 +108,6 @@ const DaySelector: FC<Props> = ({ date }) => {
   };
 
   const nextRoute = () => {
-    let baseURL = `/app/`;
     switch (date) {
       case BaseDatesEnum.today:
         return baseURL + BaseDatesEnum.tomorrow;

@@ -93,7 +93,7 @@ const AddToFavorite: FC<Props> = ({ food }) => {
     <button
       onClick={handleRating}
       id="favorites"
-      className={`flex h-7 w-7 min-w-[1.75rem] items-center justify-center rounded-full border  duration-300 hover:bg-slate-500/20 active:scale-90 ${
+      className={`flex h-8 w-8 min-w-[2rem] items-center justify-center rounded-full border  duration-300 hover:bg-slate-500/20 active:scale-90 ${
         isFavorite && "border-green-500"
       }`}
     >
