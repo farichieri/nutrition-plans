@@ -43,7 +43,7 @@ const CreateButton: FC<Props> = () => {
                 <Link
                   key={page.name}
                   href={page.url}
-                  className="flex items-center gap-2 py-2 duration-100 hover:bg-slate-500/20 active:bg-slate-500/50"
+                  className="flex items-center gap-2 px-2 py-2 duration-100 hover:bg-slate-500/20 active:bg-slate-500/50"
                 >
                   {page.icon}
                   {page.name}

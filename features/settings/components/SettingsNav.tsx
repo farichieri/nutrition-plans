@@ -67,7 +67,7 @@ const SettingsNav: FC<Props> = ({}) => {
                 <Link
                   href={page.url}
                   key={page.url}
-                  className={`flex w-full items-center justify-start gap-4 px-2 py-5 text-xl font-medium capitalize duration-100 hover:bg-slate-500/20 hover:opacity-100 `}
+                  className={`flex w-full items-center justify-start gap-4 rounded-lg px-2 py-5 text-xl font-medium capitalize duration-100 hover:bg-slate-500/20 hover:opacity-100 sm:py-2 `}
                 >
                   {page.icon}
                   {page.name}

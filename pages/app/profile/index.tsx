@@ -14,6 +14,8 @@ import { useSelector } from "react-redux";
 import Avatar from "@/components/Avatar/Avatar";
 import Link from "next/link";
 import { AppRoutes } from "@/utils";
+import PremiumLayout from "@/layouts/PremiumLayout";
+import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 
 export default function Page() {
   const router = useRouter();
@@ -55,47 +57,50 @@ export default function Page() {
   ];
 
   return (
-    <nav className="fixed inset-0 z-[60] m-auto flex max-w-3xl flex-col items-center bg-primary-color pt-[var(--nav-h)]">
-      <BackButton
-        route={AppRoutes.nav_menu}
-        customClass="top-2 left-2 absolute"
-      />
-      <div className="flex w-full justify-center border-b py-8 text-2xl font-semibold">
-        Profile
-      </div>
-      <div className="flex w-full max-w-[95vw] flex-col divide-y border-b">
-        <div className="flex items-center justify-between  py-2">
-          <div className="flex flex-col items-start justify-center  opacity-60">
-            <span className="opacity-100">{user?.display_name}</span>
-            <span className="opacity-70">{user?.email_address}</span>
-          </div>
-          <Avatar width={75} height={75} />
+    <PremiumLayout>
+      <PremiumNav hideScrolling={true} />
+      <nav className="fixed inset-0 z-[60] m-auto flex max-w-3xl flex-col items-center bg-primary-color pt-[var(--nav-h)]">
+        <BackButton
+          route={AppRoutes.nav_menu}
+          customClass="top-2 left-2 lg:absolute hidden"
+        />
+        <div className="flex w-full justify-center border-b py-8 text-2xl font-semibold">
+          Profile
         </div>
-        {isProfileRoute ? (
-          PROFILE_PAGES.map((page) => {
-            return (
+        <div className="flex w-full max-w-[95vw] flex-col divide-y border-b">
+          <div className="flex items-center justify-between  py-2">
+            <div className="flex flex-col items-start justify-center  opacity-60">
+              <span className="opacity-100">{user?.display_name}</span>
+              <span className="opacity-70">{user?.email_address}</span>
+            </div>
+            <Avatar width={75} height={75} />
+          </div>
+          {isProfileRoute ? (
+            PROFILE_PAGES.map((page) => {
+              return (
+                <Link
+                  href={page.url}
+                  key={page.url}
+                  className={`flex w-full items-center justify-start gap-4 px-2 py-5 text-xl font-medium capitalize duration-100 hover:bg-slate-500/20 hover:opacity-100 `}
+                >
+                  {page.icon}
+                  {page.name}
+                </Link>
+              );
+            })
+          ) : (
+            <nav className="flex h-full flex-col gap-1 ">
               <Link
-                href={page.url}
-                key={page.url}
-                className={`flex w-full items-center justify-start gap-4 px-2 py-5 text-xl font-medium capitalize duration-100 hover:bg-slate-500/20 hover:opacity-100 `}
+                href={"/app/profile"}
+                className="flex items-center gap-2 border-b px-4 py-5 sm:hidden"
               >
-                {page.icon}
-                {page.name}
+                <MdArrowBackIosNew className="h-4 w-4" />
+                <span>Profile</span>
               </Link>
-            );
-          })
-        ) : (
-          <nav className="flex h-full flex-col gap-1 ">
-            <Link
-              href={"/app/profile"}
-              className="flex items-center gap-2 border-b px-4 py-5 sm:hidden"
-            >
-              <MdArrowBackIosNew className="h-4 w-4" />
-              <span>Profile</span>
-            </Link>
-          </nav>
-        )}
-      </div>
-    </nav>
+            </nav>
+          )}
+        </div>
+      </nav>
+    </PremiumLayout>
   );
 }

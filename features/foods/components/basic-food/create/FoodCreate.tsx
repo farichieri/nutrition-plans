@@ -26,6 +26,7 @@ import { generateOptions } from "@/utils";
 import { NewFood } from "@/types/initialTypes";
 import { schema } from "./utils";
 import { selectAuthSlice } from "@/features/authentication/slice";
+import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
@@ -39,7 +40,6 @@ import Image from "next/image";
 import NutritionInput from "@/components/Form/NutritionInput";
 import React, { FC, useEffect, useState } from "react";
 import TranspLoader from "@/components/Loader/TranspLoader";
-import { toast } from "react-hot-toast";
 
 interface FormValues extends Food {}
 
@@ -405,7 +405,9 @@ const FoodCreate: FC<Props> = () => {
                   className="flex w-fit cursor-pointer items-center gap-5 "
                   onClick={() => setOptionalsOpen(!optionalsOpen)}
                 >
-                  <h1 className="text-xl">Optional Nutrition Fields</h1>
+                  <span className="text-xl font-semibold">
+                    Optional Nutrition Fields
+                  </span>
                   <ChevronDownIcon
                     className={`h-5 w-5 duration-300 ease-in-out ${
                       optionalsOpen && "-rotate-180 transform fill-green-500"
