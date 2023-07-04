@@ -1,5 +1,5 @@
 import { Food, FoodScale, FoodScales, NutritionMeasurements } from "../types";
-import { GRAMS_IN_ONE_OZ } from "@/utils/constants";
+import { GRAMS_IN_ONE_OZ } from "@/constants";
 
 const GRAMS = NutritionMeasurements.grams;
 const OZ = NutritionMeasurements.oz;

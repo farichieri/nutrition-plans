@@ -1,16 +1,16 @@
 import {
   Food,
   FoodNutrients,
-  NutritionMeasurements,
   mergeScales,
+  NutritionMeasurements,
 } from "@/features/foods";
+import { BiSolidPieChartAlt2 } from "react-icons/bi";
 import { formatToFixed } from "@/utils/format";
 import { getNewAmount, getNutritionValues } from "@/utils/nutritionHelpers";
 import FoodNutritionDetail from "./FoodNutritionDetail";
 import Link from "next/link";
 import PieGraph from "@/components/PieGraph/PieGraph";
 import React, { FC, useEffect, useState } from "react";
-import { BiSolidPieChartAlt2 } from "react-icons/bi";
 
 interface Props {
   food: Food;

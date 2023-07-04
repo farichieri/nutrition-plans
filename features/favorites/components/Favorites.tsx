@@ -34,9 +34,11 @@ const Favorites: FC<Props> = () => {
 
   const sortFavorites = (foods: FoodGroupArray) => {
     return foods.sort((a: Food, b: Food) => {
-      return a.food_name_lowercase.localeCompare(b.food_name_lowercase);
+      return a.food_name!.localeCompare(b.food_name!);
     });
   };
+
+  console.log({ favoriteFoods });
 
   useEffect(() => {
     getFavoriteFoods();

@@ -42,7 +42,7 @@ const BillingModal: FC<Props> = () => {
             </span>
             <span>
               {user?.premium_plan === "free" &&
-                "Upgrade to get access to all weekly nutrition plans."}
+                "Upgrade to get full access to all the features"}
             </span>
           </div>
           <div className="m-auto flex w-full min-w-fit max-w-md flex-wrap items-center justify-center gap-3 sm:gap-4">

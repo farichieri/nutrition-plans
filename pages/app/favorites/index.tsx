@@ -7,7 +7,7 @@ export default function Page() {
   return (
     <PremiumLayout>
       <PremiumNav hideScrolling={false} title="" />
-      <section className="m-auto flex w-full max-w-screen-2xl flex-col justify-center gap-5 px-2 pb-24 pt-4 sm:px-5 sm:pt-4">
+      <section className="m-auto flex w-full max-w-screen-2xl flex-col justify-center gap-5 px-2 pb-2 pt-4 sm:px-5 sm:pt-4">
         <FavoritesTypeSelector />
         <Favorites />
       </section>

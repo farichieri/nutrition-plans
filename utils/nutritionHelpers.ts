@@ -7,11 +7,11 @@ import {
   NutrientsEnum,
   NutritionMeasurements,
 } from "@/features/foods/types";
+import { DietMealGroup } from "@/features/plans";
 import { formatToFixed, formatTwoDecimals } from "@/utils/format";
-import { GRAMS_IN_ONE_OZ } from "@/utils/constants";
+import { GRAMS_IN_ONE_OZ } from "@/constants";
 import { mergeScales } from "@/features/foods";
 import { NewFoodNutrients } from "@/types/initialTypes";
-import { DietMealGroup } from "@/features/plans";
 
 const GRAMS = NutritionMeasurements.grams;
 const OZ = NutritionMeasurements.oz;

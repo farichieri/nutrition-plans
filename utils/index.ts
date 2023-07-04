@@ -1,5 +1,4 @@
 export * from "./appVersion";
-export * from "./constants";
 export * from "./dateFormat";
 export * from "./filter";
 export * from "./foodsHelpers";

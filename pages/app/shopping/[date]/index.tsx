@@ -5,15 +5,17 @@ import {
   getRealDate,
   useRedirectToday,
 } from "@/features/plans";
+import { FoodGroup } from "@/features/foods";
 import { getDaysOfWeek, getIsWeek } from "@/utils";
 import { GetServerSideProps } from "next";
-import { UserAccount, selectAuthSlice } from "@/features/authentication";
 import { ShoppingList } from "@/features/shopping";
 import { StartsOfWeek } from "@/types";
 import { useEffect, useState } from "react";
+import { UserAccount, selectAuthSlice } from "@/features/authentication";
 import { useSelector } from "react-redux";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "@/layouts/components/Nav/PremiumNav";
+import Spinner from "@/components/Loader/Spinner";
 import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
 
 interface Props {
@@ -27,15 +29,32 @@ export default function Page({ params }: { params: Props }) {
   });
   useRedirectToday(String(params.date));
   const isWeek = getIsWeek(date);
-
   const [datesInterval, setDatesInterval] = useState<string[]>([]);
+  const [foods, setFoods] = useState<FoodGroup>({});
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const getDayDiet = async (date: string, user: UserAccount) => {
     const res = await fetchDietByDate({ date, user });
     if (res.result === "success") {
       const foods = getDietFoods({ diet: res.data });
-      console.log(res.data);
-      console.log({ foods });
+      return foods;
+    }
+  };
+
+  const getDietsFoods = async (dates: string[], user: UserAccount) => {
+    try {
+      setIsLoading(true);
+      const promises = dates.map((date) => getDayDiet(date, user));
+      const res = await Promise.all(promises);
+      let foods: FoodGroup = {};
+      res.forEach((food) => {
+        foods = { ...foods, ...food };
+      });
+      setFoods(foods);
+    } catch (error) {
+      console.log({ error });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -49,11 +68,9 @@ export default function Page({ params }: { params: Props }) {
   }, [params]);
 
   useEffect(() => {
-    datesInterval.forEach((date) => {
-      if (user) {
-        getDayDiet(date, user);
-      }
-    });
+    if (user) {
+      getDietsFoods(datesInterval, user);
+    }
   }, [datesInterval]);
 
   return (
@@ -62,12 +79,16 @@ export default function Page({ params }: { params: Props }) {
       <SubPremiumNav title={""} customClass="top-[var(--subnav-h)]">
         <DaySelector date={String(params.date)} baseURL={"/app/shopping/"} />
       </SubPremiumNav>
-      <section className="mt-[var(--subnav-h)] flex w-full flex-col gap-5 p-4 sm:px-8">
+      <section className="mt-[var(--subnav-h)] flex w-full flex-col gap-5 p-2 sm:px-4">
         {/* <div className="flex flex-wrap items-center gap-1">
           <span className="text-2xl font-medium">Shopping List of:</span>
           <DateSelector />
         </div> */}
-        <ShoppingList />
+        {isLoading ? (
+          <Spinner customClass="w-5 h-5" />
+        ) : (
+          <ShoppingList foods={foods} />
+        )}
       </section>
     </PremiumLayout>
   );

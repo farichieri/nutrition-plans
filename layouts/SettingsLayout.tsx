@@ -14,7 +14,7 @@ export default function SettingsLayout({ children }: Props) {
       <PremiumNav hideScrolling={true} />
       <section className="m-auto flex h-full w-full max-w-screen-xl flex-col justify-center pb-24 ">
         <div className="flex w-full justify-center border-b py-8 text-2xl font-semibold capitalize sm:mb-5">
-          {router.asPath.split("/")[3]}
+          {router.asPath.split("/")[3] || "Account"}
         </div>
         <div className="flex flex-col gap-5 sm:flex-row">
           <SettingsNav />

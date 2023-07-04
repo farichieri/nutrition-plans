@@ -2,10 +2,10 @@ import {
   MdAutoGraph,
   MdFavorite,
   MdHomeFilled,
-  MdSearch,
   MdShoppingCart,
 } from "react-icons/md";
 import { FC } from "react";
+import { RiSearchLine } from "react-icons/ri";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
@@ -31,7 +31,7 @@ const CollapsedPages: FC<Props> = () => {
       name: "Search",
       url: "/app/search",
       pathname: ["/app/search", "/app/search/my-creations"],
-      icon: <MdSearch className="h-6 w-6 text-green-500" />,
+      icon: <RiSearchLine className="h-6 w-6 text-green-500" />,
     },
     {
       name: "Progress",

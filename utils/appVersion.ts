@@ -5,7 +5,7 @@ import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();
 
 const isAppVersionCorrect = (): Result<boolean, boolean> => {
-  // App vershion must always exists.
+  // App version must always exists.
   const appVersion = publicRuntimeConfig.version;
   const cachedAppVersion = localStorage.getItem("APP_VERSION");
   if (appVersion === cachedAppVersion) return { result: "success", data: true };

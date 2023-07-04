@@ -11,13 +11,13 @@ import { FC } from "react";
 import { Food, getScaleOptions, mergeScales } from "@/features/foods";
 import { FoodKeys } from "@/types/initialTypes";
 import { getNewAmount } from "@/utils/nutritionHelpers";
+import { MdDelete, MdDragHandle } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import FormSelect from "@/components/Form/FormSelect";
 import Image from "next/image";
 import Input from "@/components/Form/Input";
 import NutritionInput from "@/components/Form/NutritionInput";
 import RoundButton from "@/components/Buttons/RoundButton";
-import { MdDelete, MdDragHandle } from "react-icons/md";
 
 interface MealInCardProps {
   food: Food;

@@ -51,7 +51,13 @@ const Plan: FC<Props> = ({ date }) => {
     <div className="flex w-full flex-col items-center justify-start gap-2 rounded-lg border bg-slate-200/50 p-2 dark:bg-gray-500/10 ">
       <div className="flex w-full items-center justify-between border-b  px-2 py-1">
         <Link href={`/app/${urlDate}`}>
-          <span className="flex  py-1.5 font-semibold capitalize text-blue-400 underline hover:text-blue-500">
+          <span
+            className={`flex py-1.5 font-semibold capitalize ${
+              dateF === "today"
+                ? "text-red-400 underline hover:text-red-500"
+                : "text-blue-400 underline hover:text-blue-500"
+            }`}
+          >
             {dateF}
           </span>
         </Link>

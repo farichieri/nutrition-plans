@@ -1,4 +1,3 @@
-import { ShoppingList } from "@/features/shopping";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import PremiumLayout from "@/layouts/PremiumLayout";
@@ -36,8 +35,9 @@ export default function Page(): Props {
             I will be able to check those foods I have already bought.
           </span>
           <span>The default date-range will be my current week.</span>
+          <span>Once the foods is bought, the amount will be added to the pountry.</span>
+          <span>Once the food is eaten, the amount will be removed from the pountry.</span>
         </div> */}
-        <ShoppingList />
       </section>
     </PremiumLayout>
   );

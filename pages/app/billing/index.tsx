@@ -1,7 +1,7 @@
-import PremiumLayout from "@/layouts/PremiumLayout";
-import PricingPlans from "@/components/Pricing/PricingPlans";
 import { selectAuthSlice } from "@/features/authentication/slice";
 import { useSelector } from "react-redux";
+import PremiumLayout from "@/layouts/PremiumLayout";
+import PricingPlans from "@/components/Pricing/PricingPlans";
 
 export default function Page() {
   const { user } = useSelector(selectAuthSlice);
@@ -17,7 +17,7 @@ export default function Page() {
           </span>
           <span>
             {user?.premium_plan === "free" &&
-              "Upgrade to get access to weekly nutrition plans."}
+              "Upgrade to get full access to all the features."}
           </span>
         </div>
         <PricingPlans />
