@@ -45,10 +45,14 @@ const ScaleSelector: FC<Props> = ({
       newScale = scale_name;
     }
     if (id === "scale_name") {
-      newAmount = getNewAmount(scalesMerged, scale_name, value, scale_amount);
+      newAmount = getNewAmount({
+        scales: scalesMerged,
+        prev_scale_name: scale_name,
+        new_scale_name: value,
+        scale_amount,
+      });
       newScale = value;
     }
-
     if (updateRoute) {
       router.replace({
         pathname: router.pathname,

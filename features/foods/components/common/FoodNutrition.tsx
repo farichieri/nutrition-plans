@@ -28,12 +28,12 @@ const FoodNutrition: FC<Props> = ({ food, amount, scale }) => {
     setOpenDetails(true);
   };
 
-  const equivalentInGrams = getNewAmount(
-    scalesMerged,
-    scale,
-    NutritionMeasurements.grams,
-    amount
-  );
+  const equivalentInGrams = getNewAmount({
+    scales: scalesMerged,
+    prev_scale_name: scale,
+    new_scale_name: NutritionMeasurements.grams,
+    scale_amount: amount,
+  });
 
   useEffect(() => {
     if (!food) return;

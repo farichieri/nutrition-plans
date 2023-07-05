@@ -1,8 +1,7 @@
-import { FoodGroup } from "@/features/foods";
+import { FoodGroup, FoodScales } from "@/features/foods";
 
-export interface ListItemT {
-  category: string;
-  foods: FoodGroup;
+export interface ShoppingListT {
+  [foodCategory: string]: {
+    foods: FoodGroup;
+  };
 }
-
-export interface ShoppingListT extends Array<ListItemT> {}

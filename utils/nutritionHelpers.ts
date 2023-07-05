@@ -77,12 +77,17 @@ const getIngredientNutrition = (food: Food) => {
   }
 };
 
-const getNewAmount = (
-  scales: FoodScales,
-  prev_scale_name: string,
-  new_scale_name: string,
-  scale_amount: number
-): number | undefined => {
+const getNewAmount = ({
+  new_scale_name,
+  prev_scale_name,
+  scale_amount,
+  scales,
+}: {
+  new_scale_name: string;
+  prev_scale_name: string;
+  scale_amount: number;
+  scales: FoodScales;
+}): number | undefined => {
   const scale = scales.find((scale) => scale.scale_name === prev_scale_name);
   const newScale = scales.find((scale) => scale.scale_name === new_scale_name);
   switch (new_scale_name) {
@@ -105,12 +110,12 @@ const getRecipeSize = (ingredients: IngredientGroup): number | null => {
     const food = ingredients[ing];
     const scalesMerged = mergeScales(food);
     if (food.scale_name && food.scale_amount) {
-      const equivalentInGrams = getNewAmount(
-        scalesMerged,
-        food.scale_name,
-        NutritionMeasurements.grams,
-        food.scale_amount
-      );
+      const equivalentInGrams = getNewAmount({
+        scales: scalesMerged,
+        prev_scale_name: food.scale_name,
+        new_scale_name: GRAMS,
+        scale_amount: food.scale_amount,
+      });
       size += equivalentInGrams || 0;
     }
   });

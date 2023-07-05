@@ -17,6 +17,7 @@ import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 import Spinner from "@/components/Loader/Spinner";
 import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
+import ShoppingNav from "@/features/shopping/components/ShoppingNav";
 
 interface Props {
   date?: string;
@@ -80,6 +81,7 @@ export default function Page({ params }: { params: Props }) {
         <DaySelector date={String(params.date)} baseURL={"/app/shopping/"} />
       </SubPremiumNav>
       <section className="mt-[var(--subnav-h)] flex w-full flex-col gap-5 p-2 sm:px-4">
+        <ShoppingNav />
         {/* <div className="flex flex-wrap items-center gap-1">
           <span className="text-2xl font-medium">Shopping List of:</span>
           <DateSelector />

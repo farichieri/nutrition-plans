@@ -38,22 +38,22 @@ const Ingredient: FC<IngredientProps> = ({
 
   const ingGrams =
     foodIngredient &&
-    getNewAmount(
-      ingredientScalesMerged,
-      String(foodIngredient.scale_name),
-      NutritionMeasurements.grams,
-      Number(foodIngredient.scale_amount)
-    );
+    getNewAmount({
+      scales: ingredientScalesMerged,
+      prev_scale_name: String(foodIngredient.scale_name),
+      new_scale_name: NutritionMeasurements.grams,
+      scale_amount: Number(foodIngredient.scale_amount),
+    });
 
   const calculateIngredientScale = () => {
     if (!foodIngredient || !foodIngredient.serving_grams || !ingGrams) return;
 
-    const recipeEquivalentInGrams = getNewAmount(
-      recipeScalesMerged,
-      String(scale || recipe.scale_name),
-      NutritionMeasurements.grams,
-      Number(amount || recipe.scale_amount)
-    );
+    const recipeEquivalentInGrams = getNewAmount({
+      scales: recipeScalesMerged,
+      prev_scale_name: String(recipe.scale_name),
+      new_scale_name: NutritionMeasurements.grams,
+      scale_amount: Number(amount || recipe.scale_amount),
+    });
     const ingredientPart = (ingGrams / Number(recipe.serving_grams)) * 100;
 
     if (recipeEquivalentInGrams) {
@@ -65,12 +65,12 @@ const Ingredient: FC<IngredientProps> = ({
 
   const ingScaleAmount =
     ingScaleGramsAmount &&
-    getNewAmount(
-      ingredientScalesMerged,
-      NutritionMeasurements.grams,
-      String(foodIngredient.scale_name),
-      ingScaleGramsAmount
-    );
+    getNewAmount({
+      scales: ingredientScalesMerged,
+      prev_scale_name: NutritionMeasurements.grams,
+      new_scale_name: String(foodIngredient.scale_name),
+      scale_amount: ingScaleGramsAmount,
+    });
 
   return (
     <Link

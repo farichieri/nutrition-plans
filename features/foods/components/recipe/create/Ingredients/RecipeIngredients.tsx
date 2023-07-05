@@ -52,12 +52,12 @@ const Ingredient: FC<IngredientProps> = ({
 
     if (name === "scale_name") {
       // Este tiene que pasar a (food, scale_amount)
-      const newAmount = getNewAmount(
-        scalesMerged,
-        food.scale_name || "grams",
-        value,
-        food.scale_amount || 1
-      );
+      const newAmount = getNewAmount({
+        scales: scalesMerged,
+        prev_scale_name: food.scale_name || "grams",
+        new_scale_name: value,
+        scale_amount: food.scale_amount || 1,
+      });
       ingredientUpdated = {
         ...food,
         scale_name: value,

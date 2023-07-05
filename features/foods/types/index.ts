@@ -196,12 +196,12 @@ export enum RecipeCategoriesEnum {
   desserts = "Desserts",
   drinks = "Drinks",
   mostly_meat = "Mostly meat",
+  other = "Other",
+  pasta = "Pasta",
   protein_shakes = "Protein Shakes",
   salads = "Salads",
   sandwiches = "Sandwiches",
-  pasta = "Pasta",
   soups = "Soups",
-  other = "Other",
 }
 
 export enum DishTypesEnum {

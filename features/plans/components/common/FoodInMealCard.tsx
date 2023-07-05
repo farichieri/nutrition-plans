@@ -48,12 +48,12 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
     let foodUpdated = { ...food };
 
     if (name === "scale_name") {
-      const newAmount = getNewAmount(
-        scalesMerged,
-        food.scale_name,
-        value,
-        food.scale_amount
-      );
+      const newAmount = getNewAmount({
+        scales: scalesMerged,
+        prev_scale_name: food.scale_name,
+        new_scale_name: value,
+        scale_amount: food.scale_amount,
+      });
       foodUpdated = {
         ...food,
         scale_name: value,
