@@ -1,10 +1,12 @@
 import {
   MdEmojiEvents,
+  MdFavorite,
   MdRestaurantMenu,
   MdSettings,
   MdSettingsAccessibility,
   MdVerified,
 } from "react-icons/md";
+import { AppRoutes } from "@/utils";
 import { BackButton } from "@/components/Buttons";
 import { BiSolidPieChartAlt2 } from "react-icons/bi";
 import { MdArrowBackIosNew } from "react-icons/md";
@@ -13,7 +15,6 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import Avatar from "@/components/Avatar/Avatar";
 import Link from "next/link";
-import { AppRoutes } from "@/utils";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 
@@ -23,6 +24,12 @@ export default function Page() {
   const isProfileRoute = router.asPath === "/app/profile";
 
   const PROFILE_PAGES = [
+    {
+      name: "Favorites",
+      url: "/app/profile/favorites",
+      pathname: ["/app/profile/favorites"],
+      icon: <MdFavorite className="h-6 w-6 text-green-500" />,
+    },
     {
       name: "Goal",
       url: "/app/profile/goal",
@@ -48,12 +55,13 @@ export default function Page() {
       url: "/app/profile/meals",
       icon: <MdRestaurantMenu className="h-6 w-6 text-green-500" />,
     },
-    // {
-    //   name: "Settings",
-    //   url: "/app/settings",
-    //   pathname: ["/app/settings"],
-    //   icon: <MdSettings className="h-6 w-6 text-green-500" />,
-    // },
+
+    {
+      name: "Settings",
+      url: "/app/settings",
+      pathname: ["/app/settings"],
+      icon: <MdSettings className="h-6 w-6 text-green-500" />,
+    },
   ];
 
   return (

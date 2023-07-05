@@ -1,16 +1,14 @@
 import { Favorites } from "@/features/favorites";
 import FavoritesTypeSelector from "@/features/favorites/components/FavoritesTypeSelector";
-import PremiumLayout from "@/layouts/PremiumLayout";
-import PremiumNav from "@/layouts/components/Nav/PremiumNav";
+import ProfileLayout from "@/layouts/ProfileLayout";
 
 export default function Page() {
   return (
-    <PremiumLayout>
-      <PremiumNav hideScrolling={false} title="" />
+    <ProfileLayout>
       <section className="m-auto flex w-full max-w-screen-2xl flex-col justify-center gap-5 px-2 pb-2 pt-4 sm:px-5 sm:pt-4">
         <FavoritesTypeSelector />
         <Favorites />
       </section>
-    </PremiumLayout>
+    </ProfileLayout>
   );
 }

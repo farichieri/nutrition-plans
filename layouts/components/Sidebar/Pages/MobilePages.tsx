@@ -2,6 +2,7 @@ import {
   MdAutoGraph,
   MdFavorite,
   MdHomeFilled,
+  MdPerson,
   MdShoppingCart,
 } from "react-icons/md";
 import { FC } from "react";
@@ -22,10 +23,10 @@ const MobilePages: FC<Props> = () => {
       icon: <MdHomeFilled className="h-5 w-5 " />,
     },
     {
-      name: "Favorites",
-      url: "/app/favorites",
-      pathname: ["/app/favorites"],
-      icon: <MdFavorite className="h-5 w-5 " />,
+      name: "Search",
+      url: "/app/search",
+      pathname: ["/app/search", "/app/search/my-creations"],
+      icon: <RiSearchLine className="h-5 w-5 " />,
     },
     {
       name: "Progress",
@@ -34,16 +35,24 @@ const MobilePages: FC<Props> = () => {
       icon: <MdAutoGraph className="h-5 w-5 " />,
     },
     {
-      name: "Search",
-      url: "/app/search",
-      pathname: ["/app/search", "/app/search/my-creations"],
-      icon: <RiSearchLine className="h-5 w-5 " />,
-    },
-    {
       name: "Shopping",
       url: "/app/shopping/today",
       pathname: ["/app/shopping/[date]"],
       icon: <MdShoppingCart className="h-5 w-5 " />,
+    },
+    {
+      name: "Profile",
+      url: "/app/profile",
+      pathname: [
+        "/app/profile",
+        "app/profile/goal",
+        "/app/profile/favorites",
+        "/app/profile/body-features",
+        "/app/profile/nutrition-values",
+        "/app/profile/preferred-plan",
+        "/app/profile/meals",
+      ],
+      icon: <MdPerson className="h-5 w-5 " />,
     },
   ];
 

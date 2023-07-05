@@ -1,7 +1,7 @@
 import {
   MdAutoGraph,
-  MdFavorite,
   MdHomeFilled,
+  MdPerson,
   MdShoppingCart,
 } from "react-icons/md";
 import { FC } from "react";
@@ -22,12 +22,6 @@ const CollapsedPages: FC<Props> = () => {
       icon: <MdHomeFilled className="h-6 w-6 text-green-500" />,
     },
     {
-      name: "Favorites",
-      url: "/app/favorites",
-      pathname: ["/app/favorites"],
-      icon: <MdFavorite className="h-6 w-6 text-green-500" />,
-    },
-    {
       name: "Search",
       url: "/app/search",
       pathname: ["/app/search", "/app/search/my-creations"],
@@ -44,6 +38,20 @@ const CollapsedPages: FC<Props> = () => {
       url: "/app/shopping/today",
       pathname: ["/app/shopping/[date]"],
       icon: <MdShoppingCart className="h-6 w-6 text-green-500" />,
+    },
+    {
+      name: "Profile",
+      url: "/app/profile",
+      pathname: [
+        "/app/profile",
+        "app/profile/goal",
+        "/app/profile/favorites",
+        "/app/profile/body-features",
+        "/app/profile/nutrition-values",
+        "/app/profile/preferred-plan",
+        "/app/profile/meals",
+      ],
+      icon: <MdPerson className="h-6 w-6 text-green-500" />,
     },
   ];
 

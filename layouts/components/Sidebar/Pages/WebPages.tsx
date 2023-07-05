@@ -18,13 +18,13 @@ import {
   setSidebarEvolutionOpen,
 } from "@/store/slices/layoutSlice";
 import { BiFoodMenu, BiSolidPieChartAlt2 } from "react-icons/bi";
-import { PiBowlFoodFill, PiPillFill } from "react-icons/pi";
 import { FC } from "react";
+import { PiBowlFoodFill, PiPillFill } from "react-icons/pi";
+import { RiSearchLine } from "react-icons/ri";
 import { SubscribeButton } from "@/components/Buttons";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { RiSearchLine } from "react-icons/ri";
 
 interface Props {}
 
@@ -50,6 +50,12 @@ const WebPages: FC<Props> = () => {
   };
 
   const PROFILE_PAGES = [
+    {
+      name: "Favorites",
+      url: "/app/profile/favorites",
+      pathname: ["/app/profile/favorites"],
+      icon: <MdFavorite className="h-6 w-6 text-green-500" />,
+    },
     {
       name: "Goal",
       url: "/app/profile/goal",
@@ -101,12 +107,6 @@ const WebPages: FC<Props> = () => {
       url: `/app/today`,
       pathname: ["/app/[date]"],
       icon: <MdHomeFilled className="h-6 w-6 text-green-500" />,
-    },
-    {
-      name: "Favorites",
-      url: "/app/favorites",
-      pathname: ["/app/favorites"],
-      icon: <MdFavorite className="h-6 w-6 text-green-500" />,
     },
     {
       name: "Search",
