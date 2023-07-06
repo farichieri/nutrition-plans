@@ -15,8 +15,8 @@ interface Props {}
 const SetAvatar: FC<Props> = () => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
-  const userImage = user?.photo_url || "";
-  const fisrtNameWord = user?.display_name[0]?.toLowerCase();
+  const userImage = user?.imageURL || "";
+  const fisrtNameWord = user?.displayName[0]?.toLowerCase();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,20 +26,17 @@ const SetAvatar: FC<Props> = () => {
       const file = files[0];
       try {
         if (!file) throw new Error("No file selected");
-        const imageRef = ref(
-          storage,
-          `users/${user?.user_id}/settings/profile`
-        );
+        const imageRef = ref(storage, `users/${user?.id}/settings/profile`);
         uploadBytes(imageRef, file)
           .then(() => {
             getDownloadURL(imageRef)
               .then(async (newImageUrl) => {
-                await updateDoc(doc(db, "users", user.user_id), {
-                  photo_url: newImageUrl,
+                await updateDoc(doc(db, "users", user.id), {
+                  imageURL: newImageUrl,
                 });
                 const userUpdated = {
                   ...user,
-                  photo_url: newImageUrl,
+                  imageURL: newImageUrl,
                 };
                 dispatch(setUser(userUpdated));
                 toast.success("Avatar updated successfully");

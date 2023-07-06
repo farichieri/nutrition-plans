@@ -33,28 +33,28 @@ const Ingredient: FC<IngredientProps> = ({
     );
   }
 
-  const ingredientScalesMerged = mergeScales(foodIngredient);
-  const recipeScalesMerged = mergeScales(recipe);
+  const ingredientScalesMerged = mergeScales({ scales: foodIngredient.scales });
+  const recipeScalesMerged = mergeScales({ scales: recipe.scales });
 
   const ingGrams =
     foodIngredient &&
     getNewAmount({
       scales: ingredientScalesMerged,
-      prev_scale_name: String(foodIngredient.scale_name),
+      prev_scale_name: String(foodIngredient.scaleName),
       new_scale_name: NutritionMeasurements.grams,
-      scale_amount: Number(foodIngredient.scale_amount),
+      scaleAmount: Number(foodIngredient.scaleAmount),
     });
 
   const calculateIngredientScale = () => {
-    if (!foodIngredient || !foodIngredient.serving_grams || !ingGrams) return;
+    if (!foodIngredient || !foodIngredient.servingGrams || !ingGrams) return;
 
     const recipeEquivalentInGrams = getNewAmount({
       scales: recipeScalesMerged,
-      prev_scale_name: String(recipe.scale_name),
+      prev_scale_name: String(recipe.scaleName),
       new_scale_name: NutritionMeasurements.grams,
-      scale_amount: Number(amount || recipe.scale_amount),
+      scaleAmount: Number(amount || recipe.scaleAmount),
     });
-    const ingredientPart = (ingGrams / Number(recipe.serving_grams)) * 100;
+    const ingredientPart = (ingGrams / Number(recipe.servingGrams)) * 100;
 
     if (recipeEquivalentInGrams) {
       return (recipeEquivalentInGrams * ingredientPart) / 100;
@@ -68,35 +68,35 @@ const Ingredient: FC<IngredientProps> = ({
     getNewAmount({
       scales: ingredientScalesMerged,
       prev_scale_name: NutritionMeasurements.grams,
-      new_scale_name: String(foodIngredient.scale_name),
-      scale_amount: ingScaleGramsAmount,
+      new_scale_name: String(foodIngredient.scaleName),
+      scaleAmount: ingScaleGramsAmount,
     });
 
   return (
     <Link
-      href={`/app/food/${foodIngredient.food_id}`}
+      href={`/app/food/${foodIngredient.id}`}
       className="flex w-full items-start rounded-md border"
     >
       <Image
-        src={foodIngredient.image}
+        src={foodIngredient.imageURL}
         height={150}
         width={150}
-        alt={foodIngredient.food_name || ""}
+        alt={foodIngredient.name || ""}
         className="h-[100px] w-[100px] min-w-[100px] max-w-[100px] rounded-md object-cover"
       />
       <div className="flex h-full w-full flex-col px-2 py-1">
         <div className="flex flex-col gap-0.5">
           <span className="text-base font-semibold capitalize">
-            {foodIngredient.food_name}
+            {foodIngredient.name}
           </span>
           <span className="text-sm opacity-50">
-            {foodIngredient.food_description}
+            {foodIngredient.description}
           </span>
           <span className="text-sm">{foodIngredient.text}</span>
         </div>
         <div className="flex items-baseline gap-0.5">
           <span>{ingScaleAmount && Math.round(ingScaleAmount)}</span>
-          <span className="capitalize">{foodIngredient.scale_name}</span>
+          <span className="capitalize">{foodIngredient.scaleName}</span>
           <span className="ml-5 text-sm opacity-50">
             {ingScaleGramsAmount && Math.round(ingScaleGramsAmount)}g
           </span>
@@ -124,12 +124,12 @@ const Ingredients: FC<Props> = ({ food, amount, scale }) => {
     <div className="flex flex-col gap-1">
       <span className="text-3xl font-semibold">Ingredients:</span>
       {ingsSorted.map((ingredient) => {
-        if (ingredient.food_id)
+        if (ingredient.id)
           return (
             <Ingredient
               food={food}
-              ingredient={food.ingredients[ingredient.food_id]}
-              key={ingredient.food_id}
+              ingredient={food.ingredients[ingredient.id]}
+              key={ingredient.id}
               amount={amount}
               scale={scale}
             />

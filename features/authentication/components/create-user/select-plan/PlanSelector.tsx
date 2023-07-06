@@ -36,7 +36,7 @@ const PlanSelector: FC<Props> = ({ handleContinue }) => {
 
   if (!user) return <></>;
 
-  const plan_selected = user?.plan_selected;
+  const planSelected = user?.planSelected;
   const isCreatingRoute = router.asPath === "/app/create";
 
   const {
@@ -49,7 +49,7 @@ const PlanSelector: FC<Props> = ({ handleContinue }) => {
     watch,
   } = useForm<FormValues>({
     defaultValues: {
-      planSelected: plan_selected || null,
+      planSelected: planSelected || null,
     },
     resolver: yupResolver(schema),
   });
@@ -75,13 +75,10 @@ const PlanSelector: FC<Props> = ({ handleContinue }) => {
 
   const onSubmit = async (data: FormValues) => {
     if (!user || isSubmitting) return;
-    const userUpdated: UserAccount = {
-      ...user,
-      plan_selected: data.planSelected,
-    };
-    const res = await updateUser(userUpdated);
+    const fields = { planSelected: data.planSelected };
+    const res = await updateUser({ user, fields });
     if (res.result === "success") {
-      dispatch(setUpdateUser(userUpdated));
+      dispatch(setUpdateUser({ user, fields }));
       handleContinue();
       if (!isCreatingRoute) {
         toast.success("Your Preferred Plan has been updated successfully.");
@@ -98,7 +95,7 @@ const PlanSelector: FC<Props> = ({ handleContinue }) => {
   const [isDisabled, setIsDisabled] = useState(false);
 
   useEffect(() => {
-    if (values.planSelected === user.plan_selected) {
+    if (values.planSelected === user.planSelected) {
       setIsDisabled(true);
     } else {
       setIsDisabled(false);

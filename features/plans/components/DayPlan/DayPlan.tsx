@@ -24,7 +24,7 @@ const DayPlan: FC<Props> = ({ date }) => {
   const { diets, isLoadingDiet, isCreatingDiet } =
     useSelector(selectPlansSlice);
   const diet: Diet = diets[date];
-  const planID = diet?.plan_id;
+  const planID = diet?.planID;
 
   const getDayDiet = async (date: string, user: UserAccount) => {
     if (!diet) {
@@ -66,10 +66,7 @@ const DayPlan: FC<Props> = ({ date }) => {
                 </div>
                 {diet && (
                   <div className=" w-full rounded-md  ">
-                    <Nutrition
-                      nutrients={diet.diet_nutrition}
-                      planID={planID}
-                    />
+                    <Nutrition nutrients={diet.nutrients} planID={planID} />
                   </div>
                 )}
               </div>

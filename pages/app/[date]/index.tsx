@@ -1,10 +1,10 @@
 import {
-  selectPlansSlice,
-  DaySelector,
-  updateDietNutrition,
   DayPlan,
-  WeekPlan,
+  DaySelector,
+  selectPlansSlice,
+  updateDietNutrition,
   useRedirectToday,
+  WeekPlan,
 } from "@/features/plans";
 import { getIsWeek } from "@/utils/dateFormat";
 import { getRealDate } from "@/features/plans/utils/dates";
@@ -26,19 +26,19 @@ export default function Page({ params }: { params: Props }) {
   const { user } = useSelector(selectAuthSlice);
   const date = getRealDate({
     date: String(params.date),
-    userStartOfWeek: StartsOfWeek[user?.startOfWeek || "sunday"],
+    userStartOfWeek: user?.startOfWeek || StartsOfWeek.Sunday,
   });
   const diet = diets[date];
   useRedirectToday(String(params.date));
 
   useEffect(() => {
     if (diet) {
-      const { diet_id } = diet;
-      if (diet_id) {
-        dispatch(updateDietNutrition({ diet_id }));
+      const { id } = diet;
+      if (id) {
+        dispatch(updateDietNutrition({ dietID: id }));
       }
     }
-  }, [dispatch, diet?.diet_meals]);
+  }, [dispatch, diet?.meals]);
 
   return (
     <PremiumLayout>

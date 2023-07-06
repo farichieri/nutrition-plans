@@ -9,14 +9,15 @@ const createNewUser = async (
 ): Promise<Result<UserAccount, unknown>> => {
   try {
     console.log("createNewUser");
-    const newUserRef = doc(db, "users", user.uid);
+    const { uid, email, photoURL, displayName, metadata } = user;
+    const newUserRef = doc(db, "users", uid);
     const newUser: UserAccount = {
       ...newAccount,
-      created_at: user.metadata.creationTime,
-      display_name: user.displayName || "",
-      email_address: user.email,
-      photo_url: user.photoURL,
-      user_id: user.uid,
+      createdAt: metadata.creationTime,
+      displayName: displayName || "",
+      emailAddress: email,
+      imageURL: photoURL,
+      id: uid,
     };
     await setDoc(newUserRef, newUser);
     await fetch("/api/welcome/email", {
@@ -24,7 +25,7 @@ const createNewUser = async (
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email_address: user.email }),
+      body: JSON.stringify({ emailAddress: email }),
     });
     return { result: "success", data: newUser };
   } catch (error) {
@@ -47,29 +48,7 @@ const generateUserObject = async (
     const querySnapshot = await getDoc(userRef);
     const userData = querySnapshot.data();
     if (!userData) throw new Error("Error fetching user Data");
-    const userAccount: UserAccount = {
-      body_data: userData.body_data,
-      created_at: userData.created_at,
-      display_name: userData.display_name,
-      email_address: userData.email_address,
-      first_data: userData.first_data,
-      goal: userData.goal,
-      is_admin: userData.is_admin,
-      is_premium: userData.is_premium,
-      is_profile_completed: userData.is_profile_completed,
-      lang: userData.lang,
-      measurement_unit: userData.measurement_unit,
-      nutrition_targets: userData.nutrition_targets,
-      photo_url: userData.photo_url,
-      plan_selected: userData.plan_selected,
-      premium_plan: userData.premium_plan,
-      ratings: userData.ratings,
-      startOfWeek: userData.startOfWeek,
-      user_id: userData.user_id,
-      user_step: userData.user_step,
-      weight_goal: userData.weight_goal,
-      newsletter: userData.newsletter,
-    };
+    const userAccount: UserAccount = userData as UserAccount;
     return { result: "success", data: userAccount };
   } catch (error) {
     console.log(error);
@@ -77,12 +56,17 @@ const generateUserObject = async (
   }
 };
 
-const updateUser = async (
-  user: UserAccount
-): Promise<Result<UserAccount, unknown>> => {
+const updateUser = async ({
+  user,
+  fields,
+}: {
+  user: UserAccount;
+  fields: Partial<UserAccount>;
+}): Promise<Result<UserAccount, unknown>> => {
   try {
-    const userRef = doc(db, "users", user.user_id);
-    await setDoc(userRef, user);
+    console.log({ user });
+    const userRef = doc(db, "users", user.id);
+    await updateDoc(userRef, fields);
     return { result: "success", data: user };
   } catch (error) {
     console.log("updateUser", { error });
@@ -95,7 +79,7 @@ const updateUserPlan = async (
   user: UserAccount
 ): Promise<Result<boolean, unknown>> => {
   try {
-    const userRef = doc(db, "users", user.user_id);
+    const userRef = doc(db, "users", user.id);
     await updateDoc(userRef, {
       plan_selected: planID,
     });

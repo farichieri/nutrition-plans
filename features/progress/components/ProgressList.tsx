@@ -16,7 +16,7 @@ const ProgressList: FC<Props> = () => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
   if (!user) return <></>;
-  const { measurement_unit } = user;
+  const { measurementUnit } = user;
 
   const { progress, progressOpen } = useSelector(selectProgressSlice);
 
@@ -34,10 +34,10 @@ const ProgressList: FC<Props> = () => {
           <span>Edit</span>
         </div>
         {sortProgress(Object.values(progress)).map((p) => {
-          const progressWeight = p.weight_in_kg;
+          const progressWeight = p.weightInKg;
           if (!progressWeight) return;
           const weight = getWeight({
-            to: measurement_unit,
+            to: measurementUnit,
             weight: progressWeight,
           });
           return (
@@ -48,7 +48,7 @@ const ProgressList: FC<Props> = () => {
             >
               <span>{p.date}</span>
               <span>
-                {getWeightText({ from: measurement_unit, weight: weight })}
+                {getWeightText({ from: measurementUnit, weight: weight })}
               </span>
               <span>
                 <PencilIcon className="h-4 w-4" onClick={() => handleOpen(p)} />

@@ -7,52 +7,51 @@ const getRange = ({ nutrientRange }: { nutrientRange: string }): string => {
 
 const getSearchParameters = ({
   queries,
-  curated,
-  uploader_id,
+  isCurated,
+  uploaderID,
 }: {
   queries: FilterQueries;
-  curated?: boolean;
-  uploader_id?: string;
+  isCurated?: boolean;
+  uploaderID?: string;
 }) => {
   let {
     q,
     kind,
     plan,
-    calories_range,
-    carbs_range,
-    fats_range,
-    proteins_range,
+    caloriesRange,
+    carbsRange,
+    fatsRange,
+    proteinsRange,
     sort,
   } = queries;
 
-  let curatedQ = curated ? `curated:true` : "";
-  let uploader_idQ = uploader_id ? `uploader_id:${uploader_id}` : "";
+  let curatedQ = isCurated ? `isCurated:true` : "";
+  let uploader_idQ = uploaderID ? `uploaderID:${uploaderID}` : "";
   kind = kind ? ` && kind:${kind}` : "";
-  plan = plan ? ` && compatible_plans.${plan}:true` : "";
-  calories_range = calories_range
-    ? ` && nutrients.calories:${getRange({ nutrientRange: calories_range })}`
+  plan = plan ? ` && compatiblePlans.${plan}:true` : "";
+  caloriesRange = caloriesRange
+    ? ` && nutrients.calories:${getRange({ nutrientRange: caloriesRange })}`
     : "";
-  carbs_range = carbs_range
-    ? ` && nutrients.carbohydrates:${getRange({ nutrientRange: carbs_range })}`
+  carbsRange = carbsRange
+    ? ` && nutrients.carbohydrates:${getRange({ nutrientRange: carbsRange })}`
     : "";
-  fats_range = fats_range
-    ? ` && nutrients.fats:${getRange({ nutrientRange: fats_range })}`
+  fatsRange = fatsRange
+    ? ` && nutrients.fats:${getRange({ nutrientRange: fatsRange })}`
     : "";
-  proteins_range = proteins_range
-    ? ` && nutrients.proteins:${getRange({ nutrientRange: proteins_range })}`
+  proteinsRange = proteinsRange
+    ? ` && nutrients.proteins:${getRange({ nutrientRange: proteinsRange })}`
     : "";
   sort =
     !sort || sort === "rating"
-      ? "num_likes:desc"
-      : sort === "higher_calories"
+      ? "likes:desc"
+      : sort === "higherCalories"
       ? "nutrients.calories:desc"
       : "nutrients.calories:asc";
 
   const searchParameters = {
     q: q || "",
-    query_by:
-      "food_name, food_description, ingredients_names, ingredients_descriptions",
-    filter_by: `${uploader_idQ}${curatedQ}${kind}${plan}${calories_range}${carbs_range}${fats_range}${proteins_range}`,
+    query_by: "name, description, ingredientsNames, ingredientsDescriptions",
+    filter_by: `${uploader_idQ}${curatedQ}${kind}${plan}${caloriesRange}${carbsRange}${fatsRange}${proteinsRange}`,
     sort_by: sort,
     page: 1,
     per_page: 40,

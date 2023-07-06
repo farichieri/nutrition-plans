@@ -14,14 +14,14 @@ import { round } from "@/utils/format";
 const generateMeals = async (
   planID: PlansEnum,
   userMeals: UserMealsArr,
-  nutrition_targets: NutritionTargets
+  nutritionTargets: NutritionTargets
 ): Promise<Result<DietMealGroup, unknown>> => {
   try {
     const generate = async (userMeals: UserMealsArr) => {
-      const diet_meals: DietMealGroup = {};
+      const meals: DietMealGroup = {};
       console.log({ userMeals });
       const mealsLength = userMeals.length;
-      const { calories } = nutrition_targets;
+      const { calories } = nutritionTargets;
       if (!calories) throw new Error("No calories provided");
       const calsPerMeal = calories / mealsLength;
       console.log({ calories });
@@ -33,54 +33,54 @@ const generateMeals = async (
         const res = await fetchRandomFoodByPlan(planID, meal);
         if (res.result === "error") throw new Error("Error fetching food");
         const food = res.data;
-        if (!food.food_id) throw Error("No food_id provided");
+        if (!food.id) throw Error("No food id provided");
         const caloriesTarget = calsPerMeal;
         const { calories: foodCalories } = food.nutrients;
         const scales = food.scales;
-        const scale = scales.find((scale) => scale.is_default === true);
-        const scale_name = scale?.scale_name;
-        if (!foodCalories || !scale_name)
+        const scale = scales.find((scale) => scale.isDefault === true);
+        const scaleName = scale?.scaleName;
+        if (!foodCalories || !scaleName)
           throw new Error("No foodCalories or foodScale provided");
         console.log(food.nutrients.calories, { food });
         let amount;
         amount = round(caloriesTarget / foodCalories, 0.5);
         amount = amount > 2 ? 2 : amount;
-        const nutrientsUpdated = getNutritionValues(food, amount, scale_name);
+        const nutrientsUpdated = getNutritionValues(food, amount, scaleName);
         console.log({ nutrientsUpdated });
 
-        foodsFetched[food.food_id] = {
+        foodsFetched[food.id] = {
           ...food,
-          // scale_amount: amount,
-          // scale_name: scale,
+          // scaleAmount: amount,
+          // scaleName: scale,
           nutrients: nutrientsUpdated,
         };
         // foodsFetched[food.food_id] = {
         //   ...food,
-        //   scale_amount: amount,
-        //   scale_name: scale,
+        //   scaleAmount: amount,
+        //   scaleName: scale,
         //   nutrients: nutrientsUpdated,
         // };
 
         console.log({ foodsFetched });
-        // To be fixed diet_id
+        // To be fixed id
         const newDietMeal: DietMeal = {
-          diet_meal_name: meal.name,
-          user_meal_id: meal.id,
-          diet_meal_id: uuid,
-          diet_meal_foods: foodsFetched,
+          name: meal.name,
+          mealID: meal.id,
+          id: uuid,
+          foods: foodsFetched,
           order: meal.order,
           complexity: meal.complexity,
           time: meal.time,
           size: meal.size,
-          cook: meal.cook,
-          diet_id: "",
+          isCookeable: meal.isCookeable,
+          dietID: "",
         };
-        if (newDietMeal.diet_meal_id) {
-          diet_meals[newDietMeal.diet_meal_id] = newDietMeal;
+        if (newDietMeal.id) {
+          meals[newDietMeal.id] = newDietMeal;
         }
       });
       await Promise.all(promises);
-      return diet_meals;
+      return meals;
     };
 
     const mealsGenerated = await generate(userMeals);

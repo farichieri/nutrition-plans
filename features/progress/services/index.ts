@@ -16,7 +16,7 @@ const addProgress = async (
   progress: ProgressItem
 ): Promise<Result<ProgressItem, unknown>> => {
   try {
-    const docRef = doc(db, "users", user.user_id, "progress", progress.date);
+    const docRef = doc(db, "users", user.id, "progress", progress.date);
     await setDoc(docRef, progress);
     return { result: "success", data: progress };
   } catch (error) {
@@ -29,9 +29,7 @@ const fetchProgress = async (
 ): Promise<Result<Progress, unknown>> => {
   try {
     let data: Progress = {};
-    const progressRef = query(
-      collection(db, "users", user.user_id, "progress")
-    );
+    const progressRef = query(collection(db, "users", user.id, "progress"));
     const querySnapshot = await getDocs(progressRef);
     querySnapshot.forEach((progress: any) => {
       data[progress.id] = progress.data();
@@ -48,7 +46,7 @@ const deleteProgress = async (
   progress: ProgressItem
 ): Promise<Result<boolean, unknown>> => {
   try {
-    const docRef = doc(db, "users", user.user_id, "progress", progress.date);
+    const docRef = doc(db, "users", user.id, "progress", progress.date);
     await deleteDoc(docRef);
     return { result: "success", data: true };
   } catch (error) {
@@ -62,7 +60,7 @@ const updateProgress = async (
   progress: ProgressItem
 ): Promise<Result<ProgressItem, unknown>> => {
   try {
-    const docRef = doc(db, "users", user.user_id, "progress", progress.date);
+    const docRef = doc(db, "users", user.id, "progress", progress.date);
     await setDoc(docRef, progress);
     return { result: "success", data: progress };
   } catch (error) {

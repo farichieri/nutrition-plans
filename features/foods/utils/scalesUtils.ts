@@ -4,37 +4,37 @@ import { GRAMS_IN_ONE_OZ } from "@/constants";
 const GRAMS = NutritionMeasurements.grams;
 const OZ = NutritionMeasurements.oz;
 
-const mergeScales = (food: Food): FoodScales => {
+const mergeScales = ({ scales }: { scales: FoodScales }): FoodScales => {
   const foodScales: FoodScales = [
     {
-      scale_name: OZ,
-      scale_amount: 1,
-      scale_grams: GRAMS_IN_ONE_OZ,
-      is_default: false,
+      scaleName: OZ,
+      scaleAmount: 1,
+      scaleGrams: GRAMS_IN_ONE_OZ,
+      isDefault: false,
       id: null,
     },
     {
-      scale_name: GRAMS,
-      scale_amount: 1,
-      scale_grams: 1,
-      is_default: false,
+      scaleName: GRAMS,
+      scaleAmount: 1,
+      scaleGrams: 1,
+      isDefault: false,
       id: null,
     },
   ];
-  [...food.scales]
-    .sort((a, b) => Number(a.is_default) - Number(b.is_default))
+  [...scales]
+    .sort((a, b) => Number(a.isDefault) - Number(b.isDefault))
     .forEach((scale) => foodScales.unshift(scale));
   return foodScales;
 };
 
 const getScaleOptions = (scalesMerged: FoodScales) => {
   const scaleNames = scalesMerged.map((s) => {
-    if (s.scale_name === GRAMS) return { value: GRAMS, text: GRAMS };
-    else if (s.scale_name === OZ) return { value: OZ, text: `${OZ} (28.35 g)` };
+    if (s.scaleName === GRAMS) return { value: GRAMS, text: GRAMS };
+    else if (s.scaleName === OZ) return { value: OZ, text: `${OZ} (28.35 g)` };
     else
       return {
-        value: s.scale_name || "",
-        text: `${s.scale_name} (${s.scale_grams} g)`,
+        value: s.scaleName || "",
+        text: `${s.scaleName} (${s.scaleGrams} g)`,
       };
   });
   const options = [...scaleNames];
@@ -42,6 +42,6 @@ const getScaleOptions = (scalesMerged: FoodScales) => {
 };
 
 const getDefaultScale = (scales: FoodScales): FoodScale =>
-  scales?.find((s) => s.is_default === true) || scales[0];
+  scales?.find((s) => s.isDefault === true) || scales[0];
 
 export { mergeScales, getScaleOptions, getDefaultScale };

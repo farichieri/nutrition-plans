@@ -17,20 +17,20 @@ const SearchedResults: FC<Props> = ({ searchResult, handleClick, queries }) => {
         return (
           <div
             onClick={() => handleClick(food)}
-            key={food.food_id}
+            key={food.id}
             className="flex h-full w-full cursor-pointer items-start overflow-auto rounded-md border"
           >
             <span className="relative h-20 w-full basis-1/5">
               <Image
-                src={food.image}
+                src={food.imageURL}
                 fill
                 className="object-cover"
-                alt={food.food_name || ""}
+                alt={food.name || ""}
               />
             </span>
             <div className="flex h-full w-full basis-4/5 flex-col gap-1 p-1">
               <span className="text-lg font-semibold capitalize leading-4">
-                {food.food_name}
+                {food.name}
               </span>
               <span className="text-xs capitalize">
                 calories: {food.nutrients.calories}

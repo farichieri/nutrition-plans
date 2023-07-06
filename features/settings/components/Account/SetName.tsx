@@ -1,4 +1,5 @@
 import {
+  UserAccount,
   selectAuthSlice,
   setUpdateUser,
   updateUser,
@@ -15,7 +16,7 @@ const SetName: FC<Props> = () => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
   const [isLoading, setIsLoading] = useState(false);
-  const [input, setInput] = useState(user?.display_name || "");
+  const [input, setInput] = useState(user?.displayName || "");
 
   if (!user) return <></>;
 
@@ -23,13 +24,10 @@ const SetName: FC<Props> = () => {
     event.preventDefault();
     try {
       setIsLoading(true);
-      const userUpdated = {
-        ...user,
-        display_name: input,
-      };
-      const res = await updateUser(userUpdated);
+      const fields = { displayName: input };
+      const res = await updateUser({ user, fields });
       if (res.result === "success") {
-        dispatch(setUpdateUser(userUpdated));
+        dispatch(setUpdateUser({ user, fields }));
         toast.success("Name updated successfully");
       }
     } catch (error) {
@@ -71,7 +69,7 @@ const SetName: FC<Props> = () => {
               loadMessage={""}
               content="Save"
               isLoading={isLoading}
-              isDisabled={input === user.display_name || !input}
+              isDisabled={input === user.displayName || !input}
             />
           </div>
         </BoxBottomBar>

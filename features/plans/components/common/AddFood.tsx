@@ -28,7 +28,7 @@ const AddFood: FC<Props> = ({ dietMeal }) => {
   };
 
   const handleAddFood = () => {
-    if (!dietMeal.diet_meal_id || !foodModal) return;
+    if (!dietMeal.id || !foodModal) return;
     dispatch(addFoodToDiet({ food: foodModal, dietMeal }));
     dispatch(setFoodModal(null));
     setIsOpen(false);
@@ -54,7 +54,7 @@ const AddFood: FC<Props> = ({ dietMeal }) => {
           )}
           <div className="w-4xl max-w-[95vw]">
             <div className="flex h-14 items-center justify-center gap-1 border-b text-sm font-semibold sm:text-xl">
-              <span>Add new food to</span> <b>{dietMeal.diet_meal_name}</b>
+              <span>Add new food to</span> <b>{dietMeal.name}</b>
             </div>
             <div className="h-[85vh] min-h-[20rem] overflow-auto p-4">
               <SearchBarCreate preFetch={false} />

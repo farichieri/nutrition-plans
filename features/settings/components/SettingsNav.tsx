@@ -96,7 +96,7 @@ const SettingsNav: FC<Props> = ({}) => {
           </div>
           <Link
             href={"/app/settings"}
-            className="flex items-center gap-2 border-b px-4 py-5 sm:hidden"
+            className="flex items-center gap-2 border-b px-4 py-5 lg:hidden"
           >
             <MdArrowBackIosNew className="h-4 w-4" />
             <span>Settings</span>

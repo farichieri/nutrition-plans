@@ -41,8 +41,17 @@ export const authSlice = createSlice({
     setIsSigningUser: (state, action: PayloadAction<boolean>) => {
       state.isSigningUser = action.payload;
     },
-    setUpdateUser: (state, action: PayloadAction<UserAccount>) => {
-      state.user = action.payload;
+    setUpdateUser: (
+      state,
+      action: PayloadAction<{ user: UserAccount; fields: Partial<UserAccount> }>
+    ) => {
+      const { fields, user } = action.payload;
+      if (fields) {
+        state.user = {
+          ...user,
+          ...fields,
+        };
+      }
     },
     setIsSelectingPlan: (state, action: PayloadAction<boolean>) => {
       state.isSelectingPlan = action.payload;

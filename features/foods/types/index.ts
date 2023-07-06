@@ -2,66 +2,66 @@ import { PlansEnum } from "@/types";
 
 export interface Food {
   [id: string]: any;
-  allow_public: boolean;
   brand: string | null;
-  compatible_plans: CompatiblePlans;
+  category: FoodCategoriesEnum | null;
+  compatiblePlans: CompatiblePlans;
   complexity: number;
-  cook_time: number;
-  curated: boolean;
-  date_created: any | null;
-  date_updated: string | null;
-  diet_id: string | null;
-  diet_meal_id: string | null;
-  digestion_status: DigestionStatusEnum | null;
-  dish_type: DishTypesEnum | null;
-  easily_single_serving: boolean;
-  eaten: boolean;
-  food_category: FoodCategoriesEnum | null;
-  food_description: string | null;
-  food_id: string | null;
-  food_name_lowercase: string;
-  food_name: string | null;
-  food_type: FoodType;
-  glucemic_status: GlucemicStatusEnum | null;
-  image: string;
+  cookTime: number;
+  isCurated: boolean;
+  dateCreated: any | null;
+  dateUpdated: string | null;
+  description: string | null;
+  dietID: string | null;
+  dietMealID: string | null;
+  digestionStatus: DigestionStatusEnum | null;
+  dishType: DishTypesEnum | null;
+  dislikes: number;
+  favorites: number;
+  glucemicStatus: GlucemicStatusEnum | null;
+  id: string | null;
+  imageURL: string;
   index: number;
-  ingredients_descriptions: string[];
-  ingredients_names: string[];
   ingredients: IngredientGroup;
+  ingredientsAmount: number;
+  ingredientsDescriptions: string[];
+  ingredientsNames: string[];
   instructions: Instruction[];
-  is_deleted: boolean;
-  is_recommended: boolean;
+  isAllowPublic: boolean;
+  isDeleted: boolean;
+  isEasilySingleServing: boolean;
+  isEaten: boolean;
+  isRecommended: boolean;
   kind: FoodKind | null;
-  major_ingredients: string | null;
-  makes_leftovers: boolean;
+  likes: number;
+  majorIngredients: string | null;
+  makesLeftovers: boolean;
+  name: string | null;
+  nameLowerCase: string;
   note: string;
-  num_dislikes: number;
-  num_favorites: number;
-  num_ingredients: number;
-  num_likes: number;
   nutrients: FoodNutrients;
   order: number;
-  prep_time: number;
+  prepTime: number;
   price: number | null;
-  recipe_category: RecipeCategoriesEnum | null;
-  scale_amount: number;
-  scale_name: string;
+  recipeCategory: RecipeCategoriesEnum | null;
+  scaleAmount: number;
+  scaleName: string;
   scales: FoodScales;
-  serving_amount_per_package: number | null;
-  serving_amount: number;
-  serving_grams: number;
-  serving_name: string;
+  servingAmount: number;
+  servingAmountPerPackage: number | null;
+  servingGrams: number;
+  servingName: string;
   source: string | null;
-  total_time: number;
-  uploader_id: string | null;
+  totalTime: number;
+  type: FoodType;
+  uploaderID: string | null;
 }
 
 export interface FoodScale {
-  is_default: boolean;
-  scale_amount: number;
-  scale_grams: number;
-  scale_name: string;
   id: string | null;
+  isDefault: boolean;
+  scaleAmount: number;
+  scaleGrams: number;
+  scaleName: string;
 }
 
 export interface FoodScales extends Array<FoodScale> {}
@@ -75,7 +75,7 @@ export interface IngredientGroup {
 export interface IngsGroupArray extends Array<Food> {}
 
 export interface Instruction {
-  instruction_id: string;
+  id: string;
   order: number;
   text: string;
 }
@@ -87,17 +87,17 @@ export interface FoodGroup {
 export interface FoodGroupArray extends Array<Food> {}
 
 export interface FoodType {
-  is_breakfast: boolean;
-  is_dinner: boolean;
-  is_lunch: boolean;
-  is_snack: boolean;
+  isBreakfast: boolean;
+  isDinner: boolean;
+  isLunch: boolean;
+  isSnack: boolean;
 }
 
 export enum FoodTypesEnum {
-  is_breakfast = "is_breakfast",
-  is_dinner = "is_dinner",
-  is_lunch = "is_lunch",
-  is_snack = "is_snack",
+  isBreakfast = "isBreakfast",
+  isDinner = "isDinner",
+  isLunch = "isLunch",
+  isSnack = "isSnack",
 }
 
 export type CompatiblePlans = {
@@ -241,8 +241,8 @@ export interface Recipe extends Food {}
 
 export const InitialScale: FoodScale = {
   id: null,
-  is_default: false,
-  scale_amount: 1,
-  scale_grams: 0,
-  scale_name: "",
+  isDefault: false,
+  scaleAmount: 1,
+  scaleGrams: 0,
+  scaleName: "",
 };

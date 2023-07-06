@@ -13,10 +13,10 @@ export default function Page() {
           <span className="text-xl font-semibold">Subscription Plans</span>
           <span>
             You are currently on the{" "}
-            <span className="capitalize">{user?.premium_plan}</span> plan.
+            <span className="capitalize">{user?.subscriptionState}</span> plan.
           </span>
           <span>
-            {user?.premium_plan === "free" &&
+            {user?.subscriptionState === "free" &&
               "Upgrade to get full access to all the features."}
           </span>
         </div>

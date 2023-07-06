@@ -15,8 +15,8 @@ import InstallModal from "@/components/InstallApp/InstallModal";
 import Loader from "../components/Loader/Loader";
 import Sidebar from "./components/Sidebar/PremiumSidebar";
 import useOnlineStatus from "@/hooks/useOnlineStatus";
-import WelcomeSteps from "../components/WelcomeSteps/WelcomeSteps";
 import useWindowWidth from "@/hooks/useWindowWidth";
+import WelcomeSteps from "../components/WelcomeSteps/WelcomeSteps";
 
 interface Props {
   children: React.ReactNode;
@@ -34,9 +34,10 @@ export default function PremiumLayout({ children }: Props) {
 
   useEffect(() => {
     if (user) dispatch(setIsSigningUser(false));
-    if (isCreatingUser || !user?.is_profile_completed)
+    if (isCreatingUser || !user?.isProfileCompleted) {
       router.push(AppRoutes.create_user);
-  }, [user, router, isCreatingUser]);
+    }
+  }, [user, isCreatingUser]);
 
   return (
     <>
@@ -45,7 +46,7 @@ export default function PremiumLayout({ children }: Props) {
         <title>Nutrition Plans</title>
       </Head>
       {(isCreatingUser || isSigningUser) && <Loader />}
-      {user && user.is_profile_completed && <WelcomeSteps />}
+      {user && user.isProfileCompleted && <WelcomeSteps />}
       {!isOnline && <ConnectionError />}
       {showInstallModal && (
         <div className="sm:hidden">

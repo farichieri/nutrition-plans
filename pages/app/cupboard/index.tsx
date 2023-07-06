@@ -1,4 +1,4 @@
-import ShoppingNav from "@/features/shopping/components/ShoppingNav";
+import { ShoppingNav } from "@/features/shopping";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 

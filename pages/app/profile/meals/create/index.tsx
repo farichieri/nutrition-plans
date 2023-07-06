@@ -73,11 +73,11 @@ export default function Page() {
           complexity: newComplexity,
         })
       );
-    } else if (id === "cook") {
+    } else if (id === "isCookeable") {
       dispatch(
         setNewMealState({
           ...newMealState,
-          cook: value === "yes" ? true : false,
+          isCookeable: value === "yes" ? true : false,
         })
       );
     } else {
@@ -178,13 +178,15 @@ export default function Page() {
                 <FormSelect
                   customClass={""}
                   handleChange={handleChange}
-                  id={"cook"}
+                  id={"isCookeable"}
                   isRequired={true}
-                  labelText={"cook"}
-                  name={"cook"}
+                  labelText={"isCookeable"}
+                  name={"isCookeable"}
                   title={"Meal cook"}
                   options={generateOptions(cookOptions)}
-                  value={newMealState["cook"] ? MealCook.yes : MealCook.no}
+                  value={
+                    newMealState["isCookeable"] ? MealCook.Yes : MealCook.No
+                  }
                 />
               </div>
             </div>

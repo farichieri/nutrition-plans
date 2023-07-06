@@ -43,8 +43,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       const fetchData = async () => {
         const [progressRes, userMealsRes, mealsSettings] = await Promise.all([
           fetchProgress(user),
-          fetchMeals(user.user_id),
-          fetchMealsSettings(user.user_id),
+          fetchMeals(user.id),
+          fetchMealsSettings(user.id),
         ]);
         if (
           progressRes.result === "success" &&
@@ -94,13 +94,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       document.documentElement
         .querySelector('meta[name="theme-color"]')
         ?.setAttribute("content", "#111010");
-      setTheme(Theme.dark);
+      setTheme(Theme.Dark);
     } else {
       document.documentElement.classList.add("light");
       document.documentElement
         .querySelector('meta[name="theme-color"]')
         ?.setAttribute("content", "#fff");
-      setTheme(Theme.light);
+      setTheme(Theme.Light);
     }
   }, [theme]);
 

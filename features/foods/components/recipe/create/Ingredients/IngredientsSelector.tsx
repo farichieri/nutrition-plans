@@ -45,13 +45,13 @@ const IngredientsSelector: FC<Props> = ({ handleUpdateIngredients }) => {
     if (!foodModal) return;
     const newIngredient: Ingredient = {
       ...foodModal,
-      scale_amount: foodModal.scale_amount,
-      scale_name: foodModal.scale_name,
+      scaleAmount: foodModal.scaleAmount,
+      scaleName: foodModal.scaleName,
     };
 
     const newIngredients: IngredientGroup = {
       ...newRecipeState.ingredients,
-      [foodModal.food_id as keyof Food]: newIngredient,
+      [foodModal.id as keyof Food]: newIngredient,
     };
     handleUpdateIngredients(newIngredients);
     dispatch(setFoodModal(null));

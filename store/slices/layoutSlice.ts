@@ -21,7 +21,7 @@ const initialState: LayoutState = {
   sidebarAdminOpen: true,
   sidebarOpen: true,
   sidebarPlansOpen: true,
-  theme: Theme.light,
+  theme: Theme.Light,
 };
 
 export const layoutSlice = createSlice({

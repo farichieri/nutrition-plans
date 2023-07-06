@@ -38,8 +38,8 @@ export default function Page() {
         <div className="flex w-screen flex-col py-12">
           <div className="flex items-center justify-between px-4 ">
             <div className="flex flex-col items-start justify-center  opacity-60">
-              <span className="opacity-100">{user?.display_name}</span>
-              <span className="opacity-70">{user?.email_address}</span>
+              <span className="opacity-100">{user?.displayName}</span>
+              <span className="opacity-70">{user?.emailAddress}</span>
             </div>
             <Avatar width={50} height={50} />
           </div>

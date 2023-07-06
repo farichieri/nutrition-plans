@@ -21,13 +21,13 @@ const ThemeSwitcher: FC<Props> = ({ withText }) => {
       document.documentElement
         .querySelector('meta[name="theme-color"]')
         ?.setAttribute("content", "#fff");
-      dispatch(setTheme(Theme.light));
+      dispatch(setTheme(Theme.Light));
     } else {
       document.documentElement.classList.add("dark");
       document.documentElement
         .querySelector('meta[name="theme-color"]')
         ?.setAttribute("content", "#111010");
-      dispatch(setTheme(Theme.dark));
+      dispatch(setTheme(Theme.Dark));
     }
   };
 
@@ -37,7 +37,7 @@ const ThemeSwitcher: FC<Props> = ({ withText }) => {
       className="flex w-full items-center justify-between gap-1 transition-all"
     >
       {withText && <span>Theme</span>}
-      {theme === Theme.dark ? (
+      {theme === Theme.Dark ? (
         <div className="flex items-center gap-2">
           {withText && <span>Dark</span>}
           <MdDarkMode className="h-5 w-5 text-yellow-500" />

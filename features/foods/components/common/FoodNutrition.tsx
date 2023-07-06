@@ -21,7 +21,7 @@ interface Props {
 const FoodNutrition: FC<Props> = ({ food, amount, scale }) => {
   const [openDetails, setOpenDetails] = useState(false);
   const [nutrients, setNutrients] = useState<FoodNutrients | null>(null);
-  const scalesMerged = mergeScales(food);
+  const scalesMerged = mergeScales({ scales: food.scales });
 
   const handleOpenDetail = (event: React.MouseEvent) => {
     event.preventDefault();
@@ -32,7 +32,7 @@ const FoodNutrition: FC<Props> = ({ food, amount, scale }) => {
     scales: scalesMerged,
     prev_scale_name: scale,
     new_scale_name: NutritionMeasurements.grams,
-    scale_amount: amount,
+    scaleAmount: amount,
   });
 
   useEffect(() => {

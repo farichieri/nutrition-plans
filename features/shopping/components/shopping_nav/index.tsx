@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
 import { FC } from "react";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 interface Props {}
 
@@ -12,12 +12,12 @@ const ShoppingNav: FC<Props> = () => {
   const router = useRouter();
   const SHOPPING_PAGES = [
     {
-      name: "Shopping",
+      name: "Shopping List",
       url: `/app/shopping/today`,
       pathname: ["/app/shopping/[date]"],
     },
     {
-      name: "My Cupboard",
+      name: "Cupboard",
       url: `/app/cupboard`,
       pathname: ["/app/cupboard"],
     },

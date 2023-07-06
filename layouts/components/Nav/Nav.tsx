@@ -136,8 +136,8 @@ const NavBar: FC<Props> = () => {
               <div className="w-full divide-y border-b">
                 <div className="flex w-full items-center justify-between py-3 duration-300 hover:bg-slate-500/10 hover:opacity-100">
                   <div className="flex flex-col gap-0 text-base font-normal leading-5 opacity-70 ">
-                    <span>{user.display_name}</span>
-                    <span>{user.email_address}</span>
+                    <span>{user.displayName}</span>
+                    <span>{user.emailAddress}</span>
                   </div>
                   <Avatar width={30} height={30} />
                 </div>

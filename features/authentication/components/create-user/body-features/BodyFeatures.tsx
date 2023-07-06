@@ -39,7 +39,7 @@ interface FormValues {
   gender: UserGenders | null;
   inches: number | null;
   kilograms: number | null;
-  measurement_unit: MeasurementUnits;
+  measurementUnit: MeasurementUnits;
   pounds: number | null;
 }
 
@@ -51,7 +51,7 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
-  const body_data = user?.body_data || newBodyData;
+  const bodyData = user?.bodyData || newBodyData;
 
   const {
     control,
@@ -64,15 +64,15 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
     watch,
   } = useForm<FormValues>({
     defaultValues: {
-      activity: body_data.activity,
-      age: body_data.age,
-      centimeters: body_data.height_in_cm,
-      feet: cmsToFeet({ cms: Number(body_data.height_in_cm) }) || null,
-      gender: body_data.gender,
-      inches: cmsToInches({ cms: Number(body_data.height_in_cm) }) || null,
-      kilograms: body_data.weight_in_kg,
-      measurement_unit: user?.measurement_unit || MeasurementUnits.imperial,
-      pounds: kgsToLbs({ kgs: Number(body_data.weight_in_kg) }) || null,
+      activity: bodyData.activity,
+      age: bodyData.age,
+      centimeters: bodyData.heightInCm,
+      feet: cmsToFeet({ cms: Number(bodyData.heightInCm) }) || null,
+      gender: bodyData.gender,
+      inches: cmsToInches({ cms: Number(bodyData.heightInCm) }) || null,
+      kilograms: bodyData.weightInKg,
+      measurementUnit: user?.measurementUnit || MeasurementUnits.Imperial,
+      pounds: kgsToLbs({ kgs: Number(bodyData.weightInKg) }) || null,
     },
     resolver: yupResolver(schema),
   });
@@ -82,8 +82,8 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
   const isCreatingRoute = router.asPath === AppRoutes.create_user;
   const [error, setError] = useState("");
 
-  const watchMeasurementUnit = watch("measurement_unit");
-  const isMetricUnits = watchMeasurementUnit === MeasurementUnits.metric;
+  const watchMeasurementUnit = watch("measurementUnit");
+  const isMetricUnits = watchMeasurementUnit === MeasurementUnits.Metric;
 
   const handleClick = (event: React.MouseEvent) => {
     event.preventDefault();
@@ -96,10 +96,11 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
       setValue("gender", value as UserGenders);
       trigger("gender");
     } else if (
-      name === "measurement_unit" &&
-      Object.keys(MeasurementUnits).includes(value as MeasurementUnits)
+      name === "measurementUnit" &&
+      Object.values(MeasurementUnits).includes(value as MeasurementUnits)
     ) {
-      setValue("measurement_unit", value as MeasurementUnits);
+      console.log({ value });
+      setValue("measurementUnit", value as MeasurementUnits);
     }
   };
 
@@ -177,38 +178,41 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
 
   const onSubmit = async (data: FormValues) => {
     if (!user || isSubmitting) return;
-    const { activity, age, gender, centimeters, kilograms, measurement_unit } =
+    const { activity, age, gender, centimeters, kilograms, measurementUnit } =
       data;
 
     if (!kilograms) return;
 
     const lts = getWater({
       weightInKg: kilograms,
-      measurement: measurement_unit,
+      measurement: measurementUnit,
     });
 
-    let userUpdated: UserAccount = {
-      ...user,
-      measurement_unit: measurement_unit,
-      body_data: {
-        ...body_data,
+    const fields = {
+      measurementUnit: measurementUnit,
+      bodyData: {
+        ...bodyData,
         activity: Number(activity),
         age: age,
         gender: gender,
-        height_in_cm: centimeters,
-        weight_in_kg: kilograms,
-        water_lts_recommended: formatTwoDecimals(lts),
+        heightInCm: centimeters,
+        weightInKg: kilograms,
+        waterRecommendedInLts: formatTwoDecimals(lts),
       },
     };
 
-    const res = await updateUser(userUpdated);
+    const res = await updateUser({ user, fields });
     if (res.result === "success") {
-      dispatch(setUpdateUser(userUpdated));
+      dispatch(setUpdateUser({ user, fields }));
       handleContinue();
       if (!isCreatingRoute)
         toast.success("Your Body Features have been updated successfully.");
     } else {
-      if (!isCreatingRoute) toast.error("Error updating your Body Features");
+      if (!isCreatingRoute) {
+        toast.error("Error updating your Body Features");
+      } else {
+        setError("Unexpected Error");
+      }
     }
   };
 
@@ -248,18 +252,18 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
                 <div className="relative flex cursor-pointer rounded-3xl border-green-500 text-xs shadow-[0_0_5px_gray] sm:text-base">
                   <div
                     className={`${
-                      values.measurement_unit === MeasurementUnits.metric
+                      values.measurementUnit === MeasurementUnits.Metric
                         ? "right-[50%]"
                         : "right-0"
                     } absolute h-full w-[50%] select-none rounded-3xl bg-green-500 transition-all duration-300`}
                   ></div>
-                  {Object.keys(MeasurementUnits).map((type) => (
+                  {Object.values(MeasurementUnits).map((type) => (
                     <button
                       key={type}
-                      name="measurement_unit"
+                      name="measurementUnit"
                       value={type}
                       onClick={handleClick}
-                      className="z-20 w-28 rounded-3xl border-none px-4 py-1 text-xs font-semibold active:shadow-lg sm:text-base"
+                      className="z-20 w-28 rounded-3xl border-none px-4 py-1 text-xs font-semibold capitalize active:shadow-lg sm:text-base"
                     >
                       {type}
                     </button>
@@ -442,11 +446,7 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
           </div>
         </BoxMainContent>
         <BoxBottomBar>
-          {error && (
-            <span className="text-center font-medium text-red-400">
-              {error}
-            </span>
-          )}
+          {error && <FormError message={error} />}
           <div className="ml-auto flex">
             <SubmitButton
               className={"m-auto h-9 w-24"}

@@ -8,7 +8,6 @@ import {
 import { FoodGroup } from "@/features/foods";
 import { getDaysOfWeek, getIsWeek } from "@/utils";
 import { GetServerSideProps } from "next";
-import { ShoppingList } from "@/features/shopping";
 import { StartsOfWeek } from "@/types";
 import { useEffect, useState } from "react";
 import { UserAccount, selectAuthSlice } from "@/features/authentication";
@@ -17,7 +16,7 @@ import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 import Spinner from "@/components/Loader/Spinner";
 import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
-import ShoppingNav from "@/features/shopping/components/ShoppingNav";
+import { ShoppingNav, ShoppingList } from "@/features/shopping";
 
 interface Props {
   date?: string;
@@ -26,7 +25,7 @@ export default function Page({ params }: { params: Props }) {
   const { user } = useSelector(selectAuthSlice);
   const date = getRealDate({
     date: String(params.date),
-    userStartOfWeek: StartsOfWeek[user?.startOfWeek || "sunday"],
+    userStartOfWeek: user?.startOfWeek || StartsOfWeek.Sunday,
   });
   useRedirectToday(String(params.date));
   const isWeek = getIsWeek(date);
@@ -79,13 +78,10 @@ export default function Page({ params }: { params: Props }) {
       <PremiumNav hideScrolling={false} />
       <SubPremiumNav title={""} customClass="top-[var(--subnav-h)]">
         <DaySelector date={String(params.date)} baseURL={"/app/shopping/"} />
+        {/* <DateSelector /> */}
       </SubPremiumNav>
       <section className="mt-[var(--subnav-h)] flex w-full flex-col gap-5 p-2 sm:px-4">
         <ShoppingNav />
-        {/* <div className="flex flex-wrap items-center gap-1">
-          <span className="text-2xl font-medium">Shopping List of:</span>
-          <DateSelector />
-        </div> */}
         {isLoading ? (
           <Spinner customClass="w-5 h-5" />
         ) : (

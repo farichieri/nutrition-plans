@@ -28,26 +28,26 @@ const ProgressItemModal: FC<Props> = ({ progressItem }) => {
   const { user } = useSelector(selectAuthSlice);
   const dispatch = useDispatch();
 
-  const measurement_unit = user?.measurement_unit;
+  const measurementUnit = user?.measurementUnit;
   const [progressState, setProgressState] =
     useState<ProgressItem>(newProgressItem);
 
   useEffect(() => {
     let weightFormatted = 0;
-    if (measurement_unit) {
+    if (measurementUnit) {
       weightFormatted = getWeight({
-        to: measurement_unit,
-        weight: Number(progressItem.weight_in_kg),
+        to: measurementUnit,
+        weight: Number(progressItem.weightInKg),
       });
     }
     let progressItemF = {
       ...progressItem,
-      weight_in_kg: weightFormatted,
+      weightInKg: weightFormatted,
     };
     setProgressState(progressItemF);
-  }, [measurement_unit, setProgressState]);
+  }, [measurementUnit, setProgressState]);
 
-  if (!user || !measurement_unit) return <></>;
+  if (!user || !measurementUnit) return <></>;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const name = event.target.name;
@@ -67,9 +67,9 @@ const ProgressItemModal: FC<Props> = ({ progressItem }) => {
     setIsSaving(true);
     const progressUpdated = {
       ...progressItem,
-      weight_in_kg: getWeightInKg({
-        from: measurement_unit,
-        weight: Number(progressState.weight_in_kg),
+      weightInKg: getWeightInKg({
+        from: measurementUnit,
+        weight: Number(progressState.weightInKg),
       }),
     };
     const res = await updateProgress(user, progressUpdated);
@@ -107,14 +107,14 @@ const ProgressItemModal: FC<Props> = ({ progressItem }) => {
         <div className="relative flex w-full items-center gap-1">
           <span className="basis-1/3">Weight:</span>
           <span className="absolute right-2 select-none">
-            {getWeightUnit({ from: measurement_unit })}
+            {getWeightUnit({ from: measurementUnit })}
           </span>
           <input
             className="flex w-full basis-2/3 rounded-md border bg-transparent px-1.5 py-2"
             type="number"
-            name="weight_in_kg"
+            name="weightInKg"
             placeholder="Weight"
-            value={String(formatTwoDecimals(progressState.weight_in_kg))}
+            value={String(formatTwoDecimals(progressState.weightInKg))}
             onChange={handleChange}
           />
         </div>
@@ -124,7 +124,7 @@ const ProgressItemModal: FC<Props> = ({ progressItem }) => {
             content="Delete"
             isLoading={isDeleting}
             isDisabled={isDisabled}
-            type={ButtonType.delete}
+            type={ButtonType.Delete}
             className="w-full"
             onClick={handleDelete}
             action="submit"
@@ -134,7 +134,7 @@ const ProgressItemModal: FC<Props> = ({ progressItem }) => {
             content="Save"
             isLoading={isSaving}
             isDisabled={isDisabled}
-            type={ButtonType.save}
+            type={ButtonType.Save}
             className="w-full"
             onClick={handleSave}
             action="submit"

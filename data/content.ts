@@ -131,7 +131,7 @@ export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
     discount: "",
     monthlyPrice: 0,
     name: "Free",
-    plan_id: "free",
+    id: "free",
     yearlyPrice: 0,
   },
   {
@@ -148,7 +148,7 @@ export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
     discount: "-20%",
     monthlyPrice: 10,
     name: "Premium",
-    plan_id: "premium",
+    id: "premium",
     yearlyPrice: 8,
   },
 ];

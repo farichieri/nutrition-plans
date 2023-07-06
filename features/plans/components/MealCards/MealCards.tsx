@@ -27,7 +27,7 @@ interface Props {
 
 const MealCards: FC<Props> = ({ diet, date, user }) => {
   const dispatch = useDispatch();
-  const dietMeals = diet?.diet_meals;
+  const dietMeals = diet?.meals;
   const [isEditing, setIsEditing] = useState(false);
 
   const onDragEnd = (result: any) => {
@@ -45,11 +45,9 @@ const MealCards: FC<Props> = ({ diet, date, user }) => {
       const sourceDietMeal = dietMeals[source.droppableId];
       const destinationDietMeal = dietMeals[destination.droppableId];
 
-      let sourceDietMealFoodsArr = Object.values(
-        sourceDietMeal.diet_meal_foods
-      );
+      let sourceDietMealFoodsArr = Object.values(sourceDietMeal.foods);
       let destinationDietMealFoodsArr = Object.values(
-        destinationDietMeal.diet_meal_foods
+        destinationDietMeal.foods
       );
       const [removedElement, newSourceList] = removeFromList(
         sourceDietMealFoodsArr,
@@ -66,7 +64,7 @@ const MealCards: FC<Props> = ({ diet, date, user }) => {
     } else {
       // Same dietMeal
       const dietMeal = dietMeals[source.droppableId];
-      const dietMealFoodsArr = Object.values(dietMeal.diet_meal_foods);
+      const dietMealFoodsArr = Object.values(dietMeal.foods);
       const foodsReordered = reorderArr(
         dietMealFoodsArr,
         source.index,
@@ -105,15 +103,13 @@ const MealCards: FC<Props> = ({ diet, date, user }) => {
               {Object.values(dietMeals)
                 .sort((a: any, b: any) => Number(a.order) - Number(b.order))
                 .map((dietMeal: DietMeal) => {
-                  const nutritionMerged = getNutritionMerged(
-                    dietMeal.diet_meal_foods
-                  );
+                  const nutritionMerged = getNutritionMerged(dietMeal.foods);
                   const { calories } = nutritionMerged;
                   return (
                     <MealCard
                       dietMeal={dietMeal}
                       isEditing={isEditing}
-                      key={dietMeal.diet_meal_id}
+                      key={dietMeal.id}
                       mealKcals={Number(calories)}
                       setIsEditing={setIsEditing}
                     />

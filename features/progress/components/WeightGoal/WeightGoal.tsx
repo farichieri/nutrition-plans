@@ -1,11 +1,10 @@
 import { FC } from "react";
 import { getWeight, getWeightText } from "@/utils/calculations";
-import { MeasurementUnits } from "@/types";
 import { selectAuthSlice } from "@/features/authentication";
 import { setAddWeightGoalOpen, selectProgressSlice } from "@/features/progress";
 import { useDispatch, useSelector } from "react-redux";
-import WeightGoalModal from "./WeightGoalModal";
 import Collapsable from "@/components/Layout/Collapsable";
+import WeightGoalModal from "./WeightGoalModal";
 
 interface Props {}
 
@@ -16,20 +15,20 @@ const WeightGoal: FC<Props> = () => {
 
   if (!user) return <></>;
 
-  const { weight_goal, measurement_unit } = user;
+  const { weightGoal, measurementUnit } = user;
 
   const handleOpen = () => {
     dispatch(setAddWeightGoalOpen(true));
   };
 
-  const weightGoal = getWeight({
-    to: measurement_unit,
-    weight: weight_goal.weight_goal_in_kg || 0,
+  const realWeightGoal = getWeight({
+    to: measurementUnit,
+    weight: weightGoal.weightGoalInKg || 0,
   });
 
   return (
     <div className="mr-auto flex w-full max-w-sm items-center justify-center">
-      {addWeightGoalOpen && <WeightGoalModal weightGoal={weight_goal} />}
+      {addWeightGoalOpen && <WeightGoalModal weightGoal={weightGoal} />}
       <Collapsable
         showed={"Weight Goal"}
         hidden={
@@ -38,20 +37,18 @@ const WeightGoal: FC<Props> = () => {
               <span className="w-full text-left text-3xl font-semibold">
                 Weight Goal
               </span>
-              {weight_goal.weight_goal_in_kg && (
+              {weightGoal.weightGoalInKg && (
                 <div>
                   <div className="flex gap-1">
                     <span>Due date:</span>
-                    <span className="text-green-500">
-                      {weight_goal.due_date}
-                    </span>
+                    <span className="text-green-500">{weightGoal.dueDate}</span>
                   </div>
                   <div className="flex gap-1">
                     <span>Weight goal:</span>
                     <span className="text-green-500">
                       {getWeightText({
-                        from: measurement_unit,
-                        weight: weightGoal,
+                        from: measurementUnit,
+                        weight: realWeightGoal,
                       })}
                     </span>
                   </div>
@@ -63,7 +60,7 @@ const WeightGoal: FC<Props> = () => {
                 className="rounded-md bg-green-500 px-2 py-1 text-white shadow-md"
                 onClick={handleOpen}
               >
-                {weight_goal.weight_goal_in_kg
+                {weightGoal.weightGoalInKg
                   ? "Edit Weight Goal"
                   : "Add Weight Goal"}
               </button>

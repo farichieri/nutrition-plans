@@ -22,7 +22,7 @@ const fetchDietByDate = async ({
   user: UserAccount;
 }): Promise<Result<Diet, unknown>> => {
   try {
-    const docRef = doc(db, "users", user.user_id, "diets", date);
+    const docRef = doc(db, "users", user.id, "diets", date);
     const querySnapshot = await getDoc(docRef);
     const data: any = querySnapshot.data();
     if (!data) throw new Error("No data fetched.");
@@ -44,7 +44,7 @@ const fetchRandomFoodByPlan = async (
 
     let q = query(
       docRef,
-      where(`compatible_plans.${plan}`, "==", true),
+      where(`compatiblePlans.${plan}`, "==", true),
       where("complexity", ">=", complexity),
       where("complexity", "<", max_complexity),
       orderBy("complexity")
@@ -67,14 +67,14 @@ const fetchRandomFoodByPlan = async (
     ): FoodGroupArray => {
       let foodsFiltered = matchingFoods;
       // cook
-      if (!userMeal.cook) {
+      if (!userMeal.isCookeable) {
         foodsFiltered = matchingFoods.filter((food) => {
-          if (food.cook_time < 1) return food;
+          if (food.cookTime < 1) return food;
         });
       }
       // time
       foodsFiltered = foodsFiltered.filter((food) => {
-        const available_time = food.prep_time + food.cook_time;
+        const available_time = food.prepTime + food.cookTime;
         if (available_time < userMeal.time) return food;
       });
       // size

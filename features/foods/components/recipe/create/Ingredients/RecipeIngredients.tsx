@@ -33,7 +33,7 @@ const Ingredient: FC<IngredientProps> = ({
 }) => {
   const food = ingredient;
   const { newRecipeState } = useSelector(selectFoodsSlice);
-  const scalesMerged = mergeScales(food);
+  const scalesMerged = mergeScales({ scales: food.scales });
   const options = getScaleOptions(scalesMerged);
 
   if (!newRecipeState) return <>No State Provided</>;
@@ -50,18 +50,18 @@ const Ingredient: FC<IngredientProps> = ({
     let ingredient = { ...ingredients[id] };
     let ingredientUpdated = { ...ingredient };
 
-    if (name === "scale_name") {
-      // Este tiene que pasar a (food, scale_amount)
+    if (name === "scaleName") {
+      // Este tiene que pasar a (food, scaleAmount)
       const newAmount = getNewAmount({
         scales: scalesMerged,
-        prev_scale_name: food.scale_name || "grams",
+        prev_scale_name: food.scaleName || "grams",
         new_scale_name: value,
-        scale_amount: food.scale_amount || 1,
+        scaleAmount: food.scaleAmount || 1,
       });
       ingredientUpdated = {
         ...food,
-        scale_name: value,
-        scale_amount: newAmount || food.serving_amount,
+        scaleName: value,
+        scaleAmount: newAmount || food.servingAmount,
       };
     } else {
       ingredientUpdated = {
@@ -73,7 +73,7 @@ const Ingredient: FC<IngredientProps> = ({
     handleUpdateIngredients(ingredients);
   };
 
-  if (!food.food_id) {
+  if (!food.id) {
     return (
       <div className="m-auto">
         <Spinner customClass="h-5 w-5" />
@@ -85,47 +85,47 @@ const Ingredient: FC<IngredientProps> = ({
     <div className="flex w-full items-center overflow-auto rounded-md border">
       <span className="relative h-36 w-full basis-2/6">
         <Image
-          src={food.image}
+          src={food.imageURL}
           fill
           className="object-cover"
-          alt={food.food_name || ""}
+          alt={food.name || ""}
         />
       </span>
       <div className="flex w-full basis-4/6 px-2">
         <div className="w-full">
           <div className="flex flex-col">
             <span className="text-base font-semibold capitalize">
-              {food.food_name}
+              {food.name}
             </span>
-            <span className="text-sm opacity-50">{food.food_description}</span>
+            <span className="text-sm opacity-50">{food.description}</span>
           </div>
           <div className="flex flex-col">
             <div className="flex w-full items-center gap-2">
               <NutritionInput
                 handleChange={handleChange}
-                id={food.food_id}
+                id={food.id}
                 labelText={""}
                 min={"0"}
-                name={String(FoodKeys.scale_amount)}
+                name={String(FoodKeys.scaleAmount)}
                 step={"1"}
                 title={""}
                 type={"number"}
-                value={food.scale_amount}
+                value={food.scaleAmount}
               />
               <Select
                 customClass={"h-full"}
                 handleChange={handleChange}
-                id={food.food_id}
+                id={food.id}
                 labelText={""}
-                name={String(FoodKeys.scale_name)}
+                name={String(FoodKeys.scaleName)}
                 title={"Scale Name"}
                 options={options}
-                value={food.scale_name}
+                value={food.scaleName}
               />
             </div>
             <Input
               handleChange={handleChange}
-              id={food.food_id}
+              id={food.id}
               isRequired={false}
               labelFor={FoodKeys.note}
               labelText={""}
@@ -140,7 +140,7 @@ const Ingredient: FC<IngredientProps> = ({
         <RoundButton
           customClass="w-10 h-10 p-1.5 my-auto ml-auto"
           onClick={handleRemove}
-          id={food.food_id}
+          id={food.id}
         >
           <MdDelete className="h-6 w-6 opacity-50" />
         </RoundButton>
@@ -184,8 +184,8 @@ const RecipeIngredients: FC<Props> = ({
   const updateIngredientsOrder = async (ingsReordered: IngsGroupArray) => {
     const ingredientsUpdated: IngredientGroup = { ...ingredients };
     ingsReordered.forEach((food, index) => {
-      if (!food.food_id) return;
-      ingredientsUpdated[food.food_id] = {
+      if (!food.id) return;
+      ingredientsUpdated[food.id] = {
         ...food,
         order: index,
       };
@@ -223,13 +223,9 @@ const RecipeIngredients: FC<Props> = ({
               className="divide-y"
             >
               {ingsState.map((ing, index) => {
-                if (ing.food_id)
+                if (ing.id)
                   return (
-                    <Draggable
-                      key={ing.food_id}
-                      draggableId={ing.food_id}
-                      index={index}
-                    >
+                    <Draggable key={ing.id} draggableId={ing.id} index={index}>
                       {(draggableProvided) => (
                         <div
                           ref={draggableProvided.innerRef}
@@ -240,7 +236,7 @@ const RecipeIngredients: FC<Props> = ({
                           <MdDragHandle className="h-6 w-6 opacity-50" />
                           <Ingredient
                             ingredient={ing}
-                            key={ing.food_id}
+                            key={ing.id}
                             handleRemove={handleRemove}
                             handleUpdateIngredients={handleUpdateIngredients}
                           />

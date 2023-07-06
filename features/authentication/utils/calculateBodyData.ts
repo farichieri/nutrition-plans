@@ -13,7 +13,7 @@ const calculateBMR = ({
   gender: UserGenders;
 }): number => {
   const standard = 10 * Number(kgs) + 6.25 * Number(cms) - 5 * Number(age);
-  return Number(gender === UserGenders.male ? standard + 5 : standard - 161);
+  return Number(gender === UserGenders.Male ? standard + 5 : standard - 161);
 };
 
 const calculateKCALSRecommended = ({
@@ -26,9 +26,9 @@ const calculateKCALSRecommended = ({
   activity: UserActivities;
 }): number => {
   const goalCalories =
-    goal === UserGoals.lose_weight
+    goal === UserGoals.LoseWeight
       ? KCALS_TO_LOSE
-      : goal === UserGoals.build_muscle
+      : goal === UserGoals.BuildMuscle
       ? KCALS_TO_GAIN
       : 0;
   return Math.round(Number(BMR) * Number(activity) + goalCalories);

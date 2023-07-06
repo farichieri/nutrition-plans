@@ -31,27 +31,27 @@ const Graphic: FC<Props> = () => {
   const { user } = useSelector(selectAuthSlice);
   if (!user) return <>No user found.</>;
 
-  const { weight_goal, created_at, measurement_unit } = user;
+  const { weightGoal, createdAt, measurementUnit } = user;
   const { progress } = useSelector(selectProgressSlice);
-  const { body_data } = user.first_data;
+  const { bodyData } = user.firstData;
 
-  if (!created_at) return <></>;
+  if (!createdAt) return <></>;
 
-  const weightUnit = getWeightUnit({ from: measurement_unit });
+  const weightUnit = getWeightUnit({ from: measurementUnit });
 
-  const startDate = format(new Date(created_at), "MM-dd-yyyy");
+  const startDate = format(new Date(createdAt), "MM-dd-yyyy");
   const startDateF = formatToUSDate(new Date(startDate));
 
   const userStartWeight = getWeight({
-    to: measurement_unit,
-    weight: formatTwoDecimals(Number(body_data.weight_in_kg)),
+    to: measurementUnit,
+    weight: formatTwoDecimals(Number(bodyData.weightInKg)),
   });
 
-  const weightGoal = getWeight({
-    to: measurement_unit,
-    weight: Number(weight_goal.weight_goal_in_kg),
+  const realWeightGoal = getWeight({
+    to: measurementUnit,
+    weight: Number(weightGoal.weightGoalInKg),
   });
-  const dueDateGoal = weight_goal.due_date;
+  const dueDateGoal = weightGoal.dueDate;
 
   const createData = () => {
     if (!startDate || !progress) return;
@@ -66,23 +66,12 @@ const Graphic: FC<Props> = () => {
         isMonthRepresentation: true,
       },
     ];
-    // let date = getStartOfMonth(startDate);
-    // for (let i = 0; i <= 12; i++) {
-    //   let newDdate = format(addMonths(date, 1), "MM-dd-yyyy");
-    //   console.log({ newDdate });
-    //   data.push({
-    //     date: formatToUSDate(new Date(newDdate)),
-    //     weight: null,
-    //     isMonthRepresentation: true,
-    //   });
-    //   date = new Date(newDdate);
-    // }
     Object.keys(progress).map((p) => {
       const finded = data.find((d) => d.date === progress[p].date);
       const weight = formatTwoDecimals(
         getWeight({
-          to: measurement_unit,
-          weight: Number(progress[p].weight_in_kg),
+          to: measurementUnit,
+          weight: Number(progress[p].weightInKg),
         })
       );
       if (finded) {
@@ -116,10 +105,10 @@ const Graphic: FC<Props> = () => {
     const weights = data?.map((w) => w.weight || userStartWeight) || [
       userStartWeight,
     ];
-    weights.push(weightGoal);
+    weights.push(realWeightGoal);
     const maxWeightInData = Math.max(...weights);
     const minWeightInData = Math.min(...weights);
-    const domainDiff = measurement_unit === MeasurementUnits.metric ? 5 : 10;
+    const domainDiff = measurementUnit === MeasurementUnits.Metric ? 5 : 10;
     const min =
       minWeightInData - domainDiff > 45 ? maxWeightInData + domainDiff : 45;
     const max = maxWeightInData + domainDiff;
@@ -188,13 +177,13 @@ const Graphic: FC<Props> = () => {
           <Line type="monotone" dataKey="value" stroke="red" dot={false} />
           {weightGoal && (
             <ReferenceLine
-              y={weightGoal}
+              y={realWeightGoal}
               label={(props) => (
                 <CustomLabel
                   props={props}
                   text={`Goal ${getWeightText({
-                    weight: weightGoal,
-                    from: measurement_unit,
+                    weight: realWeightGoal,
+                    from: measurementUnit,
                   })}`}
                 />
               )}
@@ -203,9 +192,9 @@ const Graphic: FC<Props> = () => {
               strokeDasharray="3 3"
             />
           )}
-          {weight_goal.due_date && (
+          {weightGoal.dueDate && (
             <ReferenceLine
-              x={weight_goal.due_date}
+              x={weightGoal.dueDate}
               stroke="red"
               strokeWidth={1}
               strokeDasharray="3 3"

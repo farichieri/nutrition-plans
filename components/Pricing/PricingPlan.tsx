@@ -1,11 +1,12 @@
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import { FC, useState } from "react";
 import { selectAuthSlice } from "@/features/authentication/slice";
+import { SubscriptionPlan } from "@/types";
 import { useSelector } from "react-redux";
 import Link from "next/link";
 
 interface Props {
-  pricingPlan: any;
+  pricingPlan: SubscriptionPlan;
 }
 
 const PricingPlan: FC<Props> = ({ pricingPlan }) => {
@@ -58,7 +59,7 @@ const PricingPlan: FC<Props> = ({ pricingPlan }) => {
           </li>
         ))}
       </ul>
-      {user?.premium_plan === pricingPlan.plan_id ? (
+      {user?.subscriptionState === pricingPlan.id ? (
         <span className="mt-auto flex rounded-md border border-gray-400 px-3 py-2 text-xs dark:border-gray-700">
           Current plan
         </span>

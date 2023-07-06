@@ -14,7 +14,7 @@ const AddInstruction: FC<Props> = ({
   instructions,
 }) => {
   const [newInstruction, setNewInstruction] = useState<Instruction>({
-    instruction_id: "",
+    id: "",
     order: -1,
     text: "",
   });
@@ -38,12 +38,12 @@ const AddInstruction: FC<Props> = ({
     const uuid = uuidv4();
     const instructionsUpdated = [
       ...instructions,
-      { ...newInstruction, instruction_id: uuid },
+      { ...newInstruction, id: uuid },
     ];
     handleUpdateInstructions(instructionsUpdated);
 
     setNewInstruction({
-      instruction_id: "",
+      id: "",
       order: -1,
       text: "",
     });

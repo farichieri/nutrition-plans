@@ -16,7 +16,7 @@ const filterObject = (obj: any, filter: string, filterValue: string) =>
 const filterByCompatiblePlan = (obj: any, plan: string, filterValue: boolean) =>
   Object.keys(obj).reduce(
     (acc, val) =>
-      !obj[val]["compatible_plans"][plan] === filterValue
+      !obj[val]["compatiblePlans"][plan] === filterValue
         ? acc
         : {
             ...acc,
@@ -64,15 +64,15 @@ const sortByLowerCalories = (foodsArray: FoodGroupArray) => {
 
 const sortByRating = (foodsArray: FoodGroupArray) => {
   return foodsArray.sort(
-    (a: Food, b: Food) => Number(b.num_likes) - Number(a.num_likes)
+    (a: Food, b: Food) => Number(b.likes) - Number(a.likes)
   );
 };
 
 const sortFoodsSearched = (foodsArray: FoodGroupArray, sortBy: string) => {
   switch (sortBy) {
-    case FilterSortTypes.higher_calories:
+    case FilterSortTypes.HigherCalories:
       return sortByHigherCalories(foodsArray);
-    case FilterSortTypes.lower_calories:
+    case FilterSortTypes.LowerCalories:
       return sortByLowerCalories(foodsArray);
     default:
       return sortByRating(foodsArray);

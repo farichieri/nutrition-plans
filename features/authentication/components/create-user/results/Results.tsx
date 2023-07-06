@@ -43,27 +43,27 @@ const Results: FC<Props> = ({ handleSubmit }) => {
 
   if (!user) return <>No user found</>;
 
-  const { body_data, goal, plan_selected } = user;
-  const { weight_in_kg, height_in_cm, age, gender, activity } = body_data;
+  const { bodyData, goal, planSelected } = user;
+  const { weightInKg, heightInCm, age, gender, activity } = bodyData;
   if (
-    !weight_in_kg ||
-    !height_in_cm ||
+    !weightInKg ||
+    !heightInCm ||
     !age ||
     !gender ||
     !activity ||
     !goal ||
-    !plan_selected
+    !planSelected
   )
     return <>There's missing data to calculate Nutrition Values</>;
 
-  const BMI = calculateBMI({ kgs: weight_in_kg, cms: height_in_cm });
+  const BMI = calculateBMI({ kgs: weightInKg, cms: heightInCm });
   const BMR = calculateBMR({
-    kgs: weight_in_kg,
-    cms: height_in_cm,
+    kgs: weightInKg,
+    cms: heightInCm,
     age: age,
     gender: gender,
   });
-  const kcals_recommended = calculateKCALSRecommended({
+  const caloriesRecommended = calculateKCALSRecommended({
     BMR: BMR,
     goal: goal,
     activity: activity,
@@ -72,15 +72,15 @@ const Results: FC<Props> = ({ handleSubmit }) => {
   console.log({ user });
 
   const nutritionTargets = getNutritionTargets(
-    kcals_recommended,
-    plan_selected
+    caloriesRecommended,
+    planSelected
   );
 
   const addFirstProgress = async () => {
     const newProgress: ProgressItem = {
-      created_at: formatISO(new Date()),
+      createdAt: formatISO(new Date()),
       date: formatToUSDate(new Date()),
-      weight_in_kg: weight_in_kg,
+      weightInKg: weightInKg,
     };
     const res = await addProgress(user, newProgress);
     if (res.result === "success") {
@@ -96,23 +96,22 @@ const Results: FC<Props> = ({ handleSubmit }) => {
     try {
       if (!nutritionTargets) return;
       const bodyDataUpdated = {
-        ...user.body_data,
+        ...user.bodyData,
         BMI: BMI,
         BMR: BMR,
-        kcals_recommended: kcals_recommended,
+        caloriesRecommended: caloriesRecommended,
       };
-      const userUpdated: UserAccount = {
-        ...user,
-        body_data: bodyDataUpdated,
-        is_profile_completed: true,
-        nutrition_targets: nutritionTargets,
-        first_data: {
-          body_data: bodyDataUpdated,
+      const fields = {
+        bodyData: bodyDataUpdated,
+        isProfileCompleted: true,
+        nutritionTargets: nutritionTargets,
+        firstData: {
+          bodyData: bodyDataUpdated,
         },
       };
       const [updateUserRes, addProgressRes, mealSettings, addMeals] =
         await Promise.all([
-          updateUser(userUpdated),
+          updateUser({ user, fields }),
           addFirstProgress(),
           createDefaultMealsSettings(user),
           createDefaultUserMeals(user),
@@ -126,7 +125,7 @@ const Results: FC<Props> = ({ handleSubmit }) => {
       ) {
         dispatch(setUserMealsSettings(mealSettings.data));
         dispatch(setUserMeals(addMeals.data));
-        dispatch(setUpdateUser(userUpdated));
+        dispatch(setUpdateUser({ user, fields }));
         dispatch(setIsCreatingUser(false));
         handleSubmit();
       }
@@ -153,7 +152,7 @@ const Results: FC<Props> = ({ handleSubmit }) => {
               <span className="text-green-500">{user.goal}</span> we have
               calculated the next daily calories for your nutrition plan:{" "}
             </span>
-            <span className="text-green-500">{kcals_recommended}</span>
+            <span className="text-green-500">{caloriesRecommended}</span>
           </div>
           <div className="flex flex-col gap-4 font-medium">
             <div className="flex flex-col gap-2">
@@ -196,8 +195,8 @@ const Results: FC<Props> = ({ handleSubmit }) => {
           </div>
           <div className="">
             <NutritionTarget
-              calories={kcals_recommended}
-              plan_selected={plan_selected}
+              calories={caloriesRecommended}
+              planSelected={planSelected}
             />
           </div>
         </div>

@@ -26,11 +26,11 @@ interface MealInCardProps {
 
 const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
   const dispatch = useDispatch();
-  const scalesMerged = mergeScales(food);
+  const scalesMerged = mergeScales({ scales: food.scales });
   const options = getScaleOptions(scalesMerged);
   const { diets } = useSelector(selectPlansSlice);
 
-  if (!food.food_id) return <></>;
+  if (!food.id) return <></>;
 
   const handleRemove = (event: React.MouseEvent) => {
     event.preventDefault();
@@ -39,7 +39,7 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
-    const scalesMerged = mergeScales(food);
+    const scalesMerged = mergeScales({ scales: food.scales });
     const type = event.target.type;
     const name = event.target.name;
     const value = event.target.value;
@@ -47,17 +47,17 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
 
     let foodUpdated = { ...food };
 
-    if (name === "scale_name") {
+    if (name === "scaleName") {
       const newAmount = getNewAmount({
         scales: scalesMerged,
-        prev_scale_name: food.scale_name,
+        prev_scale_name: food.scaleName,
         new_scale_name: value,
-        scale_amount: food.scale_amount,
+        scaleAmount: food.scaleAmount,
       });
       foodUpdated = {
         ...food,
-        scale_name: value,
-        scale_amount: newAmount || food.serving_amount,
+        scaleName: value,
+        scaleAmount: newAmount || food.servingAmount,
       };
     } else {
       foodUpdated = {
@@ -70,24 +70,24 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
 
   const toggleDone = async (event: React.MouseEvent) => {
     event.preventDefault();
-    const { diet_id, diet_meal_id, food_id } = food;
-    if (!food_id || !diet_id || !diet_meal_id) return;
-    const diet = diets[diet_id];
-    const value = !food.eaten;
+    const { dietID, dietMealID, id } = food;
+    if (!id || !dietID || !dietMealID) return;
+    const diet = diets[dietID];
+    const value = !food.isEaten;
 
     dispatch(toggleEatenFood({ food, value: value }));
 
     const dietUpdated: Diet = {
       ...diet,
-      diet_meals: {
-        ...diet.diet_meals,
-        [diet_meal_id]: {
-          ...diet.diet_meals[diet_meal_id],
-          diet_meal_foods: {
-            ...diet.diet_meals[diet_meal_id].diet_meal_foods,
-            [food_id]: {
-              ...diet.diet_meals[diet_meal_id].diet_meal_foods[food_id],
-              eaten: value,
+      meals: {
+        ...diet.meals,
+        [dietMealID]: {
+          ...diet.meals[dietMealID],
+          foods: {
+            ...diet.meals[dietMealID].foods,
+            [id]: {
+              ...diet.meals[dietMealID].foods[id],
+              isEaten: value,
             },
           },
         },
@@ -100,7 +100,7 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
     }
   };
 
-  const scaleFormatted = Math.round(food.scale_amount * 100) / 100;
+  const scaleFormatted = Math.round(food.scaleAmount * 100) / 100;
   return (
     <div className="flex w-full gap-1">
       {isEditing && (
@@ -108,29 +108,29 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
       )}
       <span className="relative h-20 w-20 min-w-[80px] sm:h-20 sm:w-20">
         <Image
-          src={food.image}
+          src={food.imageURL}
           fill
           className="object-cover "
-          alt={food.food_name || ""}
+          alt={food.name || ""}
         />
       </span>
       <div className="flex h-auto w-full">
         <div className="flex h-full w-full flex-col py-1">
           <div className="flex w-full max-w-max flex-col ">
             <span className="text-base font-semibold capitalize leading-5">
-              {food.food_name}
+              {food.name}
             </span>
-            {/* <span className="text-sm opacity-50">{food.food_description}</span> */}
+            {/* <span className="text-sm opacity-50">{food.description}</span> */}
           </div>
           <div className="flex h-full flex-col">
             <div className="mt-auto  flex w-full flex-wrap items-baseline gap-1">
               {isEditing ? (
                 <NutritionInput
                   handleChange={handleChange}
-                  id={food.food_id}
+                  id={food.id}
                   labelText={""}
                   min={""}
-                  name={String(FoodKeys.scale_amount)}
+                  name={String(FoodKeys.scaleAmount)}
                   step={"1"}
                   title={""}
                   type={"number"}
@@ -144,17 +144,17 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
                 <FormSelect
                   customClass={"h-full"}
                   handleChange={handleChange}
-                  id={food.food_id}
+                  id={food.id}
                   labelText={""}
-                  name={String(FoodKeys.scale_name)}
+                  name={String(FoodKeys.scaleName)}
                   title={"Scale Name"}
                   options={options}
-                  value={food.scale_name}
+                  value={food.scaleName}
                   readOnly={!isEditing}
                 />
               ) : (
                 <span className="text-sm capitalize">
-                  {`${food.scale_name.toLowerCase()}${
+                  {`${food.scaleName.toLowerCase()}${
                     scaleFormatted > 1 ? "" : ""
                   }`}
                 </span>
@@ -163,7 +163,7 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
             {food.note && (
               <Input
                 handleChange={handleChange}
-                id={food.food_id}
+                id={food.id}
                 isRequired={false}
                 labelFor={FoodKeys.note}
                 labelText={""}
@@ -181,12 +181,12 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
           <RoundButton
             customClass="w-10 h-10 p-1.5 my-auto ml-auto"
             onClick={handleRemove}
-            id={food.food_id}
+            id={food.id}
           >
             <MdDelete className="h-6 w-6" />
           </RoundButton>
         ) : (
-          <CheckButton onClick={toggleDone} checked={food.eaten} />
+          <CheckButton onClick={toggleDone} checked={food.isEaten} />
         )}
       </div>
     </div>

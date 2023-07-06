@@ -3,27 +3,27 @@ import { PlansEnum } from "@/types";
 import * as yup from "yup";
 
 const schema = yup.object({
-  food_name: yup.string().required("Recipe Name is required"),
-  food_description: yup.string().required("Recipe Description is required"),
-  food_category: yup.string().required("Recipe Category is required"),
-  dish_type: yup.string().required("Recipe Category is required"),
+  name: yup.string().required("Recipe Name is required"),
+  description: yup.string().required("Recipe Description is required"),
+  category: yup.string().required("Recipe Category is required"),
+  dishType: yup.string().required("Recipe Category is required"),
   image: yup.string().required("Please choose an image for this food"),
-  prep_time: yup
+  prepTime: yup
     .number()
     .typeError("Amount must be a number")
     .required("Prep Time is required")
     .min(0, "Please enter a positive value"),
-  cook_time: yup
+  cookTime: yup
     .number()
     .typeError("Amount must be a number")
     .required("Cook Time is required")
     .min(0, "Please enter a positive value"),
-  serving_amount: yup
+  servingAmount: yup
     .number()
     .typeError("Amount must be a number")
     .required("Yields are required")
     .min(0, "Please enter a positive value"),
-  food_type: yup
+  type: yup
     .object()
     .test(
       "oneOfRequired",
@@ -38,7 +38,7 @@ const schema = yup.object({
         return result;
       }
     ),
-  compatible_plans: yup
+  compatiblePlans: yup
     .object()
     .test(
       "oneOfRequired",

@@ -45,8 +45,8 @@ const AvatarDropDown: FC<Props> = ({ isApp }) => {
     >
       <div className="w-60 py-2">
         <div className="flex flex-col items-start justify-center px-4 py-2 opacity-60">
-          <span className="opacity-100">{user?.display_name}</span>
-          <span className="opacity-70">{user?.email_address}</span>
+          <span className="opacity-100">{user?.displayName}</span>
+          <span className="opacity-70">{user?.emailAddress}</span>
         </div>
         <div className="mx-4 my-2 h-0 border-b border-slate-500/30 duration-300"></div>
 

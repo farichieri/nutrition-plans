@@ -23,18 +23,17 @@ const PlanSelector: FC<Props> = ({ planID }) => {
     dispatch(setIsSelectingPlan(true));
     const res = await updateUserPlan(planID, user);
     if (res.result === "success") {
-      const userUpdated = {
-        ...user,
-        plan_selected: planID,
+      const fields = {
+        planSelected: planID,
       };
-      dispatch(setUpdateUser(userUpdated));
+      dispatch(setUpdateUser({ user, fields }));
     }
     dispatch(setIsSelectingPlan(false));
   };
 
   return (
     <div className="flex w-fit min-w-fit items-center">
-      {!(user?.plan_selected === planID) ? (
+      {!(user?.planSelected === planID) ? (
         <button
           className="min-w-fit rounded-3xl border border-green-500 bg-white/50 px-4 py-1 duration-300 hover:bg-green-500/50 active:bg-green-500/20 dark:bg-black/50"
           onClick={selectPlan}

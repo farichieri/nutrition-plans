@@ -14,7 +14,7 @@ const SetCurrentSubscription: FC<Props> = () => {
       <BoxMainContent>
         <div className="flex flex-col gap-5">
           <span className="text-3xl font-semibold">Your Subscription</span>
-          <span>Current plan: {user?.premium_plan}</span>
+          <span>Current plan: {user?.subscriptionState}</span>
         </div>
       </BoxMainContent>
       <BoxBottomBar>

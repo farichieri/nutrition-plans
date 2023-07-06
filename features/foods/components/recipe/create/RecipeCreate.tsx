@@ -98,14 +98,14 @@ const RecipeCreate: FC<Props> = () => {
     setIsLoading(true);
     const newFood: Recipe = {
       ...data,
-      serving_grams: recipeGrams,
+      servingGrams: recipeGrams,
     };
     const res = await addFood(newFood, FoodKind.recipe, newImageFile, user);
     if (res.result === "success") {
       setNewImageFile(undefined);
       dispatch(setNewRecipeState(NewFood));
       dispatch(addNewFood(res.data));
-      router.push(`/app/food/${res.data.food_id}`);
+      router.push(`/app/food/${res.data.id}`);
       toast.success("Recipe created successfully");
     } else {
       toast.error("Error creating Recipe");
@@ -146,28 +146,28 @@ const RecipeCreate: FC<Props> = () => {
           <div className="mb-5 flex w-full max-w-xl flex-col gap-5 sm:px-4">
             <div className="flex flex-col gap-2 ">
               <FormInput
-                error={errors.food_name?.message}
-                id={"food_name"}
+                error={errors.name?.message}
+                id={"name"}
                 labelText="Recipe Name"
                 placeholder="Recipe Name"
                 title="Recipe Name"
                 type="text"
-                {...register("food_name")}
+                {...register("name")}
               />
               <FormInput
-                error={errors.food_description?.message}
-                id={"food_description"}
+                error={errors.description?.message}
+                id={"description"}
                 labelText="Recipe Description"
                 placeholder="Recipe Description"
                 title="Recipe Description"
                 type="text"
-                {...register("food_description")}
+                {...register("description")}
               />
             </div>
             <div className="flex flex-col gap-2">
               <h1 className="text-xl">Image</h1>
               <Image
-                src={values.image}
+                src={values.imageURL}
                 width={200}
                 height={200}
                 alt="Food Image"
@@ -180,46 +180,46 @@ const RecipeCreate: FC<Props> = () => {
                 accept="image/*"
               />
               <div className="text-red-500">
-                <p>{errors.image?.message}</p>
+                <p>{errors.imageURL?.message}</p>
               </div>
             </div>
             <div className="flex flex-col gap-2">
               <span className="text-3xl font-normal">Recipe Properties:</span>
               <NutritionInput
                 changed={false}
-                error={errors.prep_time?.message}
+                error={errors.prepTime?.message}
                 handleChange={() => {}}
-                id={"prep_time"}
+                id={"prepTime"}
                 labelText="Prep Time"
                 title={"Prep Time"}
                 type="number"
                 unit={"minutes"}
-                value={values.prep_time}
-                {...register("prep_time", { valueAsNumber: true, min: 0 })}
+                value={values.prepTime}
+                {...register("prepTime", { valueAsNumber: true, min: 0 })}
               />
               <NutritionInput
                 changed={false}
-                error={errors.cook_time?.message}
+                error={errors.cookTime?.message}
                 handleChange={() => {}}
-                id={"cook_time"}
+                id={"cookTime"}
                 labelText="Cook Time"
                 title={"Cook Time"}
                 type="number"
                 unit={"minutes"}
-                value={values.cook_time}
-                {...register("cook_time", { valueAsNumber: true, min: 0 })}
+                value={values.cookTime}
+                {...register("cookTime", { valueAsNumber: true, min: 0 })}
               />
               <NutritionInput
                 changed={false}
-                error={errors.serving_amount?.message}
+                error={errors.servingAmount?.message}
                 handleChange={() => {}}
-                id={"serving_amount"}
+                id={"servingAmount"}
                 labelText="Yields"
                 title={"Yields"}
                 type="number"
                 unit={"servings"}
-                value={values.serving_amount}
-                {...register("serving_amount", { valueAsNumber: true, min: 0 })}
+                value={values.servingAmount}
+                {...register("servingAmount", { valueAsNumber: true, min: 0 })}
               />
               <div className="my-5">
                 <h1 className="text-xl">Extra scales {`(optional)`}</h1>
@@ -231,29 +231,29 @@ const RecipeCreate: FC<Props> = () => {
                 </div>
               </div>
               <FormSelect
-                error={errors.food_category?.message}
+                error={errors.category?.message}
                 handleChange={() => {}}
-                id={"food_category"}
+                id={"category"}
                 labelText="Recipe Category"
                 options={generateOptions(Object.keys(RecipeCategoriesEnum))}
                 placeholder="Recipe Category"
                 title="Recipe Category"
-                {...register("food_category")}
+                {...register("category")}
               />
               <FormSelect
-                error={errors.dish_type?.message}
+                error={errors.dishType?.message}
                 handleChange={() => {}}
-                id={"dish_type"}
+                id={"dishType"}
                 labelText="Dish Type"
                 options={generateOptions(Object.keys(DishTypesEnum))}
                 placeholder="Dish Type"
                 title="Dish Type"
-                {...register("dish_type")}
+                {...register("dishType")}
               />
               <div>
                 <h1 className="text-xl">Food Type</h1>
                 <div className="flex flex-col gap-1">
-                  {Object.keys(values.food_type).map((type) => {
+                  {Object.keys(values.type).map((type) => {
                     return (
                       <Checkbox
                         id={type}
@@ -261,19 +261,19 @@ const RecipeCreate: FC<Props> = () => {
                         labelText={type}
                         placeholder="Food Type"
                         title="Food Type"
-                        {...register(`food_type.${type as keyof FoodType}`)}
+                        {...register(`type.${type as keyof FoodType}`)}
                       />
                     );
                   })}
                 </div>
                 <div className="text-red-500">
-                  <span>{errors.food_type?.message}</span>
+                  <span>{errors.type?.message}</span>
                 </div>
               </div>
               <div>
                 <h1 className="text-xl">Compatible Plans</h1>
                 <div className="flex flex-col gap-1">
-                  {Object.keys(values.compatible_plans).map((plan) => {
+                  {Object.keys(values.compatiblePlans).map((plan) => {
                     return (
                       <Checkbox
                         id={plan}
@@ -282,14 +282,14 @@ const RecipeCreate: FC<Props> = () => {
                         placeholder="Compatible Plans"
                         title="Compatible Plans"
                         {...register(
-                          `compatible_plans.${plan as keyof CompatiblePlans}`
+                          `compatiblePlans.${plan as keyof CompatiblePlans}`
                         )}
                       />
                     );
                   })}
                 </div>
                 <div className="text-red-500">
-                  <span>{errors.compatible_plans?.message}</span>
+                  <span>{errors.compatiblePlans?.message}</span>
                 </div>
               </div>
             </div>
@@ -322,28 +322,28 @@ const RecipeCreate: FC<Props> = () => {
             <div className="flex flex-col gap-1">
               <h1 className="text-xl">Optional Fields</h1>
               <FormSelect
-                error={errors.digestion_status?.message}
+                error={errors.digestionStatus?.message}
                 handleChange={() => {}}
-                id={"digestion_status"}
+                id={"digestionStatus"}
                 labelText="Digestion Status"
                 options={generateOptions(Object.keys(DigestionStatusEnum))}
                 placeholder="Digestion Status"
                 title="Digestion Status"
-                {...register("digestion_status")}
+                {...register("digestionStatus")}
               />
               <Checkbox
-                id={"easily_single_serving"}
-                key={"easily_single_serving"}
-                labelText={"easily_single_serving"}
+                id={"isEasilySingleServing"}
+                key={"isEasilySingleServing"}
+                labelText={"isEasilySingleServing"}
                 title="Easily Single Serving"
-                {...register(`easily_single_serving`)}
+                {...register(`isEasilySingleServing`)}
               />
               <Checkbox
-                id={"makes_leftovers"}
-                key={"makes_leftovers"}
-                labelText={"makes_leftovers"}
+                id={"makesLeftovers"}
+                key={"makesLeftovers"}
+                labelText={"makesLeftovers"}
                 title="Makes good leftovers"
-                {...register(`makes_leftovers`)}
+                {...register(`makesLeftovers`)}
               />
             </div>
           </div>

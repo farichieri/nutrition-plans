@@ -50,9 +50,9 @@ export const plansSlice = createSlice({
       }
     },
     setDiet: (state, action: PayloadAction<Diet>) => {
-      const { plan_date, plan_id } = action.payload;
-      if (plan_date && plan_id) {
-        state.diets[plan_date] = action.payload;
+      const { date, planID: plan_id } = action.payload;
+      if (date && plan_id) {
+        state.diets[date] = action.payload;
       }
       state.isLoadingDiet = false;
     },
@@ -61,47 +61,38 @@ export const plansSlice = createSlice({
       action: PayloadAction<{ food: Food; dietMeal: DietMeal }>
     ) => {
       const { food, dietMeal } = action.payload;
-      const { diet_id } = dietMeal;
-      if (!diet_id) return;
-      const diet = state.diets[diet_id];
+      const { dietID } = dietMeal;
+      if (!dietID) return;
+      const diet = state.diets[dietID];
 
       const dietMealFood: Food = {
         ...food,
-        diet_meal_id: dietMeal.diet_meal_id,
-        diet_id: diet_id,
+        dietMealID: dietMeal.id,
+        dietID: dietID,
       };
-      if (!dietMeal.diet_meal_id) return;
-      const dietMealFoods =
-        diet.diet_meals[dietMeal.diet_meal_id].diet_meal_foods;
-      diet.diet_meals[dietMeal.diet_meal_id].diet_meal_foods[
-        food.food_id as keyof Food
-      ] = {
+      if (!dietMeal.id) return;
+      const dietMealFoods = diet.meals[dietMeal.id].foods;
+      diet.meals[dietMeal.id].foods[food.id as keyof Food] = {
         ...dietMealFoods,
         ...dietMealFood,
       };
     },
     removeFoodInDiet: (state, action: PayloadAction<Food>) => {
-      const { food_id, diet_meal_id, diet_id } = action.payload;
-      if (!diet_meal_id || !diet_id || !food_id) return;
-      delete state.diets[diet_id].diet_meals[diet_meal_id].diet_meal_foods[
-        food_id
-      ];
+      const { id, dietMealID, dietID } = action.payload;
+      if (!dietMealID || !dietID || !id) return;
+      delete state.diets[dietID].meals[dietMealID].foods[id];
     },
     updateFoodInDiet: (state, action: PayloadAction<Food>) => {
-      const { diet_meal_id, food_id, diet_id } = action.payload;
-      if (!diet_meal_id || !diet_id || !food_id) return;
-      state.diets[diet_id].diet_meals[diet_meal_id].diet_meal_foods[food_id] =
-        action.payload;
+      const { dietMealID, id: id, dietID } = action.payload;
+      if (!dietMealID || !dietID || !id) return;
+      state.diets[dietID].meals[dietMealID].foods[id] = action.payload;
     },
-    updateDietNutrition: (
-      state,
-      action: PayloadAction<{ diet_id: string }>
-    ) => {
-      const { diet_id } = action.payload;
-      const diet = state.diets[diet_id];
+    updateDietNutrition: (state, action: PayloadAction<{ dietID: string }>) => {
+      const { dietID } = action.payload;
+      const diet = state.diets[dietID];
       if (!diet) return;
-      const dietNutrition = getDietNutrition(diet.diet_meals);
-      state.diets[diet_id].diet_nutrition = dietNutrition;
+      const dietNutrition = getDietNutrition(diet.meals);
+      state.diets[dietID].nutrients = dietNutrition;
     },
     updateDietMealFoodsOrder: (
       state,
@@ -111,48 +102,46 @@ export const plansSlice = createSlice({
       }>
     ) => {
       const { dietMeal, foodsArrayOrdered } = action.payload;
-      const { diet_id, diet_meal_id } = dietMeal;
-      if (!diet_id || !diet_meal_id) return;
-      const diet = state.diets[diet_id];
+      const { dietID, id } = dietMeal;
+      if (!dietID || !id) return;
+      const diet = state.diets[dietID];
       let foodsUpdated: FoodGroup = {};
       foodsArrayOrdered.map((food, index) => {
-        if (!food.food_id) return;
-        foodsUpdated[food.food_id] = {
+        if (!food.id) return;
+        foodsUpdated[food.id] = {
           ...food,
           order: index,
-          diet_meal_id: diet_meal_id,
+          dietMealID: id,
         };
       });
-      diet.diet_meals[diet_meal_id].diet_meal_foods = foodsUpdated;
+      diet.meals[id].foods = foodsUpdated;
     },
     toggleEatenFood: (
       state,
       action: PayloadAction<{ food: Food; value: boolean }>
     ) => {
       const { food, value } = action.payload;
-      const { food_id, diet_meal_id, diet_id } = food;
-      if (!diet_id || !diet_meal_id || !food_id) return;
-      state.diets[diet_id].diet_meals[diet_meal_id].diet_meal_foods[
-        food_id
-      ].eaten = value;
+      const { id: id, dietMealID, dietID } = food;
+      if (!dietID || !dietMealID || !id) return;
+      state.diets[dietID].meals[dietMealID].foods[id].isEaten = value;
     },
     toggleDrunkWater: (
       state,
       action: PayloadAction<{ diet: Diet; value: boolean }>
     ) => {
       const { diet, value } = action.payload;
-      const { diet_water, diet_id } = diet;
+      const { water, id } = diet;
       // const { drunk, litters_drunk, litters_to_drink } = diet_water;
-      if (!diet_id) return;
-      state.diets[diet_id].diet_water.drunk = value;
+      if (!id) return;
+      state.diets[id].water.drunk = value;
     },
     setIsCreatingDiet: (state, action: PayloadAction<boolean>) => {
       state.isCreatingDiet = action.payload;
     },
     setDeleteDiet: (state, action: PayloadAction<Diet>) => {
-      const { diet_id } = action.payload;
-      if (diet_id) {
-        delete state.diets[diet_id];
+      const { id } = action.payload;
+      if (id) {
+        delete state.diets[id];
       }
     },
     setIsGeneratingMeals: (state, action: PayloadAction<boolean>) => {

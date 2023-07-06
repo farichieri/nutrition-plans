@@ -35,7 +35,7 @@ const FoodsSearched: FC<Props> = ({ queries }) => {
   return (
     <div className="flex w-full max-w-screen-2xl select-none grid-cols-fluid_lg flex-col items-start justify-center gap-2 px-0 sm:grid sm:grid-cols-fluid sm:px-0 lg:justify-start">
       {foods.map((food: Food) => {
-        return <FoodCard food={food} key={food.food_id} />;
+        return <FoodCard food={food} key={food.id} />;
       })}
     </div>
   );

@@ -15,7 +15,7 @@ const addFood = async (
   user: UserAccount
 ): Promise<Result<Food, unknown>> => {
   try {
-    if (!food.food_name) throw new Error("No food_name provided");
+    if (!food.name) throw new Error("No name provided");
     const docRef = doc(collection(db, "foods"));
 
     let img = DEFAULT_IMAGE;
@@ -33,50 +33,49 @@ const addFood = async (
 
     const ingredients = food.ingredients;
     const numIngredients = Object.keys(ingredients).length;
-    const complexity =
-      1 + numIngredients + food.prep_time + food.cook_time * 0.2;
+    const complexity = 1 + numIngredients + food.prepTime + food.cookTime * 0.2;
 
     // Add the ingredients names and descriptions to the food:
-    let ingredients_names: string[] = [];
-    let ingredients_descriptions: string[] = [];
+    let ingredientsNames: string[] = [];
+    let ingredientsDescriptions: string[] = [];
     if (numIngredients > 0) {
       for (let key in ingredients) {
-        ingredients_names.push(ingredients[key].food_name!);
-        ingredients_descriptions.push(ingredients[key].food_description!);
+        ingredientsNames.push(ingredients[key].name!);
+        ingredientsDescriptions.push(ingredients[key].description!);
       }
     }
 
     // Add the default scale:
     const newScales = [...food.scales];
     const uuid = uuidv4();
-    const scale_name = food.serving_name;
-    const scale_amount = 1;
+    const scaleName = food.servingName;
+    const scaleAmount = 1;
     newScales.unshift({
-      scale_name: scale_name,
-      scale_amount: scale_amount,
-      scale_grams: food.serving_grams,
-      is_default: true,
+      scaleName: scaleName,
+      scaleAmount: scaleAmount,
+      scaleGrams: food.servingGrams,
+      isDefault: true,
       id: uuid,
     });
 
     const newFood: Food = {
       ...food,
       complexity: complexity,
-      date_created: serverTimestamp(),
-      food_id: docRef.id,
-      food_name_lowercase: food.food_name.toLowerCase(),
-      image: img,
+      dateCreated: serverTimestamp(),
+      id: docRef.id,
+      nameLowerCase: food.name.toLowerCase(),
+      imageURL: img,
       index: index,
-      ingredients_descriptions: ingredients_descriptions,
-      ingredients_names: ingredients_names,
+      ingredientsDescriptions: ingredientsDescriptions,
+      ingredientsNames: ingredientsNames,
       kind: kind,
-      num_ingredients: numIngredients,
+      ingredientsAmount: numIngredients,
       nutrients: { ...food.nutrients },
-      scale_amount: scale_amount,
-      scale_name: scale_name,
+      scaleAmount: scaleAmount,
+      scaleName: scaleName,
       scales: newScales,
-      total_time: food.cook_time + food.prep_time,
-      uploader_id: user.user_id,
+      totalTime: food.cookTime + food.prepTime,
+      uploaderID: user.id,
     };
     console.log({ newFood });
     await setDoc(docRef, newFood);
@@ -89,14 +88,14 @@ const addFood = async (
 
 const uploadImage = async (
   file: File,
-  food_id: string
+  id: string
 ): Promise<Result<string, unknown>> => {
   try {
-    const storageRef = ref(storage, `foods/${food_id}/default_image`);
+    const storageRef = ref(storage, `foods/${id}/default_image`);
     await uploadBytes(storageRef, file);
-    const imageUrl = await getDownloadURL(storageRef);
-    if (!imageUrl) throw new Error("Error getting ImageURL");
-    return { result: "success", data: imageUrl };
+    const imageURL = await getDownloadURL(storageRef);
+    if (!imageURL) throw new Error("Error getting ImageURL");
+    return { result: "success", data: imageURL };
   } catch (error) {
     return { result: "error", error };
   }

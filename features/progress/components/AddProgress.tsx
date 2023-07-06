@@ -38,7 +38,7 @@ const AddProgress: FC<Props> = () => {
 
   if (!user) return <></>;
 
-  const { measurement_unit } = user;
+  const { measurementUnit } = user;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -54,10 +54,10 @@ const AddProgress: FC<Props> = () => {
     const dateParsed = parse(input.date, "yyyy-MM-dd", new Date());
     const date = formatToUSDate(dateParsed);
     const newProgress = {
-      created_at: formatISO(new Date()),
+      createdAt: formatISO(new Date()),
       date: date,
-      weight_in_kg: getWeightInKg({
-        from: measurement_unit,
+      weightInKg: getWeightInKg({
+        from: measurementUnit,
         weight: Number(input.weight),
       }),
     };
@@ -124,7 +124,7 @@ const AddProgress: FC<Props> = () => {
               Weight
             </label>
             <span className="absolute right-2 select-none">
-              {getWeightUnit({ from: measurement_unit })}
+              {getWeightUnit({ from: measurementUnit })}
             </span>
             <input
               value={input.weight}
@@ -140,7 +140,7 @@ const AddProgress: FC<Props> = () => {
             content="Add"
             isLoading={isAdding}
             isDisabled={isDisabled}
-            type={ButtonType.save}
+            type={ButtonType.Save}
             className="w-40 py-1.5"
             onClick={handleSubmit}
             action={undefined}
@@ -153,7 +153,7 @@ const AddProgress: FC<Props> = () => {
             content="Add Progress"
             isLoading={false}
             isDisabled={false}
-            type={ButtonType.save}
+            type={ButtonType.Save}
             className="w-40 py-1.5"
             onClick={handleOpen}
             action={undefined}

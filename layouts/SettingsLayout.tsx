@@ -16,7 +16,7 @@ export default function SettingsLayout({ children }: Props) {
         <div className="flex w-full justify-center border-b py-8 text-2xl font-semibold capitalize sm:mb-5">
           {router.asPath.split("/")[3] || "Account"}
         </div>
-        <div className="flex flex-col gap-5 sm:flex-row">
+        <div className="flex flex-col gap-5 lg:flex-row">
           <SettingsNav />
           <div className="h-full w-full px-4">{children}</div>
         </div>

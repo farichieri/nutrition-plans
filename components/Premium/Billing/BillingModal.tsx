@@ -41,7 +41,7 @@ const BillingModal: FC<Props> = () => {
               Level up. Go Premium
             </span>
             <span>
-              {user?.premium_plan === "free" &&
+              {user?.subscriptionState === "free" &&
                 "Upgrade to get full access to all the features"}
             </span>
           </div>

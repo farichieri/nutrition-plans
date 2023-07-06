@@ -1,5 +1,4 @@
 import {
-  FoodRating,
   selectAuthSlice,
   setUpdateUser,
   updateUser,
@@ -13,68 +12,69 @@ import {
 } from "@/features/favorites";
 import { FC, useState } from "react";
 import { Food } from "@/features/foods";
+import { MdFavorite } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "@/components/Loader/Spinner";
-import { MdFavorite } from "react-icons/md";
 
 interface Props {
   food: Food;
 }
 
 const AddToFavorite: FC<Props> = ({ food }) => {
-  const { food_id } = food;
   const dispatch = useDispatch();
-  const { user } = useSelector(selectAuthSlice);
   const [isFavoriting, setIsFavoriting] = useState(false);
+  const { id: foodID } = food;
   const { isRating } = useSelector(selectFavoritesSlice);
-  if (!user || !food_id) return <></>;
+  const { user } = useSelector(selectAuthSlice);
 
-  const food_rating: FoodRating = user.ratings.food_rating;
-  const isFavorite = food_rating?.favorites.includes(food_id);
+  if (!user || !foodID) return <></>;
+
+  const { foodRating } = user.ratings;
+  const isFavorite: boolean = foodRating.favorites.includes(foodID);
 
   const handleRating = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     try {
       const id = (event.target as HTMLButtonElement).id;
-      if (!food_rating) return;
+      if (!foodRating) return;
       if (isRating) return;
       dispatch(setIsRating(true));
 
       id === "favorites" && setIsFavoriting(true);
 
-      let favorites = [...food_rating["favorites"]];
+      let favorites = [...foodRating["favorites"]];
 
-      const favIndex = favorites.indexOf(food_id);
+      const favIndex = favorites.indexOf(foodID);
       const isAlreadyFavorite = favIndex > -1;
 
       const updateAction = async (field: string, action: string) => {
-        const res = await updateFoodRating(food_id, field, action);
+        const res = await updateFoodRating({ foodID, field, action });
         if (res.result === "error") {
           throw new Error("Error updating food rating");
         }
       };
 
       if (isAlreadyFavorite) {
-        await updateAction("num_favorites", "decrement");
+        await updateAction("favorites", "decrement");
         favorites.splice(favIndex, 1);
       } else {
-        await updateAction("num_favorites", "increment");
-        favorites = [...favorites, food_id];
+        await updateAction("favorites", "increment");
+        favorites = [...favorites, foodID];
       }
 
-      let userUpdated = {
-        ...user,
+      let fields = {
         ratings: {
-          food_rating: {
-            ...food_rating,
+          foodRating: {
+            ...foodRating,
             favorites: favorites,
           },
         },
       };
-      if (JSON.stringify(userUpdated) !== JSON.stringify(user)) {
-        const res = await updateUser(userUpdated);
+
+      if (JSON.stringify(fields.ratings) !== JSON.stringify(user.ratings)) {
+        const res = await updateUser({ user, fields });
         if (res.result === "success") {
-          dispatch(setUpdateUser(userUpdated));
+          dispatch(setUpdateUser({ user, fields }));
           if (isAlreadyFavorite) {
             dispatch(removeFavoriteFood(food));
           } else {

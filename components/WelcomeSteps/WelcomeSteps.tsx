@@ -7,12 +7,12 @@ interface Props {}
 
 const WelcomeSteps: FC<Props> = () => {
   const { user } = useSelector(selectAuthSlice);
-  const step = user?.user_step;
+  const step = user?.welcomeStep;
 
   const getStep = () => {
     if (!user) return;
     switch (step) {
-      case UserSteps.step_1:
+      case UserSteps.One:
         return <StepOne user={user} />;
       default:
         break;

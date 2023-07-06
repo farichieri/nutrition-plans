@@ -11,7 +11,7 @@ const App = () => {
 
   useEffect(() => {
     if (user) {
-      if (user.plan_selected) {
+      if (user.planSelected) {
         router.push(`/app/today`);
       } else {
         router.push(`/app/progress`);

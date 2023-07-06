@@ -17,26 +17,26 @@ const postDietToUserDiets = async ({
   user: UserAccount;
 }): Promise<Result<Diet, unknown>> => {
   try {
-    const docRef = doc(db, "users", user.user_id, "diets", date);
+    const docRef = doc(db, "users", user.id, "diets", date);
     const dietID = docRef.id;
 
     let dietMeals: DietMealGroup = {};
-    for (let key in diet.diet_meals) {
+    for (let key in diet.meals) {
       dietMeals[key] = {
-        ...diet.diet_meals[key],
-        diet_id: dietID,
+        ...diet.meals[key],
+        dietID: dietID,
       };
     }
 
     let newDiet: Diet = {
       ...diet,
-      plan_date: date,
-      plan_id: planID,
-      diet_id: dietID,
-      user_id: user.user_id,
-      date_created: getToday(),
-      diet_meals: dietMeals,
-      diet_nutrition: { ...diet.diet_nutrition },
+      date: date,
+      planID: planID,
+      id: dietID,
+      userID: user.id,
+      dateCreated: getToday(),
+      meals: dietMeals,
+      nutrients: { ...diet.nutrients },
     };
 
     await setDoc(docRef, newDiet);
@@ -54,12 +54,12 @@ const updateDiet = async ({
   diet: Diet;
 }): Promise<Result<Diet, unknown>> => {
   try {
-    if (!diet.user_id || !diet.diet_id) throw new Error("Invalid diet fields");
-    const docRef = doc(db, "users", diet.user_id, "diets", diet.diet_id);
+    if (!diet.userID || !diet.id) throw new Error("Invalid diet fields");
+    const docRef = doc(db, "users", diet.userID, "diets", diet.id);
 
     diet = {
       ...diet,
-      diet_nutrition: { ...diet.diet_nutrition },
+      nutrients: { ...diet.nutrients },
     };
     await setDoc(docRef, diet);
 

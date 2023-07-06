@@ -24,13 +24,10 @@ const StepOne: FC<Props> = ({ user }) => {
     setIsLoading(true);
     setIsDisabled(true);
     try {
-      const userUpdated: UserAccount = {
-        ...user,
-        user_step: UserSteps.step_2,
-      };
-      const updateUserRes = await updateUser(userUpdated);
+      const fields = {welcomeStep: UserSteps.Two}
+      const updateUserRes = await updateUser({user, fields});
       if (updateUserRes.result === "success") {
-        dispatch(setUpdateUser(userUpdated));
+        dispatch(setUpdateUser({user, fields}));
         setIsLoading(false);
         setIsDisabled(false);
       }
@@ -46,7 +43,7 @@ const StepOne: FC<Props> = ({ user }) => {
         <div className="flex flex-col gap-3 p-5">
           <span className="text-center text-3xl">Welcome to</span>
           <span className="text-center text-4xl font-semibold">
-            Nutrition Plans, {user.display_name}! 🎉
+            Nutrition Plans, {user.displayName}! 🎉
           </span>
         </div>
         <div className="flex w-full items-center justify-center border-t p-5">

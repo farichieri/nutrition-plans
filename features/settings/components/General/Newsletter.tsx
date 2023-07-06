@@ -17,7 +17,7 @@ const Newsletter: FC<Props> = () => {
   const { user } = useSelector(selectAuthSlice);
   const [isLoading, setIsLoading] = useState(false);
   const [userChoice, setUserChoice] = useState<NewsletterChoices>(
-    user?.newsletter || NewsletterChoices.yes
+    user?.newsletter || NewsletterChoices.Yes
   );
 
   if (!user) return <></>;
@@ -25,13 +25,10 @@ const Newsletter: FC<Props> = () => {
   const handleSubmit = async () => {
     try {
       setIsLoading(true);
-      const userUpdated = {
-        ...user,
-        Newsletter: userChoice,
-      };
-      const res = await updateUser(userUpdated);
+      const fields = { newsletter: userChoice };
+      const res = await updateUser({ user, fields });
       if (res.result === "success") {
-        dispatch(setUpdateUser(userUpdated));
+        dispatch(setUpdateUser({ user, fields }));
         toast.success("Newsletter choice updated");
       } else {
         throw Error;

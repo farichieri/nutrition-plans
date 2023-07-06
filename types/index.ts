@@ -1,27 +1,27 @@
 export enum Theme {
-  dark = "dark",
-  light = "light",
+  Dark = "dark",
+  Light = "light",
 }
 export enum ButtonType {
-  save = "save",
-  delete = "delete",
-  discard = "discard",
+  Save = "save",
+  Delete = "delete",
+  Discard = "discard",
 }
 export enum SubscriptionState {
-  free = "free",
-  premium = "premium",
+  Free = "free",
+  Premium = "premium",
 }
 export enum MeasurementUnits {
-  metric = "metric",
-  imperial = "imperial",
+  Metric = "metric",
+  Imperial = "imperial",
 }
 export enum WeightUnits {
-  lbs = "lbs",
-  kgs = "kgs",
+  Lbs = "lbs",
+  Kgs = "kgs",
 }
 export enum WaterUnits {
-  lts = "lts",
-  floz = "fl oz",
+  Lts = "lts",
+  FlOz = "fl oz",
 }
 export enum PlansEnum {
   balanced = "balanced",
@@ -31,27 +31,27 @@ export enum PlansEnum {
   low_carb = "low_carb",
 }
 export enum FiltersEnum {
-  q = "q",
-  kind = "kind",
-  plan = "plan",
-  sort = "sort",
-  calories_range = "calories_range",
-  proteins_range = "proteins_range",
-  carbs_range = "carbs_range",
-  fats_range = "fats_range",
+  Q = "q",
+  Kind = "kind",
+  Plan = "plan",
+  Sort = "sort",
+  CaloriesRange = "caloriesRange",
+  ProteinsRange = "proteinsRange",
+  CarbsRange = "carbsRange",
+  FatsRange = "fatsRange",
 }
 export enum FilterSortTypes {
-  rating = "rating",
-  higher_calories = "higher_calories",
-  lower_calories = "lower_calories",
+  Rating = "rating",
+  HigherCalories = "higherCalories",
+  LowerCalories = "lowerCalories",
 }
 export enum StartsOfWeek {
-  sunday = "sunday",
-  monday = "monday",
+  Sunday = "sunday",
+  Monday = "monday",
 }
 export enum NewsletterChoices {
-  "yes" = "yes",
-  "no" = "no",
+  Yes = "yes",
+  No = "no",
 }
 
 // Posts
@@ -61,18 +61,18 @@ export interface Post {
   content: string;
   date: string;
   id: string;
+  image: string;
   summary: string;
+  timeReading: string;
   title: string;
   topic: string;
-  image: string;
-  timeReading: string;
 }
 export interface Posts extends Array<Post> {}
 export interface PlanType {
   content: string;
   id: string;
-  title: string;
   image: string;
+  title: string;
 }
 export interface PlansType extends Array<PlanType> {}
 
@@ -87,9 +87,9 @@ export interface SubscriptionPlan {
   checklistTitle: string;
   checkoutLink: string;
   discount: string;
+  id: string;
   monthlyPrice: number;
   name: string;
-  plan_id: string;
   yearlyPrice: number;
 }
 
@@ -97,10 +97,10 @@ export interface FilterQueries {
   q?: string;
   kind?: string;
   plan?: string;
-  calories_range?: string;
-  proteins_range?: string;
-  carbs_range?: string;
-  fats_range?: string;
+  caloriesRange?: string;
+  proteinsRange?: string;
+  carbsRange?: string;
+  fatsRange?: string;
   sort?: string;
 }
 

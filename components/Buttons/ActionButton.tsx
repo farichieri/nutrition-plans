@@ -21,7 +21,7 @@ const ActionButton = ({
   onClick: MouseEventHandler;
   type: ButtonType;
 }) => {
-  if (type === ButtonType.save) {
+  if (type === ButtonType.Save) {
     return (
       <button
         type={action}
@@ -36,7 +36,7 @@ const ActionButton = ({
         {isLoading ? <span>{loadMessage}</span> : <span>{content}</span>}
       </button>
     );
-  } else if (type === ButtonType.delete) {
+  } else if (type === ButtonType.Delete) {
     return (
       <button
         type={action}
@@ -58,7 +58,7 @@ const ActionButton = ({
         )}
       </button>
     );
-  } else if (type === ButtonType.discard) {
+  } else if (type === ButtonType.Discard) {
     return (
       <button
         type={action}

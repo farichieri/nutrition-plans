@@ -17,19 +17,19 @@ interface Props {
 }
 
 interface Nuts {
-  calories_range: {
+  caloriesRange: {
     min: number;
     max: number;
   };
-  proteins_range: {
+  proteinsRange: {
     min: number;
     max: number;
   };
-  carbs_range: {
+  carbsRange: {
     min: number;
     max: number;
   };
-  fats_range: {
+  fatsRange: {
     min: number;
     max: number;
   };
@@ -39,19 +39,19 @@ const Filters: FC<Props> = ({ queries, updateRoute, setLocalQueries }) => {
   const router = useRouter();
   const [openFilters, setOpenFilters] = useState(false);
   const [nutrients, setNutrients] = useState<Nuts>({
-    calories_range: {
+    caloriesRange: {
       min: 0,
       max: 0,
     },
-    proteins_range: {
+    proteinsRange: {
       min: 0,
       max: 0,
     },
-    carbs_range: {
+    carbsRange: {
       min: 0,
       max: 0,
     },
-    fats_range: {
+    fatsRange: {
       min: 0,
       max: 0,
     },
@@ -60,27 +60,27 @@ const Filters: FC<Props> = ({ queries, updateRoute, setLocalQueries }) => {
   const NUTRIENTS_OPTIONS = [
     {
       name: "Calories",
-      filterEnum: FiltersEnum.calories_range,
-      min: nutrients.calories_range.min,
-      max: nutrients.calories_range.max,
+      filterEnum: FiltersEnum.CaloriesRange,
+      min: nutrients.caloriesRange.min,
+      max: nutrients.caloriesRange.max,
     },
     {
       name: "Proteins",
-      filterEnum: FiltersEnum.proteins_range,
-      min: nutrients.proteins_range.min,
-      max: nutrients.proteins_range.max,
+      filterEnum: FiltersEnum.ProteinsRange,
+      min: nutrients.proteinsRange.min,
+      max: nutrients.proteinsRange.max,
     },
     {
       name: "Carbs",
-      filterEnum: FiltersEnum.carbs_range,
-      min: nutrients.carbs_range.min,
-      max: nutrients.carbs_range.max,
+      filterEnum: FiltersEnum.CarbsRange,
+      min: nutrients.carbsRange.min,
+      max: nutrients.carbsRange.max,
     },
     {
       name: "Fats",
-      filterEnum: FiltersEnum.fats_range,
-      min: nutrients.fats_range.min,
-      max: nutrients.fats_range.max,
+      filterEnum: FiltersEnum.FatsRange,
+      min: nutrients.fatsRange.min,
+      max: nutrients.fatsRange.max,
     },
   ];
 
@@ -96,10 +96,10 @@ const Filters: FC<Props> = ({ queries, updateRoute, setLocalQueries }) => {
 
     let query;
     if (
-      name === FiltersEnum.calories_range ||
-      name === FiltersEnum.proteins_range ||
-      name === FiltersEnum.fats_range ||
-      name === FiltersEnum.carbs_range
+      name === FiltersEnum.CaloriesRange ||
+      name === FiltersEnum.ProteinsRange ||
+      name === FiltersEnum.FatsRange ||
+      name === FiltersEnum.CarbsRange
     ) {
       const min = nutrients[name as keyof Nuts].min;
       const max = nutrients[name as keyof Nuts].max;
@@ -139,10 +139,10 @@ const Filters: FC<Props> = ({ queries, updateRoute, setLocalQueries }) => {
       setLocalQueries({ ...queries });
     }
     if (
-      name === FiltersEnum.calories_range ||
-      name === FiltersEnum.proteins_range ||
-      name === FiltersEnum.fats_range ||
-      name === FiltersEnum.carbs_range
+      name === FiltersEnum.CaloriesRange ||
+      name === FiltersEnum.ProteinsRange ||
+      name === FiltersEnum.FatsRange ||
+      name === FiltersEnum.CarbsRange
     ) {
       setNutrients({
         ...nutrients,
@@ -189,7 +189,7 @@ const Filters: FC<Props> = ({ queries, updateRoute, setLocalQueries }) => {
                 <div key={plan} className="flex items-center gap-2">
                   <button
                     onClick={handleSelect}
-                    name={FiltersEnum.plan}
+                    name={FiltersEnum.Plan}
                     value={plan}
                     className={`text-sm font-light capitalize ${
                       queries.plan === plan && "text-green-500"
@@ -200,7 +200,7 @@ const Filters: FC<Props> = ({ queries, updateRoute, setLocalQueries }) => {
                   {queries.plan === plan && (
                     <button
                       onClick={handleRemove}
-                      name={FiltersEnum.plan}
+                      name={FiltersEnum.Plan}
                       value={plan}
                       className="flex items-center"
                     >
@@ -218,7 +218,7 @@ const Filters: FC<Props> = ({ queries, updateRoute, setLocalQueries }) => {
                 <div key={kind} className="flex items-center gap-2">
                   <button
                     onClick={handleSelect}
-                    name={FiltersEnum.kind}
+                    name={FiltersEnum.Kind}
                     value={kind}
                     className={`text-sm font-light capitalize ${
                       queries.kind === kind && "text-green-500"
@@ -229,7 +229,7 @@ const Filters: FC<Props> = ({ queries, updateRoute, setLocalQueries }) => {
                   {queries.kind === kind && (
                     <button
                       onClick={handleRemove}
-                      name={FiltersEnum.kind}
+                      name={FiltersEnum.Kind}
                       value={kind}
                       className="flex items-center"
                     >
@@ -330,11 +330,11 @@ const Filters: FC<Props> = ({ queries, updateRoute, setLocalQueries }) => {
                 <div key={sort} className="flex items-center gap-2">
                   <button
                     onClick={handleSelect}
-                    name={FiltersEnum.sort}
+                    name={FiltersEnum.Sort}
                     value={sort}
                     className={`text-left text-sm font-light capitalize ${
                       (queries.sort === sort ||
-                        (!queries.sort && sort === FilterSortTypes.rating)) &&
+                        (!queries.sort && sort === FilterSortTypes.Rating)) &&
                       "text-green-500"
                     }`}
                   >

@@ -15,8 +15,8 @@ interface Props {}
 const Favorites: FC<Props> = () => {
   const { user } = useSelector(selectAuthSlice);
   const dispatch = useDispatch();
-  const food_rating = user?.ratings.food_rating;
-  const favorites = food_rating?.favorites;
+  const foodRating = user?.ratings.foodRating;
+  const favorites = foodRating?.favorites;
   const { favoriteFoods, isSearchingFavoriteFoods } =
     useSelector(selectFavoritesSlice);
   const noData = Object.keys(favoriteFoods).length < 1;
@@ -34,7 +34,7 @@ const Favorites: FC<Props> = () => {
 
   const sortFavorites = (foods: FoodGroupArray) => {
     return foods.sort((a: Food, b: Food) => {
-      return a.food_name!.localeCompare(b.food_name!);
+      return a.name!.localeCompare(b.name!);
     });
   };
 
@@ -54,7 +54,7 @@ const Favorites: FC<Props> = () => {
         <div className="m-auto">No favorites found 😔</div>
       ) : (
         sortFavorites(Object.values(favoriteFoods)).map((food) => (
-          <FoodCard food={food} key={food.food_id} />
+          <FoodCard food={food} key={food.id} />
         ))
       )}
     </div>

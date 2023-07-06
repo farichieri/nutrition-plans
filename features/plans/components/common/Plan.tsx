@@ -40,7 +40,7 @@ const Plan: FC<Props> = ({ date }) => {
 
   if (!user) return <></>;
 
-  const calories = diet?.diet_nutrition?.calories;
+  const calories = diet?.nutrients?.calories;
   const urlDate = convertDayToUrlDate(date);
   const dateF = convertDateToDateString({
     date,
@@ -65,7 +65,7 @@ const Plan: FC<Props> = ({ date }) => {
           <span className="text-xs opacity-70">{calories} calories</span>
         )}
         <span className="text-xl font-semibold capitalize text-green-500">
-          {diet?.plan_id?.replaceAll("_", " ")}
+          {diet?.planID?.replaceAll("_", " ")}
         </span>
       </div>
       <div className="flex h-full min-h-[15rem] w-full flex-col">
@@ -82,7 +82,7 @@ const Plan: FC<Props> = ({ date }) => {
                   {/* {diet && (
                         <div className="flex w-full items-end">
                           <Nutrition
-                            nutrients={diet.diet_nutrition}
+                            nutrients={diet.nutrition}
                             planID={planID}
                           />
                         </div>

@@ -17,20 +17,17 @@ const SetMeasurementUnits: FC<Props> = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
   const { user } = useSelector(selectAuthSlice);
-  const userMU = user?.measurement_unit;
-  const [MU, setMU] = useState(user?.measurement_unit);
+  const userMU = user?.measurementUnit;
+  const [MU, setMU] = useState(user?.measurementUnit);
 
   const handleSave = async () => {
     if (!user || !MU) return;
     try {
-      const userUpdated = {
-        ...user,
-        measurement_unit: MU,
-      };
       setIsSaving(true);
-      const res = await updateUser(userUpdated);
+      const fields = { measurementUnit: MU };
+      const res = await updateUser({ user, fields });
       if (res.result === "success") {
-        dispatch(setUpdateUser(userUpdated));
+        dispatch(setUpdateUser({ user, fields }));
         toast.success("Measurement units updated successfully");
       }
     } catch (error) {
@@ -68,7 +65,7 @@ const SetMeasurementUnits: FC<Props> = () => {
                 onClick={() => setMU(type)}
               >
                 <span className="text-xl font-semibold capitalize">{type}</span>
-                {type === MeasurementUnits.metric ? (
+                {type === MeasurementUnits.Metric ? (
                   <div className="flex w-32 flex-col">
                     <div className="flex items-center justify-between gap-1">
                       <span className="text-sm opacity-70">Height:</span>

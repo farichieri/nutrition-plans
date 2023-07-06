@@ -22,7 +22,7 @@ const PlanGenerator: FC<Props> = ({ date, setIsGeneratingPlan }) => {
   const { user } = useSelector(selectAuthSlice);
   const { meals } = useSelector(selectMealsSlice);
   const [planSelected, setPlanSelected] = useState<PlansEnum>(
-    user?.plan_selected || PlansEnum.balanced
+    user?.planSelected || PlansEnum.balanced
   );
   const plans = [
     planSelected,
@@ -52,10 +52,10 @@ const PlanGenerator: FC<Props> = ({ date, setIsGeneratingPlan }) => {
     planID: PlansEnum,
     user: UserAccount,
     meals: UserMeals,
-    plan_type: PlanTypes
+    type: PlanTypes
   ) => {
     setIsGeneratingPlan(true);
-    const diet: Diet = createDiet(meals, planID, plan_type, user.body_data);
+    const diet: Diet = createDiet(meals, planID, type, user.bodyData);
     const res = await postDietToUserDiets({
       diet,
       planID,

@@ -23,7 +23,7 @@ const SetEmail: FC<Props> = () => {
             <input
               className="cursor-default text-ellipsis rounded-md border bg-transparent px-2 py-2 outline-none "
               type="text"
-              value={String(user?.email_address)}
+              value={String(user?.emailAddress)}
               readOnly
             />
           </div>

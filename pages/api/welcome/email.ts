@@ -8,7 +8,7 @@ export default async function handler(
 ) {
   try {
     const requestMethod = req.method;
-    const email_address = req.body.email_address;
+    const emailAddress = req.body.emailAddress;
 
     if (!requestMethod || requestMethod !== "POST") {
       return res.status(405).json({ error: "Method not allowed" });
@@ -16,7 +16,7 @@ export default async function handler(
 
     const docRef = collection(db, "email");
     await addDoc(docRef, {
-      to: [email_address],
+      to: [emailAddress],
       message: {
         subject: "Welcome to Nutrition Plans!",
         text: "This is the plaintext section of the email body.",

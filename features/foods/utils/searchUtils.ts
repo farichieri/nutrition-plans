@@ -19,22 +19,22 @@ const getFoodsFiltered = (
     ? filterByCompatiblePlan(foodsFiltered, queries.plan, true)
     : foodsFiltered;
 
-  foodsFiltered = queries.calories_range
-    ? filterByNutrientRange(foodsFiltered, queries.calories_range, "calories")
+  foodsFiltered = queries.caloriesRange
+    ? filterByNutrientRange(foodsFiltered, queries.caloriesRange, "calories")
     : foodsFiltered;
-  foodsFiltered = queries.proteins_range
-    ? filterByNutrientRange(foodsFiltered, queries.proteins_range, "proteins")
+  foodsFiltered = queries.proteinsRange
+    ? filterByNutrientRange(foodsFiltered, queries.proteinsRange, "proteins")
     : foodsFiltered;
-  foodsFiltered = queries.carbs_range
-    ? filterByNutrientRange(foodsFiltered, queries.carbs_range, "carbohydrates")
+  foodsFiltered = queries.carbsRange
+    ? filterByNutrientRange(foodsFiltered, queries.carbsRange, "carbohydrates")
     : foodsFiltered;
-  foodsFiltered = queries.fats_range
-    ? filterByNutrientRange(foodsFiltered, queries.fats_range, "fats")
+  foodsFiltered = queries.fatsRange
+    ? filterByNutrientRange(foodsFiltered, queries.fatsRange, "fats")
     : foodsFiltered;
 
   const foodsSorted: FoodGroupArray = queries.sort
     ? sortFoodsSearched(Object.values(foodsFiltered), queries.sort)
-    : sortFoodsSearched(Object.values(foodsFiltered), FilterSortTypes.rating);
+    : sortFoodsSearched(Object.values(foodsFiltered), FilterSortTypes.Rating);
 
   return foodsSorted;
 };
@@ -45,7 +45,7 @@ const getFoodsSorted = (
 ): FoodGroupArray => {
   const foodsSorted: FoodGroupArray = queries.sort
     ? sortFoodsSearched(Object.values(foodsToSort), queries.sort)
-    : sortFoodsSearched(Object.values(foodsToSort), FilterSortTypes.rating);
+    : sortFoodsSearched(Object.values(foodsToSort), FilterSortTypes.Rating);
 
   return foodsSorted;
 };

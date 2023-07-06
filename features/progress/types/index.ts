@@ -1,7 +1,7 @@
 export interface ProgressItem {
-  created_at: string;
+  createdAt: string;
   date: string;
-  weight_in_kg: number | null;
+  weightInKg: number | null;
 }
 export interface Progress {
   [date: string]: ProgressItem;
@@ -11,7 +11,7 @@ export interface ProgressArray extends Array<ProgressItem> {}
 
 // initial
 export const newProgressItem: ProgressItem = {
-  created_at: "",
+  createdAt: "",
   date: "",
-  weight_in_kg: null,
+  weightInKg: null,
 };

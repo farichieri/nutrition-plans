@@ -42,7 +42,7 @@ const initialState: FoodsSlice = {
 
 interface SearchedFoods {
   foods: FoodGroup;
-  user_id: string;
+  userID: string;
 }
 
 export const foodsSlice = createSlice({
@@ -50,12 +50,12 @@ export const foodsSlice = createSlice({
   initialState,
   reducers: {
     setFoodsSearched: (state, action: PayloadAction<SearchedFoods>) => {
-      const { foods, user_id } = action.payload;
+      const { foods, userID } = action.payload;
       const myFoodsSearched: FoodGroup = {};
       const allFoodsSearched: FoodGroup = {};
       for (const key in foods) {
         allFoodsSearched[key] = foods[key];
-        if (foods[key].uploader_id === user_id) {
+        if (foods[key].uploaderID === userID) {
           myFoodsSearched[key] = foods[key];
         }
       }
@@ -63,10 +63,10 @@ export const foodsSlice = createSlice({
       state.myFoodsSearched = myFoodsSearched;
     },
     addNewFood: (state, action: PayloadAction<Food>) => {
-      const { food_id } = action.payload;
-      if (!food_id) return;
-      state.foodsSearched[food_id] = action.payload;
-      state.myFoodsSearched[food_id] = action.payload;
+      const { id } = action.payload;
+      if (!id) return;
+      state.foodsSearched[id] = action.payload;
+      state.myFoodsSearched[id] = action.payload;
     },
     setFoodOpened: (state, action: PayloadAction<Food | null>) => {
       state.foodOpened.food = action.payload;
@@ -123,12 +123,12 @@ export const foodsSlice = createSlice({
     },
     setFoodModalScale: (
       state,
-      action: PayloadAction<{ scale_amount: number; scale_name: string }>
+      action: PayloadAction<{ scaleAmount: number; scaleName: string }>
     ) => {
-      const { scale_amount, scale_name } = action.payload;
+      const { scaleAmount, scaleName } = action.payload;
       if (!state.foodModal) return;
-      state.foodModal.scale_amount = Number(scale_amount);
-      state.foodModal.scale_name = scale_name;
+      state.foodModal.scaleAmount = Number(scaleAmount);
+      state.foodModal.scaleName = scaleName;
     },
   },
   extraReducers: (builder) => {

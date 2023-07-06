@@ -14,20 +14,20 @@ interface Props {
 
 const FoodCard: FC<Props> = ({ food }) => {
   const { user } = useSelector(selectAuthSlice);
-  if (!food.food_id || !user) return <></>;
+  if (!food.id || !user) return <></>;
 
-  const isMyCreation = food.uploader_id === user.user_id;
+  const isMyCreation = food.uploaderID === user.id;
 
   return (
     <Link
-      href={`/app/food/${food.food_id}`}
-      key={food.food_id}
+      href={`/app/food/${food.id}`}
+      key={food.id}
       className="flex w-full flex-row items-center overflow-auto rounded-xl border bg-white shadow-sm shadow-[#00000028] duration-300 hover:border-black/20 hover:shadow-xl active:bg-slate-200 dark:bg-slate-400/10 dark:hover:border-white/50 dark:active:bg-slate-500/50 sm:max-w-[20rem] sm:flex-col "
     >
       <span className="relative h-[105px] w-[105px] min-w-[105px] border-b sm:h-32 sm:w-full">
         <Image
-          src={food.image}
-          alt={`${food.food_name}`}
+          src={food.imageURL}
+          alt={`${food.name}`}
           fill
           blurDataURL={blurDataURL(160, 160)}
           className="object-cover"
@@ -43,7 +43,7 @@ const FoodCard: FC<Props> = ({ food }) => {
         </div> */}
         <div className="flex w-full items-center justify-between gap-1">
           <span className="truncate text-ellipsis text-center text-lg font-semibold">
-            {food.food_name}
+            {food.name}
           </span>
           <AddToFavorite food={food} />
         </div>

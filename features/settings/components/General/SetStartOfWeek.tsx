@@ -17,7 +17,7 @@ const SetStartOfWeek: FC<Props> = () => {
   const { user } = useSelector(selectAuthSlice);
   const [isLoading, setIsLoading] = useState(false);
   const [weekSelected, setWeekSelected] = useState<StartsOfWeek>(
-    user?.startOfWeek || StartsOfWeek.sunday
+    user?.startOfWeek || StartsOfWeek.Sunday
   );
 
   if (!user) return <></>;
@@ -25,13 +25,10 @@ const SetStartOfWeek: FC<Props> = () => {
   const handleSubmit = async () => {
     try {
       setIsLoading(true);
-      const userUpdated = {
-        ...user,
-        startOfWeek: weekSelected,
-      };
-      const res = await updateUser(userUpdated);
+      const fields = { startOfWeek: weekSelected };
+      const res = await updateUser({ user, fields });
       if (res.result === "success") {
-        dispatch(setUpdateUser(userUpdated));
+        dispatch(setUpdateUser({ user, fields }));
         toast.success("Start of week updated");
       }
       setIsLoading(false);

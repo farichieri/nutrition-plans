@@ -29,14 +29,14 @@ export const favoritesSlice = createSlice({
       state.isRating = action.payload;
     },
     addFavoriteFood: (state, action: PayloadAction<Food>) => {
-      const { food_id } = action.payload;
-      if (!food_id) return;
-      state.favoriteFoods[food_id] = action.payload;
+      const { id } = action.payload;
+      if (!id) return;
+      state.favoriteFoods[id] = action.payload;
     },
     removeFavoriteFood: (state, action: PayloadAction<Food>) => {
-      const { food_id } = action.payload;
-      if (!food_id) return;
-      delete state.favoriteFoods[food_id];
+      const { id: id } = action.payload;
+      if (!id) return;
+      delete state.favoriteFoods[id];
     },
   },
   extraReducers: (builder) => {

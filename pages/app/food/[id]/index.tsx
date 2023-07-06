@@ -48,7 +48,7 @@ export default function Page() {
     }
   }, [id, foodsSearched, dispatch]);
 
-  if (!food || food?.food_id !== id || !defaultScale) {
+  if (!food || food?.id !== id || !defaultScale) {
     return (
       <PremiumLayout>
         <SubPremiumNav title={""}>
@@ -70,7 +70,7 @@ export default function Page() {
             <SubPremiumNav title={""} customClass="top-[var(--subnav-h)]">
               <BackButton />
               <span className="truncate text-ellipsis font-semibold sm:text-xl">
-                {food.food_name}
+                {food.name}
               </span>
               <div className="flex items-center justify-between gap-1">
                 <AddToFavorite food={food} />
@@ -83,49 +83,49 @@ export default function Page() {
               <div className="flex w-full flex-col gap-5 ">
                 <div className="flex w-full flex-col gap-5">
                   <Image
-                    src={food.image}
-                    alt={`${food.food_name}`}
+                    src={food.imageURL}
+                    alt={`${food.name}`}
                     width={500}
                     height={500}
                     className="m-auto h-[300px] w-full rounded-lg border border-gray-300/50 object-cover dark:border-transparent sm:w-[300px]"
                   />
                   <span className="text-center opacity-50">
-                    {food.food_description}
+                    {food.description}
                   </span>
-                  {food.food_id && <FoodActions foodID={food.food_id} />}
+                  {food.id && <FoodActions foodID={food.id} />}
                   {food.kind === FoodKind.recipe && (
                     <div>
                       {food.kind === FoodKind.recipe && (
                         <div className="flex justify-between">
                           <span>Prep time:</span>
-                          <span>{food.prep_time} minutes</span>
+                          <span>{food.prepTime} minutes</span>
                         </div>
                       )}
                       {food.kind === FoodKind.recipe && (
                         <div className="flex justify-between">
                           <span>Cook time:</span>
-                          <span>{food.cook_time} minutes</span>
+                          <span>{food.cookTime} minutes</span>
                         </div>
                       )}
                     </div>
                   )}
                 </div>
-                <CompatiblePlansC compatible_plans={food.compatible_plans} />
+                <CompatiblePlansC compatiblePlans={food.compatiblePlans} />
                 <div className="m-auto flex w-full max-w-lg">
                   <ScaleSelector
                     setLocalScale={() => {}}
                     updateRoute={true}
                     food={food}
-                    scale_amount={Number(amount || defaultScale.scale_amount)}
-                    scale_name={String(scale || defaultScale.scale_name)}
+                    scaleAmount={Number(amount || defaultScale.scaleAmount)}
+                    scaleName={String(scale || defaultScale.scaleName)}
                   />
                 </div>
               </div>
               <div className="flex w-full ">
                 <FoodNutrition
                   food={food}
-                  amount={Number(amount || defaultScale.scale_amount)}
-                  scale={String(scale || defaultScale.scale_name)}
+                  amount={Number(amount || defaultScale.scaleAmount)}
+                  scale={String(scale || defaultScale.scaleName)}
                 />
               </div>
               {food.kind !== FoodKind.basic_food && (
@@ -133,8 +133,8 @@ export default function Page() {
                   <div className="w-full ">
                     <Ingredients
                       food={food}
-                      amount={Number(amount || defaultScale.scale_amount)}
-                      scale={String(scale || defaultScale.scale_name)}
+                      amount={Number(amount || defaultScale.scaleAmount)}
+                      scale={String(scale || defaultScale.scaleName)}
                     />
                   </div>
                   {food.instructions.length > 0 && (

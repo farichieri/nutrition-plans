@@ -15,12 +15,12 @@ interface Props {
 const Water: FC<Props> = ({ diet, isEditing }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
-  const { diet_water } = diet;
+  const { water } = diet;
 
-  if (!user || !diet_water) return <></>;
+  if (!user || !water) return <></>;
 
-  const { litters_drunk, litters_to_drink, drunk } = diet_water;
-  const { measurement_unit } = user;
+  const { litterDrunk, littersToDrink, drunk } = water;
+  const { measurementUnit } = user;
 
   const handleCheck = async (event: React.MouseEvent) => {
     event.preventDefault();
@@ -30,8 +30,8 @@ const Water: FC<Props> = ({ diet, isEditing }) => {
 
     const dietUpdated: Diet = {
       ...diet,
-      diet_water: {
-        ...diet_water,
+      water: {
+        ...water,
         drunk: value,
       },
     };
@@ -42,8 +42,11 @@ const Water: FC<Props> = ({ diet, isEditing }) => {
     }
   };
 
-  const water = convertWater({ to: measurement_unit, lts: litters_to_drink });
-  const waterUnit = getWaterUnit({ from: measurement_unit });
+  const realWater = convertWater({
+    to: measurementUnit,
+    lts: littersToDrink,
+  });
+  const waterUnit = getWaterUnit({ from: measurementUnit });
 
   return (
     <div
@@ -57,7 +60,7 @@ const Water: FC<Props> = ({ diet, isEditing }) => {
         <div>
           <span className="px-2 font-semibold">Water:</span>
           <span>
-            {water} {waterUnit}
+            {realWater} {waterUnit}
           </span>
         </div>
         <div className="h-10 w-10">

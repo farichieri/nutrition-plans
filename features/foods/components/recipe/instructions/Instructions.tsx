@@ -24,12 +24,9 @@ const Instructions: FC<Props> = ({ instructions }) => {
     <div className="flex flex-col gap-1">
       <span className="text-3xl font-semibold">Instructions:</span>
       {instructionsSorted.map((instruction: Instruction, index: number) => (
-        <div
-          key={instruction.instruction_id}
-          className="flex w-full items-center gap-1"
-        >
+        <div key={instruction.id} className="flex w-full items-center gap-1">
           <span className="w-5 text-xs opacity-50">{index + 1}</span>
-          <RecipeStep step={instruction} key={instruction.instruction_id} />
+          <RecipeStep step={instruction} key={instruction.id} />
         </div>
       ))}
     </div>

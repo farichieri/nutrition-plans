@@ -27,18 +27,18 @@ const WeightGoalModal: FC<Props> = ({ weightGoal }) => {
 
   if (!user) return <></>;
 
-  const { measurement_unit } = user;
+  const { measurementUnit } = user;
   const [weightGoalState, setWeightGoalState] = useState<WeightGoal>({
-    created_at: weightGoal?.created_at || null,
-    due_date: weightGoal?.due_date || null,
-    weight_goal_in_kg: weightGoal?.weight_goal_in_kg || null,
+    createdAt: weightGoal?.createdAt || null,
+    dueDate: weightGoal?.dueDate || null,
+    weightGoalInKg: weightGoal?.weightGoalInKg || null,
   });
   const addGoal = weightGoal === undefined;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const name = event.target.name;
     const value = event.target.value;
-    const valueF = name === "weight_goal_in_kg" ? Number(value) : value;
+    const valueF = name === "weightGoalInKg" ? Number(value) : value;
     setWeightGoalState({
       ...weightGoalState,
       [name]: valueF,
@@ -52,20 +52,19 @@ const WeightGoalModal: FC<Props> = ({ weightGoal }) => {
   const handleSave = async () => {
     if (!user) return;
     setIsSaving(true);
-    const userUpdated = {
-      ...user,
-      weight_goal: {
+    const fields = {
+      weightGoal: {
         ...weightGoalState,
-        weight_goal_in_kg: getWeightInKg({
-          from: measurement_unit,
-          weight: Number(weightGoalState.weight_goal_in_kg),
+        weightGoalInKg: getWeightInKg({
+          from: measurementUnit,
+          weight: Number(weightGoalState.weightGoalInKg),
         }),
-        created_at: formatISO(new Date()),
+        createdAt: formatISO(new Date()),
       },
     };
-    const res = await updateUser(userUpdated);
+    const res = await updateUser({ user, fields });
     if (res.result === "success") {
-      dispatch(setUpdateUser(userUpdated));
+      dispatch(setUpdateUser({ user, fields }));
       dispatch(setAddWeightGoalOpen(false));
     }
     setIsSaving(false);
@@ -74,13 +73,10 @@ const WeightGoalModal: FC<Props> = ({ weightGoal }) => {
   const handleDelete = async () => {
     if (!user) return;
     setIsDeleting(true);
-    const userUpdated = {
-      ...user,
-      weight_goal: initialWeightGoal,
-    };
-    const res = await updateUser(userUpdated);
+    const fields = { weightGoal: initialWeightGoal };
+    const res = await updateUser({ user, fields });
     if (res.result === "success") {
-      dispatch(setUpdateUser(userUpdated));
+      dispatch(setUpdateUser({ user, fields }));
       dispatch(setAddWeightGoalOpen(false));
     }
     setIsDeleting(false);
@@ -88,18 +84,18 @@ const WeightGoalModal: FC<Props> = ({ weightGoal }) => {
 
   useEffect(() => {
     let weightFormatted = 0;
-    if (measurement_unit) {
+    if (measurementUnit) {
       weightFormatted = getWeight({
-        to: measurement_unit,
-        weight: Number(weightGoalState.weight_goal_in_kg),
+        to: measurementUnit,
+        weight: Number(weightGoalState.weightGoalInKg),
       });
     }
     let weightGoalF: WeightGoal = {
       ...weightGoalState,
-      weight_goal_in_kg: weightFormatted,
+      weightGoalInKg: weightFormatted,
     };
     setWeightGoalState(weightGoalF);
-  }, [measurement_unit]);
+  }, [measurementUnit]);
 
   useEffect(() => {
     if (JSON.stringify(weightGoal) !== JSON.stringify(weightGoalState)) {
@@ -118,9 +114,9 @@ const WeightGoalModal: FC<Props> = ({ weightGoal }) => {
         <div className="flex items-center gap-1">
           <span className="basis-1/3">Due Date:</span>
           <input
-            value={String(weightGoalState?.due_date)}
+            value={String(weightGoalState?.dueDate)}
             onChange={handleChange}
-            name="due_date"
+            name="dueDate"
             type="date"
             className="w-full basis-3/4 rounded-md border bg-transparent px-2 py-2"
           />
@@ -129,14 +125,14 @@ const WeightGoalModal: FC<Props> = ({ weightGoal }) => {
         <div className="relative flex items-center gap-1">
           <span className="basis-1/3">Weight:</span>
           <span className="absolute right-2 select-none">
-            {getWeightUnit({ from: measurement_unit })}
+            {getWeightUnit({ from: measurementUnit })}
           </span>
           <input
             className="flex w-full basis-3/4 rounded-md border bg-transparent px-2 py-2"
             type="number"
-            name="weight_goal_in_kg"
+            name="weightGoalInKg"
             placeholder="Weight"
-            value={String(weightGoalState?.weight_goal_in_kg)}
+            value={String(weightGoalState?.weightGoalInKg)}
             onChange={handleChange}
           />
         </div>
@@ -146,7 +142,7 @@ const WeightGoalModal: FC<Props> = ({ weightGoal }) => {
             content={addGoal ? "Discard" : "Delete"}
             isLoading={isDeleting}
             isDisabled={false}
-            type={ButtonType.delete}
+            type={ButtonType.Delete}
             className="w-full"
             onClick={handleDelete}
             action="submit"
@@ -156,7 +152,7 @@ const WeightGoalModal: FC<Props> = ({ weightGoal }) => {
             content={addGoal ? "Add" : "Save"}
             isLoading={isSaving}
             isDisabled={isDisabled}
-            type={ButtonType.save}
+            type={ButtonType.Save}
             className="w-full"
             onClick={handleSave}
             action="submit"

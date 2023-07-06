@@ -1,26 +1,26 @@
 export interface UserMeal {
   [id: string]: any;
   complexity: MealComplexities;
-  cook: boolean;
   id: string | null;
+  isCookeable: boolean;
+  mealSettingId: string | null;
   name: string | null;
   order: number;
-  setting_id: string | null;
   size: MealSizes;
   time: MealMinutes;
 }
 
 export enum MealCook {
-  yes = "yes",
-  no = "no",
+  Yes = "yes",
+  No = "no",
 }
 
 export enum MealSizes {
-  tiny = 50,
-  small = 75,
-  normal = 100,
-  big = 125,
-  huge = 150,
+  Tiny = 50,
+  Small = 75,
+  Normal = 100,
+  Big = 125,
+  Huge = 150,
 }
 export type MealSizesType = {
   [key in keyof typeof MealSizes]?: (typeof MealSizes)[key];
@@ -78,12 +78,12 @@ export interface UserMealsArr extends Array<UserMeal> {}
 
 // Initial
 export const NewMealSetting: UserMeal = {
-  cook: true,
+  isCookeable: true,
   id: null,
-  setting_id: null,
+  mealSettingId: null,
   name: null,
   order: -1,
-  size: MealSizes.normal,
+  size: MealSizes.Normal,
   time: MealMinutes.less_than_30_min,
   complexity: MealComplexities.moderate,
 };

@@ -29,21 +29,21 @@ const SearchBar: FC<Props> = ({ queries }) => {
 
   const fetchData = useCallback(
     async ({ queries }: { queries: FilterQueries }) => {
-      if (!user?.user_id) return;
+      if (!user?.id) return;
       setIsSearching(true);
       const res = await fetchFoods({
         queries: queries,
-        uploader_id: user?.user_id,
+        uploaderID: user?.id,
       });
       if (res.result === "success") {
-        dispatch(setFoodsSearched({ foods: res.data, user_id: user.user_id }));
+        dispatch(setFoodsSearched({ foods: res.data, userID: user.id }));
       } else {
-        dispatch(setFoodsSearched({ foods: {}, user_id: user.user_id }));
+        dispatch(setFoodsSearched({ foods: {}, userID: user.id }));
       }
       setIsSearching(false);
       dispatch(setIsSearchingFoods(false));
     },
-    [dispatch, user?.user_id]
+    [dispatch, user?.id]
   );
 
   useEffect(() => {

@@ -11,8 +11,8 @@ interface Props {
 
 const Avatar: FC<Props> = ({ width, height }) => {
   const { user } = useSelector(selectAuthSlice);
-  const userImage = user?.photo_url || "";
-  const fisrtNameWord = user?.display_name[0]?.toLowerCase();
+  const userImage = user?.imageURL || "";
+  const fisrtNameWord = user?.displayName[0]?.toLowerCase();
 
   return (
     <>

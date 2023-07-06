@@ -7,7 +7,7 @@ const updateMealsOrders = async (
   user: UserAccount
 ): Promise<Result<UserMeals, unknown>> => {
   try {
-    if (!user?.user_id) throw new Error("No user found");
+    if (!user?.id) throw new Error("No user found");
     const mealsUpdated: UserMeals = {};
     mealsReordered.forEach((meal, index) => {
       if (!meal.id) return;

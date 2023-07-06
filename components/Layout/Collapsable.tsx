@@ -16,7 +16,7 @@ const Collapsable: FC<Props> = ({ showed, hidden, defaultState }) => {
         open ? "bg-gray-300/30 dark:bg-gray-500/20" : ""
       }`}
     >
-      <div onClick={() => setOpen(!open)}>
+      <div onClick={() => setOpen(!open)} className="select-none">
         <div className="flex w-full cursor-pointer items-center justify-between">
           {showed}
           <MdExpandMore

@@ -40,7 +40,7 @@ const DaySelector: FC<Props> = ({ date, baseURL }) => {
   const dateF = String(
     getRealDate({
       date,
-      userStartOfWeek: StartsOfWeek[user?.startOfWeek || "sunday"],
+      userStartOfWeek: user?.startOfWeek || StartsOfWeek.Sunday,
     })
   );
   const isWeek = getIsWeek(dateF);

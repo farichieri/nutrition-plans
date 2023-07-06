@@ -22,8 +22,8 @@ const Nutrition: FC<Props> = ({ nutrients, planID }) => {
 
   if (!user) return <></>;
 
-  const calories = user.nutrition_targets.calories || 0;
-  const nutrition_targets = planID && getNutritionTargets(calories, planID);
+  const calories = user.nutritionTargets.calories || 0;
+  const nutritionTargets = planID && getNutritionTargets(calories, planID);
   const [openDetails, setOpenDetails] = useState(false);
 
   const handleOpenDetail = (event: React.MouseEvent) => {
@@ -38,32 +38,32 @@ const Nutrition: FC<Props> = ({ nutrients, planID }) => {
   const NUTRIENT_TARGETS = [
     {
       nutrient: NutrientsEnum.calories,
-      min: Number(nutrition_targets?.calories) - 100,
-      max: Number(nutrition_targets?.calories) + 100,
+      min: Number(nutritionTargets?.calories) - 100,
+      max: Number(nutritionTargets?.calories) + 100,
       value: nutrients.calories,
       isInRange: false,
       diff: 0,
     },
     {
       nutrient: NutrientsEnum.carbohydrates,
-      max: nutrition_targets?.carbohydrates.max,
-      min: nutrition_targets?.carbohydrates.min,
+      max: nutritionTargets?.carbohydrates.max,
+      min: nutritionTargets?.carbohydrates.min,
       value: nutrients.carbohydrates,
       isInRange: false,
       diff: 0,
     },
     {
       nutrient: NutrientsEnum.fats,
-      max: nutrition_targets?.fats.max,
-      min: nutrition_targets?.fats.min,
+      max: nutritionTargets?.fats.max,
+      min: nutritionTargets?.fats.min,
       value: nutrients.fats,
       isInRange: false,
       diff: 0,
     },
     {
       nutrient: NutrientsEnum.proteins,
-      max: nutrition_targets?.proteins.max,
-      min: nutrition_targets?.proteins.min,
+      max: nutritionTargets?.proteins.max,
+      min: nutritionTargets?.proteins.min,
       value: nutrients.proteins,
       isInRange: false,
       diff: 0,

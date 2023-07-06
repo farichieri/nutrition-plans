@@ -35,7 +35,7 @@ const AddMealSelector: FC<Props> = ({
     const newMealSetting = {
       ...mealSetting,
       order: index,
-      setting_id: mealSetting.id,
+      mealSetting: mealSetting.id,
     };
     const res = await createUserMeal(user, newMealSetting);
     if (!res?.error && res?.mealSettingAdded) {

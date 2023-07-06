@@ -1,8 +1,8 @@
+import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
 import { FC } from "react";
 import { selectAuthSlice } from "@/features/authentication/slice";
 import { setIsBillingModalOpen } from "@/store/slices/layoutSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
 
 interface Props {}
 
@@ -17,12 +17,12 @@ const SetBilling: FC<Props> = () => {
           <div className="flex items-center gap-1">
             <span>Current plan:</span>
             <span className="rounded-md bg-slate-300/50 p-1 capitalize">
-              {user?.premium_plan}
+              {user?.subscriptionState}
             </span>
           </div>
           <div className="flex">
             <div className="flex flex-col">
-              <span>Unlock all nutrition plans, from $8/month</span>
+              <span>Unlock all benefits, from $8/month</span>
             </div>
           </div>
         </div>

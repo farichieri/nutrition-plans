@@ -21,36 +21,36 @@ interface Props {
 
 const FoodModal: FC<Props> = ({ food, handleClose, handleAdd }) => {
   const dispatch = useDispatch();
-  const { food_id } = food;
+  const { id } = food;
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     // Fetch the food from firestore
-    if (!food_id) return;
+    if (!id) return;
     const fetchFoodID = async () => {
-      const res = await fetchFoodByID(food_id);
+      const res = await fetchFoodByID(id);
       if (res.result === "success") {
         dispatch(setFoodModal(res.data));
         setIsLoading(false);
       }
     };
     fetchFoodID();
-  }, [food_id, dispatch]);
+  }, [id, dispatch]);
 
-  const { scale_amount, scale_name } = food;
+  const { scaleAmount, scaleName: scaleName } = food;
 
-  if (!food_id || isLoading)
+  if (!id || isLoading)
     return (
       <div className="absolute inset-0 z-100 flex h-full w-full items-center justify-center bg-black/50">
         <Spinner customClass="h-5 w-5" />
       </div>
     );
 
-  const setLocalScale = (scale_amount: number, scale_name: string) => {
+  const setLocalScale = (scaleAmount: number, scaleName: string) => {
     dispatch(
       setFoodModalScale({
-        scale_amount: scale_amount,
-        scale_name: scale_name,
+        scaleAmount: scaleAmount,
+        scaleName: scaleName,
       })
     );
   };
@@ -62,32 +62,32 @@ const FoodModal: FC<Props> = ({ food, handleClose, handleAdd }) => {
           <div className="flex w-full gap-2">
             <div className="relative flex h-40 w-full basis-1/2 sm:h-60 ">
               <Image
-                src={food.image}
+                src={food.imageURL}
                 fill
                 className="rounded-md object-cover"
-                alt={food.food_name || ""}
+                alt={food.name || ""}
               />
             </div>
             <div className="flex h-full w-full basis-1/2 flex-col ">
               <span className="text-xl font-semibold capitalize sm:text-3xl">
-                {food.food_name}
+                {food.name}
               </span>
               <span className="text-sm capitalize opacity-50">
-                {food.food_description}
+                {food.description}
               </span>
             </div>
           </div>
           <AddFoodIngredient
             food={food}
-            scale_amount={scale_amount}
+            scaleAmount={scaleAmount}
             handleAddIngredient={handleAdd}
-            scale_name={scale_name}
+            scaleName={scaleName}
             setLocalScale={setLocalScale}
           />
         </div>
         <div className="flex w-full flex-col gap-5 overflow-auto p-4">
-          <CompatiblePlansC compatible_plans={food.compatible_plans} />
-          <FoodNutrition food={food} amount={scale_amount} scale={scale_name} />
+          <CompatiblePlansC compatiblePlans={food.compatiblePlans} />
+          <FoodNutrition food={food} amount={scaleAmount} scale={scaleName} />
         </div>
       </div>
     </Modal>

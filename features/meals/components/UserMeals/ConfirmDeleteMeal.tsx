@@ -60,7 +60,7 @@ const ConfirmDeleteMeal: FC<Props> = ({ confirmDelete, setConfirmDelete }) => {
             content="Delete"
             isLoading={isDeleting}
             isDisabled={false}
-            type={ButtonType.delete}
+            type={ButtonType.Delete}
             className="mx-auto w-32"
             onClick={() => handleDeleteUserMeal(confirmDelete)}
             action="submit"

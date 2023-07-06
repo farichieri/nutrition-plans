@@ -58,14 +58,7 @@ const fetchMealsSettings = async (
 const createMealSetting = async (user: UserAccount, mealSetting: UserMeal) => {
   try {
     const newMealSettingRef = doc(
-      collection(
-        db,
-        "users",
-        user.user_id,
-        "settings",
-        "mealsSettings",
-        "meals"
-      )
+      collection(db, "users", user.id, "settings", "mealsSettings", "meals")
     );
     const newMealSetting = {
       ...mealSetting,
@@ -88,7 +81,7 @@ const updateMealSetting = async (
     const mealSettingRef = doc(
       db,
       "users",
-      user.user_id,
+      user.id,
       "settings",
       "mealsSettings",
       "meals",
@@ -104,7 +97,7 @@ const updateMealSetting = async (
 
 const createUserMeal = async (user: UserAccount, mealSetting: UserMeal) => {
   try {
-    const newUserMeal = doc(collection(db, "users", user.user_id, "meals"));
+    const newUserMeal = doc(collection(db, "users", user.id, "meals"));
     const newMealSetting = {
       ...mealSetting,
       id: newUserMeal.id,
@@ -123,7 +116,7 @@ const deleteUserMeal = async (
 ): Promise<Result<UserMeal, unknown>> => {
   try {
     if (!mealSetting.id) throw Error;
-    const docRef = doc(db, "users", user.user_id, "meals", mealSetting.id);
+    const docRef = doc(db, "users", user.id, "meals", mealSetting.id);
     await deleteDoc(docRef);
     return { result: "success", data: mealSetting };
   } catch (error) {
@@ -141,7 +134,7 @@ const deleteMealSetting = async (
     const docRef = doc(
       db,
       "users",
-      user.user_id,
+      user.id,
       "settings",
       "mealsSettings",
       "meals",
@@ -161,7 +154,7 @@ const updateUserMeal = async (
 ): Promise<Result<UserMeal, unknown>> => {
   try {
     if (!userMeal.id) throw Error;
-    const docRef = doc(db, "users", user?.user_id, "meals", userMeal.id);
+    const docRef = doc(db, "users", user?.id, "meals", userMeal.id);
     await setDoc(docRef, userMeal);
     return { result: "success", data: userMeal };
   } catch (error) {
@@ -172,42 +165,42 @@ const updateUserMeal = async (
 
 const defaultMeals: UserMealsArr = [
   {
-    cook: true,
+    isCookeable: true,
     id: "def-1",
-    setting_id: null,
+    mealSettingId: null,
     name: "Breakfast",
     order: -1,
-    size: MealSizes.normal,
+    size: MealSizes.Normal,
     time: MealMinutes.less_than_30_min,
     complexity: MealComplexities.moderate,
   },
   {
-    cook: true,
+    isCookeable: true,
     id: "def-2",
-    setting_id: null,
+    mealSettingId: null,
     name: "Lunch",
     order: -1,
-    size: MealSizes.normal,
+    size: MealSizes.Normal,
     time: MealMinutes.less_than_30_min,
     complexity: MealComplexities.moderate,
   },
   {
-    cook: true,
+    isCookeable: true,
     id: "def-3",
-    setting_id: null,
+    mealSettingId: null,
     name: "Dinner",
     order: -1,
-    size: MealSizes.normal,
+    size: MealSizes.Normal,
     time: MealMinutes.less_than_30_min,
     complexity: MealComplexities.moderate,
   },
   {
-    cook: true,
+    isCookeable: true,
     id: "def-4",
-    setting_id: null,
+    mealSettingId: null,
     name: "Snack",
     order: -1,
-    size: MealSizes.normal,
+    size: MealSizes.Normal,
     time: MealMinutes.less_than_30_min,
     complexity: MealComplexities.moderate,
   },
@@ -223,7 +216,7 @@ const createDefaultMealsSettings = async (
     });
     await Promise.all(promises);
 
-    const res = await fetchMealsSettings(user.user_id);
+    const res = await fetchMealsSettings(user.id);
     if (res.result === "error") throw Error;
     return { result: "success", data: res.data };
   } catch (error) {
@@ -240,14 +233,14 @@ const createDefaultUserMeals = async (
       const newUserMeal = {
         ...meal,
         order: index,
-        setting_id: meal.id,
+        mealSettingId: meal.id,
       };
       const res = await updateUserMeal(user, newUserMeal);
       if (res.result === "error") throw Error;
     });
     await Promise.all(promises);
 
-    const res = await fetchMeals(user.user_id);
+    const res = await fetchMeals(user.id);
     if (res.result === "error") throw Error;
     return { result: "success", data: res.data };
   } catch (error) {

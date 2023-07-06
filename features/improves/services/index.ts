@@ -12,7 +12,7 @@ const saveFoodFilterNotFound = async (
     const docRef = doc(collection(db, "improves", "plans", "foods-not-found"));
     const newUserMealNotFound = {
       complexity: userMeal.complexity,
-      cook: userMeal.cook,
+      isCookeable: userMeal.isCookeable,
       size: userMeal.size,
       time: userMeal.time,
       plan: planID,

@@ -12,22 +12,22 @@ import FormSelect from "@/components/Form/FormSelect";
 
 interface Props {
   food: Food;
-  scale_amount: number;
-  scale_name: string;
+  scaleAmount: number;
+  scaleName: string;
   updateRoute: boolean;
   setLocalScale: Function;
 }
 
 const ScaleSelector: FC<Props> = ({
   food,
-  scale_amount,
-  scale_name,
+  scaleAmount,
+  scaleName,
   updateRoute,
   setLocalScale,
 }) => {
   const [isNotOriginal, setIsNotOriginal] = useState(false);
   const router = useRouter();
-  const scalesMerged = mergeScales(food);
+  const scalesMerged = mergeScales({ scales: food.scales });
   const options = getScaleOptions(scalesMerged);
   const defaultScale = getDefaultScale(food.scales);
 
@@ -40,16 +40,16 @@ const ScaleSelector: FC<Props> = ({
     let newAmount;
     let newScale;
 
-    if (id === "scale_amount") {
+    if (id === "scaleAmount") {
       newAmount = Number(value);
-      newScale = scale_name;
+      newScale = scaleName;
     }
-    if (id === "scale_name") {
+    if (id === "scaleName") {
       newAmount = getNewAmount({
         scales: scalesMerged,
-        prev_scale_name: scale_name,
+        prev_scale_name: scaleName,
         new_scale_name: value,
-        scale_amount,
+        scaleAmount,
       });
       newScale = value;
     }
@@ -79,22 +79,22 @@ const ScaleSelector: FC<Props> = ({
         },
       });
     } else {
-      const { scale_amount, scale_name } = defaultScale;
-      setLocalScale(scale_amount, scale_name);
+      const { scaleAmount, scaleName } = defaultScale;
+      setLocalScale(scaleAmount, scaleName);
     }
   };
 
   useEffect(() => {
     if (!food) return;
     if (
-      scale_name !== defaultScale.scale_name ||
-      scale_amount !== defaultScale.scale_amount
+      scaleName !== defaultScale.scaleName ||
+      scaleAmount !== defaultScale.scaleAmount
     ) {
       setIsNotOriginal(true);
     } else {
       setIsNotOriginal(false);
     }
-  }, [scale_amount, scale_name]);
+  }, [scaleAmount, scaleName]);
 
   return (
     <div className="flex w-full flex-col gap-2">
@@ -102,23 +102,23 @@ const ScaleSelector: FC<Props> = ({
         <NutritionInput
           changed={false}
           handleChange={handleChange}
-          id={"scale_amount"}
-          key={"scale_amount"}
+          id={"scaleAmount"}
+          key={"scaleAmount"}
           labelText={"Scale Amount"}
-          name={"scale_amount"}
+          name={"scaleAmount"}
           min={"0"}
           title={""}
           type={"number"}
-          value={Number(scale_amount)}
+          value={Number(scaleAmount)}
         />
         <FormSelect
           customClass={""}
           handleChange={handleChange}
-          id={"scale_name"}
+          id={"scaleName"}
           labelText={"Scale name"}
           title={"Scale name"}
           options={options}
-          value={scale_name}
+          value={scaleName}
         />
       </div>
       <div className="m-2 flex justify-center">

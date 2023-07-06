@@ -22,7 +22,7 @@ const fetchCuratedFoods = async ({
   try {
     let data: FoodGroup = {};
 
-    const searchParameters = getSearchParameters({ queries, curated: true });
+    const searchParameters = getSearchParameters({ queries, isCurated: true });
 
     const res = await searchClient
       .collections("foods")
@@ -36,7 +36,7 @@ const fetchCuratedFoods = async ({
 
     hits.forEach((hit: any) => {
       const { document } = hit;
-      data[document.food_id] = document;
+      data[document.id] = document;
     });
 
     console.log("fetchCuratedFoods", { data });
@@ -49,15 +49,15 @@ const fetchCuratedFoods = async ({
 
 const fetchUserFoods = async ({
   queries,
-  uploader_id,
+  uploaderID,
 }: {
   queries: FilterQueries;
-  uploader_id?: string;
+  uploaderID?: string;
 }): Promise<Result<FoodGroup, unknown>> => {
   try {
     let data: FoodGroup = {};
 
-    const searchParameters = getSearchParameters({ queries, uploader_id });
+    const searchParameters = getSearchParameters({ queries, uploaderID });
 
     const res = await searchClient
       .collections("foods")
@@ -71,7 +71,7 @@ const fetchUserFoods = async ({
 
     hits.forEach((hit: any) => {
       const { document } = hit;
-      data[document.food_id] = document;
+      data[document.id] = document;
     });
 
     console.log("fetchUserFoods", { data });
@@ -84,17 +84,17 @@ const fetchUserFoods = async ({
 
 const fetchFoods = async ({
   queries,
-  uploader_id,
+  uploaderID,
 }: {
   queries: FilterQueries;
-  uploader_id?: string;
+  uploaderID?: string;
 }): Promise<Result<FoodGroup, unknown>> => {
   try {
     let data: FoodGroup = {};
 
     const [curatedFoodsRes, userFoodsRes] = await Promise.all([
       fetchCuratedFoods({ queries }),
-      fetchUserFoods({ queries, uploader_id }),
+      fetchUserFoods({ queries, uploaderID }),
     ]);
 
     if (
@@ -122,12 +122,10 @@ const fetchFoods = async ({
   }
 };
 
-const fetchFoodByID = async (
-  food_id: string
-): Promise<Result<Food, unknown>> => {
-  console.log(`Fetching Food ${food_id}`);
+const fetchFoodByID = async (id: string): Promise<Result<Food, unknown>> => {
+  console.log(`Fetching Food ${id}`);
   try {
-    const foodRef = doc(db, "foods", food_id);
+    const foodRef = doc(db, "foods", id);
     const querySnapshot = await getDoc(foodRef);
     const data: any = querySnapshot.data();
     if (!data) throw new Error("No food found");
@@ -139,13 +137,13 @@ const fetchFoodByID = async (
 };
 
 const fetchFoodsByIDS = async (
-  food_ids: string[]
+  ids: string[]
 ): Promise<Result<FoodGroup, unknown>> => {
-  console.log(`Fetching Food IDS ${food_ids}`);
+  console.log(`Fetching Food IDS ${ids}`);
   try {
     let data: FoodGroup = {};
     const foodRef = collection(db, "foods");
-    const q = query(foodRef, where(documentId(), "in", food_ids));
+    const q = query(foodRef, where(documentId(), "in", ids));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((food: any) => {
       data[food.id] = food.data();

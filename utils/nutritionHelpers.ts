@@ -27,8 +27,8 @@ const formatNutrient = (num: number, nutrient: NutrientsEnum): number => {
 
 const getNutritionValues = (
   food: Food,
-  scale_amount: number,
-  scale_name: string
+  scaleAmount: number,
+  scaleName: string
 ): FoodNutrients => {
   let nutrientsUpdated = { ...food.nutrients };
 
@@ -41,23 +41,19 @@ const getNutritionValues = (
           ? formatNutrient(Number(food.nutrients[keyEv]) * servings, keyEv)
           : null;
     };
-    if (scale_name === GRAMS) {
+    if (scaleName === GRAMS) {
       const servings =
-        (scale_amount * Number(food.serving_amount)) /
-        Number(food.serving_grams);
+        (scaleAmount * Number(food.servingAmount)) / Number(food.servingGrams);
       updateByServing(servings);
-    } else if (scale_name === OZ) {
+    } else if (scaleName === OZ) {
       const servings =
-        (scale_amount * GRAMS_IN_ONE_OZ * Number(food.serving_amount)) /
-        Number(food.serving_grams);
+        (scaleAmount * GRAMS_IN_ONE_OZ * Number(food.servingAmount)) /
+        Number(food.servingGrams);
       updateByServing(servings);
     } else {
-      const scale = food.scales.find(
-        (scale) => scale.scale_name === scale_name
-      );
+      const scale = food.scales.find((scale) => scale.scaleName === scaleName);
       const amount =
-        scale_amount /
-        (Number(food.serving_grams) / Number(scale?.scale_grams));
+        scaleAmount / (Number(food.servingGrams) / Number(scale?.scaleGrams));
       updateByServing(amount);
     }
   }
@@ -65,11 +61,11 @@ const getNutritionValues = (
 };
 
 const getIngredientNutrition = (food: Food) => {
-  if (food.nutrients && food.scale_amount && food.scale_name) {
+  if (food.nutrients && food.scaleAmount && food.scaleName) {
     const foodNutrition: FoodNutrients = getNutritionValues(
       food,
-      food.scale_amount,
-      food.scale_name
+      food.scaleAmount,
+      food.scaleName
     );
     return foodNutrition;
   } else {
@@ -80,25 +76,24 @@ const getIngredientNutrition = (food: Food) => {
 const getNewAmount = ({
   new_scale_name,
   prev_scale_name,
-  scale_amount,
+  scaleAmount,
   scales,
 }: {
   new_scale_name: string;
   prev_scale_name: string;
-  scale_amount: number;
+  scaleAmount: number;
   scales: FoodScales;
 }): number | undefined => {
-  const scale = scales.find((scale) => scale.scale_name === prev_scale_name);
-  const newScale = scales.find((scale) => scale.scale_name === new_scale_name);
+  const scale = scales.find((scale) => scale.scaleName === prev_scale_name);
+  const newScale = scales.find((scale) => scale.scaleName === new_scale_name);
   switch (new_scale_name) {
     case GRAMS:
-      return scale_amount * Number(scale?.scale_grams);
+      return scaleAmount * Number(scale?.scaleGrams);
     case OZ:
-      return (scale_amount * Number(scale?.scale_grams)) / GRAMS_IN_ONE_OZ;
+      return (scaleAmount * Number(scale?.scaleGrams)) / GRAMS_IN_ONE_OZ;
     default:
       return (
-        (scale_amount / Number(newScale?.scale_grams)) *
-        Number(scale?.scale_grams)
+        (scaleAmount / Number(newScale?.scaleGrams)) * Number(scale?.scaleGrams)
       );
   }
 };
@@ -108,13 +103,13 @@ const getRecipeSize = (ingredients: IngredientGroup): number | null => {
   let size = 0;
   Object.keys(ingredients).map((ing) => {
     const food = ingredients[ing];
-    const scalesMerged = mergeScales(food);
-    if (food.scale_name && food.scale_amount) {
+    const scalesMerged = mergeScales({ scales: food.scales });
+    if (food.scaleName && food.scaleAmount) {
       const equivalentInGrams = getNewAmount({
         scales: scalesMerged,
-        prev_scale_name: food.scale_name,
+        prev_scale_name: food.scaleName,
         new_scale_name: GRAMS,
-        scale_amount: food.scale_amount,
+        scaleAmount: food.scaleAmount,
       });
       size += equivalentInGrams || 0;
     }
@@ -129,9 +124,9 @@ const getNutritionMerged = (foods: FoodGroup): FoodNutrients => {
 
   let result: any = Object.create({});
 
-  Object.keys(foods).forEach((food_id) => {
-    const food = foods[food_id];
-    if (food_id && food) {
+  Object.keys(foods).forEach((id) => {
+    const food = foods[id];
+    if (id && food) {
       const ingredientNutrition: FoodNutrients = getIngredientNutrition(food);
       for (let key in ingredientNutrition) {
         const value = result[key as keyof FoodNutrients];
@@ -148,13 +143,13 @@ const getNutritionMerged = (foods: FoodGroup): FoodNutrients => {
   return result;
 };
 
-const getDietFoods = (diet_meals: DietMealGroup): FoodGroup => {
+const getDietFoods = (meals: DietMealGroup): FoodGroup => {
   let result: FoodGroup = {};
-  Object.keys(diet_meals).map((meal_id) => {
-    const diet_meal = diet_meals[meal_id];
-    const foods = diet_meal.diet_meal_foods;
-    Object.keys(foods).map((food_id, index) => {
-      result[meal_id + "_" + index] = foods[food_id];
+  Object.keys(meals).map((meal_id) => {
+    const diet_meal = meals[meal_id];
+    const foods = diet_meal.foods;
+    Object.keys(foods).map((id, index) => {
+      result[meal_id + "_" + index] = foods[id];
     });
   });
   return result;

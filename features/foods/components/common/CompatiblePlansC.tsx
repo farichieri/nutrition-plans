@@ -3,14 +3,14 @@ import { PlansEnum } from "@/types";
 import { MdDone } from "react-icons/md";
 
 interface Props {
-  compatible_plans: any;
+  compatiblePlans: any;
 }
 
-const CompatiblePlansC: FC<Props> = ({ compatible_plans }) => {
-  if (!compatible_plans) {
+const CompatiblePlansC: FC<Props> = ({ compatiblePlans }) => {
+  if (!compatiblePlans) {
     return <></>;
   }
-  const isPlan = (plan: string) => compatible_plans[plan] === true;
+  const isPlan = (plan: string) => compatiblePlans[plan] === true;
   return (
     <div className="flex w-full flex-col gap-1 divide-y border-y">
       {Object.keys(PlansEnum).map((plan) => (

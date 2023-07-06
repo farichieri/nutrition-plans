@@ -19,33 +19,33 @@ export enum PlanDateType {
 
 export interface Diet {
   [id: string]: any;
-  date_available: string | null;
-  date_created: any | null;
-  diet_description: string | null;
-  diet_id: string | null;
-  diet_meals: DietMealGroup;
-  diet_name_lowercase: string | null;
-  diet_name: string | null;
-  diet_nutrition: FoodNutrients;
-  diet_water: DietWater;
-  plan_date: string | null;
-  plan_id: PlansEnum | null;
-  plan_type: PlanTypes;
-  user_id: string | null;
+  date: string | null;
+  dateAvailable: string | null;
+  dateCreated: any | null;
+  description: string | null;
+  id: string | null;
+  meals: DietMealGroup;
+  name: string | null;
+  nameLowerCase: string | null;
+  nutrients: FoodNutrients;
+  planID: PlansEnum | null;
+  type: PlanTypes;
+  userID: string | null;
+  water: DietWater;
 }
 
 export interface DietMeal {
   [id: string]: any;
   complexity: MealComplexities | null;
-  cook: boolean;
-  diet_id: string | null;
-  diet_meal_foods: FoodGroup;
-  diet_meal_id: string | null;
-  diet_meal_name: string | null;
+  dietID: string | null;
+  foods: FoodGroup;
+  id: string | null;
+  isCookeable: boolean;
+  mealID: string | null;
+  name: string | null;
   order: number;
   size: MealSizes | null;
   time: MealMinutes | null;
-  user_meal_id: string | null;
 }
 
 export interface DietMealGroup {
@@ -60,43 +60,43 @@ export interface DietGroup {
 
 export interface DietWater {
   drunk: boolean;
-  litters_drunk: number;
-  litters_to_drink: number;
+  litterDrunk: number;
+  littersToDrink: number;
 }
 
 // Initials
 export const NewDietWater: DietWater = {
   drunk: false,
-  litters_drunk: 0,
-  litters_to_drink: 0,
+  litterDrunk: 0,
+  littersToDrink: 0,
 };
 
 export const NewDiet: Diet = {
-  date_available: null,
-  date_created: null,
-  diet_description: null,
-  diet_id: null,
-  diet_meals: {},
-  diet_name_lowercase: null,
-  diet_name: null,
-  diet_nutrition: NewFoodNutrients,
-  diet_water: NewDietWater,
-  plan_date: null,
-  plan_id: null,
-  plan_type: PlanTypes.manually,
-  user_id: null,
+  date: null,
+  dateAvailable: null,
+  dateCreated: null,
+  description: null,
+  id: null,
+  meals: {},
+  name: null,
+  nameLowerCase: null,
+  nutrients: NewFoodNutrients,
+  planID: null,
+  type: PlanTypes.manually,
+  userID: null,
+  water: NewDietWater,
 };
 
 export const NewDietMeal: DietMeal = {
   complexity: null,
-  cook: true,
-  diet_id: null,
-  diet_meal_foods: NewFood,
-  diet_meal_id: null,
-  diet_meal_name: null,
   diet_meal_type: null,
+  dietID: null,
+  foods: NewFood,
+  id: null,
+  isCookeable: true,
+  mealID: null,
+  name: null,
   order: -1,
   size: null,
   time: null,
-  user_meal_id: null,
 };

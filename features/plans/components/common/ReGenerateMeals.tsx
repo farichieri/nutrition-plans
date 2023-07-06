@@ -21,15 +21,15 @@ const ReGenerateMeals: FC<Props> = ({ planID }) => {
   const { user } = useSelector(selectAuthSlice);
   const { meals } = useSelector(selectMealsSlice);
   const { isGeneratingMeals } = useSelector(selectPlansSlice);
-  const nutrition_targets = user?.nutrition_targets;
+  const nutritionTargets = user?.nutritionTargets;
   const userMealsArr: UserMealsArr = Object.values(meals).sort(
     (a, b) => a.order - b.order
   );
 
   // const reGenerate = async () => {
-  //   if (!nutrition_targets) return;
+  //   if (!nutritionTargets) return;
   //   dispatch(setIsGeneratingMeals(true));
-  //   const res = await generateMeals(planID, userMealsArr, nutrition_targets);
+  //   const res = await generateMeals(planID, userMealsArr, nutritionTargets);
   //   if (res.result === "success") {
   //     const { data } = res;
   //     const dietMeals = Object.values(data);

@@ -76,10 +76,10 @@ export default function Page({ mealID }: Props) {
         ...mealState,
         complexity: newComplexity,
       });
-    } else if (id === "cook") {
+    } else if (id === "isCookeable") {
       setMealState({
         ...mealState,
-        cook: value === "yes" ? true : false,
+        isCookeable: value === "yes" ? true : false,
       });
     } else {
       setMealState({ ...mealState, [id]: valueF });
@@ -105,12 +105,12 @@ export default function Page({ mealID }: Props) {
         const updateUserMeals = async () => {
           Object.keys(meals).map(async (meal_id) => {
             let meal = meals[meal_id];
-            if (meal.setting_id === mealUpdated.id) {
+            if (meal.mealSettingId === mealUpdated.id) {
               meal = {
                 ...mealUpdated,
                 order: meal.order,
                 id: meal.id,
-                setting_id: mealUpdated.id,
+                mealSettingId: mealUpdated.id,
               };
               const res = await updateUserMeal(user, meal);
               if (res.result === "error")
@@ -224,13 +224,13 @@ export default function Page({ mealID }: Props) {
                 <FormSelect
                   customClass={""}
                   handleChange={handleChange}
-                  id={"cook"}
+                  id={"isCookeable"}
                   isRequired={true}
-                  labelText={"cook"}
-                  name={"cook"}
+                  labelText={"isCookeable"}
+                  name={"isCookeable"}
                   title={"Meal cook"}
                   options={generateOptions(cookOptions)}
-                  value={mealState["cook"] ? MealCook.yes : MealCook.no}
+                  value={mealState["isCookeable"] ? MealCook.Yes : MealCook.No}
                 />
               </div>
             </div>
@@ -259,7 +259,7 @@ export default function Page({ mealID }: Props) {
               content="Delete Meal Setting"
               isLoading={isDeleting}
               isDisabled={false}
-              type={ButtonType.delete}
+              type={ButtonType.Delete}
               className="mt-auto w-44"
               onClick={handleDelete}
               action="submit"

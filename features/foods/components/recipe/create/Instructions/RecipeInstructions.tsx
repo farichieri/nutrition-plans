@@ -21,9 +21,7 @@ const InstructionC: FC<InstructionProps> = ({
     const value = event.target.value;
     const id = event.target.id;
 
-    const ingredientExists = instructions.find(
-      (ing) => ing.instruction_id === id
-    );
+    const ingredientExists = instructions.find((ing) => ing.id === id);
 
     const ingredientUpdated: Instruction = {
       ...inst,
@@ -39,9 +37,7 @@ const InstructionC: FC<InstructionProps> = ({
   const handleRemove = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const id = (event.target as HTMLButtonElement).id;
-    const instructionExists = instructions.find(
-      (ing) => ing.instruction_id === id
-    );
+    const instructionExists = instructions.find((ing) => ing.id === id);
 
     if (instructionExists) {
       instructions.splice(instructions.indexOf(instructionExists), 1);
@@ -56,7 +52,7 @@ const InstructionC: FC<InstructionProps> = ({
         autoComplete="off"
         autoCorrect="off"
         className="min-h-20 h-full max-h-32 w-full rounded-lg border bg-transparent p-2 text-sm outline-none  placeholder:opacity-50 focus-within:border-black dark:focus-within:border-white"
-        id={inst.instruction_id}
+        id={inst.id}
         name="text"
         onChange={handleChange}
         placeholder="New Instruction..."
@@ -67,7 +63,7 @@ const InstructionC: FC<InstructionProps> = ({
       <RoundButton
         customClass="w-10 h-10 p-1.5 my-auto ml-auto"
         onClick={handleRemove}
-        id={inst.instruction_id}
+        id={inst.id}
       >
         <MdDelete className="pointer-events-none h-6 w-6" />
       </RoundButton>
@@ -128,11 +124,11 @@ const RecipeInstructions: FC<Props> = ({
               className="divide-y"
             >
               {instructions.map((inst, index) => {
-                if (inst.instruction_id)
+                if (inst.id)
                   return (
                     <Draggable
-                      key={inst.instruction_id}
-                      draggableId={inst.instruction_id}
+                      key={inst.id}
+                      draggableId={inst.id}
                       index={index}
                     >
                       {(draggableProvided) => (
@@ -146,7 +142,7 @@ const RecipeInstructions: FC<Props> = ({
                           <InstructionC
                             instructions={instructions}
                             inst={inst}
-                            key={inst.instruction_id}
+                            key={inst.id}
                             handleUpdateInstructions={handleUpdateInstructions}
                           />
                         </div>

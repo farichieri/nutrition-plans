@@ -8,26 +8,26 @@ import { useSelector } from "react-redux";
 
 interface Props {
   calories: number;
-  plan_selected: PlansEnum;
+  planSelected: PlansEnum;
 }
 
-const NutritionTarget: FC<Props> = ({ calories, plan_selected }) => {
+const NutritionTarget: FC<Props> = ({ calories, planSelected }) => {
   const { user } = useSelector(selectAuthSlice);
-  const planData = MEAL_PLANS.find((plan) => plan.id === plan_selected);
+  const planData = MEAL_PLANS.find((plan) => plan.id === planSelected);
   const nutritionTargets =
-    calories && plan_selected && getNutritionTargets(calories, plan_selected);
+    calories && planSelected && getNutritionTargets(calories, planSelected);
 
-  const weightInKg = user?.body_data.weight_in_kg;
+  const weightInKg = user?.bodyData.weightInKg;
 
   if (!user || !nutritionTargets || !weightInKg) return <></>;
-  const { water_lts_recommended } = user.body_data;
-  const { measurement_unit } = user;
+  const { waterRecommendedInLts } = user.bodyData;
+  const { measurementUnit } = user;
 
   const water = convertWater({
-    to: measurement_unit,
-    lts: water_lts_recommended || 0,
+    to: measurementUnit,
+    lts: waterRecommendedInLts || 0,
   });
-  const waterUnit = getWaterUnit({ from: measurement_unit });
+  const waterUnit = getWaterUnit({ from: measurementUnit });
 
   return (
     <div className="flex flex-col gap-1">

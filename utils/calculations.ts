@@ -52,7 +52,7 @@ const getWeight = ({
   to: MeasurementUnits;
   weight: number;
 }): number => {
-  const { metric, imperial } = MeasurementUnits;
+  const { Metric: metric, Imperial: imperial } = MeasurementUnits;
   switch (to) {
     case imperial:
       return kgsToLbs({ kgs: weight });
@@ -70,7 +70,7 @@ const getWeightInKg = ({
   from: MeasurementUnits;
   weight: number;
 }): number => {
-  const { metric, imperial } = MeasurementUnits;
+  const { Metric: metric, Imperial: imperial } = MeasurementUnits;
   switch (from) {
     case imperial:
       return lbsToKgs({ pounds: weight });
@@ -88,21 +88,21 @@ const getWeightText = ({
   weight: number;
   from: MeasurementUnits;
 }): string => {
-  const { metric, imperial } = MeasurementUnits;
-  const { lbs, kgs } = WeightUnits;
+  const { Metric: metric, Imperial: imperial } = MeasurementUnits;
+  const { Lbs, Kgs } = WeightUnits;
   switch (from) {
     case metric:
-      return `${formatTwoDecimals(weight)} ${kgs}`;
+      return `${formatTwoDecimals(weight)} ${Kgs}`;
     case imperial:
-      return `${formatTwoDecimals(weight)} ${lbs}`;
+      return `${formatTwoDecimals(weight)} ${Lbs}`;
     default:
       return `${formatTwoDecimals(weight)}`;
   }
 };
 
 const getWeightUnit = ({ from }: { from: MeasurementUnits }): string => {
-  if (from === MeasurementUnits.imperial) return WeightUnits.lbs;
-  else if (from === MeasurementUnits.metric) return WeightUnits.kgs;
+  if (from === MeasurementUnits.Imperial) return WeightUnits.Lbs;
+  else if (from === MeasurementUnits.Metric) return WeightUnits.Kgs;
   else return "";
 };
 
@@ -113,7 +113,7 @@ const convertWater = ({
   to: MeasurementUnits;
   lts: number;
 }): number => {
-  const { metric, imperial } = MeasurementUnits;
+  const { Metric: metric, Imperial: imperial } = MeasurementUnits;
   switch (to) {
     case imperial:
       return ltsToFluidOnces({ lts: lts });
@@ -125,8 +125,8 @@ const convertWater = ({
 };
 
 const getWaterUnit = ({ from }: { from: MeasurementUnits }): string => {
-  if (from === MeasurementUnits.imperial) return WaterUnits.floz;
-  else if (from === MeasurementUnits.metric) return WaterUnits.lts;
+  if (from === MeasurementUnits.Imperial) return WaterUnits.FlOz;
+  else if (from === MeasurementUnits.Metric) return WaterUnits.Lts;
   else return "";
 };
 

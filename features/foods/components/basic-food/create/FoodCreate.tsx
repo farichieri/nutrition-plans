@@ -91,7 +91,7 @@ const FoodCreate: FC<Props> = () => {
       const file = files[0];
       if (!file) return;
       const blob = URL.createObjectURL(file);
-      setValue("image", blob);
+      setValue("imageURL", blob);
       setNewImageFile(file);
     }
   };
@@ -104,7 +104,7 @@ const FoodCreate: FC<Props> = () => {
       dispatch(setNewFoodState(NewFood));
       setNewImageFile(undefined);
       dispatch(addNewFood(res.data));
-      router.push(`/app/food/${res.data.food_id}`);
+      router.push(`/app/food/${res.data.id}`);
       toast.success("Food created successfully");
     } else {
       toast.error("Error creating food");
@@ -154,7 +154,6 @@ const FoodCreate: FC<Props> = () => {
 
   return (
     <>
-      {/* <DevTool control={control} /> */}
       {(isSubmitting || isLoading) && (
         <TranspLoader text={"Creating Food..."} />
       )}
@@ -167,28 +166,28 @@ const FoodCreate: FC<Props> = () => {
           <div className="mb-10 flex w-full max-w-xl flex-col gap-5 sm:px-4">
             <div className="flex flex-col gap-2">
               <FormInput
-                error={errors.food_name?.message}
-                id={"food_name"}
+                error={errors.name?.message}
+                id={"name"}
                 labelText="Food Name"
                 placeholder="Food Name"
                 title="Food Name"
                 type="text"
-                {...register("food_name")}
+                {...register("name")}
               />
               <FormInput
-                error={errors.food_description?.message}
-                id={"food_description"}
+                error={errors.description?.message}
+                id={"description"}
                 labelText="Food Description"
                 placeholder="Food Description"
                 title="Food Description"
                 type="text"
-                {...register("food_description")}
+                {...register("description")}
               />
             </div>
             <div className="flex flex-col gap-2">
               <h1 className="text-xl">Image</h1>
               <Image
-                src={values.image}
+                src={values.imageURL}
                 width={200}
                 height={200}
                 alt="Food Image"
@@ -201,7 +200,7 @@ const FoodCreate: FC<Props> = () => {
                 accept="image/*"
               />
               <div className="text-red-500">
-                <p>{errors.image?.message}</p>
+                <p>{errors.imageURL?.message}</p>
               </div>
             </div>
 
@@ -248,22 +247,22 @@ const FoodCreate: FC<Props> = () => {
                   {...register("nutrients.proteins", { valueAsNumber: true })}
                 />
                 <FormInput
-                  error={errors.serving_name?.message}
-                  id={"serving_name"}
+                  error={errors.servingName?.message}
+                  id={"servingName"}
                   labelText="Scale Name (Customizable)"
                   placeholder="Scale Name"
                   title="Scale Name"
                   type="text"
-                  {...register("serving_name")}
+                  {...register("servingName")}
                 />
                 <FormInput
-                  error={errors.serving_grams?.message}
-                  id={"serving_grams"}
+                  error={errors.servingGrams?.message}
+                  id={"servingGrams"}
                   labelText="Equivalent Weight In Grams"
                   placeholder="Equivalent Weight In Grams"
                   title="Equivalent Weight In Grams"
                   type="number"
-                  {...register("serving_grams", { valueAsNumber: true })}
+                  {...register("servingGrams", { valueAsNumber: true })}
                 />
               </div>
             </div>
@@ -279,20 +278,20 @@ const FoodCreate: FC<Props> = () => {
             </div>
             <div>
               <FormSelect
-                error={errors.food_category?.message}
-                id={"food_category"}
+                error={errors.category?.message}
+                id={"category"}
                 labelText="Food Category"
                 options={generateOptions(foodCategoryOptions)}
                 placeholder="Food Category"
                 title="Food Category"
                 handleChange={() => {}}
-                {...register("food_category")}
+                {...register("category")}
               />
             </div>
             <div>
               <h1 className="text-xl">Food Type</h1>
               <div className="flex flex-col gap-1">
-                {Object.keys(values.food_type).map((type) => {
+                {Object.keys(values.type).map((type) => {
                   return (
                     <Checkbox
                       id={type}
@@ -300,19 +299,19 @@ const FoodCreate: FC<Props> = () => {
                       labelText={type}
                       placeholder="Food Type"
                       title="Food Type"
-                      {...register(`food_type.${type as keyof FoodType}`)}
+                      {...register(`type.${type as keyof FoodType}`)}
                     />
                   );
                 })}
               </div>
               <div className="text-red-500">
-                <p>{errors.food_type?.message}</p>
+                <p>{errors.type?.message}</p>
               </div>
             </div>
             <div>
               <h1 className="text-xl">Compatible Plans</h1>
               <div className="flex flex-col gap-1">
-                {Object.keys(values.compatible_plans).map((plan) => {
+                {Object.keys(values.compatiblePlans).map((plan) => {
                   return (
                     <Checkbox
                       id={plan}
@@ -321,14 +320,14 @@ const FoodCreate: FC<Props> = () => {
                       placeholder="Compatible Plans"
                       title="Compatible Plans"
                       {...register(
-                        `compatible_plans.${plan as keyof CompatiblePlans}`
+                        `compatiblePlans.${plan as keyof CompatiblePlans}`
                       )}
                     />
                   );
                 })}
               </div>
               <div className="text-red-500">
-                <p>{errors.compatible_plans?.message}</p>
+                <p>{errors.compatiblePlans?.message}</p>
               </div>
             </div>
 
@@ -336,13 +335,13 @@ const FoodCreate: FC<Props> = () => {
               <h1 className="text-xl">Optional Fields</h1>
               <div className="flex flex-col gap-2">
                 <FormInput
-                  error={errors.serving_amount_per_package?.message}
-                  id={"serving_amount_per_package"}
+                  error={errors.servingAmountPerPackage?.message}
+                  id={"servingAmountPerPackage"}
                   labelText="Servings Per Package"
                   placeholder="Servings Per Package"
                   title="Servings Per Package"
                   type="number"
-                  {...register("serving_amount_per_package")}
+                  {...register("servingAmountPerPackage")}
                 />
                 <NutritionInput
                   changed={false}
@@ -375,24 +374,24 @@ const FoodCreate: FC<Props> = () => {
                   {...register("source")}
                 />
                 <FormSelect
-                  error={errors.glucemic_status?.message}
+                  error={errors.glucemicStatus?.message}
                   handleChange={() => {}}
-                  id={"glucemic_status"}
+                  id={"glucemicStatus"}
                   labelText="Glucemic Statis"
                   options={generateOptions(foodGlucemicStatusOptions)}
                   placeholder="Glucemic Statis"
                   title="Glucemic Statis"
-                  {...register("glucemic_status")}
+                  {...register("glucemicStatus")}
                 />
                 <FormSelect
-                  error={errors.digestion_status?.message}
+                  error={errors.digestionStatus?.message}
                   handleChange={() => {}}
-                  id={"digestion_status"}
+                  id={"digestionStatus"}
                   labelText="Digestion Status"
                   options={generateOptions(foodDigestionStatusOptions)}
                   placeholder="Digestion Status"
                   title="Digestion Status"
-                  {...register("digestion_status")}
+                  {...register("digestionStatus")}
                 />
               </div>
             </div>

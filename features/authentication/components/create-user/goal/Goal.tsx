@@ -6,27 +6,27 @@ import {
   setUpdateUser,
   updateUser,
 } from "@/features/authentication";
+import { AppRoutes, formatToUSDate } from "@/utils";
+import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
 import { DevTool } from "@hookform/devtools";
 import { FC, useEffect, useState } from "react";
 import { format, formatISO, parse } from "date-fns";
-import { AppRoutes, formatToUSDate } from "@/utils";
 import { getWeight, getWeightInKg, getWeightUnit } from "@/utils/calculations";
+import { MdEmojiEvents } from "react-icons/md";
 import { schema } from "./schema";
+import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Collapsable from "@/components/Layout/Collapsable";
 import FormError from "@/components/Errors/FormError";
-import SubmitButton from "@/components/Buttons/SubmitButton";
-import { toast } from "react-hot-toast";
-import { useRouter } from "next/router";
 import InfoMessage from "@/components/Layout/InfoMessage";
-import { MdEmojiEvents } from "react-icons/md";
-import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
+import SubmitButton from "@/components/Buttons/SubmitButton";
 
 interface FormValues {
   goalSelected: UserGoals | null;
-  weight_goal: WeightGoal;
+  weightGoal: WeightGoal;
 }
 
 interface Props {
@@ -45,18 +45,18 @@ const Goal: FC<Props> = ({ handleContinue }) => {
 
   if (!user) return <></>;
 
-  const { measurement_unit, goal, weight_goal } = user;
-  const { weight_goal_in_kg, due_date } = weight_goal;
+  const { measurementUnit, goal, weightGoal } = user;
+  const { weightGoalInKg, dueDate } = weightGoal;
 
   const weightGoalFormatted = getWeight({
-    to: measurement_unit,
-    weight: Number(weight_goal_in_kg),
+    to: measurementUnit,
+    weight: Number(weightGoalInKg),
   });
 
-  const dateParsed = due_date && parse(due_date, "MM-dd-yyyy", new Date());
+  const dateParsed = dueDate && parse(dueDate, "MM-dd-yyyy", new Date());
   const dueDateFormatted =
     dateParsed && format(new Date(dateParsed), "yyyy-MM-dd");
-  const hasGoal = Boolean(weight_goal_in_kg || user?.weight_goal.due_date);
+  const hasGoal = Boolean(weightGoalInKg || user?.weightGoal.dueDate);
 
   const {
     control,
@@ -70,10 +70,10 @@ const Goal: FC<Props> = ({ handleContinue }) => {
   } = useForm<FormValues>({
     defaultValues: {
       goalSelected: goal || null,
-      weight_goal: {
-        created_at: null,
-        due_date: dueDateFormatted || null,
-        weight_goal_in_kg: weightGoalFormatted || null,
+      weightGoal: {
+        createdAt: null,
+        dueDate: dueDateFormatted || null,
+        weightGoalInKg: weightGoalFormatted || null,
       },
     },
     resolver: yupResolver(schema),
@@ -102,40 +102,38 @@ const Goal: FC<Props> = ({ handleContinue }) => {
 
   const handleRemoveWeightGoal = (event: React.MouseEvent) => {
     event.preventDefault();
-    setValue("weight_goal.due_date", null);
-    setValue("weight_goal.weight_goal_in_kg", null);
+    setValue("weightGoal.dueDate", null);
+    setValue("weightGoal.weightGoalInKg", null);
   };
 
   const onSubmit = async (data: FormValues) => {
     if (isSubmitting) return;
-    const { weight_goal } = data;
-    const { weight_goal_in_kg } = weight_goal;
+    const { weightGoal: weightGoal } = data;
+    const { weightGoalInKg: weightGoalInKg } = weightGoal;
 
     // format Date if exists
-    let date = weight_goal.due_date;
+    let date = weightGoal.dueDate;
     if (date) {
       const dateParsed = parse(date, "yyyy-MM-dd", new Date());
       date = formatToUSDate(dateParsed);
     }
 
     const weightInKg = getWeightInKg({
-      from: measurement_unit,
-      weight: Number(weight_goal_in_kg),
+      from: measurementUnit,
+      weight: Number(weightGoalInKg),
     });
-
-    const userUpdated: UserAccount = {
-      ...user,
+    const fields = {
       goal: data.goalSelected,
-      weight_goal: {
-        ...weight_goal,
-        created_at: formatISO(new Date()),
-        weight_goal_in_kg: weightInKg,
-        due_date: date,
+      weightGoal: {
+        ...weightGoal,
+        createdAt: formatISO(new Date()),
+        weightGoalInKg: weightInKg,
+        dueDate: date,
       },
     };
-    const res = await updateUser(userUpdated);
+    const res = await updateUser({ user, fields });
     if (res.result === "success") {
-      dispatch(setUpdateUser(userUpdated));
+      dispatch(setUpdateUser({ user, fields }));
       handleContinue();
       if (!isCreatingRoute) {
         toast.success("Your Goal has been updated successfully.");
@@ -150,8 +148,8 @@ const Goal: FC<Props> = ({ handleContinue }) => {
   useEffect(() => {
     if (
       values.goalSelected === user.goal &&
-      values.weight_goal.weight_goal_in_kg === weightGoalFormatted &&
-      values.weight_goal.due_date === dueDateFormatted
+      values.weightGoal.weightGoalInKg === weightGoalFormatted &&
+      values.weightGoal.dueDate === dueDateFormatted
     ) {
       setIsDisabled(true);
     } else {
@@ -207,15 +205,15 @@ const Goal: FC<Props> = ({ handleContinue }) => {
                     <label>Weight Goal: </label>
                     <>
                       <span className="absolute right-2 select-none">
-                        {getWeightUnit({ from: measurement_unit })}
+                        {getWeightUnit({ from: measurementUnit })}
                       </span>
                       <input
                         className="w-24 rounded-md border bg-transparent px-3 py-1.5"
                         type="number"
                         placeholder={getWeightUnit({
-                          from: measurement_unit,
+                          from: measurementUnit,
                         })}
-                        {...register("weight_goal.weight_goal_in_kg", {
+                        {...register("weightGoal.weightGoalInKg", {
                           valueAsNumber: true,
                         })}
                       />
@@ -226,7 +224,7 @@ const Goal: FC<Props> = ({ handleContinue }) => {
                     <input
                       className="rounded-md border bg-transparent px-3 py-1.5"
                       type="date"
-                      {...register("weight_goal.due_date")}
+                      {...register("weightGoal.dueDate")}
                     />
                   </div>
                 </div>

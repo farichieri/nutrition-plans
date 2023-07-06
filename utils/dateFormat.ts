@@ -18,9 +18,9 @@ const getStartOfWeekNumber = ({
   userStartOfWeek: StartsOfWeek;
 }) => {
   switch (userStartOfWeek) {
-    case StartsOfWeek.sunday:
+    case StartsOfWeek.Sunday:
       return SUNDAY;
-    case StartsOfWeek.monday:
+    case StartsOfWeek.Monday:
       return MONDAY;
     default:
       return SUNDAY;

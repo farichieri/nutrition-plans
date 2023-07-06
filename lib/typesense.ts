@@ -17,27 +17,27 @@ export const searchClient = new TypesenseSearchClient(TYPESENSE_SERVER_CONFIG);
 // {
 //   "fields": [
 //     {
-//       "name": "food_name",
+//       "name": "name",
 //       "drop": true
 //     },
 //     {
-//       "name": "food_description",
+//       "name": "description",
 //       "drop": true
 //     },
 //     {
-//       "name": "ingredients_names",
+//       "name": "ingredientsNames",
 //       "drop": true
 //     },
 //     {
-//       "name": "ingredients_descriptions",
+//       "name": "ingredientsDescriptions",
 //       "drop": true
 //     },
 //     {
-//       "name": "curated",
+//       "name": "isCurated",
 //       "drop": true
 //     },
 //     {
-//       "name": "uploader_id",
+//       "name": "uploaderID",
 //       "drop": true
 //     },
 //     {
@@ -45,11 +45,11 @@ export const searchClient = new TypesenseSearchClient(TYPESENSE_SERVER_CONFIG);
 //       "drop": true
 //     },
 //     {
-//       "name": "image",
+//       "name": "imageURL",
 //       "drop": true
 //     },
 //     {
-//       "name": "compatible_plans",
+//       "name": "compatiblePlans",
 //       "drop": true
 //     },
 //     {
@@ -70,37 +70,37 @@ export const searchClient = new TypesenseSearchClient(TYPESENSE_SERVER_CONFIG);
 //     },
 
 //     {
-//       "name": "food_name",
+//       "name": "name",
 //       "type": "string",
 //       "optional": false,
 //       "facet": false
 //     },
 //     {
-//       "name": "food_description",
+//       "name": "description",
 //       "type": "string",
 //       "optional": false,
 //       "facet": false
 //     },
 //     {
-//       "name": "ingredients_names",
+//       "name": "ingredientsNames",
 //       "type": "string[]",
 //       "optional": false,
 //       "facet": false
 //     },
 //     {
-//       "name": "ingredients_descriptions",
+//       "name": "ingredientsDescriptions",
 //       "type": "string[]",
 //       "optional": false,
 //       "facet": false
 //     },
 //     {
-//       "name": "curated",
+//       "name": "isCurated",
 //       "type": "bool",
 //       "optional": false,
 //       "facet": true
 //     },
 //     {
-//       "name": "uploader_id",
+//       "name": "uploaderID",
 //       "type": "string",
 //       "optional": false,
 //       "facet": true
@@ -112,13 +112,13 @@ export const searchClient = new TypesenseSearchClient(TYPESENSE_SERVER_CONFIG);
 //       "facet": true
 //     },
 //     {
-//       "name": "image",
+//       "name": "imageURL",
 //       "type": "string",
 //       "optional": false,
 //       "facet": false
 //     },
 //     {
-//       "name": "compatible_plans",
+//       "name": "compatiblePlans",
 //       "type": "object",
 //       "optional": false,
 //       "facet": true
@@ -148,10 +148,12 @@ export const searchClient = new TypesenseSearchClient(TYPESENSE_SERVER_CONFIG);
 //       "facet": true
 //     },
 //     {
-//       "name": "num_likes",
+//       "name": "likes",
 //       "type": "int32",
 //       "optional": false,
 //       "facet": true
 //     },
 //   ]
 // }
+
+// id,name,description,ingredientsNames,ingredientsDescriptions,isCurated,uploaderID,kind,nutrients,imageURL,compatiblePlans,likes

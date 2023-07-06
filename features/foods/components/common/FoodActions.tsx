@@ -23,28 +23,28 @@ const FoodActions: FC<Props> = ({ foodID }) => {
   const { isRating } = useSelector(selectFavoritesSlice);
   if (!user) return <></>;
 
-  const food_rating: FoodRating = user.ratings.food_rating;
-  const isLiked = food_rating?.likes.includes(foodID);
-  const isDisliked = food_rating?.dislikes.includes(foodID);
+  const foodRating: FoodRating = user.ratings.foodRating;
+  const isLiked = foodRating?.likes.includes(foodID);
+  const isDisliked = foodRating?.dislikes.includes(foodID);
 
   const handleRating = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     try {
       const id = (event.target as HTMLButtonElement).id;
-      if (!food_rating) return;
+      if (!foodRating) return;
       if (isRating) return;
       dispatch(setIsRating(true));
 
       id === "likes" ? setIsLiking(true) : setIsDisliking(true);
 
-      let likes = [...food_rating["likes"]];
-      let dislikes = [...food_rating["dislikes"]];
+      let likes = [...foodRating["likes"]];
+      let dislikes = [...foodRating["dislikes"]];
 
       const likeIndex = likes.indexOf(foodID);
       const dislikeIndex = dislikes.indexOf(foodID);
 
       const updateAction = async (field: string, action: string) => {
-        const res = await updateFoodRating(foodID, field, action);
+        const res = await updateFoodRating({ foodID, field, action });
         if (res.result === "error") {
           throw new Error("Error updating food rating");
         }
@@ -53,13 +53,13 @@ const FoodActions: FC<Props> = ({ foodID }) => {
       switch (id) {
         case "likes":
           if (likeIndex > -1) {
-            await updateAction("num_likes", "decrement");
+            await updateAction("likes", "decrement");
             likes.splice(likeIndex, 1);
           } else {
             likes = [...likes, foodID];
-            await updateAction("num_likes", "increment");
+            await updateAction("likes", "increment");
             if (dislikeIndex > -1) {
-              await updateAction("num_dislikes", "decrement");
+              await updateAction("dislikes", "decrement");
               dislikes.splice(dislikeIndex, 1);
             }
           }
@@ -67,12 +67,12 @@ const FoodActions: FC<Props> = ({ foodID }) => {
         case "dislikes":
           if (dislikeIndex > -1) {
             dislikes.splice(dislikeIndex, 1);
-            await updateAction("num_dislikes", "decrement");
+            await updateAction("dislikes", "decrement");
           } else {
             dislikes = [...dislikes, foodID];
-            await updateAction("num_dislikes", "increment");
+            await updateAction("dislikes", "increment");
             if (likeIndex > -1) {
-              await updateAction("num_likes", "decrement");
+              await updateAction("likes", "decrement");
               likes.splice(likeIndex, 1);
             }
           }
@@ -81,20 +81,19 @@ const FoodActions: FC<Props> = ({ foodID }) => {
           break;
       }
 
-      let userUpdated = {
-        ...user,
+      let fields = {
         ratings: {
-          food_rating: {
-            ...food_rating,
+          foodRating: {
+            ...foodRating,
             likes: likes,
             dislikes: dislikes,
           },
         },
       };
-      if (JSON.stringify(userUpdated) !== JSON.stringify(user)) {
-        const res = await updateUser(userUpdated);
+      if (JSON.stringify(fields.ratings) !== JSON.stringify(user.ratings)) {
+        const res = await updateUser({ user, fields });
         if (res.result === "success") {
-          dispatch(setUpdateUser(userUpdated));
+          dispatch(setUpdateUser({ user, fields }));
         }
       }
     } catch (error) {

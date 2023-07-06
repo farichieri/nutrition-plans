@@ -23,7 +23,7 @@ export default function Page() {
     if (!user) {
       router.push("/signup");
     } else {
-      if (user.is_profile_completed) {
+      if (user.isProfileCompleted) {
         router.push("/app/today");
       }
     }
@@ -75,7 +75,7 @@ export default function Page() {
       <div className="flex w-full flex-col items-center justify-center gap-5">
         <span className="">
           Let&apos;s start your transformation,{" "}
-          <b className="capitalize text-green-500">{user?.display_name}</b>!
+          <b className="capitalize text-green-500">{user?.displayName}</b>!
         </span>
         <div className="flex w-full flex-col items-center justify-center ">
           <NewUserSteps steps={STEPS} stepSelected={stepSelected} />

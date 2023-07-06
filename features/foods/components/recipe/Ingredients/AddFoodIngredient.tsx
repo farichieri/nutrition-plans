@@ -4,27 +4,27 @@ import { MdAdd } from "react-icons/md";
 
 interface Props {
   handleAddIngredient: MouseEventHandler;
-  scale_amount: number;
-  scale_name: string;
+  scaleAmount: number;
+  scaleName: string;
   setLocalScale: Function;
   food: Food;
 }
 
 const AddFoodIngredient: FC<Props> = ({
   handleAddIngredient,
-  scale_amount,
-  scale_name,
+  scaleAmount,
+  scaleName,
   setLocalScale,
   food,
 }) => {
-  if (!food?.food_id) return <>No food_id found</>;
+  if (!food?.id) return <>No food id found</>;
 
   return (
     <div className="flex flex-col">
       <ScaleSelector
         food={food}
-        scale_amount={scale_amount}
-        scale_name={scale_name}
+        scaleAmount={scaleAmount}
+        scaleName={scaleName}
         updateRoute={false}
         setLocalScale={setLocalScale}
       />

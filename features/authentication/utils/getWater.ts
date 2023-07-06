@@ -8,7 +8,7 @@ const getWater = ({
   weightInKg: number;
   measurement: MeasurementUnits;
 }) => {
-  if (measurement === MeasurementUnits.imperial) {
+  if (measurement === MeasurementUnits.Imperial) {
     // return floz.
     const lts = weightInKg * 0.03;
     return ltsToFluidOnces({ lts: lts });

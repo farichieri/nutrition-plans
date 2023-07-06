@@ -44,7 +44,7 @@ const AddExtraScale: FC<AddExtraScaleProps> = ({
 
   const handleAdd = (event: React.FormEvent) => {
     event.preventDefault();
-    if (!newScaleState.scale_name || !newScaleState.scale_grams) return;
+    if (!newScaleState.scaleName || !newScaleState.scaleGrams) return;
     const uuid = uuidv4();
     const newScale = {
       ...newScaleState,
@@ -64,28 +64,28 @@ const AddExtraScale: FC<AddExtraScaleProps> = ({
           <Input
             customClass={""}
             handleChange={handleChange}
-            id={"scale_name"}
+            id={"scaleName"}
             isRequired={true}
-            key={"scale_name"}
-            labelFor={"scale_name"}
+            key={"scaleName"}
+            labelFor={"scaleName"}
             labelText={"Scale Name"}
-            name={"scale_name"}
+            name={"scaleName"}
             placeholder={""}
             title={"Scale Name"}
             type={"text"}
-            value={newScaleState["scale_name"] || ""}
+            value={newScaleState["scaleName"] || ""}
           />
           <NutritionInput
             changed={false}
             handleChange={handleChange}
-            id={"scale_grams"}
+            id={"scaleGrams"}
             labelText={"Equivalent weight in grams"}
-            name="scale_grams"
+            name="scaleGrams"
             title="Scale Grams"
             type="number"
             min={"0"}
             unit={"g"}
-            value={newScaleState["scale_grams"]}
+            value={newScaleState["scaleGrams"]}
           />
         </div>
         <div className="mt-4 flex w-full justify-center gap-2 border-t p-4 dark:border-white">
@@ -186,8 +186,8 @@ const ExtraScales: FC<Props> = ({ scales, handleChangeScales }) => {
                             >
                               <div className="flex w-full flex-col divide-y border-x">
                                 <div className="flex items-baseline justify-between p-2">
-                                  <span>1 {scale.scale_name}</span>
-                                  <span>{`(${scale.scale_grams} grams)`}</span>
+                                  <span>1 {scale.scaleName}</span>
+                                  <span>{`(${scale.scaleGrams} grams)`}</span>
                                 </div>
                               </div>
                               <div className="m-auto flex">

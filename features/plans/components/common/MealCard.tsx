@@ -23,16 +23,16 @@ const MealCard: FC<Props> = ({
   isEditing,
   setIsEditing,
 }) => {
-  const dietMealFoodsArr: FoodGroupArray = Object.values(
-    dietMeal.diet_meal_foods
-  ).sort((a, b) => a.order - b.order);
+  const dietMealFoodsArr: FoodGroupArray = Object.values(dietMeal.foods).sort(
+    (a, b) => a.order - b.order
+  );
   const allEaten = isAllEaten(dietMealFoodsArr);
 
-  if (!dietMeal.diet_meal_id) return <></>;
+  if (!dietMeal.id) return <></>;
 
   return (
     <div
-      key={dietMeal.diet_meal_id}
+      key={dietMeal.id}
       className={`min-h-20 flex w-full flex-col divide-y overflow-auto rounded-xl border ${
         allEaten
           ? "border-green-500 bg-green-500/20"
@@ -40,9 +40,7 @@ const MealCard: FC<Props> = ({
       }`}
     >
       <div className="flex items-center gap-5 px-2 py-1 text-center">
-        <span className="font-semibold capitalize">
-          {dietMeal.diet_meal_name}
-        </span>
+        <span className="font-semibold capitalize">{dietMeal.name}</span>
         {/* <div className="flex w-full flex-col text-left text-xs">
           <span className="text-blue-500">
             Meal Complexity: {dietMeal.complexity}
@@ -62,7 +60,7 @@ const MealCard: FC<Props> = ({
           </div>
         )}
       </div>
-      <Droppable droppableId={dietMeal.diet_meal_id}>
+      <Droppable droppableId={dietMeal.id}>
         {(droppableProvided) => (
           <div
             {...droppableProvided.droppableProps}
@@ -75,11 +73,11 @@ const MealCard: FC<Props> = ({
               </span>
             ) : (
               dietMealFoodsArr.map((food, index) => {
-                if (!food.food_id) return <></>;
+                if (!food.id) return <></>;
                 return (
                   <Draggable
-                    key={food.food_id}
-                    draggableId={food.food_id + food.diet_meal_id}
+                    key={food.id}
+                    draggableId={food.id + food.dietMealID}
                     index={index}
                     isDragDisabled={!isEditing}
                   >
@@ -94,9 +92,9 @@ const MealCard: FC<Props> = ({
                           <FoodInMealCard food={food} isEditing={isEditing} />
                         ) : (
                           <Link
-                            key={food.food_id}
+                            key={food.id}
                             className="flex w-full"
-                            href={`/app/food/${food.food_id}?amount=${food.scale_amount}&scale=${food.scale_name}`}
+                            href={`/app/food/${food.id}?amount=${food.scaleAmount}&scale=${food.scaleName}`}
                           >
                             <FoodInMealCard food={food} isEditing={isEditing} />
                           </Link>
