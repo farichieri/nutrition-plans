@@ -188,10 +188,12 @@ th {
 }
 
 .react-datepicker__input-container input {
-  background-color: rgba(0, 128, 0, 0.17);
+  background-color: transparent;
   padding: 0.25rem 0.5rem;
-  border-radius: 4px;
   cursor: pointer;
+  border-bottom: #22c55e 2px solid;
+  outline: none;
+  line-height: normal;
 }
 
 /* .react-datepicker {

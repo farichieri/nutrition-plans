@@ -125,6 +125,13 @@ const getYesterday = (): string => {
   return result;
 };
 
+const convertToWeekDate = ({ range }: { range: Date[] }): string => {
+  const start = formatToUSDate(range[0]);
+  const end = formatToUSDate(range[1]);
+  const result = `${start}~${end}`;
+  return result;
+};
+
 const getThisWeek = ({
   userStartOfWeek,
 }: {
@@ -170,6 +177,7 @@ const getDayAndMonth = (date: string): string => {
 
 const getDaysOfWeek = (week: string): string[] | null => {
   try {
+    if (!week.includes("~")) return [week];
     const start = new Date(week.split("~")[0]);
     const end = new Date(week.split("~")[1]);
     const intervalDates = eachDayOfInterval({
@@ -208,4 +216,5 @@ export {
   getYesterday,
   isValidDate,
   restOneWeek,
+  convertToWeekDate,
 };

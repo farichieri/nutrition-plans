@@ -17,6 +17,7 @@ const ListColumn: FC<ListProps> = ({ list }) => {
         return (
           <div key={category}>
             <Collapsable
+              key={category}
               defaultState={foodsLength > 0 ? true : false}
               showed={
                 <div className="flex gap-2">

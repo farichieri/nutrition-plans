@@ -18,16 +18,17 @@ import {
   calculateKCALSRecommended,
 } from "../../../utils/calculateBodyData";
 import { addProgress, ProgressItem, setAddProgress } from "@/features/progress";
+import { BiSolidPieChartAlt2 } from "react-icons/bi";
 import { FC, useState } from "react";
 import { formatISO } from "date-fns";
+import { formatToUSDate } from "@/utils";
 import { getNutritionTargets } from "../../../utils/getNutritionTargets";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import InfoTooltip from "@/components/Tooltip/InfoTooltip";
 import NutritionTarget from "../NutritionTarget";
 import SubmitButton from "@/components/Buttons/SubmitButton";
-import { formatToUSDate } from "@/utils";
-import InfoTooltip from "@/components/Tooltip/InfoTooltip";
-import { BiSolidPieChartAlt2 } from "react-icons/bi";
+import { toast } from "react-hot-toast";
 
 interface Props {
   handleSubmit: Function;
@@ -131,9 +132,10 @@ const Results: FC<Props> = ({ handleSubmit }) => {
       }
     } catch (error) {
       console.log({ error });
+      setIsLoading(false);
+      setIsDisabled(false);
+      toast.error("Something happened!");
     }
-    setIsLoading(false);
-    setIsDisabled(false);
   };
 
   return (

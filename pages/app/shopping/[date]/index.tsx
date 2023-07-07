@@ -8,6 +8,7 @@ import {
 import { FoodGroup } from "@/features/foods";
 import { getDaysOfWeek, getIsWeek } from "@/utils";
 import { GetServerSideProps } from "next";
+import { ShoppingNav, ShoppingList } from "@/features/shopping";
 import { StartsOfWeek } from "@/types";
 import { useEffect, useState } from "react";
 import { UserAccount, selectAuthSlice } from "@/features/authentication";
@@ -16,7 +17,6 @@ import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 import Spinner from "@/components/Loader/Spinner";
 import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
-import { ShoppingNav, ShoppingList } from "@/features/shopping";
 
 interface Props {
   date?: string;

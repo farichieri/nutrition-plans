@@ -86,7 +86,7 @@ const RecipeCreate: FC<Props> = () => {
       const file = files[0];
       if (!file) return;
       const blob = URL.createObjectURL(file);
-      setValue("image", blob);
+      setValue("imageURL", blob);
       setNewImageFile(file);
     }
   };

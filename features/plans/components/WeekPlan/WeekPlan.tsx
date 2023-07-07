@@ -1,10 +1,8 @@
 import { FC } from "react";
 import { getDaysOfWeek } from "@/utils";
 import { selectAuthSlice } from "@/features/authentication";
-import { selectPlansSlice } from "@/features/plans";
 import { useSelector } from "react-redux";
 import Plan from "../common/Plan";
-import Spinner from "@/components/Loader/Spinner";
 
 interface Props {
   dateInterval: string;
@@ -12,25 +10,28 @@ interface Props {
 
 const WeekPlan: FC<Props> = ({ dateInterval }) => {
   const { user } = useSelector(selectAuthSlice);
-  const { isLoadingDiet } = useSelector(selectPlansSlice);
-  const week = getDaysOfWeek(dateInterval);
+  const datesInterval = getDaysOfWeek(dateInterval);
+  const isValidRange = datesInterval && datesInterval?.length <= 31;
 
-  if (!user || !user.startOfWeek) return <></>;
+  console.log({ datesInterval });
+  if (!user) return <></>;
 
   return (
     <div className="w-full">
-      {isLoadingDiet ? (
-        <div className="fixed inset-0 mt-auto flex h-screen w-screen justify-center">
-          <Spinner customClass="h-6 w-6 m-auto" />
-        </div>
-      ) : (
-        <div className="grid w-full gap-10 sm:grid-cols-fluid_md sm:gap-5 ">
-          {!week && "Invalid Week"}
-          {week?.map((date) => {
-            return <Plan date={date} key={date} />;
-          })}
-        </div>
-      )}
+      <div className="grid w-full gap-10 sm:grid-cols-fluid_md sm:gap-5 ">
+        {!datesInterval && "Invalid Dates Range"}
+        {isValidRange ? (
+          <>
+            {datesInterval?.map((date) => {
+              return <Plan date={date} key={date} />;
+            })}
+          </>
+        ) : (
+          <div className="fixed inset-0 mt-auto flex h-screen w-screen items-center justify-center">
+            <span>Invalid Dates Range</span>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

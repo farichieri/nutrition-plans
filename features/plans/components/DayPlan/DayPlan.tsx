@@ -6,7 +6,6 @@ import {
   PlanGenerator,
   selectPlansSlice,
   setDiet,
-  setIsLoadingDiet,
 } from "@/features/plans";
 import { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,20 +20,20 @@ const DayPlan: FC<Props> = ({ date }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
   const [isGeneratingPlan, setIsGeneratingPlan] = useState(false);
-  const { diets, isLoadingDiet, isCreatingDiet } =
-    useSelector(selectPlansSlice);
+  const { diets, isCreatingDiet } = useSelector(selectPlansSlice);
   const diet: Diet = diets[date];
   const planID = diet?.planID;
+  const [isLoadingDiet, setIsLoadingDiet] = useState<boolean>(false);
 
   const getDayDiet = async (date: string, user: UserAccount) => {
     if (!diet) {
-      dispatch(setIsLoadingDiet(true));
+      setIsLoadingDiet(true);
     }
     const res = await fetchDietByDate({ date, user });
     if (res.result === "success") {
       dispatch(setDiet(res.data));
     }
-    dispatch(setIsLoadingDiet(false));
+    setIsLoadingDiet(false);
   };
 
   useEffect(() => {
@@ -60,7 +59,7 @@ const DayPlan: FC<Props> = ({ date }) => {
               <span className="text-xl font-semibold capitalize text-green-500">
                 {planID?.replaceAll("_", " ")}
               </span>
-              <div className="grid w-full gap-10 sm:grid-cols-fluid_lg">
+              <div className="grid w-full gap-5 sm:grid-cols-fluid_lg sm:gap-5">
                 <div className="flex w-full flex-col rounded-md">
                   <MealCards diet={diet} date={date} user={user} />
                 </div>

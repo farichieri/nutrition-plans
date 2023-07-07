@@ -21,8 +21,8 @@ const RoundButton: FC<Props> = ({
       id={id}
       onClick={onClick}
       className={
-        customClass +
-        ` flex items-center justify-center rounded-full border border-transparent active:bg-slate-500/30 sm:hover:bg-slate-500/20 sm:active:border-black/10 sm:dark:active:border-white/10`
+        ` flex items-center justify-center rounded-full border border-transparent active:bg-slate-500/30 sm:hover:bg-slate-500/20 sm:active:border-black/10 sm:dark:active:border-white/10 ` +
+        customClass
       }
     >
       {children}

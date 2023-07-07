@@ -27,6 +27,7 @@ const ShoppingNav: FC<Props> = () => {
       {SHOPPING_PAGES.map((page) => {
         return (
           <Link
+            key={page.name}
             href={page.url}
             className={`${
               page.pathname.includes(router.route) ? selectedClass : ""

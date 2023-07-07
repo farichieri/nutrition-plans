@@ -48,7 +48,11 @@ const Plan: FC<Props> = ({ date }) => {
   });
 
   return (
-    <div className="flex w-full flex-col items-center justify-start gap-2 rounded-lg border bg-slate-200/50 p-2 dark:bg-gray-500/10 ">
+    <div
+      className={`flex w-full flex-col items-center justify-start gap-2 rounded-lg border bg-slate-200/50 p-2 dark:bg-gray-500/10 ${
+        dateF === "today" ? "border-red-400/50" : ""
+      }`}
+    >
       <div className="flex w-full items-center justify-between border-b  px-2 py-1">
         <Link href={`/app/${urlDate}`}>
           <span

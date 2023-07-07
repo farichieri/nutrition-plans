@@ -1,6 +1,7 @@
 import {
   addOneWeek,
   getDatePlusDays,
+  getDaysOfWeek,
   getIsToday,
   getIsWeek,
   getLastWeek,
@@ -21,6 +22,8 @@ import { MdArrowLeft, MdArrowRight } from "react-icons/md";
 import { selectAuthSlice } from "@/features/authentication";
 import { StartsOfWeek } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
+import DateSelector from "@/components/date-selector";
 import Link from "next/link";
 import RoundButton from "@/components/Buttons/RoundButton";
 
@@ -36,6 +39,7 @@ const selectedClass = "after:origin-bottom-left after:scale-x-100";
 
 const DaySelector: FC<Props> = ({ date, baseURL }) => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const { user } = useSelector(selectAuthSlice);
   const dateF = String(
     getRealDate({
@@ -43,7 +47,10 @@ const DaySelector: FC<Props> = ({ date, baseURL }) => {
       userStartOfWeek: user?.startOfWeek || StartsOfWeek.Sunday,
     })
   );
-  const isWeek = getIsWeek(dateF);
+  const datesInterval = getDaysOfWeek(dateF);
+  console.log({ datesInterval });
+  const isWeek = getIsWeek(dateF) && datesInterval?.length === 7;
+  const isDay = datesInterval?.length === 1;
   const isToday = getIsToday(dateF);
   const weekDates = isWeek && String(dateF).split("~");
 
@@ -148,8 +155,27 @@ const DaySelector: FC<Props> = ({ date, baseURL }) => {
     }
   };
 
+  const handleSelectRange = ({ date }: { date: string }): void => {
+    router.push(`${baseURL}${date}`);
+  };
+
   return (
-    <div className="m-auto flex w-full justify-between px-1 xs:px-2 s:px-3 sm:px-4 lg:px-10">
+    <div className="m-auto flex w-full items-center justify-between px-1 xs:px-2 s:px-3 sm:px-4 lg:px-10">
+      <div className="flex items-center gap-5 sm:gap-10 ">
+        <Link
+          href={todayRoute}
+          className={fixedButtonClass + (isDay ? selectedClass : "")}
+        >
+          Day
+        </Link>
+        <Link
+          href={thisWeekRoute}
+          className={fixedButtonClass + (isWeek ? selectedClass : "")}
+        >
+          Week
+        </Link>
+        <DateSelector handleSelectRange={handleSelectRange} />
+      </div>
       <div className="ml-2 flex flex-col items-center justify-center">
         <div className="flex w-full max-w-sm items-center justify-center xs:gap-5 lg:w-auto">
           <Link href={backRoute()}>
@@ -169,22 +195,6 @@ const DaySelector: FC<Props> = ({ date, baseURL }) => {
             </RoundButton>
           </Link>
         </div>
-      </div>
-      <div className="flex items-center gap-5 sm:gap-10 ">
-        <Link
-          href={todayRoute}
-          className={
-            fixedButtonClass + (!isWeek && isToday ? selectedClass : "")
-          }
-        >
-          Today
-        </Link>
-        <Link
-          href={thisWeekRoute}
-          className={fixedButtonClass + (isWeek ? selectedClass : "")}
-        >
-          This Week
-        </Link>
       </div>
     </div>
   );

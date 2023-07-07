@@ -16,6 +16,7 @@ import { DevTool } from "@hookform/devtools";
 import { emailRegex } from "@/constants";
 import { GoogleLoginButton, SubmitButton } from "@/components/Buttons";
 import { MdOutlineEmail, MdTrendingFlat } from "react-icons/md";
+import { persistor } from "@/store/store";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -70,6 +71,7 @@ const Signup = () => {
         }
       })
       .catch((error) => {
+        persistor.purge();
         dispatch(setLoginError());
         const errorCode = error.code;
         setErrorMessage(AUTH_ERRORS[errorCode]);
@@ -90,6 +92,7 @@ const Signup = () => {
         }
       })
       .catch((error) => {
+        persistor.purge();
         const errorCode = error.code;
         setErrorMessage(AUTH_ERRORS[errorCode]);
         setLoginError();

@@ -17,6 +17,7 @@ import { DevTool } from "@hookform/devtools";
 import { emailRegex } from "@/constants";
 import { GoogleLoginButton, SubmitButton } from "@/components/Buttons";
 import { MdOutlineEmail, MdTrendingFlat } from "react-icons/md";
+import { persistor } from "@/store/store";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
@@ -70,6 +71,7 @@ const Login = () => {
       })
       .catch((error) => {
         dispatch(setLoginError());
+        persistor.purge();
         const errorCode = error.code;
         setErrorMessage(AUTH_ERRORS[errorCode]);
       });
@@ -92,6 +94,7 @@ const Login = () => {
         }
       })
       .catch((error) => {
+        persistor.purge();
         const errorCode = error.code;
         setErrorMessage(AUTH_ERRORS[errorCode]);
         dispatch(setIsSigningUser(false));
