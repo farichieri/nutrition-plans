@@ -29,7 +29,7 @@ const InstallButton: FC<Props> = ({ deferredPrompt }) => {
       onClick={handlePrompt}
       className="rounded-md border border-green-500 bg-green-500/50 px-3 py-1.5 text-white hover:bg-green-500"
     >
-      <span>Install App</span>
+      <span>Install</span>
     </button>
   );
 };

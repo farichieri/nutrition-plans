@@ -21,7 +21,7 @@ const InstallModal: FC<Props> = () => {
 
   return (
     <Modal onClose={() => setCloseModal(false)}>
-      <div className="flex flex-col items-center justify-center gap-5 px-10 py-10">
+      <div className="flex flex-col items-center justify-center gap-5 px-10 pb-5 pt-10">
         <span className="text-xl font-semibold">
           App available for download!
         </span>

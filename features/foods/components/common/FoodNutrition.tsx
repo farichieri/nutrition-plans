@@ -11,6 +11,7 @@ import FoodNutritionDetail from "./FoodNutritionDetail";
 import Link from "next/link";
 import PieGraph from "@/components/PieGraph/PieGraph";
 import React, { FC, useEffect, useState } from "react";
+import { USDAIcon } from "@/assets";
 
 interface Props {
   food: Food;
@@ -67,7 +68,7 @@ const FoodNutrition: FC<Props> = ({ food, amount, scale }) => {
                 target="_blank"
                 className="capitalize text-green-500 opacity-50 duration-300 hover:opacity-100"
               >
-                {food.source.split(".")[1]}
+                {/* <USDAIcon /> */}
               </Link>
             </div>
           )}

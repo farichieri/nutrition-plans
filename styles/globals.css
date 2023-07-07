@@ -180,6 +180,9 @@ th {
   th {
     padding: 0.25rem;
   }
+  .react-datepicker__month-container {
+    float: none !important;
+  }
 }
 
 .react-datepicker-wrapper {
@@ -191,9 +194,13 @@ th {
   background-color: transparent;
   padding: 0.25rem 0.5rem;
   cursor: pointer;
-  border-bottom: #22c55e 2px solid;
-  outline: none;
+  border: #22c55e 1px solid;
+  border-radius: 10px;
+  padding: 0.5rem;
   line-height: normal;
+  background-color: #22c55e3d;
+  width: 200px;
+  height: 2.5rem;
 }
 
 /* .react-datepicker {

@@ -55,7 +55,7 @@ const CreateButton: FC<Props> = () => {
       )}
       <button
         onClick={handleOpen}
-        className="flex items-center gap-1 rounded-3xl border px-2 py-1 duration-100 hover:bg-slate-500/20 active:bg-slate-500/50"
+        className="flex h-10 items-center gap-1 rounded-3xl border px-4 py-1 duration-100 hover:bg-slate-500/20 active:bg-slate-500/50"
       >
         <MdCreate className="text-green-500" />
         <span className="btn btn-primary text-sm">Create</span>

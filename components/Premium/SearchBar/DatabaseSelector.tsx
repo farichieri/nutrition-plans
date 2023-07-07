@@ -1,11 +1,8 @@
 import { AppRoutes } from "@/utils/routes";
 import { FC } from "react";
 import { FilterQueries } from "@/types";
+import { Options, Option } from "@/components";
 import { useRouter } from "next/router";
-
-const fixedButtonClass =
-  "relative after:absolute border-b border-b text-sm sm:text-lg after:bottom-[-1px] after:left-0 after:h-[3px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-green-500 after:transition-transform after:duration-300 after:ease-in-out hover:after:origin-bottom-left hover:after:scale-x-100";
-const selectedClass = "after:origin-bottom-left after:scale-x-100";
 
 interface Props {
   queries: FilterQueries;
@@ -34,18 +31,23 @@ const DatabaseSelector: FC<Props> = ({ queries }) => {
   return (
     <div className="flex gap-10 px-2 sm:px-0">
       <div className="flex w-full items-center justify-start gap-5 sm:gap-10">
-        <button
-          onClick={handleSelect}
-          className={fixedButtonClass + (isAllDatabase ? selectedClass : "")}
-        >
-          All Database
-        </button>
-        <button
-          onClick={handleSelect}
-          className={fixedButtonClass + (isMyCreations ? selectedClass : "")}
-        >
-          My Creations
-        </button>
+        <Options>
+          <Option
+            position="left"
+            onClick={handleSelect}
+            selected={isAllDatabase}
+          >
+            All Foods
+          </Option>
+
+          <Option
+            position="right"
+            onClick={handleSelect}
+            selected={isMyCreations}
+          >
+            My Creations
+          </Option>
+        </Options>
       </div>
     </div>
   );
