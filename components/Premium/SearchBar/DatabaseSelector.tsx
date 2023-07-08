@@ -10,22 +10,20 @@ interface Props {
 
 const DatabaseSelector: FC<Props> = ({ queries }) => {
   const router = useRouter();
-  console.log({ router });
   const allDatabaseRoute = AppRoutes.search_foods;
   const myCreationsRoute = AppRoutes.search_my_creations;
   const isAllDatabase = router.route === allDatabaseRoute;
   const isMyCreations = router.route === myCreationsRoute;
 
-  const handleSelect = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-
-    const path = isAllDatabase ? myCreationsRoute : allDatabaseRoute;
-
-    let query = { ...queries };
-    router.replace({
-      pathname: path,
-      query,
-    });
+  const getQueries = () => {
+    const queryEntries = Object.entries(router.query);
+    if (queryEntries.length === 0) {
+      return "";
+    } else {
+      return `?${Object.entries(queries)
+        .map(([key, value]) => `${key}=${value}`)
+        .join("&")}`;
+    }
   };
 
   return (
@@ -34,16 +32,18 @@ const DatabaseSelector: FC<Props> = ({ queries }) => {
         <Options>
           <Option
             position="left"
-            onClick={handleSelect}
             selected={isAllDatabase}
+            isLink
+            href={`${allDatabaseRoute}${getQueries()}`}
           >
             All Foods
           </Option>
 
           <Option
             position="right"
-            onClick={handleSelect}
             selected={isMyCreations}
+            isLink
+            href={`${myCreationsRoute}${getQueries()}`}
           >
             My Creations
           </Option>

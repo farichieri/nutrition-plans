@@ -18,6 +18,7 @@ import Image from "next/image";
 import Input from "@/components/Form/Input";
 import NutritionInput from "@/components/Form/NutritionInput";
 import RoundButton from "@/components/Buttons/RoundButton";
+import { formatTwoDecimals } from "@/utils";
 
 interface MealInCardProps {
   food: Food;
@@ -100,7 +101,7 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
     }
   };
 
-  const scaleFormatted = Math.round(food.scaleAmount * 100) / 100;
+  const scaleFormatted = formatTwoDecimals(food.scaleAmount);
   return (
     <div className="flex w-full gap-1">
       {isEditing && (
@@ -138,7 +139,7 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
                   readOnly={!isEditing}
                 />
               ) : (
-                <span>{scaleFormatted}</span>
+                <span className="text-sm">{scaleFormatted}</span>
               )}
               {isEditing ? (
                 <FormSelect
@@ -153,7 +154,7 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
                   readOnly={!isEditing}
                 />
               ) : (
-                <span className="text-sm capitalize">
+                <span className="text-sm lowercase">
                   {`${food.scaleName.toLowerCase()}${
                     scaleFormatted > 1 ? "" : ""
                   }`}

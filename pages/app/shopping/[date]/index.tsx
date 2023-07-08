@@ -78,7 +78,6 @@ export default function Page({ params }: { params: Props }) {
       <PremiumNav hideScrolling={false} />
       <SubPremiumNav title={""} customClass="top-[var(--subnav-h)]">
         <DaySelector date={String(params.date)} baseURL={"/app/shopping/"} />
-        {/* <DateSelector /> */}
       </SubPremiumNav>
       <section className="mt-[var(--subnav-h)] flex w-full flex-col gap-5 p-2 sm:px-4">
         <ShoppingNav />

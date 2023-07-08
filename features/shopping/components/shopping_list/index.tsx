@@ -1,6 +1,7 @@
 import { CheckButton } from "@/components/Buttons";
 import { FC, useEffect, useState } from "react";
 import { FoodCategoriesEnum, FoodGroup } from "@/features/foods";
+import { formatTwoDecimals } from "@/utils";
 import { ShoppingListT, buildShoppingList } from "@/features/shopping";
 import Collapsable from "@/components/Layout/Collapsable";
 import Image from "next/image";
@@ -54,7 +55,7 @@ const ListColumn: FC<ListProps> = ({ list }) => {
                           <div className="flex flex-col">
                             <span>{food.name}</span>
                             <div className="flex gap-2">
-                              <span>{food.scaleAmount}</span>
+                              <span>{formatTwoDecimals(food.scaleAmount)}</span>
                               <span>{food.scaleName}</span>
                             </div>
                           </div>

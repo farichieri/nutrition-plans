@@ -18,11 +18,11 @@ import {
 import { BaseDatesEnum } from "@/types/datesTypes";
 import { FC, useEffect, useState } from "react";
 import { MdArrowLeft, MdArrowRight } from "react-icons/md";
+import { Options, Option } from "@/components";
 import { selectAuthSlice } from "@/features/authentication";
 import { StartsOfWeek } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import { Options, Option } from "@/components";
 import DateSelector from "@/components/date-selector";
 import Link from "next/link";
 import RoundButton from "@/components/Buttons/RoundButton";
@@ -164,20 +164,15 @@ const DaySelector: FC<Props> = ({ date, baseURL }) => {
     <div className="m-auto flex w-full items-center justify-between px-1 xs:px-1 s:px-1 sm:px-4 lg:px-10">
       <div className="flex items-center gap-2 sm:gap-10 ">
         <Options>
-          <Option
-            position="left"
-            selected={isDay}
-            onClick={() => router.push(todayRoute)}
-          >
-            {/* <Link href={todayRoute}>Day</Link> */}
+          <Option position="left" selected={isDay} isLink href={todayRoute}>
             Day
           </Option>
           <Option
             position="middle"
             selected={isWeek}
-            onClick={() => router.push(thisWeekRoute)}
+            isLink
+            href={thisWeekRoute}
           >
-            {/* <Link href={thisWeekRoute}>Week</Link> */}
             Week
           </Option>
           <Option
