@@ -24,3 +24,7 @@ const TwitterIcon: FC<Props> = ({ customClass }) => {
 };
 
 export default TwitterIcon;
+
+{
+  /* <style>.cls-1{fill:#004785;}.cls-2{fill:#005941;}</style> */
+}

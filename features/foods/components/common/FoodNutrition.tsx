@@ -64,11 +64,11 @@ const FoodNutrition: FC<Props> = ({ food, amount, scale }) => {
             <div className="flex items-center gap-1">
               <span>Source:</span>
               <Link
-                href={food.source}
+                href={"https://fdc.nal.usda.gov/"}
                 target="_blank"
                 className="capitalize text-green-500 opacity-50 duration-300 hover:opacity-100"
               >
-                {/* <USDAIcon /> */}
+                <USDAIcon customClass="h-6 w-6" />
               </Link>
             </div>
           )}
