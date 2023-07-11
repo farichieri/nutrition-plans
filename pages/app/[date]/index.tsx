@@ -17,18 +17,18 @@ import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
 
 interface Props {
-  date?: string;
+  date: string;
 }
-export default function Page({ params }: { params: Props }) {
+export default function Page({ date }: { date: Props }) {
   const dispatch = useDispatch();
   const { diets } = useSelector(selectPlansSlice);
   const { user } = useSelector(selectAuthSlice);
-  const date = getRealDate({
-    date: String(params.date),
+  const realDate = getRealDate({
+    date: String(date),
     userStartOfWeek: user?.startOfWeek || StartsOfWeek.Sunday,
   });
-  const diet = diets[date];
-  useRedirectToday(String(params.date));
+  const diet = diets[realDate];
+  useRedirectToday(String(date));
 
   useEffect(() => {
     if (diet) {
@@ -42,17 +42,17 @@ export default function Page({ params }: { params: Props }) {
   return (
     <PremiumLayout>
       <section className="mt-[calc(1_*_var(--nav-h))] flex w-full select-none flex-col sm:mt-[var(--nav-h)]">
-        {date && (
+        {realDate && (
           <>
             <PremiumNav hideScrolling={false} title="" />
             <SubPremiumNav title={""} customClass="top-[var(--subnav-h)]">
-              <DaySelector date={String(params.date)} baseURL={"/app/"} />
+              <DaySelector date={String(date)} baseURL={"/app/"} />
             </SubPremiumNav>
             <div className="p-2 sm:p-4 lg:p-5">
-              {getIsWeek(date) ? (
-                <WeekPlan dateInterval={date} />
+              {getIsWeek(realDate) ? (
+                <WeekPlan dateInterval={realDate} />
               ) : (
-                <DayPlan date={date} />
+                <DayPlan date={realDate} />
               )}
             </div>
           </>
@@ -63,14 +63,6 @@ export default function Page({ params }: { params: Props }) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  let params: Props = {};
-
-  if (context.params) {
-    Object.entries(context?.params).forEach((param) => {
-      if (params) {
-        params[param[0] as keyof Props] = String(param[1]);
-      }
-    });
-  }
-  return { props: { params } };
+  const date = context?.params?.date;
+  return { props: { date } };
 };

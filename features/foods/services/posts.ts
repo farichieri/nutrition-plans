@@ -1,4 +1,4 @@
-import { collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { collection, doc, setDoc } from "firebase/firestore";
 import { db, storage } from "@/services/firebase/firebase.config";
 import { DEFAULT_IMAGE } from "@/types/initialTypes";
 import { Food, FoodKind } from "@/features/foods";
@@ -7,6 +7,7 @@ import { getFoodsCollectionLength } from "./fetches";
 import { Result } from "@/types";
 import { User } from "@/features/authentication";
 import { uuidv4 } from "@firebase/util";
+import { formatISO } from "date-fns";
 
 const addFood = async (
   food: Food,
@@ -61,7 +62,7 @@ const addFood = async (
     const newFood: Food = {
       ...food,
       complexity: complexity,
-      dateCreated: serverTimestamp(),
+      dateCreated: formatISO(new Date()),
       id: docRef.id,
       nameLowerCase: food.name.toLowerCase(),
       imageURL: img,

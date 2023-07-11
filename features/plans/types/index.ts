@@ -21,7 +21,7 @@ export interface Diet {
   [id: string]: any;
   date: string | null;
   dateAvailable: string | null;
-  dateCreated: any | null;
+  dateCreated: string | null;
   description: string | null;
   id: string | null;
   meals: DietMealGroup;

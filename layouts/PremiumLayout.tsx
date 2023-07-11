@@ -34,7 +34,7 @@ export default function PremiumLayout({ children }: Props) {
 
   useEffect(() => {
     if (user) dispatch(setIsSigningUser(false));
-    if (isCreatingUser || !user?.isProfileCompleted) {
+    if (isCreatingUser || (user && !user?.isProfileCompleted)) {
       router.push(AppRoutes.create_user);
     }
   }, [user, isCreatingUser]);

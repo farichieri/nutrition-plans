@@ -1,6 +1,7 @@
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/services/firebase/firebase.config";
 import { User } from "@/features/authentication";
+import { formatISO } from "date-fns";
 
 const postFeedback = async (user: User, message: string) => {
   try {
@@ -8,7 +9,7 @@ const postFeedback = async (user: User, message: string) => {
     await addDoc(docRef, {
       user: user.id,
       message: message,
-      timestamp: serverTimestamp(),
+      dateCreated: formatISO(new Date()),
     });
   } catch (error) {
     return { error: `Error posting feedback: ${error}` };

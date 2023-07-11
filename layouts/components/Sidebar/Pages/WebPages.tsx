@@ -142,7 +142,7 @@ const WebPages: FC<Props> = () => {
           href={page.url}
           className={
             `${
-              page.pathname.includes(router.asPath) &&
+              page.pathname.includes(router.pathname) &&
               " bg-slate-500/30 font-semibold"
             } px-2` + fixedOptClass
           }

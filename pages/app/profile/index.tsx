@@ -112,3 +112,9 @@ export default function Page() {
     </PremiumLayout>
   );
 }
+
+export const getStaticProps = () => {
+  return {
+    props: {},
+  };
+};

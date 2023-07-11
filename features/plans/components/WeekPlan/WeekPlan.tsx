@@ -13,7 +13,6 @@ const WeekPlan: FC<Props> = ({ dateInterval }) => {
   const datesInterval = getDaysOfWeek(dateInterval);
   const isValidRange = datesInterval && datesInterval?.length <= 31;
 
-  console.log({ datesInterval });
   if (!user) return <></>;
 
   return (
