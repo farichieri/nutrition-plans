@@ -1,20 +1,17 @@
 import { DaySelector, getRealDate, useRedirectToday } from "@/features/plans";
 import {
-  ShoppingNav,
-  ShoppingList,
-  ShoppingDistributor,
-  ShoppingListFoods,
-  setShoppingListFoods,
   getDietShoppingFoods,
+  setShoppingListFoods,
+  ShoppingDistributor,
+  ShoppingList,
+  ShoppingNav,
 } from "@/features/shopping";
-import { firebaseAdmin } from "@/services/firebase/firebaseAdmin";
 import { getDaysOfWeek, getIsWeek } from "@/utils";
 import { GetServerSidePropsContext } from "next";
-import { getUserData } from "@/features/authentication";
+import { selectAuthSlice } from "@/features/authentication";
 import { StartsOfWeek } from "@/types";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import nookies from "nookies";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
@@ -23,19 +20,42 @@ interface Props {
   date?: string;
 }
 
-export default function Page({
-  params,
-  shoppingFoods,
-}: {
-  params: Props;
-  shoppingFoods: ShoppingListFoods;
-}) {
+export default function Page({ params }: { params: Props }) {
   const dispatch = useDispatch();
+  const { user } = useSelector(selectAuthSlice);
   useRedirectToday(String(params.date));
+  const date = params.date;
+  const realDate = getRealDate({
+    date: String(date),
+    userStartOfWeek: user?.startOfWeek || StartsOfWeek.Sunday,
+  });
+  const isWeek = getIsWeek(realDate);
+
+  const getData = async () => {
+    if (!user) return;
+    let datesInterval = [];
+    if (isWeek) {
+      datesInterval = getDaysOfWeek(realDate);
+    } else {
+      datesInterval = [realDate];
+    }
+
+    const res = await getDietShoppingFoods({
+      dates: datesInterval,
+      userID: user?.id,
+    });
+
+    if (res.result === "success") {
+      console.log("res.data", res.data);
+      dispatch(setShoppingListFoods(res.data));
+    }
+  };
 
   useEffect(() => {
-    dispatch(setShoppingListFoods(shoppingFoods));
-  }, [shoppingFoods]);
+    if (user) {
+      getData();
+    }
+  }, [params.date]);
 
   return (
     <PremiumLayout>
@@ -54,7 +74,6 @@ export default function Page({
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const cookies = nookies.get(context);
   let params: Props = {};
 
   if (context.params) {
@@ -65,47 +84,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     });
   }
 
-  const token = await firebaseAdmin.auth().verifyIdToken(cookies.token);
-  const { uid } = token;
-  const userID = uid;
-  const user = await firebaseAdmin.auth().getUser(uid);
-  const date = params.date;
-
-  if (!user || !date)
-    return {
-      props: {
-        params,
-        shoppingFoods: {},
-      },
-    };
-
-  const userDataRes = await getUserData({ userID });
-  if (userDataRes.result === "error") throw Error;
-
-  const userData = userDataRes.data;
-  const realDate = getRealDate({
-    date: String(date),
-    userStartOfWeek: userData?.startOfWeek || StartsOfWeek.Sunday,
-  });
-  const isWeek = getIsWeek(realDate);
-
-  let datesInterval: string[] = [];
-
-  if (isWeek) {
-    datesInterval = getDaysOfWeek(realDate);
-  } else {
-    datesInterval = [realDate];
-  }
-
-  const shoppingFoods = await getDietShoppingFoods({
-    dates: datesInterval,
-    userID,
-  });
-
   return {
     props: {
       params,
-      shoppingFoods,
     },
   };
 }

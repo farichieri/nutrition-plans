@@ -15,13 +15,12 @@ import { auth } from "@/services/firebase/firebase.config";
 import { fetchProgress, setProgress } from "@/features/progress";
 import { Inter } from "next/font/google";
 import { isAppVersionCorrect } from "@/utils";
-import { getIdToken, onIdTokenChanged } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import { selectLayoutSlice } from "@/store/slices/layoutSlice";
 import { Theme } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import Head from "next/head";
-import nookies from "nookies";
 
 const font = Inter({
   subsets: ["latin"],
@@ -83,18 +82,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     }
     if (!isVerifyingVersion) {
       // Verify User
-      onIdTokenChanged(auth, async (user) => {
+      onAuthStateChanged(auth, async (user) => {
         if (user) {
           const [userRes] = await Promise.all([getUser(user.uid)]);
           if (userRes.result === "success") {
             dispatch(setUser(userRes.data));
-            const token = await user.getIdToken();
-            nookies.set(undefined, "token", token, { path: "/" });
           } else {
             dispatch(setLoginError());
           }
         } else {
-          nookies.set(undefined, "token", "", { path: "/" });
           dispatch(setLoginError());
         }
       });
@@ -102,20 +98,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       dispatch(setIsSigningUser(true));
     }
   }, [isVerifyingVersion]);
-
-  useEffect(() => {
-    // Refresh token every 10 min.
-    const handle = setInterval(async () => {
-      console.log("Refreshing token...");
-      if (auth.currentUser) {
-        const token = await getIdToken(auth.currentUser);
-        nookies.set(undefined, "token", token, { path: "/" });
-      } else {
-        nookies.set(undefined, "token", "", { path: "/" });
-      }
-    }, 10 * 60 * 1000);
-    return () => clearInterval(handle);
-  }, []);
 
   return (
     <>

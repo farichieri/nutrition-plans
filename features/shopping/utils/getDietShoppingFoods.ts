@@ -1,5 +1,10 @@
 import { FoodGroup } from "@/features/foods";
-import { getDayDiet, getShoppingFoods } from "@/features/shopping";
+import {
+  ShoppingListFoods,
+  getDayDiet,
+  getShoppingFoods,
+} from "@/features/shopping";
+import { Result } from "@/types";
 
 const getDietShoppingFoods = async ({
   dates,
@@ -7,7 +12,7 @@ const getDietShoppingFoods = async ({
 }: {
   dates: string[];
   userID: string;
-}) => {
+}): Promise<Result<ShoppingListFoods, unknown>> => {
   try {
     const promises = dates.map((date) => getDayDiet({ date, userID }));
     const res = await Promise.all(promises);
@@ -17,8 +22,11 @@ const getDietShoppingFoods = async ({
         foods = { ...foods, ...r.data };
       }
     });
-    return getShoppingFoods({ foods });
-  } catch (error) {}
+    const data = getShoppingFoods({ foods });
+    return { result: "success", data };
+  } catch (error) {
+    return { result: "error", error };
+  }
 };
 
 export { getDietShoppingFoods };
