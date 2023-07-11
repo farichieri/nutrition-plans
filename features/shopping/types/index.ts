@@ -1,7 +1,7 @@
-import { FoodGroup, FoodScales, IngredientGroup } from "@/features/foods";
+import { FoodCategoriesEnum, FoodScales } from "@/features/foods";
 
 export interface ShoppingListFood {
-  category: string;
+  category: FoodCategoriesEnum;
   id: string;
   imageURL: string;
   isCupboard: boolean;
@@ -16,7 +16,9 @@ export interface ShoppingListFoods {
 }
 
 export interface ShoppingListT {
-  [foodCategory: string]: {
-    foods: ShoppingListFoods;
-  };
+  [foodCategory: string]: ShoppingListFoods;
+}
+
+export interface Cupboard {
+  [foodCategory: string]: ShoppingListFoods;
 }

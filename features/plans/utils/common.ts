@@ -72,7 +72,7 @@ const buildDiet = (
     type: type,
     water: {
       drunk: false,
-      litterDrunk: 0,
+      littersDrunk: 0,
       littersToDrink: waterRecommendedInLts,
     },
   };

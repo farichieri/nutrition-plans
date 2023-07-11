@@ -1,10 +1,4 @@
-import {
-  buildDiet,
-  generateMeals,
-  selectPlansSlice,
-  setDiet,
-  setIsGeneratingMeals,
-} from "@/features/plans";
+import { selectPlansSlice } from "@/features/plans/slice";
 import { FC } from "react";
 import { PlansEnum } from "@/types";
 import { selectAuthSlice } from "@/features/authentication";

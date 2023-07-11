@@ -175,7 +175,7 @@ const getDayAndMonth = (date: string): string => {
   return result;
 };
 
-const getDaysOfWeek = (week: string): string[] | null => {
+const getDaysOfWeek = (week: string): string[] | [] => {
   try {
     if (!week.includes("~")) return [week];
     const start = new Date(week.split("~")[0]);
@@ -187,7 +187,7 @@ const getDaysOfWeek = (week: string): string[] | null => {
     const dates = intervalDates.map((d) => formatToUSDate(d));
     return dates;
   } catch (error) {
-    return null;
+    return [];
   }
 };
 

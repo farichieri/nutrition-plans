@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { PURGE } from "redux-persist";
 import { RootState } from "@/store/store";
-import { UserAccount } from "@/features/authentication";
+import { User } from "@/features/authentication";
 
 interface AuthState {
   error: string | null;
@@ -10,7 +10,7 @@ interface AuthState {
   isSigningUser: boolean;
   isVerifyingUser: boolean;
   showInstallModal: boolean;
-  user: UserAccount | null;
+  user: User | null;
 }
 
 const initialState: AuthState = {
@@ -30,7 +30,7 @@ export const authSlice = createSlice({
     setIsVerifyingUser: (state) => {
       state.isVerifyingUser = true;
     },
-    setUser: (state, action: PayloadAction<UserAccount | null>) => {
+    setUser: (state, action: PayloadAction<User | null>) => {
       state.user = action.payload;
       state.isVerifyingUser = false;
       // state.isSigningUser = false;
@@ -43,7 +43,7 @@ export const authSlice = createSlice({
     },
     setUpdateUser: (
       state,
-      action: PayloadAction<{ user: UserAccount; fields: Partial<UserAccount> }>
+      action: PayloadAction<{ user: User; fields: Partial<User> }>
     ) => {
       const { fields, user } = action.payload;
       if (fields) {

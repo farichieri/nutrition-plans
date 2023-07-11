@@ -66,7 +66,7 @@ const NavBar: FC<Props> = () => {
             <Logo hideText={false} />
           </Link>
         </div>
-        <div className="hidden basis-1/3 items-center justify-center gap-4 text-xs font-medium sm:text-base lg:flex lg:gap-10">
+        <div className="hidden basis-1/3 items-center justify-center gap-4 text-xs font-medium sm:text-base md:flex md:gap-10">
           {!isLogin &&
             !isSignup &&
             PAGES.map((page) => (
@@ -85,7 +85,7 @@ const NavBar: FC<Props> = () => {
         </div>
         <div className="flex w-fit min-w-fit basis-1/3 items-center justify-end gap-4 text-xs xs:gap-5 sm:gap-10 sm:text-xl">
           {user ? (
-            <div className="hidden lg:flex">
+            <div className="hidden md:flex">
               <AvatarDropDown isApp={false} />
             </div>
           ) : (
@@ -109,7 +109,7 @@ const NavBar: FC<Props> = () => {
             </>
           )}
           {!isSignup && (
-            <div className="cursor-pointer lg:hidden">
+            <div className="cursor-pointer md:hidden">
               <button
                 className="flex items-center"
                 onClick={(e) => {
@@ -129,7 +129,7 @@ const NavBar: FC<Props> = () => {
         <div
           className={`${
             openMenu ? "left-0" : "left-full"
-          } absolute top-[var(--nav-h)] flex h-screen w-full flex-col items-center bg-primary-color px-4 shadow-sm transition-all duration-300 dark:shadow-cyan-100/20 lg:hidden `}
+          } absolute top-[var(--nav-h)] flex h-screen w-full flex-col items-center bg-primary-color px-4 shadow-sm transition-all duration-300 dark:shadow-cyan-100/20 md:hidden `}
         >
           <div className="flex w-full flex-col items-center justify-center gap-10 border-b text-base font-semibold">
             {user && (

@@ -1,11 +1,10 @@
 import {
   DayPlan,
   DaySelector,
-  selectPlansSlice,
-  updateDietNutrition,
   useRedirectToday,
   WeekPlan,
 } from "@/features/plans";
+import { selectPlansSlice, updateDietNutrition } from "@/features/plans/slice";
 import { getIsWeek } from "@/utils/dateFormat";
 import { getRealDate } from "@/features/plans/utils/dates";
 import { GetServerSideProps } from "next";

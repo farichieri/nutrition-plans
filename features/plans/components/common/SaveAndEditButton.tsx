@@ -1,23 +1,22 @@
 import {
   fetchDietByDate,
-  setDiet,
   Diet,
   updateDiet,
   deleteDiet,
-  setDeleteDiet,
 } from "@/features/plans";
+import { setDeleteDiet, setDiet } from "@/features/plans/slice";
 import { FC, useState } from "react";
 import { LuFileEdit, LuSave } from "react-icons/lu";
 import { MdDelete } from "react-icons/md";
 import { toast } from "react-hot-toast";
 import { useDispatch } from "react-redux";
-import { UserAccount } from "@/features/authentication";
+import { User } from "@/features/authentication";
 import Spinner from "@/components/Loader/Spinner";
 
 interface Props {
   diet: Diet;
   date: string;
-  user: UserAccount;
+  user: User;
   isEditing: boolean;
   setIsEditing: Function;
 }
@@ -46,7 +45,7 @@ const SaveAndEditButton: FC<Props> = ({
 
   const cancelChanges = async () => {
     setIsCanceling(true);
-    const res = await fetchDietByDate({ date, user });
+    const res = await fetchDietByDate({ date, userID: user.id });
     if (res.result === "success") dispatch(setDiet(res.data));
     setIsEditing(false);
     setIsCanceling(false);

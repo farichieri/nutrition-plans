@@ -1,10 +1,10 @@
 import { Result } from "@/types";
-import { UserAccount } from "@/features/authentication";
+import { User } from "@/features/authentication";
 import { UserMeals, UserMealsArr, updateUserMeal } from "@/features/meals";
 
 const updateMealsOrders = async (
   mealsReordered: UserMealsArr,
-  user: UserAccount
+  user: User
 ): Promise<Result<UserMeals, unknown>> => {
   try {
     if (!user?.id) throw new Error("No user found");

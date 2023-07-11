@@ -1,5 +1,5 @@
 import {
-  UserAccount,
+  User,
   UserGoals,
   WeightGoal,
   selectAuthSlice,

@@ -4,11 +4,11 @@ import {
   Diet,
   createDiet,
   postDietToUserDiets,
-  setDiet,
 } from "@/features/plans";
+import { setDiet } from "@/features/plans/slice";
 import { PlansEnum } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
-import { UserAccount, selectAuthSlice } from "@/features/authentication";
+import { User, selectAuthSlice } from "@/features/authentication";
 import { UserMeals, selectMealsSlice } from "@/features/meals";
 import React, { ChangeEvent, FC, useState } from "react";
 
@@ -50,7 +50,7 @@ const PlanGenerator: FC<Props> = ({ date, setIsGeneratingPlan }) => {
   const createAndSaveDiet = async (
     date: string,
     planID: PlansEnum,
-    user: UserAccount,
+    user: User,
     meals: UserMeals,
     type: PlanTypes
   ) => {

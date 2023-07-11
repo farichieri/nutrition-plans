@@ -1,4 +1,3 @@
-import { AppRoutes } from "@/utils";
 import { auth } from "@/services/firebase/firebase.config";
 import { MdClose, MdOpenInNew, MdPerson, MdSettings } from "react-icons/md";
 import { persistor } from "@/store/store";
@@ -32,9 +31,9 @@ export default function Page() {
   return (
     <PremiumLayout>
       <section className="fixed inset-0 z-[300] bg-primary-color">
-        <Link href={AppRoutes.today}>
+        <span onClick={() => router.back()}>
           <MdClose className="absolute left-3 top-3 h-6 w-6" />
-        </Link>
+        </span>
         <div className="flex w-screen flex-col py-12">
           <div className="flex items-center justify-between px-4 ">
             <div className="flex flex-col items-start justify-center  opacity-60">

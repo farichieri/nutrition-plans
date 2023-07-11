@@ -1,11 +1,10 @@
+import { updateDiet, Diet } from "@/features/plans";
 import {
-  updateFoodInDiet,
   selectPlansSlice,
-  removeFoodInDiet,
   toggleEatenFood,
-  updateDiet,
-  Diet,
-} from "@/features/plans";
+  removeFoodInDiet,
+  updateFoodInDiet,
+} from "@/features/plans/slice";
 import { CheckButton } from "@/components/Buttons";
 import { FC } from "react";
 import { Food, getScaleOptions, mergeScales } from "@/features/foods";

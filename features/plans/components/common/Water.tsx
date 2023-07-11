@@ -19,7 +19,7 @@ const Water: FC<Props> = ({ diet, isEditing }) => {
 
   if (!user || !water) return <></>;
 
-  const { litterDrunk, littersToDrink, drunk } = water;
+  const { littersDrunk, littersToDrink, drunk } = water;
   const { measurementUnit } = user;
 
   const handleCheck = async (event: React.MouseEvent) => {

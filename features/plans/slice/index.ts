@@ -4,7 +4,6 @@ import {
   PlanTypes,
   DietMeal,
   PlanDateType,
-  DietWater,
 } from "@/features/plans/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Food, FoodGroup, FoodGroupArray } from "@/features/foods/types";
@@ -15,11 +14,7 @@ import { getDietNutrition, getIsWeek, getToday } from "@/utils";
 interface PlansSlice {
   date: string;
   diets: DietGroup;
-  isCreatingDiet: boolean;
-  isEditingDiet: boolean;
   isGeneratingMeals: boolean;
-  isLoadingDiet: boolean;
-  isSavingDiet: boolean;
   planDateType: PlanDateType;
   planType: PlanTypes;
 }
@@ -27,11 +22,7 @@ interface PlansSlice {
 const initialState: PlansSlice = {
   date: getToday(),
   diets: {},
-  isCreatingDiet: false,
-  isEditingDiet: false,
   isGeneratingMeals: false,
-  isLoadingDiet: true,
-  isSavingDiet: false,
   planDateType: PlanDateType.day,
   planType: PlanTypes.automatically,
 };
@@ -54,7 +45,6 @@ export const plansSlice = createSlice({
       if (date && plan_id) {
         state.diets[date] = action.payload;
       }
-      state.isLoadingDiet = false;
     },
     addFoodToDiet: (
       state,
@@ -135,9 +125,6 @@ export const plansSlice = createSlice({
       if (!id) return;
       state.diets[id].water.drunk = value;
     },
-    setIsCreatingDiet: (state, action: PayloadAction<boolean>) => {
-      state.isCreatingDiet = action.payload;
-    },
     setDeleteDiet: (state, action: PayloadAction<Diet>) => {
       const { id } = action.payload;
       if (id) {
@@ -146,21 +133,6 @@ export const plansSlice = createSlice({
     },
     setIsGeneratingMeals: (state, action: PayloadAction<boolean>) => {
       state.isGeneratingMeals = action.payload;
-    },
-    setPlanType: (state, action: PayloadAction<PlanTypes>) => {
-      state.planType = action.payload;
-    },
-    setIsEditingDiet: (state, action: PayloadAction<boolean>) => {
-      state.isEditingDiet = action.payload;
-    },
-    setIsSavingDiet: (state, action: PayloadAction<boolean>) => {
-      state.isSavingDiet = action.payload;
-    },
-    setIsLoadingDiet: (state, action: PayloadAction<boolean>) => {
-      state.isLoadingDiet = action.payload;
-    },
-    setPlanDateType: (state, action: PayloadAction<PlanDateType>) => {
-      state.planDateType = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -175,14 +147,8 @@ export const {
   removeFoodInDiet,
   setDeleteDiet,
   setDiet,
-  setIsCreatingDiet,
-  setIsEditingDiet,
   setIsGeneratingMeals,
-  setIsLoadingDiet,
-  setIsSavingDiet,
-  setPlanDateType,
   setPlansDate,
-  setPlanType,
   toggleDrunkWater,
   toggleEatenFood,
   updateDietMealFoodsOrder,

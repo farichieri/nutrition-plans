@@ -13,6 +13,7 @@ import mealsSlice from "@/features/meals/slice";
 import plansSlice from "@/features/plans/slice";
 import progressSlice from "@/features/progress/slice";
 import settingsSlice from "@/features/settings/slice";
+import shoppingSlice from "@/features/shopping/slice";
 
 export function createPersistStorage(): WebStorage {
   const isServer = typeof window === "undefined";
@@ -51,6 +52,7 @@ const persistConfig = {
     "createDiet",
     "meals",
     "favorites",
+    "shopping",
   ],
 };
 
@@ -63,6 +65,7 @@ const rootReducer = combineReducers({
   meals: mealsSlice,
   progress: progressSlice,
   settings: settingsSlice,
+  shopping: shoppingSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

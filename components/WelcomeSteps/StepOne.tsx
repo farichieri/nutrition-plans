@@ -1,5 +1,5 @@
 import {
-  UserAccount,
+  User,
   UserSteps,
   setUpdateUser,
   updateUser,
@@ -10,7 +10,7 @@ import Confetti from "../Confetti";
 import SubmitButton from "../Buttons/SubmitButton";
 
 interface Props {
-  user: UserAccount;
+  user: User;
 }
 
 const StepOne: FC<Props> = ({ user }) => {
@@ -24,10 +24,10 @@ const StepOne: FC<Props> = ({ user }) => {
     setIsLoading(true);
     setIsDisabled(true);
     try {
-      const fields = {welcomeStep: UserSteps.Two}
-      const updateUserRes = await updateUser({user, fields});
+      const fields = { welcomeStep: UserSteps.Two };
+      const updateUserRes = await updateUser({ user, fields });
       if (updateUserRes.result === "success") {
-        dispatch(setUpdateUser({user, fields}));
+        dispatch(setUpdateUser({ user, fields }));
         setIsLoading(false);
         setIsDisabled(false);
       }

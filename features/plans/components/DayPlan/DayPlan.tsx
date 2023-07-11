@@ -4,12 +4,11 @@ import {
   MealCards,
   Nutrition,
   PlanGenerator,
-  selectPlansSlice,
-  setDiet,
 } from "@/features/plans";
+import { selectPlansSlice, setDiet } from "@/features/plans/slice";
 import { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { UserAccount, selectAuthSlice } from "@/features/authentication";
+import { User, selectAuthSlice } from "@/features/authentication";
 import Spinner from "@/components/Loader/Spinner";
 
 interface Props {
@@ -20,16 +19,16 @@ const DayPlan: FC<Props> = ({ date }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
   const [isGeneratingPlan, setIsGeneratingPlan] = useState(false);
-  const { diets, isCreatingDiet } = useSelector(selectPlansSlice);
+  const { diets } = useSelector(selectPlansSlice);
   const diet: Diet = diets[date];
   const planID = diet?.planID;
   const [isLoadingDiet, setIsLoadingDiet] = useState<boolean>(false);
 
-  const getDayDiet = async (date: string, user: UserAccount) => {
+  const getDayDiet = async (date: string, user: User) => {
     if (!diet) {
       setIsLoadingDiet(true);
     }
-    const res = await fetchDietByDate({ date, user });
+    const res = await fetchDietByDate({ date, userID: user.id });
     if (res.result === "success") {
       dispatch(setDiet(res.data));
     }
@@ -70,7 +69,7 @@ const DayPlan: FC<Props> = ({ date }) => {
                 )}
               </div>
             </div>
-          ) : isCreatingDiet ? (
+          ) : false ? (
             <div className="fixed inset-0 mt-auto flex h-screen w-screen flex-col items-center justify-center gap-2">
               <Spinner customClass="h-6 w-6" />
               <span>Generating Plan...</span>

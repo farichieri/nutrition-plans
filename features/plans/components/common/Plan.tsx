@@ -2,9 +2,9 @@ import { convertDateToDateString, convertDayToUrlDate } from "../../utils";
 import { FC, useEffect, useState } from "react";
 import { fetchDietByDate } from "../../services";
 import { ManualMeals } from "..";
-import { selectPlansSlice, setDiet } from "../../slice";
+import { selectPlansSlice, setDiet } from "@/features/plans/slice";
 import { useDispatch, useSelector } from "react-redux";
-import { UserAccount, selectAuthSlice } from "@/features/authentication";
+import { User, selectAuthSlice } from "@/features/authentication";
 import Link from "next/link";
 import PlanGenerator from "./PlanGenerator";
 import Spinner from "@/components/Loader/Spinner";
@@ -21,11 +21,11 @@ const Plan: FC<Props> = ({ date }) => {
   const [isLoadingDiet, setIsLoadingDiet] = useState(false);
   const diet = diets[date];
 
-  const getDayDiet = async (date: string, user: UserAccount) => {
+  const getDayDiet = async (date: string, user: User) => {
     if (!diet) {
       setIsLoadingDiet(true);
     }
-    const res = await fetchDietByDate({ date, user });
+    const res = await fetchDietByDate({ date, userID: user.id });
     if (res.result === "success") {
       dispatch(setDiet(res.data));
     }

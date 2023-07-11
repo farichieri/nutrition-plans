@@ -63,7 +63,7 @@ const CollapsedPages: FC<Props> = () => {
           href={page.url}
           className={`${
             page.pathname.includes(router.pathname) && "bg-slate-500/30  "
-          } text-md hover:opacity-7 flex w-full flex-col items-center gap-1 rounded-lg border border-transparent px-1.5 py-1 text-center text-base font-medium duration-300 hover:bg-slate-500/30 active:border-gray-400 dark:active:border-white sm:text-lg`}
+          } text-md hover:opacity-7 flex w-full flex-col items-center gap-1 rounded-lg border border-transparent px-1.5 py-3 text-center text-base font-medium duration-300 hover:bg-slate-500/30 active:border-gray-400 dark:active:border-white sm:text-lg`}
         >
           {page.icon}
           <span className="text-xs">{page.name}</span>

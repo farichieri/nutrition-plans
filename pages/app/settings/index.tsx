@@ -13,7 +13,7 @@ interface Props {}
 const SettingsNav: FC<Props> = ({}) => {
   const router = useRouter();
   const windowWidth = useWindowWidth();
-  const isMobile = windowWidth < 1024;
+  const isMobile = windowWidth < 768;
   const isSettingsRoute = router.asPath === "/app/settings";
 
   const SETTINGS_PAGES = [

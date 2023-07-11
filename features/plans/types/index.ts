@@ -60,14 +60,14 @@ export interface DietGroup {
 
 export interface DietWater {
   drunk: boolean;
-  litterDrunk: number;
+  littersDrunk: number;
   littersToDrink: number;
 }
 
 // Initials
 export const NewDietWater: DietWater = {
   drunk: false,
-  litterDrunk: 0,
+  littersDrunk: 0,
   littersToDrink: 0,
 };
 

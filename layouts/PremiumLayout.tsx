@@ -30,7 +30,7 @@ export default function PremiumLayout({ children }: Props) {
     useSelector(selectAuthSlice);
   const isOnline = useOnlineStatus();
   const windowWidth = useWindowWidth();
-  const isMobile = windowWidth < 1024;
+  const isMobile = windowWidth < 768;
 
   useEffect(() => {
     if (user) dispatch(setIsSigningUser(false));
@@ -59,7 +59,7 @@ export default function PremiumLayout({ children }: Props) {
           <Sidebar />
           <div
             className={`flex flex-col pt-[var(--nav-h)] duration-0 ease-in-out ${
-              sidebarOpen ? "lg:pl-64 " : "lg:pl-20 "
+              sidebarOpen ? "md:pl-64 " : "md:pl-20 "
             } ${isMobile ? "pb-[var(--mobile-sidenav-h)]" : ""}`}
           >
             {children}

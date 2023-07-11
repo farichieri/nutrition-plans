@@ -10,11 +10,8 @@ import {
   getYesterday,
   restOneWeek,
 } from "@/utils";
-import {
-  convertDateToDateString,
-  getRealDate,
-  setPlansDate,
-} from "@/features/plans";
+import { convertDateToDateString, getRealDate } from "@/features/plans";
+import { setPlansDate } from "@/features/plans/slice";
 import { BaseDatesEnum } from "@/types/datesTypes";
 import { FC, useEffect, useState } from "react";
 import { MdArrowLeft, MdArrowRight } from "react-icons/md";
@@ -161,7 +158,7 @@ const DaySelector: FC<Props> = ({ date, baseURL }) => {
   };
 
   return (
-    <div className="m-auto flex w-full items-center justify-between px-1 xs:px-1 s:px-1 sm:px-4 lg:px-10">
+    <div className="m-auto flex w-full items-center justify-between px-1">
       <div className="flex items-center gap-2 sm:gap-10 ">
         <Options>
           <Option position="left" selected={isDay} isLink href={todayRoute}>

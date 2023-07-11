@@ -1,8 +1,8 @@
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "@/services/firebase/firebase.config";
-import { UserAccount } from "@/features/authentication";
+import { User } from "@/features/authentication";
 
-const postFeedback = async (user: UserAccount, message: string) => {
+const postFeedback = async (user: User, message: string) => {
   try {
     const docRef = collection(db, "feedbacks");
     await addDoc(docRef, {

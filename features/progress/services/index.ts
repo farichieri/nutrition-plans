@@ -8,11 +8,11 @@ import {
 } from "firebase/firestore";
 import { db } from "../../../services/firebase/firebase.config";
 import { Result } from "@/types";
-import { UserAccount } from "@/features/authentication";
+import { User } from "@/features/authentication";
 import { ProgressItem, Progress } from "@/features/progress";
 
 const addProgress = async (
-  user: UserAccount,
+  user: User,
   progress: ProgressItem
 ): Promise<Result<ProgressItem, unknown>> => {
   try {
@@ -25,7 +25,7 @@ const addProgress = async (
 };
 
 const fetchProgress = async (
-  user: UserAccount
+  user: User
 ): Promise<Result<Progress, unknown>> => {
   try {
     let data: Progress = {};
@@ -42,7 +42,7 @@ const fetchProgress = async (
 };
 
 const deleteProgress = async (
-  user: UserAccount,
+  user: User,
   progress: ProgressItem
 ): Promise<Result<boolean, unknown>> => {
   try {
@@ -56,7 +56,7 @@ const deleteProgress = async (
 };
 
 const updateProgress = async (
-  user: UserAccount,
+  user: User,
   progress: ProgressItem
 ): Promise<Result<ProgressItem, unknown>> => {
   try {

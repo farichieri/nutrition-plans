@@ -3,7 +3,7 @@ import { Diet, DietMealGroup } from "@/features/plans";
 import { doc, setDoc } from "firebase/firestore";
 import { getToday } from "@/utils/dateFormat";
 import { PlansEnum, Result } from "@/types";
-import { UserAccount } from "@/features/authentication";
+import { User } from "@/features/authentication";
 
 const postDietToUserDiets = async ({
   diet,
@@ -14,7 +14,7 @@ const postDietToUserDiets = async ({
   diet: Diet;
   planID: PlansEnum;
   date: string;
-  user: UserAccount;
+  user: User;
 }): Promise<Result<Diet, unknown>> => {
   try {
     const docRef = doc(db, "users", user.id, "diets", date);

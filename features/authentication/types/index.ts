@@ -6,7 +6,7 @@ import {
   SubscriptionState,
 } from "@/types";
 
-export interface UserAccount {
+export interface User {
   bodyData: UserBodyData;
   createdAt: string | undefined;
   displayName: string;
@@ -160,7 +160,7 @@ export const initialWeightGoal: WeightGoal = {
   dueDate: null,
 };
 
-export const newAccount: UserAccount = {
+export const newAccount: User = {
   bodyData: newBodyData,
   createdAt: "",
   displayName: "",

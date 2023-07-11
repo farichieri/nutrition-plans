@@ -6,7 +6,7 @@ import {
 } from "@/features/meals";
 import {
   setUser,
-  generateUserObject,
+  getUser,
   selectAuthSlice,
   setLoginError,
   setIsSigningUser,
@@ -15,21 +15,17 @@ import { auth } from "@/services/firebase/firebase.config";
 import { fetchProgress, setProgress } from "@/features/progress";
 import { Inter } from "next/font/google";
 import { isAppVersionCorrect } from "@/utils";
-import { onAuthStateChanged } from "firebase/auth";
+import { getIdToken, onIdTokenChanged } from "firebase/auth";
 import { selectLayoutSlice } from "@/store/slices/layoutSlice";
 import { Theme } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import Head from "next/head";
+import nookies from "nookies";
 
 const font = Inter({
   subsets: ["latin"],
 });
-
-// const font = Roboto({
-//   weight: ["100", "300", "400", "500", "700", "900"],
-//   subsets: ["latin"],
-// });
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const dispatch = useDispatch();
@@ -37,6 +33,25 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const [_theme, setTheme] = useState<Theme | null>(null);
   const { user } = useSelector(selectAuthSlice);
   const [isVerifyingVersion, setIsVerifyingVersion] = useState(true);
+
+  useEffect(() => {
+    if (
+      theme === "dark" ||
+      (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)
+    ) {
+      document.documentElement.classList.add("dark");
+      document.documentElement
+        .querySelector('meta[name="theme-color"]')
+        ?.setAttribute("content", "#111010");
+      setTheme(Theme.Dark);
+    } else {
+      document.documentElement.classList.add("light");
+      document.documentElement
+        .querySelector('meta[name="theme-color"]')
+        ?.setAttribute("content", "#fff");
+      setTheme(Theme.Light);
+    }
+  }, [theme]);
 
   useEffect(() => {
     if (user) {
@@ -68,15 +83,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     }
     if (!isVerifyingVersion) {
       // Verify User
-      onAuthStateChanged(auth, async (user) => {
+      onIdTokenChanged(auth, async (user) => {
         if (user) {
-          const [userRes] = await Promise.all([generateUserObject(user)]);
+          const [userRes] = await Promise.all([getUser(user.uid)]);
           if (userRes.result === "success") {
             dispatch(setUser(userRes.data));
+            const token = await user.getIdToken();
+            nookies.set(undefined, "token", token, { path: "/" });
           } else {
             dispatch(setLoginError());
           }
         } else {
+          nookies.set(undefined, "token", "", { path: "/" });
           dispatch(setLoginError());
         }
       });
@@ -86,23 +104,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }, [isVerifyingVersion]);
 
   useEffect(() => {
-    if (
-      theme === "dark" ||
-      (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
-      document.documentElement.classList.add("dark");
-      document.documentElement
-        .querySelector('meta[name="theme-color"]')
-        ?.setAttribute("content", "#111010");
-      setTheme(Theme.Dark);
-    } else {
-      document.documentElement.classList.add("light");
-      document.documentElement
-        .querySelector('meta[name="theme-color"]')
-        ?.setAttribute("content", "#fff");
-      setTheme(Theme.Light);
-    }
-  }, [theme]);
+    // Refresh token every 10 min.
+    const handle = setInterval(async () => {
+      console.log("Refreshing token...");
+      if (auth.currentUser) {
+        const token = await getIdToken(auth.currentUser);
+        nookies.set(undefined, "token", token, { path: "/" });
+      } else {
+        nookies.set(undefined, "token", "", { path: "/" });
+      }
+    }, 10 * 60 * 1000);
+    return () => clearInterval(handle);
+  }, []);
 
   return (
     <>

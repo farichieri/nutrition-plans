@@ -203,12 +203,12 @@ th {
   height: 2.5rem;
 }
 
-/* .react-datepicker {
-  border: 1px solid green !important;
+/* Hide scrollbar in mobile view */
+@media screen and (max-width: 768px) {
+  ::-webkit-scrollbar {
+    display: none;
+    -ms-overflow-style: none;
+    scrollbar-width: none; /* Firefox */
+    -webkit-appearance: none;
+  }
 }
-
-.react-datepicker__month-container {
-}
-
-.react-datepicker__header {
-} */

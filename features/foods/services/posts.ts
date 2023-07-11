@@ -5,14 +5,14 @@ import { Food, FoodKind } from "@/features/foods";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { getFoodsCollectionLength } from "./fetches";
 import { Result } from "@/types";
-import { UserAccount } from "@/features/authentication";
+import { User } from "@/features/authentication";
 import { uuidv4 } from "@firebase/util";
 
 const addFood = async (
   food: Food,
   kind: FoodKind,
   newImage: File | undefined,
-  user: UserAccount
+  user: User
 ): Promise<Result<Food, unknown>> => {
   try {
     if (!food.name) throw new Error("No name provided");

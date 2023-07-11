@@ -1,5 +1,5 @@
 import {
-  UserAccount,
+  User,
   selectAuthSlice,
   setUpdateUser,
   updateUser,

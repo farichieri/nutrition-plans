@@ -1,11 +1,12 @@
 import {
-  UserAccount,
+  User,
   selectAuthSlice,
   setIsCreatingUser,
   setUpdateUser,
   updateUser,
 } from "@/features/authentication";
 import {
+  createDefaultCupboard,
   createDefaultMealsSettings,
   createDefaultUserMeals,
   setUserMeals,
@@ -29,6 +30,7 @@ import InfoTooltip from "@/components/Tooltip/InfoTooltip";
 import NutritionTarget from "../NutritionTarget";
 import SubmitButton from "@/components/Buttons/SubmitButton";
 import { toast } from "react-hot-toast";
+import { setCupboardFoods } from "@/features/shopping";
 
 interface Props {
   handleSubmit: Function;
@@ -110,25 +112,34 @@ const Results: FC<Props> = ({ handleSubmit }) => {
           bodyData: bodyDataUpdated,
         },
       };
-      const [updateUserRes, addProgressRes, mealSettings, addMeals] =
+      const [addProgressRes, mealSettings, addMeals, addCupboard] =
         await Promise.all([
-          updateUser({ user, fields }),
           addFirstProgress(),
           createDefaultMealsSettings(user),
           createDefaultUserMeals(user),
+          createDefaultCupboard(user),
         ]);
 
       if (
-        updateUserRes.result === "success" &&
         addProgressRes.result === "success" &&
         mealSettings.result === "success" &&
-        addMeals.result === "success"
+        addMeals.result === "success" &&
+        addCupboard.result === "success"
       ) {
         dispatch(setUserMealsSettings(mealSettings.data));
         dispatch(setUserMeals(addMeals.data));
         dispatch(setUpdateUser({ user, fields }));
         dispatch(setIsCreatingUser(false));
-        handleSubmit();
+        dispatch(setCupboardFoods(addCupboard.data));
+
+        const updateUserRes = await updateUser({ user, fields });
+        if (updateUserRes.result === "success") {
+          handleSubmit();
+        } else {
+          throw Error;
+        }
+      } else {
+        throw Error;
       }
     } catch (error) {
       console.log({ error });

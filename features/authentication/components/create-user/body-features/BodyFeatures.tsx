@@ -1,5 +1,5 @@
 import {
-  UserAccount,
+  User,
   UserActivities,
   UserGenders,
   getWater,

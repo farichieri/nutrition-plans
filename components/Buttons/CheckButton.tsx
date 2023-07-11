@@ -1,6 +1,6 @@
 import { FC, MouseEventHandler } from "react";
-import RoundButton from "./RoundButton";
 import { MdCheckCircle, MdRadioButtonUnchecked } from "react-icons/md";
+import RoundButton from "./RoundButton";
 
 interface Props {
   onClick: MouseEventHandler;

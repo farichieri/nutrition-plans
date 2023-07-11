@@ -11,18 +11,17 @@ import { db } from "@/services/firebase/firebase.config";
 import { Food, FoodGroupArray } from "@/features/foods";
 import { maxComplexity, Diet } from "@/features/plans";
 import { PlansEnum, Result } from "@/types";
-import { UserAccount } from "@/features/authentication";
 import { UserMeal } from "@/features/meals";
 
 const fetchDietByDate = async ({
   date,
-  user,
+  userID,
 }: {
   date: string;
-  user: UserAccount;
+  userID: string;
 }): Promise<Result<Diet, unknown>> => {
   try {
-    const docRef = doc(db, "users", user.id, "diets", date);
+    const docRef = doc(db, "users", userID, "diets", date);
     const querySnapshot = await getDoc(docRef);
     const data: any = querySnapshot.data();
     if (!data) throw new Error("No data fetched.");

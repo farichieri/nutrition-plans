@@ -17,7 +17,9 @@ import {
 } from "@/features/meals/types";
 import { db } from "../../../services/firebase/firebase.config";
 import { Result } from "@/types";
-import { UserAccount } from "@/features/authentication";
+import { User } from "@/features/authentication";
+import { buildCupboard } from "@/features/shopping/utils/buildCupboard";
+import { Cupboard, ShoppingListFoods } from "@/features/shopping";
 
 const fetchMeals = async (
   userID: string
@@ -55,7 +57,7 @@ const fetchMealsSettings = async (
   }
 };
 
-const createMealSetting = async (user: UserAccount, mealSetting: UserMeal) => {
+const createMealSetting = async (user: User, mealSetting: UserMeal) => {
   try {
     const newMealSettingRef = doc(
       collection(db, "users", user.id, "settings", "mealsSettings", "meals")
@@ -73,7 +75,7 @@ const createMealSetting = async (user: UserAccount, mealSetting: UserMeal) => {
 };
 
 const updateMealSetting = async (
-  user: UserAccount,
+  user: User,
   mealSetting: UserMeal
 ): Promise<Result<UserMeal, unknown>> => {
   try {
@@ -95,7 +97,7 @@ const updateMealSetting = async (
   }
 };
 
-const createUserMeal = async (user: UserAccount, mealSetting: UserMeal) => {
+const createUserMeal = async (user: User, mealSetting: UserMeal) => {
   try {
     const newUserMeal = doc(collection(db, "users", user.id, "meals"));
     const newMealSetting = {
@@ -111,7 +113,7 @@ const createUserMeal = async (user: UserAccount, mealSetting: UserMeal) => {
 };
 
 const deleteUserMeal = async (
-  user: UserAccount,
+  user: User,
   mealSetting: UserMeal
 ): Promise<Result<UserMeal, unknown>> => {
   try {
@@ -126,7 +128,7 @@ const deleteUserMeal = async (
 };
 
 const deleteMealSetting = async (
-  user: UserAccount,
+  user: User,
   mealSetting: UserMeal
 ): Promise<Result<UserMeal, unknown>> => {
   try {
@@ -149,7 +151,7 @@ const deleteMealSetting = async (
 };
 
 const updateUserMeal = async (
-  user: UserAccount,
+  user: User,
   userMeal: UserMeal
 ): Promise<Result<UserMeal, unknown>> => {
   try {
@@ -207,7 +209,7 @@ const defaultMeals: UserMealsArr = [
 ];
 
 const createDefaultMealsSettings = async (
-  user: UserAccount
+  user: User
 ): Promise<Result<UserMeals, unknown>> => {
   try {
     const promises = defaultMeals.map(async (meal) => {
@@ -226,7 +228,7 @@ const createDefaultMealsSettings = async (
 };
 
 const createDefaultUserMeals = async (
-  user: UserAccount
+  user: User
 ): Promise<Result<UserMeals, unknown>> => {
   try {
     const promises = defaultMeals.map(async (meal, index) => {
@@ -249,6 +251,20 @@ const createDefaultUserMeals = async (
   }
 };
 
+const createDefaultCupboard = async (
+  user: User
+): Promise<Result<ShoppingListFoods, unknown>> => {
+  try {
+    const cupboardRef = doc(db, "users", user.id, "cupboard", "uniqueCupboard");
+    const cupboard = buildCupboard();
+    await setDoc(cupboardRef, cupboard);
+    return { result: "success", data: cupboard };
+  } catch (error) {
+    console.log("createCupboard", { error });
+    return { result: "error", error };
+  }
+};
+
 export {
   createMealSetting,
   createUserMeal,
@@ -260,4 +276,5 @@ export {
   createDefaultUserMeals,
   createDefaultMealsSettings,
   updateMealSetting,
+  createDefaultCupboard,
 };

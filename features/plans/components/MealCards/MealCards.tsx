@@ -2,10 +2,10 @@ import {
   Diet,
   DietMeal,
   MealCard,
-  updateDietMealFoodsOrder,
   SaveAndEditButton,
   Water,
 } from "@/features/plans";
+import { updateDietMealFoodsOrder } from "@/features/plans/slice";
 import {
   addToList,
   removeFromList,
@@ -16,13 +16,13 @@ import { DragDropContext } from "@hello-pangea/dnd";
 import { FC, useState } from "react";
 import { FoodGroupArray } from "@/features/foods";
 import { useDispatch } from "react-redux";
-import { UserAccount } from "@/features/authentication";
+import { User } from "@/features/authentication";
 import { MdRestaurant } from "react-icons/md";
 
 interface Props {
   diet: Diet;
   date: string;
-  user: UserAccount;
+  user: User;
 }
 
 const MealCards: FC<Props> = ({ diet, date, user }) => {

@@ -2,7 +2,7 @@ import {
   setIsCreatingUser,
   createNewUser,
   setIsSigningUser,
-  generateUserObject,
+  getUser,
   setUser,
   AUTH_ERRORS,
   setLoginError,
@@ -61,7 +61,7 @@ const Login = () => {
           await createNewUser(user);
         } else {
           dispatch(setIsSigningUser(true));
-          const userRes = await generateUserObject(result.user);
+          const userRes = await getUser(result.user.uid);
           if (userRes.result === "success") {
             dispatch(setUser(userRes.data));
           } else {
@@ -84,8 +84,7 @@ const Login = () => {
         console.log({ user });
         if (user) {
           dispatch(setIsSigningUser(true));
-          const userRes =
-            result.user && (await generateUserObject(result.user));
+          const userRes = result.user && (await getUser(result.user.uid));
           if (userRes.result === "success") {
             dispatch(setUser(userRes.data));
           } else {
