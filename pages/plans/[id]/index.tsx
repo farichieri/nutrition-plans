@@ -22,18 +22,19 @@ export default function Page({ planData, restOfPlans }: Props) {
   return (
     <LandingLayout>
       <section className="flex max-w-5xl flex-col items-center justify-center py-24">
-        <div className="mb-10 flex flex-col items-center justify-center gap-4">
+        <div className="mb-10 flex w-full flex-col items-center justify-center gap-4">
           <span className="mb-10 text-5xl font-bold md:text-6xl lg:text-7xl">
             {planData.title}
           </span>
 
-          <span className="h-[500px] w-[500px] overflow-auto rounded-3xl shadow-[0_1px_5px_gray] dark:shadow-[0px_1px_5px_#4040408c]">
+          <span className="h-full w-full max-w-[500px] overflow-hidden rounded-3xl shadow-[0_1px_5px_gray] dark:shadow-[0px_1px_5px_#4040408c]">
             <BlurImage
               image={{
                 imageURL: planData.image,
                 title: planData.title,
                 id: planData.id,
               }}
+              customContainerClass="!aspect-h-1 !aspect-w-1"
             />
           </span>
         </div>

@@ -5,14 +5,21 @@ import Image from "next/image";
 const BlurImage = ({
   image,
   customClass,
+  customContainerClass,
 }: {
   image: ImageI;
   customClass?: string;
+  customContainerClass?: string;
 }) => {
   const [isLoading, setLoading] = useState(true);
 
   return (
-    <div className="aspect-h-1 aspect-w-1 h-full w-full overflow-hidden bg-[var(--blur-color)] sm:aspect-h-3 sm:aspect-w-5  ">
+    <div
+      className={
+        `aspect-h-1 aspect-w-1 h-full w-full overflow-hidden bg-[var(--blur-color)] sm:aspect-h-3 sm:aspect-w-5 ` +
+        customContainerClass
+      }
+    >
       <Image
         alt={image.title}
         src={image.imageURL}

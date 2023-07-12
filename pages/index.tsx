@@ -1,16 +1,14 @@
 import { directories, getSortedData } from "@/utils/mds";
 import { FAQS_INDEX } from "@/data/content";
 import { PlansType } from "@/types";
+import BlurImage from "@/components/BlurImage";
 import CallToAction from "@/components/CallToAction";
 import FAQS from "@/components/FAQS/FAQS";
 import Goals from "@/components/Goals/Goals";
-import Image from "next/image";
 import LandingLayout from "@/layouts/LandingLayout";
 import Link from "next/link";
 import Plans from "@/components/Plans/Plans";
 import PrimaryButton from "@/components/Buttons/PrimaryButton";
-import { blurDataURL } from "@/components/Layout/BlurDataImage";
-import BlurImage from "@/components/BlurImage";
 
 interface Props {
   plans: PlansType;
@@ -36,25 +34,17 @@ export default function Home({ plans }: Props) {
             <PrimaryButton onClick={() => {}} content={`Start my plan now`} />
           </Link>
         </div>
-        <div className="  my-10  ">
-          <Image
-            src="/images/general/landing-img.png"
-            width={1200}
-            height={1200}
-            placeholder="blur"
-            blurDataURL={blurDataURL(1200, 1200)}
-            alt="cooking"
-            loading="lazy"
-            className="flex rounded-md border border-green-500/20 shadow-sm duration-300 hover:border-green-500/40 dark:shadow-gray-400/20"
-          />
-          {/* <BlurImage
+        <span className="flex h-full w-full overflow-hidden  rounded-3xl shadow-sm duration-300 dark:shadow-gray-400/20">
+          <BlurImage
             image={{
               imageURL: "/images/general/landing-img.png",
               title: "Demo",
               id: "Demo",
             }}
-          /> */}
-        </div>
+            customClass="!object-fill"
+            customContainerClass="!aspect-h-3 !aspect-w-5"
+          />
+        </span>
       </div>
       <Goals />
       <span className="text-4xl font-bold">Plans Available</span>

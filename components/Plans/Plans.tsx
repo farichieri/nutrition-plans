@@ -20,14 +20,14 @@ const Plans: FC<Props> = ({ plans }) => {
             <span className="flex w-full items-center justify-center text-center text-xl font-bold">
               {plan.title}
             </span>
-
-            <span className="h-[150px] w-[150px] overflow-auto rounded-3xl shadow-[0_1px_5px_gray] dark:shadow-[0px_1px_5px_#4040408c]">
+            <span className="h-[150px] w-[150px] min-w-[150px] overflow-auto rounded-3xl">
               <BlurImage
                 image={{
                   imageURL: `/images/plans/${plan.id}.jpg`,
                   title: plan.title!,
                   id: plan.id!,
                 }}
+                customClass=""
               />
             </span>
           </Link>
