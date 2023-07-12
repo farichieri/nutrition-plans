@@ -1,7 +1,7 @@
 import { auth } from "@/services/firebase/firebase.config";
 import { FC, useState } from "react";
 import { MdFavorite, MdOpenInNew, MdPerson, MdSettings } from "react-icons/md";
-import { persistor } from "@/store/store";
+import { persistor } from "@/store";
 import { selectAuthSlice } from "@/features/authentication";
 import { setProgress } from "@/features/progress";
 import { signOut } from "firebase/auth";

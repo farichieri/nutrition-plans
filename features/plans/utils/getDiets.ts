@@ -1,6 +1,6 @@
 import { Result } from "@/types";
 import { DietGroup } from "../types";
-import { fetchDietByDate } from "../services";
+import { fetchDietByDate } from "@/features/plans";
 
 const getDiets = async ({
   dates,

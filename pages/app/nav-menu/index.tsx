@@ -1,6 +1,6 @@
 import { auth } from "@/services/firebase/firebase.config";
 import { MdClose, MdOpenInNew, MdPerson, MdSettings } from "react-icons/md";
-import { persistor } from "@/store/store";
+import { persistor } from "@/store";
 import { selectAuthSlice } from "@/features/authentication";
 import { signOut } from "firebase/auth";
 import { SubscribeButton } from "@/components/Buttons";

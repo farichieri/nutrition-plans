@@ -2,7 +2,7 @@ import { AppRoutes } from "@/utils";
 import { auth } from "@/services/firebase/firebase.config";
 import { Bars2Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import { FC, useState } from "react";
-import { persistor } from "@/store/store";
+import { persistor } from "@/store";
 import { PrimaryButton } from "@/components/Buttons";
 import { selectAuthSlice } from "@/features/authentication/slice";
 import { setProgress } from "@/features/progress";

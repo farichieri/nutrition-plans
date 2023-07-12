@@ -1,4 +1,4 @@
-import { persistor } from "@/store/store";
+import { persistor } from "@/store";
 import { Result } from "@/types";
 import getConfig from "next/config";
 

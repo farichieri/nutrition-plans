@@ -3,7 +3,7 @@ import "@/styles/globals.css";
 import { auth } from "@/services/firebase/firebase.config";
 import { getAnalytics, logEvent, setUserId } from "firebase/analytics";
 import { PersistGate } from "redux-persist/integration/react";
-import { persistor, store } from "@/store/store";
+import { persistor, store } from "@/store";
 import { Provider } from "react-redux";
 import { useEffect } from "react";
 import { useRouter } from "next/router";

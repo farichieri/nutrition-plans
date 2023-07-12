@@ -1,5 +1,5 @@
 import { auth } from "@/services/firebase/firebase.config";
-import { persistor } from "@/store/store";
+import { persistor } from "@/store";
 import { setProgress } from "@/features/progress";
 import { signOut } from "firebase/auth";
 import { SubmitButton } from "@/components/Buttons";

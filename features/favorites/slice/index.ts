@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { PURGE } from "redux-persist";
 import { Food, FoodGroup } from "@/features/foods";
-import { RootState } from "@/store/store";
+import { RootState } from "@/store";
 
 interface FavoritesState {
   favoriteFoods: FoodGroup;

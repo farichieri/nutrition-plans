@@ -1,19 +1,19 @@
+import { Cupboard } from "../types";
 import { db } from "@/services/firebase/firebase.config";
 import { doc, getDoc } from "firebase/firestore";
 import { Result } from "@/types";
-import { User } from "@/features/authentication";
 
 const getCupboard = async ({
-  user,
+  userID,
 }: {
-  user: User;
-}): Promise<Result<any, unknown>> => {
+  userID: string;
+}): Promise<Result<Cupboard, unknown>> => {
   try {
-    const docRef = doc(db, "users", user.id, "cupboard", "uniqueCupboard");
+    const docRef = doc(db, "users", userID, "cupboard", "uniqueCupboard");
     const querySnapshot = await getDoc(docRef);
     const data: any = querySnapshot.data();
-    if (!data) throw new Error("No data fetched.");
-    return { result: "success", data };
+    const cupboard = data || {};
+    return { result: "success", data: cupboard };
   } catch (error) {
     return { result: "error", error };
   }

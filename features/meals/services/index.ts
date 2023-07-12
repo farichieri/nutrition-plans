@@ -18,7 +18,7 @@ import {
 import { db } from "../../../services/firebase/firebase.config";
 import { Result } from "@/types";
 import { User } from "@/features/authentication";
-import { buildCupboard } from "@/features/shopping/utils/buildCupboard";
+import { buildCupboardList } from "@/features/shopping/utils/buildCupboardList";
 import { Cupboard, ShoppingListFoods } from "@/features/shopping";
 
 const fetchMeals = async (
@@ -251,20 +251,6 @@ const createDefaultUserMeals = async (
   }
 };
 
-const createDefaultCupboard = async (
-  user: User
-): Promise<Result<ShoppingListFoods, unknown>> => {
-  try {
-    const cupboardRef = doc(db, "users", user.id, "cupboard", "uniqueCupboard");
-    const cupboard = buildCupboard();
-    await setDoc(cupboardRef, cupboard);
-    return { result: "success", data: cupboard };
-  } catch (error) {
-    console.log("createCupboard", { error });
-    return { result: "error", error };
-  }
-};
-
 export {
   createMealSetting,
   createUserMeal,
@@ -276,5 +262,4 @@ export {
   createDefaultUserMeals,
   createDefaultMealsSettings,
   updateMealSetting,
-  createDefaultCupboard,
 };

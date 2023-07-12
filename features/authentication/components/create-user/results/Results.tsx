@@ -6,7 +6,6 @@ import {
   updateUser,
 } from "@/features/authentication";
 import {
-  createDefaultCupboard,
   createDefaultMealsSettings,
   createDefaultUserMeals,
   setUserMeals,
@@ -112,25 +111,21 @@ const Results: FC<Props> = ({ handleSubmit }) => {
           bodyData: bodyDataUpdated,
         },
       };
-      const [addProgressRes, mealSettings, addMeals, addCupboard] =
-        await Promise.all([
-          addFirstProgress(),
-          createDefaultMealsSettings(user),
-          createDefaultUserMeals(user),
-          createDefaultCupboard(user),
-        ]);
+      const [addProgressRes, mealSettings, addMeals] = await Promise.all([
+        addFirstProgress(),
+        createDefaultMealsSettings(user),
+        createDefaultUserMeals(user),
+      ]);
 
       if (
         addProgressRes.result === "success" &&
         mealSettings.result === "success" &&
-        addMeals.result === "success" &&
-        addCupboard.result === "success"
+        addMeals.result === "success"
       ) {
         dispatch(setUserMealsSettings(mealSettings.data));
         dispatch(setUserMeals(addMeals.data));
         dispatch(setUpdateUser({ user, fields }));
         dispatch(setIsCreatingUser(false));
-        dispatch(setCupboardFoods(addCupboard.data));
 
         const updateUserRes = await updateUser({ user, fields });
         if (updateUserRes.result === "success") {

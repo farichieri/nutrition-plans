@@ -1,4 +1,3 @@
-import { DaySelector, getRealDate, useRedirectToday } from "@/features/plans";
 import {
   getDietShoppingFoods,
   setShoppingListFoods,
@@ -6,6 +5,7 @@ import {
   ShoppingList,
   ShoppingNav,
 } from "@/features/shopping";
+import { DaySelector, getRealDate, useRedirectToday } from "@/features/plans";
 import { getDaysOfWeek, getIsWeek } from "@/utils";
 import { GetServerSidePropsContext } from "next";
 import { selectAuthSlice } from "@/features/authentication";
@@ -20,11 +20,10 @@ interface Props {
   date?: string;
 }
 
-export default function Page({ params }: { params: Props }) {
+export default function Page({ date }: { date: Props }) {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
-  useRedirectToday(String(params.date));
-  const date = params.date;
+  useRedirectToday(String(date));
   const realDate = getRealDate({
     date: String(date),
     userStartOfWeek: user?.startOfWeek || StartsOfWeek.Sunday,
@@ -55,7 +54,7 @@ export default function Page({ params }: { params: Props }) {
     if (user) {
       getData();
     }
-  }, [params.date]);
+  }, [date]);
 
   return (
     <PremiumLayout>
@@ -63,9 +62,12 @@ export default function Page({ params }: { params: Props }) {
         <ShoppingNav />
       </PremiumNav>
       <SubPremiumNav title={""} customClass="top-[var(--nav-h)]">
-        <DaySelector date={String(params.date)} baseURL={"/app/shopping/"} />
+        <DaySelector date={String(date)} baseURL={"/app/shopping/"} />
       </SubPremiumNav>
-      <section className="mt-[var(--subnav-h)] flex w-full flex-col gap-5 p-2 sm:px-4">
+      <section className="mt-[var(--subnav-h)] flex w-full flex-col gap-2 p-2 sm:px-4">
+        <span className="font-semibold ">
+          Products that I should buy for my planned days
+        </span>
         <ShoppingDistributor />
         <ShoppingList />
       </section>
@@ -74,19 +76,10 @@ export default function Page({ params }: { params: Props }) {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  let params: Props = {};
-
-  if (context.params) {
-    Object.entries(context?.params).forEach((param) => {
-      if (params) {
-        params[param[0] as keyof Props] = String(param[1]);
-      }
-    });
-  }
-
+  const date = context.params?.date;
   return {
     props: {
-      params,
+      date,
     },
   };
 }

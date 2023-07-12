@@ -83,7 +83,7 @@ const getNewAmount = ({
   prev_scale_name: string;
   scaleAmount: number;
   scales: FoodScales;
-}): number | undefined => {
+}): number => {
   const scale = scales.find((scale) => scale.scaleName === prev_scale_name);
   const newScale = scales.find((scale) => scale.scaleName === new_scale_name);
   switch (new_scale_name) {

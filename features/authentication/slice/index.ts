@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { PURGE } from "redux-persist";
-import { RootState } from "@/store/store";
+import { RootState } from "@/store";
 import { User } from "@/features/authentication";
 
 interface AuthState {

@@ -20,5 +20,5 @@ export interface ShoppingListT {
 }
 
 export interface Cupboard {
-  [foodCategory: string]: ShoppingListFoods;
+  [id: string]: ShoppingListFood;
 }

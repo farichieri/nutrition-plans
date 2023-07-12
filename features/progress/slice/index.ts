@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Progress, ProgressItem } from "@/features/progress";
 import { PURGE } from "redux-persist";
-import type { RootState } from "../../../store/store";
+import type { RootState } from "../../../store";
 
 interface ProgressState {
   progress: Progress;

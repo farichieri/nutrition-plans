@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Food, FoodGroup, Recipe } from "@/features/foods";
 import { NewFood } from "@/types/initialTypes";
 import { PURGE } from "redux-persist";
-import { RootState } from "@/store/store";
+import { RootState } from "@/store";
 
 interface FoodsSlice {
   foodsSearched: FoodGroup;

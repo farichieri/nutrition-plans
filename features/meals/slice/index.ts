@@ -4,7 +4,7 @@ import {
   UserMeals,
   NewMealSetting,
 } from "@/features/meals/types";
-import { RootState } from "@/store/store";
+import { RootState } from "@/store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { PURGE } from "redux-persist";
 

@@ -16,7 +16,7 @@ import { DevTool } from "@hookform/devtools";
 import { emailRegex } from "@/constants";
 import { GoogleLoginButton, SubmitButton } from "@/components/Buttons";
 import { MdOutlineEmail, MdTrendingFlat } from "react-icons/md";
-import { persistor } from "@/store/store";
+import { persistor } from "@/store";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";

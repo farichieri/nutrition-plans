@@ -14,7 +14,7 @@ import {
 } from "@/features/authentication";
 import { auth } from "@/services/firebase/firebase.config";
 import { fetchProgress, setProgress } from "@/features/progress";
-import { getThisWeekDiets } from "@/features/plans/utils/getThisWeekDiets";
+import { getThisWeekDiets } from "@/features/plans";
 import { Inter } from "next/font/google";
 import { isAppVersionCorrect } from "@/utils";
 import { onAuthStateChanged } from "firebase/auth";
