@@ -20,6 +20,7 @@ import InfoMessage from "@/components/Layout/InfoMessage";
 import SubmitButton from "@/components/Buttons/SubmitButton";
 import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
 import { blurDataURL } from "@/components/Layout/BlurDataImage";
+import BlurImage from "@/components/BlurImage";
 
 interface FormValues {
   planSelected: PlansEnum | null;
@@ -134,19 +135,19 @@ const PlanSelector: FC<Props> = ({ handleContinue }) => {
                     className={`h-6 w-6 ${
                       values.planSelected === opt.id
                         ? "text-green-500"
-                        : "hidden text-transparent"
+                        : " text-transparent"
                     }`}
                   />
                   <span className="mb-1 flex w-full items-center justify-center text-center text-base font-bold sm:text-xl">
                     {opt.name}
                   </span>
-                  <span className="pointer-events-none relative h-32 w-32 sm:h-40 sm:w-40 ">
-                    <Image
-                      src={`/images/plans/${opt.id}.jpg`}
-                      alt={opt.name}
-                      fill
-                      blurDataURL={blurDataURL(160, 160)}
-                      className="rounded-3xl object-cover shadow-[0_1px_5px_gray] dark:shadow-[0px_1px_5px_#4040408c]"
+                  <span className="pointer-events-none relative h-32 w-32 overflow-auto rounded-3xl shadow-[0_1px_5px_gray] dark:shadow-[0px_1px_5px_#4040408c] sm:h-40 sm:w-40">
+                    <BlurImage
+                      image={{
+                        imageURL: `/images/plans/${opt.id}.jpg`,
+                        title: opt.name,
+                        id: opt.id,
+                      }}
                     />
                   </span>
                 </button>

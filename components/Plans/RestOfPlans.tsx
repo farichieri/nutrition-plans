@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { PlansType } from "@/types";
-import Image from "next/image";
 import Link from "next/link";
+import BlurImage from "../BlurImage";
 
 interface Props {
   plans: PlansType;
@@ -23,13 +23,15 @@ const RestOfPlans: FC<Props> = ({ plans }) => {
             <span className="flex w-full items-center justify-center text-center text-xl font-bold">
               {plan.title}
             </span>
-            <Image
-              src={`/images/plans/${plan.id}.jpg`}
-              alt={plan.title}
-              width={150}
-              height={150}
-              className="m-2 rounded-3xl shadow-[0_1px_5px_gray] dark:shadow-[0px_1px_5px_#4040408c]"
-            />
+            <span className="h-[150px] w-[150px] overflow-auto rounded-3xl shadow-[0_1px_5px_gray] dark:shadow-[0px_1px_5px_#4040408c]">
+              <BlurImage
+                image={{
+                  imageURL: `/images/plans/${plan.id}.jpg`,
+                  title: plan.title,
+                  id: plan.id,
+                }}
+              />
+            </span>
           </Link>
         ))}
       </div>

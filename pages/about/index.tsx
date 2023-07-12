@@ -1,3 +1,4 @@
+import BlurImage from "@/components/BlurImage";
 import LandingLayout from "@/layouts/LandingLayout";
 import Head from "next/head";
 import Image from "next/image";
@@ -7,7 +8,7 @@ export default function Page() {
   const TEAM = [
     {
       name: "Fabricio Richieri",
-      charge: "CEO",
+      charge: "Founder",
       image: "fabricio-richieri",
       url: "https://www.linkedin.com/in/frichieri/",
     },
@@ -72,14 +73,17 @@ export default function Page() {
                 key={person.name}
                 className="flex items-center gap-2"
               >
-                <span className="relative flex h-[80px] min-h-[80px] w-[80px] min-w-[80px] items-center justify-center overflow-hidden rounded-full">
-                  <Image
-                    src={`/images/general/${person.image}.png`}
-                    alt={person.name}
-                    fill
-                    className="flex items-center justify-center rounded-full "
+                <span className="relative flex h-[80px] min-h-[80px] w-[80px] min-w-[80px] items-center justify-center overflow-auto rounded-full">
+                  <BlurImage
+                    image={{
+                      imageURL: `/images/general/${person.image}.png`,
+                      title: person.name,
+                      id: person.name,
+                    }}
+                    customClass={"object-fill"}
                   />
                 </span>
+
                 <div className="flex h-full flex-col justify-between gap-2 py-2">
                   <h1 className="text-xl font-semibold capitalize">
                     {person.name}

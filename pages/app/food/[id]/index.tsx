@@ -11,14 +11,14 @@ import {
   Instructions,
   ScaleSelector,
 } from "@/features/foods";
+import { GetStaticPaths, GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import AddToFavorite from "@/features/favorites/components/AddToFavorite";
 import BackButton from "@/components/Buttons/BackButton";
-import Image from "next/image";
+import BlurImage from "@/components/BlurImage";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
-import { GetStaticPaths, GetStaticProps } from "next";
 
 export default function Page({ food }: { food: Food }) {
   const router = useRouter();
@@ -54,13 +54,16 @@ export default function Page({ food }: { food: Food }) {
           <div className="divide grid w-full gap-10 sm:grid-cols-fluid_lg sm:gap-20">
             <div className="flex w-full flex-col gap-5 ">
               <div className="flex w-full flex-col gap-5">
-                <Image
-                  src={food.imageURL}
-                  alt={`${food.name}`}
-                  width={500}
-                  height={500}
-                  className="m-auto h-[300px] w-full rounded-lg border border-gray-300/50 object-cover dark:border-transparent sm:w-[300px]"
-                />
+                <span className="m-auto h-full w-full  overflow-auto rounded-lg">
+                  <BlurImage
+                    image={{
+                      imageURL: food.imageURL,
+                      title: food.name!,
+                      id: food.id,
+                    }}
+                  />
+                </span>
+
                 <span className="text-center opacity-50">
                   {food.description}
                 </span>

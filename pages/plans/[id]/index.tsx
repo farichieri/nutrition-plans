@@ -4,14 +4,14 @@ import {
   getAllMDData,
   getSortedData,
 } from "@/utils/mds";
-import { blurDataURL } from "@/components/Layout/BlurDataImage";
 import { PlanType, PlansType } from "@/types";
+import { ReactMarkdown } from "react-markdown/lib/react-markdown";
+import BlurImage from "@/components/BlurImage";
 import CallToAction from "@/components/CallToAction";
 import Image from "next/image";
 import LandingLayout from "@/layouts/LandingLayout";
-import RestOfPlans from "@/components/Plans/RestOfPlans";
-import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import remarkGfm from "remark-gfm";
+import RestOfPlans from "@/components/Plans/RestOfPlans";
 
 interface Props {
   planData: PlanType;
@@ -26,16 +26,16 @@ export default function Page({ planData, restOfPlans }: Props) {
           <span className="mb-10 text-5xl font-bold md:text-6xl lg:text-7xl">
             {planData.title}
           </span>
-          <Image
-            src={planData.image}
-            alt={planData.title}
-            width={500}
-            height={500}
-            placeholder="blur"
-            blurDataURL={blurDataURL(500, 500)}
-            loading="lazy"
-            className="m-2 rounded-3xl shadow-[0_1px_5px_gray] dark:shadow-[0px_1px_5px_#4040408c]"
-          />
+
+          <span className="h-[500px] w-[500px] overflow-auto rounded-3xl shadow-[0_1px_5px_gray] dark:shadow-[0px_1px_5px_#4040408c]">
+            <BlurImage
+              image={{
+                imageURL: planData.image,
+                title: planData.title,
+                id: planData.id,
+              }}
+            />
+          </span>
         </div>
         <ReactMarkdown
           className="border-b pb-14"

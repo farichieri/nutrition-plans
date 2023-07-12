@@ -1,15 +1,14 @@
-import { blurDataURL } from "@/components/Layout/BlurDataImage";
 import { directories, getAllMDIDS, getAllMDData } from "@/utils/mds";
+import { MdTrendingFlat } from "react-icons/md";
 import { Post } from "@/types";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
+import BlurImage from "@/components/BlurImage";
 import CallToAction from "@/components/CallToAction";
 import Date from "@/components/Posts/Post/Date/Date";
 import Head from "next/head";
-import Image from "next/image";
 import LandingLayout from "@/layouts/LandingLayout";
 import Link from "next/link";
 import remarkGfm from "remark-gfm";
-import { MdTrendingFlat } from "react-icons/md";
 
 interface Props {
   postData: Post;
@@ -34,7 +33,7 @@ export default function Page({ postData }: Props) {
           <MdTrendingFlat className="h-5 w-5 -rotate-180 transform" />
           <span>Back to Blog</span>
         </Link>
-        <div className="mb-10 flex flex-col items-center justify-center gap-6 border-b pb-14 ">
+        <div className="mb-10 flex flex-col items-center justify-center gap-6 border-b pb-4 ">
           <h1 className="text-left text-3xl font-bold uppercase sm:text-4xl md:text-5xl lg:text-6xl">
             {postData.title}
           </h1>
@@ -43,13 +42,14 @@ export default function Page({ postData }: Props) {
             &#8226;
             <span>{postData.timeReading}</span>
           </div>
+
           <span className="relative h-[80vh] w-full overflow-auto rounded-lg">
-            <Image
-              src={postData.image}
-              alt={postData.title}
-              blurDataURL={blurDataURL(1200, 1200)}
-              fill
-              className="object-cover"
+            <BlurImage
+              image={{
+                imageURL: postData.image,
+                title: postData.title,
+                id: postData.id,
+              }}
             />
           </span>
         </div>
@@ -58,14 +58,13 @@ export default function Page({ postData }: Props) {
           remarkPlugins={[remarkGfm]}
           components={{
             img: (props) => (
-              <div className="relative mx-auto my-5 h-[50vh] w-full">
-                <Image
-                  src={props.src || ""}
-                  alt={props.alt || ""}
-                  fill
-                  placeholder="blur"
-                  blurDataURL={blurDataURL(1200, 1200)}
-                  className="rounded-lg object-cover"
+              <div className="relative mx-auto my-5 h-[50vh] w-full overflow-hidden rounded-md">
+                <BlurImage
+                  image={{
+                    imageURL: props.src!,
+                    title: props.alt!,
+                    id: props.alt!,
+                  }}
                 />
               </div>
             ),

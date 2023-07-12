@@ -1,11 +1,10 @@
-import { blurDataURL } from "@/components/Layout/BlurDataImage";
 import { FC } from "react";
 import { Food } from "@/features/foods/types";
 import { formatTwoDecimals } from "@/utils";
 import { selectAuthSlice } from "@/features/authentication";
 import { useSelector } from "react-redux";
 import AddToFavorite from "@/features/favorites/components/AddToFavorite";
-import Image from "next/image";
+import BlurImage from "@/components/BlurImage";
 import Link from "next/link";
 
 interface Props {
@@ -22,18 +21,14 @@ const FoodCard: FC<Props> = ({ food }) => {
     <Link
       href={`/app/food/${food.id}`}
       key={food.id}
-      className="flex w-full flex-row items-center overflow-auto rounded-xl border bg-white shadow-sm shadow-[#00000028] duration-300 hover:border-black/20 hover:shadow-xl active:bg-slate-200 dark:bg-slate-400/10 dark:hover:border-white/50 dark:active:bg-slate-500/50 sm:max-w-[20rem] sm:flex-col "
+      className="flex w-full flex-row items-center overflow-auto rounded-xl border bg-white shadow-sm shadow-[#00000028] duration-300 hover:border-black/20 hover:shadow-xl active:bg-slate-200 dark:bg-slate-400/10 dark:hover:border-white/50 dark:active:bg-slate-500/50 sm:max-h-[25rem] sm:max-w-[20rem] sm:flex-col "
     >
-      <span className="relative h-[105px] w-[105px] min-w-[105px] border-b sm:h-32 sm:w-full">
-        <Image
-          src={food.imageURL}
-          alt={`${food.name}`}
-          fill
-          blurDataURL={blurDataURL(160, 160)}
-          className="object-cover"
+      <span className="flex h-full  max-h-[105px] w-full max-w-[105px] sm:max-h-full sm:max-w-full">
+        <BlurImage
+          image={{ imageURL: food.imageURL, title: food.name!, id: food.id! }}
         />
       </span>
-      <div className="flex w-full flex-col gap-0.5 overflow-auto break-words px-2 py-0.5 text-sm">
+      <div className="flex h-full w-full flex-col gap-0.5 overflow-hidden break-words px-2 py-0.5 text-sm">
         {/* <div className="flex h-2 items-center">
           {isMyCreation ? (
             <span className="text-xs text-green-500">My Creation</span>

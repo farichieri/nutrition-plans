@@ -36,6 +36,7 @@ html {
   --carbs-color: #976802;
   --fats-color: #2fa800e0;
   --prots-color: #3d80d0;
+  --blur-color: #c5c5c53b;
 }
 
 :root.dark {
@@ -45,6 +46,7 @@ html {
   --background-start-rgb: #111010;
   --background-end-rgb: #111010;
   --border-color: rgb(58, 58, 58);
+  --blur-color: #3333333b;
 }
 
 body {

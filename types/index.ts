@@ -104,6 +104,14 @@ export interface FilterQueries {
   sort?: string;
 }
 
+export interface ImageI {
+  id: string;
+  imageURL: string;
+  title: string;
+  height?: number;
+  width?: number;
+}
+
 export interface BeforeInstallPromptEvent extends Event {
   readonly platforms: string[];
   readonly userChoice: Promise<{

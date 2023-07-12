@@ -13,10 +13,10 @@ isAvailable: true
 Choosing an appropriate eating plan is not something to be done lightly. There are some important factors when making this decision that should be kept in mind so as not to put our health at risk.
 
 Currently, many people decide to start a diet basically because they want to lose weight as one of the main causes. However, many times, those interested do not know how to choose correctly due to lack of information, so they opt for miraculous, doubtful diets that are difficult to continue throughout their lives or have a negative impact on their health.
-11
+
 A proper diet is essential to enjoy good physical and mental health. Here are some tips on how to choose the most convenient plan for each one.
 
-![What is the right nutrition plan for me](/images/posts/why-is-it-important-to-follow-a-healthy-diet/1.jpg)
+![What is the right nutrition plan for me](/images/posts/what-is-the-right-nutrition-plan-for-me/1.jpg)
 
 ## **Basic principles to keep in mind:**
 
@@ -29,7 +29,7 @@ Do I want to improve my current whole blood values or do I want to learn to eat 
 
 Do I want to learn to eat so that I can choose the foods I eat better and not harm the planet or I just don't like selected foods?
 
-![What is the right nutrition plan for me](/images/posts/why-is-it-important-to-follow-a-healthy-diet/2.jpg)
+![What is the right nutrition plan for me](/images/posts/what-is-the-right-nutrition-plan-for-me/2.jpg)
 
 ## **So how do I choose my eating plan once the above is determined?**
 

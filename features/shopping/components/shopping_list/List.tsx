@@ -5,6 +5,7 @@ import { formatTwoDecimals } from "@/utils";
 import { ShoppingListFood, ShoppingListT } from "@/features/shopping";
 import Collapsable from "@/components/Layout/Collapsable";
 import Image from "next/image";
+import BlurImage from "@/components/BlurImage";
 
 interface Props {
   list: ShoppingListT;
@@ -51,12 +52,13 @@ const List: FC<Props> = ({ list, handleSelected, selecteds }) => {
                               checked={isSelected}
                             />
                           </div>
-                          <span className="relative h-[50px] min-h-[50px] w-[50px] min-w-[50px]">
-                            <Image
-                              src={food.imageURL}
-                              alt={food.name!}
-                              fill
-                              className="rounded-md border object-cover"
+                          <span className="relative h-[50px] min-h-[50px] w-[50px] min-w-[50px] overflow-auto rounded-md">
+                            <BlurImage
+                              image={{
+                                imageURL: food.imageURL,
+                                title: food.name!,
+                                id: food.id!,
+                              }}
                             />
                           </span>
                           <div className="flex flex-col">

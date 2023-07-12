@@ -10,6 +10,7 @@ import Link from "next/link";
 import Plans from "@/components/Plans/Plans";
 import PrimaryButton from "@/components/Buttons/PrimaryButton";
 import { blurDataURL } from "@/components/Layout/BlurDataImage";
+import BlurImage from "@/components/BlurImage";
 
 interface Props {
   plans: PlansType;
@@ -35,7 +36,7 @@ export default function Home({ plans }: Props) {
             <PrimaryButton onClick={() => {}} content={`Start my plan now`} />
           </Link>
         </div>
-        <div className="my-10 ">
+        <div className="  my-10  ">
           <Image
             src="/images/general/landing-img.png"
             width={1200}
@@ -46,6 +47,13 @@ export default function Home({ plans }: Props) {
             loading="lazy"
             className="flex rounded-md border border-green-500/20 shadow-sm duration-300 hover:border-green-500/40 dark:shadow-gray-400/20"
           />
+          {/* <BlurImage
+            image={{
+              imageURL: "/images/general/landing-img.png",
+              title: "Demo",
+              id: "Demo",
+            }}
+          /> */}
         </div>
       </div>
       <Goals />

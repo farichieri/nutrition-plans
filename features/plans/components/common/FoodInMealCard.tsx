@@ -14,10 +14,10 @@ import { MdDelete, MdDragHandle } from "react-icons/md";
 import { updateDiet, Diet } from "@/features/plans";
 import { useDispatch, useSelector } from "react-redux";
 import FormSelect from "@/components/Form/FormSelect";
-import Image from "next/image";
 import Input from "@/components/Form/Input";
 import NutritionInput from "@/components/Form/NutritionInput";
 import RoundButton from "@/components/Buttons/RoundButton";
+import BlurImage from "@/components/BlurImage";
 
 interface MealInCardProps {
   food: Food;
@@ -107,11 +107,8 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
         <MdDragHandle className="m-auto h-6 w-6 min-w-fit opacity-50" />
       )}
       <span className="relative h-20 w-20 min-w-[80px] sm:h-20 sm:w-20">
-        <Image
-          src={food.imageURL}
-          fill
-          className="object-cover "
-          alt={food.name || ""}
+        <BlurImage
+          image={{ imageURL: food.imageURL, title: food.name!, id: food.id! }}
         />
       </span>
       <div className="flex h-auto w-full">
