@@ -1,4 +1,3 @@
-import { updateDiet, Diet } from "@/features/plans";
 import {
   selectPlansSlice,
   toggleEatenFood,
@@ -9,15 +8,16 @@ import { CheckButton } from "@/components/Buttons";
 import { FC } from "react";
 import { Food, getScaleOptions, mergeScales } from "@/features/foods";
 import { FoodKeys } from "@/types/initialTypes";
+import { formatTwoDecimals } from "@/utils";
 import { getNewAmount } from "@/utils/nutritionHelpers";
 import { MdDelete, MdDragHandle } from "react-icons/md";
+import { updateDiet, Diet } from "@/features/plans";
 import { useDispatch, useSelector } from "react-redux";
 import FormSelect from "@/components/Form/FormSelect";
 import Image from "next/image";
 import Input from "@/components/Form/Input";
 import NutritionInput from "@/components/Form/NutritionInput";
 import RoundButton from "@/components/Buttons/RoundButton";
-import { formatTwoDecimals } from "@/utils";
 
 interface MealInCardProps {
   food: Food;

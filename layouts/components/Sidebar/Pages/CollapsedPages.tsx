@@ -8,6 +8,7 @@ import { FC } from "react";
 import { RiSearchLine } from "react-icons/ri";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { AppRoutes } from "@/utils";
 
 interface Props {}
 
@@ -17,7 +18,7 @@ const CollapsedPages: FC<Props> = () => {
   const COLLAPSED_PAGES = [
     {
       name: "Home",
-      url: `/app/today`,
+      url: AppRoutes.today,
       pathname: ["/app/[date]"],
       icon: <MdHomeFilled className="h-6 w-6 text-green-500" />,
     },

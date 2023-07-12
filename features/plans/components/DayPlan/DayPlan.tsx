@@ -25,6 +25,7 @@ const DayPlan: FC<Props> = ({ date }) => {
   const [isLoadingDiet, setIsLoadingDiet] = useState<boolean>(false);
 
   const getDayDiet = async (date: string, user: User) => {
+    console.log({ diet, date });
     if (!diet) {
       setIsLoadingDiet(true);
     }

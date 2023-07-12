@@ -25,6 +25,7 @@ import { SubscribeButton } from "@/components/Buttons";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { AppRoutes } from "@/utils";
 
 interface Props {}
 
@@ -104,7 +105,7 @@ const WebPages: FC<Props> = () => {
   const WEB_PAGES = [
     {
       name: "Home",
-      url: `/app/today`,
+      url: AppRoutes.today,
       pathname: ["/app/[date]"],
       icon: <MdHomeFilled className="h-6 w-6 text-green-500" />,
     },

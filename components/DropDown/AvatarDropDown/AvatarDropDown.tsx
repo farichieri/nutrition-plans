@@ -12,6 +12,7 @@ import DropDown from "../DropDown";
 import Link from "next/link";
 import SubscribeButton from "@/components/Buttons/Subscribe";
 import ThemeSwitcher from "@/components/theme-switcher";
+import { AppRoutes } from "@/utils";
 
 interface Props {
   isApp: boolean;
@@ -81,7 +82,7 @@ const AvatarDropDown: FC<Props> = ({ isApp }) => {
           </span>
         ) : (
           <Link
-            href={"/app/today"}
+            href={AppRoutes.today}
             className={`flex w-full items-center justify-between gap-2 border-none bg-transparent px-4 py-2 opacity-60 hover:bg-slate-500/40 hover:opacity-100 `}
           >
             <span>App</span>

@@ -46,23 +46,24 @@ const persistConfig = {
   storage,
   whitelist: [
     "auth",
+    "favorites",
     "foods",
     "layout",
-    "progress",
-    "createDiet",
     "meals",
-    "favorites",
+    "plans",
+    "progress",
     "shopping",
+    "settings",
   ],
 };
 
 const rootReducer = combineReducers({
   auth: authSlice,
-  plans: plansSlice,
   favorites: favoritesSlice,
   foods: foodsSlice,
   layout: layoutSlice,
   meals: mealsSlice,
+  plans: plansSlice,
   progress: progressSlice,
   settings: settingsSlice,
   shopping: shoppingSlice,

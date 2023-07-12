@@ -62,7 +62,6 @@ const updateUser = async ({
   fields: Partial<User>;
 }): Promise<Result<User, unknown>> => {
   try {
-    console.log({ user });
     const userRef = doc(db, "users", user.id);
     await updateDoc(userRef, fields);
     return { result: "success", data: user };

@@ -9,6 +9,7 @@ import { FC } from "react";
 import { RiSearchLine } from "react-icons/ri";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { AppRoutes } from "@/utils";
 
 interface Props {}
 
@@ -18,7 +19,7 @@ const MobilePages: FC<Props> = () => {
   const COLLAPSED_PAGES = [
     {
       name: "Home",
-      url: `/app/today`,
+      url: AppRoutes.today,
       pathname: ["/app/[date]"],
       icon: <MdHomeFilled className="h-5 w-5 " />,
     },

@@ -24,18 +24,24 @@ interface Props {
 
 export default function PremiumLayout({ children }: Props) {
   const router = useRouter();
-  const dispatch = useDispatch();
   const { sidebarOpen, isBillingModalOpen } = useSelector(selectLayoutSlice);
-  const { user, isCreatingUser, isSigningUser, showInstallModal } =
-    useSelector(selectAuthSlice);
+  const {
+    user,
+    isCreatingUser,
+    isSigningUser,
+    showInstallModal,
+    isFirstDataLoaded,
+  } = useSelector(selectAuthSlice);
   const isOnline = useOnlineStatus();
   const windowWidth = useWindowWidth();
   const isMobile = windowWidth < 768;
 
   useEffect(() => {
-    if (user) dispatch(setIsSigningUser(false));
     if (isCreatingUser || (user && !user?.isProfileCompleted)) {
       router.push(AppRoutes.create_user);
+    }
+    if (!user && !isSigningUser) {
+      router.push(AppRoutes.login);
     }
   }, [user, isCreatingUser]);
 
@@ -45,7 +51,7 @@ export default function PremiumLayout({ children }: Props) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Nutrition Plans</title>
       </Head>
-      {(isCreatingUser || isSigningUser) && <Loader />}
+      {(isCreatingUser || isSigningUser || !isFirstDataLoaded) && <Loader />}
       {user && user.isProfileCompleted && <WelcomeSteps />}
       {!isOnline && <ConnectionError />}
       {showInstallModal && (
@@ -53,7 +59,7 @@ export default function PremiumLayout({ children }: Props) {
           <InstallModal />
         </div>
       )}
-      {user ? (
+      {user && user.isProfileCompleted ? (
         <div className="flex min-h-screen w-full flex-col">
           {isBillingModalOpen && <BillingModal />}
           <Sidebar />
@@ -66,7 +72,7 @@ export default function PremiumLayout({ children }: Props) {
           </div>
         </div>
       ) : (
-        <Login />
+        <Loader />
       )}
     </>
   );

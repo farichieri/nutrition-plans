@@ -143,7 +143,7 @@ const NavBar: FC<Props> = () => {
                 </div>
 
                 <div className="w-full divide-y ">
-                  <Link href="/app/today">
+                  <Link href={AppRoutes.today}>
                     <div className="flex w-full items-center justify-between py-3 duration-300 hover:bg-slate-500/10 hover:opacity-100">
                       <span>App</span>
                       <MdFavorite className="h-6 w-6 text-green-500" />

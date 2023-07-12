@@ -14,6 +14,7 @@ import Goal from "@/features/authentication/components/create-user/goal/Goal";
 import PlanSelector from "@/features/authentication/components/create-user/select-plan/PlanSelector";
 import Results from "@/features/authentication/components/create-user/results/Results";
 import ThemeSwitcher from "@/components/theme-switcher";
+import { AppRoutes } from "@/utils";
 
 export default function Page() {
   const { user } = useSelector(selectAuthSlice);
@@ -24,7 +25,7 @@ export default function Page() {
       router.push("/signup");
     } else {
       if (user.isProfileCompleted) {
-        router.push("/app/today");
+        router.push(AppRoutes.today);
       }
     }
   }, [user, router]);

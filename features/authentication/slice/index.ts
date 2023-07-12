@@ -11,11 +11,13 @@ interface AuthState {
   isVerifyingUser: boolean;
   showInstallModal: boolean;
   user: User | null;
+  isFirstDataLoaded: boolean;
 }
 
 const initialState: AuthState = {
   error: null,
   isCreatingUser: false,
+  isFirstDataLoaded: false,
   isSelectingPlan: false,
   isSigningUser: false,
   isVerifyingUser: false,
@@ -31,9 +33,12 @@ export const authSlice = createSlice({
       state.isVerifyingUser = true;
     },
     setUser: (state, action: PayloadAction<User | null>) => {
-      state.user = action.payload;
+      const user = action.payload;
+      state.user = user;
       state.isVerifyingUser = false;
-      // state.isSigningUser = false;
+      if (user) {
+        state.isSigningUser = false;
+      }
     },
     setIsCreatingUser: (state, action: PayloadAction<boolean>) => {
       state.isCreatingUser = action.payload;
@@ -64,6 +69,9 @@ export const authSlice = createSlice({
     setBeforeInstallState: (state, action: PayloadAction<boolean>) => {
       state.showInstallModal = action.payload;
     },
+    setIsFirstDataLoaded: (state, action: PayloadAction<boolean>) => {
+      state.isFirstDataLoaded = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(PURGE, () => {
@@ -75,6 +83,7 @@ export const authSlice = createSlice({
 export const {
   setBeforeInstallState,
   setIsCreatingUser,
+  setIsFirstDataLoaded,
   setIsSelectingPlan,
   setIsSigningUser,
   setIsVerifyingUser,

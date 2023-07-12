@@ -11,7 +11,7 @@ const GoogleLoginButton = ({
   return (
     <button
       onClick={onClick}
-      className="space-between m-auto flex items-center rounded-3xl bg-[#4c8bf5] shadow-[0_1px_10px] shadow-slate-500/50 duration-300 hover:shadow-[0_1px_20px] hover:shadow-slate-500/70 active:scale-95 dark:shadow-slate-300/40 dark:hover:shadow-slate-300/50"
+      className="space-between m-auto flex items-center rounded-3xl bg-[#4c8bf5] shadow-[0_1px_6px] shadow-slate-500/50 duration-300 hover:shadow-[0_1px_15px] hover:shadow-slate-500/70 active:scale-95 dark:shadow-slate-300/40 dark:hover:shadow-slate-300/50"
     >
       <span className="image">
         <GoogleIcon customClass="h-7 w-7" />

@@ -22,7 +22,7 @@ export default function Page() {
 
   return (
     <SignLayout>
-      {(isLoading || isSigningUser) && <Loader />}
+      {(isLoading || isSigningUser || user) && <Loader />}
       <Signup />
       <div className="text-center text-base">
         <p>

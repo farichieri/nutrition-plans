@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import Loader from "@/components/Loader/Loader";
 import PremiumLayout from "@/layouts/PremiumLayout";
+import { AppRoutes } from "@/utils";
 
 const App = () => {
   const { user } = useSelector(selectAuthSlice);
@@ -12,7 +13,7 @@ const App = () => {
   useEffect(() => {
     if (user) {
       if (user.planSelected) {
-        router.push(`/app/today`);
+        router.push(AppRoutes.today);
       } else {
         router.push(`/app/progress`);
       }

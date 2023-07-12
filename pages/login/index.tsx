@@ -20,7 +20,7 @@ export default function Page() {
 
   return (
     <SignLayout>
-      {(isLoading || isSigningUser) && <Loader />}
+      {(isLoading || isSigningUser || user) && <Loader />}
       <Login />
     </SignLayout>
   );

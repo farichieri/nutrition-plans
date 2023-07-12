@@ -10,6 +10,7 @@ import {
   selectAuthSlice,
   setLoginError,
   setIsSigningUser,
+  setIsFirstDataLoaded,
 } from "@/features/authentication";
 import { auth } from "@/services/firebase/firebase.config";
 import { fetchProgress, setProgress } from "@/features/progress";
@@ -53,6 +54,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           dispatch(setUserMeals(userMealsRes.data));
           dispatch(setUserMealsSettings(mealsSettings.data));
           dispatch(setDiets(thisWeekDiets.data));
+          dispatch(setIsFirstDataLoaded(true));
         }
       };
       fetchData();
@@ -79,8 +81,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           dispatch(setLoginError());
         }
       });
-    } else {
-      dispatch(setIsSigningUser(true));
     }
   }, [isVerifyingVersion]);
 

@@ -54,13 +54,13 @@ const Login = () => {
   const handleLogInWithGoogle = async () => {
     signInWithPopup(auth, provider)
       .then(async (result) => {
+        dispatch(setIsSigningUser(true));
         const additinalInfo = getAdditionalUserInfo(result);
         if (additinalInfo?.isNewUser) {
           const user = result.user;
           dispatch(setIsCreatingUser(true));
           await createNewUser(user);
         } else {
-          dispatch(setIsSigningUser(true));
           const userRes = await getUser(result.user.uid);
           if (userRes.result === "success") {
             dispatch(setUser(userRes.data));
@@ -96,7 +96,7 @@ const Login = () => {
         persistor.purge();
         const errorCode = error.code;
         setErrorMessage(AUTH_ERRORS[errorCode]);
-        dispatch(setIsSigningUser(false));
+        setLoginError();
       });
   };
 
