@@ -13,14 +13,15 @@ import {
 } from "@/features/authentication";
 import { auth } from "@/services/firebase/firebase.config";
 import { fetchProgress, setProgress } from "@/features/progress";
+import { getThisWeekDiets } from "@/features/plans/utils/getThisWeekDiets";
 import { Inter } from "next/font/google";
 import { isAppVersionCorrect } from "@/utils";
 import { onAuthStateChanged } from "firebase/auth";
-import { selectLayoutSlice } from "@/store/slices/layoutSlice";
-import { Theme } from "@/types";
+import { setDiets } from "@/features/plans/slice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import Head from "next/head";
+import useTheme from "@/hooks/useTheme";
 
 const font = Inter({
   subsets: ["latin"],
@@ -28,46 +29,30 @@ const font = Inter({
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const dispatch = useDispatch();
-  const { theme } = useSelector(selectLayoutSlice);
-  const [_theme, setTheme] = useState<Theme | null>(null);
   const { user } = useSelector(selectAuthSlice);
   const [isVerifyingVersion, setIsVerifyingVersion] = useState(true);
-
-  useEffect(() => {
-    if (
-      theme === "dark" ||
-      (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
-      document.documentElement.classList.add("dark");
-      document.documentElement
-        .querySelector('meta[name="theme-color"]')
-        ?.setAttribute("content", "#111010");
-      setTheme(Theme.Dark);
-    } else {
-      document.documentElement.classList.add("light");
-      document.documentElement
-        .querySelector('meta[name="theme-color"]')
-        ?.setAttribute("content", "#fff");
-      setTheme(Theme.Light);
-    }
-  }, [theme]);
+  const _theme = useTheme();
 
   useEffect(() => {
     if (user) {
       const fetchData = async () => {
-        const [progressRes, userMealsRes, mealsSettings] = await Promise.all([
-          fetchProgress(user),
-          fetchMeals(user.id),
-          fetchMealsSettings(user.id),
-        ]);
+        const [progressRes, userMealsRes, mealsSettings, thisWeekDiets] =
+          await Promise.all([
+            fetchProgress(user),
+            fetchMeals(user.id),
+            fetchMealsSettings(user.id),
+            getThisWeekDiets({ user }),
+          ]);
         if (
           progressRes.result === "success" &&
           userMealsRes.result === "success" &&
-          mealsSettings.result === "success"
+          mealsSettings.result === "success" &&
+          thisWeekDiets.result === "success"
         ) {
           dispatch(setProgress(progressRes.data));
           dispatch(setUserMeals(userMealsRes.data));
           dispatch(setUserMealsSettings(mealsSettings.data));
+          dispatch(setDiets(thisWeekDiets.data));
         }
       };
       fetchData();

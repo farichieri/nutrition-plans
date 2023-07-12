@@ -46,8 +46,8 @@ const getUser = async (userID: string): Promise<Result<User, unknown>> => {
     const querySnapshot = await getDoc(userRef);
     const userData = querySnapshot.data();
     if (!userData) throw new Error("Error fetching user Data");
-    const userAccount: User = userData as User;
-    return { result: "success", data: userAccount };
+    const user: User = userData as User;
+    return { result: "success", data: user };
   } catch (error) {
     console.log(error);
     return { result: "error", error };

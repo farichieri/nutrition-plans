@@ -18,7 +18,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
   NProgress.configure({ showSpinner: false });
-  NProgress.configure({ trickle: false });
+  // NProgress.configure({ trickle: false });
 
   useEffect(() => {
     if (

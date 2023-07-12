@@ -191,6 +191,19 @@ const getDaysOfWeek = (week: string): string[] | [] => {
   }
 };
 
+const getThisWeekInterval = ({
+  userStartOfWeek,
+}: {
+  userStartOfWeek: StartsOfWeek;
+}): string[] => {
+  const startWeek = getStartOfWeek({ date: getToday(), userStartOfWeek });
+  const intervalDates = eachDayOfInterval({
+    start: new Date(startWeek),
+    end: new Date(getDatePlusDays(startWeek, 6)),
+  });
+  return intervalDates.map((d) => formatToUSDate(d));
+};
+
 const getIsWeek = (date: string): boolean => date.includes("~");
 const getIsToday = (date: string): boolean => date === getToday();
 
@@ -217,4 +230,5 @@ export {
   isValidDate,
   restOneWeek,
   convertToWeekDate,
+  getThisWeekInterval,
 };

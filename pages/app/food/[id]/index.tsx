@@ -10,11 +10,7 @@ import {
   Ingredients,
   Instructions,
   ScaleSelector,
-  selectFoodsSlice,
-  setFoodOpened,
 } from "@/features/foods";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
 import { useRouter } from "next/router";
 import AddToFavorite from "@/features/favorites/components/AddToFavorite";
 import BackButton from "@/components/Buttons/BackButton";
@@ -26,27 +22,9 @@ import { GetStaticPaths, GetStaticProps } from "next";
 
 export default function Page({ food }: { food: Food }) {
   const router = useRouter();
-  const dispatch = useDispatch();
   const { id } = router.query;
-  const { foodOpened, foodsSearched } = useSelector(selectFoodsSlice);
   const { amount, scale } = router.query;
   const defaultScale = food && getDefaultScale(food.scales);
-
-  useEffect(() => {
-    if (typeof id === "string") {
-      // if (!foodsSearched[id]) {
-      const fetchFoodID = async () => {
-        const res = await fetchFoodByID(id);
-        if (res.result === "success") {
-          dispatch(setFoodOpened(res.data));
-        }
-      };
-      fetchFoodID();
-      // } else {
-      //   dispatch(setFoodOpened(foodsSearched[id]));
-      // }
-    }
-  }, [id, foodsSearched, dispatch]);
 
   if (!food || food?.id !== id || !defaultScale) {
     return (

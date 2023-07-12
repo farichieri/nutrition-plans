@@ -5,8 +5,8 @@ import {
   Nutrition,
   PlanGenerator,
 } from "@/features/plans";
-import { selectPlansSlice, setDiet } from "@/features/plans/slice";
 import { FC, useEffect, useState } from "react";
+import { selectPlansSlice, setDiet } from "@/features/plans/slice";
 import { useDispatch, useSelector } from "react-redux";
 import { User, selectAuthSlice } from "@/features/authentication";
 import Spinner from "@/components/Loader/Spinner";
@@ -44,7 +44,6 @@ const DayPlan: FC<Props> = ({ date }) => {
 
   if (!user) return <></>;
 
-  console.log({ diet });
   return (
     <div className="w-full">
       {isGeneratingPlan || isLoadingDiet ? (

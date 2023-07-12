@@ -18,11 +18,13 @@ const ThemeSwitcher: FC<Props> = ({ withText }) => {
       (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)
     ) {
       document.documentElement.classList.remove("dark");
+      document.documentElement.classList.add("light");
       document.documentElement
         .querySelector('meta[name="theme-color"]')
         ?.setAttribute("content", "#fff");
       dispatch(setTheme(Theme.Light));
     } else {
+      document.documentElement.classList.remove("light");
       document.documentElement.classList.add("dark");
       document.documentElement
         .querySelector('meta[name="theme-color"]')

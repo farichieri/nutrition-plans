@@ -40,6 +40,16 @@ export const plansSlice = createSlice({
         state.planDateType = PlanDateType.day;
       }
     },
+    setDiets: (state, action: PayloadAction<DietGroup>) => {
+      const diets = action.payload;
+      for (let key in diets) {
+        const diet = diets[key];
+        const { date, planID: plan_id } = diet;
+        if (date && plan_id) {
+          state.diets[date] = diet;
+        }
+      }
+    },
     setDiet: (state, action: PayloadAction<Diet>) => {
       const { date, planID: plan_id } = action.payload;
       if (date && plan_id) {
@@ -147,6 +157,7 @@ export const {
   removeFoodInDiet,
   setDeleteDiet,
   setDiet,
+  setDiets,
   setIsGeneratingMeals,
   setPlansDate,
   toggleDrunkWater,

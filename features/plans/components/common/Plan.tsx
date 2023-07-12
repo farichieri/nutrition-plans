@@ -83,14 +83,6 @@ const Plan: FC<Props> = ({ date }) => {
                   <div className="flex w-full">
                     <ManualMeals diet={diet} date={date} user={user} />
                   </div>
-                  {/* {diet && (
-                        <div className="flex w-full items-end">
-                          <Nutrition
-                            nutrients={diet.nutrition}
-                            planID={planID}
-                          />
-                        </div>
-                      )} */}
                 </div>
               </div>
             ) : (
