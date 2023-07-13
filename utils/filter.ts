@@ -70,9 +70,9 @@ const sortByRating = (foodsArray: FoodGroupArray) => {
 
 const sortFoodsSearched = (foodsArray: FoodGroupArray, sortBy: string) => {
   switch (sortBy) {
-    case FilterSortTypes.HigherCalories:
+    case FilterSortTypes.higherCalories:
       return sortByHigherCalories(foodsArray);
-    case FilterSortTypes.LowerCalories:
+    case FilterSortTypes.lowerCalories:
       return sortByLowerCalories(foodsArray);
     default:
       return sortByRating(foodsArray);

@@ -97,7 +97,7 @@ const ShoppingDistributor: FC<Props> = () => {
           }`}
           onClick={handleMoveToCupboard}
         >
-          Move Cupboard
+          Move to Cupboard
         </button>
         {isLoading && <Spinner customClass="h-5 w-5" />}
       </div>

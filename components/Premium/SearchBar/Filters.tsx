@@ -334,7 +334,7 @@ const Filters: FC<Props> = ({ queries, updateRoute, setLocalQueries }) => {
                     value={sort}
                     className={`text-left text-sm font-light capitalize ${
                       (queries.sort === sort ||
-                        (!queries.sort && sort === FilterSortTypes.Rating)) &&
+                        (!queries.sort && sort === FilterSortTypes.rating)) &&
                       "text-green-500"
                     }`}
                   >

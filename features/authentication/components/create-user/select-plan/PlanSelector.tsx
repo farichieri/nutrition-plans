@@ -141,7 +141,7 @@ const PlanSelector: FC<Props> = ({ handleContinue }) => {
                   <span className="mb-1 flex w-full items-center justify-center text-center text-base font-bold sm:text-xl">
                     {opt.name}
                   </span>
-                  <span className="pointer-events-none relative h-32 w-32 overflow-auto rounded-3xl shadow-[0_1px_5px_gray] dark:shadow-[0px_1px_5px_#4040408c] sm:h-40 sm:w-40">
+                  <span className="pointer-events-none relative h-32 w-32 overflow-auto rounded-3xl sm:h-40 sm:w-40">
                     <BlurImage
                       image={{
                         imageURL: `/images/plans/${opt.id}.jpg`,

@@ -41,9 +41,9 @@ export enum FiltersEnum {
   FatsRange = "fatsRange",
 }
 export enum FilterSortTypes {
-  Rating = "rating",
-  HigherCalories = "higherCalories",
-  LowerCalories = "lowerCalories",
+  rating = "rating",
+  higherCalories = "higherCalories",
+  lowerCalories = "lowerCalories",
 }
 export enum StartsOfWeek {
   Sunday = "sunday",

@@ -34,7 +34,7 @@ const getFoodsFiltered = (
 
   const foodsSorted: FoodGroupArray = queries.sort
     ? sortFoodsSearched(Object.values(foodsFiltered), queries.sort)
-    : sortFoodsSearched(Object.values(foodsFiltered), FilterSortTypes.Rating);
+    : sortFoodsSearched(Object.values(foodsFiltered), FilterSortTypes.rating);
 
   return foodsSorted;
 };
@@ -45,7 +45,7 @@ const getFoodsSorted = (
 ): FoodGroupArray => {
   const foodsSorted: FoodGroupArray = queries.sort
     ? sortFoodsSearched(Object.values(foodsToSort), queries.sort)
-    : sortFoodsSearched(Object.values(foodsToSort), FilterSortTypes.Rating);
+    : sortFoodsSearched(Object.values(foodsToSort), FilterSortTypes.rating);
 
   return foodsSorted;
 };
