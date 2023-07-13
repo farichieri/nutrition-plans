@@ -4,21 +4,29 @@ import { GRAMS_IN_ONE_OZ } from "@/constants";
 const GRAMS = NutritionMeasurements.grams;
 const OZ = NutritionMeasurements.oz;
 
-const mergeScales = ({ scales }: { scales: FoodScales }): FoodScales => {
+const orderScales = ({ scales }: { scales: FoodScales }): FoodScales => {
+  return [...scales].sort((a, b) => Number(a.isDefault) - Number(b.isDefault));
+};
+
+const getScalesWithPrimaryScales = ({
+  scales,
+}: {
+  scales: FoodScales;
+}): FoodScales => {
   const foodScales: FoodScales = [
     {
       scaleName: OZ,
       scaleAmount: 1,
       scaleGrams: GRAMS_IN_ONE_OZ,
       isDefault: false,
-      id: null,
+      id: OZ,
     },
     {
       scaleName: GRAMS,
       scaleAmount: 1,
       scaleGrams: 1,
       isDefault: false,
-      id: null,
+      id: GRAMS,
     },
   ];
   [...scales]
@@ -44,4 +52,9 @@ const getScaleOptions = (scalesMerged: FoodScales) => {
 const getDefaultScale = (scales: FoodScales): FoodScale =>
   scales?.find((s) => s.isDefault === true) || scales[0];
 
-export { mergeScales, getScaleOptions, getDefaultScale };
+export {
+  orderScales,
+  getScaleOptions,
+  getDefaultScale,
+  getScalesWithPrimaryScales,
+};

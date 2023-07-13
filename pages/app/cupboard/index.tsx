@@ -15,7 +15,6 @@ interface Props {}
 export default function Page(): Props {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { cupboard } = useSelector(selectShoppingSlice);
-  const { foods } = cupboard;
 
   return (
     <PremiumLayout>

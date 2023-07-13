@@ -2,35 +2,34 @@ import {
   ShoppingListFood,
   ShoppingListFoods,
   buildCupboardList,
-  buildShoppingList,
   getCupboard,
   selectShoppingSlice,
   setCupboardFoods,
   setCupboardSelecteds,
-  setShoppingSelecteds,
 } from "@/features/shopping";
+import { db } from "@/services/firebase/firebase.config";
+import { doc, onSnapshot } from "firebase/firestore";
 import { FC, useEffect } from "react";
+import { selectAuthSlice } from "@/features/authentication";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import List from "../shopping_list/List";
-import { selectAuthSlice } from "@/features/authentication";
 
 interface Props {}
 
 const CupboardList: FC<Props> = () => {
   const dispatch = useDispatch();
-  const { user } = useSelector(selectAuthSlice);
   const router = useRouter();
-  const { shoppingList, cupboard } = useSelector(selectShoppingSlice);
-  const { selecteds, foods: shoppingListFoods } = shoppingList;
-  const { foods: cupboardFoods } = cupboard;
+  const { user } = useSelector(selectAuthSlice);
+  const { cupboard } = useSelector(selectShoppingSlice);
+  const { selecteds, foods: cupboardFoods } = cupboard;
 
   const handleSelected = ({ food }: { food: ShoppingListFood }) => {
-    // if (selecteds.includes(food.id)) {
-    //   dispatch(setShoppingSelecteds(selecteds.filter((id) => id !== food.id)));
-    // } else {
-    //   dispatch(setShoppingSelecteds([...selecteds, food.id]));
-    // }
+    if (selecteds.includes(food.id)) {
+      dispatch(setCupboardSelecteds(selecteds.filter((id) => id !== food.id)));
+    } else {
+      dispatch(setCupboardSelecteds([...selecteds, food.id]));
+    }
   };
 
   const fetchCupboard = async () => {
@@ -45,7 +44,18 @@ const CupboardList: FC<Props> = () => {
   useEffect(() => {
     dispatch(setCupboardSelecteds([]));
     fetchCupboard();
-  }, []);
+  }, [router]);
+
+  useEffect(() => {
+    // Listen to database changes
+    if (user) {
+      const docRef = doc(db, "users", user.id, "cupboard", "uniqueCupboard");
+      onSnapshot(docRef, (doc) => {
+        const data = (doc.data() as ShoppingListFoods) || {};
+        dispatch(setCupboardFoods(data));
+      });
+    }
+  }, [onSnapshot]);
 
   const list = buildCupboardList({ cupboardFoods });
 

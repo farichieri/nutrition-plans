@@ -51,9 +51,17 @@ export const plansSlice = createSlice({
       }
     },
     setDiet: (state, action: PayloadAction<Diet>) => {
-      const { date, planID: plan_id } = action.payload;
-      if (date && plan_id) {
+      const { date, id } = action.payload;
+      if (date && id) {
         state.diets[date] = action.payload;
+      } else if (date && !id) {
+        delete state.diets[date];
+      }
+    },
+    setDeleteDiet: (state, action: PayloadAction<{ id: string }>) => {
+      const { id } = action.payload;
+      if (id) {
+        delete state.diets[id];
       }
     },
     addFoodToDiet: (
@@ -134,12 +142,6 @@ export const plansSlice = createSlice({
       // const { drunk, litters_drunk, litters_to_drink } = diet_water;
       if (!id) return;
       state.diets[id].water.drunk = value;
-    },
-    setDeleteDiet: (state, action: PayloadAction<Diet>) => {
-      const { id } = action.payload;
-      if (id) {
-        delete state.diets[id];
-      }
     },
     setIsGeneratingMeals: (state, action: PayloadAction<boolean>) => {
       state.isGeneratingMeals = action.payload;

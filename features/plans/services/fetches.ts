@@ -23,9 +23,8 @@ const fetchDietByDate = async ({
   try {
     const docRef = doc(db, "users", userID, "diets", date);
     const querySnapshot = await getDoc(docRef);
-    const dietData: any = querySnapshot.data();
-    const diet: Diet = (dietData as Diet) || {};
-    return { result: "success", data: diet };
+    const data: any = (querySnapshot.data() as Diet) || {};
+    return { result: "success", data };
   } catch (error) {
     return { result: "error", error };
   }

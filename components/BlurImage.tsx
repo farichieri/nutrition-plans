@@ -2,6 +2,10 @@ import { ImageI } from "@/types";
 import { useState } from "react";
 import Image from "next/image";
 
+function cn(...classes: string[]) {
+  return classes.filter(Boolean).join(" ");
+}
+
 const BlurImage = ({
   image,
   customClass,

@@ -5,6 +5,8 @@ import {
   Nutrition,
   PlanGenerator,
 } from "@/features/plans";
+import { db } from "@/services/firebase/firebase.config";
+import { doc, onSnapshot } from "firebase/firestore";
 import { FC, useEffect, useState } from "react";
 import { selectPlansSlice, setDiet } from "@/features/plans/slice";
 import { useDispatch, useSelector } from "react-redux";
@@ -44,6 +46,14 @@ const DayPlan: FC<Props> = ({ date }) => {
   }, [date]);
 
   if (!user) return <></>;
+
+  useEffect(() => {
+    const docRef = doc(db, "users", user.id, "diets", date);
+    onSnapshot(docRef, (doc) => {
+      const data = (doc.data() as Diet) || { date };
+      dispatch(setDiet(data));
+    });
+  }, [onSnapshot]);
 
   return (
     <div className="w-full">

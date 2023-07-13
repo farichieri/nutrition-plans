@@ -1,7 +1,7 @@
 import { collection, doc, setDoc } from "firebase/firestore";
 import { db, storage } from "@/services/firebase/firebase.config";
 import { DEFAULT_IMAGE } from "@/types/initialTypes";
-import { Food, FoodKind } from "@/features/foods";
+import { Food, FoodKind, getScalesWithPrimaryScales } from "@/features/foods";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { getFoodsCollectionLength } from "./fetches";
 import { Result } from "@/types";
@@ -47,7 +47,7 @@ const addFood = async (
     }
 
     // Add the default scale:
-    const newScales = [...food.scales];
+    const newScales = getScalesWithPrimaryScales({ scales: food.scales });
     const uuid = uuidv4();
     const scaleName = food.servingName;
     const scaleAmount = 1;

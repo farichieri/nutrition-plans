@@ -6,7 +6,7 @@ import {
 } from "@/features/plans/slice";
 import { CheckButton } from "@/components/Buttons";
 import { FC } from "react";
-import { Food, getScaleOptions, mergeScales } from "@/features/foods";
+import { Food, getScaleOptions, orderScales } from "@/features/foods";
 import { FoodKeys } from "@/types/initialTypes";
 import { formatTwoDecimals } from "@/utils";
 import { getNewAmount } from "@/utils/nutritionHelpers";
@@ -26,7 +26,7 @@ interface MealInCardProps {
 
 const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
   const dispatch = useDispatch();
-  const scalesMerged = mergeScales({ scales: food.scales });
+  const scalesMerged = orderScales({ scales: food.scales });
   const options = getScaleOptions(scalesMerged);
   const { diets } = useSelector(selectPlansSlice);
 
@@ -39,7 +39,7 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
-    const scalesMerged = mergeScales({ scales: food.scales });
+    const scalesMerged = orderScales({ scales: food.scales });
     const type = event.target.type;
     const name = event.target.name;
     const value = event.target.value;

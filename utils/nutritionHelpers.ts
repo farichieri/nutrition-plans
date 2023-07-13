@@ -10,7 +10,7 @@ import {
 import { DietMealGroup } from "@/features/plans";
 import { formatToFixed, formatTwoDecimals } from "@/utils/format";
 import { GRAMS_IN_ONE_OZ } from "@/constants";
-import { mergeScales } from "@/features/foods";
+import { orderScales } from "@/features/foods";
 import { NewFoodNutrients } from "@/types/initialTypes";
 
 const GRAMS = NutritionMeasurements.grams;
@@ -103,7 +103,7 @@ const getRecipeSize = (ingredients: IngredientGroup): number | null => {
   let size = 0;
   Object.keys(ingredients).map((ing) => {
     const food = ingredients[ing];
-    const scalesMerged = mergeScales({ scales: food.scales });
+    const scalesMerged = orderScales({ scales: food.scales });
     if (food.scaleName && food.scaleAmount) {
       const equivalentInGrams = getNewAmount({
         scales: scalesMerged,

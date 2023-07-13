@@ -1,11 +1,12 @@
-import { FoodCategoriesEnum, mergeScales } from "@/features/foods";
 import {
   ShoppingListFood,
   ShoppingListFoods,
   ShoppingListT,
 } from "@/features/shopping";
+import { FoodCategoriesEnum } from "@/features/foods";
 import { getNewAmount } from "@/utils";
 
+// Get difference between shopping list food and cupboard food
 const getFoodDifference = ({
   shoppingFood,
   cupboardFood,
@@ -13,12 +14,11 @@ const getFoodDifference = ({
   shoppingFood: ShoppingListFood;
   cupboardFood: ShoppingListFood;
 }): ShoppingListFood => {
-  const scalesMerged = mergeScales({ scales: cupboardFood.scales });
   const amountUpdated = getNewAmount({
     new_scale_name: shoppingFood.scaleName,
     prev_scale_name: cupboardFood.scaleName,
     scaleAmount: cupboardFood.scaleAmount,
-    scales: scalesMerged,
+    scales: cupboardFood.scales,
   });
 
   return {
@@ -43,27 +43,21 @@ const buildShoppingList = ({
   });
 
   Object.keys(foods).forEach((food_meal_id) => {
-    const food = foods[food_meal_id];
+    const shoppingFood = foods[food_meal_id];
     const cupboardFood = cupboard[food_meal_id];
 
     if (cupboardFood) {
       const difference = getFoodDifference({
-        shoppingFood: food,
+        shoppingFood: shoppingFood,
         cupboardFood: cupboardFood,
       });
-      console.log({ food, cupboardFood, difference });
+      console.log({ food: shoppingFood, cupboardFood, difference });
+      if (difference.scaleAmount > 0) {
+        list[shoppingFood.category!][food_meal_id] = difference;
+      }
+    } else {
+      list[shoppingFood.category!][food_meal_id] = shoppingFood;
     }
-
-    list[food.category!][food_meal_id] = {
-      category: food.category!,
-      id: food.id!,
-      imageURL: food.imageURL,
-      isCupboard: false,
-      name: food.name!,
-      scaleAmount: food.scaleAmount,
-      scaleName: food.scaleName,
-      scales: food.scales,
-    };
   });
 
   return list;

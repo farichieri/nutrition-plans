@@ -1,4 +1,4 @@
-import { FoodGroup, FoodKind, mergeScales } from "@/features/foods";
+import { FoodGroup, FoodKind, orderScales } from "@/features/foods";
 import { getNewAmount } from "@/utils";
 import { ShoppingListFoods } from "@/features/shopping";
 
@@ -17,7 +17,7 @@ const mergeFoodsWithSameScaleName = ({
       mergedFoods[id] = food;
     } else {
       const newScaleName = mergedFoods[id].scaleName;
-      const scalesMerged = mergeScales({ scales: food.scales });
+      const scalesMerged = orderScales({ scales: food.scales });
       const amountUpdated = getNewAmount({
         new_scale_name: newScaleName,
         prev_scale_name: scaleName,

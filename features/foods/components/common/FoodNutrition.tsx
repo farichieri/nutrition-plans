@@ -1,7 +1,7 @@
 import {
   Food,
   FoodNutrients,
-  mergeScales,
+  orderScales,
   NutritionMeasurements,
 } from "@/features/foods";
 import { BiSolidPieChartAlt2 } from "react-icons/bi";
@@ -22,7 +22,7 @@ interface Props {
 const FoodNutrition: FC<Props> = ({ food, amount, scale }) => {
   const [openDetails, setOpenDetails] = useState(false);
   const [nutrients, setNutrients] = useState<FoodNutrients | null>(null);
-  const scalesMerged = mergeScales({ scales: food.scales });
+  const scalesMerged = orderScales({ scales: food.scales });
 
   const handleOpenDetail = (event: React.MouseEvent) => {
     event.preventDefault();

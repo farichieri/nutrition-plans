@@ -3,9 +3,8 @@ import { FC } from "react";
 import { FoodCategoriesEnum } from "@/features/foods";
 import { formatTwoDecimals } from "@/utils";
 import { ShoppingListFood, ShoppingListT } from "@/features/shopping";
-import Collapsable from "@/components/Layout/Collapsable";
-import Image from "next/image";
 import BlurImage from "@/components/BlurImage";
+import Collapsable from "@/components/Layout/Collapsable";
 
 interface Props {
   list: ShoppingListT;

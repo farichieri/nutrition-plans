@@ -1,4 +1,7 @@
 import { convertDateToDateString, convertDayToUrlDate } from "../../utils";
+import { db } from "@/services/firebase/firebase.config";
+import { Diet } from "../../types";
+import { doc, onSnapshot } from "firebase/firestore";
 import { FC, useEffect, useState } from "react";
 import { fetchDietByDate } from "../../services";
 import { ManualMeals } from "..";
@@ -47,6 +50,13 @@ const Plan: FC<Props> = ({ date }) => {
     userStartOfWeek: user?.startOfWeek,
   });
 
+  useEffect(() => {
+    const docRef = doc(db, "users", user.id, "diets", date);
+    onSnapshot(docRef, (doc) => {
+      const data = (doc.data() as Diet) || { date };
+      dispatch(setDiet(data));
+    });
+  }, [onSnapshot]);
   return (
     <div
       className={`flex w-full flex-col items-center justify-start gap-2 rounded-lg border bg-slate-200/50 p-2 dark:bg-gray-500/10 ${

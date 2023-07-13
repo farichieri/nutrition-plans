@@ -18,30 +18,18 @@ interface Props {}
 const ShoppingDistributor: FC<Props> = () => {
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
+  const [hasSelecteds, setHasSelecteds] = useState(false);
   const { user } = useSelector(selectAuthSlice);
   const [isLoading, setIsLoading] = useState(false);
   const { shoppingList, cupboard } = useSelector(selectShoppingSlice);
   const { selecteds: shoppingSelecteds, foods: shoppingFoods } = shoppingList;
-  const { selecteds: cupboardSelecteds, foods: cupboardFoods } = cupboard;
-  const [hasSelecteds, setHasSelecteds] = useState(false);
-  const isShoppingRoute = router.asPath.includes("shopping");
-  const isCupboardRoute = router.asPath.includes("cupboard");
+  const { foods: cupboardFoods } = cupboard;
 
   useEffect(() => {
-    if (isShoppingRoute) {
-      if (shoppingSelecteds.length > 0) {
-        setHasSelecteds(true);
-      } else {
-        setHasSelecteds(false);
-      }
-    } else if (isCupboardRoute) {
-      if (cupboardSelecteds.length > 0) {
-        setHasSelecteds(true);
-      } else {
-        setHasSelecteds(false);
-      }
-    }
-  }, [router, shoppingSelecteds, cupboardSelecteds]);
+    shoppingSelecteds.length > 0
+      ? setHasSelecteds(true)
+      : setHasSelecteds(false);
+  }, [router, shoppingSelecteds]);
 
   if (!user) return <></>;
 
@@ -76,17 +64,43 @@ const ShoppingDistributor: FC<Props> = () => {
     }
   };
 
+  const removeFromCupboard = () => {};
+
   return (
-    <div className="flex items-center gap-2">
-      <button
-        className={`rounded-3xl border px-3 py-2 duration-100 hover:bg-slate-500/20 active:bg-slate-500/50 ${
-          hasSelecteds ? "opacity-100" : "cursor-not-allowed opacity-50"
-        }`}
-        onClick={handleMoveToCupboard}
-      >
-        Move to Cupboard
-      </button>
-      {isLoading && <Spinner customClass="h-5 w-5" />}
+    <div className="fixed bottom-16 left-1/2 z-[100] flex min-w-max -translate-x-1/2 items-center justify-center gap-1 rounded-full border bg-white/80 px-1 py-1 dark:bg-black/80">
+      <div className="flex min-w-fit items-center gap-2">
+        <button
+          className={`rounded-3xl border bg-slate-200 px-3 py-2 duration-100 hover:bg-slate-500/20 active:bg-slate-500/50 dark:bg-slate-500 ${
+            hasSelecteds ? "opacity-100" : "cursor-not-allowed opacity-50"
+          }`}
+          onClick={handleMoveToCupboard}
+        >
+          Add Food
+        </button>
+        {isLoading && <Spinner customClass="h-5 w-5" />}
+      </div>
+      <div className="flex min-w-fit items-center gap-2">
+        <button
+          className={`rounded-3xl border bg-slate-200 px-3 py-2 duration-100 hover:bg-slate-500/20 active:bg-slate-500/50 dark:bg-slate-500 ${
+            hasSelecteds ? "opacity-100" : "cursor-not-allowed opacity-50"
+          }`}
+          onClick={handleMoveToCupboard}
+        >
+          Remove
+        </button>
+        {isLoading && <Spinner customClass="h-5 w-5" />}
+      </div>
+      <div className="flex min-w-fit items-center gap-2">
+        <button
+          className={`rounded-3xl border bg-slate-200 px-3 py-2 duration-100 hover:bg-slate-500/20 active:bg-slate-500/50 dark:bg-slate-500 ${
+            hasSelecteds ? "opacity-100" : "cursor-not-allowed opacity-50"
+          }`}
+          onClick={handleMoveToCupboard}
+        >
+          Move Cupboard
+        </button>
+        {isLoading && <Spinner customClass="h-5 w-5" />}
+      </div>
     </div>
   );
 };

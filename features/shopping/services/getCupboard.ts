@@ -11,9 +11,8 @@ const getCupboard = async ({
   try {
     const docRef = doc(db, "users", userID, "cupboard", "uniqueCupboard");
     const querySnapshot = await getDoc(docRef);
-    const data: any = querySnapshot.data();
-    const cupboard = data || {};
-    return { result: "success", data: cupboard };
+    const data: any = (querySnapshot.data() as Cupboard) || {};
+    return { result: "success", data };
   } catch (error) {
     return { result: "error", error };
   }

@@ -64,7 +64,7 @@ export default function Page({ date }: { date: Props }) {
       <SubPremiumNav title={""} customClass="top-[var(--nav-h)]">
         <DaySelector date={String(date)} baseURL={"/app/shopping/"} />
       </SubPremiumNav>
-      <section className="mt-[var(--subnav-h)] flex w-full flex-col gap-2 p-2 sm:px-4">
+      <section className="mt-[var(--subnav-h)] flex w-full flex-col gap-2 p-2 pb-16 sm:px-4">
         <span className="font-semibold ">
           Products that I should buy for my planned days
         </span>

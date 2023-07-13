@@ -2,7 +2,7 @@ import {
   Food,
   getDefaultScale,
   getScaleOptions,
-  mergeScales,
+  orderScales,
 } from "@/features/foods";
 import { FC, useEffect, useState } from "react";
 import { getNewAmount } from "@/utils";
@@ -27,7 +27,7 @@ const ScaleSelector: FC<Props> = ({
 }) => {
   const [isNotOriginal, setIsNotOriginal] = useState(false);
   const router = useRouter();
-  const scalesMerged = mergeScales({ scales: food.scales });
+  const scalesMerged = orderScales({ scales: food.scales });
   const options = getScaleOptions(scalesMerged);
   const defaultScale = getDefaultScale(food.scales);
 
