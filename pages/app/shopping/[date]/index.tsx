@@ -1,5 +1,7 @@
 import {
+  AddFoodModalShopping,
   getDietShoppingFoods,
+  selectShoppingSlice,
   setShoppingListFoods,
   ShoppingDistributor,
   ShoppingList,
@@ -23,6 +25,8 @@ interface Props {
 export default function Page({ date }: { date: Props }) {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
+  const { cupboard } = useSelector(selectShoppingSlice);
+  const { isAddingFood } = cupboard;
   useRedirectToday(String(date));
   const realDate = getRealDate({
     date: String(date),
@@ -58,13 +62,14 @@ export default function Page({ date }: { date: Props }) {
 
   return (
     <PremiumLayout>
-      <PremiumNav hideScrolling={false} simplified>
+      <PremiumNav hideScrolling={true} simplified>
         <ShoppingNav />
       </PremiumNav>
       <SubPremiumNav title={""} customClass="top-[var(--nav-h)]">
         <DaySelector date={String(date)} baseURL={"/app/shopping/"} />
       </SubPremiumNav>
-      <section className="mt-[var(--subnav-h)] flex w-full flex-col gap-2 p-2 pb-16 sm:px-4">
+      <section className="mt-[var(--subnav-h)] flex w-full flex-col gap-2 p-2 pb-20 sm:px-4">
+        {isAddingFood && <AddFoodModalShopping />}
         <span className="font-semibold ">
           Products that I should buy for my planned days
         </span>

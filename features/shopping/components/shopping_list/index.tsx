@@ -1,11 +1,12 @@
 import {
-  ShoppingListFood,
-  ShoppingListFoods,
   buildShoppingList,
   selectShoppingSlice,
   setShoppingSelecteds,
+  ShoppingListFood,
+  ShoppingListFoods,
+  ShoppingListT,
 } from "@/features/shopping";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import List from "./List";
@@ -18,6 +19,7 @@ const ShoppingList: FC<Props> = () => {
   const { shoppingList, cupboard } = useSelector(selectShoppingSlice);
   const { selecteds, foods: shoppingListFoods } = shoppingList;
   const { foods: cupboardFoods } = cupboard;
+  const [list, setList] = useState<ShoppingListT>({});
 
   const handleSelected = ({ food }: { food: ShoppingListFood }) => {
     if (selecteds.includes(food.id)) {
@@ -31,10 +33,9 @@ const ShoppingList: FC<Props> = () => {
     dispatch(setShoppingSelecteds([]));
   }, [router]);
 
-  const list = buildShoppingList({
-    foods: shoppingListFoods,
-    cupboard: cupboardFoods,
-  });
+  useEffect(() => {
+    setList(buildShoppingList({ shoppingListFoods, cupboardFoods }));
+  }, [shoppingListFoods, cupboardFoods]);
 
   const firstSlice = Object.fromEntries(Object.entries(list).slice(0, 9));
   const secondSlice = Object.fromEntries(Object.entries(list).slice(9));
@@ -42,7 +43,7 @@ const ShoppingList: FC<Props> = () => {
   return (
     <div className="flex flex-col gap-1">
       {Object.values(list).length > 1 && (
-        <div className="grid w-full sm:grid-cols-fluid_lg md:gap-5">
+        <div className="grid w-full sm:grid-cols-fluid_lg md:gap-x-5">
           <div className="flex w-full flex-col gap-1">
             <List
               list={firstSlice}

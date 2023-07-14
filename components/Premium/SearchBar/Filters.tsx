@@ -7,6 +7,7 @@ import {
 import { FC, useState } from "react";
 import { FoodKind } from "@/features/foods";
 import { MdArrowRight, MdClose, MdTune } from "react-icons/md";
+import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
 import RoundButton from "@/components/Buttons/RoundButton";
 
@@ -14,6 +15,7 @@ interface Props {
   queries: FilterQueries;
   updateRoute: boolean;
   setLocalQueries: Function;
+  fixedQueries?: FilterQueries;
 }
 
 interface Nuts {
@@ -35,7 +37,12 @@ interface Nuts {
   };
 }
 
-const Filters: FC<Props> = ({ queries, updateRoute, setLocalQueries }) => {
+const Filters: FC<Props> = ({
+  queries,
+  updateRoute,
+  setLocalQueries,
+  fixedQueries,
+}) => {
   const router = useRouter();
   const [openFilters, setOpenFilters] = useState(false);
   const [nutrients, setNutrients] = useState<Nuts>({
@@ -94,6 +101,11 @@ const Filters: FC<Props> = ({ queries, updateRoute, setLocalQueries }) => {
     const name = (event.target as HTMLButtonElement).name;
     const value = (event.target as HTMLButtonElement).value;
 
+    if (fixedQueries && fixedQueries[name as keyof FilterQueries]) {
+      toast.error("You can't change this filter here.");
+      return;
+    }
+
     let query;
     if (
       name === FiltersEnum.CaloriesRange ||
@@ -127,6 +139,12 @@ const Filters: FC<Props> = ({ queries, updateRoute, setLocalQueries }) => {
   const handleRemove = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const name = (event.target as HTMLButtonElement).name;
+
+    if (fixedQueries && fixedQueries[name as keyof FilterQueries]) {
+      toast.error("You can't change this filter here.");
+      return;
+    }
+
     delete queries[name as keyof FilterQueries];
     if (updateRoute) {
       router.replace({

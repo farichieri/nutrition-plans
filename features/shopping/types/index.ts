@@ -11,6 +11,8 @@ export interface ShoppingListFood {
   scales: FoodScales;
 }
 
+export interface CupboardFood extends ShoppingListFood {}
+
 export interface ShoppingListFoods {
   [id: string]: ShoppingListFood;
 }

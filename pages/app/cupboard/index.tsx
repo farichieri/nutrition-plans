@@ -1,5 +1,6 @@
 import {
-  ShoppingDistributor,
+  AddFoodModalCupboard,
+  CupboardDistributor,
   ShoppingNav,
   selectShoppingSlice,
 } from "@/features/shopping";
@@ -15,15 +16,17 @@ interface Props {}
 export default function Page(): Props {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { cupboard } = useSelector(selectShoppingSlice);
+  const { isAddingFood } = cupboard;
 
   return (
     <PremiumLayout>
-      <PremiumNav hideScrolling={false} simplified>
+      <PremiumNav hideScrolling={true} simplified>
         <ShoppingNav />
       </PremiumNav>
-      <section className=" flex w-full flex-col gap-2 p-2 sm:px-4">
+      <section className=" flex w-full flex-col gap-2 p-2 pb-20 sm:px-4">
+        {isAddingFood && <AddFoodModalCupboard />}
         <span className="font-semibold ">Products that I have</span>
-        <ShoppingDistributor />
+        <CupboardDistributor />
         {isLoading ? <Spinner customClass="w-5 h-5" /> : <CupboardList />}
       </section>
     </PremiumLayout>

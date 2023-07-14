@@ -105,7 +105,7 @@ const SaveAndEditButton: FC<Props> = ({
           onClick={cancelChanges}
         >
           Cancel
-          {isCanceling && <Spinner customClass="h-4 w-4" />}
+          {isCanceling && <Spinner customClass="h-5 w-5" />}
         </button>
       )}
       {isEditing && (
@@ -114,7 +114,7 @@ const SaveAndEditButton: FC<Props> = ({
           onClick={handleDelete}
         >
           Delete
-          {isDeleting && <Spinner customClass="h-4 w-4" />}
+          {isDeleting && <Spinner customClass="h-5 w-5" />}
           <MdDelete className="h-5 w-5" />
         </button>
       )}
@@ -130,7 +130,7 @@ const SaveAndEditButton: FC<Props> = ({
         ) : (
           <LuFileEdit className="h-5 w-5" />
         )}
-        {isSaving && <Spinner customClass="h-4 w-4" />}
+        {isSaving && <Spinner customClass="h-5 w-5" />}
       </button>
     </div>
   );

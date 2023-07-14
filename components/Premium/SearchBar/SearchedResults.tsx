@@ -18,7 +18,7 @@ const SearchedResults: FC<Props> = ({ searchResult, handleClick, queries }) => {
           <div
             onClick={() => handleClick(food)}
             key={food.id}
-            className="flex h-full w-full cursor-pointer items-start overflow-auto rounded-md border"
+            className="flex h-full w-full cursor-pointer items-start overflow-auto rounded-xl border"
           >
             <span className="relative h-20 w-full basis-1/5">
               <Image

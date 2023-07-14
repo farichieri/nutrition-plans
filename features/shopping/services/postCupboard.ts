@@ -12,7 +12,7 @@ const postCupboard = async ({
   user: User;
 }): Promise<Result<Cupboard, unknown>> => {
   try {
-    const docRef = doc(db, "users", user.id, "cupboard", "uniqueCupboard");
+    const docRef = doc(db, "users", user.id, "shopping", "cupboard");
     await setDoc(docRef, cupboard);
     return { result: "success", data: cupboard };
   } catch (error) {

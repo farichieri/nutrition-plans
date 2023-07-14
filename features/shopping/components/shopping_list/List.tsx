@@ -18,11 +18,17 @@ const List: FC<Props> = ({ list, handleSelected, selecteds }) => {
     <>
       {Object.keys(list).map((category) => {
         const foodsLength = Object.values(list[category]).length;
+        const categoryHasSelecteds = Object.values(list[category]).some(
+          (food) => selecteds.includes(food.id)
+        );
+        console.log({ categoryHasSelecteds });
         return (
           <div key={category}>
             <Collapsable
               key={category}
+              doNotExpand={foodsLength === 0 ? true : false}
               defaultState={foodsLength > 0 ? true : false}
+              doNotCollapse={categoryHasSelecteds}
               showed={
                 <div className="flex gap-2">
                   <span

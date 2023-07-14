@@ -27,8 +27,8 @@ const getSearchParameters = ({
 
   let curatedQ = isCurated ? `isCurated:true` : "";
   let uploader_idQ = uploaderID ? `uploaderID:${uploaderID}` : "";
-  kind = kind ? ` && kind:${kind}` : "";
-  plan = plan ? ` && compatiblePlans.${plan}:true` : "";
+  let kindQ = kind ? ` && kind:${kind}` : "";
+  let planQ = plan ? ` && compatiblePlans.${plan}:true` : "";
   caloriesRange = caloriesRange
     ? ` && nutrients.calories:${getRange({ nutrientRange: caloriesRange })}`
     : "";
@@ -51,7 +51,7 @@ const getSearchParameters = ({
   const searchParameters = {
     q: q || "",
     query_by: "name, description, ingredientsNames, ingredientsDescriptions",
-    filter_by: `${uploader_idQ}${curatedQ}${kind}${plan}${caloriesRange}${carbsRange}${fatsRange}${proteinsRange}`,
+    filter_by: `${uploader_idQ}${curatedQ}${kindQ}${planQ}${caloriesRange}${carbsRange}${fatsRange}${proteinsRange}`,
     sort_by: sort,
     page: 1,
     per_page: 40,

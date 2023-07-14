@@ -1,6 +1,7 @@
 import {
   ShoppingListFood,
   ShoppingListFoods,
+  ShoppingListT,
   buildCupboardList,
   getCupboard,
   selectShoppingSlice,
@@ -9,7 +10,7 @@ import {
 } from "@/features/shopping";
 import { db } from "@/services/firebase/firebase.config";
 import { doc, onSnapshot } from "firebase/firestore";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { selectAuthSlice } from "@/features/authentication";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
@@ -23,6 +24,7 @@ const CupboardList: FC<Props> = () => {
   const { user } = useSelector(selectAuthSlice);
   const { cupboard } = useSelector(selectShoppingSlice);
   const { selecteds, foods: cupboardFoods } = cupboard;
+  const [list, setList] = useState<ShoppingListT>({});
 
   const handleSelected = ({ food }: { food: ShoppingListFood }) => {
     if (selecteds.includes(food.id)) {
@@ -49,7 +51,7 @@ const CupboardList: FC<Props> = () => {
   useEffect(() => {
     // Listen to database changes
     if (user) {
-      const docRef = doc(db, "users", user.id, "cupboard", "uniqueCupboard");
+      const docRef = doc(db, "users", user.id, "shopping", "cupboard");
       onSnapshot(docRef, (doc) => {
         const data = (doc.data() as ShoppingListFoods) || {};
         dispatch(setCupboardFoods(data));
@@ -57,7 +59,9 @@ const CupboardList: FC<Props> = () => {
     }
   }, [onSnapshot]);
 
-  const list = buildCupboardList({ cupboardFoods });
+  useEffect(() => {
+    setList(buildCupboardList({ cupboardFoods }));
+  }, [cupboardFoods]);
 
   const firstSlice = Object.fromEntries(Object.entries(list).slice(0, 9));
   const secondSlice = Object.fromEntries(Object.entries(list).slice(9));
@@ -65,7 +69,7 @@ const CupboardList: FC<Props> = () => {
   return (
     <div className="flex flex-col gap-1">
       {Object.values(list).length > 1 && (
-        <div className="grid w-full sm:grid-cols-fluid_lg md:gap-5">
+        <div className="grid w-full sm:grid-cols-fluid_lg md:gap-x-5">
           <div className="flex w-full flex-col gap-1">
             <List
               list={firstSlice}

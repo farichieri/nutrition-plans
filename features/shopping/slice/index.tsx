@@ -15,10 +15,12 @@ interface ShoppingState {
   shoppingList: {
     foods: ShoppingListFoods;
     selecteds: string[];
+    isAddingFood: boolean;
   };
   cupboard: {
     foods: ShoppingListFoods;
     selecteds: string[];
+    isAddingFood: boolean;
   };
 }
 
@@ -27,10 +29,12 @@ const initialState: ShoppingState = {
   shoppingList: {
     foods: {},
     selecteds: [],
+    isAddingFood: false,
   },
   cupboard: {
     foods: {},
     selecteds: [],
+    isAddingFood: false,
   },
 };
 
@@ -53,6 +57,12 @@ export const shoppingSlice = createSlice({
     setShoppingSelecteds(state, action: PayloadAction<string[]>) {
       state.shoppingList.selecteds = action.payload;
     },
+    setIsAddingFoodToCupboard(state, action: PayloadAction<boolean>) {
+      state.cupboard.isAddingFood = action.payload;
+    },
+    setIsAddingFoodToShopping(state, action: PayloadAction<boolean>) {
+      state.cupboard.isAddingFood = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(PURGE, () => {
@@ -69,6 +79,8 @@ export const {
   setCupboardSelecteds,
   setShoppingListFoods,
   setShoppingSelecteds,
+  setIsAddingFoodToCupboard,
+  setIsAddingFoodToShopping,
 } = shoppingSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

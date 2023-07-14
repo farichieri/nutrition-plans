@@ -28,23 +28,23 @@ const getFoodDifference = ({
 };
 
 const buildShoppingList = ({
-  foods,
-  cupboard,
+  shoppingListFoods,
+  cupboardFoods,
 }: {
-  foods: ShoppingListFoods;
-  cupboard: ShoppingListFoods;
+  shoppingListFoods: ShoppingListFoods;
+  cupboardFoods: ShoppingListFoods;
 }): ShoppingListT => {
   const foodCategories = Object.keys(FoodCategoriesEnum);
   const list: ShoppingListT = {};
 
-  console.log({ foods });
+  console.log({ foods: shoppingListFoods });
   foodCategories.forEach((category: string) => {
     list[category] = {};
   });
 
-  Object.keys(foods).forEach((food_meal_id) => {
-    const shoppingFood = foods[food_meal_id];
-    const cupboardFood = cupboard[food_meal_id];
+  Object.keys(shoppingListFoods).forEach((food_meal_id) => {
+    const shoppingFood = shoppingListFoods[food_meal_id];
+    const cupboardFood = cupboardFoods[food_meal_id];
 
     if (cupboardFood) {
       const difference = getFoodDifference({

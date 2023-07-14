@@ -1,3 +1,5 @@
+import { FoodKind } from "@/features/foods";
+
 export enum Theme {
   Dark = "dark",
   Light = "light",
