@@ -11,7 +11,6 @@ import { Toaster } from "react-hot-toast";
 import Layout from "@/layouts";
 import NProgress from "nprogress";
 import type { AppProps } from "next/app";
-import AppLoader from "@/components/Loader/AppLoader";
 import ErrorBoundary from "@/components/ErrorBoundary/ErrorBoundary";
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -61,7 +60,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <ErrorBoundary>
       <Provider store={store}>
-        <PersistGate loading={<AppLoader />} persistor={persistor}>
+        <PersistGate loading={null} persistor={persistor}>
           <Toaster />
           <Layout>
             <Component {...pageProps} />

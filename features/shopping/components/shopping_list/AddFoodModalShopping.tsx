@@ -28,7 +28,7 @@ const AddFoodModalShopping: FC<Props> = () => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
   const { foodsSearched, foodModal } = useSelector(selectFoodsSlice);
-  const { cupboard: shoppingList } = useSelector(selectShoppingSlice);
+  const { shoppingList } = useSelector(selectShoppingSlice);
   const { foods } = shoppingList;
   const [queries, setLocalQueries] = useState<FilterQueries>({
     kind: FoodKind.basic_food,

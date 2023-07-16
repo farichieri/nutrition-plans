@@ -13,6 +13,7 @@ import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Spinner from "@/components/Loader/Spinner";
+import { MdSearch } from "react-icons/md";
 
 interface Props {}
 
@@ -107,9 +108,13 @@ const ShoppingDistributor: FC<Props> = () => {
     <div className="fixed bottom-16 left-1/2 z-[100] flex min-w-max -translate-x-1/2 items-center justify-center gap-1 rounded-full border bg-white/80 px-1 py-1 dark:bg-black/80 md:bottom-4">
       <div className="flex min-w-fit items-center gap-2">
         <button
-          className={buttonClass + ` opacity-50 hover:opacity-100 `}
+          className={
+            buttonClass +
+            ` border-green-800 !bg-green-500 opacity-50 hover:opacity-100 `
+          }
           onClick={() => dispatch(setIsAddingFoodToShopping(true))}
         >
+          <MdSearch className="h-5 w-5" />
           Add Food
         </button>
       </div>
