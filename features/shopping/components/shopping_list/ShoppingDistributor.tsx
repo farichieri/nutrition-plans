@@ -101,8 +101,10 @@ const ShoppingDistributor: FC<Props> = () => {
     }
   };
 
+  const selectedsLength = shoppingSelecteds.length;
+
   return (
-    <div className="fixed bottom-16 left-1/2 z-[100] flex min-w-max -translate-x-1/2 items-center justify-center gap-1 rounded-full border bg-white/80 px-1 py-1 dark:bg-black/80">
+    <div className="fixed bottom-16 left-1/2 z-[100] flex min-w-max -translate-x-1/2 items-center justify-center gap-1 rounded-full border bg-white/80 px-1 py-1 dark:bg-black/80 md:bottom-4">
       <div className="flex min-w-fit items-center gap-2">
         <button
           className={buttonClass + ` opacity-50 hover:opacity-100 `}
@@ -120,6 +122,13 @@ const ShoppingDistributor: FC<Props> = () => {
           onClick={removeFromCupboard}
         >
           Remove
+          {selectedsLength > 0 && (
+            <span
+              className={`flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-sm font-semibold`}
+            >
+              {selectedsLength}
+            </span>
+          )}
           {isLoadingRemove && <Spinner customClass="h-5 w-5" />}
         </button>
       </div>
@@ -132,6 +141,13 @@ const ShoppingDistributor: FC<Props> = () => {
           onClick={handleMoveToCupboard}
         >
           {isShoppingPage ? "Move to cupboard" : "Move to shopping"}
+          {selectedsLength > 0 && (
+            <span
+              className={`flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-sm font-semibold`}
+            >
+              {selectedsLength}
+            </span>
+          )}
           {isLoadingMove && <Spinner customClass="h-5 w-5" />}
         </button>
       </div>

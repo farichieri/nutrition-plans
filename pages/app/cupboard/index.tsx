@@ -20,7 +20,7 @@ export default function Page(): Props {
 
   return (
     <PremiumLayout>
-      <PremiumNav hideScrolling={true} simplified>
+      <PremiumNav hideScrolling={false} simplified>
         <ShoppingNav />
       </PremiumNav>
       <section className=" flex w-full flex-col gap-2 p-2 pb-20 sm:px-4">

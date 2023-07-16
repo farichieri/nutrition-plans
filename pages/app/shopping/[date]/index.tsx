@@ -62,7 +62,7 @@ export default function Page({ date }: { date: Props }) {
 
   return (
     <PremiumLayout>
-      <PremiumNav hideScrolling={true} simplified>
+      <PremiumNav hideScrolling={false} simplified>
         <ShoppingNav />
       </PremiumNav>
       <SubPremiumNav title={""} customClass="top-[var(--nav-h)]">

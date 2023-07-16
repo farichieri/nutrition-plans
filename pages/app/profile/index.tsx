@@ -67,12 +67,12 @@ export default function Page() {
   return (
     <PremiumLayout>
       <PremiumNav hideScrolling={true} />
-      <nav className="fixed inset-0 z-[60] m-auto flex max-w-3xl flex-col items-center bg-primary-color pt-[var(--nav-h)]">
+      <nav className="z-[60] m-auto flex w-full max-w-3xl flex-col items-center bg-primary-color pb-10">
         <BackButton
           route={AppRoutes.nav_menu}
           customClass="top-2 left-2 lg:absolute hidden"
         />
-        <div className="flex w-full justify-center border-b py-8 text-2xl font-semibold">
+        <div className="flex w-full justify-center border-b pb-4 text-2xl font-semibold">
           Profile
         </div>
         <div className="flex w-full max-w-[95vw] flex-col divide-y border-b">
