@@ -3,18 +3,14 @@ import { MdArrowBackIosNew } from "react-icons/md";
 import { MdManageAccounts, MdPayment, MdSettingsCell } from "react-icons/md";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
-import useWindowWidth from "@/hooks/useWindowWidth";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "@/layouts/components/Nav/PremiumNav";
+import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
 
 interface Props {}
 
 const SettingsNav: FC<Props> = ({}) => {
   const router = useRouter();
-  const windowWidth = useWindowWidth();
-  const isMobile = windowWidth < 768;
-  const isSettingsRoute = router.asPath === "/app/settings";
 
   const SETTINGS_PAGES = [
     {

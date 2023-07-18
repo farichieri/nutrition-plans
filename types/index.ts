@@ -71,10 +71,10 @@ export interface Post {
 }
 export interface Posts extends Array<Post> {}
 export interface PlanType {
-  content: string;
+  content?: string;
   id: string;
-  image: string;
-  title: string;
+  image?: string;
+  title?: string;
 }
 export interface PlansType extends Array<PlanType> {}
 

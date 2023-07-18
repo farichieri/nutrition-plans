@@ -10,7 +10,7 @@ export default function LandingLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { isSettingsOpen, isBillingModalOpen } = useSelector(selectLayoutSlice);
+  const { isBillingModalOpen } = useSelector(selectLayoutSlice);
   return (
     <>
       <Head>

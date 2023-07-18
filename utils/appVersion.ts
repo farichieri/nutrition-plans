@@ -2,7 +2,7 @@ import { persistor } from "@/store";
 import { Result } from "@/types";
 import getConfig from "next/config";
 
-const { publicRuntimeConfig } = getConfig();
+const { publicRuntimeConfig } = getConfig() || {};
 
 const isAppVersionCorrect = (): Result<boolean, boolean> => {
   // App version must always exists.

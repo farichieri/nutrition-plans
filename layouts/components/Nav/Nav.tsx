@@ -2,6 +2,7 @@ import { AppRoutes } from "@/utils";
 import { auth } from "@/services/firebase/firebase.config";
 import { Bars2Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import { FC, useState } from "react";
+import { MdFavorite } from "react-icons/md";
 import { persistor } from "@/store";
 import { PrimaryButton } from "@/components/Buttons";
 import { selectAuthSlice } from "@/features/authentication/slice";
@@ -12,9 +13,8 @@ import { useRouter } from "next/router";
 import Avatar from "@/components/Avatar/Avatar";
 import AvatarDropDown from "@/components/DropDown/AvatarDropDown/AvatarDropDown";
 import Link from "next/link";
-import ThemeSwitcher from "@/components/theme-switcher";
 import Logo from "@/components/Logo/Logo";
-import { MdFavorite } from "react-icons/md";
+import ThemeSwitcher from "@/components/theme-switcher";
 
 interface Props {}
 

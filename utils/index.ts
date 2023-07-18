@@ -8,3 +8,5 @@ export * from "../constants/formRegex";
 export * from "./helpers";
 export * from "./nutritionHelpers";
 export * from "./routes";
+
+export { getPlansAvailable } from "./getPlansAvailable";

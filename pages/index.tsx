@@ -1,5 +1,5 @@
-import { directories, getSortedData } from "@/utils/mds";
 import { FAQS_INDEX } from "@/data/content";
+import { getPlansAvailable } from "@/utils/getPlansAvailable";
 import { PlansType } from "@/types";
 import BlurImage from "@/components/BlurImage";
 import CallToAction from "@/components/CallToAction";
@@ -56,8 +56,7 @@ export default function Home({ plans }: Props) {
 }
 
 export const getStaticProps = async () => {
-  const allPlansData = getSortedData(directories.plansDirectory);
-  const plansAvailable = allPlansData.filter((plan: any) => plan.isAvailable);
+  const plansAvailable = getPlansAvailable();
   return {
     props: { plans: plansAvailable },
   };

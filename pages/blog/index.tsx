@@ -1,4 +1,4 @@
-import { directories, getSortedData } from "@/utils/mds";
+import { MDDirectories, getSortedData } from "@/utils/mds";
 import { Posts as PostsType } from "@/types";
 import BlogPosts from "@/components/Posts/BlogPosts";
 import CallToAction from "@/components/CallToAction";
@@ -28,7 +28,7 @@ export default function Blog({ posts }: Props) {
 }
 
 export const getStaticProps = async () => {
-  const allPostData = getSortedData(directories.postsDirectory);
+  const allPostData = getSortedData(MDDirectories.posts);
   return {
     props: { posts: allPostData },
   };

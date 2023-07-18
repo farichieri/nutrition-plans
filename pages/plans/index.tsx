@@ -1,8 +1,8 @@
-import { directories, getSortedData } from "@/utils/mds";
 import { PlansType } from "@/types";
 import LandingLayout from "@/layouts/LandingLayout";
 import Plans from "@/components/Plans/Plans";
 import Head from "next/head";
+import { getPlansAvailable } from "@/utils";
 
 interface Props {
   plans: PlansType;
@@ -47,8 +47,7 @@ export default function Page({ plans }: Props) {
 }
 
 export const getStaticProps = async () => {
-  const allPlansData = getSortedData(directories.plansDirectory);
-  const plansAvailable = allPlansData.filter((plan: any) => plan.isAvailable);
+  const plansAvailable = getPlansAvailable();
   return {
     props: { plans: plansAvailable },
   };

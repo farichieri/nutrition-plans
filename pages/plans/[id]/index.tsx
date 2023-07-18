@@ -1,9 +1,5 @@
-import {
-  directories,
-  getAllMDIDS,
-  getAllMDData,
-  getSortedData,
-} from "@/utils/mds";
+import { getAllMDIDS, getAllMDData, MDDirectories } from "@/utils/mds";
+import { getPlansAvailable } from "@/utils";
 import { PlanType, PlansType } from "@/types";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import BlurImage from "@/components/BlurImage";
@@ -30,8 +26,8 @@ export default function Page({ planData, restOfPlans }: Props) {
           <span className="h-full w-full max-w-[500px] overflow-hidden rounded-3xl shadow-[0_1px_5px_gray] dark:shadow-[0px_1px_5px_#4040408c]">
             <BlurImage
               image={{
-                imageURL: planData.image,
-                title: planData.title,
+                imageURL: planData.image!,
+                title: planData.title!,
                 id: planData.id,
               }}
               customContainerClass="!aspect-h-1 !aspect-w-1"
@@ -60,7 +56,7 @@ export default function Page({ planData, restOfPlans }: Props) {
             ),
           }}
         >
-          {planData.content}
+          {planData.content!}
         </ReactMarkdown>
         <RestOfPlans plans={restOfPlans} />
         <CallToAction />
@@ -70,7 +66,7 @@ export default function Page({ planData, restOfPlans }: Props) {
 }
 
 export const getStaticPaths = async () => {
-  const paths = getAllMDIDS(directories.plansDirectory);
+  const paths = getAllMDIDS(MDDirectories.plans);
   return {
     paths,
     fallback: false,
@@ -78,9 +74,8 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }: { params: any }) => {
-  const planData = await getAllMDData(directories.plansDirectory, params.id);
-  const allPlansData = getSortedData(directories.plansDirectory);
-  const plansAvailable = allPlansData.filter((plan: any) => plan.isAvailable);
+  const planData = await getAllMDData(MDDirectories.plans, params.id);
+  const plansAvailable = getPlansAvailable();
   const restOfPlans = plansAvailable.filter((plan) => plan.id !== params.id);
 
   return {

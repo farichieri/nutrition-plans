@@ -20,7 +20,7 @@ interface PlansSlice {
 }
 
 const initialState: PlansSlice = {
-  date: getToday(),
+  date: "getToday()",
   diets: {},
   isGeneratingMeals: false,
   planDateType: PlanDateType.day,

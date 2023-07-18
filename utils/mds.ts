@@ -1,21 +1,24 @@
+import path from "path";
 import fs from "fs";
 import matter from "gray-matter";
-import path from "path";
 import readingTime from "reading-time";
 
-export const directories = {
-  postsDirectory: path.join(process.cwd(), "/data/content/posts"),
-  plansDirectory: path.join(process.cwd(), "/data/content/plans"),
-};
+export enum MDDirectories {
+  plans = "/data/content/plans",
+  posts = "/data/content/posts",
+}
 
-const getSortedData = (directory: string) => {
-  const filesNames = fs.readdirSync(directory);
+const getSortedData = (directory: MDDirectories) => {
+  const dir = path.join(process.cwd(), directory);
+
+  const filesNames = fs.readdirSync(dir);
   const allPostsData = filesNames.map((fileName) => {
     const id = fileName.replace(/\.md$/, "");
-    const fullPath = path.join(directory, fileName);
+    const fullPath = path.join(dir, fileName);
     const fileContents = fs.readFileSync(fullPath, "utf8");
     const matterResult = matter(fileContents);
     const timeReading = readingTime(fileContents).text;
+
     return {
       id,
       timeReading,
@@ -32,8 +35,9 @@ const getSortedData = (directory: string) => {
   });
 };
 
-const getAllMDIDS = (directory: string) => {
-  const fileNames = fs.readdirSync(directory);
+const getAllMDIDS = (directory: MDDirectories) => {
+  const dir = path.join(process.cwd(), directory);
+  const fileNames = fs.readdirSync(dir);
   return fileNames.map((fileName) => {
     return {
       params: {
@@ -43,8 +47,10 @@ const getAllMDIDS = (directory: string) => {
   });
 };
 
-const getAllMDData = async (directory: string, id: any) => {
-  const fullPath = path.join(directory, `${id}.md`);
+const getAllMDData = async (directory: MDDirectories, id: any) => {
+  const dir = path.join(process.cwd(), directory);
+
+  const fullPath = path.join(dir, `${id}.md`);
   const fileContents = fs.readFileSync(fullPath, "utf8");
   const timeReading = readingTime(fileContents).text;
   const { data, content } = matter(fileContents);

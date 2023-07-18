@@ -1,4 +1,4 @@
-import { directories, getAllMDIDS, getAllMDData } from "@/utils/mds";
+import { getAllMDIDS, getAllMDData, MDDirectories } from "@/utils/mds";
 import { MdTrendingFlat } from "react-icons/md";
 import { Post } from "@/types";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
@@ -85,7 +85,7 @@ export default function Page({ postData }: Props) {
 }
 
 export const getStaticPaths = async () => {
-  const paths = getAllMDIDS(directories.postsDirectory);
+  const paths = getAllMDIDS(MDDirectories.posts);
   return {
     paths,
     fallback: false,
@@ -93,7 +93,7 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }: { params: any }) => {
-  const postData = await getAllMDData(directories.postsDirectory, params.id);
+  const postData = await getAllMDData(MDDirectories.posts, params.id);
   return {
     props: {
       postData,
