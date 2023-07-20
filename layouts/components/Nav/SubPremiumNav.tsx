@@ -1,5 +1,5 @@
 import { FC, ReactNode, useEffect, useState } from "react";
-import { selectLayoutSlice } from "@/store/slices/layoutSlice";
+import { selectLayoutSlice } from "@/features/layout/slice";
 import { useSelector } from "react-redux";
 
 interface Props {

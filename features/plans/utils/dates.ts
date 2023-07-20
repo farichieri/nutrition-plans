@@ -10,7 +10,7 @@ import {
   getYesterday,
   isValidDate,
 } from "@/utils/dateFormat";
-import { BaseDatesEnum } from "@/types/datesTypes";
+import { BaseDatesEnum } from "@/types/dates";
 import { StartsOfWeek } from "@/types";
 
 const isValidStringFormat = (date: string): boolean => {

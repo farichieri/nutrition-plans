@@ -12,7 +12,7 @@ import {
 } from "@/utils";
 import { convertDateToDateString, getRealDate } from "@/features/plans";
 import { setPlansDate } from "@/features/plans/slice";
-import { BaseDatesEnum } from "@/types/datesTypes";
+import { BaseDatesEnum } from "@/types/dates";
 import { FC, useEffect, useState } from "react";
 import { MdArrowLeft, MdArrowRight } from "react-icons/md";
 import { Options, Option } from "@/components";

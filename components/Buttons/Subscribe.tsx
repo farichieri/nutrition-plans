@@ -1,7 +1,7 @@
 import {
   selectLayoutSlice,
   setIsBillingModalOpen,
-} from "@/store/slices/layoutSlice";
+} from "@/features/layout/slice";
 import { useDispatch, useSelector } from "react-redux";
 
 const SubscribeButton = () => {

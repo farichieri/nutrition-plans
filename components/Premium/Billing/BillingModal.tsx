@@ -1,7 +1,7 @@
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import { FC, useState } from "react";
 import { selectAuthSlice } from "@/features/authentication/slice";
-import { setIsBillingModalOpen } from "@/store/slices/layoutSlice";
+import { setIsBillingModalOpen } from "@/features/layout/slice";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "@/components/Modal/Modal";
 

@@ -16,7 +16,7 @@ import {
   selectLayoutSlice,
   setSidebarAdminOpen,
   setSidebarEvolutionOpen,
-} from "@/store/slices/layoutSlice";
+} from "@/features/layout/slice";
 import { BiFoodMenu, BiSolidPieChartAlt2 } from "react-icons/bi";
 import { FC } from "react";
 import { PiBowlFoodFill, PiPillFill } from "react-icons/pi";

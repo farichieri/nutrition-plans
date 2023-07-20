@@ -9,7 +9,7 @@ const ShoppingNav: FC<Props> = () => {
   const router = useRouter();
   const SHOPPING_PAGES = [
     {
-      name: "Shopping List",
+      name: "Shopping",
       url: `/app/shopping/today`,
       pathname: ["/app/shopping/[date]"],
       icon: <MdOutlineListAlt className="mr-1 h-5 w-5" />,
@@ -28,7 +28,7 @@ const ShoppingNav: FC<Props> = () => {
           return (
             <Option
               key={page.name}
-              position={page.name === "Shopping List" ? "left" : "right"}
+              position={page.name === "Shopping" ? "left" : "right"}
               selected={page.pathname.includes(router.route)}
               isLink
               href={page.url}

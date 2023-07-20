@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
-import { selectLayoutSlice, setTheme } from "@/store/slices/layoutSlice";
+import { selectLayoutSlice, setTheme } from "@/features/layout/slice";
 import { Theme } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
 

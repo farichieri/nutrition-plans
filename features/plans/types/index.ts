@@ -1,7 +1,7 @@
 import { FoodGroup, FoodNutrients } from "@/features/foods";
 import { MealComplexities, MealMinutes, MealSizes } from "@/features/meals";
 import { PlansEnum } from "@/types";
-import { NewFood, NewFoodNutrients } from "@/types/initialTypes";
+import { NewFood, NewFoodNutrients } from "@/types/initial";
 
 export enum PlanTypes {
   automatically = "automatically",

@@ -39,7 +39,7 @@ const List: FC<Props> = ({ list, handleSelected, selecteds }) => {
                   return (
                     <div
                       key={`${food.id}_${index}`}
-                      className={`flex items-center gap-2 rounded-lg py-2 ${
+                      className={`flex items-center gap-1 rounded-lg px-1 py-2 ${
                         isSelected ? "bg-slate-500/20" : "bg-transparent"
                       } `}
                     >

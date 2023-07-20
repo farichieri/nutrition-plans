@@ -9,7 +9,7 @@ const getCupboard = async ({
   userID: string;
 }): Promise<Result<Cupboard, unknown>> => {
   try {
-    const docRef = doc(db, "users", userID, "cupboard", "uniqueCupboard");
+    const docRef = doc(db, "users", userID, "shopping", "cupboard");
     const querySnapshot = await getDoc(docRef);
     const data: any = (querySnapshot.data() as Cupboard) || {};
     return { result: "success", data };

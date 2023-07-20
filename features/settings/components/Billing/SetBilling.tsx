@@ -1,7 +1,7 @@
 import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
 import { FC } from "react";
 import { selectAuthSlice } from "@/features/authentication/slice";
-import { setIsBillingModalOpen } from "@/store/slices/layoutSlice";
+import { setIsBillingModalOpen } from "@/features/layout/slice";
 import { useDispatch, useSelector } from "react-redux";
 
 interface Props {}

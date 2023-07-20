@@ -1,4 +1,4 @@
-import { selectLayoutSlice } from "@/store/slices/layoutSlice";
+import { selectLayoutSlice } from "@/features/layout/slice";
 import { useSelector } from "react-redux";
 import BillingModal from "@/components/Premium/Billing/BillingModal";
 import Footer from "./components/Footer/Footer";

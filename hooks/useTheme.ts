@@ -1,4 +1,4 @@
-import { selectLayoutSlice } from "@/store/slices/layoutSlice";
+import { selectLayoutSlice } from "@/features/layout/slice";
 import { Theme } from "@/types";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";

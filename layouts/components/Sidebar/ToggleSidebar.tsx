@@ -1,7 +1,7 @@
 import { Bars3Icon } from "@heroicons/react/24/solid";
 import { FC } from "react";
 import { RoundButton } from "@/components/Buttons";
-import { selectLayoutSlice, setSidebarOpen } from "@/store/slices/layoutSlice";
+import { selectLayoutSlice, setSidebarOpen } from "@/features/layout/slice";
 import { useDispatch, useSelector } from "react-redux";
 
 interface Props {}
