@@ -53,7 +53,9 @@ const CupboardList: FC<Props> = () => {
     if (user) {
       const docRef = doc(db, "users", user.id, "shopping", "cupboard");
       onSnapshot(docRef, (doc) => {
+        console.log(doc.data());
         const data = (doc.data() as ShoppingListFoods) || {};
+        console.log("snapshot");
         dispatch(setCupboardFoods(data));
       });
     }

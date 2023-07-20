@@ -4,7 +4,7 @@ import {
 } from "@/features/authentication/slice";
 import { AppRoutes } from "@/utils";
 import { Login } from "@/features/authentication";
-import { selectLayoutSlice } from "@/store/slices/layoutSlice";
+import { selectLayoutSlice } from "@/features/layout/slice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useRouter } from "next/router";

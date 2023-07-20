@@ -12,10 +12,11 @@ import { ShoppingListFoods } from "../types";
 // );
 
 interface ShoppingState {
-  shoppingList: {
+  shopping: {
     foods: ShoppingListFoods;
     selecteds: string[];
     isAddingFood: boolean;
+    dateRange: string;
   };
   cupboard: {
     foods: ShoppingListFoods;
@@ -26,10 +27,11 @@ interface ShoppingState {
 
 // Define the initial state using that type
 const initialState: ShoppingState = {
-  shoppingList: {
+  shopping: {
     foods: {},
     selecteds: [],
     isAddingFood: false,
+    dateRange: "",
   },
   cupboard: {
     foods: {},
@@ -48,20 +50,23 @@ export const shoppingSlice = createSlice({
       state.cupboard.selecteds = [];
     },
     setShoppingListFoods(state, action: PayloadAction<ShoppingListFoods>) {
-      state.shoppingList.foods = action.payload;
-      state.shoppingList.selecteds = [];
+      state.shopping.foods = action.payload;
+      state.shopping.selecteds = [];
     },
     setCupboardSelecteds(state, action: PayloadAction<string[]>) {
       state.cupboard.selecteds = action.payload;
     },
     setShoppingSelecteds(state, action: PayloadAction<string[]>) {
-      state.shoppingList.selecteds = action.payload;
+      state.shopping.selecteds = action.payload;
     },
     setIsAddingFoodToCupboard(state, action: PayloadAction<boolean>) {
       state.cupboard.isAddingFood = action.payload;
     },
     setIsAddingFoodToShopping(state, action: PayloadAction<boolean>) {
       state.cupboard.isAddingFood = action.payload;
+    },
+    setShoppingDateRange(state, action: PayloadAction<string>) {
+      state.shopping.dateRange = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -81,6 +86,7 @@ export const {
   setShoppingSelecteds,
   setIsAddingFoodToCupboard,
   setIsAddingFoodToShopping,
+  setShoppingDateRange,
 } = shoppingSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

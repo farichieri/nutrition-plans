@@ -16,8 +16,8 @@ interface Props {}
 const ShoppingList: FC<Props> = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { shoppingList, cupboard } = useSelector(selectShoppingSlice);
-  const { selecteds, foods: shoppingListFoods } = shoppingList;
+  const { shopping, cupboard } = useSelector(selectShoppingSlice);
+  const { selecteds, foods: shoppingListFoods } = shopping;
   const { foods: cupboardFoods } = cupboard;
   const [list, setList] = useState<ShoppingListT>({});
 
@@ -43,7 +43,7 @@ const ShoppingList: FC<Props> = () => {
   return (
     <div className="flex flex-col gap-1">
       {Object.values(list).length > 1 && (
-        <div className="grid w-full sm:grid-cols-fluid_lg md:gap-x-5">
+        <div className="grid w-full divide-y divide-gray-500/20 sm:grid-cols-fluid_lg md:gap-x-5">
           <div className="flex w-full flex-col gap-1">
             <List
               list={firstSlice}

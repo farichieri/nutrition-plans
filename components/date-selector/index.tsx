@@ -68,7 +68,6 @@ const DateSelector: FC<Props> = ({
               endDate={endDate}
               selected={startDate}
               onChange={(update: any) => {
-                console.log({ update });
                 setDateRange(update);
               }}
               placeholderText="Select a date range"

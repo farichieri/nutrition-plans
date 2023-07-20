@@ -20,7 +20,7 @@ import { BiSolidPieChartAlt2 } from "react-icons/bi";
 import { FC, useEffect, useState } from "react";
 import { generateOptions } from "@/utils";
 import { getNutritionMerged, getRecipeSize } from "@/utils/nutritionHelpers";
-import { NewFood } from "@/types/initialTypes";
+import { NewFood } from "@/types/initial";
 import { schema } from "./utils";
 import { selectAuthSlice } from "@/features/authentication";
 import { toast } from "react-hot-toast";

@@ -24,13 +24,13 @@ const ShoppingDistributor: FC<Props> = () => {
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   const [hasSelecteds, setHasSelecteds] = useState(false);
-  const [isLoadingRemove, setIsLoadingRemove] = useState(false);
   const [isLoadingMove, setIsLoadingMove] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingRemove, setIsLoadingRemove] = useState(false);
   const { user } = useSelector(selectAuthSlice);
   const { shopping, cupboard } = useSelector(selectShoppingSlice);
   const { selecteds: shoppingSelecteds, foods: shoppingFoods } = shopping;
   const { selecteds: cupboardSelecteds, foods: cupboardFoods } = cupboard;
+
   const isShoppingPage = router.pathname.includes("shopping");
   const isCupboardPage = router.pathname.includes("cupboard");
 
@@ -52,7 +52,6 @@ const ShoppingDistributor: FC<Props> = () => {
 
       shoppingSelecteds.forEach((id) => {
         newCupboard[id] = newShopping[id];
-        // delete newShopping[id];
       });
 
       const res = await postCupboard({

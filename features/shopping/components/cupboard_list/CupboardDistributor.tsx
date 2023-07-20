@@ -27,8 +27,8 @@ const CupboardDistributor: FC<Props> = () => {
   const [isLoadingRemove, setIsLoadingRemove] = useState(false);
   const [isLoadingMove, setIsLoadingMove] = useState(false);
   const { user } = useSelector(selectAuthSlice);
-  const { shoppingList, cupboard } = useSelector(selectShoppingSlice);
-  const { selecteds: shoppingSelecteds, foods: shoppingFoods } = shoppingList;
+  const { shopping, cupboard } = useSelector(selectShoppingSlice);
+  const { selecteds: shoppingSelecteds, foods: shoppingFoods } = shopping;
   const { selecteds: cupboardSelecteds, foods: cupboardFoods } = cupboard;
   const isShoppingPage = router.pathname.includes("shopping");
   const isCupboardPage = router.pathname.includes("cupboard");

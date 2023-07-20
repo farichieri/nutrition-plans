@@ -1,5 +1,5 @@
 import { FC, useEffect } from "react";
-import { selectLayoutSlice, setSidebarOpen } from "@/store/slices/layoutSlice";
+import { selectLayoutSlice, setSidebarOpen } from "@/features/layout/slice";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import CollapsedPages from "./Pages/CollapsedPages";

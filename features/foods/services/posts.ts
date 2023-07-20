@@ -1,6 +1,6 @@
 import { collection, doc, setDoc } from "firebase/firestore";
 import { db, storage } from "@/services/firebase/firebase.config";
-import { DEFAULT_IMAGE } from "@/types/initialTypes";
+import { DEFAULT_IMAGE } from "@/types/initial";
 import { Food, FoodKind, getScalesWithPrimaryScales } from "@/features/foods";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { getFoodsCollectionLength } from "./fetches";

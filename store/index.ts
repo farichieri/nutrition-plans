@@ -1,4 +1,3 @@
-// import storage from "redux-persist/lib/storage";
 import { PreloadedState, combineReducers } from "@reduxjs/toolkit";
 import { configureStore } from "@reduxjs/toolkit";
 import { persistReducer } from "redux-persist";
@@ -8,7 +7,7 @@ import authSlice from "@/features/authentication/slice";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import favoritesSlice from "@/features/favorites/slice";
 import foodsSlice from "@/features/foods/slice";
-import layoutSlice from "./slices/layoutSlice";
+import layoutSlice from "@/features/layout/slice";
 import mealsSlice from "@/features/meals/slice";
 import plansSlice from "@/features/plans/slice";
 import progressSlice from "@/features/progress/slice";

@@ -7,7 +7,7 @@ import {
 import { CheckButton } from "@/components/Buttons";
 import { FC } from "react";
 import { Food, getScaleOptions, orderScales } from "@/features/foods";
-import { FoodKeys } from "@/types/initialTypes";
+import { FoodKeys } from "@/types/initial";
 import { formatTwoDecimals } from "@/utils";
 import { getNewAmount } from "@/utils/nutritionHelpers";
 import { MdDelete, MdDragHandle } from "react-icons/md";
