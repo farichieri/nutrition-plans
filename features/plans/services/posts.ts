@@ -65,6 +65,7 @@ const updateDiet = async ({
 
     return { result: "success", data: diet };
   } catch (error) {
+    console.log({ error });
     return { result: "error", error };
   }
 };

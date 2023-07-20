@@ -47,14 +47,14 @@ const DayPlan: FC<Props> = ({ date }) => {
 
   if (!user) return <></>;
 
-  useEffect(() => {
-    const docRef = doc(db, "users", user.id, "diets", date);
-    console.log("snapshoting");
-    onSnapshot(docRef, (doc) => {
-      const data = (doc.data() as Diet) || { date };
-      dispatch(setDiet(data));
-    });
-  }, [onSnapshot]);
+  // useEffect(() => {
+  //   const docRef = doc(db, "users", user.id, "diets", date);
+  //   console.log("snapshoting");
+  //   onSnapshot(docRef, (doc) => {
+  //     const data = (doc.data() as Diet) || { date };
+  //     dispatch(setDiet(data));
+  //   });
+  // }, [onSnapshot]);
 
   return (
     <div className="w-full">

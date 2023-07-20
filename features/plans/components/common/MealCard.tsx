@@ -40,7 +40,9 @@ const MealCard: FC<Props> = ({
       }`}
     >
       <div className="flex items-center gap-5 px-2 py-1 text-center">
-        <span className="font-semibold capitalize">{dietMeal.name}</span>
+        <span className="text-xl font-semibold capitalize">
+          {dietMeal.name}
+        </span>
         {/* <div className="flex w-full flex-col text-left text-xs">
           <span className="text-blue-500">
             Meal Complexity: {dietMeal.complexity}

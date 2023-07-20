@@ -48,18 +48,18 @@ const CupboardList: FC<Props> = () => {
     fetchCupboard();
   }, [router]);
 
-  useEffect(() => {
-    // Listen to database changes
-    if (user) {
-      const docRef = doc(db, "users", user.id, "shopping", "cupboard");
-      onSnapshot(docRef, (doc) => {
-        console.log(doc.data());
-        const data = (doc.data() as ShoppingListFoods) || {};
-        console.log("snapshot");
-        dispatch(setCupboardFoods(data));
-      });
-    }
-  }, [onSnapshot]);
+  // useEffect(() => {
+  //   // Listen to database changes
+  //   if (user) {
+  //     const docRef = doc(db, "users", user.id, "shopping", "cupboard");
+  //     onSnapshot(docRef, (doc) => {
+  //       console.log(doc.data());
+  //       const data = (doc.data() as ShoppingListFoods) || {};
+  //       console.log("snapshot");
+  //       dispatch(setCupboardFoods(data));
+  //     });
+  //   }
+  // }, [onSnapshot]);
 
   useEffect(() => {
     setList(buildCupboardList({ cupboardFoods }));
