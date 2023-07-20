@@ -1,8 +1,8 @@
 import {
   MdAutoGraph,
   MdHomeFilled,
+  MdLocalGroceryStore,
   MdPerson,
-  MdShoppingCart,
 } from "react-icons/md";
 import { FC } from "react";
 import { RiSearchLine } from "react-icons/ri";
@@ -35,10 +35,10 @@ const CollapsedPages: FC<Props> = () => {
       icon: <MdAutoGraph className="h-6 w-6 text-green-500" />,
     },
     {
-      name: "Shopping",
+      name: "Groceries",
       url: "/app/shopping/today",
       pathname: ["/app/shopping/[date]"],
-      icon: <MdShoppingCart className="h-6 w-6 text-green-500" />,
+      icon: <MdLocalGroceryStore className="h-6 w-6 text-green-500" />,
     },
     {
       name: "Profile",

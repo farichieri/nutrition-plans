@@ -49,6 +49,7 @@ const DayPlan: FC<Props> = ({ date }) => {
 
   useEffect(() => {
     const docRef = doc(db, "users", user.id, "diets", date);
+    console.log("snapshoting");
     onSnapshot(docRef, (doc) => {
       const data = (doc.data() as Diet) || { date };
       dispatch(setDiet(data));

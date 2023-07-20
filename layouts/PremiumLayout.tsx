@@ -1,22 +1,18 @@
-import {
-  selectAuthSlice,
-  setIsSigningUser,
-} from "@/features/authentication/slice";
 import { AppRoutes } from "@/utils";
 import { Login } from "@/features/authentication";
+import { selectAuthSlice } from "@/features/authentication/slice";
 import { selectLayoutSlice } from "@/features/layout/slice";
-import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import BillingModal from "../components/Premium/Billing/BillingModal";
+import { useSelector } from "react-redux";
+import { useOnlineStatus, useWindowWidth } from "@/hooks";
+import BillingModal from "@/components/Premium/Billing/BillingModal";
 import ConnectionError from "@/components/Layout/ConnectionError";
 import Head from "next/head";
 import InstallModal from "@/components/InstallApp/InstallModal";
-import Loader from "../components/Loader/Loader";
-import Sidebar from "./components/Sidebar/PremiumSidebar";
-import useOnlineStatus from "@/hooks/useOnlineStatus";
-import useWindowWidth from "@/hooks/useWindowWidth";
-import WelcomeSteps from "../components/WelcomeSteps/WelcomeSteps";
+import Loader from "@/components/Loader/Loader";
+import Sidebar from "@/layouts/components/Sidebar/PremiumSidebar";
+import WelcomeSteps from "@/components/WelcomeSteps/WelcomeSteps";
 
 interface Props {
   children: React.ReactNode;
@@ -40,10 +36,11 @@ export default function PremiumLayout({ children }: Props) {
     if (isCreatingUser || (user && !user?.isProfileCompleted)) {
       router.push(AppRoutes.create_user);
     }
-    if (!user && !isSigningUser) {
-      router.push(AppRoutes.login);
-    }
   }, [user, isCreatingUser]);
+
+  if (!user && !isSigningUser) {
+    return <Login />;
+  }
 
   return (
     <>

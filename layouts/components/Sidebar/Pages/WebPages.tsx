@@ -9,7 +9,7 @@ import {
   MdRestaurantMenu,
   MdSettings,
   MdSettingsAccessibility,
-  MdShoppingCart,
+  MdLocalGroceryStore,
   MdVerified,
 } from "react-icons/md";
 import {
@@ -122,10 +122,10 @@ const WebPages: FC<Props> = () => {
       icon: <MdAutoGraph className="h-6 w-6 text-green-500" />,
     },
     {
-      name: "Shopping",
+      name: "Groceries",
       url: "/app/shopping/today",
       pathname: ["/app/shopping/[date]"],
-      icon: <MdShoppingCart className="h-6 w-6 text-green-500" />,
+      icon: <MdLocalGroceryStore className="h-6 w-6 text-green-500" />,
     },
   ];
 

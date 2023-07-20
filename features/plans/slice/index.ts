@@ -84,6 +84,13 @@ export const plansSlice = createSlice({
         ...dietMealFoods,
         ...dietMealFood,
       };
+      // Update order
+      let index = 0;
+      for (let key in dietMealFoods) {
+        const food = dietMealFoods[key];
+        food.order = index;
+        index++;
+      }
     },
     removeFoodInDiet: (state, action: PayloadAction<Food>) => {
       const { id, dietMealID, dietID } = action.payload;
