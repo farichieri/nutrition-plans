@@ -229,7 +229,7 @@ const Filters: FC<Props> = ({
               ))}
             </div>
           </div>
-          <div className="flex w-1/2 flex-col items-start gap-2 p-2 sm:w-auto">
+          <div className="flex w-1/3 flex-col items-start gap-2 p-2 sm:w-auto">
             <span className="font-semibold">Kind</span>
             <div className="flex flex-col items-start gap-1">
               {Object.keys(FoodKind).map((kind) => (
@@ -341,7 +341,7 @@ const Filters: FC<Props> = ({
             })}
           </div>
 
-          <div className="flex w-1/2 flex-col items-start gap-2 p-2 sm:w-auto">
+          <div className="flex w-1/3 flex-col items-start gap-2 p-2 sm:w-auto">
             <span className="font-semibold">Sort By</span>
             <div className="flex flex-col items-start gap-1">
               {Object.keys(FilterSortTypes).map((sort) => (

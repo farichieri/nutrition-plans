@@ -7,7 +7,7 @@ jest.mock("next/router", () => require("next-router-mock"));
 
 describe("Home test suite", () => {
   // every test (it) should be independent of each other
-  it("should render Nutrition Plans that lead to results", () => {
+  it("should render Nutrition Plans that lead to results text", () => {
     const plansAvailable = getPlansAvailable();
     renderWithProviders(<Home plans={plansAvailable} />);
 
@@ -30,6 +30,18 @@ describe("Home test suite", () => {
     const expected = "Start my plan now";
 
     const actual = sut.textContent;
+
+    expect(actual).toBe(expected);
+  });
+
+  it("should render a Demo image", () => {
+    const plansAvailable = getPlansAvailable();
+    renderWithProviders(<Home plans={plansAvailable} />);
+
+    const sut = screen.getByAltText(/Demo/i);
+    const expected = "Demo";
+
+    const actual = sut.getAttribute("alt");
 
     expect(actual).toBe(expected);
   });

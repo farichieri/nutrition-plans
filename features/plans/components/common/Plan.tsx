@@ -50,13 +50,15 @@ const Plan: FC<Props> = ({ date }) => {
     userStartOfWeek: user?.startOfWeek,
   });
 
-  useEffect(() => {
-    const docRef = doc(db, "users", user.id, "diets", date);
-    onSnapshot(docRef, (doc) => {
-      const data = (doc.data() as Diet) || { date };
-      dispatch(setDiet(data));
-    });
-  }, [onSnapshot]);
+  // useEffect(() => {
+  //   const docRef = doc(db, "users", user.id, "diets", date);
+  //   onSnapshot(docRef, (doc) => {
+  //     console.log("snapshot, Plan");
+  //     const data = (doc.data() as Diet) || { date };
+  //     dispatch(setDiet(data));
+  //   });
+  // }, [onSnapshot]);
+
   return (
     <div
       className={`flex w-full flex-col items-center justify-start gap-2 rounded-lg border bg-slate-200/50 p-2 dark:bg-gray-500/10 ${
