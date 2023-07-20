@@ -29,16 +29,16 @@ const SaveAndEditButton: FC<Props> = ({
   setIsEditing,
 }) => {
   const dispatch = useDispatch();
-  const [isSaving, setIsSaving] = useState(false);
   const [isCanceling, setIsCanceling] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   const saveDietOpened = async () => {
     setIsSaving(true);
     if (!diet) throw Error;
     const res = await updateDiet({ diet });
     if (res.result === "error") {
-      console.log(res.error);
+      toast.error("Error saving diet. Please try again.");
     }
     setIsSaving(false);
   };

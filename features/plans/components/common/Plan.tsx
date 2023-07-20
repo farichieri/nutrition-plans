@@ -89,11 +89,7 @@ const Plan: FC<Props> = ({ date }) => {
           <>
             {diet ? (
               <div className="mb-auto flex h-full w-full flex-col gap-2">
-                <div className="flex h-full w-full flex-wrap justify-between gap-10 ">
-                  <div className="flex w-full">
-                    <ManualMeals diet={diet} date={date} user={user} />
-                  </div>
-                </div>
+                <ManualMeals diet={diet} date={date} user={user} />
               </div>
             ) : (
               <div className="m-auto flex justify-center">

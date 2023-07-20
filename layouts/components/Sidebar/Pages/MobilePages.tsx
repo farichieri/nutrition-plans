@@ -1,9 +1,8 @@
 import {
   MdAutoGraph,
-  MdFavorite,
   MdHomeFilled,
   MdPerson,
-  MdShoppingCart,
+  MdLocalGroceryStore,
 } from "react-icons/md";
 import { FC } from "react";
 import { RiSearchLine } from "react-icons/ri";
@@ -36,10 +35,10 @@ const MobilePages: FC<Props> = () => {
       icon: <MdAutoGraph className="h-5 w-5 " />,
     },
     {
-      name: "Shopping",
+      name: "Groceries",
       url: "/app/shopping/today",
       pathname: ["/app/shopping/[date]"],
-      icon: <MdShoppingCart className="h-5 w-5 " />,
+      icon: <MdLocalGroceryStore className="h-5 w-5 " />,
     },
     {
       name: "Profile",

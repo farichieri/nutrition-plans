@@ -96,6 +96,7 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
     const res = await updateDiet({ diet: dietUpdated });
 
     if (res.result === "error") {
+      console.log(res.error);
       dispatch(toggleEatenFood({ food, value: !value }));
     }
   };

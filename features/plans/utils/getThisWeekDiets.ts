@@ -13,7 +13,9 @@ const getThisWeekDiets = async ({
     const { startOfWeek, id } = user;
     const dates = getThisWeekInterval({ userStartOfWeek: startOfWeek });
     const res = await getDiets({ dates, userID: id });
+
     if (res.result === "error") throw res.error;
+
     return { result: "success", data: res.data };
   } catch (error) {
     return { result: "error", error };
