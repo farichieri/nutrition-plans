@@ -80,10 +80,7 @@ export const plansSlice = createSlice({
       };
       if (!dietMeal.id) return;
       const dietMealFoods = diet.meals[dietMeal.id].foods;
-      diet.meals[dietMeal.id].foods[food.id as keyof Food] = {
-        ...dietMealFoods,
-        ...dietMealFood,
-      };
+      diet.meals[dietMeal.id].foods[food.id as keyof Food] = dietMealFood;
       // Update order
       let index = 0;
       for (let key in dietMealFoods) {
