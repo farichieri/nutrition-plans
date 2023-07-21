@@ -61,6 +61,7 @@ const updateDiet = async ({
       ...diet,
       nutrients: { ...diet.nutrients },
     };
+    console.log({ diet });
     await setDoc(docRef, diet);
 
     return { result: "success", data: diet };
