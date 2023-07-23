@@ -29,7 +29,6 @@ import InfoTooltip from "@/components/Tooltip/InfoTooltip";
 import NutritionTarget from "../NutritionTarget";
 import SubmitButton from "@/components/Buttons/SubmitButton";
 import { toast } from "react-hot-toast";
-import { setCupboardFoods } from "@/features/shopping";
 
 interface Props {
   handleSubmit: Function;
@@ -56,7 +55,7 @@ const Results: FC<Props> = ({ handleSubmit }) => {
     !goal ||
     !planSelected
   )
-    return <>There's missing data to calculate Nutrition Values</>;
+    return <>There's missing data to calculate Nutrition Targets</>;
 
   const BMI = calculateBMI({ kgs: weightInKg, cms: heightInCm });
   const BMR = calculateBMR({
@@ -151,7 +150,7 @@ const Results: FC<Props> = ({ handleSubmit }) => {
           <div className="flex items-center gap-2">
             <BiSolidPieChartAlt2 className="h-6 w-6 text-green-500" />
             <span className="w-full text-left text-xl font-semibold sm:text-3xl">
-              {isCreatingRoute ? "Nutrition Values" : "Nutrition Values"}
+              {isCreatingRoute ? "Nutrition Targets" : "Nutrition Targets"}
             </span>
           </div>
           <div>

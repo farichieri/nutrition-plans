@@ -298,7 +298,9 @@ const RecipeCreate: FC<Props> = () => {
             <div className="flex max-w-xl flex-col gap-2 rounded-md border p-2">
               <div className="flex items-center gap-1">
                 <BiSolidPieChartAlt2 className="h-6 w-6 text-green-500" />
-                <span className="text-2xl font-semibold">Nutrition Values</span>
+                <span className="text-2xl font-semibold">
+                  Nutrition Targets
+                </span>
               </div>
               <RecipeNutrition nutrients={values.nutrients} />
             </div>

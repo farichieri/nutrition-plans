@@ -19,6 +19,7 @@ import BlurImage from "@/components/BlurImage";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
+import { PremiumSidebar } from "@/layouts";
 
 export default function Page({ food }: { food: Food }) {
   const router = useRouter();
@@ -40,6 +41,7 @@ export default function Page({ food }: { food: Food }) {
   return (
     <PremiumLayout>
       <PremiumNav hideScrolling={false} />
+      <PremiumSidebar />
       <SubPremiumNav title={""} customClass="top-[var(--subnav-h)]">
         <BackButton />
         <span className="truncate text-ellipsis font-semibold sm:text-xl">

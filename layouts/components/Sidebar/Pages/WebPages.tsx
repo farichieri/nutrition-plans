@@ -68,7 +68,7 @@ const WebPages: FC<Props> = () => {
       icon: <MdSettingsAccessibility className="h-6 w-6 text-green-500" />,
     },
     {
-      name: "Nutrition Values",
+      name: "Nutrition Targets",
       url: "/app/profile/nutrition-values",
       icon: <BiSolidPieChartAlt2 className="h-6 w-6 text-green-500" />,
     },

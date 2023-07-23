@@ -134,7 +134,7 @@ const Nutrition: FC<Props> = ({ nutrients, planID }) => {
           <PieGraph nutrients={nutrients} />
           <div
             className={`relative mb-4 flex w-full flex-wrap items-center justify-center rounded-md ${
-              !isAllInRange ? "pr-11" : ""
+              !isAllInRange ? "" : ""
             }`}
           >
             <div className="flex w-full flex-col gap-2">
@@ -145,7 +145,7 @@ const Nutrition: FC<Props> = ({ nutrients, planID }) => {
                       <span className="flex basis-1/2 truncate capitalize">
                         {nut.nutrient}
                       </span>
-                      <div
+                      {/* <div
                         className={`flex basis-1/3 justify-end text-xs opacity-50 `}
                       >
                         {nut.min && (
@@ -161,8 +161,20 @@ const Nutrition: FC<Props> = ({ nutrients, planID }) => {
                           {nut.max}
                           {")"}
                         </span>
-                      </div>
+                      </div> */}
                       <div className="relative ml-auto flex basis-1/12 items-center justify-end">
+                        <div className=" mr-1 w-14 ">
+                          {Number(nut.value) > Number(nut.max) && (
+                            <span className="flex text-xs text-red-500">
+                              {formatTwoDecimals(nut.diff)}🔻
+                            </span>
+                          )}
+                          {Number(nut.value) < Number(nut.min) && (
+                            <span className="flex text-xs text-red-500">
+                              {formatTwoDecimals(nut.diff)}🔺
+                            </span>
+                          )}
+                        </div>
                         <span
                           className={` ${
                             nut.isInRange ? "text-green-500" : ""
@@ -170,18 +182,6 @@ const Nutrition: FC<Props> = ({ nutrients, planID }) => {
                         >
                           {formatTwoDecimals(nut.value) || "-"}
                         </span>
-                        <div className="absolute left-full ">
-                          {Number(nut.value) > Number(nut.max) && (
-                            <span className="flex text-xs text-red-500">
-                              🔻{formatTwoDecimals(nut.diff)}
-                            </span>
-                          )}
-                          {Number(nut.value) < Number(nut.min) && (
-                            <span className="flex text-xs text-red-500">
-                              🔺{formatTwoDecimals(nut.diff)}
-                            </span>
-                          )}
-                        </div>
                       </div>
                     </div>
                   );

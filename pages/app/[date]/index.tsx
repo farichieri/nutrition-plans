@@ -15,6 +15,7 @@ import { useEffect } from "react";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
+import Sidebar from "@/layouts/components/Sidebar/PremiumSidebar";
 
 interface Props {
   date: string;
@@ -45,6 +46,7 @@ export default function Page({ date }: { date: Props }) {
         {realDate && (
           <>
             <PremiumNav hideScrolling={false} title="" />
+            <Sidebar />
             <SubPremiumNav title={""} customClass="top-[var(--subnav-h)]">
               <DaySelector date={String(date)} baseURL={"/app/"} />
             </SubPremiumNav>

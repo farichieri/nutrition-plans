@@ -59,7 +59,7 @@ export default function PremiumLayout({ children }: Props) {
       {user && user.isProfileCompleted ? (
         <div className="flex min-h-screen w-full flex-col">
           {isBillingModalOpen && <BillingModal />}
-          <Sidebar />
+          {/* <Sidebar /> */}
           <div
             className={`flex flex-col pt-[var(--nav-h)] duration-0 ease-in-out ${
               sidebarOpen ? "md:pl-64 " : "md:pl-20 "
