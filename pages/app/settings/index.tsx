@@ -1,75 +1,23 @@
-import { FC } from "react";
-import { MdArrowBackIosNew } from "react-icons/md";
-import { MdManageAccounts, MdPayment, MdSettingsCell } from "react-icons/md";
-import { useRouter } from "next/router";
-import Link from "next/link";
-import PremiumLayout from "@/layouts/PremiumLayout";
-import PremiumNav from "@/layouts/components/Nav/PremiumNav";
-import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
+import { SettingsNav } from "@/features/settings";
+import BackNav from "@/components/Layout/BackNav";
+import SettingsLayout from "@/layouts/SettingsLayout";
 
-interface Props {}
-
-const SettingsNav: FC<Props> = ({}) => {
-  const router = useRouter();
-
-  const SETTINGS_PAGES = [
-    {
-      name: "Account",
-      url: "/app/settings/account",
-      paths: ["/app/settings/account", "/app/settings/"],
-      icon: <MdManageAccounts className="h-6 w-6 text-green-500" />,
-    },
-    {
-      name: "General",
-      url: "/app/settings/general",
-      paths: ["/app/settings/general"],
-      icon: <MdSettingsCell className="h-6 w-6 text-green-500" />,
-    },
-    {
-      name: "Billing",
-      url: "/app/settings/billing",
-      paths: ["/app/settings/billing"],
-      icon: <MdPayment className="h-6 w-6 text-green-500" />,
-    },
-  ];
-
+export default function Page() {
   return (
-    <PremiumLayout>
-      <PremiumNav hideScrolling={false} />
-      <nav className="fixed inset-0 z-[60] m-auto flex max-w-3xl flex-col items-center bg-primary-color pt-[var(--nav-h)]">
-        <SubPremiumNav customClass="top-[var(--nav-h)] border-y">
-          <Link
-            href={"/app/profile"}
-            className="flex w-full items-center gap-2 px-4 "
-          >
-            <MdArrowBackIosNew className="h-4 w-4" />
-            <span>Profile</span>
-          </Link>
-        </SubPremiumNav>
-        <div className="mt-[var(--nav-h)] flex w-full justify-center border-b py-8 text-2xl font-semibold">
-          Settings
+    <SettingsLayout>
+      <BackNav title="Profile" href="/app/profile" customClass="lg:hidden" />
+      <div className="m-auto w-full max-w-xl lg:hidden">
+        <div className="flex flex-col">
+          <span className="mx-auto text-xl font-semibold">Settings</span>
         </div>
-        <div className="flex w-full max-w-[95vw] flex-col divide-y border-b">
-          {SETTINGS_PAGES.map((page) => {
-            return (
-              <Link
-                href={page.url}
-                key={page.url}
-                className={`flex w-full items-center justify-start gap-4 px-2 py-5 text-xl font-medium capitalize duration-100 hover:bg-slate-500/20 hover:opacity-100 ${
-                  page.paths.includes(router.asPath)
-                    ? "opacity-100"
-                    : "opacity-50"
-                }}`}
-              >
-                {page.icon}
-                {page.name}
-              </Link>
-            );
-          })}
-        </div>
-      </nav>
-    </PremiumLayout>
+        <SettingsNav />
+      </div>
+    </SettingsLayout>
   );
-};
+}
 
-export default SettingsNav;
+export const getStaticProps = () => {
+  return {
+    props: {},
+  };
+};

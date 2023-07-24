@@ -42,10 +42,10 @@ const CollapsedPages: FC<Props> = () => {
     },
     {
       name: "Profile",
-      url: "/app/profile",
+      url: "/app/profile/favorites",
       pathname: [
         "/app/profile",
-        "app/profile/goal",
+        "/app/profile/goal",
         "/app/profile/favorites",
         "/app/profile/body-features",
         "/app/profile/nutrition-values",

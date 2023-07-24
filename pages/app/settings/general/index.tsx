@@ -8,7 +8,7 @@ import SettingsLayout from "@/layouts/SettingsLayout";
 export default function Page() {
   return (
     <SettingsLayout>
-      <div className="flex flex-col gap-10">
+      <div className="flex w-full flex-col gap-10">
         <SetMeasurementUnits />
         <SetStartOfWeek />
         <Newsletter />
