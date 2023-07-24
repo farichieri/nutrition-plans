@@ -12,7 +12,7 @@ const WelcomeSteps: FC<Props> = () => {
   const getStep = () => {
     if (!user) return;
     switch (step) {
-      case UserSteps.One:
+      case UserSteps.step_1:
         return <StepOne user={user} />;
       default:
         break;

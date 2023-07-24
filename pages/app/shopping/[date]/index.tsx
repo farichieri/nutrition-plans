@@ -10,6 +10,7 @@ import {
 import { DaySelector, getRealDate, useRedirectToday } from "@/features/plans";
 import { getDaysOfWeek, getIsWeek } from "@/utils";
 import { GetServerSidePropsContext } from "next";
+import { PremiumSidebar } from "@/layouts";
 import { selectAuthSlice } from "@/features/authentication";
 import { StartsOfWeek } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,7 +18,6 @@ import { useEffect } from "react";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
-import { PremiumSidebar } from "@/layouts";
 
 interface Props {
   date?: string;

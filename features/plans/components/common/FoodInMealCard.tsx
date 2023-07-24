@@ -103,7 +103,9 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
 
   const scaleFormatted = formatTwoDecimals(food.scaleAmount);
   return (
-    <div className="flex w-full gap-1">
+    <div
+      className={`flex w-full gap-1 ${food.isEaten ? "bg-green-500/20" : ""}`}
+    >
       {isEditing && (
         <MdDragHandle className="m-auto h-6 w-6 min-w-fit opacity-50" />
       )}

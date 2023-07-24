@@ -2,6 +2,7 @@ import {
   User,
   UserActivities,
   UserGenders,
+  UserGendersT,
   getWater,
   newBodyData,
   selectAuthSlice,
@@ -36,7 +37,7 @@ interface FormValues {
   age: number | null;
   centimeters: number | null;
   feet: number | null;
-  gender: UserGenders | null;
+  gender: UserGendersT | null;
   inches: number | null;
   kilograms: number | null;
   measurementUnit: MeasurementUnits;
@@ -91,9 +92,9 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
     const value = (event.target as HTMLInputElement).value;
     if (
       name === "gender" &&
-      Object.keys(UserGenders).includes(value as UserGenders)
+      Object.keys(UserGenders).includes(value as UserGendersT)
     ) {
-      setValue("gender", value as UserGenders);
+      setValue("gender", value as UserGendersT);
       trigger("gender");
     } else if (
       name === "measurementUnit" &&

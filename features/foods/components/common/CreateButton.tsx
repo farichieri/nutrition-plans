@@ -25,18 +25,18 @@ const CreateButton: FC<Props> = () => {
       url: "/app/create/recipe",
       icon: <BiFoodMenu className="h-6 w-6 text-green-500" />,
     },
-    {
-      name: "Supplements & Vitamins",
-      url: "/app/create/supplements-vitamins",
-      icon: <PiPillFill className="h-6 w-6 text-green-500" />,
-    },
+    // {
+    //   name: "Supplements & Vitamins",
+    //   url: "/app/create/supplements-vitamins",
+    //   icon: <PiPillFill className="h-6 w-6 text-green-500" />,
+    // },
   ];
 
   return (
     <div>
       {open && (
         <Modal onClose={handleOpen}>
-          <div className="flex flex-col gap-2 p-4">
+          <div className="flex w-xxs flex-col gap-2 p-4">
             <span className="font-semibold">Create:</span>
             <div className="m-2 flex flex-col divide-y overflow-auto rounded-lg">
               {CREATE_PAGES.map((page) => (

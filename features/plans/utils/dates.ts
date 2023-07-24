@@ -10,17 +10,17 @@ import {
   getYesterday,
   isValidDate,
 } from "@/utils/dateFormat";
-import { BaseDatesEnum } from "@/types/dates";
+import { BaseDates } from "@/types/dates";
 import { StartsOfWeek } from "@/types";
 
 const isValidStringFormat = (date: string): boolean => {
   switch (date) {
-    case BaseDatesEnum.today:
-    case BaseDatesEnum.tomorrow:
-    case BaseDatesEnum.yesterday:
-    case BaseDatesEnum.this_week:
-    case BaseDatesEnum.next_week:
-    case BaseDatesEnum.last_week:
+    case BaseDates.today:
+    case BaseDates.tomorrow:
+    case BaseDates.yesterday:
+    case BaseDates.this_week:
+    case BaseDates.next_week:
+    case BaseDates.last_week:
       return true;
     default:
       return false;
@@ -35,17 +35,17 @@ const getRealDate = ({
   userStartOfWeek: StartsOfWeek;
 }): string => {
   switch (date) {
-    case BaseDatesEnum.today:
+    case BaseDates.today:
       return getToday();
-    case BaseDatesEnum.tomorrow:
+    case BaseDates.tomorrow:
       return getTomorrow();
-    case BaseDatesEnum.yesterday:
+    case BaseDates.yesterday:
       return getYesterday();
-    case BaseDatesEnum.this_week:
+    case BaseDates.this_week:
       return getThisWeek({ userStartOfWeek });
-    case BaseDatesEnum.next_week:
+    case BaseDates.next_week:
       return getNextWeek({ userStartOfWeek });
-    case BaseDatesEnum.last_week:
+    case BaseDates.last_week:
       return getLastWeek({ userStartOfWeek });
     default:
       if (!isValidDate(date)) {
@@ -62,11 +62,11 @@ const convertDayToUrlDate = (date: string) => {
 
   switch (date) {
     case isToday:
-      return BaseDatesEnum.today;
+      return BaseDates.today;
     case isTomorrow:
-      return BaseDatesEnum.tomorrow;
+      return BaseDates.tomorrow;
     case isYesterday:
-      return BaseDatesEnum.yesterday;
+      return BaseDates.yesterday;
     default:
       return date;
   }
@@ -92,17 +92,17 @@ const convertDateToDateString = ({
 
   switch (date) {
     case isToday:
-      return BaseDatesEnum.today;
+      return BaseDates.today;
     case isTomorrow:
-      return BaseDatesEnum.tomorrow;
+      return BaseDates.tomorrow;
     case isYesterday:
-      return BaseDatesEnum.yesterday;
+      return BaseDates.yesterday;
     case isNextWeek:
-      return BaseDatesEnum.next_week.replace("-", " ");
+      return BaseDates.next_week.replace("-", " ");
     case isLastWeek:
-      return BaseDatesEnum.last_week.replace("-", " ");
+      return BaseDates.last_week.replace("-", " ");
     case isThisWeek:
-      return BaseDatesEnum.this_week.replace("-", " ");
+      return BaseDates.this_week.replace("-", " ");
     default:
       if (isWeek && weekDates) {
         return `Week of ${getMonthDate(String(weekDates[0]))}`;

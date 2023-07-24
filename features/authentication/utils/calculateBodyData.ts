@@ -1,5 +1,11 @@
 import { KCALS_TO_GAIN, KCALS_TO_LOSE } from "@/constants/user-constants";
-import { UserGenders, UserGoals, UserActivities } from "../types";
+import {
+  UserGenders,
+  UserGoals,
+  UserActivities,
+  UserGoalsT,
+  UserGendersT,
+} from "../types";
 
 const calculateBMR = ({
   kgs,
@@ -10,7 +16,7 @@ const calculateBMR = ({
   kgs: number;
   cms: number;
   age: number;
-  gender: UserGenders;
+  gender: UserGendersT;
 }): number => {
   const standard = 10 * Number(kgs) + 6.25 * Number(cms) - 5 * Number(age);
   return Number(gender === UserGenders.Male ? standard + 5 : standard - 161);
@@ -22,13 +28,13 @@ const calculateKCALSRecommended = ({
   activity,
 }: {
   BMR: number;
-  goal: UserGoals;
+  goal: UserGoalsT;
   activity: UserActivities;
 }): number => {
   const goalCalories =
-    goal === UserGoals.LoseWeight
+    goal === UserGoals.lose_weight
       ? KCALS_TO_LOSE
-      : goal === UserGoals.BuildMuscle
+      : goal === UserGoals.build_muscle
       ? KCALS_TO_GAIN
       : 0;
   return Math.round(Number(BMR) * Number(activity) + goalCalories);

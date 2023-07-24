@@ -37,12 +37,12 @@ const CollapsedPages: FC<Props> = () => {
     {
       name: "Groceries",
       url: "/app/shopping/today",
-      pathname: ["/app/shopping/[date]"],
+      pathname: ["/app/shopping/[date]", "/app/cupboard"],
       icon: <MdLocalGroceryStore className="h-6 w-6 text-green-500" />,
     },
     {
       name: "Profile",
-      url: "/app/profile/favorites",
+      url: "/app/profile",
       pathname: [
         "/app/profile",
         "/app/profile/goal",

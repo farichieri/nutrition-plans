@@ -58,56 +58,54 @@ const SetAvatar: FC<Props> = () => {
   };
 
   return (
-    <>
-      <Box>
-        <BoxMainContent>
-          <div className="flex flex-col gap-5">
-            <span className="text-3xl font-semibold">Your Avatar</span>
-            <span>Click on the avatar to upload a new one.</span>
-          </div>
-          <>
-            {!userImage ? (
-              <div
-                className={`flex h-24 min-h-[100px] w-24 min-w-[100px] items-center justify-center overflow-hidden rounded-full bg-red-700 text-5xl font-medium text-white`}
-              >
-                <span className="flex h-full w-full items-center justify-center opacity-80">
-                  {fisrtNameWord}
-                </span>
-                <input
-                  title="Upload a new Avatar"
-                  type="file"
-                  onChange={handleChange}
-                  accept="image/*"
-                />
-              </div>
-            ) : (
-              <div
-                className={`relative flex h-24 min-h-[100px] w-24  min-w-[100px] items-center justify-center overflow-hidden rounded-full`}
-              >
-                <input
-                  title="Upload a new Avatar"
-                  type="file"
-                  onChange={handleChange}
-                  accept="image/*"
-                />
-                <Image
-                  className="pointer-events-none flex items-center justify-center overflow-auto rounded-full object-cover"
-                  alt="Avatar"
-                  src={userImage}
-                  fill
-                  blurDataURL={blurDataURL(100, 100)}
-                />
-              </div>
-            )}
-          </>
-        </BoxMainContent>
-        <BoxBottomBar>
-          <span className="text-sm opacity-50">
-            Personalize your account adding a avatar
-          </span>
-          <div>{isLoading && <Spinner customClass="w-5 h-5" />}</div>
-        </BoxBottomBar>
-      </Box>
+    <Box>
+      <BoxMainContent>
+        <div className="flex flex-col gap-5">
+          <span className="text-3xl font-semibold">Your Avatar</span>
+          <span>Click on the avatar to upload a new one.</span>
+        </div>
+        <>
+          {!userImage ? (
+            <div
+              className={`flex h-24 min-h-[100px] w-24 min-w-[100px] items-center justify-center overflow-hidden rounded-full bg-red-700 text-5xl font-medium text-white`}
+            >
+              <span className="flex h-full w-full items-center justify-center opacity-80">
+                {fisrtNameWord}
+              </span>
+              <input
+                title="Upload a new Avatar"
+                type="file"
+                onChange={handleChange}
+                accept="image/*"
+              />
+            </div>
+          ) : (
+            <div
+              className={`relative flex h-24 min-h-[100px] w-24  min-w-[100px] items-center justify-center overflow-hidden rounded-full`}
+            >
+              <input
+                title="Upload a new Avatar"
+                type="file"
+                onChange={handleChange}
+                accept="image/*"
+              />
+              <Image
+                className="pointer-events-none flex items-center justify-center overflow-auto rounded-full object-cover"
+                alt="Avatar"
+                src={userImage}
+                fill
+                blurDataURL={blurDataURL(100, 100)}
+              />
+            </div>
+          )}
+        </>
+      </BoxMainContent>
+      <BoxBottomBar>
+        <span className="text-sm opacity-50">
+          Personalize your account adding a avatar
+        </span>
+        <div>{isLoading && <Spinner customClass="w-5 h-5" />}</div>
+      </BoxBottomBar>
       <style jsx>{`
         input[type="file"] {
           cursor: pointer;
@@ -121,7 +119,7 @@ const SetAvatar: FC<Props> = () => {
           opacity: 0;
         }
       `}</style>
-    </>
+    </Box>
   );
 };
 

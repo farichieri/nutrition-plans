@@ -11,7 +11,6 @@ import ConnectionError from "@/components/Layout/ConnectionError";
 import Head from "next/head";
 import InstallModal from "@/components/InstallApp/InstallModal";
 import Loader from "@/components/Loader/Loader";
-import Sidebar from "@/layouts/components/Sidebar/PremiumSidebar";
 import WelcomeSteps from "@/components/WelcomeSteps/WelcomeSteps";
 
 interface Props {
@@ -59,7 +58,6 @@ export default function PremiumLayout({ children }: Props) {
       {user && user.isProfileCompleted ? (
         <div className="flex min-h-screen w-full flex-col">
           {isBillingModalOpen && <BillingModal />}
-          {/* <Sidebar /> */}
           <div
             className={`flex flex-col pt-[var(--nav-h)] duration-0 ease-in-out ${
               sidebarOpen ? "md:pl-64 " : "md:pl-20 "

@@ -231,6 +231,7 @@ const getNutrientsClasified = (nutrients: FoodNutrients) => {
       case NutrientsEnum.fiber:
       case NutrientsEnum.potassium:
       case NutrientsEnum.cholesterol:
+      case NutrientsEnum.fats:
       case NutrientsEnum.sodium:
         principals[nutrient as keyof NutrientsClasified] =
           nutrients[nutrient as keyof FoodNutrients];

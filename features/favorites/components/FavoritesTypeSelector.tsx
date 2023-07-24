@@ -13,6 +13,8 @@ const FavoritesTypeSelector: FC<Props> = () => {
   const router = useRouter();
   const favoritesRoute = AppRoutes.favorites_foods;
   const favoritesPlans = AppRoutes.favorites_plans;
+  const profileRoute = AppRoutes.profile;
+  const isProfileRoute = router.route === profileRoute;
   const isFavoritesFoods = router.route === favoritesRoute;
   const isFavoritesPlans = router.route === favoritesPlans;
 
@@ -32,7 +34,9 @@ const FavoritesTypeSelector: FC<Props> = () => {
           className={fixedButtonClass + (isFavoritesFoods ? selectedClass : "")}
         >
           <MdFavorite
-            className={`h-6 w-6 ${isFavoritesFoods && "text-green-600"} `}
+            className={`h-6 w-6 ${
+              (isFavoritesFoods || isProfileRoute) && "text-green-600"
+            } `}
           />
           Foods
         </button>

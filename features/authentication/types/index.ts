@@ -12,7 +12,7 @@ export interface User {
   displayName: string;
   emailAddress: string | null;
   firstData: UserCreatedData;
-  goal: UserGoals | null;
+  goal: UserGoalsT | null;
   id: string;
   imageURL: string | null;
   isAdmin: boolean;
@@ -27,7 +27,7 @@ export interface User {
   startOfWeek: StartsOfWeek;
   subscriptionState: SubscriptionState;
   weightGoal: WeightGoal;
-  welcomeStep: UserSteps;
+  welcomeStep: UserStepsT;
 }
 export interface UserCreatedData {
   bodyData: UserBodyData;
@@ -38,7 +38,7 @@ export interface UserBodyData {
   age: number | null;
   BMI: number | null;
   BMR: number | null;
-  gender: UserGenders | null;
+  gender: UserGendersT | null;
   heightInCm: number | null;
   caloriesRecommended: number | null;
   waterRecommendedInLts: number;
@@ -87,22 +87,28 @@ export interface PlansRating {
   dislikes: string[];
 }
 
-export enum UserSteps {
-  One = "step_1",
-  Two = "step_2",
-  Three = "step_3",
-}
+export const UserSteps = {
+  step_1: "step_1",
+  step_2: "step_2",
+  step_3: "step_3",
+} as const;
 
-export enum UserGoals {
-  LoseWeight = "Lose weight",
-  Maintain = "Maintain",
-  BuildMuscle = "Build Muscle",
-}
+export type UserStepsT = keyof typeof UserSteps;
 
-export enum UserGenders {
-  Male = "Male",
-  Female = "Female",
-}
+export const UserGoals = {
+  lose_weight: "lose_weight",
+  maintain: "maintain",
+  build_muscle: "build_muscle",
+} as const;
+
+export type UserGoalsT = keyof typeof UserGoals;
+
+export const UserGenders = {
+  Male: "Male",
+  Female: "Female",
+} as const;
+
+export type UserGendersT = keyof typeof UserGenders;
 
 export enum UserActivities {
   little_or_not_exercise = 1.2,
@@ -183,5 +189,5 @@ export const newAccount: User = {
   startOfWeek: StartsOfWeek.Sunday,
   subscriptionState: SubscriptionState.Free,
   weightGoal: initialWeightGoal,
-  welcomeStep: UserSteps.One,
+  welcomeStep: UserSteps.step_1,
 };

@@ -1,5 +1,4 @@
 import {
-  User,
   selectAuthSlice,
   setIsCreatingUser,
   setUpdateUser,
@@ -19,16 +18,17 @@ import {
 } from "../../../utils/calculateBodyData";
 import { addProgress, ProgressItem, setAddProgress } from "@/features/progress";
 import { BiSolidPieChartAlt2 } from "react-icons/bi";
+import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
 import { FC, useState } from "react";
 import { formatISO } from "date-fns";
 import { formatToUSDate } from "@/utils";
 import { getNutritionTargets } from "../../../utils/getNutritionTargets";
+import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import InfoTooltip from "@/components/Tooltip/InfoTooltip";
 import NutritionTarget from "../NutritionTarget";
 import SubmitButton from "@/components/Buttons/SubmitButton";
-import { toast } from "react-hot-toast";
 
 interface Props {
   handleSubmit: Function;
@@ -144,8 +144,8 @@ const Results: FC<Props> = ({ handleSubmit }) => {
   };
 
   return (
-    <section className="flex w-full max-w-5xl select-none flex-col items-center justify-center gap-3 rounded-md border bg-white/50 text-xs dark:bg-black/50 s:text-sm sm:text-base">
-      <form action="" className="flex w-full flex-col gap-5">
+    <Box>
+      <BoxMainContent>
         <div className="flex flex-col gap-10 p-5">
           <div className="flex items-center gap-2">
             <BiSolidPieChartAlt2 className="h-6 w-6 text-green-500" />
@@ -156,8 +156,11 @@ const Results: FC<Props> = ({ handleSubmit }) => {
           <div>
             <span>
               In order to accomplish your goal of{" "}
-              <span className="text-green-500">{user.goal}</span> we have
-              calculated the next daily calories for your nutrition plan:{" "}
+              <span className="capitalize text-green-500">
+                {user.goal?.replace("_", " ")}
+              </span>{" "}
+              we have calculated the next daily calories for your nutrition
+              plan:{" "}
             </span>
             <span className="text-green-500">{caloriesRecommended}</span>
           </div>
@@ -207,8 +210,10 @@ const Results: FC<Props> = ({ handleSubmit }) => {
             />
           </div>
         </div>
-        {isCreatingRoute && (
-          <div className="flex items-center justify-center border-t p-5">
+      </BoxMainContent>
+      <BoxBottomBar>
+        {isCreatingRoute ? (
+          <>
             <div className="ml-auto flex">
               <SubmitButton
                 className={"w-26 m-auto flex h-9 min-w-fit items-center"}
@@ -219,10 +224,22 @@ const Results: FC<Props> = ({ handleSubmit }) => {
                 isDisabled={isDisabled}
               />
             </div>
-          </div>
+          </>
+        ) : (
+          <>
+            {/* <span className="text-sm opacity-50"></span>
+            <SubmitButton
+              className={"h-9 w-fit text-sm"}
+              onClick={() => {}}
+              loadMessage={""}
+              content="Customize"
+              isLoading={isLoading}
+              isDisabled={false}
+            /> */}
+          </>
         )}
-      </form>
-    </section>
+      </BoxBottomBar>
+    </Box>
   );
 };
 
