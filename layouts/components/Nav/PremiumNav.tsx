@@ -51,7 +51,7 @@ const PremiumNav: FC<Props> = ({
     <nav
       className={`${
         !show && hideScrolling && "hidden"
-      } fixed left-0 top-0 z-[65] flex w-full  select-none items-center justify-center`}
+      } fixed left-0 top-0 z-[65] flex w-full select-none items-center justify-center`}
     >
       <div className="flex h-[var(--nav-h)] w-full items-center justify-between gap-2 bg-primary-color backdrop-blur-sm dark:border-slate-400/20 dark:shadow-cyan-100/10 xs:gap-4">
         <div className="text-md flex w-fit min-w-fit  cursor-pointer items-center justify-start font-semibold sm:text-2xl md:ml-20">

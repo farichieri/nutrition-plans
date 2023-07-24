@@ -3,7 +3,6 @@ import {
   selectShoppingSlice,
   setShoppingSelecteds,
   ShoppingListFood,
-  ShoppingListFoods,
   ShoppingListT,
 } from "@/features/shopping";
 import { FC, useEffect, useState } from "react";

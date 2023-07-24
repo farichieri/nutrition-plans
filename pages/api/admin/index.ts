@@ -12,9 +12,9 @@ export default async function handler(
   try {
     // const querySnapshot = await getDocs(collection(db, "foods"));
     // querySnapshot.forEach(async (snapShot) => {
-    //   const data = snapShot.data() as Food;
+    //   // const data = snapShot.data() as Food;
     //   updateDoc(doc(db, "foods", snapShot.id), {
-    //     scales: getScalesWithPrimaryScales({ scales: data.scales }),
+    //     isCurated: true,
     //   });
     // });
     // return res.status(200).json({ message: "success" });

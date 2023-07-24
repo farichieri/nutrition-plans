@@ -24,7 +24,7 @@ const StepOne: FC<Props> = ({ user }) => {
     setIsLoading(true);
     setIsDisabled(true);
     try {
-      const fields = { welcomeStep: UserSteps.Two };
+      const fields = { welcomeStep: UserSteps.step_2 };
       const updateUserRes = await updateUser({ user, fields });
       if (updateUserRes.result === "success") {
         dispatch(setUpdateUser({ user, fields }));

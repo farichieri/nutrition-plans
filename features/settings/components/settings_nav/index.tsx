@@ -4,7 +4,6 @@ import { FC } from "react";
 import { MdManageAccounts, MdPayment, MdSettingsCell } from "react-icons/md";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import useWindowWidth from "@/hooks/useWindowWidth";
 
 interface Props {}
 
@@ -15,7 +14,7 @@ const SettingsNav: FC<Props> = ({}) => {
     {
       name: "Account",
       url: "/app/settings/account",
-      pathname: ["/app/settings/account", "/app/settings/"],
+      pathname: ["/app/settings/account", "/app/settings"],
       icon: <MdManageAccounts className="h-6 w-6 text-green-500" />,
     },
     {
@@ -33,7 +32,7 @@ const SettingsNav: FC<Props> = ({}) => {
   ];
 
   return (
-    <nav className="z-[60] m-auto flex w-full flex-col items-center bg-primary-color pb-10">
+    <nav className="z-[60] m-auto flex w-full flex-col items-center border-y bg-primary-color">
       <BackButton
         route={AppRoutes.nav_menu}
         customClass="top-2 left-2 lg:absolute hidden"
@@ -45,7 +44,7 @@ const SettingsNav: FC<Props> = ({}) => {
               <Link
                 href={page.url}
                 key={page.url}
-                className={`my-1 flex w-full items-center justify-start gap-4 rounded-xl px-2 py-3 text-xl font-medium capitalize duration-100 hover:bg-slate-500/20 hover:opacity-100 ${
+                className={`my-1 flex w-full items-center justify-start gap-4 rounded-xl px-2 py-3 text-lg font-medium capitalize duration-100 hover:bg-slate-500/20 hover:opacity-100 ${
                   page.pathname?.includes(router.pathname)
                     ? "bg-slate-500/20"
                     : ""

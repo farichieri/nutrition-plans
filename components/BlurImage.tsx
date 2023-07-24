@@ -25,10 +25,10 @@ const BlurImage = ({
         src={image.imageURL}
         fill
         className={
-          ` h-full object-cover object-center ease-in-out
+          ` h-full object-cover object-center duration-700 ease-in-out
               ${
                 isLoading
-                  ? "scale-110 blur-2xl grayscale duration-700 "
+                  ? "scale-110 blur-2xl grayscale  "
                   : "scale-100 blur-0 grayscale-0 duration-0"
               }) ` + customClass
         }

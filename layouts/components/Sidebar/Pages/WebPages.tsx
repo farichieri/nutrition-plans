@@ -96,11 +96,11 @@ const WebPages: FC<Props> = () => {
       url: "/app/create/recipe",
       icon: <BiFoodMenu className="h-6 w-6 text-green-500" />,
     },
-    {
-      name: "Supplements & Vitamins",
-      url: "/app/create/supplements-vitamins",
-      icon: <PiPillFill className="h-6 w-6 text-green-500" />,
-    },
+    // {
+    //   name: "Supplements & Vitamins",
+    //   url: "/app/create/supplements-vitamins",
+    //   icon: <PiPillFill className="h-6 w-6 text-green-500" />,
+    // },
   ];
 
   const WEB_PAGES = [
@@ -125,7 +125,7 @@ const WebPages: FC<Props> = () => {
     {
       name: "Groceries",
       url: "/app/shopping/today",
-      pathname: ["/app/shopping/[date]"],
+      pathname: ["/app/shopping/[date]", "/app/cupboard"],
       icon: <MdLocalGroceryStore className="h-6 w-6 text-green-500" />,
     },
   ];

@@ -13,7 +13,7 @@ interface Props {
 }
 
 const FoodNutritionDetail: FC<Props> = ({ nutrients, handleClose }) => {
-  const nutrientsClacified = getNutrientsClasified(nutrients);
+  const nutrientsClasified = getNutrientsClasified(nutrients);
 
   return (
     <Modal onClose={handleClose}>
@@ -25,18 +25,18 @@ const FoodNutritionDetail: FC<Props> = ({ nutrients, handleClose }) => {
           <span className="flex basis-1/3 justify-end">Daily Value</span>
         </div>
         <div className="flex w-[40rem] max-w-full flex-col overflow-y-auto overflow-x-hidden px-2 py-2 text-xs s:text-sm sm:px-4">
-          {NutrientsGroup(nutrientsClacified.principals)}
+          {NutrientsGroup(nutrientsClasified.principals)}
           <span className="mb-1 pt-3 text-xl font-semibold">Sugars</span>
-          {NutrientsGroup(nutrientsClacified.sugars)}
+          {NutrientsGroup(nutrientsClasified.sugars)}
           <span className="mb-1 pt-3 text-xl font-semibold">Fats</span>
-          {NutrientsGroup(nutrientsClacified.fats)}
+          {NutrientsGroup(nutrientsClasified.fats)}
           <span className="mb-1 pt-3 text-xl font-semibold">Fatty Acids</span>
-          {NutrientsGroup(nutrientsClacified.fatty_acids)}
+          {NutrientsGroup(nutrientsClasified.fatty_acids)}
           <span className="mb-1 pt-3 text-xl font-semibold">
             Vitamins and Minerals
           </span>
 
-          {NutrientsGroup(nutrientsClacified.vitsAndMin)}
+          {NutrientsGroup(nutrientsClasified.vitsAndMin)}
         </div>
       </section>
     </Modal>

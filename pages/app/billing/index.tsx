@@ -1,6 +1,8 @@
+import { PremiumSidebar } from "@/layouts";
 import { selectAuthSlice } from "@/features/authentication/slice";
 import { useSelector } from "react-redux";
 import PremiumLayout from "@/layouts/PremiumLayout";
+import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 import PricingPlans from "@/components/Pricing/PricingPlans";
 
 export default function Page() {
@@ -8,6 +10,8 @@ export default function Page() {
 
   return (
     <PremiumLayout>
+      <PremiumNav hideScrolling={false} />
+      <PremiumSidebar />
       <section className="flex flex-col items-center gap-10 px-4 py-14">
         <div className="flex flex-col items-center text-center text-xs md:text-base">
           <span className="text-xl font-semibold">Subscription Plans</span>

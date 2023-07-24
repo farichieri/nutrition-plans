@@ -12,6 +12,7 @@ import { selectPlansSlice, setDiet } from "@/features/plans/slice";
 import { useDispatch, useSelector } from "react-redux";
 import { User, selectAuthSlice } from "@/features/authentication";
 import Spinner from "@/components/Loader/Spinner";
+import { MdOutlineMoreHoriz } from "react-icons/md";
 
 interface Props {
   date: string;
@@ -69,6 +70,9 @@ const DayPlan: FC<Props> = ({ date }) => {
               <span className="text-xl font-semibold capitalize text-green-500">
                 {planID?.replaceAll("_", " ")}
               </span>
+
+              <MdOutlineMoreHoriz className="h-6 w-6 opacity-50 hover:opacity-100" />
+
               <div className="grid w-full gap-5 sm:grid-cols-fluid_lg sm:gap-5">
                 <div className="flex w-full flex-col rounded-md">
                   <MealCards diet={diet} date={date} user={user} />

@@ -12,7 +12,7 @@ import {
 } from "@/utils";
 import { convertDateToDateString, getRealDate } from "@/features/plans";
 import { setPlansDate } from "@/features/plans/slice";
-import { BaseDatesEnum } from "@/types/dates";
+import { BaseDates } from "@/types/dates";
 import { FC, useEffect, useState } from "react";
 import { MdArrowLeft, MdArrowRight } from "react-icons/md";
 import { Options, Option } from "@/components";
@@ -64,29 +64,29 @@ const DaySelector: FC<Props> = ({ date, baseURL }) => {
   const nextWeek = getNextWeek({ userStartOfWeek: startOfWeek });
   const lastWeek = getLastWeek({ userStartOfWeek: startOfWeek });
 
-  const todayRoute = `${baseURL}${BaseDatesEnum.today}`;
-  const thisWeekRoute = `${baseURL}${BaseDatesEnum.this_week}`;
+  const todayRoute = `${baseURL}${BaseDates.today}`;
+  const thisWeekRoute = `${baseURL}${BaseDates.this_week}`;
 
   const backRoute = () => {
     switch (date) {
-      case BaseDatesEnum.today:
-        return baseURL + BaseDatesEnum.yesterday;
-      case BaseDatesEnum.tomorrow:
-        return baseURL + BaseDatesEnum.today;
-      case BaseDatesEnum.yesterday:
+      case BaseDates.today:
+        return baseURL + BaseDates.yesterday;
+      case BaseDates.tomorrow:
+        return baseURL + BaseDates.today;
+      case BaseDates.yesterday:
         return baseURL + `${getDatePlusDays(dateF, -1)}`;
-      case BaseDatesEnum.this_week:
-        return baseURL + BaseDatesEnum.last_week;
-      case BaseDatesEnum.next_week:
-        return baseURL + BaseDatesEnum.this_week;
-      case BaseDatesEnum.last_week:
+      case BaseDates.this_week:
+        return baseURL + BaseDates.last_week;
+      case BaseDates.next_week:
+        return baseURL + BaseDates.this_week;
+      case BaseDates.last_week:
         if (startWeek) {
           return (
             baseURL +
             restOneWeek({ date: startWeek, userStartOfWeek: startOfWeek })
           );
         } else {
-          return baseURL + BaseDatesEnum.this_week;
+          return baseURL + BaseDates.this_week;
         }
       default:
         if (isWeek && startWeek) {
@@ -94,14 +94,14 @@ const DaySelector: FC<Props> = ({ date, baseURL }) => {
             baseURL +
             (restOneWeek({ date: startWeek, userStartOfWeek: startOfWeek }) ===
             nextWeek
-              ? BaseDatesEnum.next_week
+              ? BaseDates.next_week
               : restOneWeek({ date: startWeek, userStartOfWeek: startOfWeek }))
           );
         } else {
           return (
             baseURL +
             (getDatePlusDays(dateF, -1) === tomorrow
-              ? BaseDatesEnum.tomorrow
+              ? BaseDates.tomorrow
               : getDatePlusDays(dateF, -1))
           );
         }
@@ -110,39 +110,39 @@ const DaySelector: FC<Props> = ({ date, baseURL }) => {
 
   const nextRoute = () => {
     switch (date) {
-      case BaseDatesEnum.today:
-        return baseURL + BaseDatesEnum.tomorrow;
-      case BaseDatesEnum.tomorrow:
+      case BaseDates.today:
+        return baseURL + BaseDates.tomorrow;
+      case BaseDates.tomorrow:
         return baseURL + `${getDatePlusDays(dateF, 1)}`;
-      case BaseDatesEnum.yesterday:
-        return baseURL + BaseDatesEnum.today;
-      case BaseDatesEnum.this_week:
-        return baseURL + BaseDatesEnum.next_week;
-      case BaseDatesEnum.next_week:
+      case BaseDates.yesterday:
+        return baseURL + BaseDates.today;
+      case BaseDates.this_week:
+        return baseURL + BaseDates.next_week;
+      case BaseDates.next_week:
         if (startWeek) {
           return (
             baseURL +
             addOneWeek({ date: startWeek, userStartOfWeek: startOfWeek })
           );
         } else {
-          return baseURL + BaseDatesEnum.this_week;
+          return baseURL + BaseDates.this_week;
         }
-      case BaseDatesEnum.last_week:
-        return baseURL + BaseDatesEnum.this_week;
+      case BaseDates.last_week:
+        return baseURL + BaseDates.this_week;
       default:
         if (isWeek && startWeek) {
           return (
             baseURL +
             (addOneWeek({ date: startWeek, userStartOfWeek: startOfWeek }) ===
             lastWeek
-              ? BaseDatesEnum.last_week
+              ? BaseDates.last_week
               : addOneWeek({ date: startWeek, userStartOfWeek: startOfWeek }))
           );
         } else {
           return (
             baseURL +
             (getDatePlusDays(dateF, 1) === yesterday
-              ? BaseDatesEnum.yesterday
+              ? BaseDates.yesterday
               : getDatePlusDays(dateF, 1))
           );
         }

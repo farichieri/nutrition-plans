@@ -1,6 +1,7 @@
 import {
   User,
   UserGoals,
+  UserGoalsT,
   WeightGoal,
   selectAuthSlice,
   setUpdateUser,
@@ -25,7 +26,7 @@ import InfoMessage from "@/components/Layout/InfoMessage";
 import SubmitButton from "@/components/Buttons/SubmitButton";
 
 interface FormValues {
-  goalSelected: UserGoals | null;
+  goalSelected: UserGoalsT | null;
   weightGoal: WeightGoal;
 }
 
@@ -89,10 +90,10 @@ const Goal: FC<Props> = ({ handleContinue }) => {
     const name = (event.target as HTMLButtonElement).name;
     const value = (event.target as HTMLButtonElement).value;
     if (
-      Object.values(UserGoals).includes(value as UserGoals) &&
+      Object.values(UserGoals).includes(value as UserGoalsT) &&
       name === "goalSelected"
     ) {
-      setValue(name, value as UserGoals, {
+      setValue(name, value as UserGoalsT, {
         shouldDirty: true,
         shouldTouch: true,
       });
@@ -178,7 +179,7 @@ const Goal: FC<Props> = ({ handleContinue }) => {
                 <button
                   onClick={handleSelect}
                   name={"goalSelected"}
-                  className={`flex w-full min-w-fit items-center justify-center rounded-lg border bg-gray-500/20 px-3 py-2 text-xl font-medium duration-100 hover:border-green-700 hover:bg-green-500 hover:text-white active:border-black/10 active:bg-slate-500/30 dark:active:border-white/10 sm:basis-1/4 sm:text-2xl ${
+                  className={`flex w-full min-w-fit items-center justify-center rounded-lg border bg-gray-500/20 px-3 py-2 text-xl font-medium capitalize duration-100 hover:border-green-700 hover:bg-green-500 hover:text-white active:border-black/10 active:bg-slate-500/30 dark:active:border-white/10 sm:basis-1/4 sm:text-2xl ${
                     goal === values.goalSelected
                       ? "border-green-700 bg-green-500 text-white"
                       : "text-gray-500"
@@ -186,7 +187,7 @@ const Goal: FC<Props> = ({ handleContinue }) => {
                   key={goal}
                   value={goal}
                 >
-                  {goal}
+                  {goal.replace("_", " ")}
                 </button>
               ))}
             </div>

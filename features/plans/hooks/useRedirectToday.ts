@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { isValidDate } from "@/utils/dateFormat";
-import { BaseDatesEnum } from "@/types/dates";
+import { BaseDates } from "@/types/dates";
 import { isValidStringFormat } from "@/features/plans";
 
 const useRedirectToday = (date: string) => {
@@ -11,7 +11,7 @@ const useRedirectToday = (date: string) => {
       router.replace({
         pathname: router.pathname,
         query: {
-          date: BaseDatesEnum.today,
+          date: BaseDates.today,
         },
       });
     }
