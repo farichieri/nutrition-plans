@@ -8,7 +8,7 @@ import { Provider } from "react-redux";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { Toaster } from "react-hot-toast";
-import Layout from "@/layouts";
+import { Layout } from "@/layouts";
 import NProgress from "nprogress";
 import type { AppProps } from "next/app";
 import ErrorBoundary from "@/components/ErrorBoundary/ErrorBoundary";

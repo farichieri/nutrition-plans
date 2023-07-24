@@ -4,12 +4,13 @@ import {
   ShoppingNav,
   selectShoppingSlice,
 } from "@/features/shopping";
-import Spinner from "@/components/Loader/Spinner";
+import { PremiumSidebar } from "@/layouts";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import CupboardList from "@/features/shopping/components/cupboard_list";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "@/layouts/components/Nav/PremiumNav";
+import Spinner from "@/components/Loader/Spinner";
 
 interface Props {}
 
@@ -23,6 +24,8 @@ export default function Page(): Props {
       <PremiumNav hideScrolling={false} simplified>
         <ShoppingNav />
       </PremiumNav>
+      <PremiumSidebar />
+
       <section className=" flex w-full flex-col gap-2 p-2 pb-20 sm:px-4">
         {isAddingFood && <AddFoodModalCupboard />}
         <span className="font-semibold ">Products that I have</span>

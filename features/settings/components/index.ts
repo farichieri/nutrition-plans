@@ -1,4 +1,4 @@
-import SettingsNav from "./SettingsNav";
+import SettingsNav from "./settings_nav";
 
 // Account
 import SetAvatar from "./Account/SetAvatar";

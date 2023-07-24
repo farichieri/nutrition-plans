@@ -58,6 +58,11 @@ const WebPages: FC<Props> = () => {
       icon: <MdFavorite className="h-6 w-6 text-green-500" />,
     },
     {
+      name: "Nutrition Targets",
+      url: "/app/profile/nutrition-values",
+      icon: <BiSolidPieChartAlt2 className="h-6 w-6 text-green-500" />,
+    },
+    {
       name: "Goal",
       url: "/app/profile/goal",
       icon: <MdEmojiEvents className="h-6 w-6 text-green-500" />,
@@ -67,11 +72,7 @@ const WebPages: FC<Props> = () => {
       url: "/app/profile/body-features",
       icon: <MdSettingsAccessibility className="h-6 w-6 text-green-500" />,
     },
-    {
-      name: "Nutrition Values",
-      url: "/app/profile/nutrition-values",
-      icon: <BiSolidPieChartAlt2 className="h-6 w-6 text-green-500" />,
-    },
+
     {
       name: "Preferred Plan",
       url: "/app/profile/preferred-plan",

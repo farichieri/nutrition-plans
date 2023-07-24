@@ -86,7 +86,7 @@ const Plan: FC<Props> = ({ date }) => {
       </div>
       <div className="flex h-full min-h-[15rem] w-full flex-col">
         {isGeneratingPlan || isLoadingDiet ? (
-          <Spinner customClass="h-6 w-6 m-auto" />
+          <Spinner customClass="h-9 w-9 m-auto" />
         ) : (
           <>
             {diet ? (

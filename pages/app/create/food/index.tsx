@@ -1,5 +1,6 @@
 import { BackButton } from "@/components/Buttons";
 import { FoodCreate } from "@/features/foods";
+import { PremiumSidebar } from "@/layouts";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
@@ -8,6 +9,7 @@ export default function Page() {
   return (
     <PremiumLayout>
       <PremiumNav hideScrolling={false} />
+      <PremiumSidebar />
       <SubPremiumNav>
         <div className="flex items-center gap-2 px-2">
           <BackButton />

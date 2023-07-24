@@ -58,7 +58,7 @@ const FoodNutrition: FC<Props> = ({ food, amount, scale }) => {
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center justify-start gap-2">
             <BiSolidPieChartAlt2 className="h-6 w-6 text-green-500" />
-            <span className="text-2xl font-semibold">Nutrition Values</span>
+            <span className="text-2xl font-semibold">Nutrition Targets</span>
           </div>
           {food.source && (
             <div className="flex items-center gap-1">

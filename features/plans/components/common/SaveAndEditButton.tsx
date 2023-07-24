@@ -76,6 +76,9 @@ const SaveAndEditButton: FC<Props> = ({
                 const res = await deleteDiet(diet);
                 if (res.result === "success") {
                   dispatch(setDeleteDiet({ id: diet.id! }));
+                  toast.success("Diet deleted successfully.");
+                } else {
+                  toast.error("Error deleting diet. Please try again.");
                 }
                 setIsDeleting(false);
               }}

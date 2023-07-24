@@ -1,5 +1,6 @@
 import { FilterQueries } from "@/types";
 import { FoodsSearched } from "@/features/foods";
+import { PremiumSidebar } from "@/layouts";
 import CreateButton from "@/features/foods/components/common/CreateButton";
 import DatabaseSelector from "@/components/Premium/SearchBar/DatabaseSelector";
 import Filters from "@/components/Premium/SearchBar/Filters";
@@ -18,6 +19,7 @@ export default function SearchLayout({ queries }: Props) {
       <PremiumNav hideScrolling={false}>
         <SearchBar queries={queries} />
       </PremiumNav>
+      <PremiumSidebar />
       <section className="m-auto flex w-full max-w-screen-2xl flex-col justify-center gap-2 px-2 pb-2 pt-2 sm:px-5">
         <div className="flex items-center gap-10">
           <DatabaseSelector queries={queries} />

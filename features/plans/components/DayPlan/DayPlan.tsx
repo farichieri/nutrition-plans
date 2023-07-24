@@ -60,7 +60,7 @@ const DayPlan: FC<Props> = ({ date }) => {
     <div className="w-full">
       {isGeneratingPlan || isLoadingDiet ? (
         <div className="fixed inset-0 mt-auto flex h-screen w-screen justify-center">
-          <Spinner customClass="h-6 w-6 m-auto" />
+          <Spinner customClass="h-9 w-9 m-auto" />
         </div>
       ) : (
         <>
