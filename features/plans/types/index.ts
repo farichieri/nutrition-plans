@@ -1,7 +1,7 @@
 import { FoodGroup, FoodNutrients } from "@/features/foods";
 import { MealComplexities, MealMinutes, MealSizes } from "@/features/meals";
-import { PlansEnum } from "@/types";
 import { NewFood, NewFoodNutrients } from "@/types/initial";
+import { PlansEnum } from "@/types";
 
 export enum PlanTypes {
   automatically = "automatically",
@@ -27,6 +27,7 @@ export interface Diet {
   meals: DietMealGroup;
   name: string | null;
   nameLowerCase: string | null;
+  note: string | null;
   nutrients: FoodNutrients;
   planID: PlansEnum | null;
   type: PlanTypes;
@@ -80,6 +81,7 @@ export const NewDiet: Diet = {
   meals: {},
   name: null,
   nameLowerCase: null,
+  note: null,
   nutrients: NewFoodNutrients,
   planID: null,
   type: PlanTypes.manually,

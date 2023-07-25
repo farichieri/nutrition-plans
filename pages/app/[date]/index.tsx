@@ -14,8 +14,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "@/layouts/components/Nav/PremiumNav";
-import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
 import Sidebar from "@/layouts/components/Sidebar/PremiumSidebar";
+import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
 
 interface Props {
   date: string;

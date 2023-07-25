@@ -1,6 +1,6 @@
 {
   "name": "nutrition-plans",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -43,6 +43,7 @@
     "react-markdown": "^8.0.7",
     "react-redux": "^8.0.5",
     "react-select": "^5.7.3",
+    "react-textarea-autosize": "^8.5.2",
     "react-tooltip": "^5.14.0",
     "reading-time": "^1.5.0",
     "recharts": "^2.5.0",

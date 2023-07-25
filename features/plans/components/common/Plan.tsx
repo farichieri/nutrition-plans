@@ -11,6 +11,7 @@ import { User, selectAuthSlice } from "@/features/authentication";
 import Link from "next/link";
 import PlanGenerator from "./PlanGenerator";
 import Spinner from "@/components/Loader/Spinner";
+import DayNote from "./DayNote";
 
 interface Props {
   date: string;
@@ -18,10 +19,11 @@ interface Props {
 
 const Plan: FC<Props> = ({ date }) => {
   const dispatch = useDispatch();
-  const { user } = useSelector(selectAuthSlice);
-  const { diets } = useSelector(selectPlansSlice);
+  const [isEditing, setIsEditing] = useState(false);
   const [isGeneratingPlan, setIsGeneratingPlan] = useState(false);
   const [isLoadingDiet, setIsLoadingDiet] = useState(false);
+  const { diets } = useSelector(selectPlansSlice);
+  const { user } = useSelector(selectAuthSlice);
   const diet = diets[date];
 
   const getDayDiet = async (date: string, user: User) => {
@@ -84,6 +86,8 @@ const Plan: FC<Props> = ({ date }) => {
           {diet?.planID?.replaceAll("_", " ")}
         </span>
       </div>
+
+      {diet && <DayNote diet={diet} isEditing={isEditing} />}
       <div className="flex h-full min-h-[15rem] w-full flex-col">
         {isGeneratingPlan || isLoadingDiet ? (
           <Spinner customClass="h-9 w-9 m-auto" />
@@ -91,7 +95,13 @@ const Plan: FC<Props> = ({ date }) => {
           <>
             {diet ? (
               <div className="mb-auto flex h-full w-full flex-col gap-2">
-                <ManualMeals diet={diet} date={date} user={user} />
+                <ManualMeals
+                  isEditing={isEditing}
+                  setIsEditing={setIsEditing}
+                  diet={diet}
+                  date={date}
+                  user={user}
+                />
               </div>
             ) : (
               <div className="m-auto flex justify-center">

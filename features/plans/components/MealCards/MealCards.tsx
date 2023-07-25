@@ -23,12 +23,19 @@ interface Props {
   diet: Diet;
   date: string;
   user: User;
+  isEditing: boolean;
+  setIsEditing: Function;
 }
 
-const MealCards: FC<Props> = ({ diet, date, user }) => {
+const MealCards: FC<Props> = ({
+  diet,
+  date,
+  user,
+  isEditing,
+  setIsEditing,
+}) => {
   const dispatch = useDispatch();
   const dietMeals = diet?.meals;
-  const [isEditing, setIsEditing] = useState(false);
 
   const onDragEnd = (result: any) => {
     const { source, destination } = result;

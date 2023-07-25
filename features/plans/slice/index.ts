@@ -150,6 +150,15 @@ export const plansSlice = createSlice({
     setIsGeneratingMeals: (state, action: PayloadAction<boolean>) => {
       state.isGeneratingMeals = action.payload;
     },
+    setDietNote: (
+      state,
+      action: PayloadAction<{ diet: Diet; note: string }>
+    ) => {
+      const { diet, note } = action.payload;
+      const { id } = diet;
+      if (!id) return;
+      state.diets[id].note = note;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(PURGE, () => {
@@ -163,6 +172,7 @@ export const {
   removeFoodInDiet,
   setDeleteDiet,
   setDiet,
+  setDietNote,
   setDiets,
   setIsGeneratingMeals,
   setPlansDate,
