@@ -9,7 +9,7 @@ import SettingsLayout from "@/layouts/SettingsLayout";
 export default function Page() {
   return (
     <SettingsLayout>
-      <div className="flex w-full flex-col gap-10">
+      <div className="flex w-full flex-col gap-4 lg:gap-10">
         <SetAvatar />
         <SetName />
         <SetEmail />

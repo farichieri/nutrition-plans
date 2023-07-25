@@ -3,12 +3,15 @@ import { BackButton } from "@/components/Buttons";
 import { FC } from "react";
 import { MdManageAccounts, MdPayment, MdSettingsCell } from "react-icons/md";
 import { useRouter } from "next/router";
+import { useWindowWidth } from "@/hooks";
 import Link from "next/link";
 
 interface Props {}
 
 const SettingsNav: FC<Props> = ({}) => {
   const router = useRouter();
+  const windowWidth = useWindowWidth();
+  const isMobile = windowWidth < 1024;
 
   const SETTINGS_PAGES = [
     {
@@ -45,7 +48,7 @@ const SettingsNav: FC<Props> = ({}) => {
                 href={page.url}
                 key={page.url}
                 className={`my-1 flex w-full items-center justify-start gap-4 rounded-xl px-2 py-3 text-lg font-medium capitalize duration-100 hover:bg-slate-500/20 hover:opacity-100 ${
-                  page.pathname?.includes(router.pathname)
+                  page.pathname?.includes(router.pathname) && !isMobile
                     ? "bg-slate-500/20"
                     : ""
                 } `}

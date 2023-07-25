@@ -21,12 +21,14 @@ export default function MealsLayout({ children }: Props) {
 
   return (
     <ProfileLayout>
-      <UserMealsC meals={meals} />
-      {isLoadingMealsSettings ? (
-        <Spinner customClass="h-5 w-5" />
-      ) : (
-        <UserMealsSettings mealsSettings={mealsSettings} />
-      )}
+      <div className="flex w-full flex-col gap-4 lg:gap-10">
+        <UserMealsC meals={meals} />
+        {isLoadingMealsSettings ? (
+          <Spinner customClass="h-5 w-5" />
+        ) : (
+          <UserMealsSettings mealsSettings={mealsSettings} />
+        )}
+      </div>
       {children}
     </ProfileLayout>
   );

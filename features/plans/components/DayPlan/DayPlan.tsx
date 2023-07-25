@@ -20,12 +20,12 @@ interface Props {
 
 const DayPlan: FC<Props> = ({ date }) => {
   const dispatch = useDispatch();
+  const [isGeneratingPlan, setIsGeneratingPlan] = useState<boolean>(false);
+  const [isLoadingDiet, setIsLoadingDiet] = useState<boolean>(false);
   const { user } = useSelector(selectAuthSlice);
-  const [isGeneratingPlan, setIsGeneratingPlan] = useState(false);
   const { diets } = useSelector(selectPlansSlice);
   const diet: Diet = diets[date];
   const planID = diet?.planID;
-  const [isLoadingDiet, setIsLoadingDiet] = useState<boolean>(false);
 
   const getDayDiet = async (date: string, user: User) => {
     console.log({ diet, date });
@@ -67,11 +67,12 @@ const DayPlan: FC<Props> = ({ date }) => {
         <>
           {diet ? (
             <div className="mb-auto flex h-full flex-col gap-2">
-              <span className="text-xl font-semibold capitalize text-green-500">
-                {planID?.replaceAll("_", " ")}
-              </span>
-
-              <MdOutlineMoreHoriz className="h-6 w-6 opacity-50 hover:opacity-100" />
+              <div className="flex justify-between">
+                <span className="text-xl font-semibold capitalize text-green-500">
+                  {planID?.replaceAll("_", " ")}
+                </span>
+                <MdOutlineMoreHoriz className="h-6 w-6 opacity-50 hover:opacity-100" />
+              </div>
 
               <div className="grid w-full gap-5 sm:grid-cols-fluid_lg sm:gap-5">
                 <div className="flex w-full flex-col rounded-md">
