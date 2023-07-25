@@ -16,7 +16,7 @@ export default function ProfileLayout({ children }: Props) {
     <PremiumLayout>
       <PremiumNav hideScrolling={false} />
       <PremiumSidebar />
-      <section className="mx-auto flex w-full max-w-7xl items-start justify-center gap-5 px-2 pb-2 sm:px-5">
+      <section className="mx-auto flex w-full max-w-7xl items-start justify-center gap-5 px-2 pb-2 pt-2 sm:px-5">
         <div className="hidden w-full min-w-fit max-w-xxs lg:flex">
           {<ProfileNav />}
         </div>

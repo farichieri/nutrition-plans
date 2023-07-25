@@ -25,7 +25,7 @@ export default function Page() {
           <SettingsNav />
         </div>
       ) : (
-        <div className="flex w-full flex-col gap-10">
+        <div className="flex w-full flex-col gap-4 lg:gap-10">
           <SetAvatar />
           <SetName />
           <SetEmail />
