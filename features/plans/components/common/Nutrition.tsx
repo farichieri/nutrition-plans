@@ -113,12 +113,6 @@ const Nutrition: FC<Props> = ({ nutrients, planID }) => {
 
   return (
     <div className="w-full">
-      {openDetails && (
-        <FoodNutritionDetail
-          nutrients={nutrients}
-          handleClose={() => setOpenDetails(false)}
-        />
-      )}
       <div
         className={`relative flex w-full flex-wrap items-center justify-center gap-10 rounded-xl border p-4 ${
           !isAllInRange
@@ -213,13 +207,7 @@ const Nutrition: FC<Props> = ({ nutrients, planID }) => {
               </div>
             </div>
           </div>
-
-          <button
-            className="m-auto rounded-3xl border px-4 py-2 duration-300 hover:bg-slate-500/20"
-            onClick={handleOpenDetail}
-          >
-            Detailed Nutrition
-          </button>
+          <FoodNutritionDetail nutrients={nutrients} />
           <div>
             {isAllInRange ? (
               <span className="my-4 flex w-full justify-center text-green-500 ">
