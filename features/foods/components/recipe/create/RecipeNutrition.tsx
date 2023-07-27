@@ -26,12 +26,7 @@ const RecipeNutrition: FC<Props> = ({ nutrients }) => {
 
   return (
     <div className="flex w-full flex-wrap items-start p-4 sm:px-10">
-      {openDetails && (
-        <FoodNutritionDetail
-          nutrients={nutrients}
-          handleClose={() => setOpenDetails(false)}
-        />
-      )}
+      {openDetails && <FoodNutritionDetail nutrients={nutrients} />}
       <div className="flex w-full flex-col gap-2"></div>
       <div className="flex w-full max-w-lg flex-col gap-5">
         <div className="flex items-center gap-2"></div>

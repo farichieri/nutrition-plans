@@ -7,11 +7,11 @@ import {
 import { BiSolidPieChartAlt2 } from "react-icons/bi";
 import { formatToFixed } from "@/utils/format";
 import { getNewAmount, getNutritionValues } from "@/utils/nutritionHelpers";
+import { USDAIcon } from "@/assets";
 import FoodNutritionDetail from "./FoodNutritionDetail";
 import Link from "next/link";
 import PieGraph from "@/components/PieGraph/PieGraph";
 import React, { FC, useEffect, useState } from "react";
-import { USDAIcon } from "@/assets";
 
 interface Props {
   food: Food;
@@ -48,12 +48,6 @@ const FoodNutrition: FC<Props> = ({ food, amount, scale }) => {
 
   return (
     <div className="flex w-full justify-center">
-      {openDetails && (
-        <FoodNutritionDetail
-          nutrients={nutrients}
-          handleClose={() => setOpenDetails(false)}
-        />
-      )}
       <div className="flex w-full  flex-col gap-2">
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center justify-start gap-2">
@@ -122,12 +116,7 @@ const FoodNutrition: FC<Props> = ({ food, amount, scale }) => {
             <span>{nutrients.cholesterol || "-"}</span>
           </div>
         </div>
-        <button
-          className="m-auto rounded-3xl border px-4 py-2 duration-300 hover:bg-slate-500/20"
-          onClick={handleOpenDetail}
-        >
-          Detailed Nutrition
-        </button>
+        <FoodNutritionDetail nutrients={nutrients} />
       </div>
     </div>
   );

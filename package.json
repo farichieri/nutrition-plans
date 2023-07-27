@@ -55,6 +55,7 @@
     "typescript": "5.0.3",
     "typesense": "^1.5.4",
     "uuid": "^9.0.0",
+    "vaul": "^0.0.7",
     "yup": "^1.2.0"
   },
   "devDependencies": {
