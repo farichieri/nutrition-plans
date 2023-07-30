@@ -41,6 +41,8 @@ export default function Document() {
           content="#000"
           media="(prefers-color-scheme: dark)"
         />
+        <meta name="robots" content="all" />
+        <meta name="google" content="notranslate" key="notranslate" />
       </Head>
       <body>
         <Main />

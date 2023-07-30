@@ -1,6 +1,7 @@
 ---
 title: "Weight Loss"
 isAvailable: false
+date: "2023-07-30"
 ---
 
 Are you looking for a realistic, balanced and healthy eating plan to lose weight? It is important first that you understand what your personal goal is, understand that to lose weight sustainably over time you must focus on reducing adipose tissue and not on decreasing muscle mass to obtain long-term health. Losing weight occurs when your body burns more calories than it consumes daily, which is why choosing this plan is recommended in conjunction with physical activity for greater efficiency.

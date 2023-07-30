@@ -1,7 +1,13 @@
 ---
-title: "Low Carb"
-isAvailable: true
+author: "aldana-richieri"
+authorName: "Aldana Richieri"
+date: "2023-07-30"
 image: "/images/plans/low_carb.jpg"
+isAvailable: true
+premium: false
+summary: "Low Carb Plan"
+title: "Low Carb"
+topic: "Plan"
 ---
 
 The low carb diet or low carbohydrate diet is a diet that involves reducing carbohydrates to give preference to proteins and fats.

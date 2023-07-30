@@ -2,13 +2,14 @@ import path from "path";
 import fs from "fs";
 import matter from "gray-matter";
 import readingTime from "reading-time";
+import { PlansType, Posts } from "@/types";
 
 export enum MDDirectories {
   plans = "/data/content/plans",
   posts = "/data/content/posts",
 }
 
-const getSortedData = (directory: MDDirectories) => {
+const getSortedData = (directory: MDDirectories): Posts | PlansType => {
   const dir = path.join(process.cwd(), directory);
 
   const filesNames = fs.readdirSync(dir);
@@ -20,9 +21,17 @@ const getSortedData = (directory: MDDirectories) => {
     const timeReading = readingTime(fileContents).text;
 
     return {
+      author: matterResult.data.author,
+      authorName: matterResult.data.authorName,
+      content: matterResult.content,
+      date: matterResult.data.date,
       id,
+      image: matterResult.data.image,
+      summary: matterResult.data.summary,
       timeReading,
-      ...matterResult.data,
+      title: matterResult.data.title,
+      topic: matterResult.data.topic,
+      isAvailable: matterResult.data.isAvailable,
     };
   });
 

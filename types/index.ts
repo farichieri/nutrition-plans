@@ -68,13 +68,21 @@ export interface Post {
   timeReading: string;
   title: string;
   topic: string;
+  isAvailable: boolean;
 }
 export interface Posts extends Array<Post> {}
 export interface PlanType {
-  content?: string;
+  author: string;
+  authorName: string;
+  content: string;
+  date: string;
   id: string;
-  image?: string;
-  title?: string;
+  image: string;
+  summary: string;
+  timeReading: string;
+  title: string;
+  topic: string;
+  isAvailable: boolean;
 }
 export interface PlansType extends Array<PlanType> {}
 
