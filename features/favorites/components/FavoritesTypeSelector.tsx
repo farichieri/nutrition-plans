@@ -1,7 +1,7 @@
 import { AppRoutes } from "@/utils";
 import { FC } from "react";
-import { useRouter } from "next/router";
 import { MdFavorite } from "react-icons/md";
+import { useRouter } from "next/router";
 
 const fixedButtonClass =
   "relative flex gap-1 items-center after:absolute border-b border-b text-lg font-semibold after:bottom-[-1px] after:left-0 after:h-[3px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-green-500 after:transition-transform after:duration-300 after:ease-in-out hover:after:origin-bottom-left hover:after:scale-x-100";

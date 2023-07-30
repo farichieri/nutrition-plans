@@ -43,7 +43,7 @@ const SettingsNav: FC<Props> = ({}) => {
       <div className="fle w-full max-w-[95vw] flex-col divide-y">
         {SETTINGS_PAGES.map((page) => {
           return (
-            <div className="min-w-fit">
+            <div className="min-w-fit" key={page.url}>
               <Link
                 href={page.url}
                 key={page.url}

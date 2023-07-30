@@ -52,12 +52,6 @@ const WebPages: FC<Props> = () => {
 
   const PROFILE_PAGES = [
     {
-      name: "Favorites",
-      url: "/app/profile/favorites",
-      pathname: ["/app/profile/favorites"],
-      icon: <MdFavorite className="h-6 w-6 text-green-500" />,
-    },
-    {
       name: "Nutrition Targets",
       url: "/app/profile/nutrition-values",
       icon: <BiSolidPieChartAlt2 className="h-6 w-6 text-green-500" />,
@@ -127,6 +121,12 @@ const WebPages: FC<Props> = () => {
       url: "/app/shopping/today",
       pathname: ["/app/shopping/[date]", "/app/cupboard"],
       icon: <MdLocalGroceryStore className="h-6 w-6 text-green-500" />,
+    },
+    {
+      name: "Favorites",
+      url: "/app/favorites",
+      pathname: ["/app/favorites"],
+      icon: <MdFavorite className="h-6 w-6 text-green-500" />,
     },
   ];
 

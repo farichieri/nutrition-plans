@@ -14,15 +14,9 @@ interface Props {
   dietMeal: DietMeal;
   mealKcals: number;
   isEditing: boolean;
-  setIsEditing: Function;
 }
 
-const MealCard: FC<Props> = ({
-  dietMeal,
-  mealKcals,
-  isEditing,
-  setIsEditing,
-}) => {
+const MealCard: FC<Props> = ({ dietMeal, mealKcals, isEditing }) => {
   const dietMealFoodsArr: FoodGroupArray = Object.values(dietMeal.foods).sort(
     (a, b) => a.order - b.order
   );

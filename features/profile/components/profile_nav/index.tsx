@@ -1,6 +1,5 @@
 import {
   MdEmojiEvents,
-  MdFavorite,
   MdRestaurantMenu,
   MdSettings,
   MdSettingsAccessibility,
@@ -20,12 +19,6 @@ const ProfileNav: FC = () => {
   const isMobile = windowWidth < 1024;
 
   const PROFILE_PAGES = [
-    {
-      name: "Favorites",
-      url: "/app/profile/favorites",
-      pathname: ["/app/profile/favorites", "/app/profile"],
-      icon: <MdFavorite className="h-6 w-6 text-green-500" />,
-    },
     {
       name: "Nutrition Targets",
       url: "/app/profile/nutrition-values",
@@ -75,7 +68,7 @@ const ProfileNav: FC = () => {
       <div className="fle w-full max-w-[95vw] flex-col divide-y">
         {PROFILE_PAGES.map((page) => {
           return (
-            <div className="min-w-fit">
+            <div className="min-w-fit" key={page.url}>
               <Link
                 href={page.url}
                 key={page.url}
