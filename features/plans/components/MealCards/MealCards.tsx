@@ -1,10 +1,4 @@
-import {
-  Diet,
-  DietMeal,
-  MealCard,
-  SaveAndEditButton,
-  Water,
-} from "@/features/plans";
+import { Diet, DietMeal, MealCard, Water } from "@/features/plans";
 import { updateDietMealFoodsOrder } from "@/features/plans/slice";
 import {
   addToList,
@@ -13,27 +7,17 @@ import {
   getNutritionMerged,
 } from "@/utils";
 import { DragDropContext } from "@hello-pangea/dnd";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { FoodGroupArray } from "@/features/foods";
 import { useDispatch } from "react-redux";
-import { User } from "@/features/authentication";
 import { MdRestaurant } from "react-icons/md";
 
 interface Props {
   diet: Diet;
-  date: string;
-  user: User;
   isEditing: boolean;
-  setIsEditing: Function;
 }
 
-const MealCards: FC<Props> = ({
-  diet,
-  date,
-  user,
-  isEditing,
-  setIsEditing,
-}) => {
+const MealCards: FC<Props> = ({ diet, isEditing }) => {
   const dispatch = useDispatch();
   const dietMeals = diet?.meals;
 
@@ -95,15 +79,8 @@ const MealCards: FC<Props> = ({
           <MdRestaurant className="h-6 w-6 text-green-500" />
           <span className="text-2xl font-semibold">Meals</span>
         </div>
-        <SaveAndEditButton
-          diet={diet}
-          isEditing={isEditing}
-          setIsEditing={setIsEditing}
-          date={date}
-          user={user}
-        />
       </div>
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-2">
         {dietMeals && (
           <DragDropContext onDragEnd={onDragEnd}>
             <div className="flex flex-col gap-2">

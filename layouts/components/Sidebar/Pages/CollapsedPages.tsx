@@ -1,5 +1,6 @@
 import {
   MdAutoGraph,
+  MdFavorite,
   MdHomeFilled,
   MdLocalGroceryStore,
   MdPerson,
@@ -39,6 +40,16 @@ const CollapsedPages: FC<Props> = () => {
       url: "/app/shopping/today",
       pathname: ["/app/shopping/[date]", "/app/cupboard"],
       icon: <MdLocalGroceryStore className="h-6 w-6 text-green-500" />,
+    },
+    {
+      name: "Favorites",
+      url: "/app/favorites",
+      pathname: [
+        "/app/favorites",
+        "/app/favorites/meals",
+        "/app/favorites/plans",
+      ],
+      icon: <MdFavorite className="h-6 w-6 text-green-500" />,
     },
     {
       name: "Profile",

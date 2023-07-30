@@ -11,13 +11,13 @@ import { FoodKeys } from "@/types/initial";
 import { formatTwoDecimals } from "@/utils";
 import { getNewAmount } from "@/utils/nutritionHelpers";
 import { MdDelete, MdDragHandle } from "react-icons/md";
-import { updateDiet, Diet } from "@/features/plans";
+import { updateDiet, Diet, getDietFoodToggled } from "@/features/plans";
 import { useDispatch, useSelector } from "react-redux";
 import FormSelect from "@/components/Form/FormSelect";
 import Input from "@/components/Form/Input";
 import NutritionInput from "@/components/Form/NutritionInput";
 import RoundButton from "@/components/Buttons/RoundButton";
-import BlurImage from "@/components/BlurImage";
+import BlurImage from "@/components/blur-image";
 
 interface MealInCardProps {
   food: Food;
@@ -77,22 +77,10 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
 
     dispatch(toggleEatenFood({ food, value: value }));
 
-    const dietUpdated: Diet = {
-      ...diet,
-      meals: {
-        ...diet.meals,
-        [dietMealID]: {
-          ...diet.meals[dietMealID],
-          foods: {
-            ...diet.meals[dietMealID].foods,
-            [id]: {
-              ...diet.meals[dietMealID].foods[id],
-              isEaten: value,
-            },
-          },
-        },
-      },
-    };
+    const dietUpdated = getDietFoodToggled({ diet, food, value: value });
+
+    if (!dietUpdated) throw new Error("Error updating diet");
+
     const res = await updateDiet({ diet: dietUpdated });
 
     if (res.result === "error") {
@@ -114,7 +102,7 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
           image={{ imageURL: food.imageURL, title: food.name!, id: food.id! }}
         />
       </span>
-      <div className="flex h-auto w-full">
+      <div className="flex h-auto w-full pr-2">
         <div className="flex h-full w-full flex-col py-1">
           <div className="flex w-full max-w-max flex-col ">
             <span className="text-base font-semibold capitalize leading-5">

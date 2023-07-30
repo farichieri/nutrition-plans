@@ -11,7 +11,7 @@ import { Toaster } from "react-hot-toast";
 import { Layout } from "@/layouts";
 import NProgress from "nprogress";
 import type { AppProps } from "next/app";
-import ErrorBoundary from "@/components/ErrorBoundary/ErrorBoundary";
+import ErrorBoundary from "@/components/Errors/ErrorBoundary";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();

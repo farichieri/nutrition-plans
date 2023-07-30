@@ -6,7 +6,7 @@ import {
 } from "@/features/authentication";
 import { FC, useState } from "react";
 import { useDispatch } from "react-redux";
-import Confetti from "../Confetti";
+import Confetti from "../confetti/Confetti";
 import SubmitButton from "../Buttons/SubmitButton";
 
 interface Props {

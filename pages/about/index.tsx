@@ -1,4 +1,4 @@
-import BlurImage from "@/components/BlurImage";
+import BlurImage from "@/components/blur-image";
 import LandingLayout from "@/layouts/LandingLayout";
 import Head from "next/head";
 import Image from "next/image";

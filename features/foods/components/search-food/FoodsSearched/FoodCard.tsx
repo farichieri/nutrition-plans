@@ -4,7 +4,7 @@ import { formatTwoDecimals } from "@/utils";
 import { selectAuthSlice } from "@/features/authentication";
 import { useSelector } from "react-redux";
 import AddToFavorite from "@/features/favorites/components/AddToFavorite";
-import BlurImage from "@/components/BlurImage";
+import BlurImage from "@/components/blur-image";
 import Link from "next/link";
 
 interface Props {

@@ -20,7 +20,7 @@ import InfoMessage from "@/components/Layout/InfoMessage";
 import SubmitButton from "@/components/Buttons/SubmitButton";
 import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
 import { blurDataURL } from "@/components/Layout/BlurDataImage";
-import BlurImage from "@/components/BlurImage";
+import BlurImage from "@/components/blur-image";
 
 interface FormValues {
   planSelected: PlansEnum | null;

@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Post } from "@/types";
 import Date from "./Date/Date";
 import Link from "next/link";
-import BlurImage from "@/components/BlurImage";
+import BlurImage from "@/components/blur-image";
 
 interface Props {
   post: Post;

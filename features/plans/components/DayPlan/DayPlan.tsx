@@ -1,14 +1,12 @@
 import {
   Diet,
-  fetchDietByDate,
   MealCards,
   Nutrition,
   PlanGenerator,
+  SaveAndEditButton,
 } from "@/features/plans";
-import { db } from "@/services/firebase/firebase.config";
-import { doc, onSnapshot } from "firebase/firestore";
+import { fetchDietByDate } from "@/features/plans/services";
 import { FC, useEffect, useState } from "react";
-import { MdOutlineMoreHoriz } from "react-icons/md";
 import { selectPlansSlice, setDiet } from "@/features/plans/slice";
 import { useDispatch, useSelector } from "react-redux";
 import { User, selectAuthSlice } from "@/features/authentication";
@@ -50,15 +48,6 @@ const DayPlan: FC<Props> = ({ date }) => {
 
   if (!user) return <></>;
 
-  // useEffect(() => {
-  //   const docRef = doc(db, "users", user.id, "diets", date);
-  //   console.log("snapshoting");
-  //   onSnapshot(docRef, (doc) => {
-  //     const data = (doc.data() as Diet) || { date };
-  //     dispatch(setDiet(data));
-  //   });
-  // }, [onSnapshot]);
-
   return (
     <div className="w-full">
       {isGeneratingPlan || isLoadingDiet ? (
@@ -69,25 +58,24 @@ const DayPlan: FC<Props> = ({ date }) => {
         <>
           {diet ? (
             <div className="mb-auto flex h-full flex-col gap-2">
-              <div>
-                <DayNote diet={diet} isEditing={isEditing} />
-              </div>
-              <div className="flex justify-between">
+              <div className="flex flex-wrap justify-between">
                 <span className="text-xl font-semibold capitalize text-green-500">
                   {planID?.replaceAll("_", " ")}
                 </span>
-                <MdOutlineMoreHoriz className="h-6 w-6 opacity-50 hover:opacity-100" />
+                <SaveAndEditButton
+                  diet={diet}
+                  isEditing={isEditing}
+                  setIsEditing={setIsEditing}
+                  date={date}
+                  user={user}
+                />
               </div>
-
-              <div className="grid w-full gap-5 sm:grid-cols-fluid_lg sm:gap-5">
+              <div>
+                <DayNote diet={diet} isEditing={isEditing} />
+              </div>
+              <div className="grid w-full gap-14 sm:grid-cols-fluid_lg sm:gap-5">
                 <div className="flex w-full flex-col rounded-md">
-                  <MealCards
-                    isEditing={isEditing}
-                    setIsEditing={setIsEditing}
-                    diet={diet}
-                    date={date}
-                    user={user}
-                  />
+                  <MealCards isEditing={isEditing} diet={diet} />
                 </div>
                 {diet && (
                   <div className=" w-full rounded-md  ">

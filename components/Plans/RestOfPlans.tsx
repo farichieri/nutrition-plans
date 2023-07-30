@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { PlansType } from "@/types";
 import Link from "next/link";
-import BlurImage from "../BlurImage";
+import BlurImage from "../blur-image";
 
 interface Props {
   plans: PlansType;

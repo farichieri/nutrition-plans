@@ -101,7 +101,21 @@ const SaveAndEditButton: FC<Props> = ({
   };
 
   return (
-    <div className="flex w-auto items-center justify-between gap-2">
+    <div className="ml-auto flex w-auto items-center justify-between gap-2">
+            {isEditing && (
+        <button
+          className="flex h-9 items-center justify-center gap-1 rounded-md border border-red-500 bg-red-500/20 px-3 py-1 hover:bg-red-500/50 active:bg-red-500"
+          onClick={handleDelete}
+        >
+          {isDeleting ? (
+            <Spinner customClass="h-5 w-5" />
+          ) : (
+            <>
+              <MdDelete className="h-5 w-5" />
+            </>
+          )}
+        </button>
+      )}
       {isEditing && (
         <button
           className="flex h-9  items-center justify-center gap-1 rounded-md border border-gray-500 bg-gray-500/20 px-3 py-1 hover:bg-gray-500/50 active:bg-gray-500"
@@ -114,21 +128,7 @@ const SaveAndEditButton: FC<Props> = ({
           )}
         </button>
       )}
-      {isEditing && (
-        <button
-          className="flex h-9 items-center justify-center gap-1 rounded-md border border-red-500 bg-red-500/20 px-3 py-1 hover:bg-red-500/50 active:bg-red-500"
-          onClick={handleDelete}
-        >
-          {isDeleting ? (
-            <Spinner customClass="h-5 w-5" />
-          ) : (
-            <>
-              <span>Delete</span>
-              <MdDelete className="h-5 w-5" />
-            </>
-          )}
-        </button>
-      )}
+
       <button
         className="flex h-9 items-center justify-center gap-1 rounded-md border border-green-500 bg-green-500/20 px-3 py-1 hover:bg-green-500/50 active:bg-green-500"
         onClick={toggleButton}

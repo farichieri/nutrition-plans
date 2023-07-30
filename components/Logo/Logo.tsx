@@ -9,7 +9,7 @@ const Logo: FC<Props> = ({ hideText }) => {
   return (
     <div className="flex items-center gap-0.5 sm:gap-1">
       <Image
-        src="/android-chrome-192x192.png"
+        src="/images/pwa/android-chrome-192x192.png"
         alt="logo"
         width={30}
         height={30}

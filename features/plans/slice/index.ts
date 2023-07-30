@@ -5,11 +5,13 @@ import {
   DietMeal,
   PlanDateType,
 } from "@/features/plans/types";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Food, FoodGroup, FoodGroupArray } from "@/features/foods/types";
+import { getDietNutrition, getIsWeek, getToday } from "@/utils";
 import { PURGE } from "redux-persist";
 import { RootState } from "@/store";
-import { getDietNutrition, getIsWeek, getToday } from "@/utils";
+import { updateDiet } from "../services";
+import { saveDiet } from "../services/saveDiet";
 
 interface PlansSlice {
   date: string;
@@ -20,12 +22,23 @@ interface PlansSlice {
 }
 
 const initialState: PlansSlice = {
-  date: "getToday()",
+  date: getToday(),
   diets: {},
   isGeneratingMeals: false,
   planDateType: PlanDateType.day,
   planType: PlanTypes.automatically,
 };
+
+export const saveDietThunk = createAsyncThunk(
+  "plans/saveDiet",
+  async ({ diet }: { diet: Diet }) => {
+    console.log("averga", diet);
+    const { id } = diet;
+    if (!id) return;
+    const res = await saveDiet({ diet: diet });
+    console.log({ res, diet });
+  }
+);
 
 export const plansSlice = createSlice({
   name: "plans",
@@ -143,7 +156,6 @@ export const plansSlice = createSlice({
     ) => {
       const { diet, value } = action.payload;
       const { water, id } = diet;
-      // const { drunk, litters_drunk, litters_to_drink } = diet_water;
       if (!id) return;
       state.diets[id].water.drunk = value;
     },

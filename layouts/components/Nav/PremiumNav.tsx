@@ -8,6 +8,8 @@ import Link from "next/link";
 import Logo from "@/components/Logo/Logo";
 import ToggleSidebar from "@/layouts/components/Sidebar/ToggleSidebar";
 import useWindowWidth from "@/hooks/useWindowWidth";
+import { useRouter } from "next/router";
+import { MdFavorite } from "react-icons/md";
 
 interface Props {
   children?: ReactNode;
@@ -22,6 +24,7 @@ const PremiumNav: FC<Props> = ({
   hideScrolling,
   simplified,
 }) => {
+  const router = useRouter();
   const [lastScrollY, setLastScrollY] = useState(0);
   const [show, setShow] = useState(true);
   const windowWidth = useWindowWidth();
@@ -69,7 +72,19 @@ const PremiumNav: FC<Props> = ({
         <div className="flex w-fit min-w-fit items-center justify-end gap-2 pr-4 text-xs xs:gap-4 sm:gap-10 sm:pr-8 sm:text-xl xl:pr-10">
           {(windowWidth > 1024 || !simplified) && (
             <>
-              <SubscribeButton />
+              {/* <SubscribeButton /> */}
+              <Link href="/app/favorites">
+                <span
+                  className={`flex items-center rounded-3xl border px-3 py-1 text-sm outline-none duration-300 hover:opacity-100 active:border-black dark:active:border-white ${
+                    router.pathname.includes("/app/favorites")
+                      ? "border-black opacity-100 dark:border-white"
+                      : "border-transparent opacity-50"
+                  }`}
+                >
+                  <MdFavorite className="mr-1 h-4 w-4 text-green-500" />
+                  Favorites
+                </span>
+              </Link>
               <Feedback />
             </>
           )}

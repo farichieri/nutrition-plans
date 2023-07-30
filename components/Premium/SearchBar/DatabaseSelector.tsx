@@ -41,20 +41,12 @@ const DatabaseSelector: FC<Props> = ({ queries }) => {
             All Foods
           </Option>
           <Option
-            position="middle"
+            position="right"
             selected={isMyCreations}
             isLink
             href={`${myCreationsRoute}${getQueries()}`}
           >
             My Creations
-          </Option>
-          <Option
-            position="right"
-            selected={isFavorites}
-            isLink
-            href={`${favoritesRoute}${getQueries()}`}
-          >
-            Favorites
           </Option>
         </Options>
       </div>

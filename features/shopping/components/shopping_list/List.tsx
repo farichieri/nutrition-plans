@@ -3,7 +3,7 @@ import { FC } from "react";
 import { FoodCategoriesEnum } from "@/features/foods";
 import { formatTwoDecimals } from "@/utils";
 import { ShoppingListFood, ShoppingListT } from "@/features/shopping";
-import BlurImage from "@/components/BlurImage";
+import BlurImage from "@/components/blur-image";
 
 interface Props {
   list: ShoppingListT;
