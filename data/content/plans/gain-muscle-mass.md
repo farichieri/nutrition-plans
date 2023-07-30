@@ -1,6 +1,7 @@
 ---
 title: "Gain Muscle Mass"
 isAvailable: false
+date: "2023-07-30"
 ---
 
 If your goal is to increase muscle mass, it is important that you be aware of the importance of the combination of physical exercise and an adequate diet for the objective. The correct combination between a good training plan and adequate dietary guidelines will make you obtain the best results and increase your performance to the maximum.

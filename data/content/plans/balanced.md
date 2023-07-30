@@ -2,6 +2,12 @@
 title: "Balanced"
 isAvailable: true
 image: "/images/plans/balanced.jpg"
+date: "2023-07-30"
+author: "aldana-richieri"
+authorName: "Aldana Richieri"
+premium: false
+summary: "Balanced Plan"
+topic: "Plan"
 ---
 
 It is an eating plan that includes all the macro and micronutrients necessary for daily requirements, in adequate and balanced amounts and in which it will consist of a variety of foods from different groups so that the body obtains enough energy and nutrition to grow and develop properly.

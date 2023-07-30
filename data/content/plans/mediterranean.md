@@ -2,6 +2,12 @@
 title: "Mediterranean"
 isAvailable: true
 image: "/images/plans/mediterranean.jpg"
+date: "2023-07-30"
+author: "aldana-richieri"
+authorName: "Aldana Richieri"
+premium: false
+summary: "Mediterranean Plan"
+topic: "Plan"
 ---
 
 The traditional Mediterranean diet is a rich source of macro- and micronutrients and is considered a balanced and varied diet. When the term "Mediterranean diet" is used, it refers to the conscious adoption of dietary patterns (diets) that are typical of the Mediterranean region, but which can be practiced anywhere in the world and by anyone.

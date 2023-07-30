@@ -1,7 +1,13 @@
 ---
-title: "Vegetarian"
-isAvailable: true
+author: "aldana-richieri"
+authorName: "Aldana Richieri"
+date: "2023-07-30"
 image: "/images/plans/vegetarian.jpg"
+isAvailable: true
+premium: false
+summary: "Vegetarian Plan"
+title: "Vegetarian"
+topic: "Plan"
 ---
 
 The vegetarian diet has gained great popularity in recent years and has generated some controversy regarding this diet choice after eliminating meat and its nutrients. However, there are more and more studies that show that a "Plant Based" diet could be cardioprotective, unlike a carnivorous eating plan. A well-planned plan can reduce your risk of chronic disease, support weight loss, and improve the quality of your diet. In addition to the benefits of eliminating meat from your diet, it also has ethical and environmental benefits.
