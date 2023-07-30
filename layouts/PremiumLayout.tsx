@@ -12,6 +12,7 @@ import Head from "next/head";
 import InstallModal from "@/components/InstallApp/InstallModal";
 import Loader from "@/components/Loader/Loader";
 import WelcomeSteps from "@/components/WelcomeSteps/WelcomeSteps";
+import { PremiumFooter } from "./components";
 
 interface Props {
   children: React.ReactNode;
@@ -29,7 +30,7 @@ export default function PremiumLayout({ children }: Props) {
   } = useSelector(selectAuthSlice);
   const isOnline = useOnlineStatus();
   const windowWidth = useWindowWidth();
-  const isMobile = windowWidth < 768;
+  const isMobile = windowWidth < 1024;
 
   useEffect(() => {
     if (isCreatingUser || (user && !user?.isProfileCompleted)) {
@@ -56,16 +57,19 @@ export default function PremiumLayout({ children }: Props) {
         </div>
       )}
       {user && user.isProfileCompleted ? (
-        <div className="flex min-h-screen w-full flex-col">
-          {isBillingModalOpen && <BillingModal />}
-          <div
-            className={`flex flex-col pt-[var(--nav-h)] duration-0 ease-in-out ${
-              sidebarOpen ? "md:pl-64 " : "md:pl-20 "
-            } ${isMobile ? "pb-[var(--mobile-sidenav-h)]" : ""}`}
-          >
-            {children}
+        <>
+          <div className="flex min-h-screen w-full flex-col">
+            {isBillingModalOpen && <BillingModal />}
+            <div
+              className={`flex flex-col pt-[var(--nav-h)] duration-0 ease-in-out ${
+                sidebarOpen ? "md:pl-64 " : "md:pl-20 "
+              } ${isMobile ? "pb-[var(--mobile-sidenav-h)]" : ""}`}
+            >
+              {children}
+            </div>
           </div>
-        </div>
+          {!isMobile && <PremiumFooter />}
+        </>
       ) : (
         <Loader />
       )}

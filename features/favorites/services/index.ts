@@ -12,6 +12,7 @@ const updateFoodRating = async ({
   action: string;
 }): Promise<Result<string, unknown>> => {
   try {
+    console.log({ foodID, field, action });
     if (!foodID) throw new Error("No id found");
     const docRef = doc(db, "foods", foodID);
     if (action === "increment") {

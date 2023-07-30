@@ -118,7 +118,6 @@ const MealCards: FC<Props> = ({
                       isEditing={isEditing}
                       key={dietMeal.id}
                       mealKcals={Number(calories)}
-                      setIsEditing={setIsEditing}
                     />
                   );
                 })}

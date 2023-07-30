@@ -30,6 +30,7 @@ html {
   --background-start-rgb: 255, 255, 255;
   --background-end-rgb: 255, 255, 255;
   --nav-h: 3rem;
+  --footer-h: 10rem;
   --mobile-sidenav-h: 60px;
   --subnav-h: 3rem;
   --border-color: lightgray;

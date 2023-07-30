@@ -4,10 +4,10 @@ import {
   updateDiet,
   deleteDiet,
 } from "@/features/plans";
-import { setDeleteDiet, setDiet } from "@/features/plans/slice";
 import { FC, useState } from "react";
 import { LuFileEdit, LuSave } from "react-icons/lu";
 import { MdDelete } from "react-icons/md";
+import { setDeleteDiet, setDiet } from "@/features/plans/slice";
 import { toast } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { User } from "@/features/authentication";
@@ -96,44 +96,60 @@ const SaveAndEditButton: FC<Props> = ({
           </div>
         </div>
       ),
-      { duration: 1000000 }
+      { duration: 5000 }
     );
   };
 
   return (
-    <div className="flex w-auto items-center justify-between gap-2 ">
+    <div className="flex w-auto items-center justify-between gap-2">
       {isEditing && (
         <button
-          className="flex h-9 items-center gap-1 rounded-md border border-gray-500 bg-gray-500/20 px-3 py-1 hover:bg-gray-500/50 active:bg-gray-500"
+          className="flex h-9  items-center justify-center gap-1 rounded-md border border-gray-500 bg-gray-500/20 px-3 py-1 hover:bg-gray-500/50 active:bg-gray-500"
           onClick={cancelChanges}
         >
-          Cancel
-          {isCanceling && <Spinner customClass="h-5 w-5" />}
+          {isCanceling ? (
+            <Spinner customClass="h-5 w-5" />
+          ) : (
+            <span>Cancel</span>
+          )}
         </button>
       )}
       {isEditing && (
         <button
-          className="flex h-9 items-center gap-1 rounded-md border border-red-500 bg-red-500/20 px-3 py-1 hover:bg-red-500/50 active:bg-red-500"
+          className="flex h-9 items-center justify-center gap-1 rounded-md border border-red-500 bg-red-500/20 px-3 py-1 hover:bg-red-500/50 active:bg-red-500"
           onClick={handleDelete}
         >
-          Delete
-          {isDeleting && <Spinner customClass="h-5 w-5" />}
-          <MdDelete className="h-5 w-5" />
+          {isDeleting ? (
+            <Spinner customClass="h-5 w-5" />
+          ) : (
+            <>
+              <span>Delete</span>
+              <MdDelete className="h-5 w-5" />
+            </>
+          )}
         </button>
       )}
       <button
-        className="flex h-9 items-center gap-1 rounded-md border border-green-500 bg-green-500/20 px-3 py-1 hover:bg-green-500/50 active:bg-green-500"
+        className="flex h-9 items-center justify-center gap-1 rounded-md border border-green-500 bg-green-500/20 px-3 py-1 hover:bg-green-500/50 active:bg-green-500"
         onClick={toggleButton}
       >
         {isEditing ? (
-          <div className="flex items-center gap-1 ">
-            Save
-            <LuSave className="h-5 w-5" />
-          </div>
+          <>
+            {isSaving ? (
+              <Spinner customClass="h-5 w-5" />
+            ) : (
+              <>
+                <span>Save</span>
+                <LuSave className="h-5 w-5" />
+              </>
+            )}
+          </>
         ) : (
-          <LuFileEdit className="h-5 w-5" />
+          <>
+            <span>Edit</span>
+            <LuFileEdit className="h-5 w-5" />
+          </>
         )}
-        {isSaving && <Spinner customClass="h-5 w-5" />}
       </button>
     </div>
   );

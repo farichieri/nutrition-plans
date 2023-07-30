@@ -1,11 +1,13 @@
 import { FC } from "react";
 
 const fixedClass =
-  " animate-spin pointer-events-none fill-black dark:fill-white ";
+  " animate-spin pointer-events-none fill-black dark:fill-white  ";
 
 interface Props {
   customClass?: string;
 }
+
+const LINES_NUMBER = 13;
 
 const Spinner: FC<Props> = ({ customClass }) => {
   return (
@@ -17,53 +19,22 @@ const Spinner: FC<Props> = ({ customClass }) => {
       className={fixedClass + customClass}
     >
       <g className="spinner_OSmW">
-        <rect x="11" y="1" width="2" height="5" opacity=".14" />
-        <rect
-          x="11"
-          y="1"
-          width="2"
-          height="5"
-          transform="rotate(30 12 12)"
-          opacity=".29"
-        />
-        <rect
-          x="11"
-          y="1"
-          width="2"
-          height="5"
-          transform="rotate(60 12 12)"
-          opacity=".43"
-        />
-        <rect
-          x="11"
-          y="1"
-          width="2"
-          height="5"
-          transform="rotate(90 12 12)"
-          opacity=".57"
-        />
-        <rect
-          x="11"
-          y="1"
-          width="2"
-          height="5"
-          transform="rotate(120 12 12)"
-          opacity=".71"
-        />
-        <rect
-          x="11"
-          y="1"
-          width="2"
-          height="5"
-          transform="rotate(150 12 12)"
-          opacity=".86"
-        />
-        <rect x="11" y="1" width="2" height="5" transform="rotate(180 12 12)" />
+        {Array.from(Array(LINES_NUMBER).keys()).map((index) => (
+          <rect
+            key={index}
+            x="11"
+            y="1"
+            width="1.5"
+            height="5"
+            rx="1"
+            transform={`rotate(${index * 30} 12 12)`}
+            opacity={1 - index / LINES_NUMBER}
+          />
+        ))}
       </g>
       <style jsx>{`
         .spinner_OSmW {
           transform-origin: center;
-          animation: spinner_T6mA 0.75s step-end infinite;
         }
         @keyframes spinner_T6mA {
           8.3% {
@@ -130,3 +101,54 @@ export default Spinner;
 //     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
 //   ></path>
 // </svg>
+
+{
+  /* <rect x="11" y="1" width="2" height="6" opacity=".14" />
+<rect
+  x="11"
+  y="1"
+  width="2"
+  height="6"
+  transform="rotate(30 12 12)"
+  opacity=".29"
+/>
+<rect
+  x="11"
+  y="1"
+  width="2"
+  height="6"
+  transform="rotate(60 12 12)"
+  opacity=".43"
+/>
+<rect
+  x="11"
+  y="1"
+  width="2"
+  height="6"
+  transform="rotate(90 12 12)"
+  opacity=".57"
+/>
+<rect
+  x="11"
+  y="1"
+  width="2"
+  height="6"
+  transform="rotate(120 12 12)"
+  opacity=".71"
+/>
+<rect
+  x="11"
+  y="1"
+  width="2"
+  height="6"
+  transform="rotate(150 12 12)"
+  opacity=".86"
+/>
+<rect x="11" y="1" width="2" height="6" transform="rotate(180 12 12)" />
+<rect x="11" y="1" width="2" height="6" transform="rotate(210 12 12)" />
+<rect x="11" y="1" width="2" height="6" transform="rotate(240 12 12)" />
+<rect x="11" y="1" width="2" height="6" transform="rotate(270 12 12)" />
+<rect x="11" y="1" width="2" height="6" transform="rotate(300 12 12)" />
+<rect x="11" y="1" width="2" height="6" transform="rotate(330 12 12)" />
+<rect x="11" y="1" width="2" height="6" transform="rotate(360 12 12)" /> */
+}
