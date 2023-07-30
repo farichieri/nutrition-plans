@@ -47,7 +47,7 @@ const SettingsNav: FC<Props> = ({}) => {
               <Link
                 href={page.url}
                 key={page.url}
-                className={`my-1 flex w-full items-center justify-start gap-4 rounded-xl px-2 py-3 text-lg font-medium capitalize duration-100 hover:bg-slate-500/20 hover:opacity-100 ${
+                className={`my-1 flex w-full items-center justify-start gap-2 rounded-xl px-2 py-1.5 text-lg font-medium capitalize duration-100 hover:bg-slate-500/20 hover:opacity-100 ${
                   page.pathname?.includes(router.pathname) && !isMobile
                     ? "bg-slate-500/20"
                     : ""

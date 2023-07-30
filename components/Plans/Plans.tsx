@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { PlansType } from "@/types";
 import Link from "next/link";
-import BlurImage from "../BlurImage";
+import BlurImage from "../blur-image";
 
 interface Props {
   plans: PlansType;
@@ -20,7 +20,10 @@ const Plans: FC<Props> = ({ plans }) => {
             <span className="flex w-full items-center justify-center text-center text-xl font-bold">
               {plan.title}
             </span>
-            <span className="h-[150px] w-[150px] min-w-[150px] overflow-auto rounded-3xl">
+            <span
+              aria-hidden="true"
+              className="h-[150px] w-[150px] min-w-[150px] overflow-auto rounded-3xl"
+            >
               <BlurImage
                 image={{
                   imageURL: `/images/plans/${plan.id}.jpg`,

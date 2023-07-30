@@ -4,7 +4,7 @@ import { Diet } from "../../types";
 import { doc, onSnapshot } from "firebase/firestore";
 import { FC, useEffect, useState } from "react";
 import { fetchDietByDate } from "../../services";
-import { ManualMeals } from "..";
+import { ManualMeals, SaveAndEditButton } from "..";
 import { selectPlansSlice, setDiet } from "@/features/plans/slice";
 import { useDispatch, useSelector } from "react-redux";
 import { User, selectAuthSlice } from "@/features/authentication";
@@ -82,11 +82,21 @@ const Plan: FC<Props> = ({ date }) => {
         {calories && (
           <span className="text-xs opacity-70">{calories} calories</span>
         )}
-        <span className="text-xl font-semibold capitalize text-green-500">
-          {diet?.planID?.replaceAll("_", " ")}
-        </span>
       </div>
-
+      {diet && (
+        <div className="flex w-full flex-wrap items-center justify-between gap-2">
+          <span className="text-xl font-semibold capitalize text-green-500">
+            {diet?.planID?.replaceAll("_", " ")}
+          </span>
+          <SaveAndEditButton
+            diet={diet}
+            isEditing={isEditing}
+            setIsEditing={setIsEditing}
+            date={date}
+            user={user}
+          />
+        </div>
+      )}
       {diet && <DayNote diet={diet} isEditing={isEditing} />}
       <div className="flex h-full min-h-[15rem] w-full flex-col">
         {isGeneratingPlan || isLoadingDiet ? (
@@ -95,13 +105,7 @@ const Plan: FC<Props> = ({ date }) => {
           <>
             {diet ? (
               <div className="mb-auto flex h-full w-full flex-col gap-2">
-                <ManualMeals
-                  isEditing={isEditing}
-                  setIsEditing={setIsEditing}
-                  diet={diet}
-                  date={date}
-                  user={user}
-                />
+                <ManualMeals isEditing={isEditing} diet={diet} />
               </div>
             ) : (
               <div className="m-auto flex justify-center">

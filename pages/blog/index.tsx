@@ -1,7 +1,7 @@
 import { MDDirectories, getSortedData } from "@/utils/mds";
 import { Posts as PostsType } from "@/types";
 import BlogPosts from "@/components/Posts/BlogPosts";
-import CallToAction from "@/components/CallToAction";
+import CallToAction from "@/components/call-to-action/CallToAction";
 import Head from "next/head";
 import LandingLayout from "@/layouts/LandingLayout";
 

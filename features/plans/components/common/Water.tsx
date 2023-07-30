@@ -56,7 +56,7 @@ const Water: FC<Props> = ({ diet, isEditing }) => {
           : "bg-white dark:bg-gray-500/20"
       }`}
     >
-      <div className="flex w-full items-center justify-between">
+      <div className="flex w-full items-center justify-between pr-2">
         <div>
           <span className="px-2 font-semibold">Water:</span>
           <span>

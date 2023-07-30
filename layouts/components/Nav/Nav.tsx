@@ -2,7 +2,7 @@ import { AppRoutes } from "@/utils";
 import { auth } from "@/services/firebase/firebase.config";
 import { Bars2Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import { FC, useState } from "react";
-import { MdFavorite } from "react-icons/md";
+import { MdArrowForwardIos, MdFavorite } from "react-icons/md";
 import { persistor } from "@/store";
 import { PrimaryButton } from "@/components/Buttons";
 import { selectAuthSlice } from "@/features/authentication/slice";
@@ -59,8 +59,8 @@ const NavBar: FC<Props> = () => {
   ];
 
   return (
-    <nav className="dark: fixed top-0 z-50 flex w-full select-none items-center justify-center  bg-white/80 px-4 backdrop-blur-md dark:bg-[#111010cf] ">
-      <div className="z-50 flex h-[var(--nav-h)] w-full  items-center justify-between gap-4 border-b border-gray-500/20 px-2 dark:border-gray-400/10">
+    <nav className="dark: fixed top-0 z-50 flex w-full select-none items-center justify-center bg-white/80 px-4 backdrop-blur-md dark:bg-[#111010cf] ">
+      <div className="z-50 flex h-[var(--nav-h)] w-full max-w-7xl  items-center justify-between gap-4 border-b border-gray-500/20 px-2 dark:border-gray-400/10">
         <div className="flex w-fit min-w-fit basis-1/3 justify-start font-bold xxs:text-sm xs:text-base sm:text-2xl">
           <Link href={"/"}>
             <Logo hideText={false} />
@@ -73,7 +73,7 @@ const NavBar: FC<Props> = () => {
               <Link
                 href={page.url}
                 key={page.name}
-                className={`rounded-3xl px-3 py-0.5 duration-300 hover:opacity-100 ${
+                className={`rounded-3xl px-3 py-1 duration-300 hover:opacity-100 ${
                   router.asPath === page.url
                     ? "bg-slate-400/20 opacity-100"
                     : "opacity-50"
@@ -84,6 +84,16 @@ const NavBar: FC<Props> = () => {
             ))}
         </div>
         <div className="flex w-fit min-w-fit basis-1/3 items-center justify-end gap-4 text-xs xs:gap-5 sm:gap-10 sm:text-xl">
+          {user && (
+            <Link
+              href={AppRoutes.today}
+              className="flex items-center justify-center gap-1 rounded-lg border border-green-500 bg-green-500/50 px-2 py-1.5 text-sm font-semibold duration-300 hover:bg-green-500/80 active:bg-green-700"
+            >
+              <span>Planner</span>
+              <MdArrowForwardIos className="h-4 w-4 text-green-500" />
+            </Link>
+          )}
+
           {user ? (
             <div className="hidden md:flex">
               <AvatarDropDown isApp={false} />
@@ -145,8 +155,8 @@ const NavBar: FC<Props> = () => {
                 <div className="w-full divide-y ">
                   <Link href={AppRoutes.today}>
                     <div className="flex w-full items-center justify-between py-3 duration-300 hover:bg-slate-500/10 hover:opacity-100">
-                      <span>App</span>
-                      <MdFavorite className="h-6 w-6 text-green-500" />
+                      <span>Planner</span>
+                      <MdArrowForwardIos className="h-4 w-4 text-green-500" />
                     </div>
                   </Link>
 

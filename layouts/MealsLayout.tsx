@@ -21,7 +21,7 @@ export default function MealsLayout({ children }: Props) {
 
   return (
     <ProfileLayout>
-      <div className="flex w-full flex-col gap-4 lg:gap-10">
+      <div className="flex w-full flex-col items-center justify-center gap-4 lg:gap-10">
         <UserMealsC meals={meals} />
         {isLoadingMealsSettings ? (
           <Spinner customClass="h-5 w-5" />

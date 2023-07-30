@@ -205,7 +205,7 @@ const WebPages: FC<Props> = () => {
             </div>
           </div>
           <div
-            className={`flex flex-col overflow-hidden border-b pb-1 pl-1 text-sm transition-[max-height] duration-200 ease-linear sm:text-base ${
+            className={`flex flex-col overflow-hidden border-b pl-1 text-sm transition-[max-height] duration-200 ease-linear sm:text-base ${
               sidebarEvolutionOpen ? " max-h-[30rem]" : "max-h-0"
             }`}
           >

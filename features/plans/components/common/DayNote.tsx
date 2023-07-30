@@ -34,7 +34,7 @@ const DayNote: FC<Props> = ({ isEditing, diet }) => {
           className={`text-md w-full resize-none overflow-hidden bg-transparent p-2 ${
             isEditing
               ? "rounded-md border"
-              : "cursor-default select-none border-b outline-none"
+              : "cursor-default select-none rounded-md border border-green-500/50 bg-green-500/10 outline-none"
           }`}
         />
       )}

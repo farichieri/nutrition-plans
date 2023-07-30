@@ -15,7 +15,7 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import AddToFavorite from "@/features/favorites/components/AddToFavorite";
 import BackButton from "@/components/Buttons/BackButton";
-import BlurImage from "@/components/BlurImage";
+import BlurImage from "@/components/blur-image";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";

@@ -1,5 +1,7 @@
 import {
+  MdArrowBackIosNew,
   MdEmojiEvents,
+  MdFavorite,
   MdRestaurantMenu,
   MdSettings,
   MdSettingsAccessibility,
@@ -17,12 +19,19 @@ const ProfileNav: FC = () => {
   const router = useRouter();
   const windowWidth = useWindowWidth();
   const isMobile = windowWidth < 1024;
+  const isProfileRoute = router.pathname === "/app/profile";
 
   const PROFILE_PAGES = [
     {
+      name: "Profile",
+      url: "/app/profile",
+      pathname: ["/app/profile"],
+      icon: <MdArrowBackIosNew className="h-5 w-5 text-green-500" />,
+    },
+    {
       name: "Nutrition Targets",
       url: "/app/profile/nutrition-values",
-      pathname: ["/app/profile/nutrition-values"],
+      pathname: ["/app/profile/nutrition-values", "/app/profile"],
       icon: <BiSolidPieChartAlt2 className="h-6 w-6 text-green-500" />,
     },
     {
@@ -54,7 +63,12 @@ const ProfileNav: FC = () => {
     {
       name: "Settings",
       url: "/app/settings",
-      pathname: ["/app/settings"],
+      pathname: [
+        "/app/settings",
+        "/app/settings/account",
+        "/app/settings/general",
+        "/app/settings/billing",
+      ],
       icon: <MdSettings className="h-6 w-6 text-green-500" />,
     },
   ];
@@ -65,15 +79,25 @@ const ProfileNav: FC = () => {
         route={AppRoutes.nav_menu}
         customClass="top-2 left-2 lg:absolute hidden"
       />
-      <div className="fle w-full max-w-[95vw] flex-col divide-y">
+      <div
+        className={`flex w-full max-w-[95vw] gap-1 overflow-auto ${
+          isProfileRoute && isMobile ? "flex-col divide-y" : "flex-row"
+        }`}
+      >
         {PROFILE_PAGES.map((page) => {
+          if (
+            (page.name === "Profile" && !isMobile) ||
+            (isMobile && isProfileRoute && page.name === "Profile")
+          ) {
+            return null;
+          }
           return (
             <div className="min-w-fit" key={page.url}>
               <Link
                 href={page.url}
                 key={page.url}
-                className={`my-1 flex w-full items-center justify-start gap-4 rounded-xl px-2 py-3 text-lg font-medium capitalize duration-100 hover:bg-slate-500/20 hover:opacity-100 ${
-                  page.pathname?.includes(router.pathname) && !isMobile
+                className={`my-1 flex w-full items-center justify-start gap-1 rounded-md px-3 py-1.5 text-base font-medium capitalize duration-100 hover:bg-slate-500/20 hover:opacity-100 ${
+                  page.pathname?.includes(router.pathname)
                     ? "bg-slate-500/20"
                     : ""
                 } `}

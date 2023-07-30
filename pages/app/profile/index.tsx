@@ -1,6 +1,5 @@
-import { Favorites, FavoritesTypeSelector } from "@/features/favorites";
 import { ProfileNav } from "@/features/profile";
-import { selectAuthSlice } from "@/features/authentication";
+import { Results, selectAuthSlice } from "@/features/authentication";
 import { useSelector } from "react-redux";
 import { useWindowWidth } from "@/hooks";
 import Avatar from "@/components/Avatar/Avatar";
@@ -10,6 +9,9 @@ export default function Page() {
   const { user } = useSelector(selectAuthSlice);
   const windowWidth = useWindowWidth();
   const isMobile = windowWidth < 1024;
+
+  const handleSubmit = () => {};
+
   return (
     <ProfileLayout>
       {isMobile ? (
@@ -28,8 +30,7 @@ export default function Page() {
         </div>
       ) : (
         <div className="flex w-full flex-col gap-4">
-          <FavoritesTypeSelector />
-          <Favorites />
+          <Results handleSubmit={handleSubmit} />
         </div>
       )}
     </ProfileLayout>

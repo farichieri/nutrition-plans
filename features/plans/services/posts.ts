@@ -1,5 +1,5 @@
 import { db } from "@/services/firebase/firebase.config";
-import { Diet, DietMealGroup } from "@/features/plans";
+import { Diet, DietMealGroup } from "@/features/plans/types";
 import { doc, setDoc } from "firebase/firestore";
 import { getToday } from "@/utils/dateFormat";
 import { PlansEnum, Result } from "@/types";
@@ -61,7 +61,6 @@ const updateDiet = async ({
       ...diet,
       nutrients: { ...diet.nutrients },
     };
-    console.log({ diet });
     await setDoc(docRef, diet);
 
     return { result: "success", data: diet };

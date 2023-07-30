@@ -3,11 +3,15 @@ import {
   DietMeal,
   AddFood,
   FoodInMealCard,
+  getDietFoodToggled,
 } from "@/features/plans";
+import { CheckButton } from "@/components/Buttons";
 import { Draggable, Droppable } from "@hello-pangea/dnd";
 import { FC } from "react";
 import { FoodGroupArray } from "@/features/foods";
-import { MdCheckCircle, MdRadioButtonUnchecked } from "react-icons/md";
+import { saveDiet } from "../../services/saveDiet";
+import { selectPlansSlice, toggleEatenFood } from "../../slice";
+import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 
 interface Props {
@@ -17,42 +21,57 @@ interface Props {
 }
 
 const MealCard: FC<Props> = ({ dietMeal, mealKcals, isEditing }) => {
+  const dispatch = useDispatch();
+  const { diets } = useSelector(selectPlansSlice);
   const dietMealFoodsArr: FoodGroupArray = Object.values(dietMeal.foods).sort(
     (a, b) => a.order - b.order
   );
   const allEaten = isAllEaten(dietMealFoodsArr);
 
-  if (!dietMeal.id) return <></>;
+  if (!dietMeal.id || !dietMeal.dietID) return <></>;
+  const diet = diets[dietMeal.dietID];
+
+  const setAllEaten = async () => {
+    if (!dietMeal.id) return;
+
+    let dietUpdated = { ...diet };
+
+    dietMealFoodsArr.map((food) => {
+      dispatch(toggleEatenFood({ food, value: !allEaten }));
+      dietUpdated = getDietFoodToggled({
+        diet: dietUpdated,
+        food: food,
+        value: !allEaten,
+      });
+    });
+
+    const res = await saveDiet({ diet: dietUpdated });
+    if (res.result === "error") {
+      console.log("Error saving diet");
+    }
+  };
 
   return (
     <div
       key={dietMeal.id}
-      className={`min-h-20 flex w-full flex-col divide-y overflow-auto rounded-xl border ${
+      className={`min-h-20 flex w-full flex-col overflow-auto rounded-xl border ${
         allEaten
           ? "border-green-500 bg-green-500/20"
           : "bg-white dark:bg-gray-500/20"
       }`}
     >
-      <div className="flex items-center gap-5 px-2 py-1 text-center">
+      <div
+        className={`flex items-center gap-5 px-2 py-1 text-center ${
+          allEaten ? "bg-green-500/40" : "bg-black/10"
+        }`}
+      >
         <span className="text-xl font-semibold capitalize">
           {dietMeal.name}
         </span>
-        {/* <div className="flex w-full flex-col text-left text-xs">
-          <span className="text-blue-500">
-            Meal Complexity: {dietMeal.complexity}
-          </span>
-          <span className="text-cyan-500">Meal Cook: {String(dietMeal.cook)}</span>
-          <span className="text-yellow-500">Meal Time: {dietMeal.time}</span>
-          <span className="text-purple-500">Meal Size: {dietMeal.size}</span>
-        </div> */}
         <span className="ml-auto text-xs opacity-50">{mealKcals} calories</span>
         {!isEditing && (
           <div className="flex items-center">
-            {allEaten ? (
-              <MdCheckCircle className="h-6 w-6 text-green-500" />
-            ) : (
-              <MdRadioButtonUnchecked className="h-6 w-6 text-gray-500" />
-            )}
+            <CheckButton onClick={setAllEaten} checked={allEaten} />
           </div>
         )}
       </div>
@@ -61,7 +80,9 @@ const MealCard: FC<Props> = ({ dietMeal, mealKcals, isEditing }) => {
           <div
             {...droppableProvided.droppableProps}
             ref={droppableProvided.innerRef}
-            className="w-full divide-y overflow-hidden"
+            className={`w-full divide-y overflow-hidden ${
+              allEaten ? "divide-green-500/50" : "divide-green-500/10"
+            }`}
           >
             {dietMealFoodsArr.length < 1 && !isEditing ? (
               <span className="m-2 flex h-10 text-sm opacity-50">
@@ -85,14 +106,20 @@ const MealCard: FC<Props> = ({ dietMeal, mealKcals, isEditing }) => {
                         className={`flex w-full items-center gap-1 px-0 hover:bg-slate-500/20  active:bg-slate-500/50 `}
                       >
                         {isEditing ? (
-                          <FoodInMealCard food={food} isEditing={isEditing} />
+                          <FoodInMealCard
+                            food={food}
+                            isEditing={isEditing && !food.isEaten}
+                          />
                         ) : (
                           <Link
                             key={food.id}
                             className="flex w-full"
                             href={`/app/food/${food.id}?amount=${food.scaleAmount}&scale=${food.scaleName}`}
                           >
-                            <FoodInMealCard food={food} isEditing={isEditing} />
+                            <FoodInMealCard
+                              food={food}
+                              isEditing={isEditing && !food.isEaten}
+                            />
                           </Link>
                         )}
                       </div>
