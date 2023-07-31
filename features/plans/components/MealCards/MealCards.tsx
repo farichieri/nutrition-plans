@@ -10,7 +10,8 @@ import { DragDropContext } from "@hello-pangea/dnd";
 import { FC } from "react";
 import { FoodGroupArray } from "@/features/foods";
 import { useDispatch } from "react-redux";
-import { MdRestaurant } from "react-icons/md";
+import { MdOutlineMoreHoriz, MdRestaurant } from "react-icons/md";
+import MoreDropdown from "../common/MoreDropdown";
 
 interface Props {
   diet: Diet;
@@ -79,6 +80,7 @@ const MealCards: FC<Props> = ({ diet, isEditing }) => {
           <MdRestaurant className="h-6 w-6 text-green-500" />
           <span className="text-2xl font-semibold">Meals</span>
         </div>
+        <MoreDropdown diet={diet} />
       </div>
       <div className="flex flex-col gap-2">
         {dietMeals && (

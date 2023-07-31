@@ -86,7 +86,7 @@ const MealCard: FC<Props> = ({ dietMeal, mealKcals, isEditing }) => {
           >
             {dietMealFoodsArr.length < 1 && !isEditing ? (
               <span className="m-2 flex h-10 text-sm opacity-50">
-                No foods added yet.
+                No foods planned yet.
               </span>
             ) : (
               dietMealFoodsArr.map((food, index) => {

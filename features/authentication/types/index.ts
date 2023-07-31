@@ -71,15 +71,20 @@ export interface NutritionTargets {
 }
 
 export interface Ratings {
-  foodRating: FoodRating;
+  foodsRating: FoodsRating;
+  mealsRating: MealsRating;
+  plansRating: PlansRating;
 }
 // plans_rating: PlansRating;
 
-export interface FoodRating {
+export interface FoodsRating {
   favorites: string[];
   likes: string[];
   dislikes: string[];
 }
+
+export interface PlansRating extends FoodsRating {}
+export interface MealsRating extends FoodsRating {}
 
 export interface PlansRating {
   favorites: string[];
@@ -120,17 +125,22 @@ export enum UserActivities {
 
 // Initials:
 export const newRatings: Ratings = {
-  foodRating: {
+  foodsRating: {
+    favorites: [],
+    likes: [],
+    dislikes: [],
+  },
+  mealsRating: {
+    favorites: [],
+    likes: [],
+    dislikes: [],
+  },
+  plansRating: {
     favorites: [],
     likes: [],
     dislikes: [],
   },
 };
-// plans_rating: {
-//   favorites: [],
-//   likes: [],
-//   dislikes: [],
-// },
 
 export const newNutritionTargets: NutritionTargets = {
   calories: null,

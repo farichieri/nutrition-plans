@@ -12,11 +12,11 @@ import Spinner from "@/components/Loader/Spinner";
 
 interface Props {}
 
-const Favorites: FC<Props> = () => {
+const FavoriteFoods: FC<Props> = () => {
   const { user } = useSelector(selectAuthSlice);
   const dispatch = useDispatch();
-  const foodRating = user?.ratings.foodRating;
-  const favorites = foodRating?.favorites;
+  const foodsRating = user?.ratings.foodsRating;
+  const favorites = foodsRating?.favorites;
   const { favoriteFoods, isSearchingFavoriteFoods } =
     useSelector(selectFavoritesSlice);
   const noData = Object.keys(favoriteFoods).length < 1;
@@ -37,8 +37,6 @@ const Favorites: FC<Props> = () => {
       return a.name!.localeCompare(b.name!);
     });
   };
-
-  console.log({ favoriteFoods });
 
   useEffect(() => {
     getFavoriteFoods();
@@ -61,4 +59,4 @@ const Favorites: FC<Props> = () => {
   );
 };
 
-export default Favorites;
+export default FavoriteFoods;

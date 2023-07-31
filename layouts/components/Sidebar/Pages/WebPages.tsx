@@ -4,13 +4,13 @@ import {
   MdEmojiEvents,
   MdExpandMore,
   MdFavorite,
-  MdHomeFilled,
   MdPerson,
   MdRestaurantMenu,
   MdSettings,
   MdSettingsAccessibility,
   MdLocalGroceryStore,
   MdVerified,
+  MdOutlineCalendarMonth,
 } from "react-icons/md";
 import {
   selectLayoutSlice,
@@ -99,10 +99,10 @@ const WebPages: FC<Props> = () => {
 
   const WEB_PAGES = [
     {
-      name: "Home",
+      name: "Planner",
       url: AppRoutes.today,
       pathname: ["/app/[date]"],
-      icon: <MdHomeFilled className="h-6 w-6 text-green-500" />,
+      icon: <MdOutlineCalendarMonth className="h-6 w-6 text-green-500" />,
     },
     {
       name: "Search",

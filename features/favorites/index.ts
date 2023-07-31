@@ -1,3 +1,4 @@
 export * from "./components";
-export * from "./services";
+export * from "./services/updateFoodRating";
 export * from "./slice";
+export * from "./services";

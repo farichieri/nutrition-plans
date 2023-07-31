@@ -1,8 +1,8 @@
 import {
   MdAutoGraph,
   MdFavorite,
-  MdHomeFilled,
   MdLocalGroceryStore,
+  MdOutlineCalendarMonth,
   MdPerson,
 } from "react-icons/md";
 import { FC } from "react";
@@ -18,10 +18,10 @@ const CollapsedPages: FC<Props> = () => {
 
   const COLLAPSED_PAGES = [
     {
-      name: "Home",
+      name: "Planner",
       url: AppRoutes.today,
       pathname: ["/app/[date]"],
-      icon: <MdHomeFilled className="h-6 w-6 text-green-500" />,
+      icon: <MdOutlineCalendarMonth className="h-6 w-6 text-green-500" />,
     },
     {
       name: "Search",

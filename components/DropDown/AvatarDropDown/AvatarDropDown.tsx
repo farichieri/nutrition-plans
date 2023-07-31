@@ -1,3 +1,4 @@
+import { AppRoutes } from "@/utils";
 import { auth } from "@/services/firebase/firebase.config";
 import { FC, useState } from "react";
 import { MdFavorite, MdOpenInNew, MdPerson, MdSettings } from "react-icons/md";
@@ -12,7 +13,6 @@ import DropDown from "../DropDown";
 import Link from "next/link";
 import SubscribeButton from "@/components/Buttons/Subscribe";
 import ThemeSwitcher from "@/components/theme-switcher";
-import { AppRoutes } from "@/utils";
 
 interface Props {
   isApp: boolean;

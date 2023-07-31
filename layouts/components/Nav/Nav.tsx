@@ -87,10 +87,10 @@ const NavBar: FC<Props> = () => {
           {user && (
             <Link
               href={AppRoutes.today}
-              className="flex items-center justify-center gap-1 rounded-lg border border-green-500 bg-green-500/50 px-2 py-1.5 text-sm font-semibold duration-300 hover:bg-green-500/80 active:bg-green-700"
+              className="flex items-center justify-center gap-1 rounded-3xl border border-green-500 bg-green-500/70 px-3 py-1.5 text-sm font-semibold duration-300 hover:bg-green-500 active:bg-green-600"
             >
-              <span>Planner</span>
-              <MdArrowForwardIos className="h-4 w-4 text-green-500" />
+              <span className="text-white">Planner</span>
+              <MdArrowForwardIos className="h-4 w-4 text-white" />
             </Link>
           )}
 

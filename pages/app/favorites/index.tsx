@@ -1,5 +1,10 @@
+import { FavoriteFoods } from "@/features/favorites";
 import FavoritesLayout from "@/layouts/FavoritesLayout";
 
 export default function Page() {
-  return <FavoritesLayout>{}</FavoritesLayout>;
+  return (
+    <FavoritesLayout>
+      <FavoriteFoods />
+    </FavoritesLayout>
+  );
 }
