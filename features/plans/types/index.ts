@@ -35,6 +35,8 @@ export interface Diet {
   water: DietWater;
 }
 
+export interface DietGroupArray extends Array<Diet> {}
+
 export interface DietMeal {
   [id: string]: any;
   complexity: MealComplexities | null;

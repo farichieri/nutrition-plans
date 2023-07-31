@@ -29,20 +29,22 @@ const AddToFavorite: FC<Props> = ({ food }) => {
 
   if (!user || !foodID) return <></>;
 
-  const { foodRating } = user.ratings;
-  const isFavorite: boolean = foodRating.favorites.includes(foodID);
+  const { foodsRating } = user.ratings;
+  const isFavorite: boolean = foodsRating.favorites.includes(foodID);
 
   const handleRating = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     try {
       const id = (event.target as HTMLButtonElement).id;
-      if (!foodRating) return;
+      if (!foodsRating) return;
       if (isRating) return;
       dispatch(setIsRating(true));
 
+      console.log("1");
+
       id === "favorites" && setIsFavoriting(true);
 
-      let favorites = [...foodRating["favorites"]];
+      let favorites = [...foodsRating["favorites"]];
 
       const favIndex = favorites.indexOf(foodID);
       const isAlreadyFavorite = favIndex > -1;
@@ -64,8 +66,9 @@ const AddToFavorite: FC<Props> = ({ food }) => {
 
       let fields = {
         ratings: {
-          foodRating: {
-            ...foodRating,
+          ...user.ratings,
+          foodsRating: {
+            ...foodsRating,
             favorites: favorites,
           },
         },

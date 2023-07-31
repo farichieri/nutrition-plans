@@ -1,15 +1,15 @@
-import { FC, useState } from "react";
-import { FoodRating } from "@/features/authentication";
-import { selectAuthSlice, setUpdateUser } from "@/features/authentication";
 import {
   selectFavoritesSlice,
   setIsRating,
   updateFoodRating,
 } from "@/features/favorites";
+import { FC, useState } from "react";
+import { FoodsRating } from "@/features/authentication";
+import { MdThumbDown, MdThumbUp } from "react-icons/md";
+import { selectAuthSlice, setUpdateUser } from "@/features/authentication";
 import { updateUser } from "@/features/authentication/services";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "@/components/Loader/Spinner";
-import { MdThumbDown, MdThumbUp } from "react-icons/md";
 
 interface Props {
   foodID: string;
@@ -23,22 +23,22 @@ const FoodActions: FC<Props> = ({ foodID }) => {
   const { isRating } = useSelector(selectFavoritesSlice);
   if (!user) return <></>;
 
-  const foodRating: FoodRating = user.ratings.foodRating;
-  const isLiked = foodRating?.likes.includes(foodID);
-  const isDisliked = foodRating?.dislikes.includes(foodID);
+  const foodsRating: FoodsRating = user.ratings.foodsRating;
+  const isLiked = foodsRating?.likes.includes(foodID);
+  const isDisliked = foodsRating?.dislikes.includes(foodID);
 
   const handleRating = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     try {
       const id = (event.target as HTMLButtonElement).id;
-      if (!foodRating) return;
+      if (!foodsRating) return;
       if (isRating) return;
       dispatch(setIsRating(true));
 
       id === "likes" ? setIsLiking(true) : setIsDisliking(true);
 
-      let likes = [...foodRating["likes"]];
-      let dislikes = [...foodRating["dislikes"]];
+      let likes = [...foodsRating["likes"]];
+      let dislikes = [...foodsRating["dislikes"]];
 
       const likeIndex = likes.indexOf(foodID);
       const dislikeIndex = dislikes.indexOf(foodID);
@@ -83,8 +83,9 @@ const FoodActions: FC<Props> = ({ foodID }) => {
 
       let fields = {
         ratings: {
-          foodRating: {
-            ...foodRating,
+          ...user.ratings,
+          foodsRating: {
+            ...foodsRating,
             likes: likes,
             dislikes: dislikes,
           },

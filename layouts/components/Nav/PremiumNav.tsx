@@ -69,20 +69,21 @@ const PremiumNav: FC<Props> = ({
           </span>
         )}
         <div className="m-auto flex w-full">{children}</div>
-        <div className="flex w-fit min-w-fit items-center justify-end gap-2 pr-4 text-xs xs:gap-4 sm:gap-10 sm:pr-8 sm:text-xl xl:pr-10">
+        <div className="flex w-fit min-w-fit items-center justify-end gap-4 pr-4 text-xs sm:pr-8 sm:text-xl xl:pr-10">
           {(windowWidth > 1024 || !simplified) && (
             <>
-              {/* <SubscribeButton /> */}
               <Link href="/app/favorites">
                 <span
-                  className={`flex items-center rounded-3xl border px-3 py-1 text-sm outline-none duration-300 hover:opacity-100 active:border-black dark:active:border-white ${
-                    router.pathname.includes("/app/favorites")
-                      ? "border-black opacity-100 dark:border-white"
-                      : "border-transparent opacity-50"
-                  }`}
+                  className={`flex items-center justify-center text-sm outline-none duration-300 hover:opacity-100 `}
                 >
-                  <MdFavorite className="mr-1 h-4 w-4 text-green-500" />
-                  Favorites
+                  <MdFavorite
+                    className={`h-5 w-5 ${
+                      router.pathname.includes("/app/favorites")
+                        ? "text-green-500"
+                        : "text-gray-500"
+                    }`}
+                  />
+                  <span className="ml-1 hidden lg:flex">Favorites</span>
                 </span>
               </Link>
               <Feedback />

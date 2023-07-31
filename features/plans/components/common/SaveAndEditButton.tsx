@@ -60,62 +60,8 @@ const SaveAndEditButton: FC<Props> = ({
     }
   };
 
-  const handleDelete = async () => {
-    toast(
-      (t) => (
-        <div className="flex flex-col items-center gap-1">
-          <span>
-            Confirm <b>Delete</b>
-          </span>
-          <div className="flex gap-1">
-            <button
-              className="flex items-center gap-1 rounded-md border border-red-500 bg-red-500/20 px-3 py-1 hover:bg-red-500/50 active:bg-red-500"
-              onClick={async () => {
-                toast.dismiss(t.id);
-                setIsDeleting(true);
-                const res = await deleteDiet(diet);
-                if (res.result === "success") {
-                  dispatch(setDeleteDiet({ id: diet.id! }));
-                  toast.success("Diet deleted successfully.");
-                } else {
-                  toast.error("Error deleting diet. Please try again.");
-                }
-                setIsDeleting(false);
-              }}
-            >
-              Confirm
-            </button>
-            <button
-              className="flex items-center gap-1 rounded-md border border-gray-500 bg-gray-500/20 px-3 py-1 hover:bg-gray-500/50 active:bg-gray-500"
-              onClick={() => {
-                toast.dismiss(t.id);
-              }}
-            >
-              Discard
-            </button>
-          </div>
-        </div>
-      ),
-      { duration: 5000 }
-    );
-  };
-
   return (
     <div className="ml-auto flex w-auto items-center justify-between gap-2">
-            {isEditing && (
-        <button
-          className="flex h-9 items-center justify-center gap-1 rounded-md border border-red-500 bg-red-500/20 px-3 py-1 hover:bg-red-500/50 active:bg-red-500"
-          onClick={handleDelete}
-        >
-          {isDeleting ? (
-            <Spinner customClass="h-5 w-5" />
-          ) : (
-            <>
-              <MdDelete className="h-5 w-5" />
-            </>
-          )}
-        </button>
-      )}
       {isEditing && (
         <button
           className="flex h-9  items-center justify-center gap-1 rounded-md border border-gray-500 bg-gray-500/20 px-3 py-1 hover:bg-gray-500/50 active:bg-gray-500"

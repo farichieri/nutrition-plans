@@ -12,13 +12,13 @@ interface Props {
 const SearchedResults: FC<Props> = ({ searchResult, handleClick, queries }) => {
   const foods = getFoodsFiltered(searchResult, queries);
   return (
-    <div className="max-w-screen-2xl select-none grid-cols-fluid_lg items-start justify-center gap-4 sm:grid sm:px-0 lg:justify-start">
+    <div className="max-w-screen-2xl select-none grid-cols-fluid_lg items-start justify-center gap-1 sm:grid sm:px-0 lg:justify-start">
       {foods.map((food) => {
         return (
           <div
             onClick={() => handleClick(food)}
             key={food.id}
-            className="flex h-full w-full cursor-pointer items-start overflow-auto rounded-xl border"
+            className="my-1 flex h-full w-full cursor-pointer items-start overflow-auto rounded-xl border"
           >
             <span className="relative h-20 w-full basis-1/5">
               <Image

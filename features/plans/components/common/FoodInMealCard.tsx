@@ -97,7 +97,7 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
       {isEditing && (
         <MdDragHandle className="m-auto h-6 w-6 min-w-fit opacity-50" />
       )}
-      <span className="relative h-20 w-20 min-w-[80px] sm:h-20 sm:w-20">
+      <span className="relative h-16 w-16 min-w-[64px] sm:h-16 sm:w-16">
         <BlurImage
           image={{ imageURL: food.imageURL, title: food.name!, id: food.id! }}
         />
@@ -105,7 +105,7 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
       <div className="flex h-auto w-full pr-2">
         <div className="flex h-full w-full flex-col py-1">
           <div className="flex w-full max-w-max flex-col ">
-            <span className="text-base font-semibold capitalize leading-5">
+            <span className="text-base font-semibold capitalize leading-4 tracking-tight">
               {food.name}
             </span>
             {/* <span className="text-sm opacity-50">{food.description}</span> */}

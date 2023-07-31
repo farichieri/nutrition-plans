@@ -1,4 +1,4 @@
-import { Favorites, FavoritesTypeSelector } from "@/features/favorites";
+import { FavoriteFoods, FavoritesTypeSelector } from "@/features/favorites";
 import { PremiumSidebar } from "./components";
 import { useRouter } from "next/router";
 import { useWindowWidth } from "@/hooks";
@@ -20,7 +20,7 @@ export default function FavoritesLayout({ children }: Props) {
       <PremiumSidebar />
       <section className="m-auto flex w-full max-w-screen-2xl flex-col justify-center gap-2 px-2 pb-2 pt-2 sm:px-5">
         <FavoritesTypeSelector />
-        <Favorites />
+        {children}
       </section>
     </PremiumLayout>
   );

@@ -1,8 +1,8 @@
 import {
   MdAutoGraph,
-  MdHomeFilled,
   MdPerson,
   MdLocalGroceryStore,
+  MdOutlineCalendarMonth,
 } from "react-icons/md";
 import { AppRoutes } from "@/utils";
 import { FC } from "react";
@@ -17,28 +17,28 @@ const MobilePages: FC<Props> = () => {
 
   const COLLAPSED_PAGES = [
     {
-      name: "Home",
+      name: "Planner",
       url: AppRoutes.today,
       pathname: ["/app/[date]"],
-      icon: <MdHomeFilled className="h-6 w-6 " />,
+      icon: <MdOutlineCalendarMonth className="h-5 w-5" />,
     },
     {
       name: "Search",
       url: "/app/search",
       pathname: ["/app/search", "/app/search/my-creations"],
-      icon: <RiSearchLine className="h-6 w-6 " />,
+      icon: <RiSearchLine className="h-5 w-5 " />,
     },
     {
       name: "Progress",
       url: "/app/progress",
       pathname: ["/app/progress"],
-      icon: <MdAutoGraph className="h-6 w-6 " />,
+      icon: <MdAutoGraph className="h-5 w-5 " />,
     },
     {
       name: "Groceries",
       url: "/app/shopping/today",
       pathname: ["/app/shopping/[date]", "/app/cupboard"],
-      icon: <MdLocalGroceryStore className="h-6 w-6 " />,
+      icon: <MdLocalGroceryStore className="h-5 w-5 " />,
     },
     {
       name: "Profile",
@@ -73,7 +73,7 @@ const MobilePages: FC<Props> = () => {
               page.url === "/app/progress"
                 ? " border-white p-0.5"
                 : "border-transparent"
-            } rounded-full border  `}
+            } rounded-full border `}
           >
             {page.icon}
           </span>
