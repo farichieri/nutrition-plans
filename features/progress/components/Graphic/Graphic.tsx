@@ -153,7 +153,6 @@ const Graphic: FC<Props> = () => {
             tickCount={10}
             style={{ fontSize: "0.8rem" }}
             tickFormatter={(value) => {
-              console.log({ value });
               return value.toFixed(0);
             }}
           />

@@ -1,0 +1,64 @@
+import { useWindowWidth } from "@/hooks";
+import { FC, useState } from "react";
+import { Drawer } from "vaul";
+import Modal from "../Modal/Modal";
+
+interface Props {
+  children: React.ReactNode;
+  btnText: string;
+}
+
+const VaulDrawer: FC<Props> = ({ children, btnText }) => {
+  const windowWidth = useWindowWidth();
+  const isMobile = windowWidth < 1024;
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <>
+      {isMobile ? (
+        <Drawer.Root shouldScaleBackground>
+          <Drawer.Trigger asChild>
+            <button className="m-auto rounded-3xl border px-4 py-2 duration-300 hover:bg-slate-500/20">
+              {btnText}
+            </button>
+          </Drawer.Trigger>
+          <Drawer.Overlay className="fixed inset-0 z-[9999] bg-black/40" />
+          <Drawer.Portal>
+            <Drawer.Content className="fixed bottom-0 left-0 right-0 z-[9999] mt-36 flex h-[96%] flex-col rounded-t-[10px] bg-tertiary-color">
+              <div className="flex w-auto min-w-full flex-col overflow-hidden px-2 py-4">
+                <div className="mx-auto mb-8 h-1.5 w-12 flex-shrink-0 rounded-full bg-gray-300" />
+                {children}
+              </div>
+            </Drawer.Content>
+          </Drawer.Portal>
+        </Drawer.Root>
+      ) : (
+        <>
+          <button
+            className="m-auto rounded-3xl border px-4 py-2 duration-300 hover:bg-slate-500/20"
+            onClick={handleOpen}
+          >
+            {btnText}
+          </button>
+          {open && (
+            <Modal onClose={handleClose}>
+              <section className="z-[100] flex h-auto max-h-[90vh] w-auto min-w-full max-w-[95vw] flex-col overflow-hidden px-2 py-4">
+                {children}
+              </section>
+            </Modal>
+          )}
+        </>
+      )}
+    </>
+  );
+};
+
+export default VaulDrawer;

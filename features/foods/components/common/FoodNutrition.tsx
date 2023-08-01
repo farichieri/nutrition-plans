@@ -20,14 +20,8 @@ interface Props {
 }
 
 const FoodNutrition: FC<Props> = ({ food, amount, scale }) => {
-  const [openDetails, setOpenDetails] = useState(false);
   const [nutrients, setNutrients] = useState<FoodNutrients | null>(null);
   const scalesMerged = orderScales({ scales: food.scales });
-
-  const handleOpenDetail = (event: React.MouseEvent) => {
-    event.preventDefault();
-    setOpenDetails(true);
-  };
 
   const equivalentInGrams = getNewAmount({
     scales: scalesMerged,

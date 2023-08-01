@@ -4,11 +4,11 @@ import {
   useRedirectToday,
   WeekPlan,
 } from "@/features/plans";
-import { selectPlansSlice, updateDietNutrition } from "@/features/plans/slice";
 import { getIsWeek } from "@/utils/dateFormat";
 import { getRealDate } from "@/features/plans/utils/dates";
 import { GetServerSideProps } from "next";
 import { selectAuthSlice } from "@/features/authentication";
+import { selectPlansSlice, updateDietNutrition } from "@/features/plans/slice";
 import { StartsOfWeek } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -16,7 +16,7 @@ import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 import Sidebar from "@/layouts/components/Sidebar/PremiumSidebar";
 import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
-import { PremiumFooter } from "@/layouts";
+import { useWindowWidth } from "@/hooks";
 
 interface Props {
   date: string;
@@ -31,6 +31,8 @@ export default function Page({ date }: { date: Props }) {
   });
   const diet = diets[realDate];
   useRedirectToday(String(date));
+  const windowWidth = useWindowWidth();
+  const isMobile = windowWidth < 1024;
 
   useEffect(() => {
     if (diet) {
@@ -48,10 +50,14 @@ export default function Page({ date }: { date: Props }) {
           <>
             <PremiumNav hideScrolling={false} title="" />
             <Sidebar />
-            <SubPremiumNav title={""} customClass="top-[var(--subnav-h)]">
+            <SubPremiumNav
+              title={""}
+              hideScrolling={isMobile}
+              customClass="top-[var(--subnav-h)]"
+            >
               <DaySelector date={String(date)} baseURL={"/app/"} />
             </SubPremiumNav>
-            <div className="p-2 sm:p-4 lg:p-5">
+            <div className="px-2 sm:px-4 lg:px-5">
               {getIsWeek(realDate) ? (
                 <WeekPlan dateInterval={realDate} />
               ) : (

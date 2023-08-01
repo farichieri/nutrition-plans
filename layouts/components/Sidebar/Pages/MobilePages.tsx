@@ -32,7 +32,7 @@ const MobilePages: FC<Props> = () => {
       name: "Progress",
       url: "/app/progress",
       pathname: ["/app/progress"],
-      icon: <MdAutoGraph className="h-5 w-5 " />,
+      icon: <MdAutoGraph className="h-7 w-7 " />,
     },
     {
       name: "Groceries",
@@ -71,13 +71,15 @@ const MobilePages: FC<Props> = () => {
           <span
             className={`${
               page.url === "/app/progress"
-                ? " border-white p-0.5"
+                ? " border-1 border-white p-1.5"
                 : "border-transparent"
             } rounded-full border `}
           >
             {page.icon}
           </span>
-          <span className="text-xs">{page.name}</span>
+          {page.name !== "Progress" && (
+            <span className="text-xs">{page.name}</span>
+          )}
         </Link>
       ))}
     </>

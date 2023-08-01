@@ -9,6 +9,7 @@ import {
   setUpdateUser,
   updateUser,
 } from "@/features/authentication";
+import { addFavoritePlan, removeFavoritePlan } from "@/features/favorites";
 import { deleteDiet } from "../../services";
 import { Diet } from "../..";
 import { FC, useState } from "react";
@@ -17,7 +18,6 @@ import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import DropDown from "@/components/DropDown/DropDown";
 import Spinner from "@/components/Loader/Spinner";
-import { addFavoritePlan, removeFavoritePlan } from "@/features/favorites";
 
 const optionStyle =
   "flex w-full cursor-pointer items-center gap-2 border-none bg-transparent px-4 py-2 opacity-60 hover:bg-slate-500/40 hover:opacity-100";

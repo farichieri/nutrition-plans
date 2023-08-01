@@ -6,9 +6,15 @@ interface Props {
   children?: ReactNode;
   customClass?: string;
   title?: string;
+  hideScrolling?: boolean;
 }
 
-const SubPremiumNav: FC<Props> = ({ children, customClass, title }) => {
+const SubPremiumNav: FC<Props> = ({
+  children,
+  customClass,
+  title,
+  hideScrolling,
+}) => {
   const { sidebarOpen } = useSelector(selectLayoutSlice);
 
   const [show, setShow] = useState(true);
@@ -42,8 +48,8 @@ const SubPremiumNav: FC<Props> = ({ children, customClass, title }) => {
   return (
     <nav
       className={
-        `active ${
-          !show && "hidden"
+        ` ${
+          !show && hideScrolling && "hidden"
         } fixed right-0 z-[60] flex min-h-[var(--subnav-h)] w-full items-center gap-4 bg-primary-color px-1 backdrop-blur-lg xs:px-2 s:px-3 sm:gap-10 sm:px-4 ` +
         customClass +
         ` ${sidebarOpen ? "md:pl-[17rem] " : "md:pl-24"} `
