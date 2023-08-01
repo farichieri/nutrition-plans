@@ -83,7 +83,6 @@ const PremiumNav: FC<Props> = ({
                         : "text-gray-500"
                     }`}
                   />
-                  <span className="ml-1 hidden lg:flex">Favorites</span>
                 </span>
               </Link>
               <Feedback />

@@ -7,9 +7,10 @@ const postFeedback = async (user: User, message: string) => {
   try {
     const docRef = collection(db, "feedbacks");
     await addDoc(docRef, {
-      user: user.id,
-      message: message,
       dateCreated: formatISO(new Date()),
+      message: message,
+      user: user.id,
+      userEmail: user.emailAddress,
     });
   } catch (error) {
     return { error: `Error posting feedback: ${error}` };

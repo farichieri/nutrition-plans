@@ -76,13 +76,13 @@ const Plan: FC<Props> = ({ date }) => {
           <span className="text-xl font-semibold capitalize text-green-500">
             {diet?.planID?.replaceAll("_", " ")}
           </span>
-          <SaveAndEditButton
+          {/* <SaveAndEditButton
             diet={diet}
             isEditing={isEditing}
             setIsEditing={setIsEditing}
             date={date}
             user={user}
-          />
+          /> */}
         </div>
       )}
       {diet && <DayNote diet={diet} isEditing={isEditing} />}

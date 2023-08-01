@@ -1,13 +1,7 @@
-import {
-  fetchDietByDate,
-  Diet,
-  updateDiet,
-  deleteDiet,
-} from "@/features/plans";
 import { FC, useState } from "react";
+import { fetchDietByDate, Diet, updateDiet } from "@/features/plans";
 import { LuFileEdit, LuSave } from "react-icons/lu";
-import { MdDelete } from "react-icons/md";
-import { setDeleteDiet, setDiet } from "@/features/plans/slice";
+import { setDiet } from "@/features/plans/slice";
 import { toast } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { User } from "@/features/authentication";
@@ -30,7 +24,6 @@ const SaveAndEditButton: FC<Props> = ({
 }) => {
   const dispatch = useDispatch();
   const [isCanceling, setIsCanceling] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
   const saveDietOpened = async () => {
@@ -61,26 +54,24 @@ const SaveAndEditButton: FC<Props> = ({
   };
 
   return (
-    <div className="ml-auto flex w-auto items-center justify-between gap-2">
-      {isEditing && (
-        <button
-          className="flex h-9  items-center justify-center gap-1 rounded-md border border-gray-500 bg-gray-500/20 px-3 py-1 hover:bg-gray-500/50 active:bg-gray-500"
-          onClick={cancelChanges}
-        >
-          {isCanceling ? (
-            <Spinner customClass="h-5 w-5" />
-          ) : (
-            <span>Cancel</span>
-          )}
-        </button>
-      )}
-
-      <button
-        className="flex h-9 items-center justify-center gap-1 rounded-md border border-green-500 bg-green-500/20 px-3 py-1 hover:bg-green-500/50 active:bg-green-500"
-        onClick={toggleButton}
-      >
-        {isEditing ? (
-          <>
+    <>
+      {isEditing ? (
+        <div className="fixed left-1/2 top-[3rem] z-[60] flex w-full -translate-x-1/2 items-center justify-center gap-4 bg-primary-color px-4 py-1">
+          <span>Editing ✏️ </span>
+          <button
+            className="flex h-9  items-center justify-center gap-1 rounded-md border border-gray-500 bg-gray-500/20 px-3 py-1 hover:bg-gray-500/50 active:bg-gray-500"
+            onClick={cancelChanges}
+          >
+            {isCanceling ? (
+              <Spinner customClass="h-5 w-5" />
+            ) : (
+              <span>Cancel</span>
+            )}
+          </button>
+          <button
+            className="flex h-9 items-center justify-center gap-1 rounded-md border border-green-500 bg-green-500/20 px-3 py-1 hover:bg-green-500/50 active:bg-green-500"
+            onClick={toggleButton}
+          >
             {isSaving ? (
               <Spinner customClass="h-5 w-5" />
             ) : (
@@ -89,15 +80,18 @@ const SaveAndEditButton: FC<Props> = ({
                 <LuSave className="h-5 w-5" />
               </>
             )}
-          </>
-        ) : (
-          <>
-            <span>Edit</span>
-            <LuFileEdit className="h-5 w-5" />
-          </>
-        )}
-      </button>
-    </div>
+          </button>
+        </div>
+      ) : (
+        <button
+          className="flex h-9 items-center justify-center gap-1 rounded-md border border-green-500 bg-green-500/20 px-3 py-1 hover:bg-green-500/50 active:bg-green-500"
+          onClick={toggleButton}
+        >
+          <span>Edit</span>
+          <LuFileEdit className="h-5 w-5" />
+        </button>
+      )}
+    </>
   );
 };
 

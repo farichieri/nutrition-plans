@@ -191,7 +191,7 @@ const WebPages: FC<Props> = () => {
           </div>
         </div>
 
-        <div className="flex flex-col py-1">
+        <div className="flex flex-col  py-1">
           <div className={fixedOptClass} onClick={toggleEvolution}>
             <MdPerson className="h-6 w-6 text-green-500" />
             <div className="flex w-full cursor-pointer items-center justify-between">
@@ -205,7 +205,7 @@ const WebPages: FC<Props> = () => {
             </div>
           </div>
           <div
-            className={`flex flex-col overflow-hidden border-b pl-1 text-sm transition-[max-height] duration-200 ease-linear sm:text-base ${
+            className={`flex flex-col overflow-hidden  pl-1 text-sm transition-[max-height] duration-200 ease-linear sm:text-base ${
               sidebarEvolutionOpen ? " max-h-[30rem]" : "max-h-0"
             }`}
           >

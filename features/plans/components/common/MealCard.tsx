@@ -13,6 +13,7 @@ import { saveDiet } from "../../services/saveDiet";
 import { selectPlansSlice, toggleEatenFood } from "../../slice";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
+import { MdOutlineMoreHoriz } from "react-icons/md";
 
 interface Props {
   dietMeal: DietMeal;
@@ -61,14 +62,18 @@ const MealCard: FC<Props> = ({ dietMeal, mealKcals, isEditing }) => {
       }`}
     >
       <div
-        className={`flex items-center gap-5 px-2 py-1 text-center ${
+        className={`flex items-center gap-2 px-2 py-1 text-center ${
           allEaten ? "bg-green-500/40" : "bg-black/10"
         }`}
       >
         <span className="text-xl font-semibold capitalize">
           {dietMeal.name}
         </span>
-        <span className="ml-auto text-xs opacity-50">{mealKcals} calories</span>
+        <span className="ml-auto px-2 text-xs opacity-50">
+          {mealKcals} calories
+        </span>
+        <MdOutlineMoreHoriz className="h-6 w-6 cursor-pointer text-gray-500" />
+
         {!isEditing && (
           <div className="flex items-center">
             <CheckButton onClick={setAllEaten} checked={allEaten} />
@@ -103,7 +108,7 @@ const MealCard: FC<Props> = ({ dietMeal, mealKcals, isEditing }) => {
                         ref={draggableProvided.innerRef}
                         {...draggableProvided.draggableProps}
                         {...draggableProvided.dragHandleProps}
-                        className={`flex w-full items-center gap-1 px-0 hover:bg-slate-500/20  active:bg-slate-500/50 `}
+                        className={` flex w-full items-center gap-1 px-0 hover:bg-slate-500/20  active:bg-slate-500/50 `}
                       >
                         {isEditing ? (
                           <FoodInMealCard

@@ -28,7 +28,6 @@ const DayPlan: FC<Props> = ({ date }) => {
   const planID = diet?.planID;
 
   const getDayDiet = async (date: string, user: User) => {
-    console.log({ diet, date });
     if (!diet) {
       setIsLoadingDiet(true);
     }
@@ -49,7 +48,7 @@ const DayPlan: FC<Props> = ({ date }) => {
   if (!user) return <></>;
 
   return (
-    <div className="w-full">
+    <div className="relative h-full w-full rounded-lg p-2">
       {isGeneratingPlan || isLoadingDiet ? (
         <div className="fixed inset-0 mt-auto flex h-screen w-screen justify-center">
           <Spinner customClass="h-9 w-9 m-auto" />
@@ -58,28 +57,33 @@ const DayPlan: FC<Props> = ({ date }) => {
         <>
           {diet ? (
             <div className="mb-auto flex h-full flex-col gap-2">
-              <div className="flex flex-wrap items-center justify-between">
+              <div className="flex items-center">
                 <span className="text-xl font-semibold capitalize text-green-500">
                   {planID?.replaceAll("_", " ")}
                 </span>
-                <SaveAndEditButton
-                  diet={diet}
-                  isEditing={isEditing}
-                  setIsEditing={setIsEditing}
-                  date={date}
-                  user={user}
-                />
+                <div className=" ml-auto">
+                  <SaveAndEditButton
+                    diet={diet}
+                    isEditing={isEditing}
+                    setIsEditing={setIsEditing}
+                    date={date}
+                    user={user}
+                  />
+                </div>
               </div>
+
               <div>
                 <DayNote diet={diet} isEditing={isEditing} />
               </div>
-              <div className="grid w-full gap-14 sm:grid-cols-fluid_lg sm:gap-5">
+              <div className="relative grid w-full gap-14 sm:grid-cols-fluid_lg sm:gap-5">
                 <div className="flex w-full flex-col rounded-md">
                   <MealCards isEditing={isEditing} diet={diet} />
                 </div>
                 {diet && (
-                  <div className=" w-full rounded-md  ">
-                    <Nutrition nutrients={diet.nutrients} planID={planID} />
+                  <div className="z-[50]">
+                    <div className="sticky top-24 ">
+                      <Nutrition nutrients={diet.nutrients} planID={planID} />
+                    </div>
                   </div>
                 )}
               </div>
