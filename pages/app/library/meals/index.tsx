@@ -1,4 +1,4 @@
-import FavoritesLayout from "@/layouts/FavoritesLayout";
+import FavoritesLayout from "@/layouts/library_layout";
 
 export default function Page() {
   return <FavoritesLayout>{}</FavoritesLayout>;

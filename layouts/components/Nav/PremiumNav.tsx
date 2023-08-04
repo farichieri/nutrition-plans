@@ -72,13 +72,13 @@ const PremiumNav: FC<Props> = ({
         <div className="flex w-fit min-w-fit items-center justify-end gap-4 pr-4 text-xs sm:pr-8 sm:text-xl xl:pr-10">
           {(windowWidth > 1024 || !simplified) && (
             <>
-              <Link href="/app/favorites">
+              <Link href="/app/library/favorites">
                 <span
                   className={`flex items-center justify-center text-sm outline-none duration-300 hover:opacity-100 `}
                 >
                   <MdFavorite
                     className={`h-5 w-5 ${
-                      router.pathname.includes("/app/favorites")
+                      router.pathname.includes("/app/library/favorites")
                         ? "text-green-500"
                         : "text-gray-500"
                     }`}

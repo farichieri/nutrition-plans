@@ -12,7 +12,7 @@ const DatabaseSelector: FC<Props> = ({ queries }) => {
   const router = useRouter();
   const allDatabaseRoute = AppRoutes.search_foods;
   const myCreationsRoute = AppRoutes.search_my_creations;
-  const favoritesRoute = AppRoutes.favorites_foods;
+  const favoritesRoute = AppRoutes.library_favorites;
   const isAllDatabase = router.route === allDatabaseRoute;
   const isMyCreations = router.route === myCreationsRoute;
   const isFavorites = router.route === favoritesRoute;

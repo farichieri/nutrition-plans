@@ -1,8 +1,8 @@
 import { Diet } from "../..";
 import { setDietNote } from "../../slice";
+import { TextArea } from "@/components";
 import { useDispatch } from "react-redux";
 import React, { FC } from "react";
-import ReactTextareaAutosize from "react-textarea-autosize";
 
 interface Props {
   isEditing: boolean;
@@ -17,25 +17,21 @@ const DayNote: FC<Props> = ({ isEditing, diet }) => {
     dispatch(setDietNote({ diet: diet, note: value }));
   };
 
+  const customClass = isEditing
+    ? "rounded-md border"
+    : "cursor-default select-none rounded-md border border-green-500/50 bg-green-500/10 outline-none";
+
   return (
     <div className="w-full">
       {(isEditing || diet.note) && (
-        <ReactTextareaAutosize
-          minRows={1}
-          autoCorrect="off"
-          autoComplete="off"
-          autoCapitalize="off"
-          name="text"
-          spellCheck={false}
-          onChange={handleChange}
+        <TextArea
+          handleChange={handleChange}
           value={diet.note || ""}
           placeholder="Note..."
           readOnly={!isEditing}
-          className={`text-md w-full resize-none overflow-hidden bg-transparent p-2 ${
-            isEditing
-              ? "rounded-md border"
-              : "cursor-default select-none rounded-md border border-green-500/50 bg-green-500/10 outline-none"
-          }`}
+          customClass={customClass}
+          name="note"
+          isRequired={false}
         />
       )}
     </div>

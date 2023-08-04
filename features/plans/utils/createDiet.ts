@@ -29,7 +29,6 @@ const buildDiet = (
 
   const diet: Diet = {
     ...NewDiet,
-    dateAvailable: null,
     dateCreated: null,
     description: null,
     id: null,

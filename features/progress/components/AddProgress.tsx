@@ -3,16 +3,15 @@ import {
   setAddProgress,
   addProgress,
 } from "@/features/progress";
-import { ButtonType } from "@/types";
 import { FC, useEffect, useState } from "react";
 import { formatISO, parse } from "date-fns";
 import { formatToUSDate } from "@/utils";
 import { getWeightInKg, getWeightUnit } from "@/utils/calculations";
 import { selectAuthSlice } from "@/features/authentication/slice";
+import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { XCircleIcon } from "@heroicons/react/24/solid";
 import ActionButton from "@/components/Buttons/ActionButton";
-import { toast } from "react-hot-toast";
 
 interface Props {}
 
@@ -140,7 +139,7 @@ const AddProgress: FC<Props> = () => {
             content="Add"
             isLoading={isAdding}
             isDisabled={isDisabled}
-            type={ButtonType.Save}
+            type={"save"}
             className="w-40 py-1.5"
             onClick={handleSubmit}
             action={undefined}
@@ -153,7 +152,7 @@ const AddProgress: FC<Props> = () => {
             content="Add Progress"
             isLoading={false}
             isDisabled={false}
-            type={ButtonType.Save}
+            type={"save"}
             className="w-40 py-1.5"
             onClick={handleOpen}
             action={undefined}

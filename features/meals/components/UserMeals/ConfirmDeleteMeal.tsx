@@ -4,14 +4,13 @@ import {
   setUserMeals,
   selectMealsSlice,
 } from "@/features/meals";
-import { ButtonType } from "@/types";
 import { FC, useState } from "react";
 import { selectAuthSlice } from "@/features/authentication";
+import { toast } from "react-hot-toast";
 import { updateMealsOrders } from "./utils";
 import { useDispatch, useSelector } from "react-redux";
 import ActionButton from "@/components/Buttons/ActionButton";
 import Modal from "@/components/Modal/Modal";
-import { toast } from "react-hot-toast";
 
 interface Props {
   confirmDelete: null | UserMeal;
@@ -60,7 +59,7 @@ const ConfirmDeleteMeal: FC<Props> = ({ confirmDelete, setConfirmDelete }) => {
             content="Delete"
             isLoading={isDeleting}
             isDisabled={false}
-            type={ButtonType.Delete}
+            type={"delete"}
             className="mx-auto w-32"
             onClick={() => handleDeleteUserMeal(confirmDelete)}
             action="submit"

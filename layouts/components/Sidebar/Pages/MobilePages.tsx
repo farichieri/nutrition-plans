@@ -46,7 +46,6 @@ const MobilePages: FC<Props> = () => {
       pathname: [
         "/app/profile",
         "app/profile/goal",
-        "/app/profile/favorites",
         "/app/profile/body-features",
         "/app/profile/nutrition-values",
         "/app/profile/preferred-plan",

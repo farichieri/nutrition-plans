@@ -1,52 +1,94 @@
-import { convertDateToDateString, convertDayToUrlDate } from "../../utils";
 import { Diet } from "../../types";
-import { selectAuthSlice } from "@/features/authentication";
-import { useSelector } from "react-redux";
-import Link from "next/link";
 import { FC } from "react";
-import AddPlanToFavorites from "./AddPlanToFavorites";
-import PlanModal from "@/features/favorites/components/favorite_plans/plan_modal";
+import { selectAuthSlice } from "@/features/authentication";
+import { setDiet } from "../../slice";
+import { updateDiet } from "../../services";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
+import Link from "next/link";
+import { resetDiet } from "../../utils";
 
 interface Props {
   diet: Diet;
+  replaceDate?: string;
 }
 
-const PlanCard: FC<Props> = ({ diet }) => {
+const PlanCard: FC<Props> = ({ diet, replaceDate }) => {
+  const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
-  const { date } = diet;
+  const router = useRouter();
+  const isLibrary = router.pathname.includes("library");
 
-  if (!date || !user) return <></>;
+  if (!user) return <></>;
 
   const calories = diet?.nutrients?.calories;
-  const urlDate = convertDayToUrlDate(date!);
-  const dateF = convertDateToDateString({
-    date,
-    userStartOfWeek: user?.startOfWeek,
-  });
+
+  const handleSelect = async () => {
+    if (replaceDate) {
+      try {
+        const dietResetted = resetDiet({ diet });
+        if (dietResetted.result === "error") {
+
+          throw new Error("Error resetting diet");
+        }
+        const newDiet = {
+          ...dietResetted.data,
+          id: replaceDate,
+          date: replaceDate,
+        };
+        const res = await updateDiet({
+          diet: newDiet,
+        });
+        if (res.result === "success") {
+          dispatch(setDiet(newDiet));
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+      }
+    }
+  };
 
   return (
     <div
-      className={`flex w-full flex-col items-center justify-start gap-2 rounded-lg border bg-slate-200/50 p-2 dark:bg-gray-500/10 lg:max-w-sm ${
-        dateF === "today" ? "border-red-400/50" : ""
-      }`}
+      className={`flex w-full items-center justify-start gap-2 rounded-lg border bg-slate-200/50 dark:bg-gray-500/10`}
     >
-      <div className="flex w-full items-center border-b px-2 py-1">
+      <div className="flex h-full min-w-fit flex-col items-center justify-center border-r px-2 py-4">
         {diet && (
-          <span className="mr-auto text-xl font-semibold capitalize text-green-500">
+          <span className="text-xl font-semibold capitalize text-green-500">
             {diet?.planID?.replaceAll("_", " ")}
           </span>
         )}
         {calories && (
-          <span className="px-4 text-xs opacity-70">{calories} calories</span>
+          <span className="min-w-fit text-xs opacity-70">
+            {calories} calories
+          </span>
         )}
-        <AddPlanToFavorites diet={diet} />
       </div>
 
-      <div>
-        <span>Diet Name: </span>
+      <div className="flex w-full items-center justify-between gap-2 px-2 py-4">
+        <div className="flex w-full flex-col">
+          <span className="font-semibold">{diet.name}</span>
+          <span className="text-sm opacity-70">{diet.description}</span>
+        </div>
+        <div className="">
+          {isLibrary ? (
+            <Link
+              href={`/app/library/days/${diet.id}`}
+              className="activ:bg-slate-600/50 rounded-3xl border bg-slate-500/20 px-3 py-1.5"
+            >
+              Open
+            </Link>
+          ) : (
+            <button
+              onClick={handleSelect}
+              className="activ:bg-slate-600/50 rounded-3xl border bg-slate-500/20 px-3 py-1.5"
+            >
+              Select
+            </button>
+          )}
+        </div>
       </div>
-      <PlanModal diet={diet} />
-      {/* <Nutrition nutrients={diet.nutrients} planID={diet.planID} /> */}
     </div>
   );
 };

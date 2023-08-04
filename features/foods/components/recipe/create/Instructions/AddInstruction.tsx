@@ -1,8 +1,8 @@
-import { Instruction } from "@/features/foods";
 import { FC, useState } from "react";
+import { Instruction } from "@/features/foods";
+import { MdAdd } from "react-icons/md";
 import { uuidv4 } from "@firebase/util";
 import RoundButton from "@/components/Buttons/RoundButton";
-import { MdAdd } from "react-icons/md";
 
 interface Props {
   handleUpdateInstructions: Function;

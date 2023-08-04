@@ -1,4 +1,6 @@
-import { getFavoritePlans } from "./getFavoritePlans";
+import { getSavedDays } from "./getSavedDays";
 import { updateFoodRating } from "./updateFoodRating";
+import { postLibraryDay } from "./postLibraryDay";
+import { deleteLibraryDay } from "./deleteLibraryDay";
 
-export { getFavoritePlans, updateFoodRating };
+export { getSavedDays, updateFoodRating, postLibraryDay, deleteLibraryDay };

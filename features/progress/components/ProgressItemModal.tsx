@@ -7,7 +7,6 @@ import {
   setUpdateProgress,
   newProgressItem,
 } from "@/features/progress";
-import { ButtonType } from "@/types";
 import { FC, useEffect, useState } from "react";
 import { getWeight, getWeightInKg, getWeightUnit } from "@/utils/calculations";
 import { selectAuthSlice } from "@/features/authentication/slice";
@@ -124,7 +123,7 @@ const ProgressItemModal: FC<Props> = ({ progressItem }) => {
             content="Delete"
             isLoading={isDeleting}
             isDisabled={isDisabled}
-            type={ButtonType.Delete}
+            type={"delete"}
             className="w-full"
             onClick={handleDelete}
             action="submit"
@@ -134,7 +133,7 @@ const ProgressItemModal: FC<Props> = ({ progressItem }) => {
             content="Save"
             isLoading={isSaving}
             isDisabled={isDisabled}
-            type={ButtonType.Save}
+            type={"save"}
             className="w-full"
             onClick={handleSave}
             action="submit"

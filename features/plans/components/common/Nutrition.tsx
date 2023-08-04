@@ -106,7 +106,7 @@ const Nutrition: FC<Props> = ({ nutrients, planID }) => {
   let isAllInRange = addIsAllInRange();
 
   return (
-    <div>
+    <div className="w-full">
       <div className="mb-1 flex h-9 w-full items-center gap-2">
         <BiSolidPieChartAlt2 className="h-6 w-6 text-green-500" />
         <span className="text-2xl font-semibold">Nutrition</span>

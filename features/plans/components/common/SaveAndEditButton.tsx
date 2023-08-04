@@ -1,5 +1,6 @@
 import { FC, useState } from "react";
-import { fetchDietByDate, Diet, updateDiet } from "@/features/plans";
+import { Diet } from "@/features/plans";
+import { fetchDietByDate, updateDiet } from "@/features/plans/services";
 import { LuFileEdit, LuSave } from "react-icons/lu";
 import { setDiet } from "@/features/plans/slice";
 import { toast } from "react-hot-toast";

@@ -3,7 +3,6 @@ import {
   MdCreate,
   MdEmojiEvents,
   MdExpandMore,
-  MdFavorite,
   MdPerson,
   MdRestaurantMenu,
   MdSettings,
@@ -11,6 +10,7 @@ import {
   MdLocalGroceryStore,
   MdVerified,
   MdOutlineCalendarMonth,
+  MdLibraryBooks,
 } from "react-icons/md";
 import {
   selectLayoutSlice,
@@ -26,6 +26,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { AppRoutes } from "@/utils";
+import { BsCollectionFill } from "react-icons/bs";
 
 interface Props {}
 
@@ -123,10 +124,10 @@ const WebPages: FC<Props> = () => {
       icon: <MdLocalGroceryStore className="h-6 w-6 text-green-500" />,
     },
     {
-      name: "Favorites",
-      url: "/app/favorites",
-      pathname: ["/app/favorites"],
-      icon: <MdFavorite className="h-6 w-6 text-green-500" />,
+      name: "Library",
+      url: "/app/library/favorites",
+      pathname: ["/app/library"],
+      icon: <MdLibraryBooks className="h-6 w-6 text-green-500" />,
     },
   ];
 

@@ -1,9 +1,9 @@
 import { FavoriteFoods, FavoritesTypeSelector } from "@/features/favorites";
-import { PremiumSidebar } from "./components";
+import { PremiumSidebar } from "../components";
 import { useRouter } from "next/router";
 import { useWindowWidth } from "@/hooks";
 import PremiumLayout from "@/layouts/PremiumLayout";
-import PremiumNav from "./components/Nav/PremiumNav";
+import PremiumNav from "../components/Nav/PremiumNav";
 
 interface Props {
   children: React.ReactNode;
