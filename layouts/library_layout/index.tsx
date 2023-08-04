@@ -1,4 +1,4 @@
-import { FavoriteFoods, FavoritesTypeSelector } from "@/features/favorites";
+import { FavoritesTypeSelector } from "@/features/favorites";
 import { PremiumSidebar } from "../components";
 import { useRouter } from "next/router";
 import { useWindowWidth } from "@/hooks";

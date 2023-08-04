@@ -1,16 +1,16 @@
-import { Diet, DietMeal, MealCard, Water } from "@/features/plans";
-import { updateDietMealFoodsOrder } from "@/features/plans/slice";
 import {
   addToList,
   removeFromList,
   reorderArr,
   getNutritionMerged,
 } from "@/utils";
+import { Diet, DietMeal, MealCard, Water } from "@/features/plans";
+import { updateDietMealFoodsOrder } from "@/features/plans/slice";
 import { DragDropContext } from "@hello-pangea/dnd";
 import { FC } from "react";
 import { FoodGroupArray } from "@/features/foods";
 import { useDispatch } from "react-redux";
-import { MdOutlineMoreHoriz, MdRestaurant } from "react-icons/md";
+import { MdRestaurant } from "react-icons/md";
 import MoreDropdown from "../common/MoreDropdown";
 
 interface Props {

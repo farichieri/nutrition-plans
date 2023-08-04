@@ -30,7 +30,7 @@ const Modal = ({
       >
         <RoundButton
           onClick={handleCloseModal}
-          customClass="p-1.5 h-10 w-10 absolute right-1 sm:right-5 top-1 z-[9999]"
+          customClass="p-1.5 h-10 w-10 absolute right-1 lg:right-5 top-1 z-[9999]"
         >
           <MdClose className="h-6 w-6" />
         </RoundButton>

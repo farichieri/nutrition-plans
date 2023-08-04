@@ -1,7 +1,7 @@
 import { convertDateToDateString, convertDayToUrlDate } from "../../utils";
 import { FC, useEffect, useState } from "react";
 import { fetchDietByDate } from "../../services";
-import { ManualMeals, SaveAndEditButton } from "..";
+import { ManualMeals } from "..";
 import { selectPlansSlice, setDiet } from "@/features/plans/slice";
 import { useDispatch, useSelector } from "react-redux";
 import { User, selectAuthSlice } from "@/features/authentication";

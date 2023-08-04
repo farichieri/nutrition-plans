@@ -1,5 +1,5 @@
 import { db } from "@/services/firebase/firebase.config";
-import { Diet } from "@/features/plans";
+import { Diet, resetDiet } from "@/features/plans";
 import { doc, setDoc } from "firebase/firestore";
 import { Result } from "@/types";
 import { User } from "@/features/authentication";
@@ -19,10 +19,13 @@ const postLibraryDay = async ({
     const docRef = doc(db, "users", user.id, "library", "saved", "days", uuid);
     const docID = docRef.id;
 
+    const dietResseted = resetDiet({ diet, newDietID: docID });
+
+    if (dietResseted.result === "error") throw Error;
+
     const newDiet: Diet = {
-      ...diet,
+      ...dietResseted.data,
       nutrients: { ...diet.nutrients },
-      id: docID,
     };
 
     await setDoc(docRef, newDiet);

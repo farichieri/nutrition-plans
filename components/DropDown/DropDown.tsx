@@ -39,7 +39,7 @@ const DropDown: FC<Props> = ({
         <div className="absolute -bottom-2 right-0 gap-2 ">
           <div className="absolute right-2 -mt-1 h-2 w-2 rotate-45 border bg-primary-color shadow shadow-gray-500/60"></div>
           <div
-            className="absolute right-0 top-auto z-20 overflow-auto rounded-xl border bg-tertiary-color text-base shadow-[0_1px_5px] shadow-gray-500/60 dark:shadow-cyan-200/10"
+            className="absolute right-0 top-auto z-[56] overflow-auto rounded-xl border bg-tertiary-color text-base shadow-[0_1px_5px] shadow-gray-500/60 dark:shadow-cyan-200/10"
             onClick={(e) => {
               e.stopPropagation();
               e.preventDefault();
@@ -48,7 +48,7 @@ const DropDown: FC<Props> = ({
             <div className="h-auto w-max">{children}</div>
           </div>
           <div
-            className="fixed inset-0 h-screen w-screen "
+            className="w-scree fixed inset-0 z-[55] h-screen  "
             onClick={(event) => {
               event.preventDefault();
               setOpen(!open);

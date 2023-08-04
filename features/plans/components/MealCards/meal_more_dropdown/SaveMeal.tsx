@@ -1,7 +1,7 @@
 import { AiFillFileAdd } from "react-icons/ai";
-import { Diet } from "@/features/plans";
+import { DietMeal } from "@/features/plans";
 import { FC, FormEvent, useState } from "react";
-import { postLibraryDay } from "@/features/favorites/services";
+import { postLibraryMeal } from "@/features/favorites/services";
 import { selectAuthSlice } from "@/features/authentication";
 import { TextArea } from "@/components";
 import { toast } from "react-hot-toast";
@@ -9,17 +9,17 @@ import { useSelector } from "react-redux";
 import FormAction from "@/components/Form/FormAction";
 
 interface Props {
-  diet: Diet;
+  meal: DietMeal;
   handleClose: Function;
 }
 
-const SaveDay: FC<Props> = ({ diet, handleClose }) => {
+const SaveMeal: FC<Props> = ({ meal, handleClose }) => {
   const { user } = useSelector(selectAuthSlice);
+  const [isLoading, setIsLoading] = useState(false);
   const [input, setInput] = useState({
-    name: "",
+    nameSaved: "",
     description: "",
   });
-  const [isLoading, setIsLoading] = useState(false);
 
   if (!user) return <></>;
 
@@ -27,12 +27,12 @@ const SaveDay: FC<Props> = ({ diet, handleClose }) => {
     event.preventDefault();
     try {
       setIsLoading(true);
-      const newDiet: Diet = {
-        ...diet,
-        name: input.name,
+      const newMeal: DietMeal = {
+        ...meal,
         description: input.description,
+        nameSaved: input.nameSaved,
       };
-      const res = await postLibraryDay({ diet: newDiet, user });
+      const res = await postLibraryMeal({ meal: newMeal, user });
       if (res.result === "success") {
         toast.success("Day saved successfully.");
       }
@@ -53,7 +53,7 @@ const SaveDay: FC<Props> = ({ diet, handleClose }) => {
     <div className="flex w-xl max-w-[95vw] flex-col gap-5 px-5 py-5 ">
       <div className="flex items-center gap-1">
         <AiFillFileAdd className="h-5 w-5 text-green-500" />
-        <span className="text-xl font-semibold">Save Day as:</span>
+        <span className="text-xl font-semibold">Save Meal as:</span>
       </div>
 
       <form onSubmit={handleSave} className="flex flex-col gap-5">
@@ -61,10 +61,10 @@ const SaveDay: FC<Props> = ({ diet, handleClose }) => {
           <TextArea
             customClass="w-full border rounded-md"
             handleChange={handleChange}
-            name="name"
+            name="nameSaved"
             placeholder="Name..."
             readOnly={false}
-            value={input.name}
+            value={input.nameSaved}
             isRequired={true}
           />
           <TextArea
@@ -79,12 +79,12 @@ const SaveDay: FC<Props> = ({ diet, handleClose }) => {
         </div>
         <div className="ml-auto flex">
           <FormAction
-            action="submit"
-            handleSubmit={handleSave}
-            isLoading={isLoading}
-            loadingMessage="Saving..."
-            text="Save"
             type="Submit"
+            action="submit"
+            text="Save"
+            isLoading={isLoading}
+            handleSubmit={handleSave}
+            loadingMessage="Saving..."
           />
         </div>
       </form>
@@ -92,4 +92,4 @@ const SaveDay: FC<Props> = ({ diet, handleClose }) => {
   );
 };
 
-export default SaveDay;
+export default SaveMeal;

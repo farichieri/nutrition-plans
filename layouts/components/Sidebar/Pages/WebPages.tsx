@@ -17,16 +17,15 @@ import {
   setSidebarAdminOpen,
   setSidebarEvolutionOpen,
 } from "@/features/layout/slice";
+import { AppRoutes } from "@/utils";
 import { BiFoodMenu, BiSolidPieChartAlt2 } from "react-icons/bi";
 import { FC } from "react";
-import { PiBowlFoodFill, PiPillFill } from "react-icons/pi";
+import { PiBowlFoodFill } from "react-icons/pi";
 import { RiSearchLine } from "react-icons/ri";
 import { SubscribeButton } from "@/components/Buttons";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { AppRoutes } from "@/utils";
-import { BsCollectionFill } from "react-icons/bs";
 
 interface Props {}
 
@@ -126,7 +125,11 @@ const WebPages: FC<Props> = () => {
     {
       name: "Library",
       url: "/app/library/favorites",
-      pathname: ["/app/library"],
+      pathname: [
+        "/app/library/days",
+        "/app/library/favorites",
+        "/app/library/meals",
+      ],
       icon: <MdLibraryBooks className="h-6 w-6 text-green-500" />,
     },
   ];

@@ -150,7 +150,7 @@ const Nutrition: FC<Props> = ({ nutrients, planID }) => {
                       </span>
                     </div>
                     <div className="relative ml-auto flex basis-1/12 items-center justify-end ">
-                      <div className="mx-2 w-10 ">
+                      <div className="mx-2 w-12 ">
                         {Number(nut.value) > Number(nut.max) && (
                           <span className="flex text-xs text-red-500">
                             {formatTwoDecimals(nut.diff)}🔻

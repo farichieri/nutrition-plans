@@ -52,7 +52,7 @@ const FavoritePlans: FC<Props> = () => {
         <div className="m-auto">No favorites found 😔</div>
       ) : (
         sortDays(Object.values(favoritePlans)).map((diet) => (
-          <PlanCard key={diet.id} diet={diet} />
+          <PlanCard key={diet.id} diet={diet} handleClose={() => {}} />
         ))
       )}
     </div>

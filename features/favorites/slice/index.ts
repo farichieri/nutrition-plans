@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Diet, DietGroup } from "@/features/plans";
+import { Diet, DietGroup, DietMeal, DietMealGroup } from "@/features/plans";
 import { Food, FoodGroup } from "@/features/foods";
 import { PURGE } from "redux-persist";
 import { RootState } from "@/store";
@@ -7,15 +7,21 @@ import { RootState } from "@/store";
 interface FavoritesState {
   favoriteFoods: FoodGroup;
   favoritePlans: DietGroup;
+  favoriteMeals: DietMealGroup;
   isRating: boolean;
   isSearchingFavoriteFoods: boolean;
+  isSearchingFavoritePlans: boolean;
+  isSearchingFavoriteMeals: boolean;
 }
 
 const initialState: FavoritesState = {
   favoriteFoods: {},
   favoritePlans: {},
+  favoriteMeals: {},
   isRating: false,
   isSearchingFavoriteFoods: true,
+  isSearchingFavoritePlans: true,
+  isSearchingFavoriteMeals: true,
 };
 
 export const favoritesSlice = createSlice({
@@ -28,11 +34,17 @@ export const favoritesSlice = createSlice({
     setFavoritePlans: (state, action: PayloadAction<DietGroup>) => {
       state.favoritePlans = action.payload;
     },
+    setFavoriteMeals: (state, action: PayloadAction<DietMealGroup>) => {
+      state.favoriteMeals = action.payload;
+    },
     setIsSearchingFavoriteFoods: (state, action: PayloadAction<boolean>) => {
       state.isSearchingFavoriteFoods = action.payload;
     },
     setIsSearchingFavoritePlans: (state, action: PayloadAction<boolean>) => {
-      state.isSearchingFavoriteFoods = action.payload;
+      state.isSearchingFavoritePlans = action.payload;
+    },
+    setIsSearchingFavoriteMeals: (state, action: PayloadAction<boolean>) => {
+      state.isSearchingFavoriteMeals = action.payload;
     },
     setIsRating: (state, action: PayloadAction<boolean>) => {
       state.isRating = action.payload;
@@ -57,6 +69,11 @@ export const favoritesSlice = createSlice({
       if (!id) return;
       delete state.favoritePlans[id];
     },
+    removeFavoriteMeal: (state, action: PayloadAction<DietMeal>) => {
+      const { id: id } = action.payload;
+      if (!id) return;
+      delete state.favoriteMeals[id];
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(PURGE, () => {
@@ -69,12 +86,15 @@ export const {
   addFavoriteFood,
   addFavoritePlan,
   removeFavoriteFood,
+  removeFavoriteMeal,
+  removeFavoritePlan,
   setFavoriteFoods,
+  setFavoriteMeals,
   setFavoritePlans,
   setIsRating,
   setIsSearchingFavoriteFoods,
+  setIsSearchingFavoriteMeals,
   setIsSearchingFavoritePlans,
-  removeFavoritePlan,
 } = favoritesSlice.actions;
 
 export const selectFavoritesSlice = (state: RootState) => state.favorites;

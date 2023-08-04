@@ -13,7 +13,7 @@ import { saveDiet } from "../../services/saveDiet";
 import { selectPlansSlice, toggleEatenFood } from "../../slice";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
-import { MdOutlineMoreHoriz } from "react-icons/md";
+import MealMoreDropdown from "../MealCards/meal_more_dropdown/MealMoreDropdown";
 
 interface Props {
   dietMeal: DietMeal;
@@ -55,15 +55,17 @@ const MealCard: FC<Props> = ({ dietMeal, mealKcals, isEditing }) => {
   return (
     <div
       key={dietMeal.id}
-      className={`min-h-20 flex w-full flex-col overflow-auto rounded-xl border ${
+      className={`min-h-20 flex w-full flex-col rounded-xl border ${
         allEaten
-          ? "border-green-500 bg-green-500/20"
+          ? "border-green-400 bg-green-400 dark:border-green-900 dark:bg-green-900"
           : "bg-white dark:bg-gray-500/20"
       }`}
     >
       <div
-        className={`flex items-center gap-2 px-2 py-1 text-center ${
-          allEaten ? "bg-green-500/40" : "bg-black/10"
+        className={`flex items-center gap-2 rounded-t-xl border-b px-2 py-1 text-center ${
+          allEaten
+            ? "border-green-400 bg-green-400 dark:border-green-900 dark:bg-green-900"
+            : "bg-black/10"
         }`}
       >
         <span className="text-xl font-semibold capitalize">
@@ -72,7 +74,7 @@ const MealCard: FC<Props> = ({ dietMeal, mealKcals, isEditing }) => {
         <span className="ml-auto px-2 text-xs opacity-50">
           {mealKcals} calories
         </span>
-        <MdOutlineMoreHoriz className="h-6 w-6 cursor-pointer text-gray-500" />
+        <MealMoreDropdown diet={diet} mealID={dietMeal.id} />
 
         {!isEditing && (
           <div className="flex items-center">
@@ -85,8 +87,10 @@ const MealCard: FC<Props> = ({ dietMeal, mealKcals, isEditing }) => {
           <div
             {...droppableProvided.droppableProps}
             ref={droppableProvided.innerRef}
-            className={`w-full divide-y overflow-hidden ${
-              allEaten ? "divide-green-500/50" : "divide-green-500/10"
+            className={`w-full divide-y overflow-hidden last:rounded-b-xl ${
+              allEaten
+                ? "divide-green-500 dark:divide-green-900"
+                : "divide-green-500/10"
             }`}
           >
             {dietMealFoodsArr.length < 1 && !isEditing ? (
@@ -112,6 +116,7 @@ const MealCard: FC<Props> = ({ dietMeal, mealKcals, isEditing }) => {
                       >
                         {isEditing ? (
                           <FoodInMealCard
+                            isEditable={true}
                             food={food}
                             isEditing={isEditing && !food.isEaten}
                           />
@@ -122,6 +127,7 @@ const MealCard: FC<Props> = ({ dietMeal, mealKcals, isEditing }) => {
                             href={`/app/food/${food.id}?amount=${food.scaleAmount}&scale=${food.scaleName}`}
                           >
                             <FoodInMealCard
+                              isEditable={true}
                               food={food}
                               isEditing={isEditing && !food.isEaten}
                             />

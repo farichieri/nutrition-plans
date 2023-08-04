@@ -1,23 +1,25 @@
 import { Diet } from "../../types";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { selectAuthSlice } from "@/features/authentication";
 import { setDiet } from "../../slice";
-import { updateDiet } from "../../services";
+import { replaceDietWithLibraryDay } from "../../services";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { resetDiet } from "../../utils";
+import Spinner from "@/components/Loader/Spinner";
 
 interface Props {
   diet: Diet;
   replaceDate?: string;
+  handleClose: () => void;
 }
 
-const PlanCard: FC<Props> = ({ diet, replaceDate }) => {
+const PlanCard: FC<Props> = ({ diet, replaceDate, handleClose }) => {
   const dispatch = useDispatch();
-  const { user } = useSelector(selectAuthSlice);
   const router = useRouter();
+  const { user } = useSelector(selectAuthSlice);
   const isLibrary = router.pathname.includes("library");
+  const [isLoading, setIsLoading] = useState(false);
 
   if (!user) return <></>;
 
@@ -26,25 +28,23 @@ const PlanCard: FC<Props> = ({ diet, replaceDate }) => {
   const handleSelect = async () => {
     if (replaceDate) {
       try {
-        const dietResetted = resetDiet({ diet });
-        if (dietResetted.result === "error") {
-
-          throw new Error("Error resetting diet");
-        }
+        setIsLoading(true);
         const newDiet = {
-          ...dietResetted.data,
+          ...diet,
           id: replaceDate,
           date: replaceDate,
         };
-        const res = await updateDiet({
+        const res = await replaceDietWithLibraryDay({
           diet: newDiet,
         });
         if (res.result === "success") {
-          dispatch(setDiet(newDiet));
+          dispatch(setDiet(res.data));
         }
+        handleClose();
       } catch (error) {
         console.log(error);
       } finally {
+        setIsLoading(false);
       }
     }
   };
@@ -84,7 +84,14 @@ const PlanCard: FC<Props> = ({ diet, replaceDate }) => {
               onClick={handleSelect}
               className="activ:bg-slate-600/50 rounded-3xl border bg-slate-500/20 px-3 py-1.5"
             >
-              Select
+              {isLoading ? (
+                <div className="flex items-center gap-1">
+                  <span className="">Replacing...</span>
+                  <Spinner customClass="h-4 w-4" />
+                </div>
+              ) : (
+                "Replace"
+              )}
             </button>
           )}
         </div>

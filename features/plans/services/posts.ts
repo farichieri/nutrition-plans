@@ -4,6 +4,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { getToday } from "@/utils/dateFormat";
 import { PlansEnum, Result } from "@/types";
 import { User } from "@/features/authentication";
+import { resetDiet } from "../utils";
 
 const postDietToUserDiets = async ({
   diet,
@@ -70,4 +71,32 @@ const updateDiet = async ({
   }
 };
 
-export { postDietToUserDiets, updateDiet };
+const replaceDietWithLibraryDay = async ({
+  diet,
+}: {
+  diet: Diet;
+}): Promise<Result<Diet, unknown>> => {
+  try {
+    if (!diet.userID || !diet.id) throw new Error("Invalid diet fields");
+    const docRef = doc(db, "users", diet.userID, "diets", diet.id);
+
+    const dietResseted = resetDiet({ diet, newDietID: diet.id });
+
+    if (dietResseted.result === "error") throw Error;
+
+    const dietUpdated: Diet = {
+      ...dietResseted.data,
+      date: diet.date,
+      nutrients: { ...diet.nutrients },
+    };
+
+    await setDoc(docRef, dietUpdated);
+
+    return { result: "success", data: dietUpdated };
+  } catch (error) {
+    console.log({ error });
+    return { result: "error", error };
+  }
+};
+
+export { postDietToUserDiets, updateDiet, replaceDietWithLibraryDay };

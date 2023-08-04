@@ -1,17 +1,15 @@
 import {
   MdAutoGraph,
-  MdFavorite,
   MdLibraryBooks,
   MdLocalGroceryStore,
   MdOutlineCalendarMonth,
   MdPerson,
 } from "react-icons/md";
+import { AppRoutes } from "@/utils";
 import { FC } from "react";
 import { RiSearchLine } from "react-icons/ri";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { AppRoutes } from "@/utils";
-import { BsCollectionFill } from "react-icons/bs";
 
 interface Props {}
 
@@ -49,7 +47,7 @@ const CollapsedPages: FC<Props> = () => {
       pathname: [
         "/app/library/favorites",
         "/app/library/meals",
-        "/app/library/plans",
+        "/app/library/days",
       ],
       icon: <MdLibraryBooks className="h-6 w-6 text-green-500" />,
     },

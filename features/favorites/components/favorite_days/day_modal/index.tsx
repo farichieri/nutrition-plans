@@ -4,16 +4,14 @@ import {
   selectFavoritesSlice,
 } from "@/features/favorites";
 import { ActionButton } from "@/components/Buttons";
-import { DietMeal, Nutrition } from "@/features/plans";
+import { DietMeal, FoodInMealCard, Nutrition } from "@/features/plans";
 import { FC, useState } from "react";
 import { FoodGroupArray } from "@/features/foods";
-import { formatTwoDecimals, getNutritionMerged } from "@/utils";
+import { getNutritionMerged } from "@/utils";
 import { selectAuthSlice } from "@/features/authentication";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
-import BlurImage from "@/components/blur-image";
-import Link from "next/link";
 import Modal from "@/components/Modal/Modal";
 import Spinner from "@/components/Loader/Spinner";
 
@@ -115,63 +113,14 @@ const PlanModal: FC<Props> = () => {
                         No foods planned yet.
                       </span>
                     ) : (
-                      dietMealFoodsArr.map((food, index) => {
-                        if (!food.id) return <></>;
-                        const scaleFormatted = formatTwoDecimals(
-                          food.scaleAmount
-                        );
-
-                        return (
-                          <div
-                            key={food.id}
-                            className={`flex w-full items-center gap-1 px-0 hover:bg-slate-500/20  active:bg-slate-500/50 `}
-                          >
-                            <Link
-                              key={food.id}
-                              className="flex w-full"
-                              href={`/app/food/${food.id}?amount=${food.scaleAmount}&scale=${food.scaleName}`}
-                            >
-                              <div
-                                className={`flex w-full gap-1 ${
-                                  food.isEaten ? "" : ""
-                                }`}
-                              >
-                                <span className="relative h-16 w-16 min-w-[64px] sm:h-16 sm:w-16">
-                                  <BlurImage
-                                    image={{
-                                      imageURL: food.imageURL,
-                                      title: food.name!,
-                                      id: food.id!,
-                                    }}
-                                  />
-                                </span>
-                                <div className="flex h-auto w-full pr-2">
-                                  <div className="flex h-full w-full flex-col py-1">
-                                    <div className="flex w-full max-w-max flex-col ">
-                                      <span className="text-base font-semibold capitalize leading-4 tracking-tight">
-                                        {food.name}
-                                      </span>
-                                      {/* <span className="text-sm opacity-50">{food.description}</span> */}
-                                    </div>
-                                    <div className="flex h-full flex-col">
-                                      <div className="mt-auto  flex w-full flex-wrap items-baseline gap-1">
-                                        <span className="text-sm">
-                                          {scaleFormatted}
-                                        </span>
-                                        <span className="text-sm lowercase">
-                                          {`${food.scaleName.toLowerCase()}${
-                                            scaleFormatted > 1 ? "" : ""
-                                          }`}
-                                        </span>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </Link>
-                          </div>
-                        );
-                      })
+                      dietMealFoodsArr.map((food, index) => (
+                        <FoodInMealCard
+                          food={food}
+                          isEditable={false}
+                          isEditing={false}
+                          key={food.id}
+                        />
+                      ))
                     )}
                   </div>
                 </div>

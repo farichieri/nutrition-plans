@@ -63,21 +63,21 @@ const generateMeals = async (
 
         console.log({ foodsFetched });
         // To be fixed id
-        const newDietMeal: DietMeal = {
-          name: meal.name,
-          mealID: meal.id,
-          id: uuid,
-          foods: foodsFetched,
-          order: meal.order,
-          complexity: meal.complexity,
-          time: meal.time,
-          size: meal.size,
-          isCookeable: meal.isCookeable,
-          dietID: "",
-        };
-        if (newDietMeal.id) {
-          meals[newDietMeal.id] = newDietMeal;
-        }
+        // const newDietMeal: DietMeal = {
+        //   name: meal.name,
+        //   mealID: meal.id,
+        //   id: uuid,
+        //   foods: foodsFetched,
+        //   order: meal.order,
+        //   complexity: meal.complexity,
+        //   time: meal.time,
+        //   size: meal.size,
+        //   isCookeable: meal.isCookeable,
+        //   dietID: "",
+        // };
+        // if (newDietMeal.id) {
+        //   meals[newDietMeal.id] = newDietMeal;
+        // }
       });
       await Promise.all(promises);
       return meals;

@@ -10,7 +10,6 @@ import { Food, FoodGroup, FoodGroupArray } from "@/features/foods/types";
 import { getDietNutrition, getIsWeek, getToday } from "@/utils";
 import { PURGE } from "redux-persist";
 import { RootState } from "@/store";
-import { updateDiet } from "../services";
 import { saveDiet } from "../services/saveDiet";
 
 interface PlansSlice {

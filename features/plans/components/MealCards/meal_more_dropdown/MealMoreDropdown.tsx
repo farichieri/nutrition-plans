@@ -1,78 +1,59 @@
 import { AiFillFileAdd } from "react-icons/ai";
-import { deleteDiet } from "../../services";
-import { Diet } from "../..";
+import { clearMeal } from "@/features/plans/utils";
+import { Diet } from "@/features/plans/types";
 import { FC, useState } from "react";
 import { MdContentCopy, MdDelete, MdOutlineMoreHoriz } from "react-icons/md";
-import { ReplaceDaySelector, SaveDay } from "@/features/favorites";
 import { selectAuthSlice } from "@/features/authentication";
-import { setDeleteDiet } from "../../slice";
+import { setDiet } from "@/features/plans/slice";
 import { toast } from "react-hot-toast";
+import { updateDiet } from "@/features/plans/services";
 import { useDispatch, useSelector } from "react-redux";
 import DropDown from "@/components/DropDown/DropDown";
 import Modal from "@/components/Modal/Modal";
 import Spinner from "@/components/Loader/Spinner";
+import SaveMeal from "./SaveMeal";
+import { ReplaceMealSelector } from "@/features/favorites";
 
 const optionStyle =
   "flex w-full cursor-pointer items-center gap-2 border-none bg-transparent px-4 py-2 opacity-60 hover:bg-slate-500/40 hover:opacity-100";
 
 interface Props {
   diet: Diet;
+  mealID: string;
 }
 
-const MoreDropdown: FC<Props> = ({ diet }) => {
+const MealMoreDropdown: FC<Props> = ({ diet, mealID }) => {
   const dispatch = useDispatch();
-  const [closeDrop, setCloseDrop] = useState(false);
   const { user } = useSelector(selectAuthSlice);
+  const [closeDrop, setCloseDrop] = useState(false);
   const [isLoading, setIsLoading] = useState({
     favorite: false,
     replace: false,
-    delete: false,
+    clear: false,
   });
   const [isOpen, setIsOpen] = useState({
     save: false,
     replace: false,
   });
 
-  if (!user || !diet.id || !diet.date) return <></>;
+  if (!user || !mealID || !diet) return <></>;
 
-  const handleDelete = async () => {
-    toast(
-      (t) => (
-        <div className="flex flex-col items-center gap-1">
-          <span>
-            Confirm <b>Delete</b>
-          </span>
-          <div className="flex gap-1">
-            <button
-              className="flex items-center gap-1 rounded-md border border-red-500 bg-red-500/20 px-3 py-1 hover:bg-red-500/50 active:bg-red-500"
-              onClick={async () => {
-                toast.dismiss(t.id);
-                setIsLoading({ ...isLoading, delete: true });
-                const res = await deleteDiet(diet);
-                if (res.result === "success") {
-                  dispatch(setDeleteDiet({ id: diet.id! }));
-                  toast.success("Diet deleted successfully.");
-                } else {
-                  toast.error("Error deleting diet. Please try again.");
-                }
-                setIsLoading({ ...isLoading, delete: false });
-              }}
-            >
-              Confirm
-            </button>
-            <button
-              className="flex items-center gap-1 rounded-md border border-gray-500 bg-gray-500/20 px-3 py-1 hover:bg-gray-500/50 active:bg-gray-500"
-              onClick={() => {
-                toast.dismiss(t.id);
-              }}
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
-      ),
-      { duration: 5000 }
-    );
+  const meal = diet.meals[mealID];
+
+  const handleClear = async () => {
+    try {
+      setIsLoading({ ...isLoading, clear: true });
+      const dietUpdated = clearMeal({ diet, mealID });
+      const res = await updateDiet({ diet: dietUpdated });
+      if (res.result === "error") throw Error;
+      dispatch(setDiet(dietUpdated));
+    } catch (error) {
+      console.log({ error });
+      toast.error("Error clearing Meal");
+    } finally {
+      setIsLoading({ ...isLoading, clear: false });
+      handleClose();
+    }
   };
 
   const handleSave = async () => {
@@ -92,7 +73,7 @@ const MoreDropdown: FC<Props> = ({ diet }) => {
 
   const OPTIONS = [
     {
-      text: "Save Day",
+      text: "Save Meal",
       icon: (
         <AiFillFileAdd
           className={`pointer-events-none h-5 w-5  text-green-500`}
@@ -102,16 +83,16 @@ const MoreDropdown: FC<Props> = ({ diet }) => {
       isLoading: isLoading.favorite,
     },
     {
-      text: "Replace Day",
+      text: "Replace Meal",
       icon: <MdContentCopy className="h-5 w-5 text-blue-500" />,
       onClick: handleReplace,
       isLoading: isLoading.replace,
     },
     {
-      text: "Delete Day",
+      text: "Clear Meal",
       icon: <MdDelete className="h-5 w-5 text-red-500" />,
-      onClick: handleDelete,
-      isLoading: isLoading.delete,
+      onClick: handleClear,
+      isLoading: isLoading.clear,
     },
   ];
 
@@ -119,12 +100,16 @@ const MoreDropdown: FC<Props> = ({ diet }) => {
     <>
       {isOpen.save && (
         <Modal onClose={handleClose}>
-          <SaveDay diet={diet} handleClose={handleClose} />
+          <SaveMeal meal={meal} handleClose={handleClose} />
         </Modal>
       )}
       {isOpen.replace && (
         <Modal onClose={handleClose}>
-          <ReplaceDaySelector date={diet.date} handleClose={handleClose} />
+          <ReplaceMealSelector
+            replaceMealID={mealID}
+            diet={diet}
+            handleClose={handleClose}
+          />
         </Modal>
       )}
       <DropDown
@@ -153,4 +138,4 @@ const MoreDropdown: FC<Props> = ({ diet }) => {
   );
 };
 
-export default MoreDropdown;
+export default MealMoreDropdown;

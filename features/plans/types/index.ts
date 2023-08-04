@@ -39,6 +39,8 @@ export interface DietGroupArray extends Array<Diet> {}
 export interface DietMeal {
   [id: string]: any;
   complexity: MealComplexities | null;
+  dateCreated: string | null;
+  description: string | null;
   dietID: string | null;
   foods: FoodGroup;
   id: string | null;
@@ -48,6 +50,8 @@ export interface DietMeal {
   order: number;
   size: MealSizes | null;
   time: MealMinutes | null;
+  planID: PlansEnum | null;
+  nameSaved: string | null;
 }
 
 export interface DietMealGroup {
@@ -91,6 +95,7 @@ export const NewDiet: Diet = {
 
 export const NewDietMeal: DietMeal = {
   complexity: null,
+  dateCreated: null,
   diet_meal_type: null,
   dietID: null,
   foods: NewFood,
@@ -101,4 +106,7 @@ export const NewDietMeal: DietMeal = {
   order: -1,
   size: null,
   time: null,
+  description: null,
+  planID: null,
+  nameSaved: null,
 };

@@ -3,6 +3,9 @@ import { getDiets } from "./getDiets";
 import { getThisWeekDiets } from "./getThisWeekDiets";
 import { getDietFoodToggled } from "./getDietFoodToggled";
 import { resetDiet } from "./resetDiet";
+import { clearMeal } from "./clearMeal";
+import { resetMeal } from "./resetMeal";
+import { replaceMealInDiet } from "./replaceMealInDiet";
 
 export * from "./dates";
 export * from "./automatedUtils";
@@ -15,4 +18,7 @@ export {
   getThisWeekDiets,
   getDietFoodToggled,
   resetDiet,
+  clearMeal,
+  resetMeal,
+  replaceMealInDiet,
 };
