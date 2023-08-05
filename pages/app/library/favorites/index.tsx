@@ -1,10 +1,10 @@
-import { FavoriteFoods } from "@/features/favorites";
-import FavoritesLayout from "@/layouts/library_layout";
+import { LibraryFoods } from "@/features/library";
+import { LibraryLayout } from "@/layouts";
 
 export default function Page() {
   return (
-    <FavoritesLayout>
-      <FavoriteFoods />
-    </FavoritesLayout>
+    <LibraryLayout>
+      <LibraryFoods />
+    </LibraryLayout>
   );
 }

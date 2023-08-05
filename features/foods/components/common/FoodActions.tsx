@@ -1,8 +1,8 @@
 import {
-  selectFavoritesSlice,
+  selectLibrarySlice,
   setIsRating,
   updateFoodRating,
-} from "@/features/favorites";
+} from "@/features/library";
 import { FC, useState } from "react";
 import { FoodsRating } from "@/features/authentication";
 import { MdThumbDown, MdThumbUp } from "react-icons/md";
@@ -20,7 +20,7 @@ const FoodActions: FC<Props> = ({ foodID }) => {
   const { user } = useSelector(selectAuthSlice);
   const [isLiking, setIsLiking] = useState(false);
   const [isDisliking, setIsDisliking] = useState(false);
-  const { isRating } = useSelector(selectFavoritesSlice);
+  const { isRating } = useSelector(selectLibrarySlice);
   if (!user) return <></>;
 
   const foodsRating: FoodsRating = user.ratings.foodsRating;

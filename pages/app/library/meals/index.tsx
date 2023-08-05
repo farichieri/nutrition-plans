@@ -1,4 +1,4 @@
-import LibraryMealsLayout from "@/layouts/library_layout/meals_layout";
+import { LibraryMealsLayout } from "@/layouts";
 
 export default function Page() {
   return <LibraryMealsLayout>{}</LibraryMealsLayout>;

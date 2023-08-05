@@ -31,7 +31,7 @@ html {
   --background-end-rgb: 255, 255, 255;
   --nav-h: 3rem;
   --footer-h: 9rem;
-  --mobile-sidenav-h: 50px;
+  --mobile-sidenav-h: 55px;
   --subnav-h: 3rem;
   --border-color: lightgray;
   --carbs-color: #976802;
@@ -69,6 +69,7 @@ a {
 .dark {
   color-scheme: dark;
 }
+
 /* p */
 p {
   font-size: 1rem;
@@ -83,6 +84,7 @@ p {
     line-height: 1.75rem;
   }
 }
+
 /* h2 */
 h1 {
   font-weight: 700;
@@ -113,15 +115,19 @@ h2 {
     line-height: 2.25rem;
   }
 }
+
 h3 {
   font-size: 1.75rem;
 }
+
 h4 {
   font-size: 1.5rem;
 }
+
 h5 {
   font-size: 1.25rem;
 }
+
 h6 {
   font-size: 1rem;
 }
@@ -151,6 +157,7 @@ li {
   line-height: 1.625em;
   margin-bottom: 10px;
 }
+
 @media screen and (min-width: 950px) {
   li {
     font-size: 1.125rem;

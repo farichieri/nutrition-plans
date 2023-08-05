@@ -6,10 +6,12 @@ const Modal = ({
   children,
   onClose,
   customClass = "",
+  isMobileFullScreen = false,
 }: {
   children: ReactNode;
   onClose: Function;
   customClass?: string;
+  isMobileFullScreen?: boolean;
 }) => {
   const handleCloseModal = () => {
     if (onClose) {
@@ -24,13 +26,14 @@ const Modal = ({
       ></div>
       <div
         className={
-          ` relative z-[100] m-auto max-w-[100vw] overflow-hidden rounded-xl border bg-tertiary-color ` +
-          customClass
+          ` relative z-[100] m-auto max-w-[100vw] overflow-hidden border bg-tertiary-color ${
+            isMobileFullScreen ? "rounded-none sm:rounded-xl" : "rounded-xl"
+          } ` + customClass
         }
       >
         <RoundButton
           onClick={handleCloseModal}
-          customClass="p-1.5 h-10 w-10 absolute right-1 lg:right-5 top-1 z-[9999]"
+          customClass="p-1.5 h-10 w-10 absolute right-1 lg:right-5 top-1 z-[100]"
         >
           <MdClose className="h-6 w-6" />
         </RoundButton>

@@ -1,5 +1,5 @@
-import LibraryDaysLayout from "@/layouts/library_layout/days_layout";
+import { LibraryDietsLayout } from "@/layouts";
 
 export default function Page() {
-  return <LibraryDaysLayout>{}</LibraryDaysLayout>;
+  return <LibraryDietsLayout>{}</LibraryDietsLayout>;
 }

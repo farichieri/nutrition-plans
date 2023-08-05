@@ -11,8 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 import DropDown from "@/components/DropDown/DropDown";
 import Modal from "@/components/Modal/Modal";
 import Spinner from "@/components/Loader/Spinner";
-import SaveMeal from "./SaveMeal";
-import { ReplaceMealSelector } from "@/features/favorites";
+import SaveMeal from "../../../../library/components/library_meals/SaveMeal";
+import { ReplaceMealSelector } from "@/features/library";
 
 const optionStyle =
   "flex w-full cursor-pointer items-center gap-2 border-none bg-transparent px-4 py-2 opacity-60 hover:bg-slate-500/40 hover:opacity-100";

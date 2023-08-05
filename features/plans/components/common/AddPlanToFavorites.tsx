@@ -4,7 +4,7 @@ import {
   updateUser,
 } from "@/features/authentication";
 import { MdFavorite } from "react-icons/md";
-import { addFavoritePlan, removeFavoritePlan } from "@/features/favorites";
+import { addDietToLibrary, removeDietFromLibrary } from "@/features/library";
 import { Diet } from "../..";
 import { FC, useState } from "react";
 import { toast } from "react-hot-toast";
@@ -58,9 +58,9 @@ const AddPlanToFavorites: FC<Props> = ({ diet }) => {
         if (res.result === "success") {
           dispatch(setUpdateUser({ user, fields }));
           if (isAlreadyFavorite) {
-            dispatch(removeFavoritePlan(diet));
+            dispatch(removeDietFromLibrary(diet));
           } else {
-            dispatch(addFavoritePlan(diet));
+            dispatch(addDietToLibrary(diet));
           }
         }
       }

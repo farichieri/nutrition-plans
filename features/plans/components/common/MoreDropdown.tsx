@@ -3,7 +3,7 @@ import { deleteDiet } from "../../services";
 import { Diet } from "../..";
 import { FC, useState } from "react";
 import { MdContentCopy, MdDelete, MdOutlineMoreHoriz } from "react-icons/md";
-import { ReplaceDaySelector, SaveDay } from "@/features/favorites";
+import { ReplaceDietSelector, SaveDiet } from "@/features/library";
 import { selectAuthSlice } from "@/features/authentication";
 import { setDeleteDiet } from "../../slice";
 import { toast } from "react-hot-toast";
@@ -119,12 +119,12 @@ const MoreDropdown: FC<Props> = ({ diet }) => {
     <>
       {isOpen.save && (
         <Modal onClose={handleClose}>
-          <SaveDay diet={diet} handleClose={handleClose} />
+          <SaveDiet diet={diet} handleClose={handleClose} />
         </Modal>
       )}
       {isOpen.replace && (
         <Modal onClose={handleClose}>
-          <ReplaceDaySelector date={diet.date} handleClose={handleClose} />
+          <ReplaceDietSelector date={diet.date} handleClose={handleClose} />
         </Modal>
       )}
       <DropDown
