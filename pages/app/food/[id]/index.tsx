@@ -11,15 +11,15 @@ import {
   Instructions,
   ScaleSelector,
 } from "@/features/foods";
+import { AddFoodToLibrary } from "@/features/library";
 import { GetStaticPaths, GetStaticProps } from "next";
+import { PremiumSidebar } from "@/layouts";
 import { useRouter } from "next/router";
-import AddToFavorite from "@/features/favorites/components/AddToFavorite";
 import BackButton from "@/components/Buttons/BackButton";
 import BlurImage from "@/components/blur-image";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
-import { PremiumSidebar } from "@/layouts";
 
 export default function Page({ food }: { food: Food }) {
   const router = useRouter();
@@ -48,7 +48,7 @@ export default function Page({ food }: { food: Food }) {
           {food.name}
         </span>
         <div className="flex items-center justify-between gap-1">
-          <AddToFavorite food={food} />
+          <AddFoodToLibrary food={food} />
         </div>
       </SubPremiumNav>
       <section className="flex w-full select-none flex-col pt-[var(--nav-h)]">

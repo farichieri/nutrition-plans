@@ -57,7 +57,7 @@ const AddFood: FC<Props> = ({ dietMeal }) => {
             <div className="flex h-14 items-center justify-center gap-1 border-b text-sm font-semibold sm:text-xl">
               <span>Add new food to</span> <b>{dietMeal.name}</b>
             </div>
-            <div className="h-[85vh] min-h-[20rem] overflow-auto p-4">
+            <div className="h-[85vh] min-h-[20rem] overflow-auto p-1">
               <SearchBarCreate preFetch={false} />
               <Filters
                 updateRoute={false}

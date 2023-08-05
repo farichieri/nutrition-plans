@@ -17,6 +17,7 @@ import RecipeIngredients from "./recipe/create/Ingredients/RecipeIngredients";
 
 // search-food
 import FoodsSearched from "./search-food/FoodsSearched/FoodsSearched";
+import FoodCard from "./search-food/FoodsSearched/FoodCard";
 
 // common
 import FoodActions from "./common/FoodActions";
@@ -45,4 +46,5 @@ export {
   RecipeIngredients as RecipeCreateIngredients,
   ScaleSelector,
   ExtraScales,
+  FoodCard,
 };

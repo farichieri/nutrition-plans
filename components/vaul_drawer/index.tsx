@@ -49,7 +49,7 @@ const VaulDrawer: FC<Props> = ({ children, btnText }) => {
             {btnText}
           </button>
           {open && (
-            <Modal onClose={handleClose}>
+            <Modal onClose={handleClose} customClass="z-[200]">
               <section className="z-[100] flex h-auto max-h-[90vh] w-auto min-w-full max-w-[95vw] flex-col overflow-hidden px-2 py-4">
                 {children}
               </section>

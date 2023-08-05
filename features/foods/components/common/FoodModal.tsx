@@ -56,7 +56,7 @@ const FoodModal: FC<Props> = ({ food, handleClose, handleAdd }) => {
   };
 
   return (
-    <Modal onClose={handleClose} customClass="rounded-none sm:rounded-3xl">
+    <Modal onClose={handleClose} isMobileFullScreen={true}>
       <div className="flex h-screen w-xl max-w-full flex-col items-center  overflow-auto  sm:h-[95vh] sm:w-4xl">
         <div className="mt-5 flex w-full flex-col items-center gap-2 border-b p-4">
           <div className="flex w-full gap-2">

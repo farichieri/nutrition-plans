@@ -1,9 +1,9 @@
+import { AddFoodToLibrary } from "@/features/library";
 import { FC } from "react";
 import { Food } from "@/features/foods/types";
 import { formatTwoDecimals } from "@/utils";
 import { selectAuthSlice } from "@/features/authentication";
 import { useSelector } from "react-redux";
-import AddToFavorite from "@/features/favorites/components/AddToFavorite";
 import BlurImage from "@/components/blur-image";
 import Link from "next/link";
 
@@ -31,7 +31,7 @@ const FoodCard: FC<Props> = ({ food }) => {
           <span className="truncate text-ellipsis text-center text-lg font-semibold">
             {food.name}
           </span>
-          <AddToFavorite food={food} />
+          <AddFoodToLibrary food={food} />
         </div>
         <div className="text-xs leading-4">
           <div className="flex w-full justify-between opacity-70">
