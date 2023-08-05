@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { getDaysOfWeek } from "@/utils";
 import { selectAuthSlice } from "@/features/authentication";
 import { useSelector } from "react-redux";
@@ -12,6 +12,9 @@ const WeekPlan: FC<Props> = ({ dateInterval }) => {
   const { user } = useSelector(selectAuthSlice);
   const datesInterval = getDaysOfWeek(dateInterval);
   const isValidRange = datesInterval && datesInterval?.length <= 31;
+  const [planBeingEdited, setPlanBeingEdited] = useState<string | null>(null);
+
+  console.log(planBeingEdited);
 
   if (!user) return <></>;
 
@@ -22,7 +25,20 @@ const WeekPlan: FC<Props> = ({ dateInterval }) => {
         {isValidRange ? (
           <>
             {datesInterval?.map((date) => {
-              return <Plan date={date} key={date} />;
+              return (
+                <div
+                  key={date}
+                  className={`${
+                    planBeingEdited === null
+                      ? "bg-transparent blur-none"
+                      : planBeingEdited === date
+                      ? "bg-transparent "
+                      : "pointer-events-none select-none blur-sm"
+                  }`}
+                >
+                  <Plan date={date} setPlanBeingEdited={setPlanBeingEdited} />
+                </div>
+              );
             })}
           </>
         ) : (

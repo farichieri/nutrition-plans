@@ -12,9 +12,10 @@ import DayNote from "./DayNote";
 
 interface Props {
   date: string;
+  setPlanBeingEdited: (date: string | null) => void;
 }
 
-const Plan: FC<Props> = ({ date }) => {
+const Plan: FC<Props> = ({ date, setPlanBeingEdited }) => {
   const dispatch = useDispatch();
   const [isEditing, setIsEditing] = useState(false);
   const [isGeneratingPlan, setIsGeneratingPlan] = useState(false);
@@ -39,6 +40,14 @@ const Plan: FC<Props> = ({ date }) => {
       getDayDiet(date, user);
     }
   }, [date]);
+
+  useEffect(() => {
+    if (isEditing) {
+      setPlanBeingEdited(date);
+    } else {
+      setPlanBeingEdited(null);
+    }
+  }, [isEditing]);
 
   if (!user) return <></>;
 
@@ -76,13 +85,6 @@ const Plan: FC<Props> = ({ date }) => {
           <span className="text-xl font-semibold capitalize text-green-500">
             {diet?.planID?.replaceAll("_", " ")}
           </span>
-          {/* <SaveAndEditButton
-            diet={diet}
-            isEditing={isEditing}
-            setIsEditing={setIsEditing}
-            date={date}
-            user={user}
-          /> */}
         </div>
       )}
       {diet && <DayNote diet={diet} isEditing={isEditing} />}
@@ -93,7 +95,12 @@ const Plan: FC<Props> = ({ date }) => {
           <>
             {diet ? (
               <div className="mb-auto flex h-full w-full flex-col gap-2">
-                <ManualMeals isEditing={isEditing} diet={diet} />
+                <ManualMeals
+                  isEditing={isEditing}
+                  diet={diet}
+                  date={date}
+                  setIsEditing={setIsEditing}
+                />
               </div>
             ) : (
               <div className="m-auto flex justify-center">

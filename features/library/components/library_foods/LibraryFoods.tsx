@@ -27,13 +27,20 @@ const LibraryFoods: FC<Props> = () => {
 
   const getLibraryFoods = async () => {
     if (!favorites) return;
-    const res = await fetchFoodsByIDS(favorites);
-    if (res.result === "success") {
-      dispatch(setLibraryFoods(res.data));
-    } else {
-      dispatch(setLibraryFoods({}));
+
+    try {
+      dispatch(setIsSearching({ target: "foods", value: true }));
+      const res = await fetchFoodsByIDS(favorites);
+      if (res.result === "success") {
+        dispatch(setLibraryFoods(res.data));
+      } else {
+        dispatch(setLibraryFoods({}));
+      }
+    } catch (error) {
+      console.log({ error });
+    } finally {
+      dispatch(setIsSearching({ target: "foods", value: false }));
     }
-    dispatch(setIsSearching({ target: "foods", value: false }));
   };
 
   const sortFavorites = (foods: FoodGroupArray) => {
@@ -47,11 +54,11 @@ const LibraryFoods: FC<Props> = () => {
   }, []);
 
   if (noData && isSearchingFavoriteFoods) {
-    return <Spinner customClass="h-6 w-6 m-auto" />;
+    return <Spinner customClass="h-10 w-10 m-auto" />;
   }
 
   return (
-    <div className="flex w-full select-none grid-cols-fluid_lg flex-col items-start justify-center gap-2 px-0 sm:grid sm:grid-cols-fluid sm:px-0 lg:justify-start">
+    <div className="custom-grid grid w-full max-w-screen-2xl select-none flex-col items-start justify-center gap-2 px-0 sm:px-0">
       {noData ? (
         <div className="m-auto">No favorites found 😔</div>
       ) : (

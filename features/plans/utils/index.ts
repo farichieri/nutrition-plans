@@ -8,7 +8,6 @@ import { resetMeal } from "./resetMeal";
 import { replaceMealInDiet } from "./replaceMealInDiet";
 
 export * from "./dates";
-export * from "./automatedUtils";
 export * from "./common";
 export * from "./createDiet";
 

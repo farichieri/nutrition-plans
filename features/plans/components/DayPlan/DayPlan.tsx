@@ -51,7 +51,7 @@ const DayPlan: FC<Props> = ({ date }) => {
     <div className="relative h-full w-full rounded-lg p-2">
       {isGeneratingPlan || isLoadingDiet ? (
         <div className="fixed inset-0 mt-auto flex h-screen w-screen justify-center">
-          <Spinner customClass="h-9 w-9 m-auto" />
+          <Spinner customClass="h-10 w-10 m-auto" />
         </div>
       ) : (
         <>
@@ -61,15 +61,6 @@ const DayPlan: FC<Props> = ({ date }) => {
                 <span className="text-xl font-semibold capitalize text-green-500">
                   {planID?.replaceAll("_", " ")}
                 </span>
-                <div className=" ml-auto">
-                  <SaveAndEditButton
-                    diet={diet}
-                    isEditing={isEditing}
-                    setIsEditing={setIsEditing}
-                    date={date}
-                    user={user}
-                  />
-                </div>
               </div>
 
               <div>
@@ -77,11 +68,16 @@ const DayPlan: FC<Props> = ({ date }) => {
               </div>
               <div className="relative grid w-full gap-14 sm:grid-cols-fluid_lg sm:gap-5">
                 <div className="flex w-full flex-col rounded-md">
-                  <MealCards isEditing={isEditing} diet={diet} />
+                  <MealCards
+                    isEditing={isEditing}
+                    diet={diet}
+                    date={date}
+                    setIsEditing={setIsEditing}
+                  />
                 </div>
                 {diet && (
-                  <div className="z-[50]">
-                    <div className="sticky top-24 ">
+                  <div>
+                    <div className="sticky top-24 z-[50] ">
                       <Nutrition nutrients={diet.nutrients} planID={planID} />
                     </div>
                   </div>

@@ -23,13 +23,19 @@ const LibraryDiets: FC<Props> = () => {
 
   const fetchLibraryDays = async () => {
     if (!user) return;
-    const res = await getSavedDays({ userID: user.id });
-    if (res.result === "success") {
-      dispatch(setLibraryDiets(res.data));
-    } else {
-      dispatch(setLibraryDiets({}));
+    try {
+      dispatch(setIsSearching({ target: "diets", value: true }));
+      const res = await getSavedDays({ userID: user.id });
+      if (res.result === "success") {
+        dispatch(setLibraryDiets(res.data));
+      } else {
+        dispatch(setLibraryDiets({}));
+      }
+    } catch (error) {
+      console.log({ error });
+    } finally {
+      dispatch(setIsSearching({ target: "diets", value: false }));
     }
-    dispatch(setIsSearching({ target: "diets", value: false }));
   };
 
   const sortDays = (foods: DietGroupArray) => {
@@ -43,7 +49,7 @@ const LibraryDiets: FC<Props> = () => {
   }, []);
 
   if (noData && isSearchingFavoriteFoods) {
-    return <Spinner customClass="h-6 w-6 m-auto" />;
+    return <Spinner customClass="h-10 w-10 m-auto" />;
   }
 
   return (

@@ -2,6 +2,7 @@ import {
   MdArrowBackIosNew,
   MdEmojiEvents,
   MdFavorite,
+  MdLibraryBooks,
   MdRestaurantMenu,
   MdSettings,
   MdSettingsAccessibility,
@@ -59,7 +60,6 @@ const ProfileNav: FC = () => {
       pathname: ["/app/profile/meals"],
       icon: <MdRestaurantMenu className="h-6 w-6 text-green-500" />,
     },
-
     {
       name: "Settings",
       url: "/app/settings",
@@ -71,6 +71,12 @@ const ProfileNav: FC = () => {
       ],
       icon: <MdSettings className="h-6 w-6 text-green-500" />,
     },
+    {
+      name: "Library",
+      url: "/app/library/favorites",
+      pathname: ["/app/library/favorites"],
+      icon: <MdLibraryBooks className="h-6 w-6 text-green-500" />,
+    },
   ];
 
   return (
@@ -80,7 +86,7 @@ const ProfileNav: FC = () => {
         customClass="top-2 left-2 lg:absolute hidden"
       />
       <div
-        className={`flex w-full max-w-[95vw] gap-1 overflow-auto ${
+        className={`flex w-full max-w-[95vw] gap-x-1 overflow-auto ${
           isProfileRoute && isMobile ? "flex-col divide-y" : "flex-row"
         }`}
       >

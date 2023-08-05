@@ -10,6 +10,7 @@ module.exports = {
     extend: {
       colors: {
         "primary-color": "var(--primary-color)",
+        "primary-color-light": "var(--primary-color-light)",
         "secondary-color": "var(--secondary-color)",
         "tertiary-color": "var(--tertiary-color)",
       },

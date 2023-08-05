@@ -52,11 +52,17 @@ const PremiumSidebar: FC<Props> = () => {
             </div>
             <CollapsedPages />
           </div>
-
+          <div
+            onClick={handleSidebar}
+            className={`fixed inset-0 z-[70] bg-black/50 xl:hidden  ${
+              sidebarOpen ? "flex" : "hidden"
+            }
+            `}
+          ></div>
           <div
             className={`${
               sidebarOpen ? "left-0" : "left-[-16rem]"
-            } fixed left-0 top-0 z-[70] flex h-screen min-h-screen w-64 select-none flex-col gap-1 overflow-auto bg-primary-color px-2 pb-5 font-semibold backdrop-blur-sm transition-all duration-300 dark:border-slate-400/20 sm:gap-2 md:w-64 md:duration-0`}
+            } fixed left-0 top-0 z-[70] flex h-screen min-h-screen w-64 select-none flex-col gap-1 overflow-auto bg-primary-color px-2 pb-5 font-semibold backdrop-blur-sm transition-all duration-300 dark:border-slate-400/20 sm:gap-2 md:w-64 md:duration-300 xl:duration-0`}
           >
             <div className="flex w-full items-center py-1 pl-1">
               <div className="hidden md:flex">

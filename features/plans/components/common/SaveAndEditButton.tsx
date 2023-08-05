@@ -1,7 +1,8 @@
-import { FC, useState } from "react";
 import { Diet } from "@/features/plans";
+import { FC, useState } from "react";
 import { fetchDietByDate, updateDiet } from "@/features/plans/services";
 import { LuFileEdit, LuSave } from "react-icons/lu";
+import { MdOutlineCancel } from "react-icons/md";
 import { setDiet } from "@/features/plans/slice";
 import { toast } from "react-hot-toast";
 import { useDispatch } from "react-redux";
@@ -57,35 +58,33 @@ const SaveAndEditButton: FC<Props> = ({
   return (
     <>
       {isEditing ? (
-        <div className="fixed left-1/2 top-[3rem] z-[60] flex w-full -translate-x-1/2 items-center justify-center gap-4 bg-primary-color px-4 py-1">
-          <span>Editing ✏️ </span>
+        <div className="fixed left-1/2 top-[3rem] z-[60] flex h-[3rem] w-full -translate-x-1/2 items-center justify-center gap-4 bg-primary-color-light px-4 py-1 backdrop-blur-sm">
           <button
-            className="flex h-9  items-center justify-center gap-1 rounded-md border border-gray-500 bg-gray-500/20 px-3 py-1 hover:bg-gray-500/50 active:bg-gray-500"
+            className="flex h-9  items-center justify-center gap-1 rounded-3xl border border-gray-500 bg-gray-500/20 px-3 py-1 hover:bg-gray-500/50 active:bg-gray-500"
             onClick={cancelChanges}
           >
+            <span>Cancel</span>
             {isCanceling ? (
               <Spinner customClass="h-5 w-5" />
             ) : (
-              <span>Cancel</span>
+              <MdOutlineCancel className="h-5 w-5" />
             )}
           </button>
           <button
-            className="flex h-9 items-center justify-center gap-1 rounded-md border border-green-500 bg-green-500/20 px-3 py-1 hover:bg-green-500/50 active:bg-green-500"
+            className="flex h-9 items-center justify-center gap-1 rounded-3xl border border-green-600 bg-green-500 px-3 py-1 text-white hover:bg-green-500/50 active:bg-green-500"
             onClick={toggleButton}
           >
+            <span>Save</span>
             {isSaving ? (
-              <Spinner customClass="h-5 w-5" />
+              <Spinner customClass="h-5 w-5 stroke-white" />
             ) : (
-              <>
-                <span>Save</span>
-                <LuSave className="h-5 w-5" />
-              </>
+              <LuSave className="h-5 w-5" />
             )}
           </button>
         </div>
       ) : (
         <button
-          className="flex h-9 items-center justify-center gap-1 rounded-md border border-green-500 bg-green-500/20 px-3 py-1 hover:bg-green-500/50 active:bg-green-500"
+          className="flex h-9 items-center justify-center gap-1 rounded-3xl border border-green-600 bg-green-500 px-3 py-1 text-white hover:bg-green-500/50 active:bg-green-500"
           onClick={toggleButton}
         >
           <span>Edit</span>

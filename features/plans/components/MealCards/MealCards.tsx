@@ -4,23 +4,35 @@ import {
   reorderArr,
   getNutritionMerged,
 } from "@/utils";
-import { Diet, DietMeal, MealCard, Water } from "@/features/plans";
+import {
+  Diet,
+  DietMeal,
+  MealCard,
+  SaveAndEditButton,
+  Water,
+} from "@/features/plans";
 import { updateDietMealFoodsOrder } from "@/features/plans/slice";
 import { DragDropContext } from "@hello-pangea/dnd";
 import { FC } from "react";
 import { FoodGroupArray } from "@/features/foods";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { MdRestaurant } from "react-icons/md";
 import MoreDropdown from "../common/MoreDropdown";
+import { selectAuthSlice } from "@/features/authentication";
 
 interface Props {
   diet: Diet;
   isEditing: boolean;
+  date: string;
+  setIsEditing: Function;
 }
 
-const MealCards: FC<Props> = ({ diet, isEditing }) => {
+const MealCards: FC<Props> = ({ diet, isEditing, setIsEditing, date }) => {
   const dispatch = useDispatch();
   const dietMeals = diet?.meals;
+  const { user } = useSelector(selectAuthSlice);
+
+  if (!user) return <></>;
 
   const onDragEnd = (result: any) => {
     const { source, destination } = result;
@@ -80,7 +92,16 @@ const MealCards: FC<Props> = ({ diet, isEditing }) => {
           <MdRestaurant className="h-6 w-6 text-green-500" />
           <span className="text-2xl font-semibold">Meals</span>
         </div>
-        <MoreDropdown diet={diet} />
+        <div className="ml-auto flex items-center gap-4">
+          <MoreDropdown diet={diet} />
+          <SaveAndEditButton
+            diet={diet}
+            isEditing={isEditing}
+            setIsEditing={setIsEditing}
+            date={date}
+            user={user}
+          />
+        </div>
       </div>
       <div className="flex flex-col gap-2">
         {dietMeals && (

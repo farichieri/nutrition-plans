@@ -16,6 +16,7 @@ import {
   selectLayoutSlice,
   setSidebarAdminOpen,
   setSidebarEvolutionOpen,
+  setSidebarOpen,
 } from "@/features/layout/slice";
 import { AppRoutes } from "@/utils";
 import { BiFoodMenu, BiSolidPieChartAlt2 } from "react-icons/bi";
@@ -26,6 +27,7 @@ import { SubscribeButton } from "@/components/Buttons";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { useWindowWidth } from "@/hooks";
 
 interface Props {}
 
@@ -34,6 +36,8 @@ const WebPages: FC<Props> = () => {
   const router = useRouter();
   const { sidebarEvolutionOpen, sidebarAdminOpen, sidebarOpen } =
     useSelector(selectLayoutSlice);
+  const windowWidth = useWindowWidth();
+  const isSidebarRepleagable = windowWidth < 1280;
 
   const toggleEvolution = () => {
     if (sidebarEvolutionOpen === true) {
@@ -47,6 +51,12 @@ const WebPages: FC<Props> = () => {
       dispatch(setSidebarAdminOpen(false));
     } else {
       dispatch(setSidebarAdminOpen(true));
+    }
+  };
+
+  const handleSidebar = () => {
+    if (sidebarOpen === true && isSidebarRepleagable) {
+      dispatch(setSidebarOpen(false));
     }
   };
 
@@ -146,6 +156,7 @@ const WebPages: FC<Props> = () => {
         <Link
           key={page.name}
           href={page.url}
+          onClick={handleSidebar}
           className={
             `${
               page.pathname.includes(router.pathname) &&
@@ -162,7 +173,7 @@ const WebPages: FC<Props> = () => {
         <div className="flex flex-col py-1">
           <div className={fixedOptClass} onClick={toggleAdmin}>
             <MdCreate className="h-6 w-6 text-green-500" />
-            <div className="flex w-full cursor-pointer items-center justify-between">
+            <div className="flex w-full cursor-pointer items-center justify-between ">
               <span className="text-md  sm:text-lg">Create</span>
               <MdExpandMore
                 className={`duration-200 ease-in-out ${
@@ -180,6 +191,7 @@ const WebPages: FC<Props> = () => {
             {CREATE_PAGES.map((page) => (
               <Link
                 key={page.name}
+                onClick={handleSidebar}
                 href={page.url}
                 className={
                   `${
@@ -217,6 +229,7 @@ const WebPages: FC<Props> = () => {
               <Link
                 key={page.name}
                 href={page.url}
+                onClick={handleSidebar}
                 className={
                   `${
                     router.asPath === page.url &&
@@ -233,6 +246,7 @@ const WebPages: FC<Props> = () => {
 
         <Link
           href={"/app/settings"}
+          onClick={handleSidebar}
           className={
             `${
               router.asPath.includes("settings") &&
