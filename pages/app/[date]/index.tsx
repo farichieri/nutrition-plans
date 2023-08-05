@@ -12,11 +12,11 @@ import { selectPlansSlice, updateDietNutrition } from "@/features/plans/slice";
 import { StartsOfWeek } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import { useWindowWidth } from "@/hooks";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 import Sidebar from "@/layouts/components/Sidebar/PremiumSidebar";
 import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
-import { useWindowWidth } from "@/hooks";
 
 interface Props {
   date: string;

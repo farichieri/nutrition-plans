@@ -1,27 +1,18 @@
-import {
-  collection,
-  documentId,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/services/firebase/firebase.config";
 import { DietGroup } from "@/features/plans";
 import { Result } from "@/types";
 
-const getFavoritePlans = async ({
-  ids,
+const getSavedDays = async ({
   userID,
 }: {
-  ids: string[];
   userID: string;
 }): Promise<Result<DietGroup, unknown>> => {
-  console.log(`Fetching Diet IDS ${ids}`);
+  console.log(`Fetching Saved Diets`);
   try {
     let data: DietGroup = {};
-    const foodRef = collection(db, "users", userID, "diets");
-    const q = query(foodRef, where(documentId(), "in", ids));
-    const querySnapshot = await getDocs(q);
+    const docsRef = collection(db, "users", userID, "library", "saved", "days");
+    const querySnapshot = await getDocs(docsRef);
     querySnapshot.forEach((doc: any) => {
       data[doc.id] = doc.data();
     });
@@ -32,4 +23,4 @@ const getFavoritePlans = async ({
   }
 };
 
-export { getFavoritePlans };
+export { getSavedDays };

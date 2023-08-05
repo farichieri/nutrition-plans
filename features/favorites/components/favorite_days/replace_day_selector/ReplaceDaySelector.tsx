@@ -1,31 +1,33 @@
 import {
-  getFavoritePlans,
+  getSavedDays,
   selectFavoritesSlice,
   setFavoritePlans,
   setIsSearchingFavoritePlans,
 } from "@/features/favorites";
 import { Diet, DietGroupArray } from "@/features/plans";
 import { FC, useEffect } from "react";
+import { MdContentCopy } from "react-icons/md";
 import { selectAuthSlice } from "@/features/authentication";
 import { useDispatch, useSelector } from "react-redux";
-import Spinner from "@/components/Loader/Spinner";
 import PlanCard from "@/features/plans/components/common/PlanCard";
+import Spinner from "@/components/Loader/Spinner";
 
-interface Props {}
+interface Props {
+  date: string;
+  handleClose: () => void;
+}
 
-const FavoritePlans: FC<Props> = () => {
+const ReplaceDaySelector: FC<Props> = ({ date, handleClose }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
-  const plansRating = user?.ratings.plansRating;
-  const favorites = plansRating?.favorites;
 
   const { favoritePlans, isSearchingFavoriteFoods } =
     useSelector(selectFavoritesSlice);
   const noData = Object.keys(favoritePlans).length < 1;
 
   const fetchFavoritePlans = async () => {
-    if (!favorites || !user) return;
-    const res = await getFavoritePlans({ ids: favorites, userID: user.id });
+    if (!user) return;
+    const res = await getSavedDays({ userID: user.id });
     if (res.result === "success") {
       dispatch(setFavoritePlans(res.data));
     } else {
@@ -34,9 +36,9 @@ const FavoritePlans: FC<Props> = () => {
     dispatch(setIsSearchingFavoritePlans(false));
   };
 
-  const sortFavorites = (foods: DietGroupArray) => {
+  const sortDays = (foods: DietGroupArray) => {
     return foods.sort((a: Diet, b: Diet) => {
-      return a.date!.localeCompare(b.date!);
+      return a.dateCreated!.localeCompare(b.dateCreated!);
     });
   };
 
@@ -49,16 +51,25 @@ const FavoritePlans: FC<Props> = () => {
   }
 
   return (
-    <div className="grid w-full gap-10 sm:grid-cols-fluid_lg sm:gap-5 ">
+    <div className="flex w-3xl  max-w-[95vw] flex-col gap-2 p-2 pt-3 ">
+      <div className="flex items-center gap-1">
+        <MdContentCopy className="h-5 w-5 text-blue-500" />
+        <span className="font-semibold">Replace day with:</span>
+      </div>
       {noData ? (
-        <div className="m-auto">No favorites found 😔</div>
+        <div className="m-auto">No days saved found 😔</div>
       ) : (
-        sortFavorites(Object.values(favoritePlans)).map((diet) => (
-          <PlanCard key={diet.id} diet={diet} />
+        sortDays(Object.values(favoritePlans)).map((diet) => (
+          <PlanCard
+            replaceDate={date}
+            key={diet.id}
+            diet={diet}
+            handleClose={handleClose}
+          />
         ))
       )}
     </div>
   );
 };
 
-export default FavoritePlans;
+export default ReplaceDaySelector;

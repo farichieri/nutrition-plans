@@ -9,7 +9,7 @@ const InfoMessage: FC<Props> = ({ message }) => {
   return (
     <div className="flex items-start gap-1.5 opacity-50">
       <MdInfo className="block h-6 w-6 min-w-fit" />
-      <span>{message}</span>
+      <span className="text-sm leading-5">{message}</span>
     </div>
   );
 };

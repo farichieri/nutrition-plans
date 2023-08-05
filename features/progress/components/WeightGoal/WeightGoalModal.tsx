@@ -5,7 +5,6 @@ import {
   setUpdateUser,
   initialWeightGoal,
 } from "@/features/authentication";
-import { ButtonType } from "@/types";
 import { FC, useEffect, useState } from "react";
 import { formatISO } from "date-fns";
 import { getWeight, getWeightInKg, getWeightUnit } from "@/utils/calculations";
@@ -142,7 +141,7 @@ const WeightGoalModal: FC<Props> = ({ weightGoal }) => {
             content={addGoal ? "Discard" : "Delete"}
             isLoading={isDeleting}
             isDisabled={false}
-            type={ButtonType.Delete}
+            type={"delete"}
             className="w-full"
             onClick={handleDelete}
             action="submit"
@@ -152,7 +151,7 @@ const WeightGoalModal: FC<Props> = ({ weightGoal }) => {
             content={addGoal ? "Add" : "Save"}
             isLoading={isSaving}
             isDisabled={isDisabled}
-            type={ButtonType.Save}
+            type={"save"}
             className="w-full"
             onClick={handleSave}
             action="submit"

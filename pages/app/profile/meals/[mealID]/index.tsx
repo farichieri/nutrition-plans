@@ -15,20 +15,19 @@ import {
   MealSizesType,
   UserMeal,
 } from "@/features/meals";
-import { ButtonType } from "@/types";
+import { generateOptions } from "@/utils";
 import { GetServerSideProps } from "next";
 import { selectAuthSlice } from "@/features/authentication";
+import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import ActionButton from "@/components/Buttons/ActionButton";
 import FormAction from "@/components/Form/FormAction";
+import FormSelect from "@/components/Form/FormSelect";
 import Input from "@/components/Form/Input";
 import MealsLayout from "@/layouts/MealsLayout";
 import Modal from "@/components/Modal/Modal";
-import FormSelect from "@/components/Form/FormSelect";
-import { generateOptions } from "@/utils";
-import { toast } from "react-hot-toast";
 
 interface Props {
   mealID: string;
@@ -259,7 +258,7 @@ export default function Page({ mealID }: Props) {
               content="Delete Meal Setting"
               isLoading={isDeleting}
               isDisabled={false}
-              type={ButtonType.Delete}
+              type={"delete"}
               className="mt-auto w-44"
               onClick={handleDelete}
               action="submit"

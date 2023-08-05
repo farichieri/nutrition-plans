@@ -1,12 +1,7 @@
-import {
-  PlanTypes,
-  PlanTypesT,
-  Diet,
-  createDiet,
-  postDietToUserDiets,
-} from "@/features/plans";
-import { setDiet } from "@/features/plans/slice";
 import { PlansEnum } from "@/types";
+import { PlanTypes, PlanTypesT, Diet, createDiet } from "@/features/plans";
+import { postDietToUserDiets } from "@/features/plans/services";
+import { setDiet } from "@/features/plans/slice";
 import { useDispatch, useSelector } from "react-redux";
 import { User, selectAuthSlice } from "@/features/authentication";
 import { UserMeals, selectMealsSlice } from "@/features/meals";
@@ -56,6 +51,7 @@ const PlanGenerator: FC<Props> = ({ date, setIsGeneratingPlan }) => {
   ) => {
     setIsGeneratingPlan(true);
     const diet: Diet = createDiet(meals, planID, type, user.bodyData);
+    console.log({ diet });
     const res = await postDietToUserDiets({
       diet,
       planID,

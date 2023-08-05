@@ -1,7 +1,7 @@
 import {
+  removeFoodInDiet,
   selectPlansSlice,
   toggleEatenFood,
-  removeFoodInDiet,
   updateFoodInDiet,
 } from "@/features/plans/slice";
 import { CheckButton } from "@/components/Buttons";
@@ -9,22 +9,28 @@ import { FC } from "react";
 import { Food, getScaleOptions, orderScales } from "@/features/foods";
 import { FoodKeys } from "@/types/initial";
 import { formatTwoDecimals } from "@/utils";
+import { getDietFoodToggled } from "@/features/plans";
 import { getNewAmount } from "@/utils/nutritionHelpers";
 import { MdDelete, MdDragHandle } from "react-icons/md";
-import { updateDiet, Diet, getDietFoodToggled } from "@/features/plans";
+import { updateDiet } from "@/features/plans/services";
 import { useDispatch, useSelector } from "react-redux";
+import BlurImage from "@/components/blur-image";
 import FormSelect from "@/components/Form/FormSelect";
 import Input from "@/components/Form/Input";
 import NutritionInput from "@/components/Form/NutritionInput";
 import RoundButton from "@/components/Buttons/RoundButton";
-import BlurImage from "@/components/blur-image";
 
 interface MealInCardProps {
   food: Food;
   isEditing: boolean;
+  isEditable: boolean;
 }
 
-const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
+const FoodInMealCard: FC<MealInCardProps> = ({
+  food,
+  isEditing,
+  isEditable,
+}) => {
   const dispatch = useDispatch();
   const scalesMerged = orderScales({ scales: food.scales });
   const options = getScaleOptions(scalesMerged);
@@ -92,7 +98,9 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
   const scaleFormatted = formatTwoDecimals(food.scaleAmount);
   return (
     <div
-      className={`flex w-full gap-1 ${food.isEaten ? "bg-green-500/20" : ""}`}
+      className={`flex w-full gap-1 overflow-hidden ${
+        food.isEaten ? "bg-green-300 dark:bg-green-800" : ""
+      }`}
     >
       {isEditing && (
         <MdDragHandle className="m-auto h-6 w-6 min-w-fit opacity-50" />
@@ -165,16 +173,20 @@ const FoodInMealCard: FC<MealInCardProps> = ({ food, isEditing }) => {
             )}
           </div>
         </div>
-        {isEditing ? (
-          <RoundButton
-            customClass="w-10 h-10 p-1.5 my-auto ml-auto"
-            onClick={handleRemove}
-            id={food.id}
-          >
-            <MdDelete className="h-6 w-6" />
-          </RoundButton>
-        ) : (
-          <CheckButton onClick={toggleDone} checked={food.isEaten} />
+        {isEditable && (
+          <>
+            {isEditing ? (
+              <RoundButton
+                customClass="w-10 h-10 p-1.5 my-auto ml-auto"
+                onClick={handleRemove}
+                id={food.id}
+              >
+                <MdDelete className="h-6 w-6" />
+              </RoundButton>
+            ) : (
+              <CheckButton onClick={toggleDone} checked={food.isEaten} />
+            )}
+          </>
         )}
       </div>
     </div>

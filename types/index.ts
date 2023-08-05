@@ -1,14 +1,8 @@
-import { FoodKind } from "@/features/foods";
-
 export enum Theme {
   Dark = "dark",
   Light = "light",
 }
-export enum ButtonType {
-  Save = "save",
-  Delete = "delete",
-  Discard = "discard",
-}
+
 export enum SubscriptionState {
   Free = "free",
   Premium = "premium",

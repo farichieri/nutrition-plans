@@ -1,4 +1,3 @@
-import { ButtonType } from "@/types";
 import { MouseEventHandler } from "react";
 import Spinner from "../Loader/Spinner";
 
@@ -19,9 +18,9 @@ const ActionButton = ({
   isLoading: boolean;
   loadMessage: string;
   onClick: MouseEventHandler;
-  type: ButtonType;
+  type: "save" | "delete" | "discard";
 }) => {
-  if (type === ButtonType.Save) {
+  if (type === "save") {
     return (
       <button
         type={action}
@@ -36,7 +35,7 @@ const ActionButton = ({
         {isLoading ? <span>{loadMessage}</span> : <span>{content}</span>}
       </button>
     );
-  } else if (type === ButtonType.Delete) {
+  } else if (type === "delete") {
     return (
       <button
         type={action}
@@ -58,7 +57,7 @@ const ActionButton = ({
         )}
       </button>
     );
-  } else if (type === ButtonType.Discard) {
+  } else if (type === "discard") {
     return (
       <button
         type={action}

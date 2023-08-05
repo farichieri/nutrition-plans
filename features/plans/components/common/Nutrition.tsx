@@ -106,7 +106,7 @@ const Nutrition: FC<Props> = ({ nutrients, planID }) => {
   let isAllInRange = addIsAllInRange();
 
   return (
-    <div>
+    <div className="w-full">
       <div className="mb-1 flex h-9 w-full items-center gap-2">
         <BiSolidPieChartAlt2 className="h-6 w-6 text-green-500" />
         <span className="text-2xl font-semibold">Nutrition</span>
@@ -150,7 +150,7 @@ const Nutrition: FC<Props> = ({ nutrients, planID }) => {
                       </span>
                     </div>
                     <div className="relative ml-auto flex basis-1/12 items-center justify-end ">
-                      <div className="mx-2 w-10 ">
+                      <div className="mx-2 w-12 ">
                         {Number(nut.value) > Number(nut.max) && (
                           <span className="flex text-xs text-red-500">
                             {formatTwoDecimals(nut.diff)}🔻

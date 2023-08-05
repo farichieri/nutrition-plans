@@ -1,15 +1,15 @@
 import {
   createUserMeal,
-  UserMeal,
   selectMealsSlice,
   setAddNewUserMeal,
+  UserMeal,
 } from "@/features/meals";
 import { FC } from "react";
 import { selectAuthSlice } from "@/features/authentication";
+import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "@/components/Modal/Modal";
 import SubmitButton from "@/components/Buttons/SubmitButton";
-import { toast } from "react-hot-toast";
 
 interface Props {
   isCreating: null | UserMeal;

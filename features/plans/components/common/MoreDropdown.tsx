@@ -1,22 +1,15 @@
-import {
-  MdContentCopy,
-  MdDelete,
-  MdFavorite,
-  MdOutlineMoreHoriz,
-} from "react-icons/md";
-import {
-  selectAuthSlice,
-  setUpdateUser,
-  updateUser,
-} from "@/features/authentication";
-import { addFavoritePlan, removeFavoritePlan } from "@/features/favorites";
+import { AiFillFileAdd } from "react-icons/ai";
 import { deleteDiet } from "../../services";
 import { Diet } from "../..";
 import { FC, useState } from "react";
+import { MdContentCopy, MdDelete, MdOutlineMoreHoriz } from "react-icons/md";
+import { ReplaceDaySelector, SaveDay } from "@/features/favorites";
+import { selectAuthSlice } from "@/features/authentication";
 import { setDeleteDiet } from "../../slice";
 import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import DropDown from "@/components/DropDown/DropDown";
+import Modal from "@/components/Modal/Modal";
 import Spinner from "@/components/Loader/Spinner";
 
 const optionStyle =
@@ -35,12 +28,12 @@ const MoreDropdown: FC<Props> = ({ diet }) => {
     replace: false,
     delete: false,
   });
+  const [isOpen, setIsOpen] = useState({
+    save: false,
+    replace: false,
+  });
 
-  if (!user || !diet.id) return <></>;
-
-  const isFavorite: boolean = user.ratings.plansRating.favorites.includes(
-    diet.id
-  );
+  if (!user || !diet.id || !diet.date) return <></>;
 
   const handleDelete = async () => {
     toast(
@@ -82,74 +75,36 @@ const MoreDropdown: FC<Props> = ({ diet }) => {
     );
   };
 
-  const handleFavoriteDiet = async () => {
-    const favIndex = user.ratings.plansRating.favorites.indexOf(diet.id!);
-    const isAlreadyFavorite = favIndex > -1;
-    const { plansRating } = user.ratings;
+  const handleSave = async () => {
+    setIsOpen({ ...isOpen, save: true });
+    setCloseDrop(true);
+  };
 
-    try {
-      setIsLoading({ ...isLoading, favorite: true });
+  const handleReplace = async () => {
+    setIsOpen({ ...isOpen, replace: true });
+    setCloseDrop(true);
+  };
 
-      let favorites = [...plansRating["favorites"]];
-
-      if (isAlreadyFavorite) {
-        favorites.splice(favIndex, 1);
-      } else {
-        favorites = [...favorites, diet.id!];
-      }
-
-      let fields = {
-        ratings: {
-          ...user.ratings,
-          plansRating: {
-            ...user.ratings.plansRating,
-            favorites: favorites,
-          },
-        },
-      };
-
-      if (JSON.stringify(fields.ratings) !== JSON.stringify(user.ratings)) {
-        const res = await updateUser({ user, fields });
-        if (res.result === "success") {
-          dispatch(setUpdateUser({ user, fields }));
-          if (isAlreadyFavorite) {
-            dispatch(removeFavoritePlan(diet));
-          } else {
-            dispatch(addFavoritePlan(diet));
-          }
-        }
-      }
-      toast.success(
-        `Diet ${isAlreadyFavorite ? "removed from" : "added to"} favorites.`
-      );
-    } catch (error) {
-      console.log({ error });
-      toast.error(
-        `
-        Error ${isAlreadyFavorite ? "removing from" : "adding to"} favorites.`
-      );
-    } finally {
-      setIsLoading({ ...isLoading, favorite: false });
-    }
+  const handleClose = () => {
+    setCloseDrop(true);
+    setIsOpen({ ...isOpen, save: false, replace: false });
   };
 
   const OPTIONS = [
     {
-      text: "Favorite Day",
+      text: "Save Day",
       icon: (
-        <MdFavorite
-          className={`pointer-events-none h-5 w-5  ${
-            isFavorite ? "text-green-500" : "text-gray-400 dark:text-gray-300"
-          }`}
+        <AiFillFileAdd
+          className={`pointer-events-none h-5 w-5  text-green-500`}
         />
       ),
-      onClick: handleFavoriteDiet,
+      onClick: handleSave,
       isLoading: isLoading.favorite,
     },
     {
       text: "Replace Day",
       icon: <MdContentCopy className="h-5 w-5 text-blue-500" />,
-      onClick: () => {},
+      onClick: handleReplace,
       isLoading: isLoading.replace,
     },
     {
@@ -161,28 +116,40 @@ const MoreDropdown: FC<Props> = ({ diet }) => {
   ];
 
   return (
-    <DropDown
-      closeDrop={closeDrop}
-      setCloseDrop={setCloseDrop}
-      btnText={
-        <MdOutlineMoreHoriz className="h-6 w-6 cursor-pointer text-gray-500" />
-      }
-    >
-      <div className=" py-2">
-        {OPTIONS.map((option, index) => (
-          <div key={index} className={optionStyle} onClick={option.onClick}>
-            <>
-              {option.isLoading ? (
-                <Spinner customClass="h-5 w-5" />
-              ) : (
-                <>{option.icon}</>
-              )}
-            </>
-            <span>{option.text}</span>
-          </div>
-        ))}
-      </div>
-    </DropDown>
+    <>
+      {isOpen.save && (
+        <Modal onClose={handleClose}>
+          <SaveDay diet={diet} handleClose={handleClose} />
+        </Modal>
+      )}
+      {isOpen.replace && (
+        <Modal onClose={handleClose}>
+          <ReplaceDaySelector date={diet.date} handleClose={handleClose} />
+        </Modal>
+      )}
+      <DropDown
+        closeDrop={closeDrop}
+        setCloseDrop={setCloseDrop}
+        btnText={
+          <MdOutlineMoreHoriz className="h-6 w-6 cursor-pointer text-gray-500" />
+        }
+      >
+        <div className=" py-2">
+          {OPTIONS.map((option, index) => (
+            <div key={index} className={optionStyle} onClick={option.onClick}>
+              <>
+                {option.isLoading ? (
+                  <Spinner customClass="h-5 w-5" />
+                ) : (
+                  <>{option.icon}</>
+                )}
+              </>
+              <span>{option.text}</span>
+            </div>
+          ))}
+        </div>
+      </DropDown>
+    </>
   );
 };
 

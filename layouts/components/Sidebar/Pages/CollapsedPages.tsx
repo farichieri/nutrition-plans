@@ -1,15 +1,15 @@
 import {
   MdAutoGraph,
-  MdFavorite,
+  MdLibraryBooks,
   MdLocalGroceryStore,
   MdOutlineCalendarMonth,
   MdPerson,
 } from "react-icons/md";
+import { AppRoutes } from "@/utils";
 import { FC } from "react";
 import { RiSearchLine } from "react-icons/ri";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { AppRoutes } from "@/utils";
 
 interface Props {}
 
@@ -42,14 +42,14 @@ const CollapsedPages: FC<Props> = () => {
       icon: <MdLocalGroceryStore className="h-6 w-6 text-green-500" />,
     },
     {
-      name: "Favorites",
-      url: "/app/favorites",
+      name: "Library",
+      url: "/app/library/favorites",
       pathname: [
-        "/app/favorites",
-        "/app/favorites/meals",
-        "/app/favorites/plans",
+        "/app/library/favorites",
+        "/app/library/meals",
+        "/app/library/days",
       ],
-      icon: <MdFavorite className="h-6 w-6 text-green-500" />,
+      icon: <MdLibraryBooks className="h-6 w-6 text-green-500" />,
     },
     {
       name: "Profile",
