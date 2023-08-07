@@ -5,7 +5,7 @@ import ThemeSwitcher from "@/components/theme-switcher";
 export default function Footer() {
   return (
     <footer className="flex min-h-[12rem] w-full flex-col items-center justify-center border-t border-gray-300 dark:border-gray-400/10">
-      <div className="flex h-full w-full flex-col  items-center justify-center gap-4 px-9 py-10 ">
+      <div className="flex h-full w-full flex-col  items-center justify-center gap-4 px-9 py-14 ">
         <span className=" flex text-2xl font-bold ">Nutrition Plans</span>
         <div className="flex flex-col text-center text-sm">
           <span className="opacity-50">© 2023 Nutrition Plans Inc.</span>
@@ -19,7 +19,7 @@ export default function Footer() {
             hello@nutritionplans.co
           </a>
         </div>
-        <div className="flex gap-2">
+        <div className="flex items-center gap-2">
           <a
             aria-label="Twitter"
             href="https://www.twitter.com/nutritionplans_"

@@ -20,12 +20,15 @@ import BlurImage from "@/components/blur-image";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
+import { useWindowWidth } from "@/hooks";
 
 export default function Page({ food }: { food: Food }) {
   const router = useRouter();
   const { id } = router.query;
   const { amount, scale } = router.query;
   const defaultScale = food && getDefaultScale(food.scales);
+  const windowWidth = useWindowWidth();
+  const isMobile = windowWidth < 1024;
 
   if (!food || food?.id !== id || !defaultScale) {
     return (
@@ -40,9 +43,16 @@ export default function Page({ food }: { food: Food }) {
 
   return (
     <PremiumLayout>
-      <PremiumNav hideScrolling={false} />
-      <PremiumSidebar />
-      <SubPremiumNav title={""} customClass="top-[var(--subnav-h)]">
+      {!isMobile && (
+        <>
+          <PremiumNav hideScrolling={false} />
+          <PremiumSidebar />
+        </>
+      )}
+      <SubPremiumNav
+        title={""}
+        customClass={`${isMobile ? "top-0" : "top-[var(--subnav-h)]"}`}
+      >
         <BackButton />
         <span className="truncate text-ellipsis font-semibold sm:text-xl">
           {food.name}
@@ -51,7 +61,11 @@ export default function Page({ food }: { food: Food }) {
           <AddFoodToLibrary food={food} />
         </div>
       </SubPremiumNav>
-      <section className="flex w-full select-none flex-col pt-[var(--nav-h)]">
+      <section
+        className={`flex w-full select-none flex-col ${
+          isMobile ? "pt-0" : "pt-[var(--nav-h)]"
+        }`}
+      >
         <div className="p-2 sm:p-4 lg:p-8">
           <div className="divide grid w-full gap-10 sm:grid-cols-fluid_lg sm:gap-20">
             <div className="flex w-full flex-col gap-5 ">

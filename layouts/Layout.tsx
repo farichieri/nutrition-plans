@@ -9,7 +9,6 @@ import {
   getUser,
   selectAuthSlice,
   setLoginError,
-  setIsSigningUser,
   setIsFirstDataLoaded,
 } from "@/features/authentication";
 import { auth } from "@/services/firebase/firebase.config";
@@ -69,7 +68,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     }
     if (!isVerifyingVersion) {
       // Verify User
-      onAuthStateChanged(auth, async (user) => {
+      const unsubscribe = onAuthStateChanged(auth, async (user) => {
         if (user) {
           const [userRes] = await Promise.all([getUser(user.uid)]);
           if (userRes.result === "success") {
@@ -81,6 +80,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           dispatch(setLoginError());
         }
       });
+      return () => unsubscribe();
     }
   }, [isVerifyingVersion]);
 

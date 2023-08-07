@@ -31,7 +31,7 @@ const PremiumSidebar: FC<Props> = () => {
   return (
     <>
       {isMobile ? (
-        <div className="fixed bottom-0 z-[150] flex w-full items-center border-t border-[#00000080] bg-primary-color dark:border-[#7c7c7c1a]">
+        <div className="fixed bottom-0 z-[150] flex w-full items-center border-t border-[#46464623] bg-primary-color dark:border-[#7c7c7c1a]">
           <MobilePages />
         </div>
       ) : (
@@ -69,7 +69,7 @@ const PremiumSidebar: FC<Props> = () => {
                 <ToggleSidebar />
               </div>
               <span className="py-1 pl-3 text-lg font-semibold">
-                <Logo hideText={false} />
+                <Logo hideText={true} />
               </span>
             </div>
             <WebPages />

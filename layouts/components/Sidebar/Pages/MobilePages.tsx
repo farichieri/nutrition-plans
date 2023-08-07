@@ -70,7 +70,9 @@ const MobilePages: FC<Props> = () => {
           <span
             className={`${
               page.url === "/app/progress"
-                ? " border-1 border-white p-1.5"
+                ? `border-1 p-1.5 ${
+                    router.pathname === page.url ? "border-green-500" : ""
+                  }`
                 : "border-transparent"
             } rounded-full border `}
           >

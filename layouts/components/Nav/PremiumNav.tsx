@@ -1,6 +1,5 @@
 import { AppRoutes } from "@/utils";
 import { FC, ReactNode, useEffect, useState } from "react";
-import { SubscribeButton } from "@/components/Buttons";
 import Avatar from "@/components/Avatar/Avatar";
 import AvatarDropDown from "@/components/DropDown/AvatarDropDown/AvatarDropDown";
 import Feedback from "@/features/client-contact/components/Feedback/Feedback";
@@ -60,7 +59,7 @@ const PremiumNav: FC<Props> = ({
         <div className="text-md flex w-fit min-w-fit  cursor-pointer items-center justify-start font-semibold sm:text-2xl md:ml-20">
           <div className="px-2 md:hidden">{!isMobile && <ToggleSidebar />}</div>
           <Link href={AppRoutes.today}>
-            <Logo hideText={isMobile} />
+            <Logo hideText={true} />
           </Link>
         </div>
         {title && (

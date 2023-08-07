@@ -111,15 +111,15 @@ const FoodInMealCard: FC<MealInCardProps> = ({
         />
       </span>
       <div className="flex h-auto w-full pr-2">
-        <div className="flex h-full w-full flex-col py-1">
+        <div className="flex h-full w-full flex-col justify-center gap-1 py-1">
           <div className="flex w-full max-w-max flex-col ">
-            <span className="text-base font-semibold capitalize leading-4 tracking-tight">
+            <span className="text-base font-medium capitalize leading-4 tracking-tight">
               {food.name}
             </span>
             {/* <span className="text-sm opacity-50">{food.description}</span> */}
           </div>
           <div className="flex h-full flex-col">
-            <div className="mt-auto  flex w-full flex-wrap items-baseline gap-1">
+            <div className="mt-auto flex w-full flex-wrap items-baseline gap-1">
               {isEditing ? (
                 <NutritionInput
                   handleChange={handleChange}
@@ -134,7 +134,7 @@ const FoodInMealCard: FC<MealInCardProps> = ({
                   readOnly={!isEditing}
                 />
               ) : (
-                <span className="text-sm">{scaleFormatted}</span>
+                <span className="text-xs opacity-70">{scaleFormatted}</span>
               )}
               {isEditing ? (
                 <FormSelect
@@ -149,7 +149,7 @@ const FoodInMealCard: FC<MealInCardProps> = ({
                   readOnly={!isEditing}
                 />
               ) : (
-                <span className="text-sm lowercase">
+                <span className="text-xs lowercase opacity-70">
                   {`${food.scaleName.toLowerCase()}${
                     scaleFormatted > 1 ? "" : ""
                   }`}
