@@ -62,7 +62,7 @@ const MealCard: FC<Props> = ({ dietMeal, mealKcals, isEditing }) => {
       }`}
     >
       <div
-        className={`flex items-center gap-2 rounded-t-xl border-b px-2 py-1 text-center ${
+        className={`flex h-11 items-center gap-2 rounded-t-xl border-b px-2 text-center ${
           allEaten
             ? "border-green-400 bg-green-400 dark:border-green-900 dark:bg-green-900"
             : "bg-black/10"

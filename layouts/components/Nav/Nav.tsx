@@ -73,7 +73,7 @@ const NavBar: FC<Props> = () => {
               <Link
                 href={page.url}
                 key={page.name}
-                className={`rounded-3xl px-3 py-1 duration-300 hover:opacity-100 ${
+                className={`rounded-3xl px-3 py-1 text-sm duration-300 hover:opacity-100 ${
                   router.asPath === page.url
                     ? "bg-slate-400/20 opacity-100"
                     : "opacity-50"

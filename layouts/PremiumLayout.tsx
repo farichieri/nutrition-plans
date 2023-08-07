@@ -46,7 +46,7 @@ export default function PremiumLayout({ children }: Props) {
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Nutrition Plans</title>
+        <title>NutritionPlans - App</title>
       </Head>
       {(isCreatingUser || isSigningUser || !isFirstDataLoaded) && <Loader />}
       {user && user.isProfileCompleted && <WelcomeSteps />}

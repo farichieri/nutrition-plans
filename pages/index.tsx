@@ -34,7 +34,7 @@ export default function Home({ plans }: Props) {
             <PrimaryButton onClick={() => {}} content={`Start my plan now`} />
           </Link>
         </div>
-        <span className="flex h-full w-full overflow-hidden  rounded-lg shadow-sm duration-300 dark:shadow-gray-400/20">
+        <span className="flex h-full w-full overflow-hidden rounded-lg border shadow-sm duration-300">
           <BlurImage
             image={{
               imageURL: "/images/general/landing-img.png",
