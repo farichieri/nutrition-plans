@@ -4,6 +4,7 @@ import {
   setUpdateUser,
   updateUser,
 } from "@/features/authentication";
+import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
 import { FC, useEffect, useState } from "react";
 import { MdRestaurant, MdVerified } from "react-icons/md";
 import { MEAL_PLANS } from "@/data/content";
@@ -14,13 +15,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { yupResolver } from "@hookform/resolvers/yup";
+import BlurImage from "@/components/blur-image";
 import FormError from "@/components/Errors/FormError";
-import Image from "next/image";
 import InfoMessage from "@/components/Layout/InfoMessage";
 import SubmitButton from "@/components/Buttons/SubmitButton";
-import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
-import { blurDataURL } from "@/components/Layout/BlurDataImage";
-import BlurImage from "@/components/blur-image";
 
 interface FormValues {
   planSelected: PlansEnum | null;
@@ -96,7 +94,7 @@ const PlanSelector: FC<Props> = ({ handleContinue }) => {
   const [isDisabled, setIsDisabled] = useState(false);
 
   useEffect(() => {
-    if (values.planSelected === user.planSelected) {
+    if (values.planSelected === user.planSelected && !isCreatingRoute) {
       setIsDisabled(true);
     } else {
       setIsDisabled(false);

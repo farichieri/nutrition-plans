@@ -60,7 +60,7 @@ const LibraryFoods: FC<Props> = () => {
   return (
     <div className="custom-grid grid w-full max-w-screen-2xl select-none flex-col items-start justify-center gap-2 px-0 sm:px-0">
       {noData ? (
-        <div className="m-auto">No favorites found 😔</div>
+        <div className="m-auto">No Favorite Foods found.</div>
       ) : (
         sortFavorites(Object.values(libraryFoods)).map((food) => (
           <FoodCard food={food} key={food.id} />

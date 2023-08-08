@@ -208,7 +208,7 @@ const WebPages: FC<Props> = () => {
         </div>
 
         <div className="flex flex-col  py-1">
-          <div className={fixedOptClass} onClick={toggleEvolution}>
+          {/* <div className={fixedOptClass} onClick={toggleEvolution}>
             <MdPerson className="h-6 w-6 text-green-500" />
             <div className="flex w-full cursor-pointer items-center justify-between">
               <span className="text-md sm:text-lg">Profile</span>
@@ -241,7 +241,21 @@ const WebPages: FC<Props> = () => {
                 {page.name}
               </Link>
             ))}
-          </div>
+          </div> */}
+
+          <Link
+            href={"/app/profile"}
+            onClick={handleSidebar}
+            className={
+              `${
+                router.pathname.includes("/profile") &&
+                " bg-slate-500/30 font-semibold"
+              } px-2` + fixedOptClass
+            }
+          >
+            <MdPerson className="h-6 w-6 text-green-500" />
+            <span className="text-md sm:text-lg">Profile</span>{" "}
+          </Link>
         </div>
 
         <Link

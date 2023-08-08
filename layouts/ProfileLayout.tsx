@@ -1,10 +1,10 @@
 import { PremiumSidebar } from "./components";
 import { ProfileNav } from "@/features/profile";
 import { useRouter } from "next/router";
-import BackNav from "@/components/Layout/BackNav";
+import { useWindowWidth } from "@/hooks";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "./components/Nav/PremiumNav";
-import { useWindowWidth } from "@/hooks";
+import BackNav from "@/components/Layout/BackNav";
 
 interface Props {
   children: React.ReactNode;
@@ -19,14 +19,21 @@ export default function ProfileLayout({ children }: Props) {
     <PremiumLayout>
       <PremiumNav hideScrolling={false} />
       <PremiumSidebar />
-      <section className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center gap-5 px-2 pb-2 pt-2 sm:px-5">
-        {(router.asPath !== "/app/profile" || !isMobile) && (
-          <div className="w-full min-w-fit max-w-xxs lg:flex">
-            <ProfileNav />
-          </div>
+      <section className="mx-auto flex w-full max-w-7xl flex-col items-center justify-center gap-5 px-2 pb-2 pt-2 sm:px-5">
+        {router.asPath !== "/app/profile" && (
+          <BackNav
+            title="Profile"
+            href="/app/profile"
+            customClass="lg:hidden"
+          />
         )}
-        <div className="flex w-full max-w-4xl flex-col items-center gap-10 lg:pt-0">
-          {children}
+        <div className="flex w-full items-start gap-5 pt-[var(--nav-h)] lg:pt-0">
+          {(router.asPath !== "/app/profile" || !isMobile) && (
+            <div className="top-[var(--nav-h)] hidden w-full min-w-fit max-w-xxs lg:sticky lg:flex">
+              <ProfileNav />
+            </div>
+          )}
+          <div className="w-full">{children}</div>
         </div>
       </section>
     </PremiumLayout>

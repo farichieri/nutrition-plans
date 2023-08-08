@@ -55,7 +55,7 @@ const LibraryMeals: FC<Props> = () => {
   return (
     <div className="flex w-full max-w-[95vw] flex-col gap-2 p-2 ">
       {noData ? (
-        <div className="m-auto">No favorites found 😔</div>
+        <div className="m-auto">No Saved Meals Found.</div>
       ) : (
         sortDays(Object.values(libraryMeals)).map((meal) => (
           <SavedMealCard

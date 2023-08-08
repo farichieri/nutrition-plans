@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import BackNav from "@/components/Layout/BackNav";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "./components/Nav/PremiumNav";
-import { ProfileNav } from "@/features/profile";
 
 interface Props {
   children: React.ReactNode;
@@ -25,11 +24,8 @@ export default function SettingsLayout({ children }: Props) {
             customClass="lg:hidden"
           />
         )}
-        <div className="hidden w-full min-w-fit max-w-xxs lg:flex">
-          <ProfileNav />
-        </div>
-        <div className="flex w-full items-start gap-10 pt-[var(--nav-h)] lg:pt-0">
-          <div className="hidden w-full min-w-fit max-w-xxs lg:flex">
+        <div className="flex w-full items-start gap-5 pt-[var(--nav-h)] lg:pt-0">
+          <div className="sticky top-[var(--nav-h)] hidden w-full min-w-fit max-w-xxs lg:flex">
             <SettingsNav />
           </div>
           <div className="w-full">{children}</div>
