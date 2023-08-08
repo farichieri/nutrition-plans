@@ -1,7 +1,8 @@
 import {
   MdArrowBackIosNew,
+  MdArrowForward,
+  MdArrowForwardIos,
   MdEmojiEvents,
-  MdFavorite,
   MdLibraryBooks,
   MdRestaurantMenu,
   MdSettings,
@@ -32,7 +33,10 @@ const ProfileNav: FC = () => {
     {
       name: "Nutrition Targets",
       url: "/app/profile/nutrition-values",
-      pathname: ["/app/profile/nutrition-values", "/app/profile"],
+      pathname: [
+        "/app/profile/nutrition-values",
+        `${!isMobile ? "/app/profile" : ""}`,
+      ],
       icon: <BiSolidPieChartAlt2 className="h-6 w-6 text-green-500" />,
     },
     {
@@ -60,6 +64,18 @@ const ProfileNav: FC = () => {
       pathname: ["/app/profile/meals"],
       icon: <MdRestaurantMenu className="h-6 w-6 text-green-500" />,
     },
+  ];
+
+  const LIBRARY_PAGE = [
+    {
+      name: "Library",
+      url: "/app/library/favorites",
+      pathname: ["/app/library/favorites"],
+      icon: <MdLibraryBooks className="h-6 w-6 text-green-500" />,
+    },
+  ];
+
+  const SETTINGS_PAGE = [
     {
       name: "Settings",
       url: "/app/settings",
@@ -71,23 +87,20 @@ const ProfileNav: FC = () => {
       ],
       icon: <MdSettings className="h-6 w-6 text-green-500" />,
     },
-    {
-      name: "Library",
-      url: "/app/library/favorites",
-      pathname: ["/app/library/favorites"],
-      icon: <MdLibraryBooks className="h-6 w-6 text-green-500" />,
-    },
   ];
 
   return (
-    <nav className="z-[60] m-auto flex w-full flex-col items-center border-y bg-primary-color ">
+    <nav
+      className={`z-[60] m-auto flex w-full flex-col items-center bg-primary-color`}
+    >
       <BackButton
         route={AppRoutes.nav_menu}
         customClass="top-2 left-2 lg:absolute hidden"
       />
+
       <div
-        className={`flex w-full max-w-[95vw] gap-x-1 overflow-auto ${
-          isProfileRoute && isMobile ? "flex-col divide-y" : "flex-row"
+        className={`flex w-full max-w-[95vw] flex-col  ${
+          isMobile && "divide-y"
         }`}
       >
         {PROFILE_PAGES.map((page) => {
@@ -98,25 +111,71 @@ const ProfileNav: FC = () => {
             return null;
           }
           return (
-            <div className="min-w-fit" key={page.url}>
-              <Link
-                href={page.url}
-                key={page.url}
-                className={`my-1 flex w-full items-center justify-start gap-1 rounded-md px-3 py-1.5 text-base font-medium capitalize duration-100 hover:bg-slate-500/20 hover:opacity-100 ${
-                  page.pathname?.includes(router.pathname)
-                    ? "bg-slate-500/20"
-                    : ""
-                } `}
-              >
-                {page.icon}
-                {page.name}
-              </Link>
-            </div>
+            <LinkOption
+              key={page.name}
+              name={page.name}
+              url={page.url}
+              pathname={page.pathname}
+              icon={page.icon}
+            />
           );
         })}
+      </div>
+      <div className="mt-10 w-full divide-y border-y">
+        {LIBRARY_PAGE.map((page) => (
+          <LinkOption
+            key={page.name}
+            name={page.name}
+            url={page.url}
+            pathname={page.pathname}
+            icon={page.icon}
+            isOutside
+          />
+        ))}
+        {SETTINGS_PAGE.map((page) => (
+          <LinkOption
+            key={page.name}
+            name={page.name}
+            url={page.url}
+            pathname={page.pathname}
+            icon={page.icon}
+            isOutside
+          />
+        ))}
       </div>
     </nav>
   );
 };
 
 export default ProfileNav;
+
+const LinkOption = ({
+  name,
+  icon,
+  url,
+  pathname,
+  isOutside,
+}: {
+  name: string;
+  icon: JSX.Element;
+  url: string;
+  pathname: string[];
+  isOutside?: boolean;
+}) => {
+  const router = useRouter();
+
+  return (
+    <div className="min-w-fit">
+      <Link
+        href={url}
+        className={`my-1 flex w-full items-center justify-start gap-1 rounded-md px-3 py-1.5 text-base font-medium capitalize duration-100 hover:bg-slate-500/20 hover:opacity-100 ${
+          pathname?.includes(router.pathname) ? "bg-slate-500/20" : ""
+        }`}
+      >
+        {icon}
+        {name}
+        {isOutside && <MdArrowForwardIos className="ml-auto text-xs" />}
+      </Link>
+    </div>
+  );
+};

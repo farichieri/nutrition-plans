@@ -35,12 +35,18 @@ const SettingsNav: FC<Props> = ({}) => {
   ];
 
   return (
-    <nav className="z-[60] m-auto flex w-full flex-col items-center border-y bg-primary-color">
+    <nav
+      className={`z-[60] m-auto flex w-full flex-col items-center bg-primary-color ${
+        isMobile && "border-y"
+      }`}
+    >
       <BackButton
         route={AppRoutes.nav_menu}
         customClass="top-2 left-2 lg:absolute hidden"
       />
-      <div className="fle w-full max-w-[95vw] flex-col divide-y">
+      <div
+        className={`fle w-full max-w-[95vw] flex-col ${isMobile && "divide-y"}`}
+      >
         {SETTINGS_PAGES.map((page) => {
           return (
             <div className="min-w-fit" key={page.url}>
