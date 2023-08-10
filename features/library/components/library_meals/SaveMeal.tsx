@@ -59,7 +59,7 @@ const SaveMeal: FC<Props> = ({ meal, handleClose }) => {
       <form onSubmit={handleSave} className="flex flex-col gap-5">
         <div className="flex flex-col gap-2">
           <TextArea
-            customClass="w-full border rounded-md"
+            customClass="w-full border rounded-md p-2"
             handleChange={handleChange}
             name="nameSaved"
             placeholder="Name..."
@@ -68,7 +68,7 @@ const SaveMeal: FC<Props> = ({ meal, handleClose }) => {
             isRequired={true}
           />
           <TextArea
-            customClass="w-full border rounded-md"
+            customClass="w-full border rounded-md p-2"
             handleChange={handleChange}
             name="description"
             placeholder="Description..."

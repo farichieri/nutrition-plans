@@ -54,6 +54,11 @@ const formatToMonthDay = (date: string): string => {
   return result;
 };
 
+const formatToInputDate = (date: Date): string => {
+  const result = format(date, "yyyy-MM-dd");
+  return result;
+};
+
 const getDatePlusDays = (date: string, days: number): string => {
   const result = addDays(new Date(date), days);
   return formatToUSDate(result);
@@ -209,6 +214,8 @@ const getIsToday = (date: string): boolean => date === getToday();
 
 export {
   addOneWeek,
+  convertToWeekDate,
+  formatToInputDate,
   formatToMonthDay,
   formatToShortDate,
   formatToUSDate,
@@ -224,11 +231,10 @@ export {
   getStartOfMonth,
   getStartOfWeek,
   getThisWeek,
+  getThisWeekInterval,
   getToday,
   getTomorrow,
   getYesterday,
   isValidDate,
   restOneWeek,
-  convertToWeekDate,
-  getThisWeekInterval,
 };

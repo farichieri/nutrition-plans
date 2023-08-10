@@ -40,7 +40,7 @@ const PremiumFooter: FC<Props> = ({}) => {
             Copyright © 2023 Nutrition Plans Inc. All rights reserved.
           </span>
         </div>
-        <ul className="flex w-full flex-wrap justify-between gap-4">
+        <ul className="m-auto flex w-full flex-wrap justify-between gap-4 p-2">
           {PAGES.map((page) => (
             <li key={page.title}>
               <Link

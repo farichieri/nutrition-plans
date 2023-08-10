@@ -34,6 +34,8 @@ const AddFoodToLibrary: FC<Props> = ({ food }) => {
 
   const handleRating = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
+    event.stopPropagation();
+
     try {
       const id = (event.target as HTMLButtonElement).id;
       if (!foodsRating) return;

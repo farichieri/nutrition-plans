@@ -9,7 +9,7 @@ interface Props {
 const FormError: FC<Props> = ({ message, customClass }) => {
   if (!message) return <></>;
   return (
-    <div className={`mt-2 flex items-start gap-2 text-red-500 ${customClass}`}>
+    <div className={`flex items-start gap-2 text-red-500 ${customClass}`}>
       <MdOutlineErrorOutline className="block h-6 w-6 min-w-fit" />
       <span>Error: {message}</span>
     </div>

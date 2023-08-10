@@ -1,5 +1,5 @@
 import {
-  MeasurementUnits,
+  MeasurementUnitsT,
   NewsletterChoices,
   PlansEnum,
   StartsOfWeek,
@@ -19,7 +19,7 @@ export interface User {
   isPremium: boolean;
   isProfileCompleted: boolean;
   lang: string;
-  measurementUnit: MeasurementUnits;
+  measurementUnit: MeasurementUnitsT;
   newsletter: NewsletterChoices;
   nutritionTargets: NutritionTargets;
   planSelected: PlansEnum | null;
@@ -40,7 +40,6 @@ export interface UserBodyData {
   BMR: number | null;
   gender: UserGendersT | null;
   heightInCm: number | null;
-  caloriesRecommended: number | null;
   waterRecommendedInLts: number;
   weightInKg: number | null;
 }
@@ -165,7 +164,6 @@ export const newBodyData: UserBodyData = {
   BMR: null,
   gender: null,
   heightInCm: null,
-  caloriesRecommended: null,
   waterRecommendedInLts: 0,
   weightInKg: null,
 };
@@ -191,7 +189,7 @@ export const newAccount: User = {
   isPremium: false,
   isProfileCompleted: false,
   lang: "en",
-  measurementUnit: MeasurementUnits.Imperial,
+  measurementUnit: "imperial",
   newsletter: NewsletterChoices.Yes,
   nutritionTargets: newNutritionTargets,
   planSelected: null,

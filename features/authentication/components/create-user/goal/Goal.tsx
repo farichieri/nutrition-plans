@@ -1,14 +1,15 @@
 import {
-  User,
   UserGoals,
   UserGoalsT,
   WeightGoal,
+  getNutritionTargets,
   selectAuthSlice,
   setUpdateUser,
   updateUser,
 } from "@/features/authentication";
-import { AppRoutes, formatToUSDate } from "@/utils";
+import { AppRoutes, formatToInputDate, formatToUSDate } from "@/utils";
 import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
+import { calculateKCALSRecommended } from "@/features/authentication/utils/calculateBodyData";
 import { DevTool } from "@hookform/devtools";
 import { FC, useEffect, useState } from "react";
 import { format, formatISO, parse } from "date-fns";
@@ -39,6 +40,7 @@ const Goal: FC<Props> = ({ handleContinue }) => {
   const router = useRouter();
   const { user } = useSelector(selectAuthSlice);
   const isCreatingRoute = router.asPath === AppRoutes.create_user;
+  const [isDisabled, setIsDisabled] = useState(false);
 
   useEffect(() => {
     register("goalSelected");
@@ -46,8 +48,16 @@ const Goal: FC<Props> = ({ handleContinue }) => {
 
   if (!user) return <></>;
 
-  const { measurementUnit, goal, weightGoal } = user;
+  const {
+    measurementUnit,
+    goal,
+    weightGoal,
+    bodyData,
+    planSelected,
+    nutritionTargets,
+  } = user;
   const { weightGoalInKg, dueDate } = weightGoal;
+  const { BMR, activity } = bodyData;
 
   const weightGoalFormatted = getWeight({
     to: measurementUnit,
@@ -109,45 +119,70 @@ const Goal: FC<Props> = ({ handleContinue }) => {
 
   const onSubmit = async (data: FormValues) => {
     if (isSubmitting) return;
-    const { weightGoal: weightGoal } = data;
+    const { weightGoal: weightGoal, goalSelected } = data;
     const { weightGoalInKg: weightGoalInKg } = weightGoal;
 
-    // format Date if exists
-    let date = weightGoal.dueDate;
-    if (date) {
-      const dateParsed = parse(date, "yyyy-MM-dd", new Date());
-      date = formatToUSDate(dateParsed);
-    }
+    try {
+      if (!activity || !BMR || !goalSelected) throw new Error("Missing data");
 
-    const weightInKg = getWeightInKg({
-      from: measurementUnit,
-      weight: Number(weightGoalInKg),
-    });
-    const fields = {
-      goal: data.goalSelected,
-      weightGoal: {
-        ...weightGoal,
-        createdAt: formatISO(new Date()),
-        weightGoalInKg: weightInKg,
-        dueDate: date,
-      },
-    };
-    const res = await updateUser({ user, fields });
-    if (res.result === "success") {
-      dispatch(setUpdateUser({ user, fields }));
-      handleContinue();
-      if (!isCreatingRoute) {
-        toast.success("Your Goal has been updated successfully.");
+      // format Date if exists
+      let date = weightGoal.dueDate;
+      if (date) {
+        const dateParsed = parse(date, "yyyy-MM-dd", new Date());
+        date = formatToUSDate(dateParsed);
       }
-    } else {
-      toast.error("Error updating your Goal");
+
+      const weightInKg = getWeightInKg({
+        from: measurementUnit,
+        weight: Number(weightGoalInKg),
+      });
+
+      const calories = calculateKCALSRecommended({
+        activity: activity,
+        BMR: BMR,
+        goal: goalSelected,
+      });
+
+      let newNutritionTargets = nutritionTargets;
+
+      // if plan selected and not creating route, update nutrition targets
+      if (planSelected && !isCreatingRoute) {
+        newNutritionTargets = getNutritionTargets({
+          calories: calories,
+          planSelected: planSelected,
+        });
+      }
+
+      const fields = {
+        goal: goalSelected,
+        weightGoal: {
+          ...weightGoal,
+          createdAt: formatISO(new Date()),
+          weightGoalInKg: weightInKg,
+          dueDate: date,
+        },
+        nutritionTargets: newNutritionTargets,
+      };
+      const res = await updateUser({ user, fields });
+      if (res.result === "success") {
+        dispatch(setUpdateUser({ user, fields }));
+        handleContinue();
+        if (!isCreatingRoute) {
+          toast.success("Your Goal has been updated successfully.");
+        }
+      } else {
+        throw new Error("Error updating your Goal");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Unexpected Error");
+    } finally {
     }
   };
 
-  const [isDisabled, setIsDisabled] = useState(false);
-
   useEffect(() => {
     if (
+      !isCreatingRoute &&
       values.goalSelected === user.goal &&
       values.weightGoal.weightGoalInKg === weightGoalFormatted &&
       values.weightGoal.dueDate === dueDateFormatted
@@ -157,6 +192,8 @@ const Goal: FC<Props> = ({ handleContinue }) => {
       setIsDisabled(false);
     }
   }, [setIsDisabled, values, watch]);
+
+  const today = formatToInputDate(new Date());
 
   return (
     <Box customClass="max-w-2xl">
@@ -225,6 +262,7 @@ const Goal: FC<Props> = ({ handleContinue }) => {
                     <input
                       className="rounded-md border bg-transparent px-3 py-1.5"
                       type="date"
+                      min={today}
                       {...register("weightGoal.dueDate")}
                     />
                   </div>

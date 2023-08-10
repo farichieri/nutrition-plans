@@ -32,7 +32,7 @@ const TextArea: FC<Props> = ({
       value={value}
       placeholder={placeholder}
       readOnly={readOnly}
-      className={`text-md w-full resize-none overflow-hidden bg-transparent p-2 ${customClass}`}
+      className={`text-md w-full resize-none overflow-hidden bg-transparent ${customClass}`}
       required={isRequired}
     />
   );

@@ -50,8 +50,7 @@ const PlanGenerator: FC<Props> = ({ date, setIsGeneratingPlan }) => {
     type: PlanTypes
   ) => {
     setIsGeneratingPlan(true);
-    const diet: Diet = createDiet(meals, planID, type, user.bodyData);
-    console.log({ diet });
+    const diet: Diet = createDiet(meals, planID, type, user);
     const res = await postDietToUserDiets({
       diet,
       planID,

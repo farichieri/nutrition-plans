@@ -1,20 +1,24 @@
 import { MEAL_PLANS } from "@/data/content";
 import { NutritionTargets } from "@/features/authentication";
+import { PlansEnum } from "@/types";
 
-const getNutritionTargets = (
-  calories: number,
-  planSelected: string
-): NutritionTargets => {
-  const getMacro = (
-    personCalories: number,
-    macroMultiplyer: number,
-    macroValue: number
-  ): number => {
-    return Math.round(
-      (Number(personCalories) * (Number(macroValue) / 100)) / macroMultiplyer
-    );
-  };
+const getMacro = (
+  personCalories: number,
+  macroMultiplyer: number,
+  macroValue: number
+): number => {
+  return Math.round(
+    (Number(personCalories) * (Number(macroValue) / 100)) / macroMultiplyer
+  );
+};
 
+const getNutritionTargets = ({
+  calories,
+  planSelected,
+}: {
+  calories: number;
+  planSelected: PlansEnum;
+}): NutritionTargets => {
   const planData = MEAL_PLANS.find((plan) => plan.id === planSelected);
 
   const carbsMin = getMacro(calories, 4, Number(planData?.macros.carbs.min));

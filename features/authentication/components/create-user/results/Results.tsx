@@ -1,4 +1,8 @@
 import {
+  calculateKCALSRecommended,
+  BMISignificance,
+} from "@/features/authentication/utils/calculateBodyData";
+import {
   selectAuthSlice,
   setIsCreatingUser,
   setUpdateUser,
@@ -10,19 +14,12 @@ import {
   setUserMeals,
   setUserMealsSettings,
 } from "@/features/meals";
-import {
-  BMISignificance,
-  calculateBMI,
-  calculateBMR,
-  calculateKCALSRecommended,
-} from "../../../utils/calculateBodyData";
 import { addProgress, ProgressItem, setAddProgress } from "@/features/progress";
 import { BiSolidPieChartAlt2 } from "react-icons/bi";
 import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
 import { FC, useState } from "react";
 import { formatISO } from "date-fns";
 import { formatToUSDate } from "@/utils";
-import { getNutritionTargets } from "../../../utils/getNutritionTargets";
 import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
@@ -44,8 +41,8 @@ const Results: FC<Props> = ({ handleSubmit }) => {
 
   if (!user) return <>No user found</>;
 
-  const { bodyData, goal, planSelected } = user;
-  const { weightInKg, heightInCm, age, gender, activity } = bodyData;
+  const { bodyData, goal, planSelected, nutritionTargets } = user;
+  const { weightInKg, heightInCm, age, gender, activity, BMR, BMI } = bodyData;
   if (
     !weightInKg ||
     !heightInCm ||
@@ -53,29 +50,17 @@ const Results: FC<Props> = ({ handleSubmit }) => {
     !gender ||
     !activity ||
     !goal ||
-    !planSelected
+    !planSelected ||
+    !BMR ||
+    !BMI
   )
     return <>There's missing data to calculate Nutrition Targets</>;
 
-  const BMI = calculateBMI({ kgs: weightInKg, cms: heightInCm });
-  const BMR = calculateBMR({
-    kgs: weightInKg,
-    cms: heightInCm,
-    age: age,
-    gender: gender,
-  });
   const caloriesRecommended = calculateKCALSRecommended({
     BMR: BMR,
     goal: goal,
     activity: activity,
   });
-
-  console.log({ user });
-
-  const nutritionTargets = getNutritionTargets(
-    caloriesRecommended,
-    planSelected
-  );
 
   const addFirstProgress = async () => {
     const newProgress: ProgressItem = {
@@ -92,15 +77,14 @@ const Results: FC<Props> = ({ handleSubmit }) => {
 
   const handleCreateUser = async (event: React.FormEvent) => {
     event.preventDefault();
-    setIsLoading(true);
-    setIsDisabled(true);
     try {
+      setIsLoading(true);
+      setIsDisabled(true);
       if (!nutritionTargets) return;
       const bodyDataUpdated = {
         ...user.bodyData,
         BMI: BMI,
         BMR: BMR,
-        caloriesRecommended: caloriesRecommended,
       };
       const fields = {
         bodyData: bodyDataUpdated,
@@ -137,9 +121,10 @@ const Results: FC<Props> = ({ handleSubmit }) => {
       }
     } catch (error) {
       console.log({ error });
+      toast.error("Something happened!");
+    } finally {
       setIsLoading(false);
       setIsDisabled(false);
-      toast.error("Something happened!");
     }
   };
 
@@ -204,10 +189,7 @@ const Results: FC<Props> = ({ handleSubmit }) => {
             </div>
           </div>
           <div className="">
-            <NutritionTarget
-              calories={caloriesRecommended}
-              planSelected={planSelected}
-            />
+            <NutritionTarget planSelected={planSelected} />
           </div>
         </div>
       </BoxMainContent>

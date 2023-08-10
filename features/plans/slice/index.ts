@@ -4,6 +4,7 @@ import {
   PlanTypes,
   DietMeal,
   PlanDateType,
+  DietExercise,
 } from "@/features/plans/types";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Food, FoodGroup, FoodGroupArray } from "@/features/foods/types";
@@ -111,6 +112,15 @@ export const plansSlice = createSlice({
       if (!dietMealID || !dietID || !id) return;
       state.diets[dietID].meals[dietMealID].foods[id] = action.payload;
     },
+    updateWaterDrunkInDiet: (
+      state,
+      action: PayloadAction<{ diet: Diet; littersDrunk: number }>
+    ) => {
+      const { diet, littersDrunk } = action.payload;
+      const { id } = diet;
+      if (!id) return;
+      state.diets[id].water.littersDrunk = littersDrunk;
+    },
     updateDietNutrition: (state, action: PayloadAction<{ dietID: string }>) => {
       const { dietID } = action.payload;
       const diet = state.diets[dietID];
@@ -170,6 +180,15 @@ export const plansSlice = createSlice({
       if (!id) return;
       state.diets[id].note = note;
     },
+    setDietExercise: (
+      state,
+      action: PayloadAction<{ diet: Diet; exercise: DietExercise }>
+    ) => {
+      const { diet, exercise } = action.payload;
+      const { id } = diet;
+      if (!id) return;
+      state.diets[id].exercise = exercise;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(PURGE, () => {
@@ -192,6 +211,8 @@ export const {
   updateDietMealFoodsOrder,
   updateDietNutrition,
   updateFoodInDiet,
+  updateWaterDrunkInDiet,
+  setDietExercise,
 } = plansSlice.actions;
 
 export const selectPlansSlice = (state: RootState) => state.plans;

@@ -1,21 +1,21 @@
 import { convertWater, getWaterUnit } from "@/utils/calculations";
 import { FC } from "react";
-import { getNutritionTargets } from "../../utils";
 import { MEAL_PLANS } from "@/data/content";
 import { PlansEnum } from "@/types";
 import { selectAuthSlice } from "@/features/authentication/slice";
 import { useSelector } from "react-redux";
 
 interface Props {
-  calories: number;
   planSelected: PlansEnum;
 }
 
-const NutritionTarget: FC<Props> = ({ calories, planSelected }) => {
+const NutritionTarget: FC<Props> = ({ planSelected }) => {
   const { user } = useSelector(selectAuthSlice);
   const planData = MEAL_PLANS.find((plan) => plan.id === planSelected);
-  const nutritionTargets =
-    calories && planSelected && getNutritionTargets(calories, planSelected);
+
+  if (!user) return <></>;
+
+  const { nutritionTargets } = user;
 
   const weightInKg = user?.bodyData.weightInKg;
 
