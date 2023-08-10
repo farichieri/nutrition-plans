@@ -8,13 +8,13 @@ import {
   newProgressItem,
 } from "@/features/progress";
 import { FC, useEffect, useState } from "react";
+import { formatTwoDecimals } from "@/utils";
 import { getWeight, getWeightInKg, getWeightUnit } from "@/utils/calculations";
 import { selectAuthSlice } from "@/features/authentication/slice";
+import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import ActionButton from "@/components/Buttons/ActionButton";
 import Modal from "@/components/Modal/Modal";
-import { formatTwoDecimals } from "@/utils";
-import { toast } from "react-hot-toast";
 
 interface Props {
   progressItem: ProgressItem;

@@ -1,4 +1,9 @@
-import { AddProgress, Graphic, ProgressList } from "@/features/progress";
+import {
+  AddProgress,
+  DaysLeft,
+  Graphic,
+  ProgressList,
+} from "@/features/progress";
 import { PremiumSidebar } from "@/layouts";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "@/layouts/components/Nav/PremiumNav";
@@ -14,6 +19,7 @@ export default function Page() {
           <ProgressList />
         </div>
         <AddProgress />
+        <DaysLeft />
       </section>
     </PremiumLayout>
   );

@@ -13,7 +13,7 @@ import DaySelector from "./common/DaySelector";
 import FoodInMealCard from "./common/FoodInMealCard";
 import MealCard from "./common/MealCard";
 import MealCards from "./MealCards/MealCards";
-import Nutrition from "./common/Nutrition";
+import DietNutrition from "./DietNutrition/DietNutrition";
 import PlanGenerator from "./common/PlanGenerator";
 import PlanGeneratorTypeSelector from "./common/PlanGenerator";
 import PlanSelector from "./common/PlanSelector";
@@ -29,7 +29,7 @@ export {
   ManualMeals,
   MealCard,
   MealCards,
-  Nutrition,
+  DietNutrition,
   PlanGenerator,
   PlanGeneratorTypeSelector,
   PlanSelector,

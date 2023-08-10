@@ -1,25 +1,36 @@
-import {
-  FoodNutrients,
-  FoodNutritionDetail,
-  NutrientsEnum,
-} from "@/features/foods";
 import { BiSolidPieChartAlt2 } from "react-icons/bi";
+import { checkTargetsEquality } from "../../utils";
 import { Diet } from "../../types";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
+import { FoodNutrients, FoodNutritionDetail } from "@/features/foods";
 import { formatToFixed, formatTwoDecimals } from "@/utils/format";
+import { getDietNutritionTargets } from "./utils/getDietNutritionTargets";
+import { MdClose } from "react-icons/md";
 import { PlansEnum } from "@/types";
+import { RoundButton } from "@/components/Buttons";
 import { selectAuthSlice } from "@/features/authentication";
-import { useSelector } from "react-redux";
+import { setDiet } from "../../slice";
+import { toast } from "react-hot-toast";
+import { updateDiet } from "../../services";
+import { useDispatch, useSelector } from "react-redux";
 import PieGraph from "@/components/PieGraph/PieGraph";
+import Spinner from "@/components/Loader/Spinner";
 
 interface Props {
   nutrients: FoodNutrients;
   planID: PlansEnum | null;
   diet: Diet;
+  isEditing: boolean;
 }
 
-const Nutrition: FC<Props> = ({ nutrients, diet }) => {
+const DietNutrition: FC<Props> = ({ nutrients, diet, isEditing }) => {
+  const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
+  const [differFromUserTargets, setDifferFromUserTargets] = useState(false);
+  const [loading, setLoading] = useState({
+    updateWithUserTargets: false,
+    hideNutritionDiff: false,
+  });
 
   if (!user) return <></>;
 
@@ -28,85 +39,77 @@ const Nutrition: FC<Props> = ({ nutrients, diet }) => {
   }
 
   const { nutritionTargets: userNutritionTargets } = user;
-  const { nutritionTargets: dietNutritionTargets } = diet;
+  const { nutritionTargets: dietNutritionTargets, hideNutritionTargetsDiff } =
+    diet;
   // Make nutritionTargets individual for each diet. If there is an old diet, use that one, otherwise use the user's nutritionTargets
   const nutritionTargets = dietNutritionTargets || userNutritionTargets;
 
-  const NUTRIENT_TARGETS = [
-    {
-      nutrient: NutrientsEnum.calories,
-      min: Number(nutritionTargets?.calories) - 100,
-      max: Number(nutritionTargets?.calories) + 100,
-      value: nutrients.calories,
-      isInRange: false,
-      diff: 0,
-    },
-    {
-      nutrient: NutrientsEnum.carbohydrates,
-      max: nutritionTargets?.carbohydrates.max,
-      min: nutritionTargets?.carbohydrates.min,
-      value: nutrients.carbohydrates,
-      isInRange: false,
-      diff: 0,
-    },
-    {
-      nutrient: NutrientsEnum.fats,
-      max: nutritionTargets?.fats.max,
-      min: nutritionTargets?.fats.min,
-      value: nutrients.fats,
-      isInRange: false,
-      diff: 0,
-    },
-    {
-      nutrient: NutrientsEnum.proteins,
-      max: nutritionTargets?.proteins.max,
-      min: nutritionTargets?.proteins.min,
-      value: nutrients.proteins,
-      isInRange: false,
-      diff: 0,
-    },
-  ];
+  const { NUTRIENT_TARGETS, isAllInRange } = getDietNutritionTargets({
+    nutritionTargets,
+    nutrients,
+  });
 
-  const getIsInRange = (value: number, min: number, max: number): boolean => {
-    return value >= min && value <= max;
-  };
-  const getDifference = (value: number, min: number, max: number): number => {
-    if (value > max) {
-      return value - max;
-    } else if (value < min) {
-      return min - value;
+  useEffect(() => {
+    if (!userNutritionTargets || !dietNutritionTargets) {
+      setDifferFromUserTargets(false);
+      return;
+    }
+    const areEqual = checkTargetsEquality({
+      userTargets: userNutritionTargets,
+      dietTargets: dietNutritionTargets,
+    });
+    if (!areEqual) {
+      setDifferFromUserTargets(true);
     } else {
-      return 0;
+      setDifferFromUserTargets(false);
+    }
+  }, [userNutritionTargets, dietNutritionTargets]);
+
+  const updateWithUserTargets = async () => {
+    try {
+      setLoading({ ...loading, updateWithUserTargets: true });
+      if (isEditing) {
+        toast.error("Please save your changes first.");
+        return;
+      }
+      const newDiet = { ...diet };
+      newDiet.nutritionTargets = userNutritionTargets;
+      const res = await updateDiet({ diet: newDiet });
+      if (res.result === "error") {
+        toast.error("Error updating targets. Please try again.");
+      } else {
+        dispatch(setDiet(newDiet));
+        toast.success("Targets updated successfully.");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading({ ...loading, updateWithUserTargets: false });
     }
   };
-  const completeTargetValues = () => {
-    NUTRIENT_TARGETS.map((nutrient, index) => {
-      NUTRIENT_TARGETS[index].isInRange = getIsInRange(
-        Number(nutrient.value),
-        Number(nutrient.min),
-        Number(nutrient.max)
-      );
-      NUTRIENT_TARGETS[index].diff = getDifference(
-        Number(nutrient.value),
-        Number(nutrient.min),
-        Number(nutrient.max)
-      );
-    });
-  };
 
-  completeTargetValues();
-
-  const addIsAllInRange = (): boolean => {
-    let result = true;
-    NUTRIENT_TARGETS.forEach((nutrient) => {
-      if (!nutrient.isInRange) {
-        result = false;
+  const handleHideNutritionDiff = async () => {
+    try {
+      setLoading({ ...loading, hideNutritionDiff: true });
+      if (isEditing) {
+        toast.error("Please save your changes first.");
+        return;
       }
-    });
-    return result;
+      const newDiet = { ...diet };
+      newDiet.hideNutritionTargetsDiff = true;
+      const res = await updateDiet({ diet: newDiet });
+      if (res.result === "error") {
+        toast.error("Error updating targets. Please try again.");
+      } else {
+        dispatch(setDiet(newDiet));
+      }
+    } catch (error) {
+      toast.error("Error updating targets. Please try again.");
+      console.log(error);
+    } finally {
+      setLoading({ ...loading, hideNutritionDiff: false });
+    }
   };
-
-  let isAllInRange = addIsAllInRange();
 
   return (
     <div className="w-full">
@@ -203,6 +206,30 @@ const Nutrition: FC<Props> = ({ nutrients, diet }) => {
             </div>
           </div>
         </div>
+        {differFromUserTargets && !hideNutritionTargetsDiff && (
+          <div className="relative my-2 flex flex-col items-center justify-center rounded-md border border-red-500 bg-red-400/40 p-2">
+            <RoundButton
+              onClick={handleHideNutritionDiff}
+              customClass="p-1 h-7 w-7 absolute right-1 top-1 "
+            >
+              {loading.hideNutritionDiff ? (
+                <Spinner customClass={`h-4 w-4`} />
+              ) : (
+                <MdClose className="h-5 w-5" />
+              )}
+            </RoundButton>
+            <span>Day targets differ from your personal nutrition targets</span>
+            <button
+              onClick={updateWithUserTargets}
+              className="flex items-center rounded-3xl border border-blue-500 bg-blue-400 px-3 py-1.5"
+            >
+              Update with my targets
+              {loading.updateWithUserTargets && (
+                <Spinner customClass={`h-4 w-4 ml-2`} />
+              )}
+            </button>
+          </div>
+        )}
         <FoodNutritionDetail nutrients={nutrients} />
         <div>
           {isAllInRange ? (
@@ -220,4 +247,4 @@ const Nutrition: FC<Props> = ({ nutrients, diet }) => {
   );
 };
 
-export default Nutrition;
+export default DietNutrition;

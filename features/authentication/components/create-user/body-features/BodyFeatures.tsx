@@ -3,6 +3,7 @@ import {
   UserActivities,
   UserGenders,
   UserGendersT,
+  getNutritionTargets,
   getWater,
   newBodyData,
   selectAuthSlice,
@@ -28,13 +29,16 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import FormError from "@/components/Errors/FormError";
 import SubmitButton from "@/components/Buttons/SubmitButton";
 import { toast } from "react-hot-toast";
-import { AppRoutes, formatTwoDecimals } from "@/utils";
+import { AppRoutes, formatToUSDate, formatTwoDecimals } from "@/utils";
 import { MdSettingsAccessibility } from "react-icons/md";
 import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
 import {
   calculateBMI,
   calculateBMR,
+  calculateKCALSRecommended,
 } from "@/features/authentication/utils/calculateBodyData";
+import { formatISO } from "date-fns";
+import { addProgress, setAddProgress } from "@/features/progress";
 
 interface FormValues {
   activity: UserActivities | null;
@@ -186,6 +190,7 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
     if (!user || isSubmitting) return;
     const { activity, age, gender, centimeters, kilograms, measurementUnit } =
       data;
+    const { nutritionTargets, planSelected, goal } = user;
 
     try {
       if (!kilograms || !centimeters || !age || !gender) return;
@@ -203,6 +208,20 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
         gender: gender,
       });
 
+      let newNutritionTargets = nutritionTargets;
+
+      if (!isCreatingRoute && planSelected && goal && activity) {
+        const calories = calculateKCALSRecommended({
+          activity,
+          BMR,
+          goal,
+        });
+        newNutritionTargets = getNutritionTargets({
+          calories,
+          planSelected,
+        });
+      }
+
       const fields = {
         measurementUnit: measurementUnit,
         bodyData: {
@@ -215,14 +234,31 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
           waterRecommendedInLts: formatTwoDecimals(lts),
           weightInKg: kilograms,
         },
+        nutritionTargets: newNutritionTargets,
       };
 
       const res = await updateUser({ user, fields });
       if (res.result === "success") {
         dispatch(setUpdateUser({ user, fields }));
         handleContinue();
-        if (!isCreatingRoute)
+
+        if (!isCreatingRoute) {
           toast.success("Your Body Features have been updated successfully.");
+
+          // create new progress
+          const date = formatToUSDate(new Date());
+          const newProgress = {
+            createdAt: formatISO(new Date()),
+            date: date,
+            weightInKg: kilograms,
+          };
+
+          const res = await addProgress(user, newProgress);
+          if (res.result === "success") {
+            dispatch(setAddProgress(newProgress));
+            toast.success("Progress updated successfully.");
+          }
+        }
       } else {
         if (!isCreatingRoute) {
           toast.error("Error updating your Body Features");
@@ -232,9 +268,7 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
       }
     } catch (error) {
       console.log({ error });
-      if (error instanceof Error) {
-        setError(error.message);
-      }
+      toast.error("Error updating your Body Features");
     } finally {
     }
   };
