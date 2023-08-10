@@ -22,7 +22,9 @@ const AddFood: FC<Props> = ({ dietMeal }) => {
   const dispatch = useDispatch();
   const { foodsSearched, foodModal } = useSelector(selectFoodsSlice);
   const [isOpen, setIsOpen] = useState(false);
-  const [queries, setLocalQueries] = useState<FilterQueries>({});
+  const [queries, setLocalQueries] = useState<FilterQueries>({
+    plan: dietMeal.planID!,
+  });
 
   const handleOpenFood = (food: Food) => {
     dispatch(setFoodModal(food));

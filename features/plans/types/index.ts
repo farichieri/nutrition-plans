@@ -1,6 +1,10 @@
 import { FoodGroup, FoodNutrients } from "@/features/foods";
 import { MealComplexities, MealMinutes, MealSizes } from "@/features/meals";
 import { NewFood, NewFoodNutrients } from "@/types/initial";
+import {
+  NutritionTargets,
+  newNutritionTargets,
+} from "@/features/authentication/types";
 import { PlansEnum } from "@/types";
 
 export enum PlanTypes {
@@ -22,6 +26,7 @@ export interface Diet {
   date: string | null;
   dateCreated: string | null;
   description: string | null;
+  exercise: DietExercise;
   id: string | null;
   meals: DietMealGroup;
   name: string | null;
@@ -32,6 +37,7 @@ export interface Diet {
   type: PlanTypes;
   userID: string | null;
   water: DietWater;
+  nutritionTargets: NutritionTargets;
 }
 
 export interface DietGroupArray extends Array<Diet> {}
@@ -47,11 +53,11 @@ export interface DietMeal {
   isCookeable: boolean;
   mealID: string | null;
   name: string | null;
+  nameSaved: string | null;
   order: number;
+  planID: PlansEnum | null;
   size: MealSizes | null;
   time: MealMinutes | null;
-  planID: PlansEnum | null;
-  nameSaved: string | null;
 }
 
 export interface DietMealGroup {
@@ -68,6 +74,12 @@ export interface DietWater {
   drunk: boolean;
   littersDrunk: number;
   littersToDrink: number;
+}
+
+export interface DietExercise {
+  exercised: boolean;
+  isPlanned: boolean;
+  note: string | null;
 }
 
 // Initials
@@ -87,10 +99,16 @@ export const NewDiet: Diet = {
   nameLowerCase: null,
   note: null,
   nutrients: NewFoodNutrients,
+  nutritionTargets: newNutritionTargets,
   planID: null,
   type: PlanTypes.manually,
   userID: null,
   water: NewDietWater,
+  exercise: {
+    exercised: false,
+    isPlanned: false,
+    note: null,
+  },
 };
 
 export const NewDietMeal: DietMeal = {

@@ -19,7 +19,7 @@ import {
 import { ACTIVITY_OPTIONS } from "@/constants";
 import { DevTool } from "@hookform/devtools";
 import { FC, useEffect, useState } from "react";
-import { MeasurementUnits } from "@/types";
+import { MeasurementUnitsT, MeasurementUnits } from "@/types";
 import { schema } from "./schema";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
@@ -31,6 +31,10 @@ import { toast } from "react-hot-toast";
 import { AppRoutes, formatTwoDecimals } from "@/utils";
 import { MdSettingsAccessibility } from "react-icons/md";
 import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
+import {
+  calculateBMI,
+  calculateBMR,
+} from "@/features/authentication/utils/calculateBodyData";
 
 interface FormValues {
   activity: UserActivities | null;
@@ -40,7 +44,7 @@ interface FormValues {
   gender: UserGendersT | null;
   inches: number | null;
   kilograms: number | null;
-  measurementUnit: MeasurementUnits;
+  measurementUnit: MeasurementUnitsT;
   pounds: number | null;
 }
 
@@ -52,7 +56,10 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [error, setError] = useState("");
   const bodyData = user?.bodyData || newBodyData;
+  const isCreatingRoute = router.asPath === AppRoutes.create_user;
 
   const {
     control,
@@ -72,7 +79,7 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
       gender: bodyData.gender,
       inches: cmsToInches({ cms: Number(bodyData.heightInCm) }) || null,
       kilograms: bodyData.weightInKg,
-      measurementUnit: user?.measurementUnit || MeasurementUnits.Imperial,
+      measurementUnit: user?.measurementUnit || "imperial",
       pounds: kgsToLbs({ kgs: Number(bodyData.weightInKg) }) || null,
     },
     resolver: yupResolver(schema),
@@ -80,11 +87,9 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
   const { errors, isSubmitting } = formState;
   const values = getValues();
 
-  const isCreatingRoute = router.asPath === AppRoutes.create_user;
-  const [error, setError] = useState("");
-
   const watchMeasurementUnit = watch("measurementUnit");
-  const isMetricUnits = watchMeasurementUnit === MeasurementUnits.Metric;
+  const watchFields = watch(["measurementUnit", "age", "activity"]);
+  const isMetricUnits = watchMeasurementUnit === "metric";
 
   const handleClick = (event: React.MouseEvent) => {
     event.preventDefault();
@@ -98,10 +103,10 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
       trigger("gender");
     } else if (
       name === "measurementUnit" &&
-      Object.values(MeasurementUnits).includes(value as MeasurementUnits)
+      Object.values(MeasurementUnits).includes(value as MeasurementUnitsT)
     ) {
       console.log({ value });
-      setValue("measurementUnit", value as MeasurementUnits);
+      setValue("measurementUnit", value as MeasurementUnitsT);
     }
   };
 
@@ -182,54 +187,73 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
     const { activity, age, gender, centimeters, kilograms, measurementUnit } =
       data;
 
-    if (!kilograms) return;
+    try {
+      if (!kilograms || !centimeters || !age || !gender) return;
 
-    const lts = getWater({
-      weightInKg: kilograms,
-      measurement: measurementUnit,
-    });
+      const lts = getWater({
+        weightInKg: kilograms,
+        measurement: measurementUnit,
+      });
 
-    const fields = {
-      measurementUnit: measurementUnit,
-      bodyData: {
-        ...bodyData,
-        activity: Number(activity),
+      const BMI = calculateBMI({ kgs: kilograms, cms: centimeters });
+      const BMR = calculateBMR({
+        kgs: kilograms,
+        cms: centimeters,
         age: age,
         gender: gender,
-        heightInCm: centimeters,
-        weightInKg: kilograms,
-        waterRecommendedInLts: formatTwoDecimals(lts),
-      },
-    };
+      });
 
-    const res = await updateUser({ user, fields });
-    if (res.result === "success") {
-      dispatch(setUpdateUser({ user, fields }));
-      handleContinue();
-      if (!isCreatingRoute)
-        toast.success("Your Body Features have been updated successfully.");
-    } else {
-      if (!isCreatingRoute) {
-        toast.error("Error updating your Body Features");
+      const fields = {
+        measurementUnit: measurementUnit,
+        bodyData: {
+          activity: Number(activity),
+          age: age,
+          BMI: BMI,
+          BMR: BMR,
+          gender: gender,
+          heightInCm: centimeters,
+          waterRecommendedInLts: formatTwoDecimals(lts),
+          weightInKg: kilograms,
+        },
+      };
+
+      const res = await updateUser({ user, fields });
+      if (res.result === "success") {
+        dispatch(setUpdateUser({ user, fields }));
+        handleContinue();
+        if (!isCreatingRoute)
+          toast.success("Your Body Features have been updated successfully.");
       } else {
-        setError("Unexpected Error");
+        if (!isCreatingRoute) {
+          toast.error("Error updating your Body Features");
+        } else {
+          throw new Error("Unexpected Error");
+        }
       }
+    } catch (error) {
+      console.log({ error });
+      if (error instanceof Error) {
+        setError(error.message);
+      }
+    } finally {
     }
   };
 
-  const [isDisabled, setIsDisabled] = useState(false);
-
-  // useEffect(() => {
-  //   if (
-  //     values.goalSelected === user.goal &&
-  //     values.weight_goal.weight_goal_in_kg === weightGoalFormatted &&
-  //     values.weight_goal.due_date === dueDateFormatted
-  //   ) {
-  //     setIsDisabled(true);
-  //   } else {
-  //     setIsDisabled(false);
-  //   }
-  // }, [setIsDisabled, values, watch]);
+  useEffect(() => {
+    if (
+      !isCreatingRoute &&
+      values.activity === bodyData.activity &&
+      values.age === bodyData.age &&
+      values.gender === bodyData.gender &&
+      values.centimeters === bodyData.heightInCm &&
+      values.kilograms === bodyData.weightInKg &&
+      values.measurementUnit === user?.measurementUnit
+    ) {
+      setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
+    }
+  }, [setIsDisabled, values, watchFields]);
 
   return (
     <Box customClass="max-w-xl">
@@ -253,7 +277,7 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
                 <div className="relative flex cursor-pointer rounded-3xl border-green-500 text-xs shadow-[0_0_5px_gray] sm:text-base">
                   <div
                     className={`${
-                      values.measurementUnit === MeasurementUnits.Metric
+                      values.measurementUnit === "metric"
                         ? "right-[50%]"
                         : "right-0"
                     } absolute h-full w-[50%] select-none rounded-3xl bg-green-500 transition-all duration-300`}
@@ -264,7 +288,7 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
                       name="measurementUnit"
                       value={type}
                       onClick={handleClick}
-                      className="z-20 w-28 rounded-3xl border-none px-4 py-1 text-xs font-semibold capitalize active:shadow-lg sm:text-base"
+                      className="z-20 w-28 rounded-3xl border-none px-4 py-1.5 text-xs font-semibold capitalize active:shadow-lg sm:text-base"
                     >
                       {type}
                     </button>
@@ -296,7 +320,7 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
               </div>
               {isMetricUnits ? (
                 <>
-                  <div className="flex flex-col items-center justify-center">
+                  <div className="flex flex-col items-center justify-center gap-2">
                     <div className="relative flex w-full max-w-xl items-center justify-between gap-1">
                       <label
                         className="basis-1/5 font-semibold"
@@ -317,7 +341,7 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
                     </div>
                     <FormError message={errors.centimeters?.message} />
                   </div>
-                  <div className="flex flex-col items-center justify-center">
+                  <div className="flex flex-col items-center justify-center gap-2">
                     <div className="relative flex w-full max-w-xl items-center justify-between gap-1">
                       <label
                         className="basis-1/5 font-semibold"
@@ -340,7 +364,7 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
                 </>
               ) : (
                 <>
-                  <div className="flex flex-col items-center justify-center">
+                  <div className="flex flex-col items-center justify-center gap-2">
                     <div className="relative flex w-full max-w-xl items-center justify-between gap-1">
                       <label htmlFor="feet" className="basis-1/5 font-semibold">
                         Height
@@ -377,7 +401,7 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
                     <FormError message={errors.feet?.message} />
                     <FormError message={errors.inches?.message} />
                   </div>
-                  <div className="flex flex-col items-center justify-center">
+                  <div className="flex flex-col items-center justify-center gap-2">
                     <div className="relative flex w-full max-w-xl items-center justify-between gap-1">
                       <label
                         htmlFor="pounds"
@@ -399,7 +423,7 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
                   </div>
                 </>
               )}
-              <div className="flex flex-col items-center justify-center">
+              <div className="flex flex-col items-center justify-center gap-2">
                 <div className="relative flex w-full items-center justify-between gap-1">
                   <label className="basis-1/5 font-semibold" htmlFor="age">
                     Age
@@ -416,7 +440,7 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
                 <FormError message={errors.age?.message} />
               </div>
 
-              <div className="flex flex-col items-center justify-center">
+              <div className="flex flex-col items-center justify-center gap-2">
                 <div className="relative flex w-full items-center justify-between gap-1">
                   <label className="basis-1/5 font-semibold" htmlFor="activity">
                     Activity

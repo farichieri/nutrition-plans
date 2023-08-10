@@ -18,8 +18,8 @@ const DayNote: FC<Props> = ({ isEditing, diet }) => {
   };
 
   const customClass = isEditing
-    ? "rounded-md border"
-    : "cursor-default select-none rounded-md border border-green-500/50 bg-green-500/10 outline-none";
+    ? "rounded-md border p-2"
+    : "cursor-default p-2 select-none rounded-md border border-green-500/50 bg-green-500/10 outline-none";
 
   return (
     <div className="w-full">

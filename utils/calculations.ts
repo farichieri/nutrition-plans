@@ -4,7 +4,7 @@ import {
   LIB_TO_KG,
   L_TO_FO,
 } from "@/constants/measurements";
-import { MeasurementUnits, WaterUnits, WeightUnits } from "@/types";
+import { WaterUnits, WeightUnits, MeasurementUnitsT } from "@/types";
 import { formatTwoDecimals } from "./format";
 
 const cmsToFeet = ({ cms }: { cms: number }) => {
@@ -49,14 +49,13 @@ const getWeight = ({
   to,
   weight,
 }: {
-  to: MeasurementUnits;
+  to: MeasurementUnitsT;
   weight: number;
 }): number => {
-  const { Metric: metric, Imperial: imperial } = MeasurementUnits;
   switch (to) {
-    case imperial:
+    case "imperial":
       return kgsToLbs({ kgs: weight });
-    case metric:
+    case "metric":
       return weight;
     default:
       return weight;
@@ -67,14 +66,13 @@ const getWeightInKg = ({
   from,
   weight,
 }: {
-  from: MeasurementUnits;
+  from: MeasurementUnitsT;
   weight: number;
 }): number => {
-  const { Metric: metric, Imperial: imperial } = MeasurementUnits;
   switch (from) {
-    case imperial:
+    case "imperial":
       return lbsToKgs({ pounds: weight });
-    case metric:
+    case "metric":
       return weight;
     default:
       return weight;
@@ -86,23 +84,22 @@ const getWeightText = ({
   from,
 }: {
   weight: number;
-  from: MeasurementUnits;
+  from: MeasurementUnitsT;
 }): string => {
-  const { Metric: metric, Imperial: imperial } = MeasurementUnits;
   const { Lbs, Kgs } = WeightUnits;
   switch (from) {
-    case metric:
+    case "metric":
       return `${formatTwoDecimals(weight)} ${Kgs}`;
-    case imperial:
+    case "imperial":
       return `${formatTwoDecimals(weight)} ${Lbs}`;
     default:
       return `${formatTwoDecimals(weight)}`;
   }
 };
 
-const getWeightUnit = ({ from }: { from: MeasurementUnits }): string => {
-  if (from === MeasurementUnits.Imperial) return WeightUnits.Lbs;
-  else if (from === MeasurementUnits.Metric) return WeightUnits.Kgs;
+const getWeightUnit = ({ from }: { from: MeasurementUnitsT }): string => {
+  if (from === "imperial") return WeightUnits.Lbs;
+  else if (from === "metric") return WeightUnits.Kgs;
   else return "";
 };
 
@@ -110,23 +107,39 @@ const convertWater = ({
   to,
   lts,
 }: {
-  to: MeasurementUnits;
+  to: MeasurementUnitsT;
   lts: number;
 }): number => {
-  const { Metric: metric, Imperial: imperial } = MeasurementUnits;
   switch (to) {
-    case imperial:
+    case "imperial":
       return ltsToFluidOnces({ lts: lts });
-    case metric:
+    case "metric":
       return lts;
     default:
       return lts;
   }
 };
 
-const getWaterUnit = ({ from }: { from: MeasurementUnits }): string => {
-  if (from === MeasurementUnits.Imperial) return WaterUnits.FlOz;
-  else if (from === MeasurementUnits.Metric) return WaterUnits.Lts;
+const getWaterInLts = ({
+  from,
+  value,
+}: {
+  from: MeasurementUnitsT;
+  value: number;
+}): number => {
+  switch (from) {
+    case "imperial":
+      return value * L_TO_FO;
+    case "metric":
+      return value;
+    default:
+      return value;
+  }
+};
+
+const getWaterUnit = ({ from }: { from: MeasurementUnitsT }): string => {
+  if (from === "imperial") return WaterUnits.FlOz;
+  else if (from === "metric") return WaterUnits.Lts;
   else return "";
 };
 
@@ -143,4 +156,5 @@ export {
   ltsToFluidOnces,
   convertWater,
   getWaterUnit,
+  getWaterInLts,
 };

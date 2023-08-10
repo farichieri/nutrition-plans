@@ -7,10 +7,14 @@ export enum SubscriptionState {
   Free = "free",
   Premium = "premium",
 }
-export enum MeasurementUnits {
-  Metric = "metric",
-  Imperial = "imperial",
-}
+
+export const MeasurementUnits = {
+  metric: "metric",
+  imperial: "imperial",
+} as const;
+
+export type MeasurementUnitsT = keyof typeof MeasurementUnits;
+
 export enum WeightUnits {
   Lbs = "lbs",
   Kgs = "kgs",

@@ -9,7 +9,7 @@ import {
 import { Food, FoodGroup } from "@/features/foods";
 import { getDietNutrition, getNutritionValues, getToday } from "@/utils";
 import { PlansEnum } from "@/types";
-import { UserBodyData } from "@/features/authentication";
+import { User } from "@/features/authentication";
 import { UserMeals, UserMealsArr } from "@/features/meals";
 import { uuidv4 } from "@firebase/util";
 
@@ -17,7 +17,7 @@ const buildDiet = (
   meals: DietMealGroupArr,
   plan_id: PlansEnum,
   type: PlanTypes,
-  userBodyData: UserBodyData
+  user: User
 ) => {
   const dietMeals: DietMealGroup = {};
   meals.forEach((meal) => {
@@ -25,18 +25,20 @@ const buildDiet = (
     dietMeals[meal.id as keyof DietMeal] = meal;
   });
   const nutrition = getDietNutrition(dietMeals);
-  const { waterRecommendedInLts } = userBodyData;
+  const { bodyData, nutritionTargets } = user;
+  const { waterRecommendedInLts } = bodyData;
 
   const diet: Diet = {
     ...NewDiet,
+    date: null,
     dateCreated: null,
     description: null,
     id: null,
     meals: dietMeals,
-    nameLowerCase: null,
     name: null,
+    nameLowerCase: null,
     nutrients: nutrition,
-    date: null,
+    nutritionTargets: nutritionTargets,
     planID: plan_id,
     type: type,
     water: {
@@ -99,16 +101,11 @@ const createDiet = (
   meals: UserMeals,
   planID: PlansEnum,
   type: PlanTypes,
-  userBodyData: UserBodyData
+  user: User
 ): Diet => {
   const userMealsArr = Object.values(meals);
   const mealsGenerated = generateDietMeals({ userMealsArr, planID });
-  const diet = buildDiet(
-    Object.values(mealsGenerated),
-    planID,
-    type,
-    userBodyData
-  );
+  const diet = buildDiet(Object.values(mealsGenerated), planID, type, user);
   return diet;
 };
 

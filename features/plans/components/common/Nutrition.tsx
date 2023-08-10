@@ -4,9 +4,9 @@ import {
   NutrientsEnum,
 } from "@/features/foods";
 import { BiSolidPieChartAlt2 } from "react-icons/bi";
+import { Diet } from "../../types";
 import { FC } from "react";
 import { formatToFixed, formatTwoDecimals } from "@/utils/format";
-import { getNutritionTargets } from "@/features/authentication/utils/getNutritionTargets";
 import { PlansEnum } from "@/types";
 import { selectAuthSlice } from "@/features/authentication";
 import { useSelector } from "react-redux";
@@ -15,19 +15,22 @@ import PieGraph from "@/components/PieGraph/PieGraph";
 interface Props {
   nutrients: FoodNutrients;
   planID: PlansEnum | null;
+  diet: Diet;
 }
 
-const Nutrition: FC<Props> = ({ nutrients, planID }) => {
+const Nutrition: FC<Props> = ({ nutrients, diet }) => {
   const { user } = useSelector(selectAuthSlice);
 
   if (!user) return <></>;
 
-  const calories = user.nutritionTargets.calories || 0;
-  const nutritionTargets = planID && getNutritionTargets(calories, planID);
-
   if (!nutrients) {
     return <div>No Nutrients Found.</div>;
   }
+
+  const { nutritionTargets: userNutritionTargets } = user;
+  const { nutritionTargets: dietNutritionTargets } = diet;
+  // Make nutritionTargets individual for each diet. If there is an old diet, use that one, otherwise use the user's nutritionTargets
+  const nutritionTargets = dietNutritionTargets || userNutritionTargets;
 
   const NUTRIENT_TARGETS = [
     {

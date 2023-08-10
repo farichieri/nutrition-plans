@@ -1,5 +1,6 @@
 import {
   User,
+  getNutritionTargets,
   selectAuthSlice,
   setUpdateUser,
   updateUser,
@@ -19,6 +20,7 @@ import BlurImage from "@/components/blur-image";
 import FormError from "@/components/Errors/FormError";
 import InfoMessage from "@/components/Layout/InfoMessage";
 import SubmitButton from "@/components/Buttons/SubmitButton";
+import { calculateKCALSRecommended } from "@/features/authentication/utils/calculateBodyData";
 
 interface FormValues {
   planSelected: PlansEnum | null;
@@ -35,7 +37,7 @@ const PlanSelector: FC<Props> = ({ handleContinue }) => {
 
   if (!user) return <></>;
 
-  const planSelected = user?.planSelected;
+  const { planSelected, bodyData, goal } = user;
   const isCreatingRoute = router.asPath === "/app/create";
 
   const {
@@ -73,17 +75,40 @@ const PlanSelector: FC<Props> = ({ handleContinue }) => {
   };
 
   const onSubmit = async (data: FormValues) => {
-    if (!user || isSubmitting) return;
-    const fields = { planSelected: data.planSelected };
-    const res = await updateUser({ user, fields });
-    if (res.result === "success") {
-      dispatch(setUpdateUser({ user, fields }));
-      handleContinue();
-      if (!isCreatingRoute) {
-        toast.success("Your Preferred Plan has been updated successfully.");
+    try {
+      const { BMR, activity } = bodyData;
+      if (!user || isSubmitting || !BMR || !goal || !activity)
+        throw new Error("Missing data");
+      const { planSelected } = data;
+
+      const calories = calculateKCALSRecommended({
+        BMR,
+        goal,
+        activity,
+      });
+
+      let newNutritionTargets = getNutritionTargets({
+        calories: calories,
+        planSelected: planSelected!,
+      });
+
+      const fields = {
+        planSelected: planSelected,
+        nutritionTargets: newNutritionTargets,
+      };
+      const res = await updateUser({ user, fields });
+      if (res.result === "success") {
+        dispatch(setUpdateUser({ user, fields }));
+        handleContinue();
+        if (!isCreatingRoute) {
+          toast.success("Your Preferred Plan has been updated successfully.");
+        }
+      } else {
+        throw new Error("Error updating your Preferred Plan");
       }
-    } else {
-      toast.error("Error updating your Preferred Plan");
+    } catch (error) {
+      console.log(error);
+      toast.error("Unexpected Error.");
     }
   };
 

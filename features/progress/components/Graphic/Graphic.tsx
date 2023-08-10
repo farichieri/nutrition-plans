@@ -17,7 +17,6 @@ import {
 } from "@/utils";
 import { format, formatISO, parse } from "date-fns";
 import { getWeight, getWeightText, getWeightUnit } from "@/utils/calculations";
-import { MeasurementUnits } from "@/types";
 import { selectAuthSlice } from "@/features/authentication";
 import { selectProgressSlice } from "@/features/progress";
 import { useSelector } from "react-redux";
@@ -108,7 +107,7 @@ const Graphic: FC<Props> = () => {
     weights.push(realWeightGoal);
     const maxWeightInData = Math.max(...weights);
     const minWeightInData = Math.min(...weights);
-    const domainDiff = measurementUnit === MeasurementUnits.Metric ? 5 : 10;
+    const domainDiff = measurementUnit === "metric" ? 5 : 10;
     const min =
       minWeightInData - domainDiff > 45 ? maxWeightInData + domainDiff : 45;
     const max = maxWeightInData + domainDiff;

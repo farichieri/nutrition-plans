@@ -1,4 +1,4 @@
-import { MeasurementUnits } from "@/types";
+import { MeasurementUnitsT } from "@/types";
 import { ltsToFluidOnces } from "@/utils/calculations";
 
 const getWater = ({
@@ -6,9 +6,9 @@ const getWater = ({
   measurement,
 }: {
   weightInKg: number;
-  measurement: MeasurementUnits;
+  measurement: MeasurementUnitsT;
 }) => {
-  if (measurement === MeasurementUnits.Imperial) {
+  if (measurement === "imperial") {
     // return floz.
     const lts = weightInKg * 0.03;
     return ltsToFluidOnces({ lts: lts });

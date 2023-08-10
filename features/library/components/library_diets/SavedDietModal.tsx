@@ -127,7 +127,11 @@ const SavedDietModal: FC<Props> = () => {
               );
             })}
         </div>
-        <Nutrition nutrients={diet.nutrients} planID={diet.planID} />
+        <Nutrition
+          nutrients={diet.nutrients}
+          planID={diet.planID}
+          diet={diet}
+        />
         <div className="p-2">
           <ActionButton
             type="delete"

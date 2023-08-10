@@ -20,7 +20,7 @@ const WeekPlan: FC<Props> = ({ dateInterval }) => {
 
   return (
     <div className="w-full">
-      <div className="grid w-full gap-10 sm:grid-cols-fluid_lg sm:gap-5 ">
+      <div className="grid w-full gap-10 sm:grid-cols-fluid_md sm:gap-5 ">
         {!datesInterval && "Invalid Dates Range"}
         {isValidRange ? (
           <>

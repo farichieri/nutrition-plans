@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { MdRestaurant } from "react-icons/md";
 import MoreDropdown from "../common/MoreDropdown";
 import { selectAuthSlice } from "@/features/authentication";
+import Exercise from "../common/Exercise";
 
 interface Props {
   diet: Diet;
@@ -125,6 +126,7 @@ const MealCards: FC<Props> = ({ diet, isEditing, setIsEditing, date }) => {
           </DragDropContext>
         )}
         <Water diet={diet} isEditing={isEditing} />
+        <Exercise diet={diet} isEditing={isEditing} />
       </div>
     </div>
   );

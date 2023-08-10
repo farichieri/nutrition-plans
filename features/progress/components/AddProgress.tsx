@@ -5,7 +5,7 @@ import {
 } from "@/features/progress";
 import { FC, useEffect, useState } from "react";
 import { formatISO, parse } from "date-fns";
-import { formatToUSDate } from "@/utils";
+import { formatToInputDate, formatToUSDate } from "@/utils";
 import { getWeightInKg, getWeightUnit } from "@/utils/calculations";
 import { selectAuthSlice } from "@/features/authentication/slice";
 import { toast } from "react-hot-toast";
@@ -94,7 +94,9 @@ const AddProgress: FC<Props> = () => {
     });
   };
 
-  console.log({ user });
+  // today in input date format
+  const today = formatToInputDate(new Date());
+
   return (
     <>
       {formOpened ? (
@@ -115,6 +117,8 @@ const AddProgress: FC<Props> = () => {
               onChange={handleChange}
               name="date"
               type="date"
+              max={today}
+              required
               className="w-full basis-2/3 rounded-md border bg-transparent px-2 py-1"
             />
           </div>

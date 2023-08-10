@@ -1,11 +1,17 @@
-import { FC } from "react";
-import { Diet } from "../../types";
+import {
+  convertWater,
+  getWaterInLts,
+  getWaterUnit,
+} from "@/utils/calculations";
 import { CheckButton } from "@/components/Buttons";
+import { Diet } from "../../types";
+import { FC } from "react";
+import { formatTwoDecimals } from "@/utils";
+import { selectAuthSlice } from "@/features/authentication";
+import { toast } from "react-hot-toast";
+import { toggleDrunkWater, updateWaterDrunkInDiet } from "../../slice";
 import { updateDiet } from "../../services";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleDrunkWater } from "../../slice";
-import { selectAuthSlice } from "@/features/authentication";
-import { convertWater, getWaterUnit } from "@/utils/calculations";
 
 interface Props {
   diet: Diet;
@@ -22,46 +28,88 @@ const Water: FC<Props> = ({ diet, isEditing }) => {
   const { littersDrunk, littersToDrink, drunk } = water;
   const { measurementUnit } = user;
 
-  const handleCheck = async (event: React.MouseEvent) => {
+  const handleCheck = async (event: React.FormEvent) => {
     event.preventDefault();
     const value = !drunk;
 
-    dispatch(toggleDrunkWater({ diet, value: value }));
+    try {
+      dispatch(toggleDrunkWater({ diet, value: value }));
 
-    const dietUpdated: Diet = {
-      ...diet,
-      water: {
-        ...water,
-        drunk: value,
-      },
-    };
-    const res = await updateDiet({ diet: dietUpdated });
+      const dietUpdated: Diet = {
+        ...diet,
+        water: {
+          ...water,
+          drunk: value,
+        },
+      };
+      const res = await updateDiet({ diet: dietUpdated });
 
-    if (res.result === "error") {
-      dispatch(toggleDrunkWater({ diet, value: !value }));
+      if (res.result === "error") {
+        dispatch(toggleDrunkWater({ diet, value: !value }));
+      }
+    } catch (error) {
+      toast.error("Error saving water drunk.");
+      console.log(error);
+    } finally {
     }
   };
 
-  const realWater = convertWater({
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    const value = Number(event.target.value);
+    const lts = getWaterInLts({ from: measurementUnit, value });
+    dispatch(updateWaterDrunkInDiet({ diet, littersDrunk: lts }));
+  };
+
+  const realWaterToDrink = convertWater({
     to: measurementUnit,
     lts: littersToDrink,
   });
+
+  const realWaterDrunk = convertWater({
+    to: measurementUnit,
+    lts: littersDrunk,
+  });
+
   const waterUnit = getWaterUnit({ from: measurementUnit });
+  const waterUnitCapitalized =
+    waterUnit.charAt(0).toUpperCase() + waterUnit.slice(1);
 
   return (
     <div
-      className={`flex items-center gap-1 rounded-xl border-b  ${
+      className={`flex items-center gap-1 rounded-xl border-b py-1  ${
         drunk
           ? "border-blue-300 bg-blue-300/30 "
           : "bg-white dark:bg-gray-500/20"
       }`}
     >
-      <div className="flex w-full items-center justify-between pr-2">
-        <div>
-          <span className="px-2 font-semibold">Water:</span>
-          <span>
-            {realWater} {waterUnit}
+      <div className="flex w-full items-center justify-between px-2 ">
+        <div className="flex items-baseline gap-1">
+          <span className="min-w-fit font-semibold text-blue-500">
+            💧Water:
           </span>
+          <div className="flex items-baseline gap-1">
+            <div>
+              {isEditing ? (
+                <input
+                  type="number"
+                  value={realWaterDrunk || ""}
+                  onChange={handleChange}
+                  className="h-10 w-20 rounded-md border-2 border-gray-300 text-center"
+                  min={0}
+                  step={0.1}
+                />
+              ) : (
+                <span className="font-semibold text-green-500">
+                  {formatTwoDecimals(realWaterDrunk)}
+                </span>
+              )}
+            </div>
+            <span>
+              {waterUnitCapitalized} of {realWaterToDrink}{" "}
+              {waterUnitCapitalized}
+            </span>
+          </div>
         </div>
         <div className="h-10 w-10">
           {!isEditing && <CheckButton onClick={handleCheck} checked={drunk} />}

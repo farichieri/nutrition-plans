@@ -65,7 +65,7 @@ const SetMeasurementUnits: FC<Props> = () => {
                 onClick={() => setMU(type)}
               >
                 <span className="text-xl font-semibold capitalize">{type}</span>
-                {type === MeasurementUnits.Metric ? (
+                {type === "metric" ? (
                   <div className="flex w-32 flex-col">
                     <div className="flex items-center justify-between gap-1">
                       <span className="text-sm opacity-70">Height:</span>
