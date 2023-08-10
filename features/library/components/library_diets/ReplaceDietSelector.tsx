@@ -51,7 +51,7 @@ const ReplaceDietSelector: FC<Props> = ({ date, handleClose }) => {
   }
 
   return (
-    <div className="flex w-3xl  max-w-[95vw] flex-col gap-2 p-2 pt-3 ">
+    <div className="flex w-3xl max-w-[95vw] flex-col gap-2 p-2 pt-3 ">
       <div className="flex items-center gap-1">
         <MdContentCopy className="h-5 w-5 text-blue-500" />
         <span className="font-semibold">Replace day with:</span>

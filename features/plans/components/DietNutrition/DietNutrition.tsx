@@ -112,13 +112,13 @@ const DietNutrition: FC<Props> = ({ nutrients, diet, isEditing }) => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full ">
       <div className="mb-1 flex h-9 w-full items-center gap-2">
         <BiSolidPieChartAlt2 className="h-6 w-6 text-green-500" />
         <span className="text-2xl font-semibold">Nutrition</span>
       </div>
       <div
-        className={`relative flex w-full flex-col  rounded-xl border p-4 ${
+        className={`relative flex w-full flex-col rounded-xl border p-4 shadow-md dark:shadow-slate-500/20 ${
           !isAllInRange
             ? "bg-white dark:bg-gray-500/20"
             : "border-green-500 bg-green-500/20 "

@@ -3,12 +3,13 @@ import { getDaysOfWeek } from "@/utils";
 import { selectAuthSlice } from "@/features/authentication";
 import { useSelector } from "react-redux";
 import Plan from "../common/Plan";
+import PlansGenerator from "./PlansGenerator";
 
 interface Props {
   dateInterval: string;
 }
 
-const WeekPlan: FC<Props> = ({ dateInterval }) => {
+const MultipleDaysPlan: FC<Props> = ({ dateInterval }) => {
   const { user } = useSelector(selectAuthSlice);
   const datesInterval = getDaysOfWeek(dateInterval);
   const isValidRange = datesInterval && datesInterval?.length <= 31;
@@ -20,7 +21,8 @@ const WeekPlan: FC<Props> = ({ dateInterval }) => {
 
   return (
     <div className="w-full">
-      <div className="grid w-full gap-10 sm:grid-cols-fluid_md sm:gap-5 ">
+      <PlansGenerator />
+      <div className="flex w-full flex-col gap-20 sm:gap-10 ">
         {!datesInterval && "Invalid Dates Range"}
         {isValidRange ? (
           <>
@@ -28,7 +30,7 @@ const WeekPlan: FC<Props> = ({ dateInterval }) => {
               return (
                 <div
                   key={date}
-                  className={`${
+                  className={`overflow-hidden rounded-lg ${
                     planBeingEdited === null
                       ? "bg-transparent blur-none"
                       : planBeingEdited === date
@@ -51,4 +53,4 @@ const WeekPlan: FC<Props> = ({ dateInterval }) => {
   );
 };
 
-export default WeekPlan;
+export default MultipleDaysPlan;

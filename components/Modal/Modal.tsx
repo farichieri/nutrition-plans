@@ -19,9 +19,9 @@ const Modal = ({
     }
   };
   return (
-    <div className="min-w-screen max-w-screen fixed inset-0 z-[500] m-0 flex min-h-screen items-center justify-center overflow-auto">
+    <div className="min-w-screen max-w-screen fixed inset-0 z-[500] m-0 flex items-center justify-center overflow-auto">
       <div
-        className="min-w-screen fixed inset-0 z-[90] m-0 flex min-h-screen items-center justify-center bg-black/60 dark:bg-black/40"
+        className="min-w-screen fixed inset-0 z-[90] m-0 flex items-center justify-center bg-black/60 dark:bg-black/40"
         onClick={handleCloseModal}
       ></div>
       <div

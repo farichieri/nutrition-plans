@@ -72,6 +72,7 @@ const DayPlan: FC<Props> = ({ date }) => {
                     diet={diet}
                     date={date}
                     setIsEditing={setIsEditing}
+                    isMultipleDaysView={false}
                   />
                 </div>
                 {diet && (

@@ -84,7 +84,7 @@ const Exercise: FC<Props> = ({ diet, isEditing }) => {
   if (isPlanned || isEditing) {
     return (
       <div
-        className={`flex items-center gap-1 rounded-xl border-b py-1  ${
+        className={`flex items-center gap-1 rounded-xl border-b py-1 shadow-md dark:shadow-slate-500/20 ${
           exercised
             ? "border-red-300 bg-red-300/30 "
             : "bg-white dark:bg-gray-500/20"
