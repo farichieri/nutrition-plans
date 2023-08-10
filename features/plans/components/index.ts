@@ -1,8 +1,9 @@
 // Manual
 import ManualMeals from "./MealCards/MealCards";
 
-// WeekPlan
-import WeekPlan from "./WeekPlan/WeekPlan";
+// MultipleDaysPlan
+import MultipleDaysPlan from "./MultipleDaysPlan/MultipleDaysPlan";
+import PlansGenerator from "./MultipleDaysPlan/PlansGenerator";
 
 // DayPlan
 import DayPlan from "./DayPlan/DayPlan";
@@ -36,5 +37,6 @@ export {
   ReGenerateMeals,
   SaveAndEditButton,
   Water,
-  WeekPlan,
+  MultipleDaysPlan,
+  PlansGenerator,
 };

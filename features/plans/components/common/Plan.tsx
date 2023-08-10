@@ -5,10 +5,10 @@ import { ManualMeals } from "..";
 import { selectPlansSlice, setDiet } from "@/features/plans/slice";
 import { useDispatch, useSelector } from "react-redux";
 import { User, selectAuthSlice } from "@/features/authentication";
+import DayNote from "./DayNote";
 import Link from "next/link";
 import PlanGenerator from "./PlanGenerator";
 import Spinner from "@/components/Loader/Spinner";
-import DayNote from "./DayNote";
 
 interface Props {
   date: string;
@@ -60,7 +60,7 @@ const Plan: FC<Props> = ({ date, setPlanBeingEdited }) => {
 
   return (
     <div
-      className={`flex w-full flex-col items-center justify-start gap-2 rounded-lg border bg-slate-200/50 p-2 dark:bg-gray-500/10 ${
+      className={`relative flex w-full flex-col items-center justify-start gap-2 overflow-auto rounded-lg border bg-slate-200/50 p-2 dark:bg-gray-500/10 ${
         dateF === "today" ? "border-red-400/50" : ""
       }`}
     >
@@ -100,6 +100,7 @@ const Plan: FC<Props> = ({ date, setPlanBeingEdited }) => {
                   diet={diet}
                   date={date}
                   setIsEditing={setIsEditing}
+                  isMultipleDaysView={true}
                 />
               </div>
             ) : (

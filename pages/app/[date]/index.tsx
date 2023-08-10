@@ -2,7 +2,7 @@ import {
   DayPlan,
   DaySelector,
   useRedirectToday,
-  WeekPlan,
+  MultipleDaysPlan,
 } from "@/features/plans";
 import { getIsWeek } from "@/utils/dateFormat";
 import { getRealDate } from "@/features/plans/utils/dates";
@@ -59,7 +59,7 @@ export default function Page({ date }: { date: Props }) {
             </SubPremiumNav>
             <div className="px-2 sm:px-4 lg:px-5">
               {getIsWeek(realDate) ? (
-                <WeekPlan dateInterval={realDate} />
+                <MultipleDaysPlan dateInterval={realDate} />
               ) : (
                 <DayPlan date={realDate} />
               )}

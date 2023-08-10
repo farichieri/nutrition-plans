@@ -11,24 +11,31 @@ import {
   SaveAndEditButton,
   Water,
 } from "@/features/plans";
-import { updateDietMealFoodsOrder } from "@/features/plans/slice";
 import { DragDropContext } from "@hello-pangea/dnd";
 import { FC } from "react";
 import { FoodGroupArray } from "@/features/foods";
-import { useDispatch, useSelector } from "react-redux";
 import { MdRestaurant } from "react-icons/md";
-import MoreDropdown from "../common/MoreDropdown";
 import { selectAuthSlice } from "@/features/authentication";
+import { updateDietMealFoodsOrder } from "@/features/plans/slice";
+import { useDispatch, useSelector } from "react-redux";
 import Exercise from "../common/Exercise";
+import MoreDropdown from "../common/MoreDropdown";
 
 interface Props {
+  date: string;
   diet: Diet;
   isEditing: boolean;
-  date: string;
   setIsEditing: Function;
+  isMultipleDaysView: boolean;
 }
 
-const MealCards: FC<Props> = ({ diet, isEditing, setIsEditing, date }) => {
+const MealCards: FC<Props> = ({
+  diet,
+  isEditing,
+  setIsEditing,
+  date,
+  isMultipleDaysView,
+}) => {
   const dispatch = useDispatch();
   const dietMeals = diet?.meals;
   const { user } = useSelector(selectAuthSlice);
@@ -86,6 +93,10 @@ const MealCards: FC<Props> = ({ diet, isEditing, setIsEditing, date }) => {
     dispatch(updateDietMealFoodsOrder({ dietMeal, foodsArrayOrdered }));
   };
 
+  const classDependingView = isMultipleDaysView
+    ? "grid gap-2 sm:grid-cols-fluid_md"
+    : "flex flex-col gap-2";
+
   return (
     <div className="w-full">
       <div className="mb-1 flex flex-wrap items-center justify-between gap-2">
@@ -107,7 +118,7 @@ const MealCards: FC<Props> = ({ diet, isEditing, setIsEditing, date }) => {
       <div className="flex flex-col gap-2">
         {dietMeals && (
           <DragDropContext onDragEnd={onDragEnd}>
-            <div className="flex flex-col gap-2">
+            <div className={classDependingView}>
               {Object.values(dietMeals)
                 .sort((a: any, b: any) => Number(a.order) - Number(b.order))
                 .map((dietMeal: DietMeal) => {
