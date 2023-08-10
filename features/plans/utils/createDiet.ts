@@ -33,6 +33,7 @@ const buildDiet = (
     date: null,
     dateCreated: null,
     description: null,
+    hideNutritionTargetsDiff: false,
     id: null,
     meals: dietMeals,
     name: null,

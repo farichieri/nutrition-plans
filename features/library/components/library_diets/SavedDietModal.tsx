@@ -4,7 +4,7 @@ import {
   deleteLibraryDay,
 } from "@/features/library";
 import { ActionButton } from "@/components/Buttons";
-import { DietMeal, FoodInMealCard, Nutrition } from "@/features/plans";
+import { DietMeal, FoodInMealCard, DietNutrition } from "@/features/plans";
 import { FC, useState } from "react";
 import { FoodGroupArray } from "@/features/foods";
 import { getNutritionMerged } from "@/utils";
@@ -127,10 +127,11 @@ const SavedDietModal: FC<Props> = () => {
               );
             })}
         </div>
-        <Nutrition
+        <DietNutrition
           nutrients={diet.nutrients}
           planID={diet.planID}
           diet={diet}
+          isEditing={isEditing}
         />
         <div className="p-2">
           <ActionButton

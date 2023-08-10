@@ -1,4 +1,9 @@
 import {
+  getUserWithNewWeight,
+  setUpdateUser,
+  updateUser,
+} from "@/features/authentication";
+import {
   ProgressItem,
   selectProgressSlice,
   setProgressOpen,
@@ -10,12 +15,6 @@ import { selectAuthSlice } from "@/features/authentication/slice";
 import { sortProgress } from "../utils/sortProgress";
 import { useDispatch, useSelector } from "react-redux";
 import ProgressItemModal from "./ProgressItemModal";
-import {
-  getNutritionTargets,
-  setUpdateUser,
-  updateUser,
-} from "@/features/authentication";
-import { calculateKCALSRecommended } from "@/features/authentication/utils/calculateBodyData";
 
 interface Props {}
 const ProgressList: FC<Props> = () => {
@@ -24,8 +23,7 @@ const ProgressList: FC<Props> = () => {
 
   if (!user) return <></>;
 
-  const { measurementUnit, goal, bodyData, planSelected } = user;
-  const { BMR, activity } = bodyData;
+  const { measurementUnit } = user;
 
   const { progress, progressOpen } = useSelector(selectProgressSlice);
 
@@ -36,33 +34,24 @@ const ProgressList: FC<Props> = () => {
   const progressSorted = sortProgress(Object.values(progress));
   const lastProgress = progressSorted[progressSorted.length - 1];
 
-  console.log({ lastProgress, user });
-
   const updateUserWeight = async () => {
     if (lastProgress.weightInKg !== user.bodyData.weightInKg) {
       try {
-        if (!lastProgress || !BMR || !goal || !activity || !planSelected)
-          throw new Error("Missing data");
+        if (!lastProgress.weightInKg) throw new Error("Missing data");
 
-        // The problem here is that I dont have the BMR updated....
-        // I have to make a reutilizable function... I cant be doing all the logic every time I change the weight.
-        const calories = calculateKCALSRecommended({
-          BMR,
-          goal,
-          activity,
+        const newUserRes = getUserWithNewWeight({
+          user,
+          newWeightInKgs: lastProgress.weightInKg,
         });
 
-        let newNutritionTargets = getNutritionTargets({
-          calories: calories,
-          planSelected: planSelected,
-        });
+        if (newUserRes.result === "error") {
+          throw new Error("Error updating user weight");
+        }
+        const newUser = newUserRes.data;
 
         const fields = {
-          bodyData: {
-            ...user.bodyData,
-            weightInKg: lastProgress.weightInKg,
-          },
-          nutritionTargets: newNutritionTargets,
+          bodyData: newUser.bodyData,
+          nutritionTargets: newUser.nutritionTargets,
         };
         const res = await updateUser({
           user,

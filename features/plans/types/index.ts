@@ -38,6 +38,7 @@ export interface Diet {
   userID: string | null;
   water: DietWater;
   nutritionTargets: NutritionTargets;
+  hideNutritionTargetsDiff: boolean;
 }
 
 export interface DietGroupArray extends Array<Diet> {}
@@ -93,6 +94,7 @@ export const NewDiet: Diet = {
   date: null,
   dateCreated: null,
   description: null,
+  hideNutritionTargetsDiff: false,
   id: null,
   meals: {},
   name: null,

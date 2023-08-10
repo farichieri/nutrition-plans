@@ -1,9 +1,8 @@
 import {
   Diet,
   MealCards,
-  Nutrition,
+  DietNutrition,
   PlanGenerator,
-  SaveAndEditButton,
 } from "@/features/plans";
 import { fetchDietByDate } from "@/features/plans/services";
 import { FC, useEffect, useState } from "react";
@@ -78,10 +77,11 @@ const DayPlan: FC<Props> = ({ date }) => {
                 {diet && (
                   <div>
                     <div className="sticky top-24 z-[50] ">
-                      <Nutrition
+                      <DietNutrition
                         nutrients={diet.nutrients}
                         planID={planID}
                         diet={diet}
+                        isEditing={isEditing}
                       />
                     </div>
                   </div>
