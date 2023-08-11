@@ -70,6 +70,7 @@ const Login = () => {
         }
       })
       .catch((error) => {
+        console.log(error);
         dispatch(setLoginError());
         persistor.purge();
         const errorCode = error.code;
@@ -81,7 +82,6 @@ const Login = () => {
     await signInWithEmailAndPassword(auth, data.email, data.password)
       .then(async (result) => {
         const user = result.user;
-        console.log({ user });
         if (user) {
           dispatch(setIsSigningUser(true));
           const userRes = result.user && (await getUser(result.user.uid));
@@ -93,6 +93,7 @@ const Login = () => {
         }
       })
       .catch((error) => {
+        console.log(error);
         persistor.purge();
         const errorCode = error.code;
         setErrorMessage(AUTH_ERRORS[errorCode]);

@@ -1,21 +1,27 @@
 import { PlansEnum } from "@/types";
 import { PlanTypes, PlanTypesT, Diet, createDiet } from "@/features/plans";
 import { postDietToUserDiets } from "@/features/plans/services";
+import { ReplaceDietSelector } from "@/features/library";
 import { setDiet } from "@/features/plans/slice";
+import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { User, selectAuthSlice } from "@/features/authentication";
 import { UserMeals, selectMealsSlice } from "@/features/meals";
+import Modal from "@/components/Modal/Modal";
 import React, { ChangeEvent, FC, useState } from "react";
+import Spinner from "@/components/Loader/Spinner";
 
 interface Props {
-  date: string;
-  setIsGeneratingPlan: Function;
+  date: string | null;
+  dates: string[] | null;
+  setDoneGeneratingPlan: (value: boolean) => void;
 }
 
-const PlanGenerator: FC<Props> = ({ date, setIsGeneratingPlan }) => {
+const PlanGenerator: FC<Props> = ({ date, dates, setDoneGeneratingPlan }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
   const { meals } = useSelector(selectMealsSlice);
+  const [isLoadDayOpen, setIsLoadDayOpen] = useState(false);
   const [planSelected, setPlanSelected] = useState<PlansEnum>(
     user?.planSelected || PlansEnum.balanced
   );
@@ -23,6 +29,7 @@ const PlanGenerator: FC<Props> = ({ date, setIsGeneratingPlan }) => {
     planSelected,
     ...Object.values(PlansEnum).filter((p) => p !== planSelected),
   ];
+  const [isGenerating, setIsGenerating] = useState(false);
 
   if (!user) return <></>;
 
@@ -34,12 +41,28 @@ const PlanGenerator: FC<Props> = ({ date, setIsGeneratingPlan }) => {
     }
   };
 
-  const generatePlan = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault;
+  const generatePlan = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
     const id = (event.target as HTMLButtonElement).id;
     const planType = PlanTypes[id as keyof PlanTypesT];
-
-    createAndSaveDiet(date, planSelected, user, meals, planType);
+    try {
+      setIsGenerating(true);
+      if (date && !dates) {
+        await createAndSaveDiet(date, planSelected, user, meals, planType);
+      } else if (dates && !date) {
+        await Promise.all(
+          dates.map((d) =>
+            createAndSaveDiet(d, planSelected, user, meals, planType)
+          )
+        ).then(() => setDoneGeneratingPlan(true));
+      } else {
+        toast.error("Error generating plan");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   const createAndSaveDiet = async (
@@ -49,28 +72,47 @@ const PlanGenerator: FC<Props> = ({ date, setIsGeneratingPlan }) => {
     meals: UserMeals,
     type: PlanTypes
   ) => {
-    setIsGeneratingPlan(true);
-    const diet: Diet = createDiet(meals, planID, type, user);
-    const res = await postDietToUserDiets({
-      diet,
-      planID,
-      date,
-      user,
-    });
-    if (res.result === "success") {
-      dispatch(setDiet(res.data));
+    try {
+      const diet: Diet = createDiet(meals, planID, type, user);
+      const res = await postDietToUserDiets({
+        diet,
+        planID,
+        date,
+        user,
+      });
+      if (res.result === "success") {
+        dispatch(setDiet(res.data));
+      }
+    } catch (error) {
+      toast.error("Error generating plan");
+      console.log(error);
+    } finally {
     }
-    setIsGeneratingPlan(false);
   };
 
+  if (isGenerating) {
+    return <Spinner customClass="mt-5 h-10 w-10 mx-auto" />;
+  }
+
   return (
-    <div className="flex flex-col items-center justify-center gap-5 p-5">
+    <div className="m-auto flex w-fit flex-col items-center justify-center gap-5 p-5">
+      {/* To be fixed with dates */}
+      {isLoadDayOpen && (
+        <Modal onClose={() => setIsLoadDayOpen(false)}>
+          <ReplaceDietSelector
+            date={date}
+            dates={dates}
+            handleClose={() => setIsLoadDayOpen(false)}
+            setDoneGeneratingPlan={setDoneGeneratingPlan}
+          />
+        </Modal>
+      )}
       <div className="m-auto flex flex-wrap items-center justify-center gap-2">
         <span className="text-lg font-semibold">Generate Plan:</span>
         <select
           value={planSelected}
           onChange={handleSelect}
-          className="cursor-pointer border-b border-green-500 bg-transparent p-2 font-semibold capitalize text-green-500 outline-none"
+          className="cursor-pointer border-b border-green-500 bg-transparent p-1 font-semibold capitalize text-green-500 outline-none"
         >
           {plans.map((plan) => (
             <option
@@ -83,7 +125,7 @@ const PlanGenerator: FC<Props> = ({ date, setIsGeneratingPlan }) => {
           ))}
         </select>
       </div>
-      <div className="flex  gap-5">
+      <div className="flex gap-5">
         {Object.keys(PlanTypes).map((p) => (
           <button
             id={p}
@@ -94,6 +136,14 @@ const PlanGenerator: FC<Props> = ({ date, setIsGeneratingPlan }) => {
             {p}
           </button>
         ))}
+      </div>
+      <div className="tems-center m-2 flex w-full justify-center border-t p-4">
+        <button
+          onClick={() => setIsLoadDayOpen(true)}
+          className="flex cursor-pointer items-center gap-0.5 border-b border-transparent text-xs text-blue-500 hover:border-blue-500"
+        >
+          <span className="">Load Saved Day</span>
+        </button>
       </div>
     </div>
   );

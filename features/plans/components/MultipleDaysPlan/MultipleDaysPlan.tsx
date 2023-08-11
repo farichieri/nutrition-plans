@@ -11,17 +11,15 @@ interface Props {
 
 const MultipleDaysPlan: FC<Props> = ({ dateInterval }) => {
   const { user } = useSelector(selectAuthSlice);
+  const [planBeingEdited, setPlanBeingEdited] = useState<string | null>(null);
   const datesInterval = getDaysOfWeek(dateInterval);
   const isValidRange = datesInterval && datesInterval?.length <= 31;
-  const [planBeingEdited, setPlanBeingEdited] = useState<string | null>(null);
-
-  console.log(planBeingEdited);
 
   if (!user) return <></>;
 
   return (
     <div className="w-full">
-      <PlansGenerator />
+      <PlansGenerator dates={datesInterval} />
       <div className="flex w-full flex-col gap-20 sm:gap-10 ">
         {!datesInterval && "Invalid Dates Range"}
         {isValidRange ? (

@@ -7,14 +7,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Spinner from "@/components/Loader/Spinner";
+import { toast } from "react-hot-toast";
 
 interface Props {
   diet: Diet;
-  replaceDate?: string;
+  replaceDate: string | null;
+  replaceDates: string[] | null;
   handleClose: () => void;
+  setDoneGeneratingPlan: (value: boolean) => void;
 }
 
-const PlanCard: FC<Props> = ({ diet, replaceDate, handleClose }) => {
+const PlanCard: FC<Props> = ({
+  diet,
+  replaceDate,
+  replaceDates,
+  handleClose,
+  setDoneGeneratingPlan,
+}) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { user } = useSelector(selectAuthSlice);
@@ -26,9 +35,9 @@ const PlanCard: FC<Props> = ({ diet, replaceDate, handleClose }) => {
   const calories = diet?.nutrients?.calories;
 
   const handleSelect = async () => {
-    if (replaceDate) {
-      try {
-        setIsLoading(true);
+    try {
+      setIsLoading(true);
+      if (replaceDate && !replaceDates) {
         const newDiet = {
           ...diet,
           id: replaceDate,
@@ -40,12 +49,32 @@ const PlanCard: FC<Props> = ({ diet, replaceDate, handleClose }) => {
         if (res.result === "success") {
           dispatch(setDiet(res.data));
         }
-        handleClose();
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsLoading(false);
+      } else if (replaceDates && !replaceDate) {
+        const promises = await Promise.all(
+          replaceDates.map((date) => {
+            const newDiet = {
+              ...diet,
+              id: date,
+              date: date,
+            };
+            return replaceDietWithLibraryDay({
+              diet: newDiet,
+            });
+          })
+        );
+        promises.forEach((res) => {
+          if (res.result === "success") {
+            dispatch(setDiet(res.data));
+          }
+        });
       }
+    } catch (error) {
+      toast.error("Something went wrong");
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+      setDoneGeneratingPlan(true);
+      handleClose();
     }
   };
 

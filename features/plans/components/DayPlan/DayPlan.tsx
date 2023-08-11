@@ -98,7 +98,8 @@ const DayPlan: FC<Props> = ({ date }) => {
             <div className="fixed inset-0 mt-auto flex h-screen w-screen flex-col justify-center">
               <PlanGenerator
                 date={date}
-                setIsGeneratingPlan={setIsGeneratingPlan}
+                dates={null}
+                setDoneGeneratingPlan={() => {}}
               />
             </div>
           )}
