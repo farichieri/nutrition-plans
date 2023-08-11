@@ -32,6 +32,7 @@ const MoreDropdown: FC<Props> = ({ diet }) => {
     save: false,
     replace: false,
   });
+  const [doneGeneratingPlan, setDoneGeneratingPlan] = useState(false);
 
   if (!user || !diet.id || !diet.date) return <></>;
 
@@ -51,9 +52,9 @@ const MoreDropdown: FC<Props> = ({ diet }) => {
                 const res = await deleteDiet(diet);
                 if (res.result === "success") {
                   dispatch(setDeleteDiet({ id: diet.id! }));
-                  toast.success("Diet deleted successfully.");
+                  toast.success("Day deleted successfully.");
                 } else {
-                  toast.error("Error deleting diet. Please try again.");
+                  toast.error("Error deleting Day. Please try again.");
                 }
                 setIsLoading({ ...isLoading, delete: false });
               }}
@@ -102,7 +103,7 @@ const MoreDropdown: FC<Props> = ({ diet }) => {
       isLoading: isLoading.favorite,
     },
     {
-      text: "Replace Day",
+      text: "Load Saved Day",
       icon: <MdContentCopy className="h-5 w-5 text-blue-500" />,
       onClick: handleReplace,
       isLoading: isLoading.replace,
@@ -124,7 +125,12 @@ const MoreDropdown: FC<Props> = ({ diet }) => {
       )}
       {isOpen.replace && (
         <Modal onClose={handleClose}>
-          <ReplaceDietSelector date={diet.date} handleClose={handleClose} />
+          <ReplaceDietSelector
+            dates={null}
+            date={diet.date}
+            handleClose={handleClose}
+            setDoneGeneratingPlan={setDoneGeneratingPlan}
+          />
         </Modal>
       )}
       <DropDown

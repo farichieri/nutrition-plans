@@ -94,7 +94,7 @@ const MealCards: FC<Props> = ({
   };
 
   const classDependingView = isMultipleDaysView
-    ? "grid gap-2 sm:grid-cols-fluid_md"
+    ? "grid gap-2 sm:grid-cols-fluid_m"
     : "flex flex-col gap-2";
 
   return (

@@ -74,9 +74,9 @@ const Exercise: FC<Props> = ({ diet, isEditing }) => {
     return (
       <button
         onClick={handleSetPlanned}
-        className="ml-auto rounded-3xl border border-red-500 bg-red-300/50 px-3 py-1.5"
+        className="mr-auto rounded-lg border border-red-500 bg-red-300/50 px-3 py-1.5"
       >
-        Plan Exercise💪
+        Add Exercise💪
       </button>
     );
   }

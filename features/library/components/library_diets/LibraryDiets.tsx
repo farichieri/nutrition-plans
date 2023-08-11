@@ -58,7 +58,14 @@ const LibraryDiets: FC<Props> = () => {
         <div className="m-auto">No Days saved found.</div>
       ) : (
         sortDays(Object.values(libraryDiets)).map((diet) => (
-          <PlanCard key={diet.id} diet={diet} handleClose={() => {}} />
+          <PlanCard
+            key={diet.id}
+            diet={diet}
+            handleClose={() => {}}
+            replaceDate={null}
+            replaceDates={null}
+            setDoneGeneratingPlan={() => {}}
+          />
         ))
       )}
     </div>

@@ -60,14 +60,14 @@ const Plan: FC<Props> = ({ date, setPlanBeingEdited }) => {
 
   return (
     <div
-      className={`relative flex w-full flex-col items-center justify-start gap-2 overflow-auto rounded-lg border bg-slate-200/50 p-2 dark:bg-gray-500/10 ${
+      className={`relative flex w-full flex-col items-center justify-start gap-2 overflow-auto rounded-lg border bg-slate-300/40 p-2 dark:bg-gray-500/10 ${
         dateF === "today" ? "border-red-400/50" : ""
       }`}
     >
-      <div className="flex w-full items-center justify-between border-b  px-2 py-1">
+      <div className="flex w-full items-center justify-between border-b px-2 pb-1.5">
         <Link href={`/app/${urlDate}`}>
           <span
-            className={`flex py-1.5 font-semibold capitalize ${
+            className={`flex font-semibold capitalize ${
               dateF === "today"
                 ? "text-red-400 underline hover:text-red-500"
                 : "text-blue-400 underline hover:text-blue-500"
@@ -79,9 +79,10 @@ const Plan: FC<Props> = ({ date, setPlanBeingEdited }) => {
         {calories && (
           <span className="text-xs opacity-70">{calories} calories</span>
         )}
+        {!diet && <span className="text-xs text-red-500">Empty</span>}
       </div>
       {diet && (
-        <div className="flex w-full flex-wrap items-center justify-between gap-2">
+        <div className="flex w-full items-baseline">
           <span className="text-xl font-semibold capitalize text-green-500">
             {diet?.planID?.replaceAll("_", " ")}
           </span>
@@ -107,7 +108,8 @@ const Plan: FC<Props> = ({ date, setPlanBeingEdited }) => {
               <div className="m-auto flex justify-center">
                 <PlanGenerator
                   date={date}
-                  setIsGeneratingPlan={setIsGeneratingPlan}
+                  dates={null}
+                  setDoneGeneratingPlan={() => {}}
                 />
               </div>
             )}

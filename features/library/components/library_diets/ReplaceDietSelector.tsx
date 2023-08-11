@@ -13,11 +13,18 @@ import PlanCard from "@/features/plans/components/common/PlanCard";
 import Spinner from "@/components/Loader/Spinner";
 
 interface Props {
-  date: string;
+  date: string | null;
+  dates: string[] | null;
   handleClose: () => void;
+  setDoneGeneratingPlan: (value: boolean) => void;
 }
 
-const ReplaceDietSelector: FC<Props> = ({ date, handleClose }) => {
+const ReplaceDietSelector: FC<Props> = ({
+  date,
+  dates,
+  handleClose,
+  setDoneGeneratingPlan,
+}) => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
 
@@ -51,7 +58,7 @@ const ReplaceDietSelector: FC<Props> = ({ date, handleClose }) => {
   }
 
   return (
-    <div className="flex w-3xl max-w-[95vw] flex-col gap-2 p-2 pt-3 ">
+    <div className="flex w-3xl max-w-[95vw] flex-col gap-2 px-3 pb-5 pt-3 ">
       <div className="flex items-center gap-1">
         <MdContentCopy className="h-5 w-5 text-blue-500" />
         <span className="font-semibold">Replace day with:</span>
@@ -62,9 +69,11 @@ const ReplaceDietSelector: FC<Props> = ({ date, handleClose }) => {
         sortDays(Object.values(libraryDiets)).map((diet) => (
           <PlanCard
             replaceDate={date}
+            replaceDates={dates}
             key={diet.id}
             diet={diet}
             handleClose={handleClose}
+            setDoneGeneratingPlan={setDoneGeneratingPlan}
           />
         ))
       )}
