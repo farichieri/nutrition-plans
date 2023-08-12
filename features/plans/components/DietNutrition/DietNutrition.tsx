@@ -163,13 +163,13 @@ const DietNutrition: FC<Props> = ({ nutrients, diet, isEditing }) => {
                           </span>
                         )}
                         {Number(nut.value) < Number(nut.min) && (
-                          <span className="flex text-xs text-red-500">
+                          <span className="flex  text-xs text-red-500">
                             {formatTwoDecimals(nut.diff)}🔺
                           </span>
                         )}
                       </div>
                       <span
-                        className={` w-14 ${
+                        className={` w-14 text-right ${
                           nut.isInRange ? "text-green-500" : ""
                         }`}
                       >

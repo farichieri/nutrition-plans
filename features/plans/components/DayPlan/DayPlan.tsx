@@ -65,7 +65,7 @@ const DayPlan: FC<Props> = ({ date }) => {
               <div>
                 <DayNote diet={diet} isEditing={isEditing} />
               </div>
-              <div className="relative grid w-full gap-14 sm:grid-cols-fluid_lg sm:gap-5">
+              <div className="relative flex w-full flex-col gap-14 sm:grid sm:grid-cols-fluid_lg sm:gap-5">
                 <div className="flex w-full flex-col rounded-md">
                   <MealCards
                     isEditing={isEditing}
@@ -77,7 +77,7 @@ const DayPlan: FC<Props> = ({ date }) => {
                 </div>
                 {diet && (
                   <div>
-                    <div className="sticky top-24 z-[50] ">
+                    <div className="sticky top-12 z-[50] ">
                       <DietNutrition
                         nutrients={diet.nutrients}
                         planID={planID}
