@@ -15,7 +15,6 @@ const DatabaseSelector: FC<Props> = ({ queries }) => {
   const favoritesRoute = AppRoutes.library_favorites;
   const isAllDatabase = router.route === allDatabaseRoute;
   const isMyCreations = router.route === myCreationsRoute;
-  const isFavorites = router.route === favoritesRoute;
 
   const getQueries = () => {
     const queryEntries = Object.entries(router.query);
@@ -38,7 +37,7 @@ const DatabaseSelector: FC<Props> = ({ queries }) => {
             isLink
             href={`${allDatabaseRoute}${getQueries()}`}
           >
-            All Foods
+            All
           </Option>
           <Option
             position="right"
@@ -46,7 +45,7 @@ const DatabaseSelector: FC<Props> = ({ queries }) => {
             isLink
             href={`${myCreationsRoute}${getQueries()}`}
           >
-            My Creations
+            Creations
           </Option>
         </Options>
       </div>

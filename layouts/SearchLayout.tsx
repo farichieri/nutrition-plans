@@ -16,7 +16,7 @@ interface Props {
 export default function SearchLayout({ queries }: Props) {
   return (
     <PremiumLayout>
-      <PremiumNav hideScrolling={false}>
+      <PremiumNav hideScrolling={false} title="Search">
         <SearchBar queries={queries} />
       </PremiumNav>
       <PremiumSidebar />

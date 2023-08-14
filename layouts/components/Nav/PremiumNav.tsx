@@ -62,7 +62,7 @@ const PremiumNav: FC<Props> = ({
             <Logo hideText={true} />
           </Link>
         </div>
-        {title && (
+        {title && !children && (
           <span className="m-auto min-w-fit font-semibold capitalize sm:hidden">
             {title}
           </span>

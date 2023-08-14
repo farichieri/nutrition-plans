@@ -14,7 +14,7 @@ export default function SettingsLayout({ children }: Props) {
 
   return (
     <PremiumLayout>
-      <PremiumNav hideScrolling={false} />
+      <PremiumNav hideScrolling={false} title="Settings" />
       <PremiumSidebar />
       <section className="mx-auto flex w-full max-w-7xl flex-col items-center justify-center gap-5 px-2 pb-2 pt-2 sm:px-5">
         {router.asPath !== "/app/settings" && (

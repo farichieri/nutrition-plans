@@ -23,7 +23,7 @@ const Option: FC<Props> = ({
       {isLink && href ? (
         <Link
           href={href}
-          className={`flex h-10 cursor-pointer items-center px-3 text-sm duration-100 hover:bg-slate-500/20 active:bg-slate-500/50 s:px-3.5 sm:px-5 sm:text-lg ${
+          className={`flex h-10 cursor-pointer items-center px-3 text-xs duration-100 hover:bg-slate-500/20 active:bg-slate-500/50 xs:text-sm s:px-3.5 sm:px-5 sm:text-lg ${
             position === "left"
               ? "rounded-l-3xl border-y border-l"
               : position === "middle"
@@ -38,7 +38,7 @@ const Option: FC<Props> = ({
       ) : (
         <button
           onClick={onClick}
-          className={`flex h-10 cursor-pointer items-center px-3 text-sm duration-100 hover:bg-slate-500/20 active:bg-slate-500/50 s:px-3.5 sm:px-5 sm:text-lg ${
+          className={`flex h-10 cursor-pointer items-center px-3 text-xs duration-100 hover:bg-slate-500/20 active:bg-slate-500/50 xs:text-sm s:px-3.5 sm:px-5 sm:text-lg ${
             position === "left"
               ? "rounded-l-3xl border-y border-l"
               : position === "middle"

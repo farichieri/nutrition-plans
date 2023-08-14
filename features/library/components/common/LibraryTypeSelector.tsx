@@ -14,17 +14,17 @@ const LibraryTypeSelector: FC<Props> = () => {
 
   const OPTIONS = [
     {
-      label: "Foods",
+      label: "Fav Foods",
       route: favoritesRoute,
-      icon: <MdFavorite className="mr-1 h-6 w-6" />,
+      icon: "",
     },
     {
-      label: "Meals",
+      label: "Saved Meals",
       route: mealsRoute,
       icon: "",
     },
     {
-      label: "Days",
+      label: "Saved Days",
       route: daysRoute,
       icon: "",
     },

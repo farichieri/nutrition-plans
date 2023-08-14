@@ -9,7 +9,7 @@ import {
 import { Food, FoodGroup } from "@/features/foods";
 import { getDietNutrition, getNutritionValues, getToday } from "@/utils";
 import { PlansEnum } from "@/types";
-import { User } from "@/features/authentication";
+import { User, getNutritionTargets } from "@/features/authentication";
 import { UserMeals, UserMealsArr } from "@/features/meals";
 import { uuidv4 } from "@firebase/util";
 
@@ -25,8 +25,13 @@ const buildDiet = (
     dietMeals[meal.id as keyof DietMeal] = meal;
   });
   const nutrition = getDietNutrition(dietMeals);
-  const { bodyData, nutritionTargets } = user;
+  const { bodyData } = user;
   const { waterRecommendedInLts } = bodyData;
+  const calories = user.nutritionTargets.calories;
+  const nutritionTargets = getNutritionTargets({
+    calories: calories!,
+    planSelected: plan_id,
+  });
 
   const diet: Diet = {
     ...NewDiet,

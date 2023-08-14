@@ -11,7 +11,7 @@ interface Props {
 export default function LibraryDietsLayout({ children }: Props) {
   return (
     <PremiumLayout>
-      <PremiumNav hideScrolling={false} />
+      <PremiumNav hideScrolling={false} title="Library" />
       <PremiumSidebar />
       <section className="m-auto flex w-full max-w-screen-2xl flex-col justify-center gap-2 px-2 pb-2 pt-2 sm:px-5">
         <LibraryTypeSelector />
