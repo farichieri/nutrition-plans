@@ -10,7 +10,7 @@ interface Props {
 
 const VaulDrawer: FC<Props> = ({ children, btnText }) => {
   const windowWidth = useWindowWidth();
-  const isMobile = windowWidth < 1024;
+  const isMobile = windowWidth < 768;
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -24,16 +24,22 @@ const VaulDrawer: FC<Props> = ({ children, btnText }) => {
   return (
     <>
       {isMobile ? (
-        <Drawer.Root shouldScaleBackground>
+        <Drawer.Root open={open} shouldScaleBackground>
           <Drawer.Trigger asChild>
-            <button className="m-auto rounded-3xl border px-4 py-2 duration-300 hover:bg-slate-500/20">
+            <button
+              onClick={() => setOpen(true)}
+              className="m-auto rounded-3xl border px-4 py-2 duration-300 hover:bg-slate-500/20"
+            >
               {btnText}
             </button>
           </Drawer.Trigger>
           <Drawer.Overlay className="fixed inset-0 z-[9999] bg-black/40" />
           <Drawer.Portal>
             <Drawer.Content className="fixed bottom-0 left-0 right-0 z-[9999] mt-36 flex h-[96%] flex-col rounded-t-[10px] bg-tertiary-color">
-              <div className="flex w-auto min-w-full flex-col overflow-hidden px-2 py-4">
+              <div
+                onClick={() => setOpen(false)}
+                className="flex w-auto min-w-full flex-col overflow-hidden px-2 py-4"
+              >
                 <div className="mx-auto mb-8 h-1.5 w-12 flex-shrink-0 rounded-full bg-gray-300" />
                 {children}
               </div>
@@ -49,8 +55,8 @@ const VaulDrawer: FC<Props> = ({ children, btnText }) => {
             {btnText}
           </button>
           {open && (
-            <Modal onClose={handleClose} customClass="z-[200]">
-              <section className="z-[100] flex h-auto max-h-[90vh] w-auto min-w-full max-w-[95vw] flex-col overflow-hidden px-2 py-4">
+            <Modal onClose={handleClose}>
+              <section className="!z-[999] flex h-auto max-h-[70vh] w-auto min-w-full max-w-[95vw] flex-col overflow-hidden px-2 py-4">
                 {children}
               </section>
             </Modal>

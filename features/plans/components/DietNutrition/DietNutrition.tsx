@@ -63,7 +63,7 @@ const DietNutrition: FC<Props> = ({ nutrients, diet, isEditing }) => {
     } else {
       setDifferFromUserTargets(false);
     }
-  }, [userNutritionTargets, dietNutritionTargets]);
+  }, [diet]);
 
   const updateWithUserTargets = async () => {
     try {
@@ -230,7 +230,9 @@ const DietNutrition: FC<Props> = ({ nutrients, diet, isEditing }) => {
             </button>
           </div>
         )}
-        <FoodNutritionDetail nutrients={nutrients} />
+        <div className="contents">
+          <FoodNutritionDetail nutrients={nutrients} />
+        </div>
         <div>
           {isAllInRange ? (
             <span className="my-4 flex w-full justify-center text-green-500 ">

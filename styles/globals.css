@@ -45,8 +45,8 @@ html {
 }
 
 :root.dark {
-  --primary-color: #111010;
-  --primary-color-light: #11101055;
+  --primary-color: #000000;
+  --primary-color-light: #00000080;
   --secondary-color: #fff;
   --tertiary-color: #282828;
   --background-start-rgb: #111010;
