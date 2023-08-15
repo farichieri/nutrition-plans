@@ -48,8 +48,8 @@ export default function Page({ date }: { date: Props }) {
       <section className="mt-[calc(1_*_var(--nav-h))] flex w-full select-none flex-col pb-2 sm:mt-[var(--nav-h)]">
         {realDate && (
           <>
-            <PremiumNav hideScrolling={false} title="Planner" />
-            <Sidebar />
+            <PremiumNav hideScrolling={isMobile} title="Planner" />
+            <Sidebar hideScrolling={isMobile} />
             <SubPremiumNav
               title={""}
               hideScrolling={true}

@@ -30,6 +30,7 @@
     "eslint-config-next": "13.3.0",
     "firebase": "^9.19.1",
     "firebase-admin": "^11.9.0",
+    "framer-motion": "^10.15.2",
     "gray-matter": "^4.0.3",
     "next": "13.3.0",
     "nprogress": "^0.2.0",

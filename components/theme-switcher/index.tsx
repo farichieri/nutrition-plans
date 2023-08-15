@@ -28,7 +28,7 @@ const ThemeSwitcher: FC<Props> = ({ withText }) => {
       document.documentElement.classList.add("dark");
       document.documentElement
         .querySelector('meta[name="theme-color"]')
-        ?.setAttribute("content", "#111010");
+        ?.setAttribute("content", "#000");
       dispatch(setTheme(Theme.Dark));
     }
   };

@@ -1,22 +1,26 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { selectLayoutSlice, setSidebarOpen } from "@/features/layout/slice";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import CollapsedPages from "./Pages/CollapsedPages";
 import Logo from "@/components/Logo/Logo";
-import ToggleSidebar from "./ToggleSidebar";
-import WebPages from "./Pages/WebPages";
-import useWindowWidth from "@/hooks/useWindowWidth";
 import MobilePages from "./Pages/MobilePages";
+import ToggleSidebar from "./ToggleSidebar";
+import useWindowWidth from "@/hooks/useWindowWidth";
+import WebPages from "./Pages/WebPages";
 
-interface Props {}
+interface Props {
+  hideScrolling?: boolean;
+}
 
-const PremiumSidebar: FC<Props> = () => {
+const PremiumSidebar: FC<Props> = ({ hideScrolling }) => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { sidebarOpen } = useSelector(selectLayoutSlice);
   const windowWidth = useWindowWidth();
   const isMobile = windowWidth < 768;
+  const { sidebarOpen } = useSelector(selectLayoutSlice);
+  const [show, setShow] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   const handleSidebar = () => {
     dispatch(setSidebarOpen(!sidebarOpen));
@@ -28,10 +32,41 @@ const PremiumSidebar: FC<Props> = () => {
     }
   }, [router.asPath]);
 
+  const controlNavbar = () => {
+    if (typeof window !== "undefined") {
+      if (window.scrollY > lastScrollY && window.scrollY > 40) {
+        setShow(false);
+      } else {
+        setShow(true);
+      }
+      // Detect bottom of the page
+      if (
+        window.innerHeight + window.scrollY >=
+        document.body.offsetHeight - 2
+      ) {
+        setShow(true);
+      }
+      setLastScrollY(window.scrollY);
+    }
+  };
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.addEventListener("scroll", controlNavbar);
+      return () => {
+        window.removeEventListener("scroll", controlNavbar);
+      };
+    }
+  }, [lastScrollY]);
+
   return (
     <>
       {isMobile ? (
-        <div className="fixed bottom-0 z-[150] flex w-full items-center border-t border-[#46464623] bg-primary-color dark:border-[#7c7c7c1a]">
+        <div
+          className={`${
+            !show && hideScrolling && "!-bottom-[--mobile-sidenav-h] "
+          } fixed bottom-0 z-[150] flex h-[var(--mobile-sidenav-h)] w-full items-center border-t border-[#46464623] bg-primary-color transition-all duration-300 dark:border-[#7c7c7c1a]`}
+        >
           <MobilePages />
         </div>
       ) : (

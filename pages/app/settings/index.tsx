@@ -14,7 +14,11 @@ export default function Page() {
   const isMobile = windowWidth < 1024;
   return (
     <SettingsLayout>
-      <BackNav title="Profile" href="/app/profile" customClass="lg:hidden" />
+      <BackNav
+        title="Profile"
+        href="/app/profile"
+        customClass="lg:hidden !top-0"
+      />
       {isMobile ? (
         <div className="m-auto w-full max-w-xl lg:hidden">
           <div className="flex flex-col">
