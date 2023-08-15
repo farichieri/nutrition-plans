@@ -110,7 +110,7 @@ const FoodNutrition: FC<Props> = ({ food, amount, scale }) => {
             <span>{nutrients.cholesterol || "-"}</span>
           </div>
         </div>
-        <FoodNutritionDetail nutrients={nutrients} />
+        <FoodNutritionDetail title={food.name!} nutrients={nutrients} />
       </div>
     </div>
   );

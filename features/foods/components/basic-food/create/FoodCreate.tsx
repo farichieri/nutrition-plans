@@ -447,7 +447,7 @@ const FoodCreate: FC<Props> = () => {
             </div>
           </div>
         </div>
-        <div className="m-auto flex gap-2">
+        <div className="mx-auto mt-10 flex gap-2">
           <FormAction
             handleSubmit={handleCancel}
             text="Discard"
