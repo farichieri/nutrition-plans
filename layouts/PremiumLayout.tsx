@@ -1,18 +1,18 @@
 import { AppRoutes } from "@/utils";
 import { Login } from "@/features/authentication";
+import { PremiumFooter } from "./components";
 import { selectAuthSlice } from "@/features/authentication/slice";
 import { selectLayoutSlice } from "@/features/layout/slice";
 import { useEffect } from "react";
+import { useOnlineStatus, useWindowWidth } from "@/hooks";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import { useOnlineStatus, useWindowWidth } from "@/hooks";
 import BillingModal from "@/components/Premium/Billing/BillingModal";
 import ConnectionError from "@/components/Layout/ConnectionError";
 import Head from "next/head";
 import InstallModal from "@/components/InstallApp/InstallModal";
 import Loader from "@/components/Loader/Loader";
 import WelcomeSteps from "@/components/WelcomeSteps/WelcomeSteps";
-import { PremiumFooter } from "./components";
 
 interface Props {
   children: React.ReactNode;

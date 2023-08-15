@@ -34,6 +34,7 @@ export default function Page({ date }: { date: Props }) {
     userStartOfWeek: user?.startOfWeek || StartsOfWeek.Sunday,
   });
   const isWeek = getIsWeek(realDate);
+  const isMobile = window.innerWidth < 1024;
 
   const getData = async () => {
     if (!user) return;
@@ -66,7 +67,7 @@ export default function Page({ date }: { date: Props }) {
       <PremiumNav hideScrolling={false} simplified>
         <ShoppingNav />
       </PremiumNav>
-      <PremiumSidebar />
+      <PremiumSidebar hideScrolling={isMobile} />
       <SubPremiumNav title={""} customClass="top-[var(--nav-h)]">
         <DaySelector date={String(date)} baseURL={"/app/shopping/"} />
       </SubPremiumNav>

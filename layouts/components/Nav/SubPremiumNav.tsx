@@ -22,7 +22,7 @@ const SubPremiumNav: FC<Props> = ({
 
   const controlNavbar = () => {
     if (typeof window !== "undefined") {
-      if (window.scrollY > lastScrollY) {
+      if (window.scrollY > lastScrollY && window.scrollY > 40) {
         // if scroll down hide the navbar
         setShow(false);
       } else {
@@ -49,8 +49,8 @@ const SubPremiumNav: FC<Props> = ({
     <nav
       className={
         ` ${
-          !show && hideScrolling && "hidden"
-        } fixed right-0 z-[60] flex h-[var(--subnav-h)] w-full items-center gap-4 bg-primary-color-light px-1 backdrop-blur-lg xs:px-2 s:px-3 sm:gap-10 sm:px-4 ` +
+          !show && hideScrolling && "!top-0"
+        } fixed right-0 z-[60] flex h-[var(--subnav-h)] w-full items-center gap-4 bg-primary-color-light px-1 backdrop-blur-lg transition-all duration-300 xs:px-2 s:px-3 sm:gap-10 sm:px-4 ` +
         customClass +
         ` ${sidebarOpen ? "md:pl-24 xl:pl-[17rem] " : "md:pl-24"} `
       }

@@ -17,17 +17,17 @@ export default function ProfileLayout({ children }: Props) {
 
   return (
     <PremiumLayout>
-      <PremiumNav hideScrolling={false} title="Profile" />
+      {!isMobile && <PremiumNav hideScrolling={false} title="Profile" />}
       <PremiumSidebar />
-      <section className="mx-auto flex w-full max-w-7xl flex-col items-center justify-center gap-5 px-2 pb-2 pt-2 sm:px-5">
+      <section className="mx-auto flex w-full max-w-7xl flex-col items-center justify-center gap-5 px-2 pb-2 pt-2 sm:px-5 lg:pt-0">
         {router.asPath !== "/app/profile" && (
           <BackNav
             title="Profile"
             href="/app/profile"
-            customClass="lg:hidden"
+            customClass="lg:hidden !top-0"
           />
         )}
-        <div className="flex w-full items-start gap-5 pt-[var(--nav-h)] lg:pt-0">
+        <div className="flex w-full items-start gap-5 lg:pt-0">
           {(router.asPath !== "/app/profile" || !isMobile) && (
             <div className="top-[var(--nav-h)] hidden w-full min-w-fit max-w-xxs lg:sticky lg:flex">
               <ProfileNav />

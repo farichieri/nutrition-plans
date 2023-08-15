@@ -1,5 +1,7 @@
 import { AppRoutes } from "@/utils";
 import { FC, ReactNode, useEffect, useState } from "react";
+import { MdLibraryBooks } from "react-icons/md";
+import { useRouter } from "next/router";
 import Avatar from "@/components/Avatar/Avatar";
 import AvatarDropDown from "@/components/DropDown/AvatarDropDown/AvatarDropDown";
 import Feedback from "@/features/client-contact/components/Feedback/Feedback";
@@ -7,8 +9,6 @@ import Link from "next/link";
 import Logo from "@/components/Logo/Logo";
 import ToggleSidebar from "@/layouts/components/Sidebar/ToggleSidebar";
 import useWindowWidth from "@/hooks/useWindowWidth";
-import { useRouter } from "next/router";
-import { MdFavorite } from "react-icons/md";
 
 interface Props {
   children?: ReactNode;
@@ -31,7 +31,7 @@ const PremiumNav: FC<Props> = ({
 
   const controlNavbar = () => {
     if (typeof window !== "undefined") {
-      if (window.scrollY > lastScrollY) {
+      if (window.scrollY > lastScrollY && window.scrollY > 40) {
         setShow(false);
       } else {
         setShow(true);
@@ -52,8 +52,8 @@ const PremiumNav: FC<Props> = ({
   return (
     <nav
       className={`${
-        !show && hideScrolling && "hidden"
-      } fixed left-0 top-0 z-[65] flex w-full select-none items-center justify-center`}
+        !show && hideScrolling && "!-top-[var(--nav-h)]"
+      } fixed left-0 top-0 z-[65] flex w-full select-none items-center justify-center transition-all duration-300`}
     >
       <div className="flex h-[var(--nav-h)] w-full items-center justify-between gap-2 bg-primary-color backdrop-blur-sm dark:border-slate-400/20 dark:shadow-cyan-100/10 xs:gap-4">
         <div className="text-md flex w-fit min-w-fit  cursor-pointer items-center justify-start font-semibold sm:text-2xl md:ml-20">
@@ -75,9 +75,9 @@ const PremiumNav: FC<Props> = ({
                 <span
                   className={`flex items-center justify-center text-sm outline-none duration-300 hover:opacity-100 `}
                 >
-                  <MdFavorite
+                  <MdLibraryBooks
                     className={`h-5 w-5 ${
-                      router.pathname.includes("/app/library/favorites")
+                      router.pathname.includes("/app/library")
                         ? "text-green-500"
                         : "text-gray-500"
                     }`}

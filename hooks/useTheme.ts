@@ -16,7 +16,7 @@ const useTheme = () => {
       document.documentElement.classList.add("dark");
       document.documentElement
         .querySelector('meta[name="theme-color"]')
-        ?.setAttribute("content", "#111010");
+        ?.setAttribute("content", "#000");
       setTheme(Theme.Dark);
     } else {
       document.documentElement.classList.remove("dark");
