@@ -1,12 +1,16 @@
 import { BiSolidPieChartAlt2 } from "react-icons/bi";
-import { checkTargetsEquality } from "../../utils";
+import {
+  checkTargetsEquality,
+  convertDateToDateString,
+  getRealDate,
+} from "../../utils";
 import { Diet } from "../../types";
 import { FC, useEffect, useState } from "react";
 import { FoodNutrients, FoodNutritionDetail } from "@/features/foods";
 import { formatToFixed, formatTwoDecimals } from "@/utils/format";
 import { getDietNutritionTargets } from "./utils/getDietNutritionTargets";
 import { MdClose } from "react-icons/md";
-import { PlansEnum } from "@/types";
+import { PlansEnum, StartsOfWeek } from "@/types";
 import { RoundButton } from "@/components/Buttons";
 import { selectAuthSlice } from "@/features/authentication";
 import { setDiet } from "../../slice";
@@ -110,6 +114,13 @@ const DietNutrition: FC<Props> = ({ nutrients, diet, isEditing }) => {
       setLoading({ ...loading, hideNutritionDiff: false });
     }
   };
+
+  const dateF = String(
+    getRealDate({
+      date: diet.date!,
+      userStartOfWeek: user?.startOfWeek || StartsOfWeek.Sunday,
+    })
+  );
 
   return (
     <div className="w-full ">
@@ -231,7 +242,13 @@ const DietNutrition: FC<Props> = ({ nutrients, diet, isEditing }) => {
           </div>
         )}
         <div className="contents">
-          <FoodNutritionDetail nutrients={nutrients} />
+          <FoodNutritionDetail
+            nutrients={nutrients}
+            title={convertDateToDateString({
+              date: dateF,
+              userStartOfWeek: user.startOfWeek,
+            })}
+          />
         </div>
         <div>
           {isAllInRange ? (

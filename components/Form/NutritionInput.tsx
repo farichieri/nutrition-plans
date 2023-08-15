@@ -2,10 +2,10 @@ import { FC, forwardRef, useEffect, useMemo, useState } from "react";
 import { getNutrientMeasurementUnit } from "@/utils/helpers";
 
 const fixedInputClass =
-  " rounded-md truncate h-[2rem] sm:h-[2.5rem] dark:border-gray-500 font-semibold appearance-none dark:bg-slate-500/20 dark:text-white bg-slate-500/20 relative block w-20 px-2 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 caret-green-500 focus:outline-none focus:ring--500 focus:border-green-500 focus:z-10 sm:text-sm ";
+  " rounded-md truncate h-[2rem] sm:h-[2rem] dark:border-gray-500 font-semibold appearance-none dark:bg-slate-500/20 dark:text-white bg-slate-500/20 relative block w-20 px-2 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 caret-green-500 focus:outline-none focus:ring--500 focus:border-green-500 focus:z-10 sm:text-sm ";
 
 const readOnlyClass =
-  " outline-none bg-transparent cursor-default select-none appearance-none w-20 text-right ";
+  " outline-none bg-transparent cursor-default select-none appearance-none text-right ";
 
 interface Props {
   customClass?: string;
@@ -102,7 +102,9 @@ const NutritionInput: FC<Props> = forwardRef<HTMLInputElement, Props>(
             <div className="flex w-full basis-1/2 items-center justify-start gap-2">
               <input
                 className={
-                  !readOnly ? fixedInputClass : readOnlyClass + customClass
+                  !readOnly
+                    ? fixedInputClass + customClass
+                    : readOnlyClass + customClass
                 }
                 id={id}
                 ref={ref}

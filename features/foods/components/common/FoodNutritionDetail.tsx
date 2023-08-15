@@ -9,13 +9,14 @@ import { VaulDrawer } from "@/components";
 
 interface Props {
   nutrients: FoodNutrients;
+  title?: string;
 }
 
-const FoodNutritionDetail: FC<Props> = ({ nutrients }) => {
+const FoodNutritionDetail: FC<Props> = ({ title, nutrients }) => {
   const nutrientsClasified = getNutrientsClasified(nutrients);
 
   return (
-    <VaulDrawer btnText="Detailed Nutrition">
+    <VaulDrawer title={title} btnText="Detailed Nutrition">
       <span className="px-2 text-3xl font-medium">Detailed Nutrition</span>
       <div className="flex w-full justify-between border-b px-2 pb-2 pt-2 text-xs font-medium s:text-sm sm:text-lg">
         <span className="flex basis-1/3 justify-start">Nutrient</span>

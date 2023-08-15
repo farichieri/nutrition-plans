@@ -119,7 +119,7 @@ const FoodInMealCard: FC<MealInCardProps> = ({
             {/* <span className="text-sm opacity-50">{food.description}</span> */}
           </div>
           <div className="flex h-full flex-col">
-            <div className="mt-auto flex w-full flex-wrap items-baseline gap-1">
+            <div className="mt-auto flex w-full items-center gap-1">
               {isEditing ? (
                 <NutritionInput
                   handleChange={handleChange}
@@ -132,6 +132,7 @@ const FoodInMealCard: FC<MealInCardProps> = ({
                   type={"number"}
                   value={scaleFormatted}
                   readOnly={!isEditing}
+                  customClass="!w-10"
                 />
               ) : (
                 <span className="text-xs opacity-70">{scaleFormatted}</span>

@@ -2,13 +2,15 @@ import { useWindowWidth } from "@/hooks";
 import { FC, useState } from "react";
 import { Drawer } from "vaul";
 import Modal from "../Modal/Modal";
+import { BsChevronDown } from "react-icons/bs";
 
 interface Props {
   children: React.ReactNode;
   btnText: string;
+  title?: string;
 }
 
-const VaulDrawer: FC<Props> = ({ children, btnText }) => {
+const VaulDrawer: FC<Props> = ({ children, title, btnText }) => {
   const windowWidth = useWindowWidth();
   const isMobile = windowWidth < 768;
   const [open, setOpen] = useState(false);
@@ -35,12 +37,21 @@ const VaulDrawer: FC<Props> = ({ children, btnText }) => {
           </Drawer.Trigger>
           <Drawer.Overlay className="fixed inset-0 z-[9999] bg-black/40" />
           <Drawer.Portal>
-            <Drawer.Content className="fixed bottom-0 left-0 right-0 z-[9999] mt-36 flex h-[96%] flex-col rounded-t-[10px] bg-tertiary-color">
-              <div
-                onClick={() => setOpen(false)}
-                className="flex w-auto min-w-full flex-col overflow-hidden px-2 py-4"
-              >
-                <div className="mx-auto mb-8 h-1.5 w-12 flex-shrink-0 rounded-full bg-gray-300" />
+            <Drawer.Content className="fixed bottom-0 left-0 right-0 z-[9999] mt-36 flex h-[100%] flex-col bg-tertiary-color">
+              <div className="flex items-center  px-4 py-2">
+                <BsChevronDown
+                  onClick={() => setOpen(false)}
+                  className="h-6 w-6 text-green-500"
+                />
+                {title && (
+                  <span className="mx-auto text-xl font-semibold text-green-500">
+                    {title.charAt(0).toUpperCase() + title.slice(1)}
+                  </span>
+                )}
+                <span className="w-8"></span>
+              </div>
+              <div className="flex w-auto min-w-full flex-col overflow-hidden px-2 py-4">
+                {/* <div className="mx-auto mb-8 h-1.5 w-12 flex-shrink-0 rounded-full bg-gray-300" /> */}
                 {children}
               </div>
             </Drawer.Content>

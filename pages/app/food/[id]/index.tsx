@@ -28,7 +28,7 @@ export default function Page({ food }: { food: Food }) {
   const { amount, scale } = router.query;
   const defaultScale = food && getDefaultScale(food.scales);
   const windowWidth = useWindowWidth();
-  const isMobile = windowWidth < 1024;
+  const isMobile = windowWidth < 768;
 
   if (!food || food?.id !== id || !defaultScale) {
     return (
