@@ -1,5 +1,5 @@
 import { Diet } from "@/features/plans";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { fetchDietByDate, updateDiet } from "@/features/plans/services";
 import { LuFileEdit, LuSave } from "react-icons/lu";
 import { MdOutlineCancel } from "react-icons/md";
@@ -54,6 +54,10 @@ const SaveAndEditButton: FC<Props> = ({
       setIsEditing(false);
     }
   };
+
+  useEffect(() => {
+    setIsEditing(false);
+  }, [date]);
 
   return (
     <>

@@ -29,6 +29,9 @@ const getStartOfWeekNumber = ({
 
 const isValidDate = (date: string): boolean => {
   let result = true;
+  if (!date) {
+    return false;
+  }
   const dateSplitted = date.split("~");
   const start = dateSplitted[0];
   const end = dateSplitted[1];

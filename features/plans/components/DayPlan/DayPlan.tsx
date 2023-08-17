@@ -50,7 +50,7 @@ const DayPlan: FC<Props> = ({ date }) => {
     <div className="relative h-full w-full rounded-lg p-2">
       {isGeneratingPlan || isLoadingDiet ? (
         <div className="fixed inset-0 mt-auto flex h-screen w-screen justify-center">
-          <Spinner customClass="h-10 w-10 m-auto" />
+          <Spinner customClass="h-10 w-10 m-auto !stroke-green-500" />
         </div>
       ) : (
         <>
@@ -88,11 +88,6 @@ const DayPlan: FC<Props> = ({ date }) => {
                   </div>
                 )}
               </div>
-            </div>
-          ) : false ? (
-            <div className="fixed inset-0 mt-auto flex h-screen w-screen flex-col items-center justify-center gap-2">
-              <Spinner customClass="h-6 w-6" />
-              <span>Generating Plan...</span>
             </div>
           ) : (
             <div className="fixed inset-0 mt-auto flex h-screen w-screen flex-col justify-center">

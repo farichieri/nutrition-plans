@@ -1,19 +1,22 @@
 import {
-  setUserMeals,
-  setUserMealsSettings,
   fetchMeals,
   fetchMealsSettings,
+  setUserMeals,
+  setUserMealsSettings,
 } from "@/features/meals";
 import {
-  setUser,
   getUser,
   selectAuthSlice,
-  setLoginError,
   setIsFirstDataLoaded,
+  setLoginError,
+  setSubscription,
+  setUser,
+  updateUser,
 } from "@/features/authentication";
 import { auth } from "@/services/firebase/firebase.config";
 import { fetchProgress, setProgress } from "@/features/progress";
 import { getThisWeekDiets } from "@/features/plans";
+import { getUserSubscription, usePremiumStatus } from "@/features/stripe";
 import { Inter } from "next/font/google";
 import { isAppVersionCorrect } from "@/utils";
 import { onAuthStateChanged } from "firebase/auth";
@@ -32,6 +35,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const { user } = useSelector(selectAuthSlice);
   const [isVerifyingVersion, setIsVerifyingVersion] = useState(true);
   const _theme = useTheme();
+  const isPremium = usePremiumStatus(user);
 
   useEffect(() => {
     if (user) {
@@ -83,6 +87,29 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       return () => unsubscribe();
     }
   }, [isVerifyingVersion]);
+
+  useEffect(() => {
+    if (user) {
+      if (isPremium !== user.isPremium) {
+        const unsubscribe = async () => {
+          const res = await updateUser({ user, fields: { isPremium } });
+          if (res.result === "success") {
+            dispatch(setUser({ ...user, isPremium }));
+          }
+        };
+        unsubscribe();
+      }
+      if (isPremium) {
+        const unsubscribe = async () => {
+          const res = await getUserSubscription({ userID: user.id });
+          if (res.result === "success") {
+            dispatch(setSubscription(res.data));
+          }
+        };
+        unsubscribe();
+      }
+    }
+  }, [isPremium]);
 
   return (
     <>

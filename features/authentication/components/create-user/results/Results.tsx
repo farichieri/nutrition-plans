@@ -131,7 +131,7 @@ const Results: FC<Props> = ({ handleSubmit }) => {
   return (
     <Box>
       <BoxMainContent>
-        <div className="flex flex-col gap-10 p-5">
+        <div className="flex flex-col gap-10">
           <div className="flex items-center gap-2">
             <BiSolidPieChartAlt2 className="h-6 w-6 text-green-500" />
             <span className="w-full text-left text-xl font-semibold sm:text-3xl">

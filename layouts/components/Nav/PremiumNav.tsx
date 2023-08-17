@@ -59,7 +59,7 @@ const PremiumNav: FC<Props> = ({
         <div className="text-md flex w-fit min-w-fit  cursor-pointer items-center justify-start font-semibold sm:text-2xl md:ml-20">
           <div className="px-2 md:hidden">{!isMobile && <ToggleSidebar />}</div>
           <Link href={AppRoutes.today}>
-            <Logo hideText={true} />
+            <Logo hideText={true} showPremiumText />
           </Link>
         </div>
         {title && !children && (

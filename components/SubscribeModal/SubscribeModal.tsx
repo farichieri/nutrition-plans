@@ -1,40 +1,38 @@
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
+import { createCheckoutSession } from "@/features/stripe";
 import { FC, useState } from "react";
 import { selectAuthSlice } from "@/features/authentication/slice";
-import { setIsBillingModalOpen } from "@/features/layout/slice";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Modal from "@/components/Modal/Modal";
+import PRICES from "@/constants/prices";
+import Spinner from "@/components/Loader/Spinner";
 
-interface Props {}
+interface Props {
+  handleClose: () => void;
+}
 
-const BillingModal: FC<Props> = () => {
+const SubscribeModal: FC<Props> = ({ handleClose }) => {
   const { user } = useSelector(selectAuthSlice);
-  const dispatch = useDispatch();
+  const [priceSelected, setPriceSelected] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const OPTIONS = [
-    {
-      discount: null,
-      monthlyPrice: 10,
-      title: "1 month",
-      totalPrice: 10,
-      id: "standard-month",
-      popular: false,
-    },
-    {
-      discount: "20%",
-      monthlyPrice: 8,
-      title: "12 months",
-      totalPrice: 96,
-      id: "standard-year",
-      popular: true,
-    },
-  ];
+  if (!user) return <></>;
 
-  const [planSelected, setPlanSelected] = useState("standard-year");
+  // This should discriminate the pricing plan and redirect with that data.
+  const handleContinue = async () => {
+    if (isLoading) return;
+    try {
+      setIsLoading(true);
+      await createCheckoutSession({ uid: user.id, priceId: priceSelected });
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+  };
 
   return (
-    <Modal onClose={() => dispatch(setIsBillingModalOpen(false))}>
-      <section className="flex h-auto max-h-70vh w-auto min-w-full max-w-[95vw] overflow-hidden rounded-3xl">
+    <Modal isFullScreen onClose={handleClose}>
+      <section className=" flex h-auto max-h-70vh w-auto min-w-full max-w-[95vw] overflow-hidden rounded-3xl">
         <div className="m-auto flex h-full w-full flex-col items-center gap-10 overflow-auto px-4 py-10 sm:p-10">
           <div className="flex flex-col items-center text-center text-xs md:text-base">
             <span className="text-xl font-semibold sm:text-3xl">
@@ -46,13 +44,13 @@ const BillingModal: FC<Props> = () => {
             </span>
           </div>
           <div className="m-auto flex w-full min-w-fit max-w-md flex-wrap items-center justify-center gap-3 sm:gap-4">
-            {OPTIONS.map((opt) => {
-              const isSelected = planSelected === opt.id;
+            {PRICES.map((opt) => {
+              const isSelected = priceSelected === opt.id;
               return (
                 <div
                   key={opt.id}
                   className={`flex w-full max-w-xs cursor-pointer select-none flex-col items-center rounded-3xl border dark:border-gray-700 `}
-                  onClick={() => setPlanSelected(opt.id)}
+                  onClick={() => setPriceSelected(opt.id)}
                 >
                   <div
                     className={`relative flex h-full w-full items-center justify-center gap-1 rounded-3xl border-2 px-8 py-3 ${
@@ -93,8 +91,12 @@ const BillingModal: FC<Props> = () => {
               );
             })}
           </div>
-          <button className="bold:border-green-800 group mt-auto flex w-fit items-center justify-center gap-1 rounded-3xl bg-gradient-to-r from-green-700 via-green-500 to-green-400 px-3 py-1 font-semibold text-white duration-300 hover:shadow-[0_1px_40px] hover:shadow-green-300 dark:hover:shadow-green-400/50">
+          <button
+            className="bold:border-green-800 group mt-auto flex w-fit items-center justify-center gap-1 rounded-3xl bg-gradient-to-r from-green-700 via-green-500 to-green-400 px-3 py-1.5 font-semibold text-white duration-300 hover:shadow-[0_1px_40px] hover:shadow-green-300 dark:hover:shadow-green-400/50"
+            onClick={handleContinue}
+          >
             <span>Continue</span>
+            {isLoading && <Spinner customClass="h-5 w-5" />}
           </button>
         </div>
       </section>
@@ -102,4 +104,4 @@ const BillingModal: FC<Props> = () => {
   );
 };
 
-export default BillingModal;
+export default SubscribeModal;

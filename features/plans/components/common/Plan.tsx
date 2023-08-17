@@ -18,7 +18,6 @@ interface Props {
 const Plan: FC<Props> = ({ date, setPlanBeingEdited }) => {
   const dispatch = useDispatch();
   const [isEditing, setIsEditing] = useState(false);
-  const [isGeneratingPlan, setIsGeneratingPlan] = useState(false);
   const [isLoadingDiet, setIsLoadingDiet] = useState(false);
   const { diets } = useSelector(selectPlansSlice);
   const { user } = useSelector(selectAuthSlice);
@@ -90,8 +89,8 @@ const Plan: FC<Props> = ({ date, setPlanBeingEdited }) => {
       )}
       {diet && <DayNote diet={diet} isEditing={isEditing} />}
       <div className="flex h-full min-h-[15rem] w-full flex-col">
-        {isGeneratingPlan || isLoadingDiet ? (
-          <Spinner customClass="h-9 w-9 m-auto" />
+        {isLoadingDiet ? (
+          <Spinner customClass="h-10 w-10 m-auto !stroke-green-500" />
         ) : (
           <>
             {diet ? (

@@ -5,6 +5,7 @@ const fixedClass =
 
 interface Props {
   customClass?: string;
+  stroke?: string;
 }
 
 const Spinner: FC<Props> = ({ customClass }) => {

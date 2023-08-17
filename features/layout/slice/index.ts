@@ -4,7 +4,6 @@ import { Theme } from "@/types";
 
 // Define a type for the slice state
 interface LayoutState {
-  isBillingModalOpen: boolean;
   isSettingsOpen: boolean;
   sidebarEvolutionOpen: boolean;
   sidebarAdminOpen: boolean;
@@ -15,7 +14,6 @@ interface LayoutState {
 
 // Define the initial state using that type
 const initialState: LayoutState = {
-  isBillingModalOpen: false,
   isSettingsOpen: false,
   sidebarEvolutionOpen: true,
   sidebarAdminOpen: true,
@@ -47,14 +45,10 @@ export const layoutSlice = createSlice({
     setIsSettingsOpen: (state, action: PayloadAction<boolean>) => {
       state.isSettingsOpen = action.payload;
     },
-    setIsBillingModalOpen: (state, action: PayloadAction<boolean>) => {
-      state.isBillingModalOpen = action.payload;
-    },
   },
 });
 
 export const {
-  setIsBillingModalOpen,
   setIsSettingsOpen,
   setSidebarAdminOpen,
   setSidebarEvolutionOpen,

@@ -104,7 +104,7 @@ const PremiumSidebar: FC<Props> = ({ hideScrolling }) => {
                 <ToggleSidebar />
               </div>
               <span className="py-1 pl-3 text-lg font-semibold">
-                <Logo hideText={true} />
+                <Logo hideText={true} showPremiumText />
               </span>
             </div>
             <WebPages />

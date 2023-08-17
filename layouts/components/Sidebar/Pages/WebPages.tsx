@@ -23,7 +23,6 @@ import { BiFoodMenu, BiSolidPieChartAlt2 } from "react-icons/bi";
 import { FC } from "react";
 import { PiBowlFoodFill } from "react-icons/pi";
 import { RiSearchLine } from "react-icons/ri";
-import { SubscribeButton } from "@/components/Buttons";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -271,9 +270,6 @@ const WebPages: FC<Props> = () => {
           <MdSettings className="h-6 w-6 text-green-500" />
           <span>Settings</span>
         </Link>
-      </div>
-      <div className="mx-auto flex w-full items-center justify-center px-2 py-1">
-        <SubscribeButton />
       </div>
     </>
   );

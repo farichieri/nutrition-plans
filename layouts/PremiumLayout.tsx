@@ -7,7 +7,6 @@ import { useEffect } from "react";
 import { useOnlineStatus, useWindowWidth } from "@/hooks";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import BillingModal from "@/components/Premium/Billing/BillingModal";
 import ConnectionError from "@/components/Layout/ConnectionError";
 import Head from "next/head";
 import InstallModal from "@/components/InstallApp/InstallModal";
@@ -20,7 +19,7 @@ interface Props {
 
 export default function PremiumLayout({ children }: Props) {
   const router = useRouter();
-  const { sidebarOpen, isBillingModalOpen } = useSelector(selectLayoutSlice);
+  const { sidebarOpen } = useSelector(selectLayoutSlice);
   const {
     user,
     isCreatingUser,
@@ -59,7 +58,6 @@ export default function PremiumLayout({ children }: Props) {
       {user && user.isProfileCompleted ? (
         <div className="flex w-full flex-col">
           <div className="flex min-h-screen w-full flex-col lg:pb-24">
-            {isBillingModalOpen && <BillingModal />}
             <div
               className={`flex flex-col pt-[var(--nav-h)] duration-0 ease-in-out ${
                 sidebarOpen ? "md:pl-20 xl:pl-64 " : "md:pl-20 "
