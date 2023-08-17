@@ -115,12 +115,24 @@ const DietNutrition: FC<Props> = ({ nutrients, diet, isEditing }) => {
     }
   };
 
-  const dateF = String(
-    getRealDate({
-      date: diet.date!,
-      userStartOfWeek: user?.startOfWeek || StartsOfWeek.Sunday,
-    })
-  );
+  const [title, setTitle] = useState("");
+
+  useEffect(() => {
+    if (!diet.date) return;
+
+    const dateF = String(
+      getRealDate({
+        date: diet.date,
+        userStartOfWeek: user?.startOfWeek || StartsOfWeek.Sunday,
+      })
+    );
+    const newTitle = convertDateToDateString({
+      date: dateF,
+      userStartOfWeek: user.startOfWeek,
+    });
+
+    setTitle(newTitle);
+  }, [diet.date]);
 
   return (
     <div className="w-full ">
@@ -242,13 +254,7 @@ const DietNutrition: FC<Props> = ({ nutrients, diet, isEditing }) => {
           </div>
         )}
         <div className="contents">
-          <FoodNutritionDetail
-            nutrients={nutrients}
-            title={convertDateToDateString({
-              date: dateF,
-              userStartOfWeek: user.startOfWeek,
-            })}
-          />
+          <FoodNutritionDetail nutrients={nutrients} title={title} />
         </div>
         <div>
           {isAllInRange ? (

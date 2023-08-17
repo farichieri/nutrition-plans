@@ -43,7 +43,7 @@ html {
   --prots-color: #3d80d0;
   --blur-color: #c5c5c53b;
 }
-
+/* 0f0f0f */
 :root.dark {
   --primary-color: #000000;
   --primary-color-light: #00000080;

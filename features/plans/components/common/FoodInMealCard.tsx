@@ -132,7 +132,7 @@ const FoodInMealCard: FC<MealInCardProps> = ({
                   type={"number"}
                   value={scaleFormatted}
                   readOnly={!isEditing}
-                  customClass="!w-10"
+                  customClass="!w-16 "
                 />
               ) : (
                 <span className="text-xs opacity-70">{scaleFormatted}</span>

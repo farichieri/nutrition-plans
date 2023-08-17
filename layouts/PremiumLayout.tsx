@@ -5,6 +5,7 @@ import { selectAuthSlice } from "@/features/authentication/slice";
 import { selectLayoutSlice } from "@/features/layout/slice";
 import { useEffect } from "react";
 import { useOnlineStatus, useWindowWidth } from "@/hooks";
+import { createCheckoutSession, usePremiumStatus } from "@/features/stripe";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import BillingModal from "@/components/Premium/Billing/BillingModal";
@@ -40,6 +41,24 @@ export default function PremiumLayout({ children }: Props) {
 
   if (!user && !isSigningUser) {
     return <Login />;
+  }
+
+  const isUserPremium = usePremiumStatus(user);
+
+  if (!isUserPremium && user) {
+    return (
+      <div className="flex flex-col gap-2">
+        <span>NO PREMIUM PA</span>
+        <button
+          className="rounded-3xl border p-2"
+          onClick={() => createCheckoutSession(user.id)}
+        >
+          Upgrade to Premium
+        </button>
+      </div>
+    );
+  } else if (user && isUserPremium) {
+    return <div>SOS PREEEMIUUUM</div>;
   }
 
   return (

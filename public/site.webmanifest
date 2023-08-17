@@ -3,9 +3,9 @@
   "description": "Nutrition Plans helps you to achieve your nutrition goals creating custom meal plans adapted to your food preferences. Choose between Vegetarian, Vegan, Balanced, Mediterranean, Low Carb, Gluten Free and more plans!",
   "display": "standalone",
   "lang": "en",
-  "name": "Nutrition Plans",
+  "name": "nutritionplans.co",
   "scope": "/app",
-  "short_name": "Nutrition Plans",
+  "short_name": "nutritionplans.co",
   "start_url": "/app/today",
   "theme_color": "#fff",
   "icons": [
