@@ -1,4 +1,4 @@
-import { getAuth, getIdTokenResult } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 
 export default async function isUserPremium(): Promise<boolean> {
   const auth = getAuth();
@@ -6,9 +6,8 @@ export default async function isUserPremium(): Promise<boolean> {
 
   if (!user) return false;
 
-  const decodedToken = await getIdTokenResult(user);
-
-  console.log({ decodedToken });
+  // it is necessary to refresh token before getting the claims
+  const decodedToken = await user.getIdTokenResult(true);
 
   return decodedToken?.claims?.stripeRole === "premium" ? true : false;
 }

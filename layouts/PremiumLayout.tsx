@@ -5,10 +5,8 @@ import { selectAuthSlice } from "@/features/authentication/slice";
 import { selectLayoutSlice } from "@/features/layout/slice";
 import { useEffect } from "react";
 import { useOnlineStatus, useWindowWidth } from "@/hooks";
-import { createCheckoutSession, usePremiumStatus } from "@/features/stripe";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import BillingModal from "@/components/Premium/Billing/BillingModal";
 import ConnectionError from "@/components/Layout/ConnectionError";
 import Head from "next/head";
 import InstallModal from "@/components/InstallApp/InstallModal";
@@ -21,7 +19,7 @@ interface Props {
 
 export default function PremiumLayout({ children }: Props) {
   const router = useRouter();
-  const { sidebarOpen, isBillingModalOpen } = useSelector(selectLayoutSlice);
+  const { sidebarOpen } = useSelector(selectLayoutSlice);
   const {
     user,
     isCreatingUser,
@@ -43,24 +41,6 @@ export default function PremiumLayout({ children }: Props) {
     return <Login />;
   }
 
-  const isUserPremium = usePremiumStatus(user);
-
-  if (!isUserPremium && user) {
-    return (
-      <div className="flex flex-col gap-2">
-        <span>NO PREMIUM PA</span>
-        <button
-          className="rounded-3xl border p-2"
-          onClick={() => createCheckoutSession(user.id)}
-        >
-          Upgrade to Premium
-        </button>
-      </div>
-    );
-  } else if (user && isUserPremium) {
-    return <div>SOS PREEEMIUUUM</div>;
-  }
-
   return (
     <>
       <Head>
@@ -78,7 +58,6 @@ export default function PremiumLayout({ children }: Props) {
       {user && user.isProfileCompleted ? (
         <div className="flex w-full flex-col">
           <div className="flex min-h-screen w-full flex-col lg:pb-24">
-            {isBillingModalOpen && <BillingModal />}
             <div
               className={`flex flex-col pt-[var(--nav-h)] duration-0 ease-in-out ${
                 sidebarOpen ? "md:pl-20 xl:pl-64 " : "md:pl-20 "

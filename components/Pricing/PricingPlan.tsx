@@ -12,6 +12,15 @@ interface Props {
 const PricingPlan: FC<Props> = ({ pricingPlan }) => {
   const { user } = useSelector(selectAuthSlice);
   const [yearly, setYearly] = useState(false);
+
+  const currentPlan =
+    (pricingPlan.id === "free" && user?.isPremium === false) ||
+    (pricingPlan.id === "premium" && user?.isPremium === true);
+
+  const getStarted =
+    (pricingPlan.id === "free" && !user?.isPremium) ||
+    (pricingPlan.id === "premium" && !user?.isPremium);
+
   return (
     <div
       key={pricingPlan.name}
@@ -59,17 +68,21 @@ const PricingPlan: FC<Props> = ({ pricingPlan }) => {
           </li>
         ))}
       </ul>
-      {user?.subscriptionState === pricingPlan.id ? (
+      {currentPlan ? (
         <span className="mt-auto flex rounded-md border border-gray-400 px-3 py-2 text-xs dark:border-gray-700">
           Current plan
         </span>
       ) : (
-        <Link
-          href={pricingPlan.checkoutLink}
-          className="mt-auto flex rounded-3xl border border-green-500 bg-gradient-to-r from-green-500 via-green-500 to-green-500 px-3 py-2 text-xs text-white duration-300 hover:shadow-[0_1px_10px] hover:shadow-green-300 hover:brightness-110 dark:hover:shadow-green-400/50"
-        >
-          {pricingPlan.buttonContent}
-        </Link>
+        <>
+          {getStarted && (
+            <Link
+              href={pricingPlan.checkoutLink}
+              className="mt-auto flex rounded-3xl border border-green-500 bg-gradient-to-r from-green-500 via-green-500 to-green-500 px-3 py-2 text-xs text-white duration-300 hover:shadow-[0_1px_10px] hover:shadow-green-300 hover:brightness-110 dark:hover:shadow-green-400/50"
+            >
+              {pricingPlan.buttonContent}
+            </Link>
+          )}
+        </>
       )}
     </div>
   );

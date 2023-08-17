@@ -12,6 +12,7 @@ interface AuthState {
   showInstallModal: boolean;
   user: User | null;
   isFirstDataLoaded: boolean;
+  subscription: any;
 }
 
 const initialState: AuthState = {
@@ -23,6 +24,7 @@ const initialState: AuthState = {
   isVerifyingUser: false,
   showInstallModal: true,
   user: null,
+  subscription: null,
 };
 
 export const authSlice = createSlice({
@@ -72,6 +74,9 @@ export const authSlice = createSlice({
     setIsFirstDataLoaded: (state, action: PayloadAction<boolean>) => {
       state.isFirstDataLoaded = action.payload;
     },
+    setSubscription: (state, action: PayloadAction<any>) => {
+      state.subscription = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(PURGE, () => {
@@ -90,6 +95,7 @@ export const {
   setLoginError,
   setUpdateUser,
   setUser,
+  setSubscription,
 } = authSlice.actions;
 
 export const selectAuthSlice = (state: RootState) => state.auth;

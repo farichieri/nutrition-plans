@@ -1,25 +1,33 @@
 import { collection, doc, onSnapshot, setDoc } from "firebase/firestore";
 import { db } from "@/services/firebase/firebase.config";
-import initializeStripe from "../utils/initializeStripe";
 
-export default async function createCheckoutSession(uid: string) {
+export default async function createCheckoutSession({
+  uid,
+  priceId,
+}: {
+  uid: string;
+  priceId: string;
+}) {
   try {
     // Create a new checkout session in the subollection inside this users document
-    console.log({ uid });
     const checkoutSessionRef = doc(
       collection(db, "users", uid, "checkout_sessions")
     );
     await setDoc(checkoutSessionRef, {
-      price: "price_1Nfjm9FDhIG3vS5SBINV3Oii",
-      success_url: window.location.origin,
-      cancel_url: window.location.origin,
+      price: priceId,
+      billing_address_collection: "auto",
+      allow_promotion_codes: true,
+      collect_shipping_address: false,
+      tax_id_collection: false,
+      success_url: `${window.location.origin}/app/today`,
+      cancel_url: `${window.location.origin}/app/today`,
     });
 
     // Wait for the CheckoutSession to get attached by the extension
     onSnapshot(checkoutSessionRef, async (snap) => {
       const data = snap.data();
       console.log({ data });
-      const { sessionId, error } = data as { sessionId: string; error: any };
+      const { url, error } = data as { url: string; error: any };
 
       if (error) {
         // Show an error to your customer and
@@ -27,17 +35,8 @@ export default async function createCheckoutSession(uid: string) {
         alert(`An error occured: ${error.message}`);
         return;
       }
-
-      if (sessionId) {
-        // We have a session, let's redirect to Checkout
-        // Init Stripe
-        const stripe = await initializeStripe();
-        if (!stripe) {
-          throw new Error("Unable to initialize Stripe");
-        }
-        stripe.redirectToCheckout({ sessionId });
-      } else {
-        console.log("No session found");
+      if (url) {
+        window.location.assign(url);
       }
     });
   } catch (error) {

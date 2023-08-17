@@ -17,7 +17,7 @@ export default function SearchLayout({ queries }: Props) {
   const isMobile = window.innerWidth < 1024;
   return (
     <PremiumLayout>
-      <PremiumNav hideScrolling={false} title="Search">
+      <PremiumNav hideScrolling={false} title="">
         <SearchBar queries={queries} />
       </PremiumNav>
       <PremiumSidebar hideScrolling={isMobile} />
