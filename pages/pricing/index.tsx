@@ -1,8 +1,9 @@
+import { DonateText } from "@/features/stripe";
+import { FAQS_PRICING } from "@/data/content";
 import FAQS from "@/components/FAQS/FAQS";
+import Head from "next/head";
 import LandingLayout from "@/layouts/LandingLayout";
 import Plans from "@/components/Pricing/PricingPlans";
-import { FAQS_PRICING } from "@/data/content";
-import Head from "next/head";
 
 export default function Pricing() {
   return (
@@ -20,6 +21,9 @@ export default function Pricing() {
           Pricing
         </span>
         <Plans />
+        <div className="mt-6">
+          <DonateText />
+        </div>
         <FAQS content={FAQS_PRICING} />
       </section>
     </LandingLayout>

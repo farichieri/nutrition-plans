@@ -68,7 +68,7 @@ const PremiumNav: FC<Props> = ({
           </span>
         )}
         <div className="m-auto flex w-full">{children}</div>
-        <div className="flex w-fit min-w-fit items-center justify-end gap-4 pr-4 text-xs sm:pr-8 sm:text-xl xl:pr-10">
+        <div className="flex w-fit min-w-fit items-center justify-end gap-2  pr-4 text-xs sm:gap-4 sm:pr-8 sm:text-xl xl:pr-10">
           {(windowWidth > 1024 || !simplified) && (
             <>
               <Link href="/app/library/favorites">

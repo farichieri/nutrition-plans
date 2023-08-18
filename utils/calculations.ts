@@ -79,6 +79,24 @@ const getWeightInKg = ({
   }
 };
 
+const getWeightUnit = ({ from }: { from: MeasurementUnitsT }): string => {
+  if (from === "imperial") return WeightUnits.Lbs;
+  else if (from === "metric") return WeightUnits.Kgs;
+  else return "";
+};
+
+const getWeightAndText = ({
+  to,
+  weightInKg,
+}: {
+  to: MeasurementUnitsT;
+  weightInKg: number;
+}): { weight: number; weightText: string } => {
+  const weight = getWeight({ to, weight: weightInKg });
+  const weightText = getWeightUnit({ from: to });
+  return { weight, weightText };
+};
+
 const getWeightText = ({
   weight,
   from,
@@ -95,12 +113,6 @@ const getWeightText = ({
     default:
       return `${formatTwoDecimals(weight)}`;
   }
-};
-
-const getWeightUnit = ({ from }: { from: MeasurementUnitsT }): string => {
-  if (from === "imperial") return WeightUnits.Lbs;
-  else if (from === "metric") return WeightUnits.Kgs;
-  else return "";
 };
 
 const convertWater = ({
@@ -157,4 +169,5 @@ export {
   convertWater,
   getWaterUnit,
   getWaterInLts,
+  getWeightAndText,
 };

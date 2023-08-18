@@ -1,3 +1,4 @@
+import RememberGoal from "@/components/Goals/RememberGoal";
 import {
   AddProgress,
   DaysLeft,
@@ -12,7 +13,9 @@ export default function Page() {
   const isMobile = window.innerWidth < 1024;
   return (
     <PremiumLayout>
-      <PremiumNav hideScrolling={true} title="" />
+      <PremiumNav hideScrolling={true} title="">
+        <RememberGoal />
+      </PremiumNav>
       <PremiumSidebar hideScrolling={isMobile} />
       <section className="m-auto flex w-full max-w-screen-2xl flex-col items-center justify-center gap-5 px-2 pb-2 pt-2 sm:px-5 sm:pt-4">
         <div className="flex w-full flex-wrap justify-center gap-5">

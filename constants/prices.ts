@@ -1,5 +1,5 @@
-const PRICES = [
-  {
+export const PRICES = {
+  monthly: {
     discount: null,
     id: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_MONTHLY!,
     monthlyPrice: 10,
@@ -7,7 +7,7 @@ const PRICES = [
     title: "1 month",
     totalPrice: 10,
   },
-  {
+  yearly: {
     discount: "20%",
     id: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_YEARLY!,
     monthlyPrice: 8,
@@ -15,6 +15,4 @@ const PRICES = [
     title: "12 months",
     totalPrice: 96,
   },
-];
-
-export default PRICES;
+};

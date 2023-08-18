@@ -4,6 +4,7 @@ import { selectAuthSlice } from "@/features/authentication/slice";
 import { useDispatch, useSelector } from "react-redux";
 import { sendCustomerToPortal } from "@/features/stripe";
 import Spinner from "@/components/Loader/Spinner";
+import { SubscribeButton } from "@/components/Buttons";
 
 interface Props {}
 
@@ -54,12 +55,9 @@ const SetBilling: FC<Props> = () => {
 
       <BoxBottomBar>
         {!user.isPremium ? (
-          <button
-            onClick={() => {}}
-            className="bold:border-green-800 group ml-auto flex w-fit items-center justify-center gap-1 rounded-3xl bg-gradient-to-r from-green-700 via-green-500 to-green-400 px-3 py-1.5 font-semibold text-white duration-300 hover:shadow-[0_1px_40px] hover:shadow-green-300 dark:hover:shadow-green-400/50"
-          >
-            <span>Upgrade now</span>
-          </button>
+          <div className="ml-auto">
+            <SubscribeButton />
+          </div>
         ) : (
           <button
             className="ml-auto flex items-center gap-1 rounded-3xl bg-blue-500 px-3 py-1.5"

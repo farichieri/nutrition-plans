@@ -15,6 +15,7 @@ import AvatarDropDown from "@/components/DropDown/AvatarDropDown/AvatarDropDown"
 import Link from "next/link";
 import Logo from "@/components/Logo/Logo";
 import ThemeSwitcher from "@/components/theme-switcher";
+import { useWindowWidth } from "@/hooks";
 
 interface Props {}
 
@@ -27,6 +28,8 @@ const NavBar: FC<Props> = () => {
   const isSignup = router.asPath === AppRoutes.signup;
   const [show, setShow] = useState(false);
   const [lastYPos, setLastYPos] = useState(0);
+  const windowWidth = useWindowWidth();
+  const isMobile = windowWidth < 768;
 
   const controlNavbar = () => {
     if (typeof window !== "undefined") {
@@ -46,7 +49,7 @@ const NavBar: FC<Props> = () => {
         window.removeEventListener("scroll", controlNavbar);
       };
     }
-  }, [setLastYPos]);
+  }, [lastYPos]);
 
   const handleMenu = () => {
     setOpenMenu(!openMenu);
@@ -89,7 +92,7 @@ const NavBar: FC<Props> = () => {
       >
         <div className="flex w-fit min-w-fit basis-1/3 justify-start font-bold xxs:text-sm xs:text-base sm:text-2xl">
           <Link href={"/"}>
-            <Logo hideText={false} />
+            <Logo hideText={isMobile} />
           </Link>
         </div>
         <div className="hidden basis-1/3 items-center justify-center gap-4 text-xs font-medium sm:text-base md:flex md:gap-10">

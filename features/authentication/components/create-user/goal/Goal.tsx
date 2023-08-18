@@ -7,13 +7,23 @@ import {
   setUpdateUser,
   updateUser,
 } from "@/features/authentication";
-import { AppRoutes, formatToInputDate, formatToUSDate } from "@/utils";
+import {
+  getWeight,
+  getWeightAndText,
+  getWeightInKg,
+  getWeightUnit,
+} from "@/utils/calculations";
+import {
+  AppRoutes,
+  formatToInputDate,
+  formatToUSDate,
+  getDaysLeft,
+} from "@/utils";
 import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
 import { calculateKCALSRecommended } from "@/features/authentication/utils/calculateBodyData";
 import { DevTool } from "@hookform/devtools";
 import { FC, useEffect, useState } from "react";
 import { format, formatISO, parse } from "date-fns";
-import { getWeight, getWeightInKg, getWeightUnit } from "@/utils/calculations";
 import { MdEmojiEvents } from "react-icons/md";
 import { schema } from "./schema";
 import { toast } from "react-hot-toast";
@@ -57,11 +67,15 @@ const Goal: FC<Props> = ({ handleContinue }) => {
     nutritionTargets,
   } = user;
   const { weightGoalInKg, dueDate } = weightGoal;
-  const { BMR, activity } = bodyData;
+  const { BMR, activity, weightInKg } = bodyData;
 
   const weightGoalFormatted = getWeight({
     to: measurementUnit,
     weight: Number(weightGoalInKg),
+  });
+  const { weight, weightText } = getWeightAndText({
+    to: measurementUnit,
+    weightInKg: Number(weightInKg),
   });
 
   const dateParsed = dueDate && parse(dueDate, "MM-dd-yyyy", new Date());
@@ -195,6 +209,11 @@ const Goal: FC<Props> = ({ handleContinue }) => {
 
   const today = formatToInputDate(new Date());
 
+  // const formDueDate = values.weightGoal.dueDate;
+  // const formWeightGoal = values.weightGoal.weightGoalInKg;
+  // const daysLeft = formDueDate && getDaysLeft({ date: new Date(formDueDate) });
+  // console.log({ daysLeft });
+
   return (
     <Box customClass="max-w-2xl">
       <DevTool control={control} />
@@ -210,6 +229,7 @@ const Goal: FC<Props> = ({ handleContinue }) => {
               {isCreatingRoute ? "Select my Goal" : "Goal"}
             </span>
           </div>
+
           <div className="flex w-full flex-col items-center justify-center">
             <div className="mx-auto flex w-full flex-wrap items-center justify-center gap-2">
               {Object.values(UserGoals).map((goal) => (
@@ -228,6 +248,11 @@ const Goal: FC<Props> = ({ handleContinue }) => {
                 </button>
               ))}
             </div>
+          </div>
+          <div className=" flex w-full flex-col justify-center">
+            <span className="text-lg font-semibold">
+              My current weight is {weight} {weightText}
+            </span>
           </div>
           <div className="mx-auto flex w-full max-w-sm flex-col justify-center">
             <Collapsable
