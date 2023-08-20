@@ -13,12 +13,7 @@ import {
   getWeightInKg,
   getWeightUnit,
 } from "@/utils/calculations";
-import {
-  AppRoutes,
-  formatToInputDate,
-  formatToUSDate,
-  getDaysLeft,
-} from "@/utils";
+import { AppRoutes, formatToInputDate, formatToUSDate } from "@/utils";
 import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
 import { calculateKCALSRecommended } from "@/features/authentication/utils/calculateBodyData";
 import { DevTool } from "@hookform/devtools";
@@ -31,10 +26,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Collapsable from "@/components/Layout/Collapsable";
 import FormError from "@/components/Errors/FormError";
 import InfoMessage from "@/components/Layout/InfoMessage";
 import SubmitButton from "@/components/Buttons/SubmitButton";
+import WeightGoalInfo from "./WeightGoalInfo";
 
 interface FormValues {
   goalSelected: UserGoalsT | null;
@@ -81,7 +76,6 @@ const Goal: FC<Props> = ({ handleContinue }) => {
   const dateParsed = dueDate && parse(dueDate, "MM-dd-yyyy", new Date());
   const dueDateFormatted =
     dateParsed && format(new Date(dateParsed), "yyyy-MM-dd");
-  const hasGoal = Boolean(weightGoalInKg || user?.weightGoal.dueDate);
 
   const {
     control,
@@ -125,10 +119,15 @@ const Goal: FC<Props> = ({ handleContinue }) => {
     }
   };
 
+  const [addWeightGoal, setAddWeightGoal] = useState(
+    Boolean(values.weightGoal.weightGoalInKg || values.weightGoal.dueDate)
+  );
+
   const handleRemoveWeightGoal = (event: React.MouseEvent) => {
     event.preventDefault();
     setValue("weightGoal.dueDate", null);
     setValue("weightGoal.weightGoalInKg", null);
+    setAddWeightGoal(false);
   };
 
   const onSubmit = async (data: FormValues) => {
@@ -209,11 +208,6 @@ const Goal: FC<Props> = ({ handleContinue }) => {
 
   const today = formatToInputDate(new Date());
 
-  // const formDueDate = values.weightGoal.dueDate;
-  // const formWeightGoal = values.weightGoal.weightGoalInKg;
-  // const daysLeft = formDueDate && getDaysLeft({ date: new Date(formDueDate) });
-  // console.log({ daysLeft });
-
   return (
     <Box customClass="max-w-2xl">
       <DevTool control={control} />
@@ -244,67 +238,78 @@ const Goal: FC<Props> = ({ handleContinue }) => {
                   key={goal}
                   value={goal}
                 >
-                  {goal.replace("_", " ")}
+                  {goal === UserGoals.lose_weight
+                    ? "Lose Fat"
+                    : goal.replace("_", " ")}
                 </button>
               ))}
             </div>
           </div>
-          <div className=" flex w-full flex-col justify-center">
-            <span className="text-lg font-semibold">
-              My current weight is {weight} {weightText}
-            </span>
-          </div>
-          <div className="mx-auto flex w-full max-w-sm flex-col justify-center">
-            <Collapsable
-              defaultState={hasGoal}
-              showed={
-                <span className="text-xl font-semibold">
-                  Add a weight goal (optional)
-                </span>
-              }
-              hidden={
-                <div className="flex w-full max-w-sm flex-col items-center justify-center gap-2 py-4">
-                  <div className="relative flex w-full items-center justify-between gap-2 ">
-                    <label>Weight Goal: </label>
-                    <>
-                      <span className="absolute right-2 select-none">
-                        {getWeightUnit({ from: measurementUnit })}
-                      </span>
-                      <input
-                        className="w-24 rounded-md border bg-transparent px-3 py-1.5"
-                        type="number"
-                        placeholder={getWeightUnit({
-                          from: measurementUnit,
-                        })}
-                        {...register("weightGoal.weightGoalInKg", {
-                          valueAsNumber: true,
-                        })}
-                      />
-                    </>
-                  </div>
-                  <div className="flex w-full items-center justify-between gap-2 ">
-                    <label>Due date: </label>
+          {addWeightGoal ? (
+            <div className="mx-auto flex w-full max-w-sm flex-col justify-center rounded-md border p-4">
+              <div className="flex w-full max-w-sm flex-col items-center justify-center gap-2 ">
+                <div className="relative flex w-full items-center justify-between gap-2 ">
+                  <label>Weight Goal: </label>
+                  <>
+                    <span className="absolute right-2 select-none">
+                      {getWeightUnit({ from: measurementUnit })}
+                    </span>
                     <input
-                      className="rounded-md border bg-transparent px-3 py-1.5"
-                      type="date"
-                      min={today}
-                      {...register("weightGoal.dueDate")}
+                      className="w-24 rounded-md border bg-transparent px-3 py-1.5"
+                      type="number"
+                      min={
+                        values.goalSelected === "build_muscle"
+                          ? weight
+                          : undefined
+                      }
+                      max={
+                        values.goalSelected === "lose_weight"
+                          ? weight
+                          : undefined
+                      }
+                      step={0.1}
+                      placeholder={getWeightUnit({
+                        from: measurementUnit,
+                      })}
+                      {...register("weightGoal.weightGoalInKg", {
+                        valueAsNumber: true,
+                      })}
                     />
-                  </div>
+                  </>
                 </div>
-              }
-            />
-            <div>
-              {hasGoal && (
-                <button
-                  className="mx-auto mt-2 flex items-center justify-center rounded-md border border-red-500 px-2 py-1 text-red-500 duration-300 hover:bg-slate-500/20"
-                  onClick={handleRemoveWeightGoal}
-                >
-                  Remove Weight Goal
-                </button>
-              )}
+                <div className="flex w-full items-center justify-between gap-2 ">
+                  <label>To be achieved by: </label>
+                  <input
+                    className="rounded-md border bg-transparent px-3 py-1.5"
+                    type="date"
+                    min={today}
+                    {...register("weightGoal.dueDate")}
+                  />
+                </div>
+              </div>
+              <button
+                className="mx-auto mt-2 flex items-center justify-center rounded-md border border-red-500 px-2 py-1.5 text-red-500 duration-300 hover:bg-slate-500/20"
+                onClick={handleRemoveWeightGoal}
+              >
+                Remove Weight Goal
+              </button>
             </div>
-          </div>
+          ) : (
+            <button
+              className="mx-auto mt-2 flex items-center justify-center rounded-md border border-green-500 px-2 py-1.5 text-green-500 duration-300 hover:bg-slate-500/20"
+              onClick={() => setAddWeightGoal(true)}
+            >
+              Add Weight Goal
+            </button>
+          )}
+          {addWeightGoal && (
+            <WeightGoalInfo
+              currentWeight={weight}
+              dueDate={values.weightGoal.dueDate}
+              measurementUnit={measurementUnit}
+              weightGoalInKg={values.weightGoal.weightGoalInKg}
+            />
+          )}
           <InfoMessage message="Your Goal has an impact in your daily macronutrients." />
         </BoxMainContent>
         <BoxBottomBar>
