@@ -25,7 +25,7 @@ const createNewUser = async (
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ emailAddress: email }),
+      body: JSON.stringify({ emailAddress: email, displayName: displayName }),
     });
     return { result: "success", data: newUser };
   } catch (error) {

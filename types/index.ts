@@ -99,6 +99,7 @@ export interface SubscriptionPlan {
   monthlyPrice: number;
   name: string;
   yearlyPrice: number;
+  semestryPrice: number;
 }
 
 export interface FilterQueries {
@@ -140,3 +141,29 @@ export type Result<T, E> =
   | { result: "error"; error: E };
 
 export type Options = { text: string; value: string }[];
+
+type Jsonable =
+  | string
+  | number
+  | boolean
+  | null
+  | undefined
+  | readonly Jsonable[]
+  | { readonly [key: string]: Jsonable }
+  | { toJSON(): Jsonable };
+
+export class BaseError extends Error {
+  public readonly context?: Jsonable;
+
+  constructor(
+    message: string,
+    options: { error?: Error; context?: Jsonable; cause?: Error } = {}
+  ) {
+    const { cause, context } = options;
+
+    super(message, { cause });
+    this.name = this.constructor.name;
+
+    this.context = context;
+  }
+}

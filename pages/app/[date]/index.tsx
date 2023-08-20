@@ -17,6 +17,7 @@ import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 import Sidebar from "@/layouts/components/Sidebar/PremiumSidebar";
 import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
+import RememberGoal from "@/components/Goals/RememberGoal";
 
 interface Props {
   date: string;
@@ -48,7 +49,9 @@ export default function Page({ date }: { date: Props }) {
       <section className="mt-[calc(1_*_var(--nav-h))] flex w-full select-none flex-col pb-2 sm:mt-[var(--nav-h)]">
         {realDate && (
           <>
-            <PremiumNav hideScrolling={true} title="" />
+            <PremiumNav hideScrolling={true} title="">
+              <RememberGoal />
+            </PremiumNav>
             <Sidebar hideScrolling={isMobile} />
             <SubPremiumNav
               title={""}

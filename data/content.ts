@@ -133,6 +133,7 @@ export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
     monthlyPrice: 0,
     name: "Free",
     yearlyPrice: 0,
+    semestryPrice: 0,
   },
   {
     buttonContent: "Get started with Premium",
@@ -147,9 +148,10 @@ export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
     checkoutLink: "/app/settings/billing",
     discount: "-20%",
     id: "premium",
-    monthlyPrice: 10,
+    monthlyPrice: 15,
     name: "Premium",
-    yearlyPrice: 8,
+    yearlyPrice: 12,
+    semestryPrice: 13.5,
   },
 ];
 

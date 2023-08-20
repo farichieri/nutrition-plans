@@ -215,6 +215,16 @@ const getThisWeekInterval = ({
 const getIsWeek = (date: string): boolean => date.includes("~");
 const getIsToday = (date: string): boolean => date === getToday();
 
+const getDaysLeft = ({ date }: { date: Date | null }): number => {
+  if (!date) return 0;
+  const today = new Date();
+  const due = new Date(date);
+  const daysLeft = Math.floor(
+    (due.getTime() - today.getTime()) / (1000 * 3600 * 24)
+  );
+  return daysLeft + 1;
+};
+
 export {
   addOneWeek,
   convertToWeekDate,
@@ -240,4 +250,5 @@ export {
   getYesterday,
   isValidDate,
   restOneWeek,
+  getDaysLeft,
 };

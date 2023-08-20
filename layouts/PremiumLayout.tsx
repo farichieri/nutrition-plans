@@ -12,6 +12,7 @@ import Head from "next/head";
 import InstallModal from "@/components/InstallApp/InstallModal";
 import Loader from "@/components/Loader/Loader";
 import WelcomeSteps from "@/components/WelcomeSteps/WelcomeSteps";
+import { SubscribeModal } from "@/components";
 
 interface Props {
   children: React.ReactNode;
@@ -19,7 +20,7 @@ interface Props {
 
 export default function PremiumLayout({ children }: Props) {
   const router = useRouter();
-  const { sidebarOpen } = useSelector(selectLayoutSlice);
+  const { sidebarOpen, isSubscribeModalOpen } = useSelector(selectLayoutSlice);
   const {
     user,
     isCreatingUser,
@@ -47,6 +48,7 @@ export default function PremiumLayout({ children }: Props) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>NutritionPlans - App</title>
       </Head>
+      {isSubscribeModalOpen && <SubscribeModal />}
       {(isCreatingUser || isSigningUser || !isFirstDataLoaded) && <Loader />}
       {user && user.isProfileCompleted && <WelcomeSteps />}
       {!isOnline && <ConnectionError />}

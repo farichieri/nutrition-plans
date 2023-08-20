@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "@/store";
 import { Theme } from "@/types";
+import { PURGE } from "redux-persist";
 
 // Define a type for the slice state
 interface LayoutState {
@@ -10,6 +11,8 @@ interface LayoutState {
   sidebarOpen: boolean;
   sidebarPlansOpen: boolean;
   theme: Theme;
+  rememberGoalDate: string; // ISO date string
+  isSubscribeModalOpen: boolean;
 }
 
 // Define the initial state using that type
@@ -20,6 +23,8 @@ const initialState: LayoutState = {
   sidebarOpen: true,
   sidebarPlansOpen: true,
   theme: Theme.Light,
+  rememberGoalDate: "",
+  isSubscribeModalOpen: false,
 };
 
 export const layoutSlice = createSlice({
@@ -45,16 +50,32 @@ export const layoutSlice = createSlice({
     setIsSettingsOpen: (state, action: PayloadAction<boolean>) => {
       state.isSettingsOpen = action.payload;
     },
+    setRememberGoalDate: (state, action: PayloadAction<string>) => {
+      state.rememberGoalDate = action.payload;
+    },
+    setIsSubscribeModalOpen: (state, action: PayloadAction<boolean>) => {
+      state.isSubscribeModalOpen = action.payload;
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(PURGE, (state) => {
+      return {
+        ...state,
+        rememberGoalDate: "",
+      };
+    });
   },
 });
 
 export const {
   setIsSettingsOpen,
+  setRememberGoalDate,
   setSidebarAdminOpen,
   setSidebarEvolutionOpen,
   setSidebarOpen,
   setSidebarPlansOpen,
   setTheme,
+  setIsSubscribeModalOpen,
 } = layoutSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

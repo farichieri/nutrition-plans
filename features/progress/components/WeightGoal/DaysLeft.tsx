@@ -1,6 +1,7 @@
-import { UserGoalsT, selectAuthSlice } from "@/features/authentication";
-import { getWeight, getWeightUnit } from "@/utils/calculations";
 import { FC } from "react";
+import { getDaysLeft } from "@/utils";
+import { getWeightAndText } from "@/utils/calculations";
+import { UserGoalsT, selectAuthSlice } from "@/features/authentication";
 import { useSelector } from "react-redux";
 
 interface Props {}
@@ -12,20 +13,11 @@ const DaysLeft: FC<Props> = () => {
 
   const { weightGoal, measurementUnit, goal } = user;
   const { dueDate, weightGoalInKg } = weightGoal;
-  const realWeight = getWeight({
+  const { weight, weightText } = getWeightAndText({
+    weightInKg: weightGoalInKg!,
     to: measurementUnit,
-    weight: weightGoalInKg!,
   });
-  const realWeightUnit = getWeightUnit({ from: measurementUnit });
-
-  const getDaysLeft = () => {
-    const today = new Date();
-    const due = new Date(dueDate!);
-    const daysLeft = Math.floor(
-      (due.getTime() - today.getTime()) / (1000 * 3600 * 24)
-    );
-    return daysLeft + 1;
-  };
+  const daysLeft = getDaysLeft({ date: new Date(dueDate!) });
 
   const getEmoji = ({ goal }: { goal: UserGoalsT }) => {
     switch (goal) {
@@ -49,15 +41,20 @@ const DaysLeft: FC<Props> = () => {
         </span>
         <span>{getEmoji({ goal: goal! })}</span>
       </div>
+
       <div className="flex items-center gap-1">
-        <span>Weight Goal:</span>
-        <span className="font-semibold text-green-500">
-          {realWeight} {realWeightUnit}
-        </span>
+        <span>Weight Goal 🎯:</span>
+        {weight > 0 && (
+          <span className="font-semibold text-green-500">
+            {weight} {weightText}
+          </span>
+        )}
       </div>
       <div className="flex items-center gap-1">
         <span>Days left:</span>
-        <span className="font-semibold text-blue-500">{getDaysLeft()}</span>
+        {daysLeft > 0 && (
+          <span className="font-semibold text-blue-500">{daysLeft}</span>
+        )}
       </div>
     </div>
   );

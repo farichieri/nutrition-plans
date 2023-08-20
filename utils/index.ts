@@ -10,3 +10,4 @@ export * from "./nutritionHelpers";
 export * from "./routes";
 
 export { getPlansAvailable } from "./getPlansAvailable";
+export { ensureError } from "./ensureError";

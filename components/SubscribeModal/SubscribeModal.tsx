@@ -1,19 +1,21 @@
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
-import { createCheckoutSession } from "@/features/stripe";
+import { DonateText, createCheckoutSession } from "@/features/stripe";
+import { ensureError } from "@/utils";
 import { FC, useState } from "react";
+import { PRICES } from "@/constants";
 import { selectAuthSlice } from "@/features/authentication/slice";
-import { useSelector } from "react-redux";
+import { setIsSubscribeModalOpen } from "@/features/layout/slice";
+import { toast } from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
 import Modal from "@/components/Modal/Modal";
-import PRICES from "@/constants/prices";
 import Spinner from "@/components/Loader/Spinner";
 
-interface Props {
-  handleClose: () => void;
-}
+interface Props {}
 
-const SubscribeModal: FC<Props> = ({ handleClose }) => {
+const SubscribeModal: FC<Props> = () => {
+  const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
-  const [priceSelected, setPriceSelected] = useState("");
+  const [priceSelected, setPriceSelected] = useState(PRICES.yearly.id);
   const [isLoading, setIsLoading] = useState(false);
 
   if (!user) return <></>;
@@ -23,17 +25,29 @@ const SubscribeModal: FC<Props> = ({ handleClose }) => {
     if (isLoading) return;
     try {
       setIsLoading(true);
-      await createCheckoutSession({ uid: user.id, priceId: priceSelected });
+      const res = await createCheckoutSession({
+        uid: user.id,
+        priceId: priceSelected,
+      });
+      if (res.result === "error") {
+        throw new Error("Error redirecting to stripe.", { cause: res.error });
+      }
     } catch (error) {
-      console.log(error);
+      const err = ensureError(error);
+      console.log(err);
       setIsLoading(false);
+      toast.error("Something went wrong.");
     }
+  };
+
+  const handleClose = () => {
+    dispatch(setIsSubscribeModalOpen(false));
   };
 
   return (
     <Modal isFullScreen onClose={handleClose}>
-      <section className=" flex h-auto max-h-70vh w-auto min-w-full max-w-[95vw] overflow-hidden rounded-3xl">
-        <div className="m-auto flex h-full w-full flex-col items-center gap-10 overflow-auto px-4 py-10 sm:p-10">
+      <section className=" flex h-auto w-auto min-w-full max-w-[95vw] overflow-hidden rounded-3xl">
+        <div className="m-auto flex h-full w-full flex-col items-center gap-5 overflow-auto px-4 py-10 sm:p-10">
           <div className="flex flex-col items-center text-center text-xs md:text-base">
             <span className="text-xl font-semibold sm:text-3xl">
               Level up. Go Premium
@@ -44,7 +58,7 @@ const SubscribeModal: FC<Props> = ({ handleClose }) => {
             </span>
           </div>
           <div className="m-auto flex w-full min-w-fit max-w-md flex-wrap items-center justify-center gap-3 sm:gap-4">
-            {PRICES.map((opt) => {
+            {Object.values(PRICES).map((opt) => {
               const isSelected = priceSelected === opt.id;
               return (
                 <div
@@ -90,13 +104,20 @@ const SubscribeModal: FC<Props> = ({ handleClose }) => {
                 </div>
               );
             })}
+            <DonateText />
           </div>
           <button
-            className="bold:border-green-800 group mt-auto flex w-fit items-center justify-center gap-1 rounded-3xl bg-gradient-to-r from-green-700 via-green-500 to-green-400 px-3 py-1.5 font-semibold text-white duration-300 hover:shadow-[0_1px_40px] hover:shadow-green-300 dark:hover:shadow-green-400/50"
+            className="bold:border-green-800 group mt-auto flex w-fit items-center justify-center gap-1 rounded-3xl bg-gradient-to-r from-green-700 via-green-500 to-green-400 px-10 py-1.5 font-semibold text-white duration-300 hover:shadow-[0_1px_40px] hover:shadow-green-300 dark:hover:shadow-green-400/50"
             onClick={handleContinue}
           >
             <span>Continue</span>
             {isLoading && <Spinner customClass="h-5 w-5" />}
+          </button>
+          <button
+            className="text-sm duration-300 hover:text-green-500"
+            onClick={handleClose}
+          >
+            NO, THANKS
           </button>
         </div>
       </section>

@@ -31,12 +31,12 @@ const NutritionTarget: FC<Props> = ({ planSelected }) => {
 
   return (
     <div className="flex flex-col gap-1">
-      <span className="text-lg font-semibold underline underline-offset-2">
+      <span className="text-xl font-semibold">
         Macronutrients distribution in your{" "}
         <span className="text-xl font-bold text-green-500">
           {planData?.name}{" "}
         </span>
-        (selected) plan:
+        plan:
       </span>
       <div className="max-w-md divide-y px-2 xs:text-[10px] s:text-xs sm:text-base">
         <div className="flex items-center justify-between  py-2 font-semibold text-[var(--carbs-color)]">
@@ -54,7 +54,6 @@ const NutritionTarget: FC<Props> = ({ planSelected }) => {
         </div>
         <div className="flex items-center justify-between  py-2 font-semibold text-[var(--prots-color)]">
           <span>Proteins:</span>
-
           <div className="flex gap-4 sm:gap-10">
             <div className="flex gap-1">
               <span>{nutritionTargets.proteins.min}g</span>-
