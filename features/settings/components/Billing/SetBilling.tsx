@@ -46,7 +46,7 @@ const SetBilling: FC<Props> = () => {
           {!user.isPremium && (
             <div className="flex">
               <div className="flex flex-col">
-                <span>Unlock all benefits, from $8/month</span>
+                <span>Unlock all benefits, from $12/month</span>
               </div>
             </div>
           )}

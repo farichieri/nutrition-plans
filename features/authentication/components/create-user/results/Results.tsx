@@ -123,8 +123,10 @@ const Results: FC<Props> = ({ handleSubmit }) => {
       console.log({ error });
       toast.error("Something happened!");
     } finally {
-      setIsLoading(false);
-      setIsDisabled(false);
+      if (!isCreatingRoute) {
+        setIsLoading(false);
+        setIsDisabled(false);
+      }
     }
   };
 

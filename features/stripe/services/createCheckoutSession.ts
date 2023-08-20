@@ -1,5 +1,7 @@
 import { collection, doc, onSnapshot, setDoc } from "firebase/firestore";
 import { db } from "@/services/firebase/firebase.config";
+import { ensureError } from "@/utils";
+import { Result } from "@/types";
 
 export default async function createCheckoutSession({
   uid,
@@ -7,7 +9,7 @@ export default async function createCheckoutSession({
 }: {
   uid: string;
   priceId: string;
-}) {
+}): Promise<Result<undefined, unknown>> {
   try {
     // Create a new checkout session in the subollection inside this users document
     const checkoutSessionRef = doc(
@@ -26,7 +28,6 @@ export default async function createCheckoutSession({
     // Wait for the CheckoutSession to get attached by the extension
     onSnapshot(checkoutSessionRef, async (snap) => {
       const data = snap.data();
-      console.log({ data });
       const { url, error } = data as { url: string; error: any };
 
       if (error) {
@@ -39,7 +40,10 @@ export default async function createCheckoutSession({
         window.location.assign(url);
       }
     });
+    return { result: "success", data: undefined };
   } catch (error) {
-    console.log({ error });
+    const err = ensureError(error);
+    console.log(err);
+    return { result: "error", error: err };
   }
 }

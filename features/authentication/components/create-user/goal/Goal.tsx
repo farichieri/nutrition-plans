@@ -117,6 +117,9 @@ const Goal: FC<Props> = ({ handleContinue }) => {
       });
       trigger(name);
     }
+    if (value === UserGoals.maintain) {
+      handleRemoveWeightGoal(event);
+    }
   };
 
   const [addWeightGoal, setAddWeightGoal] = useState(
@@ -245,6 +248,9 @@ const Goal: FC<Props> = ({ handleContinue }) => {
               ))}
             </div>
           </div>
+          <div className="m-auto">
+            Current weight: {weight} {weightText}
+          </div>
           {addWeightGoal ? (
             <div className="mx-auto flex w-full max-w-sm flex-col justify-center rounded-md border p-4">
               <div className="flex w-full max-w-sm flex-col items-center justify-center gap-2 ">
@@ -295,12 +301,16 @@ const Goal: FC<Props> = ({ handleContinue }) => {
               </button>
             </div>
           ) : (
-            <button
-              className="mx-auto mt-2 flex items-center justify-center rounded-md border border-green-500 px-2 py-1.5 text-green-500 duration-300 hover:bg-slate-500/20"
-              onClick={() => setAddWeightGoal(true)}
-            >
-              Add Weight Goal
-            </button>
+            <>
+              {values.goalSelected !== UserGoals.maintain && (
+                <button
+                  className="mx-auto mt-2 flex items-center justify-center rounded-md border border-green-500 px-2 py-1.5 text-green-500 duration-300 hover:bg-slate-500/20"
+                  onClick={() => setAddWeightGoal(true)}
+                >
+                  Add Weight Goal
+                </button>
+              )}
+            </>
           )}
           {addWeightGoal && (
             <WeightGoalInfo

@@ -62,7 +62,7 @@ const SaveAndEditButton: FC<Props> = ({
   return (
     <>
       {isEditing ? (
-        <div className="fixed bottom-0 left-1/2 z-[150] flex h-[var(--mobile-sidenav-h)] w-full -translate-x-1/2 items-center justify-center gap-4 border-t-2 border-green-500 bg-primary-color px-4 py-1">
+        <div className="fixed bottom-0 left-1/2 z-[150] flex h-[var(--mobile-sidenav-h)] w-full -translate-x-1/2 items-center justify-center gap-4 border-t border-green-500 bg-primary-color px-4 py-1">
           <button
             className="flex h-9  items-center justify-center gap-1 rounded-3xl border border-gray-500 bg-gray-500/20 px-3 py-1 hover:bg-gray-500/50 active:bg-gray-500"
             onClick={cancelChanges}
