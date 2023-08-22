@@ -77,7 +77,7 @@ const DayPlan: FC<Props> = ({ date }) => {
                 </div>
                 {diet && (
                   <div>
-                    <div className="sticky top-12 z-[50] ">
+                    <div className="sticky top-24" id="step2">
                       <DietNutrition
                         nutrients={diet.nutrients}
                         planID={planID}

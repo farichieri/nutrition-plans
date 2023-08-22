@@ -37,7 +37,7 @@ const PremiumFooter: FC<Props> = ({}) => {
         <div className="flex items-center gap-2">
           <Logo hideText={true} />
           <span className="text-xs opacity-70">
-            Copyright © 2023 Nutrition Plans Inc. All rights reserved.
+            Copyright © 2023 Nutrition Plans LLC. All rights reserved.
           </span>
         </div>
         <ul className="m-auto flex w-full flex-wrap justify-between gap-4 p-2">

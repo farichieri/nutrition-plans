@@ -27,14 +27,14 @@ const Modal = ({
       }`}
     >
       <div
-        className={`min-w-screen fixed inset-0 z-[90] m-0 flex items-center justify-center bg-black/60 dark:bg-black/40 ${
+        className={`min-w-screen fixed inset-0 z-[90] m-0 flex items-center justify-center bg-black/30 dark:bg-black/40 ${
           isFullScreen ? "min-h-screen" : ""
         }`}
         onClick={handleCloseModal}
       ></div>
       <div
         className={
-          ` relative z-[100] m-auto max-w-[100vw] overflow-hidden border bg-tertiary-color ${
+          ` relative z-[100] m-auto max-w-[100vw] overflow-hidden border bg-white backdrop-blur-sm dark:bg-black/95 ${
             isMobileFullScreen ? "rounded-none sm:rounded-xl" : "rounded-xl"
           } ` + customClass
         }

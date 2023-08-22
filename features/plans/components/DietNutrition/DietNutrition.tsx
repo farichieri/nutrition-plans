@@ -9,9 +9,7 @@ import { FC, useEffect, useState } from "react";
 import { FoodNutrients, FoodNutritionDetail } from "@/features/foods";
 import { formatToFixed, formatTwoDecimals } from "@/utils/format";
 import { getDietNutritionTargets } from "./utils/getDietNutritionTargets";
-import { MdClose } from "react-icons/md";
 import { PlansEnum, StartsOfWeek } from "@/types";
-import { RoundButton } from "@/components/Buttons";
 import { selectAuthSlice } from "@/features/authentication";
 import { setDiet } from "../../slice";
 import { toast } from "react-hot-toast";
@@ -27,10 +25,19 @@ interface Props {
   isEditing: boolean;
 }
 
+const TARGETS_DIFFER_CAUSES = {
+  plan: "Your preferred plan is different from this day's plan",
+  weight: "Your weight has changed since this day's plan was created",
+  none: "",
+};
+
 const DietNutrition: FC<Props> = ({ nutrients, diet, isEditing }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
-  const [differFromUserTargets, setDifferFromUserTargets] = useState(false);
+  const [differFromUserTargets, setDifferFromUserTargets] = useState({
+    cause: TARGETS_DIFFER_CAUSES.none,
+    value: false,
+  });
   const [loading, setLoading] = useState({
     updateWithUserTargets: false,
     hideNutritionDiff: false,
@@ -55,7 +62,10 @@ const DietNutrition: FC<Props> = ({ nutrients, diet, isEditing }) => {
 
   useEffect(() => {
     if (!userNutritionTargets || !dietNutritionTargets) {
-      setDifferFromUserTargets(false);
+      setDifferFromUserTargets({
+        cause: TARGETS_DIFFER_CAUSES.none,
+        value: false,
+      });
       return;
     }
     const areEqual = checkTargetsEquality({
@@ -63,9 +73,22 @@ const DietNutrition: FC<Props> = ({ nutrients, diet, isEditing }) => {
       dietTargets: dietNutritionTargets,
     });
     if (!areEqual) {
-      setDifferFromUserTargets(true);
+      if (user.planSelected !== diet.planID) {
+        setDifferFromUserTargets({
+          cause: TARGETS_DIFFER_CAUSES.plan,
+          value: true,
+        });
+        return;
+      }
+      setDifferFromUserTargets({
+        cause: TARGETS_DIFFER_CAUSES.none,
+        value: true,
+      });
     } else {
-      setDifferFromUserTargets(false);
+      setDifferFromUserTargets({
+        cause: TARGETS_DIFFER_CAUSES.none,
+        value: false,
+      });
     }
   }, [diet]);
 
@@ -229,28 +252,34 @@ const DietNutrition: FC<Props> = ({ nutrients, diet, isEditing }) => {
             </div>
           </div>
         </div>
-        {differFromUserTargets && !hideNutritionTargetsDiff && (
-          <div className="relative my-2 flex flex-col items-center justify-center rounded-md border border-red-500 bg-red-400/40 p-2">
-            <RoundButton
-              onClick={handleHideNutritionDiff}
-              customClass="p-1 h-7 w-7 absolute right-1 top-1 "
-            >
-              {loading.hideNutritionDiff ? (
-                <Spinner customClass={`h-4 w-4`} />
-              ) : (
-                <MdClose className="h-5 w-5" />
-              )}
-            </RoundButton>
-            <span>Day targets differ from your personal nutrition targets</span>
-            <button
-              onClick={updateWithUserTargets}
-              className="flex items-center rounded-3xl border border-blue-500 bg-blue-400 px-3 py-1.5"
-            >
-              Update with my targets
-              {loading.updateWithUserTargets && (
-                <Spinner customClass={`h-4 w-4 ml-2`} />
-              )}
-            </button>
+        {differFromUserTargets.value && !hideNutritionTargetsDiff && (
+          <div className="relative my-2 flex flex-col items-center justify-center gap-2 rounded-md border border-red-500 bg-red-400/40 p-2">
+            <div className="flex flex-col">
+              <span>
+                Day targets differ from your personal nutrition targets
+              </span>
+              <span>Cause: {differFromUserTargets.cause}</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <button
+                onClick={updateWithUserTargets}
+                className="flex items-center rounded-3xl border border-blue-500 bg-blue-400 px-3 py-1.5 text-sm"
+              >
+                Update with my targets
+                {loading.updateWithUserTargets && (
+                  <Spinner customClass={`h-4 w-4 ml-2`} />
+                )}
+              </button>
+              <button
+                onClick={handleHideNutritionDiff}
+                className="flex items-center rounded-3xl border border-gray-500 bg-gray-400 px-3 py-1.5 text-sm"
+              >
+                Discard
+                {loading.hideNutritionDiff && (
+                  <Spinner customClass={`h-4 w-4`} />
+                )}
+              </button>
+            </div>
           </div>
         )}
         <div className="contents">

@@ -1,11 +1,11 @@
 import {
-  User,
   getNutritionTargets,
   selectAuthSlice,
   setUpdateUser,
   updateUser,
 } from "@/features/authentication";
 import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
+import { calculateKCALSRecommended } from "@/features/authentication/utils/calculateBodyData";
 import { FC, useEffect, useState } from "react";
 import { MdRestaurant, MdVerified } from "react-icons/md";
 import { MEAL_PLANS } from "@/data/content";
@@ -20,7 +20,6 @@ import BlurImage from "@/components/blur-image";
 import FormError from "@/components/Errors/FormError";
 import InfoMessage from "@/components/Layout/InfoMessage";
 import SubmitButton from "@/components/Buttons/SubmitButton";
-import { calculateKCALSRecommended } from "@/features/authentication/utils/calculateBodyData";
 
 interface FormValues {
   planSelected: PlansEnum | null;

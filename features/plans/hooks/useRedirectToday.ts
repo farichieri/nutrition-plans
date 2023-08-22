@@ -1,8 +1,8 @@
+import { BaseDates } from "@/types/dates";
+import { isValidDate } from "@/utils/dateFormat";
+import { isValidStringFormat } from "@/features/plans";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { isValidDate } from "@/utils/dateFormat";
-import { BaseDates } from "@/types/dates";
-import { isValidStringFormat } from "@/features/plans";
 
 const useRedirectToday = (date: string) => {
   const router = useRouter();

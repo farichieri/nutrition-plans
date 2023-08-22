@@ -227,3 +227,7 @@ th {
     -webkit-appearance: none;
   }
 }
+
+.introjs-tooltip {
+  color: black;
+}

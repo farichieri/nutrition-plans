@@ -9,7 +9,6 @@ interface LayoutState {
   sidebarEvolutionOpen: boolean;
   sidebarAdminOpen: boolean;
   sidebarOpen: boolean;
-  sidebarPlansOpen: boolean;
   theme: Theme;
   rememberGoalDate: string; // ISO date string
   isSubscribeModalOpen: boolean;
@@ -20,8 +19,7 @@ const initialState: LayoutState = {
   isSettingsOpen: false,
   sidebarEvolutionOpen: true,
   sidebarAdminOpen: true,
-  sidebarOpen: true,
-  sidebarPlansOpen: true,
+  sidebarOpen: false,
   theme: Theme.Light,
   rememberGoalDate: "",
   isSubscribeModalOpen: false,
@@ -34,9 +32,6 @@ export const layoutSlice = createSlice({
   reducers: {
     setSidebarOpen: (state, action: PayloadAction<boolean>) => {
       state.sidebarOpen = action.payload;
-    },
-    setSidebarPlansOpen: (state, action: PayloadAction<boolean>) => {
-      state.sidebarPlansOpen = action.payload;
     },
     setSidebarEvolutionOpen: (state, action: PayloadAction<boolean>) => {
       state.sidebarEvolutionOpen = action.payload;
@@ -73,7 +68,6 @@ export const {
   setSidebarAdminOpen,
   setSidebarEvolutionOpen,
   setSidebarOpen,
-  setSidebarPlansOpen,
   setTheme,
   setIsSubscribeModalOpen,
 } = layoutSlice.actions;

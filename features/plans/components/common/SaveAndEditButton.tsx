@@ -90,6 +90,7 @@ const SaveAndEditButton: FC<Props> = ({
         <button
           className="flex h-9 items-center justify-center gap-1 rounded-3xl border border-green-600 bg-green-500 px-3 py-1 text-white hover:bg-green-500/50 active:bg-green-500"
           onClick={toggleButton}
+          id="step1"
         >
           <span>Edit Day</span>
           <LuFileEdit className="h-5 w-5" />

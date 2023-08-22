@@ -67,7 +67,7 @@ const VaulDrawer: FC<Props> = ({ children, title, btnText }) => {
           </button>
           {open && (
             <Modal onClose={handleClose}>
-              <section className="!z-[999] flex h-auto max-h-[70vh] w-auto min-w-full max-w-[95vw] flex-col overflow-hidden px-2 py-4">
+              <section className="!z-[999] flex h-auto max-h-[80vh] w-auto min-w-full max-w-[95vw] flex-col overflow-hidden px-2 py-4">
                 {children}
               </section>
             </Modal>
