@@ -1,6 +1,5 @@
-import "intro.js/introjs.css";
 import { AppRoutes } from "@/utils";
-import { Login } from "@/features/authentication";
+import { Login, UserSteps } from "@/features/authentication";
 import { PremiumFooter } from "./components";
 import { selectAuthSlice } from "@/features/authentication/slice";
 import { selectLayoutSlice } from "@/features/layout/slice";
@@ -14,7 +13,6 @@ import Head from "next/head";
 import InstallModal from "@/components/InstallApp/InstallModal";
 import Loader from "@/components/Loader/Loader";
 import WelcomeSteps from "@/components/WelcomeSteps/WelcomeSteps";
-import introJs from "intro.js";
 
 interface Props {
   children: React.ReactNode;
@@ -33,29 +31,12 @@ export default function PremiumLayout({ children }: Props) {
   const isOnline = useOnlineStatus();
   const windowWidth = useWindowWidth();
   const isMobile = windowWidth < 1024;
+  const isProfileCompleted = user?.isProfileCompleted;
 
   useEffect(() => {
-    if (isCreatingUser || (user && !user?.isProfileCompleted)) {
+    if (isCreatingUser || (user && !isProfileCompleted)) {
       router.push(AppRoutes.create_user);
     }
-    introJs()
-      .setOptions({
-        steps: [
-          {
-            title: "Welcome to NutritionPlans",
-            intro: "Hello world!",
-          },
-          {
-            element: document.querySelector("#step1") as HTMLElement,
-            intro: "This is a tooltip.",
-          },
-          {
-            element: document.querySelector("#step2") as HTMLElement,
-            intro: "Here you can see the nutrition facts of the day.",
-          },
-        ],
-      })
-      .start();
   }, [user, isCreatingUser]);
 
   if (!user && !isSigningUser) {

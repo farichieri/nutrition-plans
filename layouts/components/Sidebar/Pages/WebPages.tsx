@@ -1,50 +1,37 @@
 import {
   MdAutoGraph,
   MdCreate,
-  MdEmojiEvents,
   MdExpandMore,
   MdPerson,
-  MdRestaurantMenu,
   MdSettings,
-  MdSettingsAccessibility,
   MdLocalGroceryStore,
-  MdVerified,
   MdOutlineCalendarMonth,
   MdLibraryBooks,
 } from "react-icons/md";
 import {
   selectLayoutSlice,
   setSidebarAdminOpen,
-  setSidebarEvolutionOpen,
   setSidebarOpen,
 } from "@/features/layout/slice";
 import { AppRoutes } from "@/utils";
-import { BiFoodMenu, BiSolidPieChartAlt2 } from "react-icons/bi";
+import { BiFoodMenu } from "react-icons/bi";
 import { FC } from "react";
 import { PiBowlFoodFill } from "react-icons/pi";
 import { RiSearchLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import Link from "next/link";
 import { useWindowWidth } from "@/hooks";
+import Link from "next/link";
 
 interface Props {}
 
 const WebPages: FC<Props> = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { sidebarEvolutionOpen, sidebarAdminOpen, sidebarOpen } =
-    useSelector(selectLayoutSlice);
+  const { sidebarAdminOpen, sidebarOpen } = useSelector(selectLayoutSlice);
   const windowWidth = useWindowWidth();
   const isSidebarRepleagable = windowWidth < 1280;
 
-  const toggleEvolution = () => {
-    if (sidebarEvolutionOpen === true) {
-      dispatch(setSidebarEvolutionOpen(false));
-    } else {
-      dispatch(setSidebarEvolutionOpen(true));
-    }
-  };
   const toggleAdmin = () => {
     if (sidebarAdminOpen === true) {
       dispatch(setSidebarAdminOpen(false));
@@ -59,35 +46,6 @@ const WebPages: FC<Props> = () => {
     }
   };
 
-  const PROFILE_PAGES = [
-    {
-      name: "Nutrition Targets",
-      url: "/app/profile/nutrition-values",
-      icon: <BiSolidPieChartAlt2 className="h-6 w-6 text-green-500" />,
-    },
-    {
-      name: "Goal",
-      url: "/app/profile/goal",
-      icon: <MdEmojiEvents className="h-6 w-6 text-green-500" />,
-    },
-    {
-      name: "Body Features",
-      url: "/app/profile/body-features",
-      icon: <MdSettingsAccessibility className="h-6 w-6 text-green-500" />,
-    },
-
-    {
-      name: "Preferred Plan",
-      url: "/app/profile/preferred-plan",
-      icon: <MdVerified className="h-6 w-6 text-green-500" />,
-    },
-    {
-      name: "Meals settings",
-      url: "/app/profile/meals",
-      icon: <MdRestaurantMenu className="h-6 w-6 text-green-500" />,
-    },
-  ];
-
   const CREATE_PAGES = [
     {
       name: "Food",
@@ -99,39 +57,42 @@ const WebPages: FC<Props> = () => {
       url: "/app/create/recipe",
       icon: <BiFoodMenu className="h-6 w-6 text-green-500" />,
     },
-    // {
-    //   name: "Supplements & Vitamins",
-    //   url: "/app/create/supplements-vitamins",
-    //   icon: <PiPillFill className="h-6 w-6 text-green-500" />,
-    // },
   ];
 
   const WEB_PAGES = [
     {
+      id: "tour-welcome-0",
       name: "Planner",
       url: AppRoutes.today,
       pathname: ["/app/[date]"],
       icon: <MdOutlineCalendarMonth className="h-6 w-6 text-green-500" />,
     },
     {
+      id: "tour-search-0",
       name: "Search",
       url: "/app/search",
       pathname: ["/app/search", "/app/search/my-creations"],
       icon: <RiSearchLine className="h-6 w-6 text-green-500" />,
     },
     {
+      id: "",
+
       name: "Progress",
       url: "/app/progress",
       pathname: ["/app/progress"],
       icon: <MdAutoGraph className="h-6 w-6 text-green-500" />,
     },
     {
+      id: "",
+
       name: "Groceries",
       url: "/app/shopping/today",
       pathname: ["/app/shopping/[date]", "/app/cupboard"],
       icon: <MdLocalGroceryStore className="h-6 w-6 text-green-500" />,
     },
     {
+      id: "",
+
       name: "Library",
       url: "/app/library/favorites",
       pathname: [
@@ -153,6 +114,7 @@ const WebPages: FC<Props> = () => {
     <>
       {WEB_PAGES.map((page) => (
         <Link
+          id={page.id}
           key={page.name}
           href={page.url}
           onClick={handleSidebar}
@@ -207,41 +169,6 @@ const WebPages: FC<Props> = () => {
         </div>
 
         <div className="flex flex-col  py-1">
-          {/* <div className={fixedOptClass} onClick={toggleEvolution}>
-            <MdPerson className="h-6 w-6 text-green-500" />
-            <div className="flex w-full cursor-pointer items-center justify-between">
-              <span className="text-md sm:text-lg">Profile</span>
-              <MdExpandMore
-                className={`duration-200 ease-in-out ${
-                  sidebarEvolutionOpen &&
-                  "h-6 w-6 -rotate-180 transform text-green-500"
-                }`}
-              />
-            </div>
-          </div>
-          <div
-            className={`flex flex-col overflow-hidden  pl-1 text-sm transition-[max-height] duration-200 ease-linear sm:text-base ${
-              sidebarEvolutionOpen ? " max-h-[30rem]" : "max-h-0"
-            }`}
-          >
-            {PROFILE_PAGES.map((page) => (
-              <Link
-                key={page.name}
-                href={page.url}
-                onClick={handleSidebar}
-                className={
-                  `${
-                    router.asPath === page.url &&
-                    " bg-slate-500/30 font-semibold"
-                  }` + fixedSecOptClass
-                }
-              >
-                {page.icon}
-                {page.name}
-              </Link>
-            ))}
-          </div> */}
-
           <Link
             href={"/app/profile"}
             onClick={handleSidebar}

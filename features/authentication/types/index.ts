@@ -28,7 +28,21 @@ export interface User {
   subscriptionState: SubscriptionState;
   weightGoal: WeightGoal;
   welcomeStep: UserStepsT;
+  tours: Tours;
 }
+
+export interface Tours {
+  createFood: boolean;
+  createRecipe: boolean;
+  dayPlan: boolean;
+  groceries: boolean;
+  library: boolean;
+  profile: boolean;
+  progress: boolean;
+  search: boolean;
+  welcome: boolean;
+}
+
 export interface UserCreatedData {
   bodyData: UserBodyData;
 }
@@ -198,4 +212,15 @@ export const newAccount: User = {
   subscriptionState: SubscriptionState.Free,
   weightGoal: initialWeightGoal,
   welcomeStep: UserSteps.step_1,
+  tours: {
+    createFood: false,
+    createRecipe: false,
+    dayPlan: false,
+    groceries: false,
+    library: false,
+    profile: false,
+    progress: false,
+    search: false,
+    welcome: false,
+  },
 };

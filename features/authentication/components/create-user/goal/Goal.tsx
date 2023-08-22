@@ -302,14 +302,15 @@ const Goal: FC<Props> = ({ handleContinue }) => {
             </div>
           ) : (
             <>
-              {values.goalSelected !== UserGoals.maintain && (
-                <button
-                  className="mx-auto mt-2 flex items-center justify-center rounded-md border border-green-500 px-2 py-1.5 text-green-500 duration-300 hover:bg-slate-500/20"
-                  onClick={() => setAddWeightGoal(true)}
-                >
-                  Add Weight Goal
-                </button>
-              )}
+              {values.goalSelected &&
+                values.goalSelected !== UserGoals.maintain && (
+                  <button
+                    className="mx-auto mt-2 flex items-center justify-center rounded-md border border-green-500 px-2 py-1.5 text-green-500 duration-300 hover:bg-slate-500/20"
+                    onClick={() => setAddWeightGoal(true)}
+                  >
+                    Add Weight Goal (optional)
+                  </button>
+                )}
             </>
           )}
           {addWeightGoal && (

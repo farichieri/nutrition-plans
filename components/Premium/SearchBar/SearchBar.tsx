@@ -88,12 +88,12 @@ const SearchBar: FC<Props> = ({ queries }) => {
   }, [windowWidth]);
 
   return (
-    <>
+    <div id="tour-search-1" className="mx-auto">
       {showSearchBar ? (
         <div
           className={`${
             windowWidth > 768 ? "relative" : "fixed"
-          } left-0 top-0 z-[100] flex h-full w-full items-center justify-center bg-primary-color px-4`}
+          } left-0 top-0 z-[100] flex h-full w-full items-center justify-center bg-primary-color`}
         >
           <div className="mr-2 flex cursor-pointer items-center justify-center lg:hidden ">
             <IoMdArrowBack
@@ -142,7 +142,7 @@ const SearchBar: FC<Props> = ({ queries }) => {
           <MdSearch className="text-2xl text-gray-400" />
         </button>
       )}
-    </>
+    </div>
   );
 };
 

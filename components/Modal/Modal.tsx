@@ -34,7 +34,7 @@ const Modal = ({
       ></div>
       <div
         className={
-          ` relative z-[100] m-auto max-w-[100vw] overflow-hidden border bg-white backdrop-blur-sm dark:bg-black/95 ${
+          ` relative z-[100] m-auto max-w-[100vw] overflow-hidden border bg-tertiary-color ${
             isMobileFullScreen ? "rounded-none sm:rounded-xl" : "rounded-xl"
           } ` + customClass
         }

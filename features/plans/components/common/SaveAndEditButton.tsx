@@ -61,7 +61,7 @@ const SaveAndEditButton: FC<Props> = ({
 
   return (
     <>
-      {isEditing ? (
+      {isEditing && (
         <div className="fixed bottom-0 left-1/2 z-[150] flex h-[var(--mobile-sidenav-h)] w-full -translate-x-1/2 items-center justify-center gap-4 border-t border-green-500 bg-primary-color px-4 py-1">
           <button
             className="flex h-9  items-center justify-center gap-1 rounded-3xl border border-gray-500 bg-gray-500/20 px-3 py-1 hover:bg-gray-500/50 active:bg-gray-500"
@@ -86,16 +86,15 @@ const SaveAndEditButton: FC<Props> = ({
             )}
           </button>
         </div>
-      ) : (
-        <button
-          className="flex h-9 items-center justify-center gap-1 rounded-3xl border border-green-600 bg-green-500 px-3 py-1 text-white hover:bg-green-500/50 active:bg-green-500"
-          onClick={toggleButton}
-          id="step1"
-        >
-          <span>Edit Day</span>
-          <LuFileEdit className="h-5 w-5" />
-        </button>
       )}
+      <button
+        id="tour-dayPlan-4"
+        className="flex h-9 items-center justify-center gap-1 rounded-3xl border border-green-600 bg-green-500 px-3 py-1 text-white hover:bg-green-500/50 active:bg-green-500"
+        onClick={toggleButton}
+      >
+        <span>Edit Day</span>
+        <LuFileEdit className="h-5 w-5" />
+      </button>
     </>
   );
 };

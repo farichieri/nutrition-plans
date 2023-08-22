@@ -18,30 +18,35 @@ const CollapsedPages: FC<Props> = () => {
 
   const COLLAPSED_PAGES = [
     {
+      id: "tour-welcome-0",
       name: "Planner",
       url: AppRoutes.today,
       pathname: ["/app/[date]"],
       icon: <MdOutlineCalendarMonth className="h-6 w-6 text-green-500" />,
     },
     {
+      id: "tour-search-0",
       name: "Search",
       url: "/app/search",
       pathname: ["/app/search", "/app/search/my-creations"],
       icon: <RiSearchLine className="h-6 w-6 text-green-500" />,
     },
     {
+      id: "",
       name: "Progress",
       url: "/app/progress",
       pathname: ["/app/progress"],
       icon: <MdAutoGraph className="h-6 w-6 text-green-500" />,
     },
     {
+      id: "",
       name: "Groceries",
       url: "/app/shopping/today",
       pathname: ["/app/shopping/[date]", "/app/cupboard"],
       icon: <MdLocalGroceryStore className="h-6 w-6 text-green-500" />,
     },
     {
+      id: "",
       name: "Library",
       url: "/app/library/favorites",
       pathname: [
@@ -52,6 +57,7 @@ const CollapsedPages: FC<Props> = () => {
       icon: <MdLibraryBooks className="h-6 w-6 text-green-500" />,
     },
     {
+      id: "",
       name: "Profile",
       url: "/app/profile",
       pathname: [
@@ -71,6 +77,7 @@ const CollapsedPages: FC<Props> = () => {
     <>
       {COLLAPSED_PAGES.map((page) => (
         <Link
+          id={page.id}
           key={page.name}
           href={page.url}
           className={`${

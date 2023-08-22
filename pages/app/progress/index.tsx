@@ -1,4 +1,5 @@
 import RememberGoal from "@/components/Goals/RememberGoal";
+import { selectAuthSlice } from "@/features/authentication";
 import {
   AddProgress,
   DaysLeft,
@@ -8,9 +9,59 @@ import {
 import { PremiumSidebar } from "@/layouts";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "@/layouts/components/Nav/PremiumNav";
+import { useSelector } from "react-redux";
+import { useTour } from "@/features/tours";
 
 export default function Page() {
   const isMobile = window.innerWidth < 1024;
+  const { user } = useSelector(selectAuthSlice);
+
+  useTour({
+    name: "progress",
+    user: user,
+    steps: () => [
+      {
+        element: document.querySelector("#tour-progress-0"),
+        title: "Progress Section",
+        intro:
+          "In this section you will see your progress in the goal you have set. Is the second most important section of the app!",
+        position: "right",
+      },
+      {
+        element: document.querySelector("#tour-progress-1"),
+        title: "List of your Progress",
+        intro: "This is the list of your progresses",
+        position: "right",
+      },
+      {
+        element: document.querySelector("#tour-progress-2"),
+        title: "Add Progress",
+        intro:
+          "Here you can add a new progress! (adding the exact day and the Weight of that day)",
+        position: "right",
+      },
+      {
+        element: document.querySelector("#tour-progress-3"),
+        title: "See your Progress graphically",
+        intro:
+          "You can see your progress graphically here! And if you have a Goal set, you will see the goal line too!",
+        position: "right",
+      },
+      {
+        element: document.querySelector("#tour-progress-4"),
+        title: "Days left",
+        intro: "Here you can see how many days are left to reach your goal!",
+        position: "right",
+      },
+      {
+        title: "You can do it!",
+        intro:
+          "Day to day you will reach your goal! Remember to be constant reaching your nutrient targets and you will see the results in your weight, the mirror and your energy!",
+        position: "right",
+      },
+    ],
+  });
+
   return (
     <PremiumLayout>
       <PremiumNav hideScrolling={true} title="">

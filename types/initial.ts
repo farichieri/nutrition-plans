@@ -21,6 +21,7 @@ export const NewFoodCompatiblePlans: CompatiblePlans = {
   low_carb: false,
   mediterranean: false,
   vegetarian: false,
+  keto: false,
 };
 
 export const NewFoodNutrients: FoodNutrients = {

@@ -17,30 +17,35 @@ const MobilePages: FC<Props> = () => {
 
   const COLLAPSED_PAGES = [
     {
+      id: "tour-welcome-0",
       name: "Planner",
       url: AppRoutes.today,
       pathname: ["/app/[date]"],
       icon: <MdOutlineCalendarMonth className="h-5 w-5" />,
     },
     {
+      id: "tour-search-0",
       name: "Search",
       url: "/app/search",
       pathname: ["/app/search", "/app/search/my-creations"],
       icon: <RiSearchLine className="h-5 w-5 " />,
     },
     {
+      id: "",
       name: "Progress",
       url: "/app/progress",
       pathname: ["/app/progress"],
       icon: <MdAutoGraph className="h-7 w-7 " />,
     },
     {
+      id: "",
       name: "Groceries",
       url: "/app/shopping/today",
       pathname: ["/app/shopping/[date]", "/app/cupboard"],
       icon: <MdLocalGroceryStore className="h-5 w-5 " />,
     },
     {
+      id: "",
       name: "Profile",
       url: "/app/profile",
       pathname: [
@@ -59,6 +64,7 @@ const MobilePages: FC<Props> = () => {
     <>
       {COLLAPSED_PAGES.map((page) => (
         <Link
+          id={page.id}
           key={page.name}
           href={page.url}
           className={`${

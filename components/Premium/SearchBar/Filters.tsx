@@ -193,6 +193,7 @@ const Filters: FC<Props> = ({
   return (
     <div className="flex w-full flex-col items-start justify-center gap-1 border-b pb-2">
       <RoundButton
+        id="tour-search-2"
         onClick={handleOpenFilters}
         customClass={`px-3 py-1.5 ${openFilters && "!border-slate-500/30"}`}
       >
