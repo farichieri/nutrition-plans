@@ -212,7 +212,7 @@ const Goal: FC<Props> = ({ handleContinue }) => {
   const today = formatToInputDate(new Date());
 
   return (
-    <Box customClass="max-w-2xl">
+    <Box id="tour-profile_goal-0" customClass="max-w-2xl">
       <DevTool control={control} />
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -229,8 +229,9 @@ const Goal: FC<Props> = ({ handleContinue }) => {
 
           <div className="flex w-full flex-col items-center justify-center">
             <div className="mx-auto flex w-full flex-wrap items-center justify-center gap-2">
-              {Object.values(UserGoals).map((goal) => (
+              {Object.values(UserGoals).map((goal, index) => (
                 <button
+                  id={`tour-profile_goal-${index + 1}`}
                   onClick={handleSelect}
                   name={"goalSelected"}
                   className={`flex w-full min-w-fit items-center justify-center rounded-lg border bg-gray-500/20 px-3 py-2 text-xl font-medium capitalize duration-100 hover:border-green-700 hover:bg-green-500 hover:text-white active:border-black/10 active:bg-slate-500/30 dark:active:border-white/10 sm:basis-1/4 sm:text-2xl ${
@@ -305,6 +306,7 @@ const Goal: FC<Props> = ({ handleContinue }) => {
               {values.goalSelected &&
                 values.goalSelected !== UserGoals.maintain && (
                   <button
+                    id="tour-profile_goal-4"
                     className="mx-auto mt-2 flex items-center justify-center rounded-md border border-green-500 px-2 py-1.5 text-green-500 duration-300 hover:bg-slate-500/20"
                     onClick={() => setAddWeightGoal(true)}
                   >
@@ -313,14 +315,16 @@ const Goal: FC<Props> = ({ handleContinue }) => {
                 )}
             </>
           )}
-          {addWeightGoal && (
-            <WeightGoalInfo
-              currentWeight={weight}
-              dueDate={values.weightGoal.dueDate}
-              measurementUnit={measurementUnit}
-              weightGoalInKg={values.weightGoal.weightGoalInKg}
-            />
-          )}
+          <div id="tour-profile_goal-5">
+            {addWeightGoal && (
+              <WeightGoalInfo
+                currentWeight={weight}
+                dueDate={values.weightGoal.dueDate}
+                measurementUnit={measurementUnit}
+                weightGoalInKg={values.weightGoal.weightGoalInKg}
+              />
+            )}
+          </div>
           <InfoMessage message="Your Goal has an impact in your daily macronutrients." />
         </BoxMainContent>
         <BoxBottomBar>

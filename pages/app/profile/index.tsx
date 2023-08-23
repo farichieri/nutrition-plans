@@ -1,6 +1,7 @@
 import { ProfileNav } from "@/features/profile";
 import { Results, selectAuthSlice } from "@/features/authentication";
 import { useSelector } from "react-redux";
+import { useTour } from "@/features/tours";
 import { useWindowWidth } from "@/hooks";
 import Avatar from "@/components/Avatar/Avatar";
 import ProfileLayout from "@/layouts/ProfileLayout";
@@ -11,6 +12,19 @@ export default function Page() {
   const isMobile = windowWidth < 1024;
 
   const handleSubmit = () => {};
+
+  useTour({
+    name: "profile",
+    user: user,
+    pushWhenFinished: "/app/profile/nutrition-values",
+    steps: () => [
+      {
+        title: "Profile Section",
+        intro: "Let's have a quick tour in the Profile section!",
+        position: "right",
+      },
+    ],
+  });
 
   return (
     <ProfileLayout>

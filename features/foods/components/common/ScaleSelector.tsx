@@ -98,7 +98,10 @@ const ScaleSelector: FC<Props> = ({
 
   return (
     <div className="flex w-full flex-col gap-2">
-      <div className="flex w-full items-center justify-between gap-4">
+      <div
+        id="tour-food-1"
+        className="flex w-full items-center justify-between gap-4"
+      >
         <NutritionInput
           changed={false}
           handleChange={handleChange}

@@ -35,8 +35,14 @@ export interface Tours {
   createFood: boolean;
   createRecipe: boolean;
   dayPlan: boolean;
+  food: boolean;
   groceries: boolean;
   library: boolean;
+  profile_body: boolean;
+  profile_goal: boolean;
+  profile_meals: boolean;
+  profile_nutrition_values: boolean;
+  profile_plan: boolean;
   profile: boolean;
   progress: boolean;
   search: boolean;
@@ -216,8 +222,14 @@ export const newAccount: User = {
     createFood: false,
     createRecipe: false,
     dayPlan: false,
+    food: false,
     groceries: false,
     library: false,
+    profile_body: false,
+    profile_goal: false,
+    profile_meals: false,
+    profile_nutrition_values: false,
+    profile_plan: false,
     profile: false,
     progress: false,
     search: false,

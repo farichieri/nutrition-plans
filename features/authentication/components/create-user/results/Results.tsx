@@ -131,7 +131,7 @@ const Results: FC<Props> = ({ handleSubmit }) => {
   };
 
   return (
-    <Box>
+    <Box id="tour-profile_nutrition_values-0">
       <BoxMainContent>
         <div className="flex flex-col gap-10">
           <div className="flex items-center gap-2">
@@ -149,7 +149,12 @@ const Results: FC<Props> = ({ handleSubmit }) => {
               we have calculated the next daily calories for your nutrition
               plan:{" "}
             </span>
-            <span className="text-green-500">{caloriesRecommended}</span>
+            <span
+              id="tour-profile_nutrition_values-1"
+              className="text-green-500"
+            >
+              {caloriesRecommended}
+            </span>
           </div>
           <div className="flex flex-col gap-4 font-medium">
             <div className="flex flex-col gap-2">

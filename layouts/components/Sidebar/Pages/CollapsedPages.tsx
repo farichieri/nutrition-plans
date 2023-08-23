@@ -32,7 +32,7 @@ const CollapsedPages: FC<Props> = () => {
       icon: <RiSearchLine className="h-6 w-6 text-green-500" />,
     },
     {
-      id: "",
+      id: "tour-progress-0",
       name: "Progress",
       url: "/app/progress",
       pathname: ["/app/progress"],
@@ -46,7 +46,7 @@ const CollapsedPages: FC<Props> = () => {
       icon: <MdLocalGroceryStore className="h-6 w-6 text-green-500" />,
     },
     {
-      id: "",
+      id: "tour-library-0",
       name: "Library",
       url: "/app/library/favorites",
       pathname: [
@@ -57,13 +57,12 @@ const CollapsedPages: FC<Props> = () => {
       icon: <MdLibraryBooks className="h-6 w-6 text-green-500" />,
     },
     {
-      id: "",
+      id: "tour-profile-0",
       name: "Profile",
       url: "/app/profile",
       pathname: [
         "/app/profile",
         "/app/profile/goal",
-        "/app/profile/favorites",
         "/app/profile/body-features",
         "/app/profile/nutrition-values",
         "/app/profile/preferred-plan",

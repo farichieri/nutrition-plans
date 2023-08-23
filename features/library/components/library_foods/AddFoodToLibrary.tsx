@@ -97,7 +97,7 @@ const AddFoodToLibrary: FC<Props> = ({ food }) => {
   return (
     <button
       onClick={handleRating}
-      id="favorites"
+      id="tour-food-3"
       className={`flex h-8 w-8 min-w-[2rem] items-center justify-center rounded-full border  duration-300 hover:bg-slate-500/20 active:scale-90 ${
         isFavorite && "border-green-500"
       }`}

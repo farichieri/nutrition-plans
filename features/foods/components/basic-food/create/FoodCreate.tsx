@@ -296,7 +296,7 @@ const FoodCreate: FC<Props> = () => {
                     <Checkbox
                       id={type}
                       key={type}
-                      labelText={type}
+                      labelText={type.split("is")[1]}
                       placeholder="Food Type"
                       title="Food Type"
                       {...register(`type.${type as keyof FoodType}`)}

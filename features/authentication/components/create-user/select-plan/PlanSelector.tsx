@@ -126,7 +126,7 @@ const PlanSelector: FC<Props> = ({ handleContinue }) => {
   }, [setIsDisabled, values, watch]);
 
   return (
-    <Box customClass="max-w-4xl">
+    <Box id="tour-profile_plan-0" customClass="max-w-4xl">
       <form
         onSubmit={handleSubmit(onSubmit)}
         action=""
@@ -140,7 +140,10 @@ const PlanSelector: FC<Props> = ({ handleContinue }) => {
                 Select my Nutrition Plan
               </span>
             </div>
-            <div className="grid select-none grid-cols-fluid_xs items-start justify-start gap-2 sm:grid-cols-fluid_sm ">
+            <div
+              id="tour-profile_plan-1"
+              className="grid select-none grid-cols-fluid_xs items-start justify-start gap-2 sm:grid-cols-fluid_sm "
+            >
               {MEAL_PLANS.map((opt) => (
                 <button
                   onClick={handleSelect}

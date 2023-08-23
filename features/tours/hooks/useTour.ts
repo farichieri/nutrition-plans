@@ -1,6 +1,7 @@
 import { postSeenTour } from "../services";
 import { Tours, User } from "@/features/authentication";
 import { useEffect } from "react";
+import { useRouter } from "next/router";
 import introJs from "intro.js";
 
 const useTour = ({
@@ -8,17 +9,21 @@ const useTour = ({
   user,
   steps,
   options = {},
+  pushWhenFinished = null,
 }: {
   name: keyof Tours;
   options?: any;
   steps: () => any[];
   user: User | null;
+  pushWhenFinished?: string | null;
 }) => {
+  const router = useRouter();
   useEffect(() => {
     if (!user) return;
 
     const unsubscribe = async () => {
-      let markedAsSeenInBrowser = window.localStorage.getItem(`tour.${name}`);
+      let tours = JSON.parse(window.localStorage.getItem("tours") || "{}");
+      let markedAsSeenInBrowser = tours[name as keyof Tours];
       let markedAsSeenInDB = user.tours?.[name as keyof Tours];
       let tour = introJs();
 
@@ -30,6 +35,13 @@ const useTour = ({
       // If the tour has been seen in the browser or in the DB, don't show it
       if (markedAsSeenInBrowser || markedAsSeenInDB) return;
 
+      const stepIsDisplayable = (step: any) => {
+        if (!step.hasOwnProperty("element")) {
+          return true;
+        }
+        return step.element && !!step.element?.getClientRects().length;
+      };
+
       const refreshTourSteps = () => {
         const timeout = setTimeout(() => {
           tour.setOptions({
@@ -40,13 +52,6 @@ const useTour = ({
         return () => clearTimeout(timeout);
       };
 
-      const stepIsDisplayable = (step: any) => {
-        if (!step.hasOwnProperty("element")) {
-          return true;
-        }
-        return step.element && !!step.element?.getClientRects().length;
-      };
-
       tour
         .setOptions({
           overlayOpacity: 0.4,
@@ -55,7 +60,7 @@ const useTour = ({
           skipLabel: "Skip",
           nextLabel: "Next",
           prevLabel: "Back",
-          doneLabel: "Finish!",
+          doneLabel: `${pushWhenFinished ? "Next" : "Finish!"}`,
           showBullets: false,
           showProgress: true,
           showStepNumbers: false,
@@ -65,11 +70,23 @@ const useTour = ({
         })
         .oncomplete(() => {
           window.removeEventListener("resize", () => refreshTourSteps());
-          window.localStorage.setItem(`tour.${name}`, "true");
+          const newTours = {
+            ...tours,
+            [name]: true,
+          };
+          window.localStorage.setItem("tours", JSON.stringify(newTours));
+          if (pushWhenFinished) {
+            // window.location.href = pushWhenFinished;
+            router.push(pushWhenFinished);
+          }
         })
         .onexit(async () => {
           window.removeEventListener("resize", () => refreshTourSteps());
-          window.localStorage.setItem(`tour.${name}`, "true");
+          const newTours = {
+            ...tours,
+            [name]: true,
+          };
+          window.localStorage.setItem("tours", JSON.stringify(newTours));
           // Save in DB
           await postSeenTour({ user, tour: name as keyof Tours });
         })

@@ -12,7 +12,7 @@ const UserMealsSettings: FC<Props> = ({ mealsSettings }) => {
   const noData = Object.keys(mealsSettings).length < 1;
 
   return (
-    <Box customClass="max-w-3xl">
+    <Box id="tour-profile_meals-3" customClass="max-w-3xl">
       <BoxMainContent customClass="flex-col gap-5">
         <div className="flex flex-wrap items-baseline">
           <span className="text-2xl font-semibold">My Templates:</span>
@@ -36,10 +36,11 @@ const UserMealsSettings: FC<Props> = ({ mealsSettings }) => {
       </BoxMainContent>
       <BoxBottomBar>
         <Link
+          id="tour-profile_meals-4"
           href={"/app/profile/meals/create"}
           className="ml-auto w-fit rounded-md border border-green-500 bg-green-500 px-3 py-1.5 duration-100 hover:bg-green-600 active:shadow-[0_0_10px_gray]"
         >
-          Create meal setting
+          Create meal template
         </Link>
       </BoxBottomBar>
     </Box>

@@ -75,8 +75,7 @@ const WebPages: FC<Props> = () => {
       icon: <RiSearchLine className="h-6 w-6 text-green-500" />,
     },
     {
-      id: "",
-
+      id: "tour-progress-0",
       name: "Progress",
       url: "/app/progress",
       pathname: ["/app/progress"],
@@ -84,15 +83,13 @@ const WebPages: FC<Props> = () => {
     },
     {
       id: "",
-
       name: "Groceries",
       url: "/app/shopping/today",
       pathname: ["/app/shopping/[date]", "/app/cupboard"],
       icon: <MdLocalGroceryStore className="h-6 w-6 text-green-500" />,
     },
     {
-      id: "",
-
+      id: "tour-library-0",
       name: "Library",
       url: "/app/library/favorites",
       pathname: [
@@ -170,6 +167,7 @@ const WebPages: FC<Props> = () => {
 
         <div className="flex flex-col  py-1">
           <Link
+            id="tour-profile-0"
             href={"/app/profile"}
             onClick={handleSidebar}
             className={

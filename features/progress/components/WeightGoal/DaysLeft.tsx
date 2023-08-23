@@ -33,7 +33,10 @@ const DaysLeft: FC<Props> = () => {
   };
 
   return (
-    <div className="flex flex-col rounded-md border border-blue-500 bg-blue-400/30 px-10 py-4">
+    <div
+      id="tour-progress-4"
+      className="flex flex-col rounded-md border border-blue-500 bg-blue-400/30 px-10 py-4"
+    >
       <div className="flex items-center gap-1">
         <span>Your Goal:</span>
         <span className="font-semibold capitalize text-green-500">

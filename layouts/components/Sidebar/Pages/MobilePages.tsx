@@ -31,7 +31,7 @@ const MobilePages: FC<Props> = () => {
       icon: <RiSearchLine className="h-5 w-5 " />,
     },
     {
-      id: "",
+      id: "tour-progress-0",
       name: "Progress",
       url: "/app/progress",
       pathname: ["/app/progress"],
@@ -45,7 +45,7 @@ const MobilePages: FC<Props> = () => {
       icon: <MdLocalGroceryStore className="h-5 w-5 " />,
     },
     {
-      id: "",
+      id: "tour-profile-0",
       name: "Profile",
       url: "/app/profile",
       pathname: [

@@ -36,8 +36,8 @@ const FoodsSearched: FC<Props> = ({ queries }) => {
     <div className="custom-grid grid w-full max-w-screen-2xl select-none flex-col items-start justify-center gap-2 px-0 sm:px-0">
       {foods.map((food: Food, index) => {
         return (
-          <div id={index === 0 ? "tour-search-5" : ""}>
-            <FoodCard food={food} key={food.id} />
+          <div key={food.id} id={index === 0 ? "tour-search-5" : ""}>
+            <FoodCard food={food} />
           </div>
         );
       })}

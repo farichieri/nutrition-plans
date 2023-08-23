@@ -150,7 +150,7 @@ const AddProgress: FC<Props> = () => {
           />
         </form>
       ) : (
-        <div>
+        <div id="tour-progress-2">
           <ActionButton
             loadMessage="Adding..."
             content="Add Progress"

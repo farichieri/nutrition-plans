@@ -116,7 +116,7 @@ export default function Page() {
     <MealsLayout>
       <Modal onClose={onClose}>
         <div className="flex w-xs max-w-[95vw] flex-col gap-5 px-4 py-8 sm:w-md sm:px-10">
-          <span className="text-2xl font-semibold">Create Meal Setting</span>
+          <span className="text-2xl font-semibold">Create Meal Template</span>
           <form
             className="mb-4 mt-4 flex h-full w-full flex-col gap-2"
             onSubmit={handleSubmit}

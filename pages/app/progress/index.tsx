@@ -56,7 +56,7 @@ export default function Page() {
       {
         title: "You can do it!",
         intro:
-          "Day to day you will reach your goal! Remember to be constant reaching your nutrient targets and you will see the results in your weight, the mirror and your energy!",
+          "Day to day you will reach your goal! Remember to be constant respecting your nutrient targets and you will see the results in your weight, your energy and in the mirror!",
         position: "right",
       },
     ],
