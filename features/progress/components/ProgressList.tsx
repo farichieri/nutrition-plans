@@ -75,7 +75,10 @@ const ProgressList: FC<Props> = () => {
   return (
     <>
       {progressOpen && <ProgressItemModal progressItem={progressOpen} />}
-      <div className="flex w-full max-w-5xl flex-col items-center justify-center divide-y rounded-md border border-y bg-white/50 p-5 shadow dark:bg-black/50">
+      <div
+        id="tour-progress-1"
+        className="flex w-full max-w-5xl flex-col items-center justify-center divide-y rounded-md border border-y bg-white/50 p-5 shadow dark:bg-black/50"
+      >
         <div className="flex w-full justify-between rounded-sm px-2 py-2">
           <span>Date</span>
           <span>Weight</span>

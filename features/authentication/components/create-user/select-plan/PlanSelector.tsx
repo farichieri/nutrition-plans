@@ -1,11 +1,11 @@
 import {
-  User,
   getNutritionTargets,
   selectAuthSlice,
   setUpdateUser,
   updateUser,
 } from "@/features/authentication";
 import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
+import { calculateKCALSRecommended } from "@/features/authentication/utils/calculateBodyData";
 import { FC, useEffect, useState } from "react";
 import { MdRestaurant, MdVerified } from "react-icons/md";
 import { MEAL_PLANS } from "@/data/content";
@@ -20,7 +20,6 @@ import BlurImage from "@/components/blur-image";
 import FormError from "@/components/Errors/FormError";
 import InfoMessage from "@/components/Layout/InfoMessage";
 import SubmitButton from "@/components/Buttons/SubmitButton";
-import { calculateKCALSRecommended } from "@/features/authentication/utils/calculateBodyData";
 
 interface FormValues {
   planSelected: PlansEnum | null;
@@ -127,7 +126,7 @@ const PlanSelector: FC<Props> = ({ handleContinue }) => {
   }, [setIsDisabled, values, watch]);
 
   return (
-    <Box customClass="max-w-4xl">
+    <Box id="tour-profile_plan-0" customClass="max-w-4xl">
       <form
         onSubmit={handleSubmit(onSubmit)}
         action=""
@@ -141,7 +140,10 @@ const PlanSelector: FC<Props> = ({ handleContinue }) => {
                 Select my Nutrition Plan
               </span>
             </div>
-            <div className="grid select-none grid-cols-fluid_xs items-start justify-start gap-2 sm:grid-cols-fluid_sm ">
+            <div
+              id="tour-profile_plan-1"
+              className="grid select-none grid-cols-fluid_xs items-start justify-start gap-2 sm:grid-cols-fluid_sm "
+            >
               {MEAL_PLANS.map((opt) => (
                 <button
                   onClick={handleSelect}

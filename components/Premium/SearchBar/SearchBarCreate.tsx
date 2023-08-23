@@ -75,7 +75,8 @@ const SearchBarCreate: FC<Props> = ({ onFocus, preFetch }) => {
     setIsFocused(true);
   };
 
-  const handleFavorites = async () => {
+  const handleFavorites = async (event: React.MouseEvent) => {
+    event.preventDefault();
     if (!user) return;
     try {
       if (!isFavorites) {

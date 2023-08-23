@@ -19,9 +19,10 @@ interface Props {
   dietMeal: DietMeal;
   mealKcals: number;
   isEditing: boolean;
+  tourId: string;
 }
 
-const MealCard: FC<Props> = ({ dietMeal, mealKcals, isEditing }) => {
+const MealCard: FC<Props> = ({ tourId, dietMeal, mealKcals, isEditing }) => {
   const dispatch = useDispatch();
   const { diets } = useSelector(selectPlansSlice);
   const dietMealFoodsArr: FoodGroupArray = Object.values(dietMeal.foods).sort(
@@ -76,7 +77,9 @@ const MealCard: FC<Props> = ({ dietMeal, mealKcals, isEditing }) => {
           <span className="ml-auto px-2 text-xs opacity-50">
             {mealKcals} calories
           </span>
-          <MealMoreDropdown diet={diet} mealID={dietMeal.id} />
+          <div id={tourId}>
+            <MealMoreDropdown diet={diet} mealID={dietMeal.id} />
+          </div>
           {!isEditing && (
             <div className="flex items-center">
               <CheckButton onClick={setAllEaten} checked={allEaten} />

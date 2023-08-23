@@ -29,6 +29,7 @@ export enum PlansEnum {
   mediterranean = "mediterranean",
   vegetarian = "vegetarian",
   low_carb = "low_carb",
+  keto = "keto",
 }
 export enum FiltersEnum {
   Q = "q",

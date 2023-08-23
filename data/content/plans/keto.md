@@ -1,13 +1,13 @@
 ---
 title: "Keto"
-isAvailable: false
+isAvailable: true
+image: ""
 date: "2023-07-30"
+author: "aldana-richieri"
+authorName: "Aldana Richieri"
+premium: false
+summary: "Keto Plan"
+topic: "Keto"
 ---
 
-Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsum praesentium architecto blanditiis laudantium. Voluptates ipsa sint earum dolores necessitatibus. Delectus, numquam at odit quia eum obcaecati est! Placeat, officia. Magni?
-
-Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsum praesentium architecto blanditiis laudantium. Voluptates ipsa sint earum dolores necessitatibus. Delectus, numquam at odit quia eum obcaecati est! Placeat, officia. Magni?
-
-Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsum praesentium architecto blanditiis laudantium. Voluptates ipsa sint earum dolores necessitatibus. Delectus, numquam at odit quia eum obcaecati est! Placeat, officia. Magni?
-
-Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsum praesentium architecto blanditiis laudantium. Voluptates ipsa sint earum dolores necessitatibus. Delectus, numquam at odit quia eum obcaecati est! Placeat, officia. Magni?
+Plan under construction.

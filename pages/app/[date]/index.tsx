@@ -12,12 +12,13 @@ import { selectPlansSlice, updateDietNutrition } from "@/features/plans/slice";
 import { StartsOfWeek } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import { useTour } from "@/features/tours";
 import { useWindowWidth } from "@/hooks";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "@/layouts/components/Nav/PremiumNav";
+import RememberGoal from "@/components/Goals/RememberGoal";
 import Sidebar from "@/layouts/components/Sidebar/PremiumSidebar";
 import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
-import RememberGoal from "@/components/Goals/RememberGoal";
 
 interface Props {
   date: string;
@@ -43,6 +44,44 @@ export default function Page({ date }: { date: Props }) {
       }
     }
   }, [dispatch, diet?.meals]);
+
+  useTour({
+    name: "welcome",
+    user: user,
+    steps: () => [
+      {
+        element: document.querySelector("#tour-welcome-0"),
+        title: "Planner Section",
+        intro: "Let's have a quick tour in the Planner section!",
+        position: "right",
+      },
+      {
+        element: document.querySelector("#tour-welcome-1"),
+        title: "Generate Day Plan!",
+        intro:
+          "Here you can generate your meal plan for the day: Manually, Automatically, or Load a Saved One.",
+        position: "right",
+      },
+      {
+        element: document.querySelector("#tour-welcome-2"),
+        title: "Change View Layout",
+        intro:
+          "Here you can select between Day, Week or a Range of Days. You can also change the start of the week in your settings.",
+        position: "right",
+      },
+      {
+        element: document.querySelector("#tour-welcome-3"),
+        title: "Change Day(s) you see",
+        intro: "Here you can go back and forward in time",
+        position: "left",
+      },
+      {
+        title: "Generate your first Plan!",
+        intro: "Click on manually once the tour is finished!",
+        position: "right",
+      },
+    ],
+  });
 
   return (
     <PremiumLayout>

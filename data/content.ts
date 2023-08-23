@@ -120,6 +120,24 @@ export const MEAL_PLANS = [
       },
     },
   },
+  {
+    name: "Keto",
+    id: "keto",
+    macros: {
+      carbs: {
+        min: 5,
+        max: 10,
+      },
+      proteins: {
+        min: 15,
+        max: 25,
+      },
+      fats: {
+        min: 60,
+        max: 75,
+      },
+    },
+  },
 ];
 
 export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [

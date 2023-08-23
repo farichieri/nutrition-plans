@@ -25,7 +25,7 @@ const UserMealsC: FC<Props> = ({ meals }) => {
   };
 
   return (
-    <Box customClass="max-w-3xl">
+    <Box id="tour-profile_meals-1" customClass="max-w-3xl w-full">
       <BoxMainContent customClass="flex-col gap-5">
         {confirmDelete && (
           <ConfirmDeleteMeal
@@ -58,6 +58,7 @@ const UserMealsC: FC<Props> = ({ meals }) => {
           content="Add Meal"
           isLoading={false}
           isDisabled={false}
+          id="tour-profile_meals-2"
         />
       </BoxBottomBar>
     </Box>

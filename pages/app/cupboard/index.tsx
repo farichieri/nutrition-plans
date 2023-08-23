@@ -25,8 +25,10 @@ export default function Page(): Props {
         <ShoppingNav />
       </PremiumNav>
       <PremiumSidebar />
-
-      <section className=" flex w-full flex-col gap-2 p-2 pb-20 sm:px-4">
+      <div className="text-semibold absolute left-1/2 top-1/2 -translate-x-1/2 rounded-xl bg-tertiary-color p-10 text-xl text-green-500">
+        Coming soon!
+      </div>
+      <section className="flex w-full flex-col gap-2 p-2 pb-20 blur-md sm:px-4">
         {isAddingFood && <AddFoodModalCupboard />}
         <span className="font-semibold ">Products that I have</span>
         <CupboardDistributor />

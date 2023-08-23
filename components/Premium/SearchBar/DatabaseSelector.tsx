@@ -28,7 +28,7 @@ const DatabaseSelector: FC<Props> = ({ queries }) => {
   };
 
   return (
-    <div className="flex gap-10 px-2 sm:px-0">
+    <div id="tour-search-3" className="flex gap-10 px-2 sm:px-0">
       <div className="flex w-full items-center justify-start gap-5 sm:gap-10">
         <Options>
           <Option

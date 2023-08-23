@@ -131,7 +131,7 @@ const Graphic: FC<Props> = () => {
   };
 
   return (
-    <div className="flex h-96 w-full overflow-hidden">
+    <div id="tour-progress-3" className="flex h-96 w-full overflow-hidden">
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart
           width={500}

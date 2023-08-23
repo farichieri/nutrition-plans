@@ -8,7 +8,7 @@ export default function Footer() {
       <div className="flex h-full w-full flex-col  items-center justify-center gap-4 px-9 py-14 ">
         <span className=" flex text-2xl font-bold ">Nutrition Plans</span>
         <div className="flex flex-col text-center text-sm">
-          <span className="opacity-50">© 2023 Nutrition Plans Inc.</span>
+          <span className="opacity-50">© 2023 Nutrition Plans LLC.</span>
         </div>
         <div className="text-xs sm:text-sm">
           <span className="opacity-50">Need help? Email </span>

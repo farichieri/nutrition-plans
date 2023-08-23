@@ -15,12 +15,15 @@ import { AddFoodToLibrary } from "@/features/library";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { PremiumSidebar } from "@/layouts";
 import { useRouter } from "next/router";
+import { useWindowWidth } from "@/hooks";
 import BackButton from "@/components/Buttons/BackButton";
 import BlurImage from "@/components/blur-image";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
-import { useWindowWidth } from "@/hooks";
+import { useSelector } from "react-redux";
+import { selectAuthSlice } from "@/features/authentication";
+import { useTour } from "@/features/tours";
 
 export default function Page({ food }: { food: Food }) {
   const router = useRouter();
@@ -29,6 +32,54 @@ export default function Page({ food }: { food: Food }) {
   const defaultScale = food && getDefaultScale(food.scales);
   const windowWidth = useWindowWidth();
   const isMobile = windowWidth < 768;
+
+  const { user } = useSelector(selectAuthSlice);
+
+  useTour({
+    name: "food",
+    user: user,
+    steps: () => [
+      {
+        title: "Food Details",
+        intro:
+          "In this section you will see the details of the food you have selected.",
+      },
+      {
+        element: document.querySelector("#tour-food-0"),
+        title: "Plans Compatibility",
+        intro: "Here you can see the plans that are compatible with this food",
+        position: "right",
+      },
+      {
+        element: document.querySelector("#tour-food-1"),
+        title: "Amount and Scale",
+        intro:
+          "Here you can select the amount and the scale of the food you want to see the nutrition facts.",
+        position: "bottom",
+      },
+      {
+        element: document.querySelector("#tour-food-2"),
+        title: "Nutrition facts",
+        intro:
+          "Here you can see the nutrition facts of the food you have selected!",
+        position: "left",
+      },
+      {
+        element: document.querySelector("#tour-food-3"),
+        title: "Add to Favorites",
+        intro:
+          "Here you can add the food to your library! So you can find it easily!",
+        position: "right",
+      },
+      {
+        element: document.querySelector("#tour-food-4"),
+        title: "Like and Dislike",
+        intro:
+          "Here you can like or dislike the food! So we can improve our food database and also know what you like and what you don't!",
+        position: "right",
+      },
+    ],
+  });
 
   if (!food || food?.id !== id || !defaultScale) {
     return (
@@ -112,7 +163,7 @@ export default function Page({ food }: { food: Food }) {
                 />
               </div>
             </div>
-            <div className="flex w-full ">
+            <div id="tour-food-2" className="flex w-full">
               <FoodNutrition
                 food={food}
                 amount={Number(amount || defaultScale.scaleAmount)}

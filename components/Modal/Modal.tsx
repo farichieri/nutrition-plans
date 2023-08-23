@@ -27,7 +27,7 @@ const Modal = ({
       }`}
     >
       <div
-        className={`min-w-screen fixed inset-0 z-[90] m-0 flex items-center justify-center bg-black/60 dark:bg-black/40 ${
+        className={`min-w-screen fixed inset-0 z-[90] m-0 flex items-center justify-center bg-black/30 dark:bg-black/40 ${
           isFullScreen ? "min-h-screen" : ""
         }`}
         onClick={handleCloseModal}

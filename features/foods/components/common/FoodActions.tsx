@@ -106,7 +106,7 @@ const FoodActions: FC<Props> = ({ foodID }) => {
   };
 
   return (
-    <div className="flex justify-center gap-2">
+    <div id="tour-food-4" className="mx-auto flex w-fit justify-center gap-0">
       <button
         onClick={handleRating}
         id="likes"

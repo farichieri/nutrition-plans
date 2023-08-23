@@ -88,7 +88,7 @@ const Plan: FC<Props> = ({ date, setPlanBeingEdited }) => {
         </div>
       )}
       {diet && <DayNote diet={diet} isEditing={isEditing} />}
-      <div className="flex h-full min-h-[15rem] w-full flex-col">
+      <div className="flex h-full min-h-[10rem] w-full flex-col">
         {isLoadingDiet ? (
           <Spinner customClass="h-10 w-10 m-auto !stroke-green-500" />
         ) : (

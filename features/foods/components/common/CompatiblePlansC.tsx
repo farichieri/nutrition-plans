@@ -12,7 +12,10 @@ const CompatiblePlansC: FC<Props> = ({ compatiblePlans }) => {
   }
   const isPlan = (plan: string) => compatiblePlans[plan] === true;
   return (
-    <div className="flex w-full flex-col gap-1 divide-y border-y">
+    <div
+      id="tour-food-0"
+      className="flex w-full flex-col gap-1 divide-y border-y"
+    >
       {Object.keys(PlansEnum).map((plan) => (
         <div
           key={plan}

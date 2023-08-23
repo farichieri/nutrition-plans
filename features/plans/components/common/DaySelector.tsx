@@ -159,7 +159,7 @@ const DaySelector: FC<Props> = ({ date, baseURL }) => {
 
   return (
     <div className="m-auto flex w-full items-center justify-between px-1">
-      <div className="flex items-center gap-2 sm:gap-10 ">
+      <div id="tour-welcome-2" className="flex items-center gap-2 sm:gap-10 ">
         <Options>
           <Option position="left" selected={isDay} isLink href={todayRoute}>
             Day
@@ -185,7 +185,10 @@ const DaySelector: FC<Props> = ({ date, baseURL }) => {
           </Option>
         </Options>
       </div>
-      <div className="ml-2 flex flex-col items-center justify-center">
+      <div
+        id="tour-welcome-3"
+        className="ml-2 flex flex-col items-center justify-center"
+      >
         {(isDay || isWeek) && (
           <div className="flex w-full max-w-sm items-center justify-center xs:gap-2 lg:w-auto">
             <Link href={backRoute()}>

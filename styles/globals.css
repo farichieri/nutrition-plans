@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "intro.js/introjs.css";
 
 @layer components {
   .app-bg-dark {
@@ -226,4 +227,40 @@ th {
     scrollbar-width: none; /* Firefox */
     -webkit-appearance: none;
   }
+}
+
+.introjs-tooltip {
+  color: black;
+}
+
+.introjs-tooltip-header {
+  @apply flex items-center justify-between pl-4 pr-0;
+}
+
+.introjs-tooltip-title {
+  @apply flex-1;
+}
+
+.introjs-skipbutton {
+  @apply relative flex h-auto p-0 text-xs font-semibold uppercase leading-none tracking-wider;
+}
+
+.introjs-tooltiptext {
+  @apply px-4 py-2 text-gray-700;
+}
+
+.introjs-progress {
+  @apply bg-gray-200;
+}
+
+.introjs-progressbar {
+  @apply bg-green-500;
+}
+
+.introjs-tooltipbuttons {
+  @apply border-none;
+}
+
+.introjs-button {
+  @apply inline-flex items-center justify-center rounded-md border px-4 py-2 text-sm font-medium leading-5 shadow-sm outline-none transition duration-150 ease-in-out;
 }

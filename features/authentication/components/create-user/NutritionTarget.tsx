@@ -30,7 +30,7 @@ const NutritionTarget: FC<Props> = ({ planSelected }) => {
   const waterUnit = getWaterUnit({ from: measurementUnit });
 
   return (
-    <div className="flex flex-col gap-1">
+    <div id="tour-profile_nutrition_values-2" className="flex flex-col gap-1">
       <span className="text-xl font-semibold">
         Macronutrients distribution in your{" "}
         <span className="text-xl font-bold text-green-500">
@@ -39,7 +39,10 @@ const NutritionTarget: FC<Props> = ({ planSelected }) => {
         plan:
       </span>
       <div className="max-w-md divide-y px-2 xs:text-[10px] s:text-xs sm:text-base">
-        <div className="flex items-center justify-between  py-2 font-semibold text-[var(--carbs-color)]">
+        <div
+          id="tour-profile_nutrition_values-3"
+          className="flex items-center justify-between  py-2 font-semibold text-[var(--carbs-color)]"
+        >
           <span>Carbohydrates:</span>
           <div className="flex gap-4 sm:gap-10">
             <div className="flex gap-1">
@@ -79,7 +82,7 @@ const NutritionTarget: FC<Props> = ({ planSelected }) => {
           </div>
         </div>
         <div className="w-full py-2">
-          <span>
+          <span id="tour-profile_nutrition_values-4">
             We recommend you to drink{" "}
             <b className="text-blue-300">
               {water} {waterUnit}

@@ -11,6 +11,7 @@ const SubmitButton = ({
   onClick,
   onSubmit,
   type,
+  ...props
 }: {
   className: string;
   content: string;
@@ -21,9 +22,11 @@ const SubmitButton = ({
   onClick?: MouseEventHandler;
   onSubmit?: React.FormEventHandler;
   type?: "button" | "submit" | "reset" | undefined;
+  [x: string]: any;
 }) => {
   return (
     <button
+      {...props}
       className={`flex min-w-[4rem] select-none items-center justify-center rounded-md border px-4 duration-100  ${className} ${
         isDisabled
           ? "cursor-not-allowed border bg-transparent opacity-70"

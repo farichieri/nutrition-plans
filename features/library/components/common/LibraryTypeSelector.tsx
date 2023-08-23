@@ -1,6 +1,5 @@
 import { AppRoutes } from "@/utils";
 import { FC } from "react";
-import { MdFavorite } from "react-icons/md";
 import { Option, Options } from "@/components";
 import { useRouter } from "next/router";
 
@@ -17,16 +16,19 @@ const LibraryTypeSelector: FC<Props> = () => {
       label: "Fav Foods",
       route: favoritesRoute,
       icon: "",
+      id: "tour-library-1",
     },
     {
       label: "Saved Meals",
       route: mealsRoute,
       icon: "",
+      id: "tour-library-2",
     },
     {
       label: "Saved Days",
       route: daysRoute,
       icon: "",
+      id: "tour-library-3",
     },
   ];
 
@@ -36,6 +38,7 @@ const LibraryTypeSelector: FC<Props> = () => {
         <Options>
           {OPTIONS.map((option, index) => (
             <Option
+              id={option.id}
               key={index}
               position={index === 0 ? "left" : index === 1 ? "middle" : "right"}
               selected={router.route === option.route}

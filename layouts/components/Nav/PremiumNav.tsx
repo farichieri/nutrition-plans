@@ -71,7 +71,7 @@ const PremiumNav: FC<Props> = ({
         <div className="flex w-fit min-w-fit items-center justify-end gap-2  pr-4 text-xs sm:gap-4 sm:pr-8 sm:text-xl xl:pr-10">
           {(windowWidth > 1024 || !simplified) && (
             <>
-              <Link href="/app/library/favorites">
+              <Link id="tour-library-4" href="/app/library/favorites">
                 <span
                   className={`flex items-center justify-center text-sm outline-none duration-300 hover:opacity-100 `}
                 >
