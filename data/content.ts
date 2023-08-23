@@ -2,14 +2,48 @@ import { SubscriptionPlan } from "@/types";
 
 export const FAQS_INDEX = [
   {
+    title: "What is Nutrition Plans?",
+    answer:
+      "Nutrition Plans is a tool that helps you to create your own meal plans based on your goals and preferences. You can choose from a variety of plans and customize them to your needs.",
+  },
+  {
+    title: "Who is Nutrition Plans for?",
+    answer:
+      "Nutrition Plans is for anyone who wants to eat healthier and achieve their goals. Whether you want to lose weight, gain muscle or just eat healthier.",
+  },
+  {
+    title: "How can Nutrition Plans help me to achieve my goals?",
+    answer:
+      "Nutrition Plans helps you to create personalized meal plans based on your goals and Plan selected. It tracks the exactly amount of calories and macronutrients based on what you eat and it guides you to reach the nutrients you need every day to achieve your goals. It also helps you to track your progress and to stay motivated.",
+  },
+  {
     title: "What plans are available in Nutrition Plans?",
     answer:
-      "The plans available at this moment are: Vegetarian, Mediterranean, Low Carb, Gluten Free and Balanced.",
+      "The plans available at this moment are: Vegetarian, Mediterranean, Keto, Low Carb, Gluten Free and Balanced.",
+  },
+  {
+    title: "How does it work?",
+    answer:
+      "You configure your profile, goals and preferences. Then you generate your meal plan for the day (or days ahead). And you check the foods you eat during the day. It's that simple!. The platform will show you if you are on track to reach your goals and it will help you to adjust your plan if needed.",
   },
   {
     title: "Are you going to add more plans in the future?",
+    answer: "Yes, we are planning to add Paleo, protein, vegan and more plans.",
+  },
+  {
+    title: "What if I don't like the foods in my Day?",
     answer:
-      "Yes, we are planning to add Paleo, Keto, protein, vegan and more plans.",
+      "You can customize your removing foods you don't like. Or you can Add the foods very easily. You can also change the quantities of every food. You can do all of this and more in the Plan Editor.",
+  },
+  {
+    title: "What if I don't find a food in the database?",
+    answer:
+      "You can create your own foods and recipes and add its nutrients and use it freely in your plans. Then it will be available for all users after the approval of our team.",
+  },
+  {
+    title: "Are all Plans included?",
+    answer:
+      "Yes, all plans are included. It means that you can create a different plan every day if you want. (eg: Monday: Keto, Tuesday: Low Carb, Wednesday: Vegetarian, etc.)",
   },
 ];
 

@@ -12,13 +12,13 @@ const Goals: FC<Props> = () => {
 
   return (
     <div className="flex w-full flex-col justify-center gap-5 py-24 text-center">
-      <span className="text-4xl font-bold">Choose your goal</span>
+      <span className="text-4xl font-bold">Choose your Goal</span>
       <div className="flex w-full justify-center gap-1 xs:gap-2 sm:gap-10">
         {GOALS_OPTIONS.map((goal) => (
           <Link
             key={goal.name}
             href={goal.link}
-            className="min-w-fit rounded-3xl border border-transparent bg-green-500 px-3 py-1 text-xs font-semibold text-white shadow-inner duration-100 hover:border-green-600 xs:text-sm sm:text-base"
+            className="min-w-fit rounded-md border border-transparent bg-green-500 px-3 py-2 text-xs font-semibold text-white shadow-inner duration-100 hover:border-green-600 hover:bg-green-600 xs:text-sm sm:text-2xl"
           >
             {goal.name}
           </Link>

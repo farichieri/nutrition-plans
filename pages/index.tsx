@@ -25,8 +25,8 @@ export default function Home({ plans }: Props) {
           </h1>
           <div className="flex flex-col">
             <span className="w-xxs text-base font-semibold opacity-50 md:text-lg">
-              Choose your nutrition goal, <br /> Adapt your diet, <br /> Follow
-              your progress
+              Choose your Goal, <br /> Adapt your Diet, <br /> Follow your
+              Progress
             </span>
           </div>
         </div>
@@ -49,19 +49,49 @@ export default function Home({ plans }: Props) {
           </span>
         </Reveal>
       </div>
-      <Reveal>
-        <Goals />
-      </Reveal>
-      <Reveal>
-        <>
-          <span className="text-4xl font-bold">Plans Available</span>
-          <Plans plans={plans} />
-        </>
-      </Reveal>
-      <Reveal>
-        <FAQS content={FAQS_INDEX} />
-      </Reveal>
-      <CallToAction />
+      <div className="my-24">
+        <Reveal>
+          <Goals />
+        </Reveal>
+      </div>
+      <div className="my-24">
+        <Reveal>
+          <>
+            <span className="mx-auto flex w-fit text-4xl font-bold">
+              Plans Available
+            </span>
+            <Plans plans={plans} />
+          </>
+        </Reveal>
+      </div>
+      <div className="my-24 w-full">
+        <Reveal width="w-full">
+          <div className="flex flex-col gap-5">
+            <span className="mx-auto flex w-fit text-4xl font-bold">
+              Follow your Progress
+            </span>
+            <span className="relative flex h-full w-full overflow-hidden rounded-xl border duration-300">
+              <BlurImage
+                image={{
+                  imageURL: "/images/general/landing-progress.png",
+                  title: "Progress",
+                  id: "Progress",
+                }}
+                customClass="!object-fill"
+                customContainerClass="!aspect-h-4 !aspect-w-8"
+              />
+            </span>
+          </div>
+        </Reveal>
+      </div>
+      <div className="my-24 flex w-full items-center justify-center">
+        <Reveal>
+          <FAQS content={FAQS_INDEX} />
+        </Reveal>
+      </div>
+      <div className="my-24 flex w-full items-center justify-center">
+        <CallToAction />
+      </div>
     </LandingLayout>
   );
 }
