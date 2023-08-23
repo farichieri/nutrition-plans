@@ -24,7 +24,9 @@ export default function Pricing() {
         <div className="mt-6">
           <DonateText />
         </div>
-        <FAQS content={FAQS_PRICING} />
+        <div className="my-24 flex w-full items-center justify-center">
+          <FAQS content={FAQS_PRICING} />
+        </div>
       </section>
     </LandingLayout>
   );

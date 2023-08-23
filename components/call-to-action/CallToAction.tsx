@@ -13,7 +13,7 @@ const CallToAction = () => {
         </span>
         <div className="my-2 h-10">
           <Link href="/signup">
-            <PrimaryButton onClick={() => {}} content="Sign up for free" />
+            <PrimaryButton onClick={() => {}} content="Try it for free" />
           </Link>
         </div>
       </div>
