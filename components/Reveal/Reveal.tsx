@@ -27,7 +27,7 @@ const Reveal: FC<Props> = ({ children, width }) => {
         }}
         initial="hidden"
         animate={mainControls}
-        transition={{ duration: 1 }}
+        transition={{ duration: 0.5 }}
       >
         {children}
       </motion.div>

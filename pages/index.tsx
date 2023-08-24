@@ -10,12 +10,17 @@ import LandingLayout from "@/layouts/LandingLayout";
 import Link from "next/link";
 import Plans from "@/components/Plans/Plans";
 import PrimaryButton from "@/components/Buttons/PrimaryButton";
+import { useEffect } from "react";
 
 interface Props {
   plans: PlansType;
 }
 
 export default function Home({ plans }: Props) {
+  useEffect(() => {
+    window.history.scrollRestoration = "manual";
+  }, []);
+
   return (
     <LandingLayout>
       <div className=" flex w-full flex-col items-center gap-10 py-10">
@@ -49,22 +54,18 @@ export default function Home({ plans }: Props) {
           </span>
         </Reveal>
       </div>
-      <div className="my-24">
-        <Reveal>
-          <Goals />
-        </Reveal>
+      <div className="my-20">
+        <Goals />
       </div>
-      <div className="my-24">
-        <Reveal>
-          <>
-            <span className="mx-auto flex w-fit text-4xl font-bold">
-              Plans Available
-            </span>
-            <Plans plans={plans} />
-          </>
-        </Reveal>
+      <div className="my-10">
+        <>
+          <span className="mx-auto flex w-fit text-4xl font-bold">
+            Plans Available
+          </span>
+          <Plans plans={plans} />
+        </>
       </div>
-      <div className="my-24 w-full">
+      <div className="my-10 w-full">
         <Reveal width="w-full">
           <div className="flex flex-col gap-5">
             <span className="mx-auto flex w-fit text-4xl font-bold">
@@ -84,12 +85,10 @@ export default function Home({ plans }: Props) {
           </div>
         </Reveal>
       </div>
-      <div className="my-24 flex w-full items-center justify-center">
-        <Reveal>
-          <FAQS content={FAQS_INDEX} />
-        </Reveal>
+      <div className="my-10 flex w-full items-center justify-center">
+        <FAQS content={FAQS_INDEX} />
       </div>
-      <div className="my-24 flex w-full items-center justify-center">
+      <div className="my-10 flex w-full items-center justify-center">
         <CallToAction />
       </div>
     </LandingLayout>

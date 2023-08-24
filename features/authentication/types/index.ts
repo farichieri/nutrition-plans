@@ -26,9 +26,10 @@ export interface User {
   ratings: Ratings;
   startOfWeek: StartsOfWeek;
   subscriptionState: SubscriptionState;
+  tours: Tours;
   weightGoal: WeightGoal;
   welcomeStep: UserStepsT;
-  tours: Tours;
+  notificationsArchived: string[];
 }
 
 export interface Tours {
@@ -218,6 +219,7 @@ export const newAccount: User = {
   subscriptionState: SubscriptionState.Free,
   weightGoal: initialWeightGoal,
   welcomeStep: UserSteps.step_1,
+  notificationsArchived: [],
   tours: {
     createFood: false,
     createRecipe: false,

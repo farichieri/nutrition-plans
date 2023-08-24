@@ -47,7 +47,7 @@ const DayPlan: FC<Props> = ({ date }) => {
   if (!user) return <></>;
 
   return (
-    <div className="relative m-auto h-full w-full rounded-lg p-2">
+    <div className="relative m-auto h-full w-full rounded-lg">
       {isGeneratingPlan ||
         (isLoadingDiet && (
           <div className="fixed inset-0 mt-auto flex h-screen w-screen justify-center">

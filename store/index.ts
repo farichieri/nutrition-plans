@@ -9,6 +9,7 @@ import foodsSlice from "@/features/foods/slice";
 import layoutSlice from "@/features/layout/slice";
 import librarySlice from "@/features/library/slice";
 import mealsSlice from "@/features/meals/slice";
+import notificationsSlice from "@/features/notifications/slice";
 import plansSlice from "@/features/plans/slice";
 import progressSlice from "@/features/progress/slice";
 import settingsSlice from "@/features/settings/slice";
@@ -44,6 +45,7 @@ const persistConfig = {
   version: 0,
   storage,
   whitelist: [
+    "notifications",
     "auth",
     "foods",
     "layout",
@@ -60,12 +62,13 @@ const rootReducer = combineReducers({
   auth: authSlice,
   foods: foodsSlice,
   layout: layoutSlice,
+  library: librarySlice,
   meals: mealsSlice,
+  notifications: notificationsSlice,
   plans: plansSlice,
   progress: progressSlice,
   settings: settingsSlice,
   shopping: shoppingSlice,
-  library: librarySlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

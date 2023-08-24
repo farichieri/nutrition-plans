@@ -1,5 +1,5 @@
+import { collection, getFirestore } from "firebase/firestore";
 import { getAnalytics, isSupported } from "firebase/analytics";
-import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import { GoogleAuthProvider, getAuth } from "firebase/auth";
 import { initializeApp } from "firebase/app";
@@ -23,3 +23,6 @@ export const storage = getStorage(app);
 export const analytics = isSupported().then((yes) =>
   yes ? getAnalytics(app) : null
 );
+
+// Collections
+export const notificationsCollection = collection(db, "notifications");
