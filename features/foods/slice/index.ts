@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Food, FoodGroup, Recipe } from "@/features/foods";
-import { NewFood } from "@/types/initial";
+import { NewFood } from "@/features/foods/types";
 import { PURGE } from "redux-persist";
 import { RootState } from "@/store";
 

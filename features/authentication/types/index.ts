@@ -3,7 +3,6 @@ import {
   NewsletterChoices,
   PlansEnum,
   StartsOfWeek,
-  SubscriptionState,
 } from "@/types";
 
 export interface User {
@@ -21,15 +20,16 @@ export interface User {
   lang: string;
   measurementUnit: MeasurementUnitsT;
   newsletter: NewsletterChoices;
+  notificationsArchived: string[];
   nutritionTargets: NutritionTargets;
   planSelected: PlansEnum | null;
   ratings: Ratings;
   startOfWeek: StartsOfWeek;
-  subscriptionState: SubscriptionState;
   tours: Tours;
   weightGoal: WeightGoal;
   welcomeStep: UserStepsT;
-  notificationsArchived: string[];
+  stripeId?: string;
+  stripeLink?: string;
 }
 
 export interface Tours {
@@ -216,7 +216,6 @@ export const newAccount: User = {
   planSelected: null,
   ratings: newRatings,
   startOfWeek: StartsOfWeek.Sunday,
-  subscriptionState: SubscriptionState.Free,
   weightGoal: initialWeightGoal,
   welcomeStep: UserSteps.step_1,
   notificationsArchived: [],

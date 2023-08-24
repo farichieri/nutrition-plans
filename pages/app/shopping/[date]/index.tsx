@@ -68,7 +68,7 @@ export default function Page({ date }: { date: Props }) {
         <ShoppingNav />
       </PremiumNav>
       <PremiumSidebar hideScrolling={isMobile} />
-      <div className="text-semibold absolute left-1/2 top-1/2 -translate-x-1/2 rounded-xl bg-tertiary-color p-10 text-xl text-green-500">
+      <div className="text-semibold absolute left-1/2 top-1/2 -translate-x-1/2 rounded-xl bg-tertiary-color p-10 text-sm text-green-500 sm:text-xl">
         Coming soon!
       </div>
       <div className="blur-md">

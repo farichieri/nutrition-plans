@@ -3,11 +3,6 @@ export enum Theme {
   Light = "light",
 }
 
-export enum SubscriptionState {
-  Free = "free",
-  Premium = "premium",
-}
-
 export const MeasurementUnits = {
   metric: "metric",
   imperial: "imperial",

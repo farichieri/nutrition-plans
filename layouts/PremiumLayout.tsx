@@ -2,12 +2,15 @@ import { AppRoutes } from "@/utils";
 import { Login, UserSteps } from "@/features/authentication";
 import { PremiumFooter } from "./components";
 import { selectAuthSlice } from "@/features/authentication/slice";
-import { selectLayoutSlice } from "@/features/layout/slice";
+import {
+  selectLayoutSlice,
+  setIsSubscribeModalOpen,
+} from "@/features/layout/slice";
 import { SubscribeModal } from "@/components";
 import { useEffect } from "react";
 import { useOnlineStatus, useWindowWidth } from "@/hooks";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ConnectionError from "@/components/Layout/ConnectionError";
 import Head from "next/head";
 import InstallModal from "@/components/InstallApp/InstallModal";
@@ -20,6 +23,7 @@ interface Props {
 
 export default function PremiumLayout({ children }: Props) {
   const router = useRouter();
+  const dispatch = useDispatch();
   const { sidebarOpen, isSubscribeModalOpen } = useSelector(selectLayoutSlice);
   const {
     user,
@@ -36,6 +40,9 @@ export default function PremiumLayout({ children }: Props) {
   useEffect(() => {
     if (isCreatingUser || (user && !isProfileCompleted)) {
       router.push(AppRoutes.create_user);
+    }
+    if (isSubscribeModalOpen && user?.isPremium) {
+      dispatch(setIsSubscribeModalOpen(false));
     }
   }, [user, isCreatingUser]);
 

@@ -23,8 +23,8 @@ const Notifications: FC<Props> = () => {
   const { user } = useSelector(selectAuthSlice);
   const [closeDrop, setCloseDrop] = useState(false);
   const [activeTab, setActiveTab] = useState<string>("inbox");
-  const notifications = useSelector(selectNotificationsSlice);
   const [idsLoading, setIdsLoading] = useState<string[]>([]);
+  const notifications = useSelector(selectNotificationsSlice);
 
   const TABS = [
     {
@@ -112,7 +112,7 @@ const Notifications: FC<Props> = () => {
               {Object.values(notifications.inbox).length}
             </span>
           )}
-          <MdOutlineNotifications className="h-5 w-5  text-gray-500" />
+          <MdOutlineNotifications className="h-6 w-6  text-gray-500" />
         </RoundButton>
       }
     >
@@ -147,14 +147,16 @@ const Notifications: FC<Props> = () => {
                 notifications[activeTab as "inbox" | "archived"]
               ).map((item, index) => (
                 <div
-                  className="flex items-center justify-between gap-1 border-b px-2 py-2"
+                  className="flex items-center justify-between gap-4 border-b px-3 py-2"
                   key={index}
                 >
-                  <div className="flex items-center">
-                    <div className="rounded-full bg-slate-500/10 p-2">
+                  <div className="flex w-2/12 items-center justify-center">
+                    <span className="rounded-full bg-slate-500/10 p-3">
                       <BsFillInboxFill className="h-4 w-4 text-gray-500" />
-                    </div>
-                    <div className="ml-2 flex flex-col">
+                    </span>
+                  </div>
+                  <div className="flex w-9/12 items-center">
+                    <div className="flex flex-col">
                       <span className="text-sm font-semibold text-green-500">
                         {item.title}
                       </span>
@@ -171,16 +173,17 @@ const Notifications: FC<Props> = () => {
                       )}
                     </div>
                   </div>
-                  <div className="flex items-center">
+                  <div className="flex w-2/12 items-center justify-center">
                     <button
                       className="flex items-center text-xs text-gray-500"
                       onClick={() => handleArchive(item.id)}
                     >
-                      {user?.notificationsArchived?.includes(item.id)
-                        ? "Unarchive"
-                        : "Archive"}
-                      {idsLoading.includes(item.id) && (
+                      {idsLoading.includes(item.id) ? (
                         <Spinner customClass="ml-1 h-4 w-4" />
+                      ) : user?.notificationsArchived?.includes(item.id) ? (
+                        "Unarchive"
+                      ) : (
+                        "Archive"
                       )}
                     </button>
                   </div>

@@ -23,7 +23,7 @@ import {
 } from "@/features/foods";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { generateOptions } from "@/utils";
-import { NewFood } from "@/types/initial";
+import { NewFood } from "@/features/foods";
 import { schema } from "./utils";
 import { selectAuthSlice } from "@/features/authentication/slice";
 import { toast } from "react-hot-toast";

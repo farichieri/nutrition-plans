@@ -52,10 +52,7 @@ const SubscribeModal: FC<Props> = () => {
             <span className="text-xl font-semibold sm:text-3xl">
               Level up. Go Premium
             </span>
-            <span>
-              {user?.subscriptionState === "free" &&
-                "Upgrade to get full access to all the features"}
-            </span>
+            <span>Upgrade to get full access to all the features</span>
           </div>
           <div className="m-auto flex w-full min-w-fit max-w-md flex-wrap items-center justify-center gap-3 sm:gap-4">
             {Object.values(PRICES).map((opt) => {

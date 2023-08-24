@@ -42,7 +42,6 @@ const buildDiet = (
     id: null,
     meals: dietMeals,
     name: null,
-    nameLowerCase: null,
     nutrients: nutrition,
     nutritionTargets: nutritionTargets,
     planID: plan_id,
