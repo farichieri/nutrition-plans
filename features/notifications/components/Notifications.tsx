@@ -1,30 +1,32 @@
 import {
-  selectNotificationsSlice,
-  setArchiveNotification,
-  setNotifications,
-  setUnarchiveNotification,
-} from "../slice";
-import { archiveNotification, unarchiveNotification } from "../utils";
+  useArchiveNotificationMutation,
+  useFetchNotificationsQuery,
+  useUnarchiveNotificationMutation,
+} from "../services";
 import { BsFillInboxFill } from "react-icons/bs";
-import { FC, useEffect, useState } from "react";
-import { fetchNotifications } from "../services";
+import { FC, useState } from "react";
+import { formatToShortDate } from "@/utils";
 import { MdOutlineNotifications } from "react-icons/md";
 import { RoundButton } from "@/components/Buttons";
-import { selectAuthSlice, setUpdateUser } from "@/features/authentication";
+import { selectAuthSlice } from "@/features/authentication";
+import { selectNotificationsSlice } from "../slice";
 import { toast } from "react-hot-toast";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import DropDown from "@/components/DropDown/DropDown";
 import Spinner from "@/components/Loader/Spinner";
 
 interface Props {}
 
 const Notifications: FC<Props> = () => {
-  const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
   const [closeDrop, setCloseDrop] = useState(false);
   const [activeTab, setActiveTab] = useState<string>("inbox");
   const [idsLoading, setIdsLoading] = useState<string[]>([]);
   const notifications = useSelector(selectNotificationsSlice);
+
+  const { isFetching, isLoading } = useFetchNotificationsQuery({ user });
+  const [archiveNotificationMutation] = useArchiveNotificationMutation();
+  const [unarchiveNotification] = useUnarchiveNotificationMutation();
 
   const TABS = [
     {
@@ -39,22 +41,6 @@ const Notifications: FC<Props> = () => {
     },
   ];
 
-  useEffect(() => {
-    if (user) {
-      const unsubscribe = async () => {
-        const res = await fetchNotifications({ user });
-        if (res.result === "success") {
-          const data = res.data;
-          const archivedIds = user.notificationsArchived;
-          if (archivedIds) {
-            dispatch(setNotifications({ notifications: data, archivedIds }));
-          }
-        }
-      };
-      unsubscribe();
-    }
-  }, []);
-
   const handleArchive = async (id: string) => {
     if (!user) return;
     if (idsLoading.length > 0) return;
@@ -63,35 +49,14 @@ const Notifications: FC<Props> = () => {
       const isArchived = user.notificationsArchived?.includes(id);
 
       if (!isArchived) {
-        const res = await archiveNotification({ notificationID: id, user });
-        if (res.result === "error") {
-          throw new Error("Error archiving notification");
-        }
-        dispatch(setArchiveNotification({ id }));
-        dispatch(
-          setUpdateUser({
-            user,
-            fields: {
-              notificationsArchived: [...user.notificationsArchived, id],
-            },
-          })
-        );
+        const res = await archiveNotificationMutation({
+          notificationID: id,
+          user,
+        });
+        if ("error" in res) throw new Error("Error archiving notification");
       } else {
         const res = await unarchiveNotification({ notificationID: id, user });
-        if (res.result === "error") {
-          throw new Error("Error unarchiving notification");
-        }
-        dispatch(setUnarchiveNotification({ id }));
-        dispatch(
-          setUpdateUser({
-            user,
-            fields: {
-              notificationsArchived: user.notificationsArchived.filter(
-                (item) => item !== id
-              ),
-            },
-          })
-        );
+        if ("error" in res) throw new Error("Error unarchiving notification");
       }
     } catch (error) {
       toast.error("Something went wrong");
@@ -116,7 +81,7 @@ const Notifications: FC<Props> = () => {
         </RoundButton>
       }
     >
-      <div className="w-64 s:w-80 sm:w-96">
+      <div className="w-64 overflow-hidden s:w-80 sm:w-96">
         <div className="flex items-center justify-between border-b ">
           {TABS.map((tab) => (
             <button
@@ -132,7 +97,7 @@ const Notifications: FC<Props> = () => {
             </button>
           ))}
         </div>
-        <div className="h-96 w-full">
+        <div className="h-96 w-full overflow-y-auto">
           {!Object.values(notifications[activeTab as "inbox" | "archived"])
             .length ? (
             <div className="flex h-full flex-col items-center justify-center">
@@ -145,50 +110,56 @@ const Notifications: FC<Props> = () => {
             <div className="h-full w-full">
               {Object.values(
                 notifications[activeTab as "inbox" | "archived"]
-              ).map((item, index) => (
-                <div
-                  className="flex items-center justify-between gap-4 border-b px-3 py-2"
-                  key={index}
-                >
-                  <div className="flex w-2/12 items-center justify-center">
-                    <span className="rounded-full bg-slate-500/10 p-3">
-                      <BsFillInboxFill className="h-4 w-4 text-gray-500" />
-                    </span>
-                  </div>
-                  <div className="flex w-9/12 items-center">
-                    <div className="flex flex-col">
-                      <span className="text-sm font-semibold text-green-500">
-                        {item.title}
+              ).map((item, index) => {
+                const dateCreated = formatToShortDate(item.dateCreated);
+                return (
+                  <div
+                    className="flex items-center justify-between gap-4 border-b px-3 py-2"
+                    key={index}
+                  >
+                    <div className="flex w-1/12 items-center justify-center">
+                      <span className="rounded-full bg-slate-500/10 p-3">
+                        <BsFillInboxFill className="h-4 w-4 text-gray-500" />
                       </span>
-                      <span className="text-xs">{item.body}</span>
-                      {item.url && (
-                        <span
-                          className="cursor-pointer text-xs text-blue-500"
-                          onClick={() =>
-                            window.open(item.url, "_blank", "noreferrer")
-                          }
-                        >
-                          View
+                    </div>
+                    <div className="flex w-9/12 items-center">
+                      <div className="flex flex-col gap-1">
+                        <span className="text-base font-semibold text-green-500">
+                          {item.title}
                         </span>
-                      )}
+                        <span className="text-sm">{item.body}</span>
+                        {item.url && (
+                          <span
+                            className="cursor-pointer text-xs text-blue-500"
+                            onClick={() =>
+                              window.open(item.url, "_blank", "noreferrer")
+                            }
+                          >
+                            View
+                          </span>
+                        )}
+                        <span className="mt-1 text-[10px] opacity-50">
+                          {dateCreated}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex w-2/12 items-center justify-center">
+                      <button
+                        className="flex items-center text-xs text-gray-500"
+                        onClick={() => handleArchive(item.id)}
+                      >
+                        {idsLoading.includes(item.id) ? (
+                          <Spinner customClass="ml-1 h-4 w-4" />
+                        ) : user?.notificationsArchived?.includes(item.id) ? (
+                          "Unarchive"
+                        ) : (
+                          "Archive"
+                        )}
+                      </button>
                     </div>
                   </div>
-                  <div className="flex w-2/12 items-center justify-center">
-                    <button
-                      className="flex items-center text-xs text-gray-500"
-                      onClick={() => handleArchive(item.id)}
-                    >
-                      {idsLoading.includes(item.id) ? (
-                        <Spinner customClass="ml-1 h-4 w-4" />
-                      ) : user?.notificationsArchived?.includes(item.id) ? (
-                        "Unarchive"
-                      ) : (
-                        "Archive"
-                      )}
-                    </button>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>

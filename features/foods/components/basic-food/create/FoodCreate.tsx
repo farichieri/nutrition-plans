@@ -103,7 +103,6 @@ const FoodCreate: FC<Props> = () => {
     if (res.result === "success") {
       dispatch(setNewFoodState(NewFood));
       setNewImageFile(undefined);
-      dispatch(addNewFood(res.data));
       router.push(`/app/food/${res.data.id}`);
       toast.success("Food created successfully");
     } else {
@@ -249,7 +248,7 @@ const FoodCreate: FC<Props> = () => {
                 <FormInput
                   error={errors.servingName?.message}
                   id={"servingName"}
-                  labelText="Scale Name (Customizable)"
+                  labelText="Default Scale Name"
                   placeholder="Scale Name"
                   title="Scale Name"
                   type="text"

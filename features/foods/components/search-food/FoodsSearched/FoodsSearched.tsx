@@ -1,7 +1,12 @@
 import { AppRoutes } from "@/utils/routes";
 import { FC } from "react";
 import { FilterQueries } from "@/types";
-import { Food, getFoodsSorted, selectFoodsSlice } from "@/features/foods";
+import {
+  Food,
+  FoodHit,
+  getFoodsSorted,
+  selectFoodsSlice,
+} from "@/features/foods";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import FoodCard from "./FoodCard";
@@ -34,7 +39,7 @@ const FoodsSearched: FC<Props> = ({ queries }) => {
 
   return (
     <div className="custom-grid grid w-full max-w-screen-2xl select-none flex-col items-start justify-center gap-2 px-0 sm:px-0">
-      {foods.map((food: Food, index) => {
+      {foods.map((food: FoodHit, index) => {
         return (
           <div key={food.id} id={index === 0 ? "tour-search-5" : ""}>
             <FoodCard food={food} />

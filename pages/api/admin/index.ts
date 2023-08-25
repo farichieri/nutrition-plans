@@ -1,5 +1,5 @@
 import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
-import { db } from "@/services/firebase/firebase.config";
+import { db } from "@/services/firebase";
 import { Food } from "@/features/foods";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getScalesWithPrimaryScales } from "@/features/foods/utils/scalesUtils";

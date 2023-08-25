@@ -26,6 +26,10 @@ import { useRouter } from "next/router";
 import InfoTooltip from "@/components/Tooltip/InfoTooltip";
 import NutritionTarget from "../NutritionTarget";
 import SubmitButton from "@/components/Buttons/SubmitButton";
+import {
+  getWelcomeNotification,
+  useCreateNotificationMutation,
+} from "@/features/notifications";
 
 interface Props {
   handleSubmit: Function;
@@ -75,6 +79,8 @@ const Results: FC<Props> = ({ handleSubmit }) => {
     return res;
   };
 
+  const [createNotification] = useCreateNotificationMutation();
+
   const handleCreateUser = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
@@ -94,21 +100,26 @@ const Results: FC<Props> = ({ handleSubmit }) => {
           bodyData: bodyDataUpdated,
         },
       };
-      const [addProgressRes, mealSettings, addMeals] = await Promise.all([
-        addFirstProgress(),
-        createDefaultMealsSettings(user),
-        createDefaultUserMeals(user),
-      ]);
+      const notification = getWelcomeNotification();
+      const [addProgressRes, mealSettings, addMeals, welcomeNotification] =
+        await Promise.all([
+          addFirstProgress(),
+          createDefaultMealsSettings(user),
+          createDefaultUserMeals(user),
+          createNotification({ user, notification: notification }),
+        ]);
 
       if (
         addProgressRes.result === "success" &&
         mealSettings.result === "success" &&
-        addMeals.result === "success"
+        addMeals.result === "success" &&
+        "error" in welcomeNotification === false
       ) {
         dispatch(setUserMealsSettings(mealSettings.data));
         dispatch(setUserMeals(addMeals.data));
         dispatch(setUpdateUser({ user, fields }));
         dispatch(setIsCreatingUser(false));
+        // welcomeNotification is already dispatched here.
 
         const updateUserRes = await updateUser({ user, fields });
         if (updateUserRes.result === "success") {

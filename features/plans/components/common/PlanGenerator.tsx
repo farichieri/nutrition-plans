@@ -1,5 +1,11 @@
 import { PlansEnum } from "@/types";
-import { PlanTypes, PlanTypesT, Diet, createDiet } from "@/features/plans";
+import {
+  PlanTypes,
+  PlanTypesT,
+  Diet,
+  createDiet,
+  createDietAutomatically,
+} from "@/features/plans";
 import { postDietToUserDiets } from "@/features/plans/services";
 import { ReplaceDietSelector } from "@/features/library";
 import { setDiet } from "@/features/plans/slice";
@@ -10,7 +16,6 @@ import { UserMeals, selectMealsSlice } from "@/features/meals";
 import Modal from "@/components/Modal/Modal";
 import React, { ChangeEvent, FC, useState } from "react";
 import Spinner from "@/components/Loader/Spinner";
-import { useTour } from "@/features/tours";
 
 interface Props {
   date: string | null;
@@ -42,7 +47,9 @@ const PlanGenerator: FC<Props> = ({ date, dates, setDoneGeneratingPlan }) => {
     }
   };
 
-  const generatePlan = async (event: React.MouseEvent<HTMLButtonElement>) => {
+  const generateManually = async (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
     event.preventDefault();
     const id = (event.target as HTMLButtonElement).id;
     const planType = PlanTypes[id as keyof PlanTypesT];
@@ -66,6 +73,38 @@ const PlanGenerator: FC<Props> = ({ date, dates, setDoneGeneratingPlan }) => {
     }
   };
 
+  const generateAutomatically = async (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+    const id = (event.target as HTMLButtonElement).id;
+    const planType = PlanTypes[id as keyof PlanTypesT];
+    try {
+      setIsGenerating(true);
+      if (date && !dates) {
+        // await createAndSaveDiet(date, planSelected, user, meals, planType);
+        const diet = await createDietAutomatically({
+          meals,
+          planID: planSelected,
+          type: planType,
+          user,
+        });
+      } else if (dates && !date) {
+        // await Promise.all(
+        //   dates.map((d) =>
+        //     createAndSaveDiet(d, planSelected, user, meals, planType)
+        //   )
+        // ).then(() => setDoneGeneratingPlan(true));
+      } else {
+        toast.error("Error generating plan");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
   const createAndSaveDiet = async (
     date: string,
     planID: PlansEnum,
@@ -74,7 +113,7 @@ const PlanGenerator: FC<Props> = ({ date, dates, setDoneGeneratingPlan }) => {
     type: PlanTypes
   ) => {
     try {
-      const diet: Diet = createDiet(meals, planID, type, user);
+      const diet: Diet = createDiet({ meals, planID, type, user });
       const res = await postDietToUserDiets({
         diet,
         planID,
@@ -87,7 +126,6 @@ const PlanGenerator: FC<Props> = ({ date, dates, setDoneGeneratingPlan }) => {
     } catch (error) {
       toast.error("Error generating plan");
       console.log(error);
-    } finally {
     }
   };
 
@@ -134,19 +172,15 @@ const PlanGenerator: FC<Props> = ({ date, dates, setDoneGeneratingPlan }) => {
               <div key={p} className="flex flex-col items-center justify-start">
                 <button
                   id={p}
-                  className={`flex flex-col items-center justify-center rounded-md border border-green-500/30 bg-green-500/20 px-3 py-1.5 capitalize duration-100 hover:border-green-500 hover:bg-green-500/30 active:bg-green-500/80 ${
-                    p === PlanTypes.automatically &&
-                    "pointer-events-none cursor-not-allowed opacity-50"
-                  } }`}
-                  onClick={generatePlan}
+                  className={`flex flex-col items-center justify-center rounded-md border border-green-500/30 bg-green-500/20 px-3 py-1.5 capitalize duration-100 hover:border-green-500 hover:bg-green-500/30 active:bg-green-500/80 `}
+                  onClick={
+                    p === PlanTypes.automatically
+                      ? generateAutomatically
+                      : generateManually
+                  }
                 >
                   {p}
                 </button>
-                {p === PlanTypes.automatically && (
-                  <span className="mx-auto mt-1 text-xs opacity-70">
-                    Coming soon
-                  </span>
-                )}
               </div>
             ))}
           </div>
@@ -165,3 +199,14 @@ const PlanGenerator: FC<Props> = ({ date, dates, setDoneGeneratingPlan }) => {
 };
 
 export default PlanGenerator;
+
+// ${
+//   p === PlanTypes.automatically &&
+//   "pointer-events-none cursor-not-allowed opacity-50"
+// }
+
+// {p === PlanTypes.automatically && (
+//   <span className="mx-auto mt-1 text-xs opacity-70">
+//     Coming soon
+//   </span>
+// )}

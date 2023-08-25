@@ -75,18 +75,18 @@ export interface WeightGoal {
 }
 
 export interface NutritionTargets {
-  calories: number | null;
+  calories: number;
   carbohydrates: {
-    min: number | null;
-    max: number | null;
+    min: number;
+    max: number;
   };
   proteins: {
-    min: number | null;
-    max: number | null;
+    min: number;
+    max: number;
   };
   fats: {
-    min: number | null;
-    max: number | null;
+    min: number;
+    max: number;
   };
 }
 
@@ -163,18 +163,18 @@ export const newRatings: Ratings = {
 };
 
 export const newNutritionTargets: NutritionTargets = {
-  calories: null,
+  calories: 0,
   carbohydrates: {
-    min: null,
-    max: null,
+    min: 0,
+    max: 0,
   },
   proteins: {
-    min: null,
-    max: null,
+    min: 0,
+    max: 0,
   },
   fats: {
-    min: null,
-    max: null,
+    min: 0,
+    max: 0,
   },
 };
 

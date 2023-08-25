@@ -5,6 +5,9 @@ export interface Notification {
   sender: string;
   title: string;
   url: string;
+  dateCreated: string;
+  type: "welcome" | "info" | "error" | "success";
+  isVisible: boolean;
 }
 
 export interface NotificationsGroup {

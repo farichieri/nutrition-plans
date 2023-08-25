@@ -6,8 +6,7 @@ import {
   NewDiet,
   PlanTypes,
 } from "@/features/plans";
-import { Food, FoodGroup } from "@/features/foods";
-import { getDietNutrition, getNutritionValues, getToday } from "@/utils";
+import { getDietNutrition, getToday } from "@/utils";
 import { PlansEnum } from "@/types";
 import { User, getNutritionTargets } from "@/features/authentication";
 import { UserMeals, UserMealsArr } from "@/features/meals";
@@ -29,7 +28,7 @@ const buildDiet = (
   const { waterRecommendedInLts } = bodyData;
   const calories = user.nutritionTargets.calories;
   const nutritionTargets = getNutritionTargets({
-    calories: calories!,
+    calories: calories,
     planSelected: plan_id,
   });
 
@@ -91,27 +90,21 @@ const generateDietMeals = ({
   return meals;
 };
 
-const getMealCalories = (dietMealFoods: FoodGroup): number => {
-  return Object.values(dietMealFoods).reduce((acc: number, curr: Food) => {
-    const nutrientsUpdated = getNutritionValues(
-      curr,
-      curr.scaleAmount,
-      curr.scaleName
-    );
-    return acc + Number(nutrientsUpdated.calories);
-  }, 0);
-};
-
-const createDiet = (
-  meals: UserMeals,
-  planID: PlansEnum,
-  type: PlanTypes,
-  user: User
-): Diet => {
+const createDiet = ({
+  meals,
+  planID,
+  type,
+  user,
+}: {
+  meals: UserMeals;
+  planID: PlansEnum;
+  type: PlanTypes;
+  user: User;
+}): Diet => {
   const userMealsArr = Object.values(meals);
   const mealsGenerated = generateDietMeals({ userMealsArr, planID });
   const diet = buildDiet(Object.values(mealsGenerated), planID, type, user);
   return diet;
 };
 
-export { createDiet, generateDietMeals, getMealCalories, buildDiet };
+export { createDiet, generateDietMeals, buildDiet };

@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Diet, DietGroup, DietMeal, DietMealGroup } from "@/features/plans";
-import { Food, FoodGroup } from "@/features/foods";
+import { Food, FoodGroup, FoodHit, FoodHitsGroup } from "@/features/foods";
 import { PURGE } from "redux-persist";
 import { RootState } from "@/store";
 
 interface LibraryState {
   libraryDiets: DietGroup;
-  libraryFoods: FoodGroup;
+  libraryFoods: FoodHitsGroup | FoodGroup;
   libraryMeals: DietMealGroup;
   isRating: boolean;
   isSearching: {
@@ -32,7 +32,7 @@ export const librarySlice = createSlice({
   name: "library",
   initialState,
   reducers: {
-    setLibraryFoods: (state, action: PayloadAction<FoodGroup>) => {
+    setLibraryFoods: (state, action: PayloadAction<FoodHitsGroup>) => {
       state.libraryFoods = action.payload;
     },
     setLibraryDiets: (state, action: PayloadAction<DietGroup>) => {
@@ -54,7 +54,7 @@ export const librarySlice = createSlice({
     setIsRating: (state, action: PayloadAction<boolean>) => {
       state.isRating = action.payload;
     },
-    addFoodToLibrary: (state, action: PayloadAction<Food>) => {
+    addFoodToLibrary: (state, action: PayloadAction<FoodHit | Food>) => {
       const { id } = action.payload;
       if (!id) return;
       state.libraryFoods[id] = action.payload;
@@ -64,7 +64,7 @@ export const librarySlice = createSlice({
       if (!id) return;
       state.libraryDiets[id] = action.payload;
     },
-    removeFoodFromLibrary: (state, action: PayloadAction<Food>) => {
+    removeFoodFromLibrary: (state, action: PayloadAction<FoodHit | Food>) => {
       const { id: id } = action.payload;
       if (!id) return;
       delete state.libraryFoods[id];

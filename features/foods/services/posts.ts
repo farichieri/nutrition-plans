@@ -1,5 +1,5 @@
 import { collection, doc, setDoc } from "firebase/firestore";
-import { db, storage } from "@/services/firebase/firebase.config";
+import { db, storage } from "@/services/firebase";
 import {
   DEFAULT_IMAGE,
   Food,

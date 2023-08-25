@@ -26,7 +26,7 @@ interface Props {
 export default function Page({ date }: { date: Props }) {
   const dispatch = useDispatch();
   const { diets } = useSelector(selectPlansSlice);
-  const { user } = useSelector(selectAuthSlice);
+  const { user, isFirstDataLoaded } = useSelector(selectAuthSlice);
   const realDate = getRealDate({
     date: String(date),
     userStartOfWeek: user?.startOfWeek || StartsOfWeek.Sunday,

@@ -104,7 +104,6 @@ const RecipeCreate: FC<Props> = () => {
     if (res.result === "success") {
       setNewImageFile(undefined);
       dispatch(setNewRecipeState(NewFood));
-      dispatch(addNewFood(res.data));
       router.push(`/app/food/${res.data.id}`);
       toast.success("Recipe created successfully");
     } else {
@@ -222,6 +221,10 @@ const RecipeCreate: FC<Props> = () => {
                 {...register("servingAmount", { valueAsNumber: true, min: 0 })}
               />
               <div className="my-5">
+                <div className="text-sm opacity-70">
+                  1 Serving (as default serving) will be compounded of the
+                  ingredients you add to the recipe
+                </div>
                 <h1 className="text-xl">Extra scales {`(optional)`}</h1>
                 <div className="relative">
                   <ExtraScales

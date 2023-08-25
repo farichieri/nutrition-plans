@@ -9,5 +9,8 @@ export * from "./helpers";
 export * from "./nutritionHelpers";
 export * from "./routes";
 
-export { getPlansAvailable } from "./getPlansAvailable";
-export { ensureError } from "./ensureError";
+import { ensureError } from "./ensureError";
+import { getPlansAvailable } from "./getPlansAvailable";
+import parseTimestamp from "./parseTimestamp";
+
+export { parseTimestamp, getPlansAvailable, ensureError };

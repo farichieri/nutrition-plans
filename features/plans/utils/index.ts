@@ -7,6 +7,7 @@ import { clearMeal } from "./clearMeal";
 import { resetMeal } from "./resetMeal";
 import { replaceMealInDiet } from "./replaceMealInDiet";
 import { checkTargetsEquality } from "./checkTargetsEquality";
+import createDietAutomatically from "./createDietAutomatically";
 
 export * from "./dates";
 export * from "./common";
@@ -22,4 +23,5 @@ export {
   resetMeal,
   replaceMealInDiet,
   checkTargetsEquality,
+  createDietAutomatically,
 };

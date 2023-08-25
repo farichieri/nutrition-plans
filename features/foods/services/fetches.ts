@@ -8,19 +8,19 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { db } from "@/services/firebase/firebase.config";
-import { FilterQueries, Result } from "@/types";
-import { Food, FoodGroup } from "@/features/foods";
+import { db } from "@/services/firebase";
 import { searchClient } from "@/lib/typesense";
 import getSearchParameters from "../utils/getSearchParameters";
+import type { FilterQueries, Result } from "@/types";
+import type { Food, FoodGroup, FoodHitsGroup } from "@/features/foods";
 
 const fetchCuratedFoods = async ({
   queries,
 }: {
   queries: FilterQueries;
-}): Promise<Result<FoodGroup, unknown>> => {
+}): Promise<Result<FoodHitsGroup, unknown>> => {
   try {
-    let data: FoodGroup = {};
+    let data: FoodHitsGroup = {};
 
     const searchParameters = getSearchParameters({ queries, isCurated: true });
 
@@ -39,7 +39,6 @@ const fetchCuratedFoods = async ({
       data[document.id] = document;
     });
 
-    console.log("fetchCuratedFoods", { data });
     return { result: "success", data };
   } catch (error) {
     console.log({ error: `Error fetching Food: ${error}` });
@@ -53,9 +52,9 @@ const fetchUserFoods = async ({
 }: {
   queries: FilterQueries;
   uploaderID?: string;
-}): Promise<Result<FoodGroup, unknown>> => {
+}): Promise<Result<FoodHitsGroup, unknown>> => {
   try {
-    let data: FoodGroup = {};
+    let data: FoodHitsGroup = {};
 
     const searchParameters = getSearchParameters({ queries, uploaderID });
 
@@ -74,7 +73,6 @@ const fetchUserFoods = async ({
       data[document.id] = document;
     });
 
-    console.log("fetchUserFoods", { data });
     return { result: "success", data };
   } catch (error) {
     console.log({ error: `Error fetching Food: ${error}` });
@@ -88,9 +86,9 @@ const fetchFoods = async ({
 }: {
   queries: FilterQueries;
   uploaderID?: string;
-}): Promise<Result<FoodGroup, unknown>> => {
+}): Promise<Result<FoodHitsGroup, unknown>> => {
   try {
-    let data: FoodGroup = {};
+    let data: FoodHitsGroup = {};
 
     const [curatedFoodsRes, userFoodsRes] = await Promise.all([
       fetchCuratedFoods({ queries }),
@@ -138,16 +136,36 @@ const fetchFoodByID = async (id: string): Promise<Result<Food, unknown>> => {
 
 const fetchFoodsByIDS = async (
   ids: string[]
-): Promise<Result<FoodGroup, unknown>> => {
+): Promise<Result<FoodHitsGroup, unknown>> => {
   console.log(`Fetching Food IDS ${ids}`);
   try {
-    let data: FoodGroup = {};
-    const foodRef = collection(db, "foods");
-    const q = query(foodRef, where(documentId(), "in", ids));
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((food: any) => {
-      data[food.id] = food.data();
+    let data: FoodHitsGroup = {};
+
+    const res = await searchClient
+      .collections("foods")
+      .documents()
+      .search(
+        {
+          q: "",
+          query_by: "name",
+          filter_by: `id: [${ids.join(",")}]`,
+          sort_by: "likes:desc",
+          page: 1,
+          per_page: 40,
+        },
+        {}
+      );
+
+    const { hits } = res;
+    if (!hits) {
+      throw new Error("Error fetching foods.");
+    }
+
+    hits.forEach((hit: any) => {
+      const { document } = hit;
+      data[document.id] = document;
     });
+
     return { result: "success", data };
   } catch (error) {
     console.log({ error: `Error fetching Foods: ${error}` });

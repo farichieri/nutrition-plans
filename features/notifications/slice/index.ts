@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { PURGE } from "redux-persist";
-import type { NotificationsGroup } from "../types";
+import type { NotificationsGroup, Notification } from "../types";
 import type { RootState } from "../../../store";
+import { parseTimestamp } from "@/utils";
 
 interface NotificationsState {
   inbox: NotificationsGroup;
@@ -30,10 +31,12 @@ export const notificationsSlice = createSlice({
       state.inbox[id] = state.archived[id];
       delete state.archived[id];
     },
-    setDeleteNotification: (state, action: PayloadAction<{ id: string }>) => {
-      const { id } = action.payload;
-      delete state.inbox[id];
-      delete state.archived[id];
+    setAddNewNotification: (
+      state,
+      action: PayloadAction<{ notification: Notification }>
+    ) => {
+      const { notification } = action.payload;
+      state.inbox[notification.id] = notification;
     },
     setNotifications: (
       state,
@@ -43,7 +46,6 @@ export const notificationsSlice = createSlice({
       }>
     ) => {
       const { notifications, archivedIds } = action.payload;
-      console.log({ notifications, archivedIds });
       state.archived = Object.keys(notifications).reduce((acc, id) => {
         if (archivedIds.includes(id)) {
           acc[id] = notifications[id];
@@ -68,8 +70,8 @@ export const notificationsSlice = createSlice({
 export const {
   setArchiveNotification,
   setUnarchiveNotification,
-  setDeleteNotification,
   setNotifications,
+  setAddNewNotification,
 } = notificationsSlice.actions;
 
 export const selectNotificationsSlice = (state: RootState) =>

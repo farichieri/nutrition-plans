@@ -14,6 +14,7 @@ import plansSlice from "@/features/plans/slice";
 import progressSlice from "@/features/progress/slice";
 import settingsSlice from "@/features/settings/slice";
 import shoppingSlice from "@/features/shopping/slice";
+import { api } from "@/services/api";
 
 export function createPersistStorage(): WebStorage {
   const isServer = typeof window === "undefined";
@@ -59,6 +60,7 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
+  [api.reducerPath]: api.reducer,
   auth: authSlice,
   foods: foodsSlice,
   layout: layoutSlice,
@@ -79,7 +81,7 @@ export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
         serializableCheck: false,
-      }),
+      }).concat(api.middleware),
     devTools: process.env.NODE_ENV !== "production",
     preloadedState,
   });

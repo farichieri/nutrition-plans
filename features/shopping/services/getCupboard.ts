@@ -1,5 +1,5 @@
 import { Cupboard } from "../types";
-import { db } from "@/services/firebase/firebase.config";
+import { db } from "@/services/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { Result } from "@/types";
 

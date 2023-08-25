@@ -8,7 +8,7 @@ import {
   setCupboardFoods,
   setCupboardSelecteds,
 } from "@/features/shopping";
-import { db } from "@/services/firebase/firebase.config";
+import { db } from "@/services/firebase";
 import { doc, onSnapshot } from "firebase/firestore";
 import { FC, useEffect, useState } from "react";
 import { selectAuthSlice } from "@/features/authentication";

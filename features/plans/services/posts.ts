@@ -1,4 +1,4 @@
-import { db } from "@/services/firebase/firebase.config";
+import { db } from "@/services/firebase";
 import { Diet, DietMealGroup } from "@/features/plans/types";
 import { doc, setDoc } from "firebase/firestore";
 import { getToday } from "@/utils/dateFormat";

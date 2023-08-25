@@ -1,4 +1,4 @@
-import { db } from "@/services/firebase/firebase.config";
+import { db } from "@/services/firebase";
 import { doc, increment, updateDoc } from "firebase/firestore";
 import { Result } from "@/types";
 

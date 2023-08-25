@@ -1,4 +1,4 @@
-import { db } from "@/services/firebase/firebase.config";
+import { db } from "@/services/firebase";
 import { Result } from "@/types";
 import { collection, getDocs } from "firebase/firestore";
 

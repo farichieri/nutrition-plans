@@ -1,4 +1,3 @@
-import archiveNotification from "./archiveNotification";
-import unarchiveNotification from "./unarchiveNotification";
+import getWelcomeNotification from "./getWelcomeNotification";
 
-export { archiveNotification, unarchiveNotification };
+export { getWelcomeNotification };

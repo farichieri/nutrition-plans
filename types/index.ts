@@ -101,7 +101,7 @@ export interface SubscriptionPlan {
 export interface FilterQueries {
   q?: string;
   kind?: string;
-  plan?: string;
+  plan?: PlansEnum;
   caloriesRange?: string;
   proteinsRange?: string;
   carbsRange?: string;

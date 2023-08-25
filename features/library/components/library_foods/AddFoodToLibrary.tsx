@@ -11,13 +11,13 @@ import {
   updateUser,
 } from "@/features/authentication";
 import { FC, useState } from "react";
-import { Food } from "@/features/foods";
+import { Food, FoodHit } from "@/features/foods";
 import { MdFavorite } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "@/components/Loader/Spinner";
 
 interface Props {
-  food: Food;
+  food: FoodHit | Food;
 }
 
 const AddFoodToLibrary: FC<Props> = ({ food }) => {
@@ -37,14 +37,11 @@ const AddFoodToLibrary: FC<Props> = ({ food }) => {
     event.stopPropagation();
 
     try {
-      const id = (event.target as HTMLButtonElement).id;
       if (!foodsRating) return;
       if (isRating) return;
       dispatch(setIsRating(true));
 
-      console.log("1");
-
-      id === "favorites" && setIsFavoriting(true);
+      setIsFavoriting(true);
 
       let favorites = [...foodsRating["favorites"]];
 

@@ -26,3 +26,5 @@ export const analytics = isSupported().then((yes) =>
 
 // Collections
 export const notificationsCollection = collection(db, "notifications");
+export const userNotificationsCollection = (userID: string) =>
+  collection(db, "users", userID, "notifications");

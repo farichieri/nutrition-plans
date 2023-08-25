@@ -6,7 +6,7 @@ import {
   query,
   setDoc,
 } from "firebase/firestore";
-import { db } from "../../../services/firebase/firebase.config";
+import { db } from "../../../services/firebase";
 import { Result } from "@/types";
 import { User } from "@/features/authentication";
 import { ProgressItem, Progress } from "@/features/progress";

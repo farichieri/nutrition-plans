@@ -1,16 +1,26 @@
-import { AppRoutes } from "@/utils";
-import { Login, UserSteps } from "@/features/authentication";
-import { PremiumFooter } from "./components";
-import { selectAuthSlice } from "@/features/authentication/slice";
+import {
+  fetchMeals,
+  fetchMealsSettings,
+  setUserMeals,
+  setUserMealsSettings,
+} from "@/features/meals";
 import {
   selectLayoutSlice,
   setIsSubscribeModalOpen,
 } from "@/features/layout/slice";
+import { AppRoutes } from "@/utils";
+import { fetchProgress, setProgress } from "@/features/progress";
+import { getThisWeekDiets } from "@/features/plans";
+import { Login, setIsFirstDataLoaded } from "@/features/authentication";
+import { PremiumFooter } from "./components";
+import { selectAuthSlice } from "@/features/authentication/slice";
+import { setDiets } from "@/features/plans/slice";
 import { SubscribeModal } from "@/components";
+import { toast } from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useOnlineStatus, useWindowWidth } from "@/hooks";
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
 import ConnectionError from "@/components/Layout/ConnectionError";
 import Head from "next/head";
 import InstallModal from "@/components/InstallApp/InstallModal";
@@ -46,6 +56,40 @@ export default function PremiumLayout({ children }: Props) {
     }
   }, [user, isCreatingUser]);
 
+  useEffect(() => {
+    const unsubscribe = async () => {
+      if (!user) return;
+      if (isFirstDataLoaded) return;
+      try {
+        const [progressRes, userMealsRes, mealsSettings, thisWeekDiets] =
+          await Promise.all([
+            fetchProgress(user),
+            fetchMeals(user.id),
+            fetchMealsSettings(user.id),
+            getThisWeekDiets({ user }),
+          ]);
+        if (
+          progressRes.result === "success" &&
+          userMealsRes.result === "success" &&
+          mealsSettings.result === "success" &&
+          thisWeekDiets.result === "success"
+        ) {
+          dispatch(setProgress(progressRes.data));
+          dispatch(setUserMeals(userMealsRes.data));
+          dispatch(setUserMealsSettings(mealsSettings.data));
+          dispatch(setDiets(thisWeekDiets.data));
+          dispatch(setIsFirstDataLoaded(true));
+        } else {
+          throw new Error("An error occurred while loading user data.");
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error("An error occurred while loading your data.");
+      }
+    };
+    unsubscribe();
+  }, []);
+
   if (!user && !isSigningUser) {
     return <Login />;
   }
@@ -57,7 +101,7 @@ export default function PremiumLayout({ children }: Props) {
         <title>NutritionPlans - App</title>
       </Head>
       {isSubscribeModalOpen && <SubscribeModal />}
-      {(isCreatingUser || isSigningUser || !isFirstDataLoaded) && <Loader />}
+      {(isCreatingUser || isSigningUser) && <Loader />}
       {user && user.isProfileCompleted && <WelcomeSteps />}
       {!isOnline && <ConnectionError />}
       {showInstallModal && (

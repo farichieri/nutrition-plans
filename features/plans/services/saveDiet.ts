@@ -1,4 +1,4 @@
-import { db } from "@/services/firebase/firebase.config";
+import { db } from "@/services/firebase";
 import { Diet } from "..";
 import { doc, setDoc } from "firebase/firestore";
 import { Result } from "@/types";
