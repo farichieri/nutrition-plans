@@ -83,20 +83,36 @@ export interface FoodGroup {
 
 export interface FoodGroupArray extends Array<Food> {}
 
-export interface FoodHit {
-  compatiblePlans: CompatiblePlans;
-  description: string;
-  id: string;
-  imageURL: string;
-  ingredientsDescriptions: string[];
-  ingredientsNames: string[];
-  isCurated: boolean;
-  kind: FoodKind;
-  likes: number;
-  name: string;
-  nutrients: FoodNutrients;
-  uploaderID: string;
-}
+// export interface FoodHit {
+//   compatiblePlans: CompatiblePlans;
+//   description: string;
+//   id: string;
+//   imageURL: string;
+//   ingredientsDescriptions: string[];
+//   ingredientsNames: string[];
+//   isCurated: boolean;
+//   kind: FoodKind;
+//   likes: number;
+//   name: string;
+//   nutrients: FoodNutrients;
+//   uploaderID: string;
+// }
+
+export type FoodHit = Pick<
+  Food,
+  | "compatiblePlans"
+  | "description"
+  | "id"
+  | "imageURL"
+  | "ingredientsDescriptions"
+  | "ingredientsNames"
+  | "isCurated"
+  | "kind"
+  | "likes"
+  | "name"
+  | "nutrients"
+  | "uploaderID"
+>;
 
 export interface FoodHitsGroup {
   [id: string]: FoodHit;
