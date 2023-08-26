@@ -1,5 +1,5 @@
 import { AppRoutes } from "@/utils";
-import { auth } from "@/services/firebase/firebase.config";
+import { auth } from "@/services/firebase";
 import { FC, useState } from "react";
 import { MdFavorite, MdOpenInNew, MdPerson, MdSettings } from "react-icons/md";
 import { persistor } from "@/store";

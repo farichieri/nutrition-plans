@@ -7,7 +7,6 @@ export interface Food {
   compatiblePlans: CompatiblePlans;
   complexity: number;
   cookTime: number;
-  isCurated: boolean;
   dateCreated: any | null;
   dateUpdated: string | null;
   description: string | null;
@@ -26,8 +25,7 @@ export interface Food {
   ingredientsDescriptions: string[];
   ingredientsNames: string[];
   instructions: Instruction[];
-  isAllowPublic: boolean;
-  isDeleted: boolean;
+  isCurated: boolean;
   isEasilySingleServing: boolean;
   isEaten: boolean;
   isRecommended: boolean;
@@ -36,7 +34,6 @@ export interface Food {
   majorIngredients: string | null;
   makesLeftovers: boolean;
   name: string | null;
-  nameLowerCase: string;
   note: string;
   nutrients: FoodNutrients;
   order: number;
@@ -85,6 +82,28 @@ export interface FoodGroup {
 }
 
 export interface FoodGroupArray extends Array<Food> {}
+
+export type FoodHit = Pick<
+  Food,
+  | "compatiblePlans"
+  | "description"
+  | "id"
+  | "imageURL"
+  | "ingredientsDescriptions"
+  | "ingredientsNames"
+  | "isCurated"
+  | "kind"
+  | "likes"
+  | "name"
+  | "nutrients"
+  | "uploaderID"
+>;
+
+export interface FoodHitsGroup {
+  [id: string]: FoodHit;
+}
+
+export interface FoodHitsGroupArray extends Array<FoodHit> {}
 
 export interface FoodType {
   isBreakfast: boolean;
@@ -246,3 +265,132 @@ export const InitialScale: FoodScale = {
   scaleGrams: 0,
   scaleName: "",
 };
+
+export const DEFAULT_IMAGE = "/images/foods/default_food.png";
+
+// Initials
+// Food
+export const NewFoodType: FoodType = {
+  isBreakfast: false,
+  isDinner: false,
+  isLunch: false,
+  isSnack: false,
+};
+
+export const NewFoodCompatiblePlans: CompatiblePlans = {
+  balanced: false,
+  gluten_free: false,
+  low_carb: false,
+  mediterranean: false,
+  vegetarian: false,
+  keto: false,
+};
+
+export const NewFoodNutrients: FoodNutrients = {
+  betaine: null,
+  caffeine: null,
+  calcium: null,
+  calories: null,
+  carbohydrates: null,
+  cholesterol: null,
+  choline: null,
+  copper: null,
+  fats: null,
+  fiber: null,
+  fluoride: null,
+  folate: null,
+  fructose: null,
+  galactose: null,
+  glucose: null,
+  iron: null,
+  lactose: null,
+  lycopene: null,
+  magnesium: null,
+  maltose: null,
+  manganese: null,
+  monounsaturated_fats: null,
+  niacin: null,
+  phosphorus: null,
+  polyunsaturated_fats: null,
+  potassium: null,
+  proteins: null,
+  retinol: null,
+  saturated_fats: null,
+  selenium: null,
+  sodium: null,
+  sucrose: null,
+  sugar: null,
+  thiamine: null,
+  total_omega_3: null,
+  total_omega_6: null,
+  trans_fats: null,
+  vitamin_a: null,
+  vitamin_b12: null,
+  vitamin_b2: null,
+  vitamin_b6: null,
+  vitamin_c: null,
+  vitamin_d: null,
+  vitamin_d2: null,
+  vitamin_d3: null,
+  vitamin_e: null,
+  vitamin_k: null,
+  water: null,
+  zinc: null,
+};
+
+export const NewFood: Food = {
+  brand: null,
+  category: null,
+  compatiblePlans: NewFoodCompatiblePlans,
+  complexity: 1,
+  cookTime: 0,
+  dateCreated: null,
+  dateUpdated: null,
+  description: null,
+  dietID: null,
+  dietMealID: null,
+  digestionStatus: null,
+  dishType: null,
+  dislikes: 0,
+  favorites: 0,
+  glucemicStatus: null,
+  id: null,
+  imageURL: DEFAULT_IMAGE,
+  index: -1,
+  ingredients: {},
+  ingredientsAmount: 0,
+  ingredientsDescriptions: [],
+  ingredientsNames: [],
+  instructions: [],
+  isCurated: false,
+  isEasilySingleServing: false,
+  isEaten: false,
+  isRecommended: false,
+  kind: null,
+  likes: 0,
+  majorIngredients: null,
+  makesLeftovers: false,
+  name: null,
+  note: "",
+  nutrients: NewFoodNutrients,
+  order: -1,
+  prepTime: 0,
+  price: null,
+  recipeCategory: null,
+  scaleAmount: 0,
+  scaleName: "",
+  scales: [],
+  servingAmount: 1,
+  servingAmountPerPackage: null,
+  servingGrams: 0,
+  servingName: "Serving",
+  source: null,
+  totalTime: 0,
+  type: NewFoodType,
+  uploaderID: null,
+};
+
+export let FoodKeys = {} as Food;
+Object.keys(NewFood).forEach((key: string) => {
+  FoodKeys[key] = key;
+});

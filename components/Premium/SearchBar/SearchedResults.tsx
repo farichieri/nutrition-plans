@@ -1,12 +1,12 @@
 import { AddFoodToLibrary } from "@/features/library";
 import { FC } from "react";
 import { FilterQueries } from "@/types";
-import { FoodGroup, getFoodsFiltered } from "@/features/foods";
+import { FoodHitsGroup, getFoodsFiltered } from "@/features/foods";
 import { formatTwoDecimals } from "@/utils";
 import BlurImage from "@/components/blur-image";
 
 interface Props {
-  searchResult: FoodGroup;
+  searchResult: FoodHitsGroup;
   handleClick: Function;
   queries: FilterQueries;
 }

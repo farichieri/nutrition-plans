@@ -1,7 +1,11 @@
 import { collection, doc, setDoc } from "firebase/firestore";
-import { db, storage } from "@/services/firebase/firebase.config";
-import { DEFAULT_IMAGE } from "@/types/initial";
-import { Food, FoodKind, getScalesWithPrimaryScales } from "@/features/foods";
+import { db, storage } from "@/services/firebase";
+import {
+  DEFAULT_IMAGE,
+  Food,
+  FoodKind,
+  getScalesWithPrimaryScales,
+} from "@/features/foods";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { getFoodsCollectionLength } from "./fetches";
 import { Result } from "@/types";
@@ -64,7 +68,6 @@ const addFood = async (
       complexity: complexity,
       dateCreated: formatISO(new Date()),
       id: docRef.id,
-      nameLowerCase: food.name.toLowerCase(),
       imageURL: img,
       index: index,
       ingredientsDescriptions: ingredientsDescriptions,

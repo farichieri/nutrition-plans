@@ -1,10 +1,4 @@
 import {
-  fetchMeals,
-  fetchMealsSettings,
-  setUserMeals,
-  setUserMealsSettings,
-} from "@/features/meals";
-import {
   getUser,
   selectAuthSlice,
   setIsFirstDataLoaded,
@@ -13,14 +7,11 @@ import {
   setUser,
   updateUser,
 } from "@/features/authentication";
-import { auth } from "@/services/firebase/firebase.config";
-import { fetchProgress, setProgress } from "@/features/progress";
-import { getThisWeekDiets } from "@/features/plans";
+import { auth } from "@/services/firebase";
 import { getUserSubscription, usePremiumStatus } from "@/features/stripe";
 import { Inter } from "next/font/google";
 import { isAppVersionCorrect } from "@/utils";
 import { onAuthStateChanged } from "firebase/auth";
-import { setDiets } from "@/features/plans/slice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import Head from "next/head";
@@ -31,38 +22,16 @@ const font = Inter({
 });
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const dispatch = useDispatch();
-  const { user } = useSelector(selectAuthSlice);
-  const [isVerifyingVersion, setIsVerifyingVersion] = useState(true);
   const _theme = useTheme();
+  const [isVerifyingVersion, setIsVerifyingVersion] = useState(true);
+  const { user } = useSelector(selectAuthSlice);
+  const dispatch = useDispatch();
   const isPremium = usePremiumStatus(user);
 
   useEffect(() => {
-    if (user) {
-      const fetchData = async () => {
-        const [progressRes, userMealsRes, mealsSettings, thisWeekDiets] =
-          await Promise.all([
-            fetchProgress(user),
-            fetchMeals(user.id),
-            fetchMealsSettings(user.id),
-            getThisWeekDiets({ user }),
-          ]);
-        if (
-          progressRes.result === "success" &&
-          userMealsRes.result === "success" &&
-          mealsSettings.result === "success" &&
-          thisWeekDiets.result === "success"
-        ) {
-          dispatch(setProgress(progressRes.data));
-          dispatch(setUserMeals(userMealsRes.data));
-          dispatch(setUserMealsSettings(mealsSettings.data));
-          dispatch(setDiets(thisWeekDiets.data));
-          dispatch(setIsFirstDataLoaded(true));
-        }
-      };
-      fetchData();
-    }
-  }, [user]);
+    // To re-fetch data on refresh if user is logged in.
+    dispatch(setIsFirstDataLoaded(false));
+  }, []);
 
   useEffect(() => {
     // Verify Version and then log log in.

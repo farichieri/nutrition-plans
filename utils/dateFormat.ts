@@ -52,6 +52,12 @@ const formatToShortDate = (date: string): string => {
   return result;
 };
 
+const formatDateToShortDate = (date: Date): string => {
+  const dateString = format(date, "MM-dd-yyyy");
+  const result = formatToShortDate(dateString);
+  return result;
+};
+
 const formatToMonthDay = (date: string): string => {
   const result = format(new Date(date), "LLLL dd");
   return result;
@@ -251,4 +257,5 @@ export {
   isValidDate,
   restOneWeek,
   getDaysLeft,
+  formatDateToShortDate,
 };

@@ -1,5 +1,5 @@
 import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
-import { db, storage } from "@/services/firebase/firebase.config";
+import { db, storage } from "@/services/firebase";
 import { doc, updateDoc } from "firebase/firestore";
 import { FC, useState } from "react";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";

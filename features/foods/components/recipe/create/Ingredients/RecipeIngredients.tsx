@@ -9,7 +9,7 @@ import {
 import { useSelector } from "react-redux";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { FC, MouseEventHandler, useEffect, useState } from "react";
-import { FoodKeys } from "@/types/initial";
+import { FoodKeys } from "@/features/foods";
 import { getNewAmount } from "@/utils/nutritionHelpers";
 import { reorderArr } from "@/utils/filter";
 import Image from "next/image";

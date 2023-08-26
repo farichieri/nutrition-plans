@@ -1,5 +1,5 @@
 import { collection, doc, onSnapshot, setDoc } from "firebase/firestore";
-import { db } from "@/services/firebase/firebase.config";
+import { db } from "@/services/firebase";
 import { ensureError } from "@/utils";
 import { Result } from "@/types";
 

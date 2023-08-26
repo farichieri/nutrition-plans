@@ -7,7 +7,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { db } from "@/services/firebase/firebase.config";
+import { db } from "@/services/firebase";
 import { Diet } from "@/features/plans/types";
 import { Food, FoodGroupArray } from "@/features/foods";
 import { maxComplexity } from "@/features/plans";

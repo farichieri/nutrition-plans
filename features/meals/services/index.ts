@@ -15,7 +15,7 @@ import {
   UserMealsArr,
   MealSizes,
 } from "@/features/meals/types";
-import { db } from "../../../services/firebase/firebase.config";
+import { db } from "../../../services/firebase";
 import { Result } from "@/types";
 import { User } from "@/features/authentication";
 import { buildCupboardList } from "@/features/shopping/utils/buildCupboardList";

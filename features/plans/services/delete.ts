@@ -1,7 +1,7 @@
 import { deleteDoc, doc } from "firebase/firestore";
 import { Diet } from "@/features/plans";
 import { Result } from "@/types";
-import { db } from "@/services/firebase/firebase.config";
+import { db } from "@/services/firebase";
 
 const deleteDiet = async (diet: Diet): Promise<Result<Diet, unknown>> => {
   try {

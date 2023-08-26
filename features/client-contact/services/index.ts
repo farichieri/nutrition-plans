@@ -1,5 +1,5 @@
 import { addDoc, collection } from "firebase/firestore";
-import { db } from "@/services/firebase/firebase.config";
+import { db } from "@/services/firebase";
 import { User } from "@/features/authentication";
 import { formatISO } from "date-fns";
 

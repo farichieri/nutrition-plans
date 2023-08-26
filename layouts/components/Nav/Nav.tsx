@@ -1,5 +1,5 @@
 import { AppRoutes } from "@/utils";
-import { auth } from "@/services/firebase/firebase.config";
+import { auth } from "@/services/firebase";
 import { Bars2Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import { FC, useEffect, useState } from "react";
 import { MdArrowForwardIos, MdFavorite } from "react-icons/md";

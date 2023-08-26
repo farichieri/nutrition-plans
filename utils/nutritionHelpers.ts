@@ -11,7 +11,7 @@ import { DietMealGroup } from "@/features/plans";
 import { formatToFixed, formatTwoDecimals } from "@/utils/format";
 import { GRAMS_IN_ONE_OZ } from "@/constants";
 import { orderScales } from "@/features/foods";
-import { NewFoodNutrients } from "@/types/initial";
+import { NewFoodNutrients } from "@/features/foods";
 
 const GRAMS = NutritionMeasurements.grams;
 const OZ = NutritionMeasurements.oz;

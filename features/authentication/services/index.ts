@@ -2,7 +2,7 @@ import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { PlansEnum, Result } from "@/types";
 import { User as FirebaseUser, deleteUser } from "firebase/auth";
 import { User, newAccount } from "@/features/authentication";
-import { db } from "@/services/firebase/firebase.config";
+import { db } from "@/services/firebase";
 
 const createNewUser = async (
   user: FirebaseUser

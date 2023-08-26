@@ -4,10 +4,11 @@ import {
   setLibraryFoods,
 } from "../../slice";
 import {
-  Food,
-  FoodGroupArray,
   fetchFoodsByIDS,
   FoodCard,
+  FoodHitsGroup,
+  FoodHit,
+  FoodGroup,
 } from "@/features/foods";
 import { FC, useEffect } from "react";
 import { selectAuthSlice } from "@/features/authentication";
@@ -43,8 +44,8 @@ const LibraryFoods: FC<Props> = () => {
     }
   };
 
-  const sortFavorites = (foods: FoodGroupArray) => {
-    return foods.sort((a: Food, b: Food) => {
+  const sortFavorites = (foods: FoodHitsGroup | FoodGroup) => {
+    return Object.values(foods).sort((a: FoodHit, b: FoodHit) => {
       return a.name!.localeCompare(b.name!);
     });
   };
@@ -62,7 +63,7 @@ const LibraryFoods: FC<Props> = () => {
       {noData ? (
         <div className="m-auto">No Favorite Foods found.</div>
       ) : (
-        sortFavorites(Object.values(libraryFoods)).map((food) => (
+        sortFavorites(libraryFoods).map((food) => (
           <FoodCard food={food} key={food.id} />
         ))
       )}

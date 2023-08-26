@@ -23,7 +23,7 @@ import {
 } from "@/features/foods";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { generateOptions } from "@/utils";
-import { NewFood } from "@/types/initial";
+import { NewFood } from "@/features/foods";
 import { schema } from "./utils";
 import { selectAuthSlice } from "@/features/authentication/slice";
 import { toast } from "react-hot-toast";
@@ -103,7 +103,6 @@ const FoodCreate: FC<Props> = () => {
     if (res.result === "success") {
       dispatch(setNewFoodState(NewFood));
       setNewImageFile(undefined);
-      dispatch(addNewFood(res.data));
       router.push(`/app/food/${res.data.id}`);
       toast.success("Food created successfully");
     } else {
@@ -249,7 +248,7 @@ const FoodCreate: FC<Props> = () => {
                 <FormInput
                   error={errors.servingName?.message}
                   id={"servingName"}
-                  labelText="Scale Name (Customizable)"
+                  labelText="Default Scale Name"
                   placeholder="Scale Name"
                   title="Scale Name"
                   type="text"

@@ -1,6 +1,6 @@
 import { FoodGroup, FoodNutrients } from "@/features/foods";
 import { MealComplexities, MealMinutes, MealSizes } from "@/features/meals";
-import { NewFood, NewFoodNutrients } from "@/types/initial";
+import { NewFood, NewFoodNutrients } from "@/features/foods/types";
 import {
   NutritionTargets,
   newNutritionTargets,
@@ -30,7 +30,6 @@ export interface Diet {
   id: string | null;
   meals: DietMealGroup;
   name: string | null;
-  nameLowerCase: string | null;
   note: string | null;
   nutrients: FoodNutrients;
   planID: PlansEnum | null;
@@ -98,7 +97,6 @@ export const NewDiet: Diet = {
   id: null,
   meals: {},
   name: null,
-  nameLowerCase: null,
   note: null,
   nutrients: NewFoodNutrients,
   nutritionTargets: newNutritionTargets,

@@ -1,4 +1,4 @@
-import { db } from "@/services/firebase/firebase.config";
+import { db } from "@/services/firebase";
 import { deleteDoc, doc } from "firebase/firestore";
 import { DietMeal } from "@/features/plans";
 import { Result } from "@/types";

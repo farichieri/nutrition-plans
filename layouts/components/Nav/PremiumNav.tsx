@@ -9,6 +9,7 @@ import Link from "next/link";
 import Logo from "@/components/Logo/Logo";
 import ToggleSidebar from "@/layouts/components/Sidebar/ToggleSidebar";
 import useWindowWidth from "@/hooks/useWindowWidth";
+import { Notifications } from "@/features/notifications";
 
 interface Props {
   children?: ReactNode;
@@ -84,9 +85,14 @@ const PremiumNav: FC<Props> = ({
                   />
                 </span>
               </Link>
-              <Feedback />
+              <div className="hidden s:flex">
+                <Feedback />
+              </div>
             </>
           )}
+          <div className="s:mr-1 sm:mr-2">
+            <Notifications />
+          </div>
           {isMobile ? (
             <Link href={AppRoutes.nav_menu}>
               <Avatar height={30} width={30} />

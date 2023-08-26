@@ -1,5 +1,5 @@
 import { Result } from "@/types";
-import { db } from "@/services/firebase/firebase.config";
+import { db } from "@/services/firebase";
 import { doc, updateDoc } from "firebase/firestore";
 import { Tours, User } from "@/features/authentication";
 

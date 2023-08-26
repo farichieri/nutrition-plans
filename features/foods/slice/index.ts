@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Food, FoodGroup, Recipe } from "@/features/foods";
-import { NewFood } from "@/types/initial";
+import { Food, Recipe, FoodHit, FoodHitsGroup } from "@/features/foods";
+import { NewFood } from "@/features/foods/types";
 import { PURGE } from "redux-persist";
 import { RootState } from "@/store";
 
 interface FoodsSlice {
-  foodsSearched: FoodGroup;
-  myFoodsSearched: FoodGroup;
+  foodsSearched: FoodHitsGroup;
+  myFoodsSearched: FoodHitsGroup;
   isSearchingFoods: boolean;
   foodOpened: {
     food: Food | null;
@@ -41,7 +41,7 @@ const initialState: FoodsSlice = {
 };
 
 interface SearchedFoods {
-  foods: FoodGroup;
+  foods: FoodHitsGroup;
   userID: string;
 }
 
@@ -51,8 +51,8 @@ export const foodsSlice = createSlice({
   reducers: {
     setFoodsSearched: (state, action: PayloadAction<SearchedFoods>) => {
       const { foods, userID } = action.payload;
-      const myFoodsSearched: FoodGroup = {};
-      const allFoodsSearched: FoodGroup = {};
+      const myFoodsSearched: FoodHitsGroup = {};
+      const allFoodsSearched: FoodHitsGroup = {};
       for (const key in foods) {
         allFoodsSearched[key] = foods[key];
         if (foods[key].uploaderID === userID) {
@@ -62,7 +62,7 @@ export const foodsSlice = createSlice({
       state.foodsSearched = allFoodsSearched;
       state.myFoodsSearched = myFoodsSearched;
     },
-    addNewFood: (state, action: PayloadAction<Food>) => {
+    addNewFood: (state, action: PayloadAction<FoodHit>) => {
       const { id } = action.payload;
       if (!id) return;
       state.foodsSearched[id] = action.payload;

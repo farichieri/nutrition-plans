@@ -1,5 +1,5 @@
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "@/services/firebase/firebase.config";
+import { db } from "@/services/firebase";
 import { DietGroup, DietMealGroup } from "@/features/plans";
 import { Result } from "@/types";
 

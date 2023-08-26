@@ -1,4 +1,9 @@
-import { Food, FoodGroupArray } from "@/features/foods";
+import {
+  Food,
+  FoodGroupArray,
+  FoodHit,
+  FoodHitsGroupArray,
+} from "@/features/foods";
 import { FilterSortTypes } from "@/types";
 
 const filterObject = (obj: any, filter: string, filterValue: string) =>
@@ -48,27 +53,27 @@ const filterByNutrientRange = (
   );
 };
 
-const sortByHigherCalories = (foodsArray: FoodGroupArray) => {
+const sortByHigherCalories = (foodsArray: FoodHitsGroupArray) => {
   return foodsArray.sort(
-    (a: Food, b: Food) =>
+    (a: FoodHit, b: FoodHit) =>
       Number(b.nutrients.calories) - Number(a.nutrients.calories)
   );
 };
 
-const sortByLowerCalories = (foodsArray: FoodGroupArray) => {
+const sortByLowerCalories = (foodsArray: FoodHitsGroupArray) => {
   return foodsArray.sort(
-    (a: Food, b: Food) =>
+    (a: FoodHit, b: FoodHit) =>
       Number(a.nutrients.calories) - Number(b.nutrients.calories)
   );
 };
 
-const sortByRating = (foodsArray: FoodGroupArray) => {
+const sortByRating = (foodsArray: FoodHitsGroupArray) => {
   return foodsArray.sort(
-    (a: Food, b: Food) => Number(b.likes) - Number(a.likes)
+    (a: FoodHit, b: FoodHit) => Number(b.likes) - Number(a.likes)
   );
 };
 
-const sortFoodsSearched = (foodsArray: FoodGroupArray, sortBy: string) => {
+const sortFoodsSearched = (foodsArray: FoodHitsGroupArray, sortBy: string) => {
   switch (sortBy) {
     case FilterSortTypes.higherCalories:
       return sortByHigherCalories(foodsArray);

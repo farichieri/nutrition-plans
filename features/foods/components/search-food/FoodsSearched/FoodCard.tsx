@@ -1,6 +1,6 @@
 import { AddFoodToLibrary } from "@/features/library";
 import { FC } from "react";
-import { Food } from "@/features/foods/types";
+import { Food, FoodHit } from "@/features/foods/types";
 import { formatTwoDecimals } from "@/utils";
 import { selectAuthSlice } from "@/features/authentication";
 import { useSelector } from "react-redux";
@@ -8,7 +8,7 @@ import BlurImage from "@/components/blur-image";
 import Link from "next/link";
 
 interface Props {
-  food: Food;
+  food: FoodHit;
 }
 
 const FoodCard: FC<Props> = ({ food }) => {

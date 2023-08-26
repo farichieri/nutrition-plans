@@ -4,14 +4,14 @@ import {
   filterObject,
   sortFoodsSearched,
 } from "@/utils/filter";
-import { FoodGroup, FoodGroupArray } from "../types";
+import { FoodHitsGroup, FoodHitsGroupArray } from "../types";
 import { FilterQueries, FilterSortTypes } from "@/types";
 
 const getFoodsFiltered = (
-  foodsToFilter: FoodGroup,
+  foodsToFilter: FoodHitsGroup,
   queries: FilterQueries
-): FoodGroupArray => {
-  let foodsFiltered: FoodGroup = queries.kind
+): FoodHitsGroupArray => {
+  let foodsFiltered: FoodHitsGroup = queries.kind
     ? filterObject(foodsToFilter, "kind", queries.kind)
     : foodsToFilter;
 
@@ -32,7 +32,7 @@ const getFoodsFiltered = (
     ? filterByNutrientRange(foodsFiltered, queries.fatsRange, "fats")
     : foodsFiltered;
 
-  const foodsSorted: FoodGroupArray = queries.sort
+  const foodsSorted: FoodHitsGroupArray = queries.sort
     ? sortFoodsSearched(Object.values(foodsFiltered), queries.sort)
     : sortFoodsSearched(Object.values(foodsFiltered), FilterSortTypes.rating);
 
@@ -40,10 +40,10 @@ const getFoodsFiltered = (
 };
 
 const getFoodsSorted = (
-  foodsToSort: FoodGroup,
+  foodsToSort: FoodHitsGroup,
   queries: FilterQueries
-): FoodGroupArray => {
-  const foodsSorted: FoodGroupArray = queries.sort
+): FoodHitsGroupArray => {
+  const foodsSorted: FoodHitsGroupArray = queries.sort
     ? sortFoodsSearched(Object.values(foodsToSort), queries.sort)
     : sortFoodsSearched(Object.values(foodsToSort), FilterSortTypes.rating);
 

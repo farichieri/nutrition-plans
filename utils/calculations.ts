@@ -31,7 +31,7 @@ const lbsToKgs = ({ pounds }: { pounds: number }): number => {
 };
 
 const ltsToFluidOnces = ({ lts }: { lts: number }): number => {
-  let fluidOnces = lts / L_TO_FO;
+  let fluidOnces = lts * L_TO_FO;
   return formatTwoDecimals(fluidOnces);
 };
 

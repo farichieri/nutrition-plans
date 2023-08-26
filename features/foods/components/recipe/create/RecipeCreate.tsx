@@ -20,7 +20,7 @@ import { BiSolidPieChartAlt2 } from "react-icons/bi";
 import { FC, useEffect, useState } from "react";
 import { generateOptions } from "@/utils";
 import { getNutritionMerged, getRecipeSize } from "@/utils/nutritionHelpers";
-import { NewFood } from "@/types/initial";
+import { NewFood } from "@/features/foods";
 import { schema } from "./utils";
 import { selectAuthSlice } from "@/features/authentication";
 import { toast } from "react-hot-toast";
@@ -104,7 +104,6 @@ const RecipeCreate: FC<Props> = () => {
     if (res.result === "success") {
       setNewImageFile(undefined);
       dispatch(setNewRecipeState(NewFood));
-      dispatch(addNewFood(res.data));
       router.push(`/app/food/${res.data.id}`);
       toast.success("Recipe created successfully");
     } else {
@@ -222,6 +221,10 @@ const RecipeCreate: FC<Props> = () => {
                 {...register("servingAmount", { valueAsNumber: true, min: 0 })}
               />
               <div className="my-5">
+                <div className="text-sm opacity-70">
+                  1 Serving (as default serving) will be compounded of the
+                  ingredients you add to the recipe
+                </div>
                 <h1 className="text-xl">Extra scales {`(optional)`}</h1>
                 <div className="relative">
                   <ExtraScales

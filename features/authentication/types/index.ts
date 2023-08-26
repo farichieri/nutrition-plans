@@ -3,7 +3,6 @@ import {
   NewsletterChoices,
   PlansEnum,
   StartsOfWeek,
-  SubscriptionState,
 } from "@/types";
 
 export interface User {
@@ -21,14 +20,16 @@ export interface User {
   lang: string;
   measurementUnit: MeasurementUnitsT;
   newsletter: NewsletterChoices;
+  notificationsArchived: string[];
   nutritionTargets: NutritionTargets;
   planSelected: PlansEnum | null;
   ratings: Ratings;
   startOfWeek: StartsOfWeek;
-  subscriptionState: SubscriptionState;
+  tours: Tours;
   weightGoal: WeightGoal;
   welcomeStep: UserStepsT;
-  tours: Tours;
+  stripeId?: string;
+  stripeLink?: string;
 }
 
 export interface Tours {
@@ -74,18 +75,18 @@ export interface WeightGoal {
 }
 
 export interface NutritionTargets {
-  calories: number | null;
+  calories: number;
   carbohydrates: {
-    min: number | null;
-    max: number | null;
+    min: number;
+    max: number;
   };
   proteins: {
-    min: number | null;
-    max: number | null;
+    min: number;
+    max: number;
   };
   fats: {
-    min: number | null;
-    max: number | null;
+    min: number;
+    max: number;
   };
 }
 
@@ -162,18 +163,18 @@ export const newRatings: Ratings = {
 };
 
 export const newNutritionTargets: NutritionTargets = {
-  calories: null,
+  calories: 0,
   carbohydrates: {
-    min: null,
-    max: null,
+    min: 0,
+    max: 0,
   },
   proteins: {
-    min: null,
-    max: null,
+    min: 0,
+    max: 0,
   },
   fats: {
-    min: null,
-    max: null,
+    min: 0,
+    max: 0,
   },
 };
 
@@ -215,9 +216,9 @@ export const newAccount: User = {
   planSelected: null,
   ratings: newRatings,
   startOfWeek: StartsOfWeek.Sunday,
-  subscriptionState: SubscriptionState.Free,
   weightGoal: initialWeightGoal,
   welcomeStep: UserSteps.step_1,
+  notificationsArchived: [],
   tours: {
     createFood: false,
     createRecipe: false,

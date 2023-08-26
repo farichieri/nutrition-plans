@@ -1,6 +1,6 @@
 import "nprogress/nprogress.css";
 import "@/styles/globals.css";
-import { auth } from "@/services/firebase/firebase.config";
+import { auth } from "@/services/firebase";
 import { getAnalytics, logEvent, setUserId } from "firebase/analytics";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "@/store";

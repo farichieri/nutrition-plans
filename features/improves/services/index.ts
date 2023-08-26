@@ -1,5 +1,5 @@
 import { collection, doc, setDoc } from "firebase/firestore";
-import { db } from "../../../services/firebase/firebase.config";
+import { db } from "../../../services/firebase";
 import { UserMeal } from "@/features/meals";
 import { PlansEnum, Result } from "@/types";
 
