@@ -1,4 +1,5 @@
 import {
+  useArchiveAllNotificationsMutation,
   useArchiveNotificationMutation,
   useFetchNotificationsQuery,
   useUnarchiveNotificationMutation,
@@ -20,15 +21,16 @@ interface Props {}
 const Notifications: FC<Props> = () => {
   const { user } = useSelector(selectAuthSlice);
   const [closeDrop, setCloseDrop] = useState(false);
-  const [activeTab, setActiveTab] = useState<string>("inbox");
+  const [activeTab, setActiveTab] = useState<"inbox" | "archived">("inbox");
   const [idsLoading, setIdsLoading] = useState<string[]>([]);
   const notifications = useSelector(selectNotificationsSlice);
 
   const { isFetching, isLoading } = useFetchNotificationsQuery({ user });
   const [archiveNotificationMutation] = useArchiveNotificationMutation();
   const [unarchiveNotification] = useUnarchiveNotificationMutation();
+  const [archiveAllNotifications] = useArchiveAllNotificationsMutation();
 
-  const TABS = [
+  const TABS: { title: string; icon: any; id: "inbox" | "archived" }[] = [
     {
       title: "Inbox",
       icon: <MdOutlineNotifications />,
@@ -66,6 +68,27 @@ const Notifications: FC<Props> = () => {
     }
   };
 
+  const handleArchiveAll = async () => {
+    if (!user) return;
+    if (idsLoading.length > 0) return;
+    try {
+      setIdsLoading([...idsLoading, "all"]);
+      const notificationIDS = Object.values(
+        notifications[activeTab as "inbox" | "archived"]
+      ).map((item) => item.id);
+      const res = await archiveAllNotifications({
+        user,
+        notificationIDS: notificationIDS,
+      });
+      if ("error" in res) throw new Error("Error archiving notifications");
+    } catch (error) {
+      toast.error("Something went wrong");
+      console.log({ error });
+    } finally {
+      setIdsLoading(idsLoading.filter((item) => item !== "all"));
+    }
+  };
+
   return (
     <DropDown
       closeDrop={closeDrop}
@@ -81,7 +104,11 @@ const Notifications: FC<Props> = () => {
         </RoundButton>
       }
     >
-      <div className="w-64 overflow-hidden s:w-80 sm:w-96">
+      <div
+        className={`w-64 overflow-hidden s:w-80 sm:w-96 ${
+          activeTab === "inbox" && "pb-8 "
+        }`}
+      >
         <div className="flex items-center justify-between border-b ">
           {TABS.map((tab) => (
             <button
@@ -97,7 +124,7 @@ const Notifications: FC<Props> = () => {
             </button>
           ))}
         </div>
-        <div className="h-96 w-full overflow-y-auto">
+        <div className="relative h-96 w-full overflow-y-auto">
           {!Object.values(notifications[activeTab as "inbox" | "archived"])
             .length ? (
             <div className="flex h-full flex-col items-center justify-center">
@@ -163,6 +190,21 @@ const Notifications: FC<Props> = () => {
             </div>
           )}
         </div>
+        {activeTab === "inbox" &&
+          Object.values(notifications.inbox).length > 0 && (
+            <div className="absolute bottom-0 flex h-8 w-full items-center justify-center border-t bg-tertiary-color">
+              <button
+                className="text-xs text-gray-500"
+                onClick={handleArchiveAll}
+              >
+                {idsLoading.includes("all") ? (
+                  <Spinner customClass="ml-1 h-4 w-4" />
+                ) : (
+                  "Archive all"
+                )}
+              </button>
+            </div>
+          )}
       </div>
     </DropDown>
   );

@@ -23,6 +23,10 @@ export const notificationsSlice = createSlice({
       state.archived[id] = state.inbox[id];
       delete state.inbox[id];
     },
+    setArchiveAllNotifications: (state) => {
+      state.archived = { ...state.archived, ...state.inbox };
+      state.inbox = {};
+    },
     setUnarchiveNotification: (
       state,
       action: PayloadAction<{ id: string }>
@@ -72,6 +76,7 @@ export const {
   setUnarchiveNotification,
   setNotifications,
   setAddNewNotification,
+  setArchiveAllNotifications,
 } = notificationsSlice.actions;
 
 export const selectNotificationsSlice = (state: RootState) =>

@@ -5,6 +5,7 @@ import {
 } from "@/services/firebase";
 import {
   setAddNewNotification,
+  setArchiveAllNotifications,
   setArchiveNotification,
   setNotifications,
   setUnarchiveNotification,
@@ -26,16 +27,16 @@ export const notificationsApi = api.injectEndpoints({
         try {
           let data: NotificationsGroup = {};
           const collRef = notificationsCollection;
-          // fetch all notifications created after the user was created
           const q = query(collRef, where("isVisible", "==", true));
-          const querySnapshot = await getDocs(q);
+
+          const promises = Promise.all([
+            getDocs(q),
+            getDocs(userNotificationsCollection(user.id)),
+          ]);
+          const [querySnapshot, userQuerySnapshot] = await promises;
           querySnapshot.forEach((notification: any) => {
             data[notification.id] = notification.data();
           });
-
-          // fetch all user notifications
-          const userCollRef = userNotificationsCollection(user.id);
-          const userQuerySnapshot = await getDocs(userCollRef);
           userQuerySnapshot.forEach((notification: any) => {
             const notificationData = notification.data() as Notification;
             data[notification.id] = {
@@ -43,7 +44,6 @@ export const notificationsApi = api.injectEndpoints({
             };
           });
 
-          console.log({ data });
           const archivedIds = user.notificationsArchived || [];
           dispatch(setNotifications({ notifications: data, archivedIds }));
           return { data: data };
@@ -85,7 +85,40 @@ export const notificationsApi = api.injectEndpoints({
           return { error };
         }
       },
-      invalidatesTags: ["notifications"],
+      // invalidatesTags: ["notifications"],
+    }),
+    archiveAllNotifications: build.mutation<User, unknown>({
+      async queryFn(
+        { user, notificationIDS }: { user: User; notificationIDS: string[] },
+        { dispatch }
+      ) {
+        console.log("Executing: archiveAllNotifications");
+        try {
+          const newArchived = [
+            ...user.notificationsArchived,
+            ...notificationIDS,
+          ];
+          const res = await updateUser({
+            user,
+            fields: { notificationsArchived: newArchived },
+          });
+          if (res.result === "error") throw new Error("Error updating user");
+          dispatch(setArchiveAllNotifications());
+          dispatch(
+            setUpdateUser({
+              user,
+              fields: {
+                notificationsArchived: newArchived,
+              },
+            })
+          );
+          return { data: res.data };
+        } catch (error) {
+          console.log({ error });
+          return { error };
+        }
+      },
+      // invalidatesTags: ["notifications"],
     }),
     unarchiveNotification: build.mutation<User, unknown>({
       async queryFn(
@@ -97,8 +130,6 @@ export const notificationsApi = api.injectEndpoints({
           const notificationsArchived = user.notificationsArchived.filter(
             (id) => id !== notificationID
           );
-          console.log({ notificationsArchived });
-
           // There should be an updateUser mutation and therefore no need to dispatch
           const res = await updateUser({
             user,
@@ -118,7 +149,7 @@ export const notificationsApi = api.injectEndpoints({
           return { error };
         }
       },
-      invalidatesTags: ["notifications"],
+      // invalidatesTags: ["notifications"],
     }),
     createNotification: build.mutation<Notification, unknown>({
       async queryFn(
@@ -144,7 +175,7 @@ export const notificationsApi = api.injectEndpoints({
           return { error };
         }
       },
-      invalidatesTags: ["notifications"],
+      // invalidatesTags: ["notifications"],
     }),
   }),
   // @ts-ignore
@@ -156,4 +187,5 @@ export const {
   useCreateNotificationMutation,
   useFetchNotificationsQuery,
   useUnarchiveNotificationMutation,
+  useArchiveAllNotificationsMutation,
 } = notificationsApi;

@@ -83,21 +83,6 @@ export interface FoodGroup {
 
 export interface FoodGroupArray extends Array<Food> {}
 
-// export interface FoodHit {
-//   compatiblePlans: CompatiblePlans;
-//   description: string;
-//   id: string;
-//   imageURL: string;
-//   ingredientsDescriptions: string[];
-//   ingredientsNames: string[];
-//   isCurated: boolean;
-//   kind: FoodKind;
-//   likes: number;
-//   name: string;
-//   nutrients: FoodNutrients;
-//   uploaderID: string;
-// }
-
 export type FoodHit = Pick<
   Food,
   | "compatiblePlans"

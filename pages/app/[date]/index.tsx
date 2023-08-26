@@ -11,7 +11,7 @@ import { selectAuthSlice } from "@/features/authentication";
 import { selectPlansSlice, updateDietNutrition } from "@/features/plans/slice";
 import { StartsOfWeek } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { useTour } from "@/features/tours";
 import { useWindowWidth } from "@/hooks";
 import PremiumLayout from "@/layouts/PremiumLayout";
@@ -26,7 +26,7 @@ interface Props {
 export default function Page({ date }: { date: Props }) {
   const dispatch = useDispatch();
   const { diets } = useSelector(selectPlansSlice);
-  const { user, isFirstDataLoaded } = useSelector(selectAuthSlice);
+  const { user } = useSelector(selectAuthSlice);
   const realDate = getRealDate({
     date: String(date),
     userStartOfWeek: user?.startOfWeek || StartsOfWeek.Sunday,
@@ -99,13 +99,15 @@ export default function Page({ date }: { date: Props }) {
             >
               <DaySelector date={String(date)} baseURL={"/app/"} />
             </SubPremiumNav>
-            <div className="px-2 sm:px-4 lg:px-5">
-              {getIsWeek(realDate) ? (
-                <MultipleDaysPlan dateInterval={realDate} />
-              ) : (
-                <DayPlan date={realDate} />
-              )}
-            </div>
+            <Suspense fallback={<div>Loading...</div>}>
+              <div className="px-2 sm:px-4 lg:px-5">
+                {getIsWeek(realDate) ? (
+                  <MultipleDaysPlan dateInterval={realDate} />
+                ) : (
+                  <DayPlan date={realDate} />
+                )}
+              </div>
+            </Suspense>
           </>
         )}
       </section>
