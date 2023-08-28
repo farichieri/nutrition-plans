@@ -18,7 +18,7 @@ import { setDiets } from "@/features/plans/slice";
 import { SubscribeModal } from "@/components";
 import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import { useOnlineStatus, useWindowWidth } from "@/hooks";
 import { useRouter } from "next/router";
 import ConnectionError from "@/components/Layout/ConnectionError";
@@ -61,6 +61,7 @@ export default function PremiumLayout({ children }: Props) {
       if (!user) return;
       if (isFirstDataLoaded) return;
       try {
+        console.log("Fetching Data");
         const [progressRes, userMealsRes, mealsSettings, thisWeekDiets] =
           await Promise.all([
             fetchProgress(user),
@@ -100,6 +101,7 @@ export default function PremiumLayout({ children }: Props) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>NutritionPlans - App</title>
       </Head>
+
       {isSubscribeModalOpen && <SubscribeModal />}
       {(isCreatingUser || isSigningUser) && <Loader />}
       {user && user.isProfileCompleted && <WelcomeSteps />}

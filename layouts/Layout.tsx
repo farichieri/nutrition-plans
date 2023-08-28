@@ -13,7 +13,7 @@ import { Inter } from "next/font/google";
 import { isAppVersionCorrect } from "@/utils";
 import { onAuthStateChanged } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Head from "next/head";
 import useTheme from "@/hooks/useTheme";
 
@@ -92,7 +92,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             translate="no"
             className="min-w-screen flex min-h-screen flex-col items-center justify-between "
           >
-            {children}
+            <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
           </main>
         </div>
       )}

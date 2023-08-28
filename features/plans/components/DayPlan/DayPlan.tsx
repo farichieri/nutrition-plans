@@ -42,6 +42,11 @@ const DayPlan: FC<Props> = ({ date }) => {
       getDayDiet(date, user);
     }
     setIsGeneratingPlan(false);
+    const fakeTimeoutPromise = async () => {
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+      console.log("fakeTimeoutPromise");
+    };
+    fakeTimeoutPromise();
   }, [date]);
 
   if (!user) return <></>;

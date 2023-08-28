@@ -21,9 +21,9 @@ import type { Notification, NotificationsGroup } from "../types";
 
 export const notificationsApi = api.injectEndpoints({
   endpoints: (build) => ({
-    fetchNotifications: build.query<NotificationsGroup, unknown>({
-      async queryFn({ user }: { user: User }, { dispatch }) {
-        console.log("Executing: fetchNotifications");
+    getNotifications: build.query<NotificationsGroup, { user: User }>({
+      async queryFn({ user }, { dispatch }) {
+        console.log("Executing: getNotifications");
         try {
           let data: NotificationsGroup = {};
           const collRef = notificationsCollection;
@@ -54,11 +54,11 @@ export const notificationsApi = api.injectEndpoints({
       },
       providesTags: ["notifications"],
     }),
-    archiveNotification: build.mutation<User, unknown>({
-      async queryFn(
-        { user, notificationID }: { user: User; notificationID: string },
-        { dispatch }
-      ) {
+    archiveNotification: build.mutation<
+      User,
+      { user: User; notificationID: string }
+    >({
+      async queryFn({ user, notificationID }, { dispatch }) {
         console.log("Executing: archiveNotification");
         try {
           const notificationsArchived = [
@@ -85,13 +85,13 @@ export const notificationsApi = api.injectEndpoints({
           return { error };
         }
       },
-      // invalidatesTags: ["notifications"],
+      invalidatesTags: ["notifications"],
     }),
-    archiveAllNotifications: build.mutation<User, unknown>({
-      async queryFn(
-        { user, notificationIDS }: { user: User; notificationIDS: string[] },
-        { dispatch }
-      ) {
+    archiveAllNotifications: build.mutation<
+      User,
+      { user: User; notificationIDS: string[] }
+    >({
+      async queryFn({ user, notificationIDS }, { dispatch }) {
         console.log("Executing: archiveAllNotifications");
         try {
           const newArchived = [
@@ -118,7 +118,7 @@ export const notificationsApi = api.injectEndpoints({
           return { error };
         }
       },
-      // invalidatesTags: ["notifications"],
+      invalidatesTags: ["notifications"],
     }),
     unarchiveNotification: build.mutation<User, unknown>({
       async queryFn(
@@ -149,7 +149,7 @@ export const notificationsApi = api.injectEndpoints({
           return { error };
         }
       },
-      // invalidatesTags: ["notifications"],
+      invalidatesTags: ["notifications"],
     }),
     createNotification: build.mutation<Notification, unknown>({
       async queryFn(
@@ -175,7 +175,7 @@ export const notificationsApi = api.injectEndpoints({
           return { error };
         }
       },
-      // invalidatesTags: ["notifications"],
+      invalidatesTags: ["notifications"],
     }),
   }),
   // @ts-ignore
@@ -185,7 +185,7 @@ export const notificationsApi = api.injectEndpoints({
 export const {
   useArchiveNotificationMutation,
   useCreateNotificationMutation,
-  useFetchNotificationsQuery,
+  useGetNotificationsQuery,
   useUnarchiveNotificationMutation,
   useArchiveAllNotificationsMutation,
 } = notificationsApi;
