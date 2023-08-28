@@ -1,10 +1,17 @@
 import { createDiet } from "./createDiet";
-import { FoodHitsGroup, fetchFoods } from "@/features/foods";
+import {
+  Food,
+  FoodGroup,
+  FoodHitsGroup,
+  FoodType,
+  fetchFoodByID,
+  fetchFoods,
+} from "@/features/foods";
 import type { Diet, DietMeal, PlanTypes } from "../types";
 import type { NutritionTargets, User } from "@/features/authentication";
 import type { PlansEnum, Result } from "@/types";
 import type { UserMeals } from "@/features/meals";
-import { getNutritionMerged } from "@/utils";
+import { updateFoodScaleAndNutrients } from "@/utils";
 
 const calculateMealsNutrtionTargets = ({
   meals,
@@ -44,7 +51,11 @@ const getPlanFoods = async ({
   }
 };
 
-const buildMealFoods = ({
+const getRandomNum = (length: number) => {
+  return Math.floor(Math.random() * length);
+};
+
+const buildMealFoods = async ({
   planFoods,
   meal,
   calories,
@@ -52,55 +63,123 @@ const buildMealFoods = ({
   planFoods: FoodHitsGroup;
   meal: DietMeal;
   calories: number;
-}) => {
-  let reachedCalories = 0;
-  let newFoods: FoodHitsGroup = {};
-  const foodsPerMeal = 3;
+}): Promise<Result<FoodGroup, unknown>> => {
+  try {
+    let reachedCalories = 0;
+    let newFoods: FoodGroup = {};
+    const foodsPerMeal = 1;
+    const planFoodsArr = Object.values(planFoods);
+    // Check if type of food is allowed in the meal.
+    const planFoodsTypeArr = planFoodsArr.filter(
+      (food) => food.type[meal.type as keyof FoodType] === true
+    );
+    const length = Object.keys(planFoodsTypeArr).length;
 
-  console.log({ calories });
+    const promises = Array.from({ length: foodsPerMeal }).map(async () => {
+      const randomIndex = getRandomNum(length);
+      const randomFoodId = planFoodsTypeArr[randomIndex].id;
 
-  console.log({ newFoods });
+      const res = await fetchFoodByID(randomFoodId!);
+      if (res.result === "error") throw new Error("Error fetching food");
+      const food: Food = res.data;
+
+      // const { calories: foodCalories } = getNutritionMerged(food);
+      reachedCalories += Number(food.nutrients.calories);
+      newFoods[food.id!] = {
+        ...food,
+        dietID: meal.dietID,
+        dietMealID: meal.id,
+      };
+    });
+    await Promise.all(promises);
+
+    // If the calories are not reached, re-scale the foods.
+    if (reachedCalories < calories) {
+      const difference = calories - reachedCalories;
+      const diffRatio = difference / reachedCalories;
+      const newFoodsArr = Object.values(newFoods);
+
+      console.log({ calories, reachedCalories, difference, diffRatio });
+
+      newFoodsArr.map((food) => {
+        const scalesMerged = food.scales;
+        const scale = scalesMerged.find((scale) => scale.isDefault === true);
+        if (scale) {
+          const scaleAmount =
+            scale.scaleAmount + (scale.scaleAmount * 100) / diffRatio;
+          const scaleName = scale.scaleName;
+
+          console.log({ scaleAmount, scaleName, food });
+
+          const newFood = updateFoodScaleAndNutrients({
+            food,
+            scaleAmount,
+            scaleName,
+          });
+
+          console.log({ newFood });
+          newFoods[food.id!] = newFood;
+        }
+      });
+    }
+
+    console.log({ calories, reachedCalories });
+    console.log({ newFoods });
+    return { result: "success", data: newFoods };
+  } catch (error) {
+    console.log({ error });
+    return { result: "error", error };
+  }
 };
 
 const createDietAutomatically = async ({
+  date,
   meals,
   planID,
   type,
   user,
 }: {
+  date: string;
   meals: UserMeals;
   planID: PlansEnum;
   type: PlanTypes;
   user: User;
 }): Promise<Result<Diet, unknown>> => {
   try {
-    const emptyDiet = createDiet({
+    // Create the diet. (Empty)
+    let newDiet = createDiet({
       meals,
       planID,
       type,
       user,
+      date,
     });
-    console.log({ emptyDiet });
+    console.log({ newDiet });
+    let newMeals = newDiet.meals;
 
-    let newMeals = emptyDiet.meals;
-
-    // All equal
+    // Calculate the nutrition targets for each meal. (in this case it's Equally distributed)
     const { calories } = calculateMealsNutrtionTargets({
       meals,
       totalTargets: user.nutritionTargets,
     });
 
+    // Get the foods of the plan.
     const res = await getPlanFoods({ planID, user });
     if (res.result === "error") throw new Error("Error fetching plan foods");
     const planFoods = res.data;
-    console.log({ planFoods });
 
-    for (const mealID in newMeals) {
-      const meal = newMeals[mealID];
-      const newFoods = buildMealFoods({ planFoods, meal, calories });
-      // newMeals[mealID].foods = newFoods;
-    }
-    return { result: "success", data: emptyDiet };
+    const promises = Object.values(newMeals).map(async (meal) => {
+      const res = await buildMealFoods({ planFoods, meal, calories });
+      if (res.result === "error") throw new Error("Error building meal foods");
+      newMeals[meal.id!].foods = res.data;
+    });
+    await Promise.all(promises);
+
+    // Update the diet with the new meals.
+    newDiet.meals = newMeals;
+
+    console.log({ newDiet });
+    return { result: "success", data: newDiet };
   } catch (error) {
     console.log({ error });
     return { result: "error", error };

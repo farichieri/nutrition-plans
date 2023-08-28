@@ -24,6 +24,7 @@ import MealsLayout from "@/layouts/MealsLayout";
 import Modal from "@/components/Modal/Modal";
 import FormSelect from "@/components/Form/FormSelect";
 import { toast } from "react-hot-toast";
+import { FoodTypesEnum } from "@/features/foods";
 
 export default function Page() {
   const dispatch = useDispatch();
@@ -32,6 +33,9 @@ export default function Page() {
   const { newMealState } = useSelector(selectMealsSlice);
   const [isCreating, setIsCreating] = useState(false);
   const sizeOptions = Object.keys(MealSizes).filter((i) => isNaN(Number(i)));
+  const typeOptions = Object.keys(FoodTypesEnum).filter((i) =>
+    isNaN(Number(i))
+  );
   const timeOptions = Object.keys(MealMinutes).filter((i) => isNaN(Number(i)));
   const complexityOptions = Object.keys(MealComplexities).filter((i) =>
     isNaN(Number(i))
@@ -139,6 +143,19 @@ export default function Page() {
                 <FormSelect
                   customClass={""}
                   handleChange={handleChange}
+                  id={"type"}
+                  isRequired={true}
+                  labelText={"Meal Type"}
+                  name={"type"}
+                  title={"Meal Type"}
+                  options={generateOptions(typeOptions)}
+                  value={FoodTypesEnum.isBreakfast}
+                />
+              </div>
+              <div className="w-full flex-col">
+                <FormSelect
+                  customClass={""}
+                  handleChange={handleChange}
                   id={"size"}
                   isRequired={true}
                   labelText={"Meal Size"}
@@ -180,7 +197,7 @@ export default function Page() {
                   handleChange={handleChange}
                   id={"isCookeable"}
                   isRequired={true}
-                  labelText={"isCookeable"}
+                  labelText={"Cookeable"}
                   name={"isCookeable"}
                   title={"Meal cook"}
                   options={generateOptions(cookOptions)}

@@ -175,6 +175,7 @@ const defaultMeals: UserMealsArr = [
     size: MealSizes.Normal,
     time: MealMinutes.less_than_30_min,
     complexity: MealComplexities.moderate,
+    type: "isBreakfast",
   },
   {
     isCookeable: true,
@@ -185,6 +186,7 @@ const defaultMeals: UserMealsArr = [
     size: MealSizes.Normal,
     time: MealMinutes.less_than_30_min,
     complexity: MealComplexities.moderate,
+    type: "isLunch",
   },
   {
     isCookeable: true,
@@ -195,6 +197,7 @@ const defaultMeals: UserMealsArr = [
     size: MealSizes.Normal,
     time: MealMinutes.less_than_30_min,
     complexity: MealComplexities.moderate,
+    type: "isDinner",
   },
   {
     isCookeable: true,
@@ -205,6 +208,7 @@ const defaultMeals: UserMealsArr = [
     size: MealSizes.Normal,
     time: MealMinutes.less_than_30_min,
     complexity: MealComplexities.moderate,
+    type: "isSnack",
   },
 ];
 

@@ -63,8 +63,12 @@ export const plansSlice = createSlice({
         }
       }
     },
-    setDiet: (state, action: PayloadAction<Diet>) => {
+    setDiet: (
+      state,
+      action: PayloadAction<Diet | { date: string; id: undefined }>
+    ) => {
       const { date, id } = action.payload;
+
       if (date && id) {
         state.diets[date] = action.payload;
       } else if (date && !id) {

@@ -97,6 +97,7 @@ export type FoodHit = Pick<
   | "name"
   | "nutrients"
   | "uploaderID"
+  | "type"
 >;
 
 export interface FoodHitsGroup {
@@ -112,12 +113,14 @@ export interface FoodType {
   isSnack: boolean;
 }
 
-export enum FoodTypesEnum {
-  isBreakfast = "isBreakfast",
-  isDinner = "isDinner",
-  isLunch = "isLunch",
-  isSnack = "isSnack",
-}
+export const FoodTypesEnum = {
+  isBreakfast: "isBreakfast",
+  isDinner: "isDinner",
+  isLunch: "isLunch",
+  isSnack: "isSnack",
+} as const;
+
+export type FoodTypesT = keyof typeof FoodTypesEnum;
 
 export type CompatiblePlans = {
   [key in PlansEnum]: boolean;

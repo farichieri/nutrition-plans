@@ -25,6 +25,25 @@ const formatNutrient = (num: number, nutrient: NutrientsEnum): number => {
   }
 };
 
+const updateFoodScaleAndNutrients = ({
+  food,
+  scaleAmount,
+  scaleName,
+}: {
+  food: Food;
+  scaleAmount: number;
+  scaleName: string;
+}): Food => {
+  let nutrientsUpdated = getNutritionValues(food, scaleAmount, scaleName);
+  let newFood = { ...food };
+
+  newFood.scaleAmount = scaleAmount;
+  newFood.scaleName = scaleName;
+  newFood.nutrients = nutrientsUpdated;
+
+  return newFood;
+};
+
 const getNutritionValues = (
   food: Food,
   scaleAmount: number,
@@ -168,4 +187,5 @@ export {
   getRecipeSize,
   getDietNutrition,
   getDietFoods,
+  updateFoodScaleAndNutrients,
 };

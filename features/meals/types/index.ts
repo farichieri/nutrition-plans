@@ -1,3 +1,5 @@
+import { FoodTypesT } from "@/features/foods";
+
 export interface UserMeal {
   [id: string]: any;
   complexity: MealComplexities;
@@ -8,6 +10,7 @@ export interface UserMeal {
   order: number;
   size: MealSizes;
   time: MealMinutes;
+  type: FoodTypesT | null;
 }
 
 export enum MealCook {
@@ -78,12 +81,13 @@ export interface UserMealsArr extends Array<UserMeal> {}
 
 // Initial
 export const NewMealSetting: UserMeal = {
-  isCookeable: true,
+  complexity: MealComplexities.moderate,
   id: null,
+  isCookeable: true,
   mealSettingId: null,
   name: null,
   order: -1,
   size: MealSizes.Normal,
   time: MealMinutes.less_than_30_min,
-  complexity: MealComplexities.moderate,
+  type: null,
 };

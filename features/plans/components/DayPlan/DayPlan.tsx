@@ -31,8 +31,11 @@ const DayPlan: FC<Props> = ({ date }) => {
       setIsLoadingDiet(true);
     }
     const res = await fetchDietByDate({ date, userID: user.id });
+    console.log({ res });
     if (res.result === "success") {
       dispatch(setDiet(res.data));
+    } else {
+      dispatch(setDiet({ date: date, id: undefined }));
     }
     setIsLoadingDiet(false);
   };
@@ -42,11 +45,6 @@ const DayPlan: FC<Props> = ({ date }) => {
       getDayDiet(date, user);
     }
     setIsGeneratingPlan(false);
-    const fakeTimeoutPromise = async () => {
-      await new Promise((resolve) => setTimeout(resolve, 5000));
-      console.log("fakeTimeoutPromise");
-    };
-    fakeTimeoutPromise();
   }, [date]);
 
   if (!user) return <></>;

@@ -1,5 +1,4 @@
 import {
-  notificationsApi,
   useArchiveAllNotificationsMutation,
   useArchiveNotificationMutation,
   useGetNotificationsQuery,

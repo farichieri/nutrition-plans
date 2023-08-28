@@ -24,7 +24,8 @@ const fetchDietByDate = async ({
   try {
     const docRef = doc(db, "users", userID, "diets", date);
     const querySnapshot = await getDoc(docRef);
-    const data: any = (querySnapshot.data() as Diet) || {};
+    const data: any = querySnapshot.data() as Diet;
+    if (!data) throw new Error("No diet fetched");
     return { result: "success", data };
   } catch (error) {
     return { result: "error", error };

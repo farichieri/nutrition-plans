@@ -4,7 +4,6 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <link rel="icon" href="/images/pwa/favicon.ico" />
         <link
           rel="apple-touch-icon"
           sizes="180x180"

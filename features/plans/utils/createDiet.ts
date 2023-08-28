@@ -12,12 +12,19 @@ import { User, getNutritionTargets } from "@/features/authentication";
 import { UserMeals, UserMealsArr } from "@/features/meals";
 import { uuidv4 } from "@firebase/util";
 
-const buildDiet = (
-  meals: DietMealGroupArr,
-  plan_id: PlansEnum,
-  type: PlanTypes,
-  user: User
-) => {
+const buildDiet = ({
+  meals,
+  planID,
+  type,
+  user,
+  date,
+}: {
+  meals: DietMealGroupArr;
+  planID: PlansEnum;
+  type: PlanTypes;
+  user: User;
+  date: string;
+}) => {
   const dietMeals: DietMealGroup = {};
   meals.forEach((meal) => {
     if (!meal.id) return;
@@ -29,22 +36,23 @@ const buildDiet = (
   const calories = user.nutritionTargets.calories;
   const nutritionTargets = getNutritionTargets({
     calories: calories,
-    planSelected: plan_id,
+    planSelected: planID,
   });
 
   const diet: Diet = {
     ...NewDiet,
-    date: null,
+    date: date,
     dateCreated: null,
     description: null,
     hideNutritionTargetsDiff: false,
-    id: null,
+    id: date,
     meals: dietMeals,
     name: null,
     nutrients: nutrition,
     nutritionTargets: nutritionTargets,
-    planID: plan_id,
+    planID: planID,
     type: type,
+    userID: user.id,
     water: {
       drunk: false,
       littersDrunk: 0,
@@ -58,9 +66,11 @@ const buildDiet = (
 const generateDietMeals = ({
   userMealsArr,
   planID,
+  dietID,
 }: {
   userMealsArr: UserMealsArr;
   planID: PlansEnum;
+  dietID: string;
 }): DietMealGroup => {
   const meals: DietMealGroup = {};
   const today = getToday();
@@ -71,7 +81,7 @@ const generateDietMeals = ({
       complexity: meal.complexity,
       dateCreated: today,
       description: null,
-      dietID: null,
+      dietID: dietID,
       foods: {},
       id: uuid,
       isCookeable: meal.isCookeable,
@@ -82,6 +92,7 @@ const generateDietMeals = ({
       planID: planID,
       size: meal.size,
       time: meal.time,
+      type: meal.type,
     };
     if (newDietMeal.id) {
       meals[newDietMeal.id] = newDietMeal;
@@ -91,19 +102,32 @@ const generateDietMeals = ({
 };
 
 const createDiet = ({
+  date,
   meals,
   planID,
   type,
   user,
 }: {
+  date: string;
   meals: UserMeals;
   planID: PlansEnum;
   type: PlanTypes;
   user: User;
 }): Diet => {
   const userMealsArr = Object.values(meals);
-  const mealsGenerated = generateDietMeals({ userMealsArr, planID });
-  const diet = buildDiet(Object.values(mealsGenerated), planID, type, user);
+  const mealsGenerated = generateDietMeals({
+    userMealsArr,
+    planID,
+    dietID: date,
+  });
+  const mealsGeneratedArr = Object.values(mealsGenerated);
+  const diet = buildDiet({
+    date,
+    meals: mealsGeneratedArr,
+    planID,
+    type,
+    user,
+  });
   return diet;
 };
 

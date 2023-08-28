@@ -30,6 +30,8 @@ const Plan: FC<Props> = ({ date, setPlanBeingEdited }) => {
     const res = await fetchDietByDate({ date, userID: user.id });
     if (res.result === "success") {
       dispatch(setDiet(res.data));
+    } else {
+      dispatch(setDiet({ date: date, id: undefined }));
     }
     setIsLoadingDiet(false);
   };
