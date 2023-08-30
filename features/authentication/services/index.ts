@@ -1,89 +1,127 @@
-import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
-import { PlansEnum, Result } from "@/types";
+import { api } from "@/services/api";
+import { userDocRef } from "@/services/firebase";
+import { getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { User as FirebaseUser, deleteUser } from "firebase/auth";
-import { User, newAccount } from "@/features/authentication";
-import { db } from "@/services/firebase";
+import {
+  User,
+  newAccount,
+  setLoginError,
+  setUpdateUser,
+  setUser,
+} from "@/features/authentication";
 
-const createNewUser = async (
-  user: FirebaseUser
-): Promise<Result<User, unknown>> => {
-  try {
-    console.log("createNewUser");
-    const { uid, email, photoURL, displayName, metadata } = user;
-    const newUserRef = doc(db, "users", uid);
-    const newUser: User = {
-      ...newAccount,
-      createdAt: metadata.creationTime,
-      displayName: displayName || "",
-      emailAddress: email,
-      imageURL: photoURL,
-      id: uid,
-    };
-    await setDoc(newUserRef, newUser);
-    await fetch("/api/welcome/email", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+export const authApi = api.injectEndpoints({
+  endpoints: (build) => ({
+    getUser: build.query<User, { userID: string | undefined }>({
+      async queryFn({ userID }, { dispatch }) {
+        try {
+          console.log("Executing getUser");
+          if (!userID) throw new Error("No user logged in.");
+          const userRef = userDocRef({ userID });
+          const querySnapshot = await getDoc(userRef);
+          const userData = querySnapshot.data() as User;
+          if (!userData) throw new Error("Error fetching user Data");
+
+          dispatch(setUser(userData));
+
+          return { data: userData };
+        } catch (error) {
+          dispatch(setLoginError());
+          console.log(error);
+          return { error };
+        }
       },
-      body: JSON.stringify({ emailAddress: email, displayName: displayName }),
-    });
-    return { result: "success", data: newUser };
-  } catch (error) {
-    try {
-      await deleteUser(user);
-      console.log("User deleted");
-    } catch (error) {
-      console.log("Error deleting user");
-    }
-    return { result: "error", error };
-  }
-};
+      providesTags: ["auth"],
+    }),
 
-const getUser = async (userID: string): Promise<Result<User, unknown>> => {
-  try {
-    console.log("getUser");
-    const userRef = doc(db, "users", userID);
-    const querySnapshot = await getDoc(userRef);
-    const userData = querySnapshot.data();
-    if (!userData) throw new Error("Error fetching user Data");
-    const user: User = userData as User;
-    return { result: "success", data: user };
-  } catch (error) {
-    console.log(error);
-    return { result: "error", error };
-  }
-};
+    login: build.mutation<User, { userID: string | undefined }>({
+      async queryFn({ userID }, { dispatch }) {
+        try {
+          console.log("Executing login");
+          if (!userID) throw new Error("No user logged in.");
+          const userRef = userDocRef({ userID });
+          const querySnapshot = await getDoc(userRef);
+          const userData = querySnapshot.data() as User;
+          if (!userData) throw new Error("Error fetching user Data");
 
-const updateUser = async ({
-  user,
-  fields,
-}: {
-  user: User;
-  fields: Partial<User>;
-}): Promise<Result<User, unknown>> => {
-  try {
-    const userRef = doc(db, "users", user.id);
-    await updateDoc(userRef, fields);
-    return { result: "success", data: user };
-  } catch (error) {
-    console.log("updateUser", { error });
-    return { result: "error", error };
-  }
-};
+          dispatch(setUser(userData));
 
-const updateUserPlan = async (
-  planID: PlansEnum,
-  user: User
-): Promise<Result<boolean, unknown>> => {
-  try {
-    const userRef = doc(db, "users", user.id);
-    await updateDoc(userRef, {
-      plan_selected: planID,
-    });
-    return { result: "success", data: true };
-  } catch (error) {
-    return { result: "error", error };
-  }
-};
+          return { data: userData };
+        } catch (error) {
+          dispatch(setLoginError());
+          console.log(error);
+          return { error };
+        }
+      },
+      invalidatesTags: ["auth"],
+    }),
 
-export { createNewUser, getUser, updateUser, updateUserPlan };
+    updateUser: build.mutation<User, { user: User; fields: Partial<User> }>({
+      async queryFn({ user, fields }, { dispatch }) {
+        try {
+          console.log("Executing updateUser");
+          const userRef = userDocRef({ userID: user.id });
+          await updateDoc(userRef, fields);
+
+          dispatch(setUpdateUser({ user, fields }));
+
+          return { data: user };
+        } catch (error) {
+          console.log("updateUser", { error });
+          return { error };
+        }
+      },
+      invalidatesTags: ["auth"],
+    }),
+
+    postUser: build.mutation<User, { user: FirebaseUser }>({
+      async queryFn({ user }, { dispatch }) {
+        try {
+          console.log("Executing postUser");
+          const { uid, email, photoURL, displayName, metadata } = user;
+          const userRef = userDocRef({ userID: user.uid });
+          const newUser: User = {
+            ...newAccount,
+            createdAt: metadata.creationTime,
+            displayName: displayName || "",
+            emailAddress: email,
+            imageURL: photoURL,
+            id: uid,
+          };
+          await setDoc(userRef, newUser);
+          await fetch("/api/welcome/email", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              emailAddress: email,
+              displayName: displayName,
+            }),
+          });
+          dispatch(setUser(newUser));
+
+          return { data: newUser };
+        } catch (error) {
+          try {
+            await deleteUser(user);
+            console.log("User deleted");
+          } catch (error) {
+            console.log("Error deleting user");
+          }
+          return { error: error };
+        }
+      },
+      invalidatesTags: ["auth"],
+    }),
+  }),
+  // @ts-ignore
+  overrideExisting: module.hot?.status() === "apply",
+});
+
+export const {
+  useGetUserQuery,
+  useLoginMutation,
+  usePostUserMutation,
+  useUpdateUserMutation,
+} = authApi;

@@ -1,22 +1,20 @@
 import {
-  User,
   selectAuthSlice,
-  setUpdateUser,
-  updateUser,
+  useUpdateUserMutation,
 } from "@/features/authentication";
 import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
 import { FC, FormEvent, useState } from "react";
 import { SubmitButton } from "@/components/Buttons";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
 
 interface Props {}
 
 const SetName: FC<Props> = () => {
-  const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
   const [isLoading, setIsLoading] = useState(false);
   const [input, setInput] = useState(user?.displayName || "");
+  const [updateUser] = useUpdateUserMutation();
 
   if (!user) return <></>;
 
@@ -26,9 +24,10 @@ const SetName: FC<Props> = () => {
       setIsLoading(true);
       const fields = { displayName: input };
       const res = await updateUser({ user, fields });
-      if (res.result === "success") {
-        dispatch(setUpdateUser({ user, fields }));
+      if (!("error" in res)) {
         toast.success("Name updated successfully");
+      } else {
+        throw new Error("Error updating name");
       }
     } catch (error) {
       toast.error("Failed to update name");

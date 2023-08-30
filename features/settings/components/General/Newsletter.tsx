@@ -1,24 +1,23 @@
 import {
   selectAuthSlice,
-  setUpdateUser,
-  updateUser,
+  useUpdateUserMutation,
 } from "@/features/authentication";
 import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
 import { FC, useState } from "react";
 import { NewsletterChoices } from "@/types";
 import { SubmitButton } from "@/components/Buttons";
 import { toast } from "react-hot-toast";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 interface Props {}
 
 const Newsletter: FC<Props> = () => {
-  const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
   const [isLoading, setIsLoading] = useState(false);
   const [userChoice, setUserChoice] = useState<NewsletterChoices>(
     user?.newsletter || NewsletterChoices.Yes
   );
+  const [updateUser] = useUpdateUserMutation();
 
   if (!user) return <></>;
 
@@ -27,8 +26,7 @@ const Newsletter: FC<Props> = () => {
       setIsLoading(true);
       const fields = { newsletter: userChoice };
       const res = await updateUser({ user, fields });
-      if (res.result === "success") {
-        dispatch(setUpdateUser({ user, fields }));
+      if (!("error" in res)) {
         toast.success("Newsletter choice updated");
       } else {
         throw Error;

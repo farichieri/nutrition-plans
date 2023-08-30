@@ -100,6 +100,8 @@ export const progressApi = api.injectEndpoints({
       },
     }),
   }),
+  // @ts-ignore
+  overrideExisting: module.hot?.status() === "apply",
 });
 
 export const {

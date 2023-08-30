@@ -28,7 +28,7 @@ const Notifications: FC<Props> = () => {
   if (!user) return <></>;
 
   useGetNotificationsQuery({ user });
-  const [archiveNotificationMutation] = useArchiveNotificationMutation();
+  const [archiveNotification] = useArchiveNotificationMutation();
   const [unarchiveNotification] = useUnarchiveNotificationMutation();
   const [archiveAllNotifications] = useArchiveAllNotificationsMutation();
 
@@ -54,7 +54,7 @@ const Notifications: FC<Props> = () => {
         const isArchived = user.notificationsArchived?.includes(id);
 
         if (!isArchived) {
-          const res = await archiveNotificationMutation({
+          const res = await archiveNotification({
             notificationID: id,
             user,
           });
@@ -75,7 +75,7 @@ const Notifications: FC<Props> = () => {
         setIdsLoading(idsLoading.filter((item) => item !== id));
       }
     },
-    [idsLoading]
+    [idsLoading, user]
   );
 
   const handleArchiveAll = async () => {

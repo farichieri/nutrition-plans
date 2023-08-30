@@ -1,6 +1,14 @@
-import { doc, getDocs, query, setDoc, where } from "firebase/firestore";
+import {
+  doc,
+  getDocs,
+  query,
+  setDoc,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import {
   notificationsCollection,
+  userDocRef,
   userNotificationsCollection,
 } from "@/services/firebase";
 import {
@@ -10,11 +18,7 @@ import {
   setNotifications,
   setUnarchiveNotification,
 } from "../slice";
-import {
-  setUpdateUser,
-  updateUser,
-  type User,
-} from "@/features/authentication";
+import { setUpdateUser, type User } from "@/features/authentication";
 import { api } from "@/services/api";
 import { formatISO } from "date-fns";
 import type { Notification, NotificationsGroup } from "../types";
@@ -54,6 +58,7 @@ export const notificationsApi = api.injectEndpoints({
       },
       providesTags: ["notifications"],
     }),
+
     archiveNotification: build.mutation<
       User,
       { user: User; notificationID: string }
@@ -65,11 +70,10 @@ export const notificationsApi = api.injectEndpoints({
             ...user.notificationsArchived,
             notificationID,
           ];
-          const res = await updateUser({
-            user,
-            fields: { notificationsArchived },
-          });
-          if (res.result === "error") throw new Error("Error updating user");
+
+          const userRef = userDocRef({ userID: user.id });
+          await updateDoc(userRef, { fields: { notificationsArchived } });
+
           dispatch(setArchiveNotification({ id: notificationID }));
           dispatch(
             setUpdateUser({
@@ -79,7 +83,7 @@ export const notificationsApi = api.injectEndpoints({
               },
             })
           );
-          return { data: res.data };
+          return { data: user };
         } catch (error) {
           console.log({ error });
           return { error };
@@ -87,6 +91,7 @@ export const notificationsApi = api.injectEndpoints({
       },
       invalidatesTags: ["notifications"],
     }),
+
     archiveAllNotifications: build.mutation<
       User,
       { user: User; notificationIDS: string[] }
@@ -98,12 +103,12 @@ export const notificationsApi = api.injectEndpoints({
             ...user.notificationsArchived,
             ...notificationIDS,
           ];
-          const res = await updateUser({
-            user,
+
+          const userRef = userDocRef({ userID: user.id });
+          await updateDoc(userRef, {
             fields: { notificationsArchived: newArchived },
           });
 
-          if (res.result === "error") throw new Error("Error updating user");
           dispatch(setArchiveAllNotifications());
           dispatch(
             setUpdateUser({
@@ -113,7 +118,7 @@ export const notificationsApi = api.injectEndpoints({
               },
             })
           );
-          return { data: res.data };
+          return { data: user };
         } catch (error) {
           console.log({ error });
           return { error };
@@ -131,12 +136,10 @@ export const notificationsApi = api.injectEndpoints({
           const notificationsArchived = user.notificationsArchived.filter(
             (id) => id !== notificationID
           );
-          // There should be an updateUser mutation and therefore no need to dispatch
-          const res = await updateUser({
-            user,
-            fields: { notificationsArchived },
-          });
-          if (res.result === "error") throw new Error("Error updating user");
+
+          const userRef = userDocRef({ userID: user.id });
+          await updateDoc(userRef, { fields: { notificationsArchived } });
+
           dispatch(setUnarchiveNotification({ id: notificationID }));
           dispatch(
             setUpdateUser({
@@ -144,7 +147,7 @@ export const notificationsApi = api.injectEndpoints({
               fields: { notificationsArchived },
             })
           );
-          return { data: res.data };
+          return { data: user };
         } catch (error) {
           console.log({ error });
           return { error };

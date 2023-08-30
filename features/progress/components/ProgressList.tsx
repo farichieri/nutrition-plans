@@ -1,7 +1,6 @@
 import {
   getUserWithNewWeight,
-  setUpdateUser,
-  updateUser,
+  useUpdateUserMutation,
 } from "@/features/authentication";
 import {
   ProgressItem,
@@ -20,6 +19,7 @@ interface Props {}
 const ProgressList: FC<Props> = () => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
+  const [updateUser] = useUpdateUserMutation();
 
   if (!user) return <></>;
 
@@ -57,9 +57,7 @@ const ProgressList: FC<Props> = () => {
           user,
           fields,
         });
-        if (res.result === "success") {
-          dispatch(setUpdateUser({ user, fields }));
-        } else {
+        if ("error" in res) {
           throw new Error("Error updating user weight");
         }
       } catch (error) {

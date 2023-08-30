@@ -1,11 +1,8 @@
 import {
-  getUser,
   selectAuthSlice,
-  setIsFirstDataLoaded,
-  setLoginError,
   setSubscription,
-  setUser,
-  updateUser,
+  useUpdateUserMutation,
+  useLoginMutation,
 } from "@/features/authentication";
 import { auth } from "@/services/firebase";
 import { getUserSubscription, usePremiumStatus } from "@/features/stripe";
@@ -27,11 +24,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const { user } = useSelector(selectAuthSlice);
   const dispatch = useDispatch();
   const isPremium = usePremiumStatus(user);
-
-  useEffect(() => {
-    // To re-fetch data on refresh if user is logged in.
-    dispatch(setIsFirstDataLoaded(false));
-  }, []);
+  const [login] = useLoginMutation();
+  const [updateUser] = useUpdateUserMutation();
 
   useEffect(() => {
     // Verify Version and then log log in.
@@ -42,16 +36,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     if (!isVerifyingVersion) {
       // Verify User
       const unsubscribe = onAuthStateChanged(auth, async (user) => {
-        if (user) {
-          const [userRes] = await Promise.all([getUser(user.uid)]);
-          if (userRes.result === "success") {
-            dispatch(setUser(userRes.data));
-          } else {
-            dispatch(setLoginError());
-          }
-        } else {
-          dispatch(setLoginError());
-        }
+        await login({ userID: user?.uid });
       });
       return () => unsubscribe();
     }
@@ -61,10 +46,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     if (user) {
       if (isPremium !== user.isPremium) {
         const unsubscribe = async () => {
-          const res = await updateUser({ user, fields: { isPremium } });
-          if (res.result === "success") {
-            dispatch(setUser({ ...user, isPremium }));
-          }
+          await updateUser({ user, fields: { isPremium } });
         };
         unsubscribe();
       }

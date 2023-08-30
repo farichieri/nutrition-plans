@@ -1,13 +1,12 @@
 import {
-  createUserMeal,
   selectMealsSlice,
-  setAddNewUserMeal,
+  usePostUserMealMutation,
   UserMeal,
 } from "@/features/meals";
 import { FC } from "react";
 import { selectAuthSlice } from "@/features/authentication";
 import { toast } from "react-hot-toast";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Modal from "@/components/Modal/Modal";
 import SubmitButton from "@/components/Buttons/SubmitButton";
 
@@ -24,9 +23,9 @@ const AddMealSelector: FC<Props> = ({
   setOpenSelector,
   index,
 }) => {
-  const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
   const { mealsSettings } = useSelector(selectMealsSlice);
+  const [postUserMeal] = usePostUserMealMutation();
 
   const handleAddUserMeal = async (mealSetting: UserMeal) => {
     if (!user) return;
@@ -37,9 +36,8 @@ const AddMealSelector: FC<Props> = ({
       order: index,
       mealSetting: mealSetting.id,
     };
-    const res = await createUserMeal(user, newMealSetting);
-    if (!res?.error && res?.mealSettingAdded) {
-      dispatch(setAddNewUserMeal(res.mealSettingAdded));
+    const res = await postUserMeal({ user, userMeal: newMealSetting });
+    if (!("error" in res)) {
       setOpenSelector(false);
       toast.success("Meal added successfully.");
     } else {

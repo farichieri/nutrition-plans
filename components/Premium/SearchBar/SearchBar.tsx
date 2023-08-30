@@ -1,7 +1,7 @@
 import {
-  fetchFoods,
   setFoodsSearched,
   setIsSearchingFoods,
+  useGetFoodsMutation,
 } from "@/features/foods";
 import { FC, useCallback, useEffect, useState } from "react";
 import { FilterQueries } from "@/types";
@@ -23,24 +23,18 @@ const SearchBar: FC<Props> = ({ queries }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
   const [searchInput, setSearchInput] = useState<string>(queries.q || "");
-  const [isSearching, setIsSearching] = useState(false);
   const [showSearchBar, setShowSearchBar] = useState(false);
   const windowWidth = useWindowWidth();
+  const [getFoods, { isLoading: isSearching }] = useGetFoodsMutation();
 
   const fetchData = useCallback(
     async ({ queries }: { queries: FilterQueries }) => {
       if (!user?.id) return;
-      setIsSearching(true);
-      const res = await fetchFoods({
+      await getFoods({
         queries: queries,
         uploaderID: user?.id,
+        user,
       });
-      if (res.result === "success") {
-        dispatch(setFoodsSearched({ foods: res.data, userID: user.id }));
-      } else {
-        dispatch(setFoodsSearched({ foods: {}, userID: user.id }));
-      }
-      setIsSearching(false);
       dispatch(setIsSearchingFoods(false));
     },
     [dispatch, user?.id]

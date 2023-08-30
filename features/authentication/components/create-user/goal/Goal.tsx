@@ -4,8 +4,7 @@ import {
   WeightGoal,
   getNutritionTargets,
   selectAuthSlice,
-  setUpdateUser,
-  updateUser,
+  useUpdateUserMutation,
 } from "@/features/authentication";
 import {
   getWeight,
@@ -22,7 +21,7 @@ import { format, formatISO, parse } from "date-fns";
 import { MdEmojiEvents } from "react-icons/md";
 import { schema } from "./schema";
 import { toast } from "react-hot-toast";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -41,11 +40,11 @@ interface Props {
 }
 
 const Goal: FC<Props> = ({ handleContinue }) => {
-  const dispatch = useDispatch();
   const router = useRouter();
   const { user } = useSelector(selectAuthSlice);
   const isCreatingRoute = router.asPath === AppRoutes.create_user;
   const [isDisabled, setIsDisabled] = useState(false);
+  const [updateUser] = useUpdateUserMutation();
 
   useEffect(() => {
     register("goalSelected");
@@ -180,8 +179,7 @@ const Goal: FC<Props> = ({ handleContinue }) => {
         nutritionTargets: newNutritionTargets,
       };
       const res = await updateUser({ user, fields });
-      if (res.result === "success") {
-        dispatch(setUpdateUser({ user, fields }));
+      if (!("error" in res)) {
         handleContinue();
         if (!isCreatingRoute) {
           toast.success("Your Goal has been updated successfully.");

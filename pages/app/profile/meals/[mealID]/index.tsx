@@ -1,11 +1,5 @@
 import {
   selectMealsSlice,
-  setAddNewMealSetting,
-  setAddNewUserMeal,
-  setDeleteMealSetting,
-  deleteMealSetting,
-  updateMealSetting,
-  updateUserMeal,
   MealComplexities,
   MealComplexitiesType,
   MealCook,
@@ -14,12 +8,15 @@ import {
   MealSizes,
   MealSizesType,
   UserMeal,
+  useUpdateMealSettingMutation,
+  useUpdateUserMealMutation,
+  useDeleteMealSettingMutation,
 } from "@/features/meals";
 import { generateOptions } from "@/utils";
 import { GetServerSideProps } from "next";
 import { selectAuthSlice } from "@/features/authentication";
 import { toast } from "react-hot-toast";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import ActionButton from "@/components/Buttons/ActionButton";
@@ -34,10 +31,8 @@ interface Props {
 }
 export default function Page({ mealID }: Props) {
   const router = useRouter();
-  const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
   const { mealsSettings, meals } = useSelector(selectMealsSlice);
-  const [isDeleting, setIsDeleting] = useState(false);
   const meal = mealsSettings[mealID];
   const [mealState, setMealState] = useState(meal);
   const sizeOptions = Object.keys(MealSizes).filter((i) => isNaN(Number(i)));
@@ -47,6 +42,12 @@ export default function Page({ mealID }: Props) {
   );
   const cookOptions = Object.values(MealCook);
   const [isSaving, setIsSaving] = useState(false);
+  const [updateMealSetting, { isLoading: isUpdating }] =
+    useUpdateMealSettingMutation();
+  const [updateUserMeal, { isLoading: isUpdatingUserMeal }] =
+    useUpdateUserMealMutation();
+  const [deleteMealSetting, { isLoading: isDeleting }] =
+    useDeleteMealSettingMutation();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -96,11 +97,9 @@ export default function Page({ mealID }: Props) {
       if (!user) return;
       if (isSaving) return;
       setIsSaving(true);
-      const res = await updateMealSetting(user, mealState);
-      const { result } = res;
-      if (result === "success") {
+      const res = await updateMealSetting({ user, mealSetting: mealState });
+      if (!("error" in res)) {
         const mealUpdated = res.data;
-        dispatch(setAddNewMealSetting(mealUpdated));
         const updateUserMeals = async () => {
           Object.keys(meals).map(async (meal_id) => {
             let meal = meals[meal_id];
@@ -111,11 +110,10 @@ export default function Page({ mealID }: Props) {
                 id: meal.id,
                 mealSettingId: mealUpdated.id,
               };
-              const res = await updateUserMeal(user, meal);
-              if (res.result === "error")
+              const res = await updateUserMeal({ user, userMeal: meal });
+              if ("error" in res) {
                 throw new Error("Error updating userMeal");
-              const mealSuccessfulyUpdated = res.data;
-              dispatch(setAddNewUserMeal(mealSuccessfulyUpdated));
+              }
             }
           });
         };
@@ -136,19 +134,14 @@ export default function Page({ mealID }: Props) {
     event.preventDefault();
     try {
       if (!user) return;
-      setIsDeleting(true);
-      const res = await deleteMealSetting(user, meal);
-      if (res.result === "success") {
-        router.push("/app/profile/meals").then(() => {
-          dispatch(setDeleteMealSetting(meal));
-        });
+      const res = await deleteMealSetting({ user, mealSetting: meal });
+      if (!("error" in res)) {
+        router.push("/app/profile/meals");
         toast.success("Meal Template deleted successfully.");
       } else {
         toast.error("Error deleting Meal Template.");
       }
-      setIsDeleting(false);
     } catch (error) {
-      setIsDeleting(false);
       console.log({ error });
     }
   };

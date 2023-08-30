@@ -1,11 +1,10 @@
 import {
   setIsCreatingUser,
-  createNewUser,
   setIsSigningUser,
-  getUser,
-  setUser,
   AUTH_ERRORS,
   setLoginError,
+  usePostUserMutation,
+  useLoginMutation,
 } from "@/features/authentication";
 import {
   getAdditionalUserInfo,
@@ -18,6 +17,7 @@ import { emailRegex } from "@/constants";
 import { GoogleLoginButton, SubmitButton } from "@/components/Buttons";
 import { MdOutlineEmail, MdTrendingFlat } from "react-icons/md";
 import { persistor } from "@/store";
+import { toast } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
@@ -51,6 +51,9 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [emailOpen, setEmailOpen] = useState(false);
 
+  const [postUser] = usePostUserMutation();
+  const [login] = useLoginMutation();
+
   const handleLogInWithGoogle = async () => {
     signInWithPopup(auth, provider)
       .then(async (result) => {
@@ -59,13 +62,11 @@ const Login = () => {
         if (additinalInfo?.isNewUser) {
           const user = result.user;
           dispatch(setIsCreatingUser(true));
-          await createNewUser(user);
+          await postUser({ user });
         } else {
-          const userRes = await getUser(result.user.uid);
-          if (userRes.result === "success") {
-            dispatch(setUser(userRes.data));
-          } else {
-            throw new Error("Not userRes found");
+          const res = await login({ userID: result.user.uid });
+          if ("error" in res) {
+            throw new Error("Error getting user");
           }
         }
       })
@@ -75,6 +76,7 @@ const Login = () => {
         persistor.purge();
         const errorCode = error.code;
         setErrorMessage(AUTH_ERRORS[errorCode]);
+        toast.error("Error logging in");
       });
   };
 
@@ -84,11 +86,11 @@ const Login = () => {
         const user = result.user;
         if (user) {
           dispatch(setIsSigningUser(true));
-          const userRes = result.user && (await getUser(result.user.uid));
-          if (userRes.result === "success") {
-            dispatch(setUser(userRes.data));
-          } else {
-            throw new Error("Not userRes found");
+          if (result.user) {
+            const res = await login({ userID: result.user.uid });
+            if ("error" in res) {
+              throw new Error("Error getting user");
+            }
           }
         }
       })

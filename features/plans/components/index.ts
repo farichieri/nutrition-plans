@@ -17,7 +17,6 @@ import MealCards from "./MealCards/MealCards";
 import DietNutrition from "./DietNutrition/DietNutrition";
 import PlanGenerator from "./common/PlanGenerator";
 import PlanGeneratorTypeSelector from "./common/PlanGenerator";
-import PlanSelector from "./common/PlanSelector";
 import ReGenerateMeals from "./common/ReGenerateMeals";
 import SaveAndEditButton from "./common/SaveAndEditButton";
 import Water from "./common/Water";
@@ -33,7 +32,6 @@ export {
   DietNutrition,
   PlanGenerator,
   PlanGeneratorTypeSelector,
-  PlanSelector,
   ReGenerateMeals,
   SaveAndEditButton,
   Water,

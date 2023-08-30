@@ -1,4 +1,4 @@
-import { collection, getFirestore } from "firebase/firestore";
+import { collection, doc, getFirestore } from "firebase/firestore";
 import { getAnalytics, isSupported } from "firebase/analytics";
 import { getStorage } from "firebase/storage";
 import { GoogleAuthProvider, getAuth } from "firebase/auth";
@@ -25,6 +25,32 @@ export const analytics = isSupported().then((yes) =>
 );
 
 // Collections
+
+// Auth
+export const userDocRef = ({ userID }: { userID: string }) =>
+  doc(db, "users", userID);
+
+// Notifications
 export const notificationsCollection = collection(db, "notifications");
 export const userNotificationsCollection = (userID: string) =>
   collection(db, "users", userID, "notifications");
+
+// Meals
+export const userMealsCollection = (userID: string) =>
+  collection(db, "users", userID, "meals");
+export const userMealsSettingsCollection = (userID: string) =>
+  collection(db, "users", userID, "settings", "mealsSettings", "meals");
+export const userMealSettingDoc = ({
+  userID,
+  mealID,
+}: {
+  userID: string;
+  mealID: string;
+}) => doc(db, "users", userID, "settings", "mealsSettings", "meals", mealID);
+export const userMealDoc = ({
+  userID,
+  mealID,
+}: {
+  userID: string;
+  mealID: string;
+}) => doc(db, "users", userID, "meals", mealID);

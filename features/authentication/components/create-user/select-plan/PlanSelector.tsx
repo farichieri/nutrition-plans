@@ -1,8 +1,7 @@
 import {
   getNutritionTargets,
   selectAuthSlice,
-  setUpdateUser,
-  updateUser,
+  useUpdateUserMutation,
 } from "@/features/authentication";
 import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
 import { calculateKCALSRecommended } from "@/features/authentication/utils/calculateBodyData";
@@ -12,7 +11,7 @@ import { MEAL_PLANS } from "@/data/content";
 import { PlansEnum } from "@/types";
 import { schema } from "./schema";
 import { toast } from "react-hot-toast";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -30,9 +29,9 @@ interface Props {
 }
 
 const PlanSelector: FC<Props> = ({ handleContinue }) => {
-  const dispatch = useDispatch();
   const router = useRouter();
   const { user } = useSelector(selectAuthSlice);
+  const [updateUser] = useUpdateUserMutation();
 
   if (!user) return <></>;
 
@@ -96,8 +95,7 @@ const PlanSelector: FC<Props> = ({ handleContinue }) => {
         nutritionTargets: newNutritionTargets,
       };
       const res = await updateUser({ user, fields });
-      if (res.result === "success") {
-        dispatch(setUpdateUser({ user, fields }));
+      if (!("error" in res)) {
         handleContinue();
         if (!isCreatingRoute) {
           toast.success("Your Preferred Plan has been updated successfully.");

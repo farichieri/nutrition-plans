@@ -1,5 +1,4 @@
 import {
-  createMealSetting,
   MealComplexities,
   MealComplexitiesType,
   MealCook,
@@ -9,29 +8,28 @@ import {
   MealSizesType,
   NewMealSetting,
   selectMealsSlice,
-  setAddNewMealSetting,
   setNewMealState,
+  usePostMealSettingMutation,
   UserMeal,
 } from "@/features/meals";
+import { FoodTypesEnum } from "@/features/foods";
 import { generateOptions } from "@/utils";
 import { selectAuthSlice } from "@/features/authentication";
+import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import FormAction from "@/components/Form/FormAction";
+import FormSelect from "@/components/Form/FormSelect";
 import Input from "@/components/Form/Input";
 import MealsLayout from "@/layouts/MealsLayout";
 import Modal from "@/components/Modal/Modal";
-import FormSelect from "@/components/Form/FormSelect";
-import { toast } from "react-hot-toast";
-import { FoodTypesEnum } from "@/features/foods";
 
 export default function Page() {
   const dispatch = useDispatch();
   const router = useRouter();
   const { user } = useSelector(selectAuthSlice);
   const { newMealState } = useSelector(selectMealsSlice);
-  const [isCreating, setIsCreating] = useState(false);
   const sizeOptions = Object.keys(MealSizes).filter((i) => isNaN(Number(i)));
   const typeOptions = Object.keys(FoodTypesEnum).filter((i) =>
     isNaN(Number(i))
@@ -41,6 +39,8 @@ export default function Page() {
     isNaN(Number(i))
   );
   const cookOptions = Object.values(MealCook);
+  const [postMealSetting, { isLoading: isCreating }] =
+    usePostMealSettingMutation();
 
   if (!user) return;
 
@@ -97,19 +97,15 @@ export default function Page() {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (!user) return;
     if (isCreating) return;
-    setIsCreating(true);
-    const res = await createMealSetting(user, newMealState);
-    if (!res?.error && res?.mealSettingAdded) {
+    const res = await postMealSetting({ user, mealSetting: newMealState });
+    if (!("error" in res)) {
       dispatch(setNewMealState(NewMealSetting));
-      dispatch(setAddNewMealSetting(res.mealSettingAdded));
       router.push(`/app/profile/meals`);
       toast.success("Meal Template created successfully.");
     } else {
       toast.error("Error creating Meal Template.");
     }
-    setIsCreating(false);
   };
 
   const onClose = () => {

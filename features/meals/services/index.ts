@@ -1,269 +1,315 @@
+import { deleteDoc, doc, getDocs, query, setDoc } from "firebase/firestore";
+import { MealsSettings, UserMeal, UserMeals } from "@/features/meals/types";
 import {
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-  query,
-  setDoc,
-} from "firebase/firestore";
-import {
-  MealComplexities,
-  MealsSettings,
-  UserMeal,
-  UserMeals,
-  MealMinutes,
-  UserMealsArr,
-  MealSizes,
-} from "@/features/meals/types";
-import { db } from "../../../services/firebase";
-import { Result } from "@/types";
+  userMealDoc,
+  userMealSettingDoc,
+  userMealsCollection,
+  userMealsSettingsCollection,
+} from "../../../services/firebase";
 import { User } from "@/features/authentication";
-import { buildCupboardList } from "@/features/shopping/utils/buildCupboardList";
-import { Cupboard, ShoppingListFoods } from "@/features/shopping";
+import { defaultMeals } from "../utils";
+import { api } from "@/services/api";
+import {
+  setAddNewMealSetting,
+  setAddNewUserMeal,
+  setDeleteMealSetting,
+  setDeleteUserMeal,
+  setUserMeals,
+  setUserMealsSettings,
+} from "../slice";
 
-const fetchMeals = async (
-  userID: string
-): Promise<Result<UserMeals, unknown>> => {
-  try {
-    let data: UserMeals = {};
-    const userMealsRef = query(collection(db, "users", userID, "meals"));
-    const querySnapshot = await getDocs(userMealsRef);
-    querySnapshot.forEach((meal: any) => {
-      data[meal.id] = meal.data();
-    });
-    return { result: "success", data };
-  } catch (error) {
-    console.log("fetchMeals", { error });
-    return { result: "error", error };
-  }
-};
+export const mealsApi = api.injectEndpoints({
+  endpoints: (build) => ({
+    getMeals: build.query<UserMeals, { user: User | null }>({
+      async queryFn({ user }, { dispatch }) {
+        console.log("Executing: getMeals");
+        if (!user) return { data: {} };
+        try {
+          let data: UserMeals = {};
+          const userMealsRef = query(userMealsCollection(user.id));
+          const querySnapshot = await getDocs(userMealsRef);
+          querySnapshot.forEach((meal: any) => {
+            data[meal.id] = meal.data();
+          });
+          dispatch(setUserMeals(data));
+          return { data: data };
+        } catch (error) {
+          console.log({ error });
+          return { error: error };
+        }
+      },
+      providesTags: ["meals"],
+    }),
 
-const fetchMealsSettings = async (
-  userID: string
-): Promise<Result<UserMeals, unknown>> => {
-  try {
-    let data: MealsSettings = {};
-    const userMealsSettingsRef = query(
-      collection(db, "users", userID, "settings", "mealsSettings", "meals")
-    );
-    const querySnapshot = await getDocs(userMealsSettingsRef);
-    querySnapshot.forEach((meal: any) => {
-      data[meal.id] = meal.data();
-    });
-    return { result: "success", data };
-  } catch (error) {
-    console.log("fetchMealsSettings", { error });
-    return { result: "error", error };
-  }
-};
+    postUserMeal: build.mutation<UserMeal, { userMeal: UserMeal; user: User }>({
+      async queryFn({ userMeal, user }, { dispatch }) {
+        console.log("Executing: postUserMeal");
+        try {
+          const userMealRef = doc(userMealsCollection(user.id));
+          const newMeal = {
+            ...userMeal,
+            id: userMealRef.id,
+          };
+          await setDoc(userMealRef, newMeal);
+          dispatch(setAddNewUserMeal(newMeal));
+          return { data: newMeal };
+        } catch (error) {
+          console.log({ error });
+          return { error: error };
+        }
+      },
+      invalidatesTags: ["meals"],
+    }),
 
-const createMealSetting = async (user: User, mealSetting: UserMeal) => {
-  try {
-    const newMealSettingRef = doc(
-      collection(db, "users", user.id, "settings", "mealsSettings", "meals")
-    );
-    const newMealSetting = {
-      ...mealSetting,
-      id: newMealSettingRef.id,
-    };
-    await setDoc(newMealSettingRef, newMealSetting);
-    return { mealSettingAdded: newMealSetting };
-  } catch (error) {
-    console.log("createMealSetting", { error });
-    return { error: error };
-  }
-};
+    deleteUserMeal: build.mutation<
+      UserMeal,
+      { userMeal: UserMeal; userMeals: UserMeals; user: User }
+    >({
+      async queryFn({ userMeal, userMeals, user }, { dispatch }) {
+        console.log("Executing: deleteUserMeal");
+        try {
+          if (!user) throw Error("No user");
+          if (!userMeal.id) throw Error("No userMeal.id");
+          const docRef = userMealDoc({ userID: user.id, mealID: userMeal.id });
+          await deleteDoc(docRef);
+          dispatch(setDeleteUserMeal(userMeal));
 
-const updateMealSetting = async (
-  user: User,
-  mealSetting: UserMeal
-): Promise<Result<UserMeal, unknown>> => {
-  try {
-    if (!mealSetting.id) throw Error;
-    const mealSettingRef = doc(
-      db,
-      "users",
-      user.id,
-      "settings",
-      "mealsSettings",
-      "meals",
-      mealSetting.id
-    );
-    await setDoc(mealSettingRef, mealSetting);
-    return { result: "success", data: mealSetting };
-  } catch (error) {
-    console.log("createMealSetting", { error });
-    return { result: "error", error };
-  }
-};
+          // Update order of remaining meals
+          const mealsUpdated: UserMeals = { ...userMeals };
+          delete mealsUpdated[userMeal.id];
+          Object.values(mealsUpdated).forEach((meal, index) => {
+            mealsUpdated[meal.id!] = {
+              ...meal,
+              order: index,
+            };
+          });
+          const promises = Object.values(mealsUpdated).map(async (meal) => {
+            const docRef = userMealDoc({
+              userID: user.id,
+              mealID: meal.id!,
+            });
+            await setDoc(docRef, meal);
+          });
 
-const createUserMeal = async (user: User, mealSetting: UserMeal) => {
-  try {
-    const newUserMeal = doc(collection(db, "users", user.id, "meals"));
-    const newMealSetting = {
-      ...mealSetting,
-      id: newUserMeal.id,
-    };
-    await setDoc(newUserMeal, newMealSetting);
-    return { mealSettingAdded: newMealSetting };
-  } catch (error) {
-    console.log("createUserMeal", { error });
-    return { error: error };
-  }
-};
+          await Promise.all(promises);
 
-const deleteUserMeal = async (
-  user: User,
-  mealSetting: UserMeal
-): Promise<Result<UserMeal, unknown>> => {
-  try {
-    if (!mealSetting.id) throw Error;
-    const docRef = doc(db, "users", user.id, "meals", mealSetting.id);
-    await deleteDoc(docRef);
-    return { result: "success", data: mealSetting };
-  } catch (error) {
-    console.log("deleteUserMeal", { error });
-    return { result: "error", error };
-  }
-};
+          return { data: userMeal };
+        } catch (error) {
+          console.log({ error });
+          return { error: error };
+        }
+      },
+      invalidatesTags: ["meals"],
+    }),
 
-const deleteMealSetting = async (
-  user: User,
-  mealSetting: UserMeal
-): Promise<Result<UserMeal, unknown>> => {
-  try {
-    if (!mealSetting.id) throw Error;
-    const docRef = doc(
-      db,
-      "users",
-      user.id,
-      "settings",
-      "mealsSettings",
-      "meals",
-      mealSetting.id
-    );
-    await deleteDoc(docRef);
-    return { result: "success", data: mealSetting };
-  } catch (error) {
-    console.log("deleteMealSetting", { error });
-    return { result: "error", error };
-  }
-};
+    updateUserMeal: build.mutation<
+      UserMeal,
+      { userMeal: UserMeal; user: User }
+    >({
+      async queryFn({ userMeal, user }, { dispatch }) {
+        console.log("Executing: updateUserMeal");
+        try {
+          if (!userMeal.id) throw Error("No userMeal.id");
+          const docRef = userMealDoc({ userID: user.id, mealID: userMeal.id });
+          await setDoc(docRef, userMeal);
+          dispatch(setAddNewUserMeal(userMeal));
+          return { data: userMeal };
+        } catch (error) {
+          console.log({ error });
+          return { error: error };
+        }
+      },
+      invalidatesTags: ["meals"],
+    }),
 
-const updateUserMeal = async (
-  user: User,
-  userMeal: UserMeal
-): Promise<Result<UserMeal, unknown>> => {
-  try {
-    if (!userMeal.id) throw Error;
-    const docRef = doc(db, "users", user?.id, "meals", userMeal.id);
-    await setDoc(docRef, userMeal);
-    return { result: "success", data: userMeal };
-  } catch (error) {
-    console.log("updateUserMeal", { error });
-    return { result: "error", error };
-  }
-};
+    updateUserMealsOrder: build.mutation<
+      UserMeals,
+      { mealsOrdered: UserMeals; user: User }
+    >({
+      async queryFn({ mealsOrdered, user }, { dispatch }) {
+        console.log("Executing: updateUserMealsOrder");
+        try {
+          const promises = Object.values(mealsOrdered).map(async (meal) => {
+            const docRef = userMealDoc({
+              userID: user.id,
+              mealID: meal.id!,
+            });
+            await setDoc(docRef, meal);
+          });
+          await Promise.all(promises);
+          // dispatch(setUserMeals(mealsUpdated));
 
-const defaultMeals: UserMealsArr = [
-  {
-    isCookeable: true,
-    id: "def-1",
-    mealSettingId: null,
-    name: "Breakfast",
-    order: -1,
-    size: MealSizes.Normal,
-    time: MealMinutes.less_than_30_min,
-    complexity: MealComplexities.moderate,
-    type: "isBreakfast",
-  },
-  {
-    isCookeable: true,
-    id: "def-2",
-    mealSettingId: null,
-    name: "Lunch",
-    order: -1,
-    size: MealSizes.Normal,
-    time: MealMinutes.less_than_30_min,
-    complexity: MealComplexities.moderate,
-    type: "isLunch",
-  },
-  {
-    isCookeable: true,
-    id: "def-3",
-    mealSettingId: null,
-    name: "Dinner",
-    order: -1,
-    size: MealSizes.Normal,
-    time: MealMinutes.less_than_30_min,
-    complexity: MealComplexities.moderate,
-    type: "isDinner",
-  },
-  {
-    isCookeable: true,
-    id: "def-4",
-    mealSettingId: null,
-    name: "Snack",
-    order: -1,
-    size: MealSizes.Normal,
-    time: MealMinutes.less_than_30_min,
-    complexity: MealComplexities.moderate,
-    type: "isSnack",
-  },
-];
+          return { data: mealsOrdered };
+        } catch (error) {
+          console.log({ error });
+          return { error: error };
+        }
+      },
+      invalidatesTags: ["meals"],
+    }),
 
-const createDefaultMealsSettings = async (
-  user: User
-): Promise<Result<UserMeals, unknown>> => {
-  try {
-    const promises = defaultMeals.map(async (meal) => {
-      const res = await updateMealSetting(user, meal);
-      if (res.result === "error") throw Error;
-    });
-    await Promise.all(promises);
+    postDefaultUserMeals: build.mutation<UserMeals, { user: User }>({
+      async queryFn({ user }, { dispatch }) {
+        console.log("Executing: postDefaultUserMeals");
+        try {
+          let data: UserMeals = {};
 
-    const res = await fetchMealsSettings(user.id);
-    if (res.result === "error") throw Error;
-    return { result: "success", data: res.data };
-  } catch (error) {
-    console.log("createDefaultMealsSettings", { error });
-    return { result: "error", error };
-  }
-};
+          const promises = defaultMeals.map(async (meal, index) => {
+            const userMealRef = userMealDoc({
+              userID: user.id,
+              mealID: meal.id!,
+            });
+            const newUserMeal = {
+              ...meal,
+              order: index,
+              mealSettingId: meal.id,
+            };
+            await setDoc(userMealRef, newUserMeal);
+            dispatch(setAddNewUserMeal(newUserMeal));
+            data[newUserMeal.id!] = newUserMeal;
+          });
+          await Promise.all(promises);
 
-const createDefaultUserMeals = async (
-  user: User
-): Promise<Result<UserMeals, unknown>> => {
-  try {
-    const promises = defaultMeals.map(async (meal, index) => {
-      const newUserMeal = {
-        ...meal,
-        order: index,
-        mealSettingId: meal.id,
-      };
-      const res = await updateUserMeal(user, newUserMeal);
-      if (res.result === "error") throw Error;
-    });
-    await Promise.all(promises);
+          return { data: data };
+        } catch (error) {
+          console.log({ error });
+          return { error: error };
+        }
+      },
+      invalidatesTags: ["meals"],
+    }),
 
-    const res = await fetchMeals(user.id);
-    if (res.result === "error") throw Error;
-    return { result: "success", data: res.data };
-  } catch (error) {
-    console.log("createDefaultUserMeals", { error });
-    return { result: "error", error };
-  }
-};
+    // Meals Settings
+    getMealsSettings: build.query<UserMeals, { user: User | null }>({
+      async queryFn({ user }, { dispatch }) {
+        console.log("Executing: getMealsSettings");
+        if (!user) return { data: {} };
+        try {
+          let data: MealsSettings = {};
+          const mealsSettingsRef = query(userMealsSettingsCollection(user.id));
+          const querySnapshot = await getDocs(mealsSettingsRef);
+          querySnapshot.forEach((meal: any) => {
+            data[meal.id] = meal.data();
+          });
+          dispatch(setUserMealsSettings(data));
+          return { data: data };
+        } catch (error) {
+          console.log({ error });
+          return { error: error };
+        }
+      },
+      providesTags: ["mealsSettings"],
+    }),
 
-export {
-  createMealSetting,
-  createUserMeal,
-  deleteMealSetting,
-  deleteUserMeal,
-  fetchMeals,
-  fetchMealsSettings,
-  updateUserMeal,
-  createDefaultUserMeals,
-  createDefaultMealsSettings,
-  updateMealSetting,
-};
+    postMealSetting: build.mutation<
+      UserMeal,
+      { mealSetting: UserMeal; user: User }
+    >({
+      async queryFn({ mealSetting, user }, { dispatch }) {
+        console.log("Executing: postMealSetting");
+        try {
+          const newMealSettingRef = doc(userMealsSettingsCollection(user.id));
+          const newMealSetting = {
+            ...mealSetting,
+            id: newMealSettingRef.id,
+          };
+          await setDoc(newMealSettingRef, newMealSetting);
+          dispatch(setAddNewMealSetting(newMealSetting));
+
+          return { data: newMealSetting };
+        } catch (error) {
+          console.log({ error });
+          return { error: error };
+        }
+      },
+      invalidatesTags: ["mealsSettings"],
+    }),
+
+    updateMealSetting: build.mutation<
+      UserMeal,
+      { mealSetting: UserMeal; user: User }
+    >({
+      async queryFn({ mealSetting, user }, { dispatch }) {
+        console.log("Executing: updateMealSetting");
+        try {
+          if (!mealSetting.id) throw Error("No mealSetting.id");
+          const docRef = userMealSettingDoc({
+            userID: user.id,
+            mealID: mealSetting.id,
+          });
+          await setDoc(docRef, mealSetting);
+          dispatch(setAddNewMealSetting(mealSetting));
+          return { data: mealSetting };
+        } catch (error) {
+          console.log({ error });
+          return { error: error };
+        }
+      },
+      invalidatesTags: ["mealsSettings"],
+    }),
+
+    deleteMealSetting: build.mutation<
+      UserMeal,
+      { mealSetting: UserMeal; user: User }
+    >({
+      async queryFn({ mealSetting, user }, { dispatch }) {
+        console.log("Executing: deleteMealSetting");
+        try {
+          if (!user) throw Error("No user");
+          if (!mealSetting.id) throw Error("No mealSetting.id");
+          const docRef = userMealSettingDoc({
+            userID: user.id,
+            mealID: mealSetting.id,
+          });
+          await deleteDoc(docRef);
+          dispatch(setDeleteMealSetting(mealSetting));
+          return { data: mealSetting };
+        } catch (error) {
+          console.log({ error });
+          return { error: error };
+        }
+      },
+      invalidatesTags: ["mealsSettings"],
+    }),
+
+    postDefaultMealsSettings: build.mutation<UserMeals, { user: User }>({
+      async queryFn({ user }, { dispatch }) {
+        console.log("Executing: postDefaultMealsSettings");
+        try {
+          let data: UserMeals = {};
+          const promises = defaultMeals.map(async (meal) => {
+            const userMealSettingRef = userMealSettingDoc({
+              userID: user.id,
+              mealID: meal.id!,
+            });
+            await setDoc(userMealSettingRef, meal);
+            data[meal.id!] = meal;
+          });
+          await Promise.all(promises);
+
+          return { data: data };
+        } catch (error) {
+          console.log({ error });
+          return { error: error };
+        }
+      },
+      invalidatesTags: ["mealsSettings"],
+    }),
+  }),
+  // @ts-ignore
+  overrideExisting: module.hot?.status() === "apply",
+});
+
+export const {
+  useDeleteMealSettingMutation,
+  useDeleteUserMealMutation,
+  useGetMealsQuery,
+  useGetMealsSettingsQuery,
+  usePostDefaultMealsSettingsMutation,
+  usePostDefaultUserMealsMutation,
+  usePostMealSettingMutation,
+  usePostUserMealMutation,
+  useUpdateMealSettingMutation,
+  useUpdateUserMealMutation,
+  useUpdateUserMealsOrderMutation,
+} = mealsApi;

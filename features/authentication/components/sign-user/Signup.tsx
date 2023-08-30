@@ -1,9 +1,10 @@
 import {
-  createNewUser,
   setIsCreatingUser,
   setIsSigningUser,
   AUTH_ERRORS,
   setLoginError,
+  usePostUserMutation,
+  useLoginMutation,
 } from "@/features/authentication";
 import {
   createUserWithEmailAndPassword,
@@ -24,6 +25,7 @@ import * as yup from "yup";
 import FormError from "@/components/Errors/FormError";
 import Link from "next/link";
 import React, { FormEvent, useState } from "react";
+import { toast } from "react-hot-toast";
 
 const schema = yup.object({
   email: yup
@@ -54,6 +56,8 @@ const Signup = () => {
   const [emailOpen, setEmailOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
+  const [postUser] = usePostUserMutation();
+
   const handleLogInWithGoogle = async () => {
     const values = getValues();
 
@@ -67,7 +71,7 @@ const Signup = () => {
             displayName: values.displayName,
           });
           dispatch(setIsCreatingUser(true));
-          await createNewUser(user);
+          await postUser({ user });
         }
       })
       .catch((error) => {
@@ -88,15 +92,16 @@ const Signup = () => {
         const additinalInfo = getAdditionalUserInfo(result);
         if (additinalInfo?.isNewUser) {
           dispatch(setIsCreatingUser(true));
-          await createNewUser(user);
+          await postUser({ user });
         }
       })
       .catch((error) => {
         persistor.purge();
         const errorCode = error.code;
         setErrorMessage(AUTH_ERRORS[errorCode]);
-        setLoginError();
         dispatch(setIsCreatingUser(false));
+        setLoginError();
+        toast.error("Error creating account");
       });
   };
 

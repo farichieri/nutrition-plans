@@ -1,40 +1,34 @@
-import {
-  selectAuthSlice,
-  setUpdateUser,
-} from "@/features/authentication/slice";
+import { selectAuthSlice } from "@/features/authentication/slice";
 import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
 import { FC, useEffect, useState } from "react";
 import { MeasurementUnits } from "@/types";
 import { SubmitButton } from "@/components/Buttons";
 import { toast } from "react-hot-toast";
-import { updateUser } from "@/features/authentication/services";
-import { useDispatch, useSelector } from "react-redux";
+import { useUpdateUserMutation } from "@/features/authentication/services";
+import { useSelector } from "react-redux";
 
 interface Props {}
 
 const SetMeasurementUnits: FC<Props> = () => {
-  const dispatch = useDispatch();
-  const [isSaving, setIsSaving] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
   const { user } = useSelector(selectAuthSlice);
   const userMU = user?.measurementUnit;
   const [MU, setMU] = useState(user?.measurementUnit);
+  const [updateUser, { isLoading: isSaving }] = useUpdateUserMutation();
 
   const handleSave = async () => {
     if (!user || !MU) return;
     try {
-      setIsSaving(true);
       const fields = { measurementUnit: MU };
       const res = await updateUser({ user, fields });
-      if (res.result === "success") {
-        dispatch(setUpdateUser({ user, fields }));
+      if (!("error" in res)) {
         toast.success("Measurement units updated successfully");
+      } else {
+        throw new Error("Error updating measurement units");
       }
     } catch (error) {
       console.log(error);
       toast.error("Failed to update measurement units");
-    } finally {
-      setIsSaving(false);
     }
   };
 

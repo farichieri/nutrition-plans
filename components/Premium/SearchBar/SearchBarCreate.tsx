@@ -1,15 +1,14 @@
 import {
-  fetchFoods,
-  fetchFoodsByIDS,
   selectFoodsSlice,
-  setFoodsSearched,
+  useGetFoodsByIdsMutation,
+  useGetFoodsMutation,
 } from "@/features/foods";
 import { MdClose, MdFavorite, MdSearch } from "react-icons/md";
+import { RoundButton } from "@/components/Buttons";
 import { selectAuthSlice } from "@/features/authentication";
 import { useDispatch, useSelector } from "react-redux";
 import React, { FC, useCallback, useEffect, useState } from "react";
 import Spinner from "@/components/Loader/Spinner";
-import { RoundButton } from "@/components/Buttons";
 
 interface Props {
   onFocus?: Function;
@@ -23,26 +22,19 @@ const SearchBarCreate: FC<Props> = ({ onFocus, preFetch }) => {
   const [searchInput, setSearchInput] = useState<string>("");
   const [isFocused, setIsFocused] = useState(false);
   const [isFavorites, setIsFavorites] = useState(false);
-  const [isSearching, setIsSearching] = useState({
-    all: false,
-    favorites: false,
-  });
   const noData = Object.values(foodsSearched).length === 0;
+  const [getFoods, { isLoading: isSearchingAll }] = useGetFoodsMutation();
+  const [getFoodsByIDS, { isLoading: isSearchingFavorites }] =
+    useGetFoodsByIdsMutation();
 
   const fetchData = useCallback(
     async (input: string) => {
       if (!user?.id) return;
-      setIsSearching({ ...isSearching, all: true });
-      const res = await fetchFoods({
+      await getFoods({
         queries: { q: input },
         uploaderID: user?.id,
+        user,
       });
-      if (res.result === "success") {
-        dispatch(setFoodsSearched({ foods: res.data, userID: user.id }));
-      } else {
-        dispatch(setFoodsSearched({ foods: {}, userID: user.id }));
-      }
-      setIsSearching({ ...isSearching, all: false });
       setIsFavorites(false);
     },
     [dispatch, user?.id]
@@ -79,15 +71,11 @@ const SearchBarCreate: FC<Props> = ({ onFocus, preFetch }) => {
     event.preventDefault();
     if (!user) return;
     try {
+      setSearchInput("");
+
       if (!isFavorites) {
-        setIsSearching({ ...isSearching, favorites: true });
         const userFavorites = user.ratings.foodsRating.favorites;
-        const res = await fetchFoodsByIDS(userFavorites);
-        if (res.result === "success") {
-          dispatch(setFoodsSearched({ foods: res.data, userID: user.id }));
-        } else {
-          dispatch(setFoodsSearched({ foods: {}, userID: user.id }));
-        }
+        getFoodsByIDS({ ids: userFavorites, user });
         setIsFavorites(true);
       } else {
         fetchData("");
@@ -95,8 +83,6 @@ const SearchBarCreate: FC<Props> = ({ onFocus, preFetch }) => {
       }
     } catch (error) {
       console.log(error);
-    } finally {
-      setIsSearching({ ...isSearching, favorites: false });
     }
   };
 
@@ -117,7 +103,7 @@ const SearchBarCreate: FC<Props> = ({ onFocus, preFetch }) => {
           autoFocus
         />
         <div className="absolute right-5">
-          {isSearching.all && <Spinner customClass="h-4 w-4" />}
+          {isSearchingAll && <Spinner customClass="h-4 w-4" />}
         </div>
       </form>
       <RoundButton
@@ -132,7 +118,7 @@ const SearchBarCreate: FC<Props> = ({ onFocus, preFetch }) => {
           }`}
         />
         Favorites
-        {isSearching.favorites && <Spinner customClass="h-4 w-4 ml-2" />}
+        {isSearchingFavorites && <Spinner customClass="h-4 w-4 ml-2" />}
         {isFavorites && <MdClose className="ml-2 h-4 w-4" />}
       </RoundButton>
     </div>

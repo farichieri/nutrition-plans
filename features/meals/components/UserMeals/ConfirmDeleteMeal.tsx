@@ -1,14 +1,12 @@
 import {
-  deleteUserMeal,
   UserMeal,
-  setUserMeals,
   selectMealsSlice,
+  useDeleteUserMealMutation,
 } from "@/features/meals";
 import { FC, useState } from "react";
 import { selectAuthSlice } from "@/features/authentication";
 import { toast } from "react-hot-toast";
-import { updateMealsOrders } from "./utils";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import ActionButton from "@/components/Buttons/ActionButton";
 import Modal from "@/components/Modal/Modal";
 
@@ -18,26 +16,17 @@ interface Props {
 }
 
 const ConfirmDeleteMeal: FC<Props> = ({ confirmDelete, setConfirmDelete }) => {
-  const dispatch = useDispatch();
   const [isDeleting, setIsDeleting] = useState(false);
   const { user } = useSelector(selectAuthSlice);
   const { meals } = useSelector(selectMealsSlice);
+  const [deleteUserMeal] = useDeleteUserMealMutation();
 
   const handleDeleteUserMeal = async (userMeal: UserMeal) => {
     if (!user || !userMeal.id) return;
     setIsDeleting(true);
-    const res = await deleteUserMeal(user, userMeal);
-    if (res.result === "success") {
-      const newUserMeals = {
-        ...meals,
-      };
-      delete newUserMeals[userMeal.id];
-      const userMealsArr = Object.values(newUserMeals);
-      const res = await updateMealsOrders(userMealsArr, user);
-      if (res.result === "success") {
-        dispatch(setUserMeals(res.data));
-        setConfirmDelete(null);
-      }
+    const res = await deleteUserMeal({ user, userMeals: meals, userMeal });
+    if (!("error" in res)) {
+      setConfirmDelete(null);
       toast.success("Meal deleted successfully.");
     } else {
       toast.error("Error deleting meal.");

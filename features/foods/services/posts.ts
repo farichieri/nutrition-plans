@@ -1,11 +1,11 @@
-import { collection, doc, setDoc } from "firebase/firestore";
-import { db, storage } from "@/services/firebase";
 import {
   DEFAULT_IMAGE,
   Food,
   FoodKind,
   getScalesWithPrimaryScales,
 } from "@/features/foods";
+import { collection, doc, setDoc } from "firebase/firestore";
+import { db, storage } from "@/services/firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { getFoodsCollectionLength } from "./fetches";
 import { Result } from "@/types";

@@ -1,5 +1,4 @@
 import {
-  addFood,
   CompatiblePlans,
   DigestionStatusEnum,
   DishTypesEnum,
@@ -14,7 +13,7 @@ import {
   updateNewRecipeState,
   IngredientGroup,
   Instruction,
-  addNewFood,
+  usePostFoodMutation,
 } from "@/features/foods";
 import { BiSolidPieChartAlt2 } from "react-icons/bi";
 import { FC, useEffect, useState } from "react";
@@ -91,6 +90,8 @@ const RecipeCreate: FC<Props> = () => {
     }
   };
 
+  const [postFood] = usePostFoodMutation();
+
   const onSubmit = async (data: FormValues) => {
     if (!user || isSubmitting) return;
     const recipeGrams = getRecipeSize(data.ingredients);
@@ -100,8 +101,13 @@ const RecipeCreate: FC<Props> = () => {
       ...data,
       servingGrams: recipeGrams,
     };
-    const res = await addFood(newFood, FoodKind.recipe, newImageFile, user);
-    if (res.result === "success") {
+    const res = await postFood({
+      food: data,
+      kind: FoodKind.basic_food,
+      newImage: newImageFile,
+      user,
+    });
+    if (!("error" in res)) {
       setNewImageFile(undefined);
       dispatch(setNewRecipeState(NewFood));
       router.push(`/app/food/${res.data.id}`);
