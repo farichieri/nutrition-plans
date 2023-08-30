@@ -7,7 +7,7 @@ import { ReplaceMealSelector } from "@/features/library";
 import { selectAuthSlice } from "@/features/authentication";
 import { setDiet } from "@/features/plans/slice";
 import { toast } from "react-hot-toast";
-import { updateDiet } from "@/features/plans/services";
+import { useUpdateDietMutation } from "@/features/plans/services";
 import { useDispatch, useSelector } from "react-redux";
 import DropDown from "@/components/DropDown/DropDown";
 import Modal from "@/components/Modal/Modal";
@@ -37,6 +37,7 @@ const MealMoreDropdown: FC<Props> = ({ diet, mealID }) => {
   });
 
   if (!user || !mealID || !diet) return <></>;
+  const [updateDiet] = useUpdateDietMutation();
 
   const meal = diet.meals[mealID];
 
@@ -45,8 +46,7 @@ const MealMoreDropdown: FC<Props> = ({ diet, mealID }) => {
       setIsLoading({ ...isLoading, clear: true });
       const dietUpdated = clearMeal({ diet, mealID });
       const res = await updateDiet({ diet: dietUpdated });
-      if (res.result === "error") throw Error;
-      dispatch(setDiet(dietUpdated));
+      if ("error" in res) throw Error;
     } catch (error) {
       console.log({ error });
       toast.error("Error clearing Meal");

@@ -12,13 +12,14 @@ import { formatTwoDecimals } from "@/utils";
 import { getDietFoodToggled } from "@/features/plans";
 import { getNewAmount } from "@/utils/nutritionHelpers";
 import { MdDelete, MdDragHandle } from "react-icons/md";
-import { updateDiet } from "@/features/plans/services";
+import { useUpdateDietMutation } from "@/features/plans/services";
 import { useDispatch, useSelector } from "react-redux";
 import BlurImage from "@/components/blur-image";
 import FormSelect from "@/components/Form/FormSelect";
 import Input from "@/components/Form/Input";
 import NutritionInput from "@/components/Form/NutritionInput";
 import RoundButton from "@/components/Buttons/RoundButton";
+import { toast } from "react-hot-toast";
 
 interface MealInCardProps {
   food: Food;
@@ -35,6 +36,7 @@ const FoodInMealCard: FC<MealInCardProps> = ({
   const scalesMerged = orderScales({ scales: food.scales });
   const options = getScaleOptions(scalesMerged);
   const { diets } = useSelector(selectPlansSlice);
+  const [updateDiet, { isLoading }] = useUpdateDietMutation();
 
   if (!food.id) return <></>;
 
@@ -76,22 +78,25 @@ const FoodInMealCard: FC<MealInCardProps> = ({
 
   const toggleDone = async (event: React.MouseEvent) => {
     event.preventDefault();
-    const { dietID, dietMealID, id } = food;
-    if (!id || !dietID || !dietMealID) return;
-    const diet = diets[dietID];
-    const value = !food.isEaten;
+    try {
+      const { dietID, dietMealID, id } = food;
+      if (!id || !dietID || !dietMealID) return;
+      const diet = diets[dietID];
+      const value = !food.isEaten;
 
-    dispatch(toggleEatenFood({ food, value: value }));
+      dispatch(toggleEatenFood({ food, value: value }));
 
-    const dietUpdated = getDietFoodToggled({ diet, food, value: value });
+      const dietUpdated = getDietFoodToggled({ diet, food, value: value });
 
-    if (!dietUpdated) throw new Error("Error updating diet");
+      if (!dietUpdated) throw new Error("Error updating diet");
 
-    const res = await updateDiet({ diet: dietUpdated });
-
-    if (res.result === "error") {
-      console.log(res.error);
-      dispatch(toggleEatenFood({ food, value: !value }));
+      const res = await updateDiet({ diet: dietUpdated, noDispatch: true });
+      if ("error" in res) {
+        throw Error;
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Error Toggling Food");
     }
   };
 

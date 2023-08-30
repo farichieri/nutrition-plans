@@ -13,7 +13,7 @@ import { PlansEnum, StartsOfWeek } from "@/types";
 import { selectAuthSlice } from "@/features/authentication";
 import { setDiet } from "../../slice";
 import { toast } from "react-hot-toast";
-import { updateDiet } from "../../services";
+import { useUpdateDietMutation } from "../../services";
 import { useDispatch, useSelector } from "react-redux";
 import PieGraph from "@/components/PieGraph/PieGraph";
 import Spinner from "@/components/Loader/Spinner";
@@ -42,6 +42,7 @@ const DietNutrition: FC<Props> = ({ nutrients, diet, isEditing }) => {
     updateWithUserTargets: false,
     hideNutritionDiff: false,
   });
+  const [updateDiet] = useUpdateDietMutation();
 
   if (!user) return <></>;
 
@@ -102,10 +103,9 @@ const DietNutrition: FC<Props> = ({ nutrients, diet, isEditing }) => {
       const newDiet = { ...diet };
       newDiet.nutritionTargets = userNutritionTargets;
       const res = await updateDiet({ diet: newDiet });
-      if (res.result === "error") {
+      if ("error" in res) {
         toast.error("Error updating targets. Please try again.");
       } else {
-        dispatch(setDiet(newDiet));
         toast.success("Targets updated successfully.");
       }
     } catch (error) {
@@ -125,10 +125,8 @@ const DietNutrition: FC<Props> = ({ nutrients, diet, isEditing }) => {
       const newDiet = { ...diet };
       newDiet.hideNutritionTargetsDiff = true;
       const res = await updateDiet({ diet: newDiet });
-      if (res.result === "error") {
+      if ("error" in res) {
         toast.error("Error updating targets. Please try again.");
-      } else {
-        dispatch(setDiet(newDiet));
       }
     } catch (error) {
       toast.error("Error updating targets. Please try again.");

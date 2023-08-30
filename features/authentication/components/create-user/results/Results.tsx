@@ -14,7 +14,7 @@ import {
   setUserMeals,
   setUserMealsSettings,
 } from "@/features/meals";
-import { addProgress, ProgressItem, setAddProgress } from "@/features/progress";
+import { ProgressItem, usePostProgressMutation } from "@/features/progress";
 import { BiSolidPieChartAlt2 } from "react-icons/bi";
 import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
 import { FC, useState } from "react";
@@ -66,17 +66,22 @@ const Results: FC<Props> = ({ handleSubmit }) => {
     activity: activity,
   });
 
+  const [postProgress] = usePostProgressMutation();
+
   const addFirstProgress = async () => {
     const newProgress: ProgressItem = {
       createdAt: formatISO(new Date()),
       date: formatToUSDate(new Date()),
       weightInKg: weightInKg,
     };
-    const res = await addProgress(user, newProgress);
-    if (res.result === "success") {
-      dispatch(setAddProgress(newProgress));
+    const res = await postProgress({ user, progress: newProgress });
+    if ("error" in res) {
+      return { result: "error" };
     }
-    return res;
+    return {
+      result: "success",
+      data: res.data,
+    };
   };
 
   const [createNotification] = useCreateNotificationMutation();
@@ -110,7 +115,7 @@ const Results: FC<Props> = ({ handleSubmit }) => {
         ]);
 
       if (
-        addProgressRes.result === "success" &&
+        addProgressRes.result !== "error" &&
         mealSettings.result === "success" &&
         addMeals.result === "success" &&
         "error" in welcomeNotification === false

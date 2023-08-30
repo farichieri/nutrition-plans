@@ -27,7 +27,7 @@ const Notifications: FC<Props> = () => {
 
   if (!user) return <></>;
 
-  const { isFetching, isLoading } = useGetNotificationsQuery({ user });
+  useGetNotificationsQuery({ user });
   const [archiveNotificationMutation] = useArchiveNotificationMutation();
   const [unarchiveNotification] = useUnarchiveNotificationMutation();
   const [archiveAllNotifications] = useArchiveAllNotificationsMutation();

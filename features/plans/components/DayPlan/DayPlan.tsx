@@ -4,11 +4,11 @@ import {
   MealCards,
   PlanGenerator,
 } from "@/features/plans";
-import { FC, useEffect, useState } from "react";
-import { fetchDietByDate } from "@/features/plans/services";
-import { selectPlansSlice, setDiet } from "@/features/plans/slice";
-import { useDispatch, useSelector } from "react-redux";
-import { User, selectAuthSlice } from "@/features/authentication";
+import { FC, useState } from "react";
+import { useGetDietByDateQuery } from "@/features/plans/services";
+import { selectPlansSlice } from "@/features/plans/slice";
+import { useSelector } from "react-redux";
+import { selectAuthSlice } from "@/features/authentication";
 import DayNote from "../common/DayNote";
 import Spinner from "@/components/Loader/Spinner";
 
@@ -17,46 +17,21 @@ interface Props {
 }
 
 const DayPlan: FC<Props> = ({ date }) => {
-  const dispatch = useDispatch();
-  const [isGeneratingPlan, setIsGeneratingPlan] = useState<boolean>(false);
-  const [isLoadingDiet, setIsLoadingDiet] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState(false);
   const { user } = useSelector(selectAuthSlice);
   const { diets } = useSelector(selectPlansSlice);
   const diet: Diet = diets[date];
   const planID = diet?.planID;
 
-  const getDayDiet = async (date: string, user: User) => {
-    if (!diet) {
-      setIsLoadingDiet(true);
-    }
-    const res = await fetchDietByDate({ date, userID: user.id });
-    console.log({ res });
-    if (res.result === "success") {
-      dispatch(setDiet(res.data));
-    } else {
-      dispatch(setDiet({ date: date, id: undefined }));
-    }
-    setIsLoadingDiet(false);
-  };
-
-  useEffect(() => {
-    if (user) {
-      getDayDiet(date, user);
-    }
-    setIsGeneratingPlan(false);
-  }, [date]);
-
   if (!user) return <></>;
+
+  const { isLoading, isFetching } = useGetDietByDateQuery(
+    { date, userID: user?.id },
+    { refetchOnMountOrArgChange: true }
+  );
 
   return (
     <div className="relative m-auto h-full w-full rounded-lg">
-      {isGeneratingPlan ||
-        (isLoadingDiet && (
-          <div className="fixed inset-0 mt-auto flex h-screen w-screen justify-center">
-            <Spinner customClass="h-10 w-10 m-auto !stroke-green-500" />
-          </div>
-        ))}
       <>
         {diet ? (
           <div className="mb-auto flex h-full flex-col gap-2">
@@ -97,13 +72,25 @@ const DayPlan: FC<Props> = ({ date }) => {
             </div>
           </div>
         ) : (
-          <div className="fixed inset-0 mt-auto flex h-screen w-screen flex-col justify-center">
-            <PlanGenerator
-              date={date}
-              dates={null}
-              setDoneGeneratingPlan={() => {}}
-            />
-          </div>
+          <>
+            {
+              <>
+                {isLoading || isFetching ? (
+                  <div className="fixed inset-0 mt-auto flex h-screen w-screen justify-center">
+                    <Spinner customClass="h-10 w-10 m-auto !stroke-green-500" />
+                  </div>
+                ) : (
+                  <div className="fixed inset-0 mt-auto flex h-screen w-screen flex-col justify-center">
+                    <PlanGenerator
+                      date={date}
+                      dates={null}
+                      setDoneGeneratingPlan={() => {}}
+                    />
+                  </div>
+                )}
+              </>
+            }
+          </>
         )}
       </>
     </div>

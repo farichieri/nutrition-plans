@@ -11,7 +11,7 @@ import type { Diet, DietMeal, PlanTypes } from "../types";
 import type { NutritionTargets, User } from "@/features/authentication";
 import type { PlansEnum, Result } from "@/types";
 import type { UserMeals } from "@/features/meals";
-import { updateFoodScaleAndNutrients } from "@/utils";
+import { getDietNutrition, round, updateFoodScale } from "@/utils";
 
 const calculateMealsNutrtionTargets = ({
   meals,
@@ -67,7 +67,7 @@ const buildMealFoods = async ({
   try {
     let reachedCalories = 0;
     let newFoods: FoodGroup = {};
-    const foodsPerMeal = 1;
+    const foodsPerMeal = 3;
     const planFoodsArr = Object.values(planFoods);
     // Check if type of food is allowed in the meal.
     const planFoodsTypeArr = planFoodsArr.filter(
@@ -77,6 +77,7 @@ const buildMealFoods = async ({
 
     const promises = Array.from({ length: foodsPerMeal }).map(async () => {
       const randomIndex = getRandomNum(length);
+      console.log({ randomIndex, length });
       const randomFoodId = planFoodsTypeArr[randomIndex].id;
 
       const res = await fetchFoodByID(randomFoodId!);
@@ -105,13 +106,11 @@ const buildMealFoods = async ({
         const scalesMerged = food.scales;
         const scale = scalesMerged.find((scale) => scale.isDefault === true);
         if (scale) {
-          const scaleAmount =
-            scale.scaleAmount + (scale.scaleAmount * 100) / diffRatio;
+          let scaleAmount = scale.scaleAmount + scale.scaleAmount * diffRatio;
+          scaleAmount = round(scaleAmount, 0.5);
           const scaleName = scale.scaleName;
 
-          console.log({ scaleAmount, scaleName, food });
-
-          const newFood = updateFoodScaleAndNutrients({
+          const newFood = updateFoodScale({
             food,
             scaleAmount,
             scaleName,
@@ -177,6 +176,8 @@ const createDietAutomatically = async ({
 
     // Update the diet with the new meals.
     newDiet.meals = newMeals;
+    const nutrition = getDietNutrition(newDiet.meals);
+    newDiet.nutrition = nutrition;
 
     console.log({ newDiet });
     return { result: "success", data: newDiet };

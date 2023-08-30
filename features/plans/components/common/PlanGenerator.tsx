@@ -6,7 +6,7 @@ import {
   createDiet,
   createDietAutomatically,
 } from "@/features/plans";
-import { postDietToUserDiets } from "@/features/plans/services";
+import { usePostDietToUserDietsMutation } from "@/features/plans/services";
 import { ReplaceDietSelector } from "@/features/library";
 import { setDiet } from "@/features/plans/slice";
 import { toast } from "react-hot-toast";
@@ -38,6 +38,8 @@ const PlanGenerator: FC<Props> = ({ date, dates, setDoneGeneratingPlan }) => {
   const [isGenerating, setIsGenerating] = useState(false);
 
   if (!user) return <></>;
+
+  const [postDietToUserDiets] = usePostDietToUserDietsMutation();
 
   const handleSelect = (event: ChangeEvent<HTMLSelectElement>) => {
     event.preventDefault();
@@ -96,8 +98,10 @@ const PlanGenerator: FC<Props> = ({ date, dates, setDoneGeneratingPlan }) => {
           date,
           user,
         });
-        if (res.result === "success") {
+        if (!("error" in res)) {
           dispatch(setDiet(res.data));
+        } else {
+          throw new Error("Error saving diet");
         }
       } else if (type === PlanTypes.manually) {
         const diet: Diet = createDiet({ meals, planID, type, user, date });
@@ -107,8 +111,10 @@ const PlanGenerator: FC<Props> = ({ date, dates, setDoneGeneratingPlan }) => {
           date,
           user,
         });
-        if (res.result === "success") {
+        if (!("error" in res)) {
           dispatch(setDiet(res.data));
+        } else {
+          throw new Error("Error saving diet");
         }
       } else {
         throw new Error("Invalid plan type");

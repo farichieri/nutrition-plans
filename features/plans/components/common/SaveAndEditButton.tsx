@@ -1,11 +1,12 @@
+import {
+  useRefreshDietByDateMutation,
+  useUpdateDietMutation,
+} from "@/features/plans/services";
 import { Diet } from "@/features/plans";
-import { FC, useEffect, useState } from "react";
-import { fetchDietByDate, updateDiet } from "@/features/plans/services";
+import { FC, useEffect } from "react";
 import { LuFileEdit, LuSave } from "react-icons/lu";
 import { MdOutlineCancel } from "react-icons/md";
-import { setDiet } from "@/features/plans/slice";
 import { toast } from "react-hot-toast";
-import { useDispatch } from "react-redux";
 import { User } from "@/features/authentication";
 import Spinner from "@/components/Loader/Spinner";
 
@@ -24,26 +25,24 @@ const SaveAndEditButton: FC<Props> = ({
   isEditing,
   setIsEditing,
 }) => {
-  const dispatch = useDispatch();
-  const [isCanceling, setIsCanceling] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
+  const [refreshDietByDate, { isLoading: isCanceling }] =
+    useRefreshDietByDateMutation();
+  const [updateDiet, { isLoading: isSaving }] = useUpdateDietMutation();
 
   const saveDietOpened = async () => {
-    setIsSaving(true);
     if (!diet) throw Error;
     const res = await updateDiet({ diet });
-    if (res.result === "error") {
+    if ("error" in res) {
       toast.error("Error saving diet. Please try again.");
     }
-    setIsSaving(false);
   };
 
   const cancelChanges = async () => {
-    setIsCanceling(true);
-    const res = await fetchDietByDate({ date, userID: user.id });
-    if (res.result === "success") dispatch(setDiet(res.data));
+    const res = await refreshDietByDate({ date, userID: user.id });
+    if (!("error" in res)) {
+      throw new Error("Error Canceling. Please try again.");
+    }
     setIsEditing(false);
-    setIsCanceling(false);
   };
 
   const toggleButton = async () => {

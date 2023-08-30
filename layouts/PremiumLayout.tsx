@@ -9,12 +9,10 @@ import {
   setIsSubscribeModalOpen,
 } from "@/features/layout/slice";
 import { AppRoutes } from "@/utils";
-import { fetchProgress, setProgress } from "@/features/progress";
-import { getThisWeekDiets } from "@/features/plans";
+import { useGetProgressQuery } from "@/features/progress";
 import { Login, setIsFirstDataLoaded } from "@/features/authentication";
 import { PremiumFooter } from "./components";
 import { selectAuthSlice } from "@/features/authentication/slice";
-import { setDiets } from "@/features/plans/slice";
 import { SubscribeModal } from "@/components";
 import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
@@ -47,6 +45,8 @@ export default function PremiumLayout({ children }: Props) {
   const isMobile = windowWidth < 1024;
   const isProfileCompleted = user?.isProfileCompleted;
 
+  useGetProgressQuery({ user }, { refetchOnMountOrArgChange: true });
+
   useEffect(() => {
     if (isCreatingUser || (user && !isProfileCompleted)) {
       router.push(AppRoutes.create_user);
@@ -62,23 +62,16 @@ export default function PremiumLayout({ children }: Props) {
       if (isFirstDataLoaded) return;
       try {
         console.log("Fetching Data");
-        const [progressRes, userMealsRes, mealsSettings, thisWeekDiets] =
-          await Promise.all([
-            fetchProgress(user),
-            fetchMeals(user.id),
-            fetchMealsSettings(user.id),
-            getThisWeekDiets({ user }),
-          ]);
+        const [userMealsRes, mealsSettings] = await Promise.all([
+          fetchMeals(user.id),
+          fetchMealsSettings(user.id),
+        ]);
         if (
-          progressRes.result === "success" &&
           userMealsRes.result === "success" &&
-          mealsSettings.result === "success" &&
-          thisWeekDiets.result === "success"
+          mealsSettings.result === "success"
         ) {
-          dispatch(setProgress(progressRes.data));
           dispatch(setUserMeals(userMealsRes.data));
           dispatch(setUserMealsSettings(mealsSettings.data));
-          dispatch(setDiets(thisWeekDiets.data));
           dispatch(setIsFirstDataLoaded(true));
         } else {
           throw new Error("An error occurred while loading user data.");

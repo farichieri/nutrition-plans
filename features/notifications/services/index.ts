@@ -26,11 +26,11 @@ export const notificationsApi = api.injectEndpoints({
         console.log("Executing: getNotifications");
         try {
           let data: NotificationsGroup = {};
-          const collRef = notificationsCollection;
-          const q = query(collRef, where("isVisible", "==", true));
 
           const promises = Promise.all([
-            getDocs(q),
+            getDocs(
+              query(notificationsCollection, where("isVisible", "==", true))
+            ),
             getDocs(userNotificationsCollection(user.id)),
           ]);
           const [querySnapshot, userQuerySnapshot] = await promises;
@@ -102,6 +102,7 @@ export const notificationsApi = api.injectEndpoints({
             user,
             fields: { notificationsArchived: newArchived },
           });
+
           if (res.result === "error") throw new Error("Error updating user");
           dispatch(setArchiveAllNotifications());
           dispatch(

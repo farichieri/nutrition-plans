@@ -1,12 +1,12 @@
-import { FC } from "react";
-import { Diet } from "../../types";
-import { TextArea } from "@/components";
 import { CheckButton } from "@/components/Buttons";
-import { useDispatch } from "react-redux";
-import { setDietExercise } from "../../slice";
+import { Diet } from "../../types";
+import { FC } from "react";
 import { MdClose } from "react-icons/md";
+import { setDietExercise } from "../../slice";
+import { TextArea } from "@/components";
 import { toast } from "react-hot-toast";
-import { updateDiet } from "../../services";
+import { useDispatch } from "react-redux";
+import { useUpdateDietMutation } from "../../services";
 
 interface Props {
   diet: Diet;
@@ -18,6 +18,8 @@ const Exercise: FC<Props> = ({ diet, isEditing }) => {
   const { exercise } = diet;
 
   if (!exercise) return <></>;
+
+  const [updateDiet] = useUpdateDietMutation();
 
   const { exercised, note, isPlanned } = exercise;
 
@@ -40,10 +42,9 @@ const Exercise: FC<Props> = ({ diet, isEditing }) => {
         ...diet,
         exercise: newExercise,
       };
-      const res = await updateDiet({ diet: dietUpdated });
-
-      if (res.result === "error") {
-        dispatch(setDietExercise({ diet, exercise: exercise }));
+      const res = await updateDiet({ diet: dietUpdated, noDispatch: true });
+      if ("error" in res) {
+        throw Error;
       }
     } catch (error) {
       toast.error("Error checking Exercise.");

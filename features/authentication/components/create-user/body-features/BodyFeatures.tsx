@@ -38,7 +38,7 @@ import {
   calculateKCALSRecommended,
 } from "@/features/authentication/utils/calculateBodyData";
 import { formatISO } from "date-fns";
-import { addProgress, setAddProgress } from "@/features/progress";
+import { setAddProgress, usePostProgressMutation } from "@/features/progress";
 
 interface FormValues {
   activity: UserActivities | null;
@@ -64,6 +64,7 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
   const [error, setError] = useState("");
   const bodyData = user?.bodyData || newBodyData;
   const isCreatingRoute = router.asPath === AppRoutes.create_user;
+  const [postProgress, { isLoading: isAdding }] = usePostProgressMutation();
 
   const {
     control,
@@ -253,9 +254,8 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
             weightInKg: kilograms,
           };
 
-          const res = await addProgress(user, newProgress);
-          if (res.result === "success") {
-            dispatch(setAddProgress(newProgress));
+          const res = await postProgress({ user, progress: newProgress });
+          if (!("error" in res)) {
             toast.success("Progress updated successfully.");
           }
         }

@@ -6,12 +6,11 @@ import {
   PlanDateType,
   DietExercise,
 } from "@/features/plans/types";
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Food, FoodGroup, FoodGroupArray } from "@/features/foods/types";
 import { getDietNutrition, getIsWeek, getToday } from "@/utils";
 import { PURGE } from "redux-persist";
 import { RootState } from "@/store";
-import { saveDiet } from "../services/saveDiet";
 
 interface PlansSlice {
   date: string;
@@ -28,17 +27,6 @@ const initialState: PlansSlice = {
   planDateType: PlanDateType.day,
   planType: PlanTypes.automatically,
 };
-
-export const saveDietThunk = createAsyncThunk(
-  "plans/saveDiet",
-  async ({ diet }: { diet: Diet }) => {
-    console.log("averga", diet);
-    const { id } = diet;
-    if (!id) return;
-    const res = await saveDiet({ diet: diet });
-    console.log({ res, diet });
-  }
-);
 
 export const plansSlice = createSlice({
   name: "plans",

@@ -4,13 +4,14 @@ import {
   AddFood,
   FoodInMealCard,
   getDietFoodToggled,
+  useSaveDietMutation,
 } from "@/features/plans";
 import { CheckButton } from "@/components/Buttons";
 import { Draggable, Droppable } from "@hello-pangea/dnd";
 import { FC } from "react";
 import { FoodGroupArray } from "@/features/foods";
-import { saveDiet } from "../../services/saveDiet";
 import { selectPlansSlice, toggleEatenFood } from "../../slice";
+import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import MealMoreDropdown from "../MealCards/meal_more_dropdown/MealMoreDropdown";
@@ -29,6 +30,7 @@ const MealCard: FC<Props> = ({ tourId, dietMeal, mealKcals, isEditing }) => {
     (a, b) => a.order - b.order
   );
   const allEaten = isAllEaten(dietMealFoodsArr);
+  const [saveDiet] = useSaveDietMutation();
 
   if (!dietMeal.id || !dietMeal.dietID) return <></>;
   const diet = diets[dietMeal.dietID];
@@ -48,7 +50,8 @@ const MealCard: FC<Props> = ({ tourId, dietMeal, mealKcals, isEditing }) => {
     });
 
     const res = await saveDiet({ diet: dietUpdated });
-    if (res.result === "error") {
+    if ("error" in res) {
+      toast.error("Error saving diet");
       console.log("Error saving diet");
     }
   };
