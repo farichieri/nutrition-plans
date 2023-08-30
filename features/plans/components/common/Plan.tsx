@@ -1,5 +1,5 @@
 import { convertDateToDateString, convertDayToUrlDate } from "../../utils";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 import { useGetDietByDateQuery } from "../../services";
 import { ManualMeals } from "..";
 import { selectPlansSlice } from "@/features/plans/slice";
@@ -16,18 +16,17 @@ interface Props {
 }
 
 const Plan: FC<Props> = ({ date, setPlanBeingEdited }) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const { diets } = useSelector(selectPlansSlice);
+  const { diets, isEditingDiet } = useSelector(selectPlansSlice);
   const { user } = useSelector(selectAuthSlice);
   const diet = diets[date];
 
   useEffect(() => {
-    if (isEditing) {
+    if (isEditingDiet) {
       setPlanBeingEdited(date);
     } else {
       setPlanBeingEdited(null);
     }
-  }, [isEditing]);
+  }, [isEditingDiet]);
 
   if (!user) return <></>;
 
@@ -73,7 +72,7 @@ const Plan: FC<Props> = ({ date, setPlanBeingEdited }) => {
           </span>
         </div>
       )}
-      {diet && <DayNote diet={diet} isEditing={isEditing} />}
+      {diet && <DayNote diet={diet} isEditing={isEditingDiet} />}
       <div className="flex h-full min-h-[10rem] w-full flex-col">
         {isLoading ? (
           <Spinner customClass="h-10 w-10 m-auto !stroke-green-500" />
@@ -82,10 +81,8 @@ const Plan: FC<Props> = ({ date, setPlanBeingEdited }) => {
             {diet ? (
               <div className="mb-auto flex h-full w-full flex-col gap-2">
                 <ManualMeals
-                  isEditing={isEditing}
                   diet={diet}
                   date={date}
-                  setIsEditing={setIsEditing}
                   isMultipleDaysView={true}
                 />
               </div>

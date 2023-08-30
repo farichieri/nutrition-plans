@@ -17,9 +17,8 @@ interface Props {
 }
 
 const DayPlan: FC<Props> = ({ date }) => {
-  const [isEditing, setIsEditing] = useState(false);
   const { user } = useSelector(selectAuthSlice);
-  const { diets } = useSelector(selectPlansSlice);
+  const { diets, isEditingDiet } = useSelector(selectPlansSlice);
   const diet: Diet = diets[date];
   const planID = diet?.planID;
 
@@ -42,20 +41,14 @@ const DayPlan: FC<Props> = ({ date }) => {
             </div>
 
             <div>
-              <DayNote diet={diet} isEditing={isEditing} />
+              <DayNote diet={diet} isEditing={isEditingDiet} />
             </div>
             <div className="relative flex w-full flex-col gap-14 sm:grid sm:grid-cols-fluid_lg sm:gap-5">
               <div
                 id="tour-dayPlan-0"
                 className="flex w-full flex-col rounded-md"
               >
-                <MealCards
-                  isEditing={isEditing}
-                  diet={diet}
-                  date={date}
-                  setIsEditing={setIsEditing}
-                  isMultipleDaysView={false}
-                />
+                <MealCards diet={diet} date={date} isMultipleDaysView={false} />
               </div>
               {diet && (
                 <div>
@@ -64,7 +57,7 @@ const DayPlan: FC<Props> = ({ date }) => {
                       nutrients={diet.nutrients}
                       planID={planID}
                       diet={diet}
-                      isEditing={isEditing}
+                      isEditing={isEditingDiet}
                     />
                   </div>
                 </div>
