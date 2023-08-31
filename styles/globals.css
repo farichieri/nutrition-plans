@@ -17,6 +17,7 @@
 
 html {
   min-width: 320px;
+  word-wrap: break-word;
 }
 
 /* @layer base {

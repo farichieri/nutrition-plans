@@ -49,7 +49,7 @@ export default function Footer() {
               <Link href="/plans" className="opacity-50 hover:opacity-100">
                 Plans
               </Link>
-              <Link href="/terms" className="opacity-50 hover:opacity-100">
+              <Link href="/blog" className="opacity-50 hover:opacity-100">
                 Blog
               </Link>
               <Link href="/about" className="opacity-50 hover:opacity-100">
