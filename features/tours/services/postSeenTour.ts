@@ -11,6 +11,7 @@ const postSeenTour = async ({
   tour: keyof Tours;
 }): Promise<Result<User, unknown>> => {
   try {
+    console.log("Executing postSeenTour");
     const userRef = doc(db, "users", user.id);
     const fields = {
       tours: {

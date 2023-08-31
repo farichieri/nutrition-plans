@@ -75,23 +75,26 @@ const buildMealFoods = async ({
     );
     const length = Object.keys(planFoodsTypeArr).length;
 
-    const promises = Array.from({ length: foodsPerMeal }).map(async () => {
-      const randomIndex = getRandomNum(length);
-      console.log({ randomIndex, length });
-      const randomFoodId = planFoodsTypeArr[randomIndex].id;
+    const promises = Array.from({ length: foodsPerMeal }).map(
+      async (f, index) => {
+        const randomIndex = getRandomNum(length);
+        console.log({ randomIndex, length });
+        const randomFoodId = planFoodsTypeArr[randomIndex].id;
 
-      const res = await fetchFoodByID(randomFoodId!);
-      if (res.result === "error") throw new Error("Error fetching food");
-      const food: Food = res.data;
+        const res = await fetchFoodByID(randomFoodId!);
+        if (res.result === "error") throw new Error("Error fetching food");
+        const food: Food = res.data;
 
-      // const { calories: foodCalories } = getNutritionMerged(food);
-      reachedCalories += Number(food.nutrients.calories);
-      newFoods[food.id!] = {
-        ...food,
-        dietID: meal.dietID,
-        dietMealID: meal.id,
-      };
-    });
+        // const { calories: foodCalories } = getNutritionMerged(food);
+        reachedCalories += Number(food.nutrients.calories);
+        newFoods[food.id!] = {
+          ...food,
+          dietID: meal.dietID,
+          dietMealID: meal.id,
+          order: index,
+        };
+      }
+    );
     await Promise.all(promises);
 
     // If the calories are not reached, re-scale the foods.

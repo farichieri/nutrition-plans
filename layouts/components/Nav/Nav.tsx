@@ -29,7 +29,7 @@ const NavBar: FC<Props> = () => {
   const [show, setShow] = useState(false);
   const [lastYPos, setLastYPos] = useState(0);
   const windowWidth = useWindowWidth();
-  const isMobile = windowWidth < 768;
+  const isMobile = windowWidth < 1024;
 
   const controlNavbar = () => {
     if (typeof window !== "undefined") {
@@ -113,6 +113,9 @@ const NavBar: FC<Props> = () => {
             ))}
         </div>
         <div className="flex w-fit min-w-fit basis-1/3 items-center justify-end gap-4 text-xs xs:gap-5 sm:gap-10 sm:text-xl">
+          <div className="hidden md:flex">
+            <ThemeSwitcher withText={false} />
+          </div>
           {user && (
             <Link
               href={AppRoutes.today}
@@ -122,7 +125,6 @@ const NavBar: FC<Props> = () => {
               <MdArrowForwardIos className="h-4 w-4 text-white" />
             </Link>
           )}
-
           {user ? (
             <div className="hidden md:flex">
               <AvatarDropDown isApp={false} />

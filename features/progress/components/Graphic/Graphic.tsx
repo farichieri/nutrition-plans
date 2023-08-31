@@ -139,7 +139,7 @@ const Graphic: FC<Props> = () => {
           data={data}
           margin={{
             top: 0,
-            right: 0,
+            right: 5,
             left: -10,
             bottom: 0,
           }}
