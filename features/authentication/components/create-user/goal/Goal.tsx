@@ -72,6 +72,8 @@ const Goal: FC<Props> = ({ handleContinue }) => {
     weightInKg: Number(weightInKg),
   });
 
+  console.log({ weight });
+
   const dateParsed = dueDate && parse(dueDate, "MM-dd-yyyy", new Date());
   const dueDateFormatted =
     dateParsed && format(new Date(dateParsed), "yyyy-MM-dd");

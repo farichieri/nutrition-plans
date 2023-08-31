@@ -27,7 +27,6 @@ export const authApi = api.injectEndpoints({
           return { data: userData };
         } catch (error) {
           dispatch(setLoginError());
-          console.log(error);
           return { error };
         }
       },
@@ -49,7 +48,6 @@ export const authApi = api.injectEndpoints({
           return { data: userData };
         } catch (error) {
           dispatch(setLoginError());
-          console.log(error);
           return { error };
         }
       },
@@ -67,7 +65,6 @@ export const authApi = api.injectEndpoints({
 
           return { data: user };
         } catch (error) {
-          console.log("updateUser", { error });
           return { error };
         }
       },

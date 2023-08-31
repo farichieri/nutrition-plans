@@ -7,6 +7,7 @@ import { PlansType, Posts } from "@/types";
 export enum MDDirectories {
   plans = "/data/content/plans",
   posts = "/data/content/posts",
+  legal = "/data/content/legal",
 }
 
 const getSortedData = (directory: MDDirectories): Posts | PlansType => {

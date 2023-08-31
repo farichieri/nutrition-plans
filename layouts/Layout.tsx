@@ -3,6 +3,7 @@ import {
   setSubscription,
   useUpdateUserMutation,
   useLoginMutation,
+  useGetUserQuery,
 } from "@/features/authentication";
 import { auth } from "@/services/firebase";
 import { getUserSubscription, usePremiumStatus } from "@/features/stripe";
@@ -26,6 +27,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const isPremium = usePremiumStatus(user);
   const [login] = useLoginMutation();
   const [updateUser] = useUpdateUserMutation();
+  const {} = useGetUserQuery({ userID: user?.id });
 
   useEffect(() => {
     // Verify Version and then log log in.
