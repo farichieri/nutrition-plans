@@ -2,7 +2,7 @@
 author: "aldana-richieri"
 authorName: "Aldana Richieri"
 date: "2023-07-30"
-image: "/images/plans/vegetarian.jpg"
+image: "/images/plans/vegetarian.png"
 isAvailable: true
 premium: false
 summary: "Vegetarian Plan"

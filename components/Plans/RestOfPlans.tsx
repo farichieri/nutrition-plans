@@ -26,7 +26,7 @@ const RestOfPlans: FC<Props> = ({ plans }) => {
             <span className="h-[150px] w-[150px] min-w-[150px] overflow-auto rounded-3xl">
               <BlurImage
                 image={{
-                  imageURL: `/images/plans/${plan.id}.jpg`,
+                  imageURL: `/images/plans/${plan.id}.png`,
                   title: plan.title!,
                   id: plan.id!,
                 }}

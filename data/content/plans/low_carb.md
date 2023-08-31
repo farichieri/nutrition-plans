@@ -2,7 +2,7 @@
 author: "aldana-richieri"
 authorName: "Aldana Richieri"
 date: "2023-07-30"
-image: "/images/plans/low_carb.jpg"
+image: "/images/plans/low_carb.png"
 isAvailable: true
 premium: false
 summary: "Low Carb Plan"

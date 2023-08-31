@@ -1,7 +1,7 @@
 ---
 title: "Balanced"
 isAvailable: true
-image: "/images/plans/balanced.jpg"
+image: "/images/plans/balanced.png"
 date: "2023-07-30"
 author: "aldana-richieri"
 authorName: "Aldana Richieri"
