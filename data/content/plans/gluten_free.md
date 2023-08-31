@@ -1,7 +1,7 @@
 ---
 title: "Gluten Free"
 isAvailable: true
-image: "/images/plans/gluten_free.jpg"
+image: "/images/plans/gluten_free.png"
 date: "2023-07-30"
 author: "aldana-richieri"
 authorName: "Aldana Richieri"

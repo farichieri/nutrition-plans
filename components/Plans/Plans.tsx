@@ -26,7 +26,7 @@ const Plans: FC<Props> = ({ plans }) => {
             >
               <BlurImage
                 image={{
-                  imageURL: `/images/plans/${plan.id}.jpg`,
+                  imageURL: `/images/plans/${plan.id}.png`,
                   title: plan.title!,
                   id: plan.id!,
                 }}

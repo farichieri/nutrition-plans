@@ -1,9 +1,25 @@
 import { InstagramIcon } from "@/assets";
 import { TwitterIcon } from "@/assets";
-import ThemeSwitcher from "@/components/theme-switcher";
+import { useRouter } from "next/router";
 import Link from "next/link";
 
 export default function Footer() {
+  const router = useRouter();
+
+  const RESOURCES_LINKS = [
+    { name: "Plans", href: "/plans" },
+    { name: "Blog", href: "/blog" },
+    { name: "About", href: "/about" },
+    { name: "Pricing", href: "/pricing" },
+  ];
+
+  console.log({ router });
+
+  const LEGAL_LINKS = [
+    { name: "Privacy", href: "/privacy" },
+    { name: "Terms", href: "/terms" },
+  ];
+
   return (
     <footer className="flex min-h-[12rem] w-full flex-col items-center justify-center border-t border-gray-300 dark:border-gray-400/10">
       <div className="m-auto flex w-full max-w-5xl flex-wrap-reverse justify-between gap-10 px-9 py-14 md:flex-nowrap ">
@@ -46,30 +62,34 @@ export default function Footer() {
           <div className="flex flex-col gap-2">
             <span className="font-medium">Resources</span>
             <div className="flex flex-col gap-1 text-sm font-light">
-              <Link href="/plans" className="opacity-50 hover:opacity-100">
-                Plans
-              </Link>
-              <Link href="/blog" className="opacity-50 hover:opacity-100">
-                Blog
-              </Link>
-              <Link href="/about" className="opacity-50 hover:opacity-100">
-                About
-              </Link>
-              <Link href="/pricing" className="opacity-50 hover:opacity-100">
-                Pricing
-              </Link>
+              {RESOURCES_LINKS.map((link) => (
+                <Link
+                  href={link.href}
+                  key={link.name}
+                  className={`hover:opacity-100 ${
+                    router.pathname === link.href ? "opacity-100" : "opacity-50"
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              ))}
             </div>
           </div>
 
           <div className="flex flex-col gap-2">
             <span className="font-medium">Legal</span>
             <div className="flex flex-col gap-1 text-sm font-light">
-              <Link href="/privacy" className="opacity-50 hover:opacity-100">
-                Privacy
-              </Link>
-              <Link href="/terms" className="opacity-50 hover:opacity-100">
-                Terms
-              </Link>
+              {LEGAL_LINKS.map((link) => (
+                <Link
+                  href={link.href}
+                  key={link.name}
+                  className={`hover:opacity-100 ${
+                    router.pathname === link.href ? "opacity-100" : "opacity-50"
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              ))}
             </div>
           </div>
         </div>

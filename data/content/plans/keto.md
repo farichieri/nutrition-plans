@@ -1,7 +1,7 @@
 ---
 title: "Keto"
 isAvailable: true
-image: ""
+image: "/images/plans/keto.png"
 date: "2023-07-30"
 author: "aldana-richieri"
 authorName: "Aldana Richieri"

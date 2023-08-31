@@ -1,7 +1,7 @@
 ---
 title: "Mediterranean"
 isAvailable: true
-image: "/images/plans/mediterranean.jpg"
+image: "/images/plans/mediterranean.png"
 date: "2023-07-30"
 author: "aldana-richieri"
 authorName: "Aldana Richieri"
