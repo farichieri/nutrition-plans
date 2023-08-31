@@ -1,20 +1,21 @@
 import {
+  getWelcomeNotification,
+  useCreateNotificationMutation,
+} from "@/features/notifications";
+import {
   calculateKCALSRecommended,
   BMISignificance,
 } from "@/features/authentication/utils/calculateBodyData";
 import {
   selectAuthSlice,
   setIsCreatingUser,
-  setUpdateUser,
-  updateUser,
+  useUpdateUserMutation,
 } from "@/features/authentication";
 import {
-  createDefaultMealsSettings,
-  createDefaultUserMeals,
-  setUserMeals,
-  setUserMealsSettings,
+  usePostDefaultMealsSettingsMutation,
+  usePostDefaultUserMealsMutation,
 } from "@/features/meals";
-import { addProgress, ProgressItem, setAddProgress } from "@/features/progress";
+import { ProgressItem, usePostProgressMutation } from "@/features/progress";
 import { BiSolidPieChartAlt2 } from "react-icons/bi";
 import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
 import { FC, useState } from "react";
@@ -26,10 +27,6 @@ import { useRouter } from "next/router";
 import InfoTooltip from "@/components/Tooltip/InfoTooltip";
 import NutritionTarget from "../NutritionTarget";
 import SubmitButton from "@/components/Buttons/SubmitButton";
-import {
-  getWelcomeNotification,
-  useCreateNotificationMutation,
-} from "@/features/notifications";
 
 interface Props {
   handleSubmit: Function;
@@ -42,6 +39,7 @@ const Results: FC<Props> = ({ handleSubmit }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const isCreatingRoute = router.asPath === "/app/create";
+  const [updateUser] = useUpdateUserMutation();
 
   if (!user) return <>No user found</>;
 
@@ -66,20 +64,27 @@ const Results: FC<Props> = ({ handleSubmit }) => {
     activity: activity,
   });
 
+  const [postProgress] = usePostProgressMutation();
+
   const addFirstProgress = async () => {
     const newProgress: ProgressItem = {
       createdAt: formatISO(new Date()),
       date: formatToUSDate(new Date()),
       weightInKg: weightInKg,
     };
-    const res = await addProgress(user, newProgress);
-    if (res.result === "success") {
-      dispatch(setAddProgress(newProgress));
+    const res = await postProgress({ user, progress: newProgress });
+    if ("error" in res) {
+      return { result: "error" };
     }
-    return res;
+    return {
+      result: "success",
+      data: res.data,
+    };
   };
 
   const [createNotification] = useCreateNotificationMutation();
+  const [postDefaultMealsSettings] = usePostDefaultMealsSettingsMutation();
+  const [postDefaultUserMeals] = usePostDefaultUserMealsMutation();
 
   const handleCreateUser = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -104,25 +109,21 @@ const Results: FC<Props> = ({ handleSubmit }) => {
       const [addProgressRes, mealSettings, addMeals, welcomeNotification] =
         await Promise.all([
           addFirstProgress(),
-          createDefaultMealsSettings(user),
-          createDefaultUserMeals(user),
+          postDefaultMealsSettings({ user }),
+          postDefaultUserMeals({ user }),
           createNotification({ user, notification: notification }),
         ]);
 
       if (
-        addProgressRes.result === "success" &&
-        mealSettings.result === "success" &&
-        addMeals.result === "success" &&
+        addProgressRes.result !== "error" &&
+        !("error" in mealSettings) &&
+        !("error" in addMeals) &&
         "error" in welcomeNotification === false
       ) {
-        dispatch(setUserMealsSettings(mealSettings.data));
-        dispatch(setUserMeals(addMeals.data));
-        dispatch(setUpdateUser({ user, fields }));
         dispatch(setIsCreatingUser(false));
-        // welcomeNotification is already dispatched here.
 
-        const updateUserRes = await updateUser({ user, fields });
-        if (updateUserRes.result === "success") {
+        const res = await updateUser({ user, fields });
+        if (!("error" in res)) {
           handleSubmit();
         } else {
           throw Error;

@@ -8,13 +8,14 @@ import {
 import {
   selectAuthSlice,
   setUpdateUser,
-  updateUser,
+  useUpdateUserMutation,
 } from "@/features/authentication";
 import { FC, useState } from "react";
 import { Food, FoodHit } from "@/features/foods";
 import { MdFavorite } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "@/components/Loader/Spinner";
+import { toast } from "react-hot-toast";
 
 interface Props {
   food: FoodHit | Food;
@@ -26,6 +27,7 @@ const AddFoodToLibrary: FC<Props> = ({ food }) => {
   const { id: foodID } = food;
   const { isRating } = useSelector(selectLibrarySlice);
   const { user } = useSelector(selectAuthSlice);
+  const [updateUser] = useUpdateUserMutation();
 
   if (!user || !foodID) return <></>;
 
@@ -58,9 +60,11 @@ const AddFoodToLibrary: FC<Props> = ({ food }) => {
       if (isAlreadyFavorite) {
         await updateAction("favorites", "decrement");
         favorites.splice(favIndex, 1);
+        toast.success("Removed from favorites");
       } else {
         await updateAction("favorites", "increment");
         favorites = [...favorites, foodID];
+        toast.success("Added to favorites");
       }
 
       let fields = {
@@ -75,13 +79,14 @@ const AddFoodToLibrary: FC<Props> = ({ food }) => {
 
       if (JSON.stringify(fields.ratings) !== JSON.stringify(user.ratings)) {
         const res = await updateUser({ user, fields });
-        if (res.result === "success") {
-          dispatch(setUpdateUser({ user, fields }));
+        if (!("error" in res)) {
           if (isAlreadyFavorite) {
             dispatch(removeFoodFromLibrary(food));
           } else {
             dispatch(addFoodToLibrary(food));
           }
+        } else {
+          throw new Error("Error updating user");
         }
       }
     } catch (error) {

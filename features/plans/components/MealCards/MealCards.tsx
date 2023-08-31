@@ -16,7 +16,10 @@ import { FC } from "react";
 import { FoodGroupArray } from "@/features/foods";
 import { MdRestaurant } from "react-icons/md";
 import { selectAuthSlice } from "@/features/authentication";
-import { updateDietMealFoodsOrder } from "@/features/plans/slice";
+import {
+  selectPlansSlice,
+  updateDietMealFoodsOrder,
+} from "@/features/plans/slice";
 import { useDispatch, useSelector } from "react-redux";
 import { useTour } from "@/features/tours";
 import Exercise from "../common/Exercise";
@@ -25,21 +28,14 @@ import MoreDropdown from "../common/MoreDropdown";
 interface Props {
   date: string;
   diet: Diet;
-  isEditing: boolean;
-  setIsEditing: Function;
   isMultipleDaysView: boolean;
 }
 
-const MealCards: FC<Props> = ({
-  diet,
-  isEditing,
-  setIsEditing,
-  date,
-  isMultipleDaysView,
-}) => {
+const MealCards: FC<Props> = ({ diet, date, isMultipleDaysView }) => {
   const dispatch = useDispatch();
   const dietMeals = diet?.meals;
   const { user } = useSelector(selectAuthSlice);
+  const { isEditingDiet } = useSelector(selectPlansSlice);
 
   if (!user) return <></>;
 
@@ -152,13 +148,7 @@ const MealCards: FC<Props> = ({
         </div>
         <div className="ml-auto flex items-center gap-4">
           <MoreDropdown diet={diet} />
-          <SaveAndEditButton
-            diet={diet}
-            isEditing={isEditing}
-            setIsEditing={setIsEditing}
-            date={date}
-            user={user}
-          />
+          <SaveAndEditButton diet={diet} date={date} user={user} />
         </div>
       </div>
       <div className="flex flex-col gap-2">
@@ -178,7 +168,7 @@ const MealCards: FC<Props> = ({
                       <MealCard
                         tourId={index === 0 ? "tour-dayPlan-2" : ""}
                         dietMeal={dietMeal}
-                        isEditing={isEditing}
+                        isEditing={isEditingDiet}
                         mealKcals={Number(calories)}
                       />
                     </div>
@@ -187,8 +177,8 @@ const MealCards: FC<Props> = ({
             </div>
           </DragDropContext>
         )}
-        <Water diet={diet} isEditing={isEditing} />
-        <Exercise diet={diet} isEditing={isEditing} />
+        <Water diet={diet} isEditing={isEditingDiet} />
+        <Exercise diet={diet} isEditing={isEditingDiet} />
       </div>
     </div>
   );

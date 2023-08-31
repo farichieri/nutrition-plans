@@ -25,6 +25,23 @@ const formatNutrient = (num: number, nutrient: NutrientsEnum): number => {
   }
 };
 
+const updateFoodScale = ({
+  food,
+  scaleAmount,
+  scaleName,
+}: {
+  food: Food;
+  scaleAmount: number;
+  scaleName: string;
+}): Food => {
+  let newFood = { ...food };
+
+  newFood.scaleAmount = scaleAmount;
+  newFood.scaleName = scaleName;
+
+  return newFood;
+};
+
 const getNutritionValues = (
   food: Food,
   scaleAmount: number,
@@ -158,7 +175,7 @@ const getDietFoods = (meals: DietMealGroup): FoodGroup => {
 const getDietNutrition = (dietMeals: DietMealGroup) => {
   const foods = getDietFoods(dietMeals);
   const nutrition = getNutritionMerged(foods);
-  return nutrition;
+  return { ...nutrition };
 };
 
 export {
@@ -168,4 +185,5 @@ export {
   getRecipeSize,
   getDietNutrition,
   getDietFoods,
+  updateFoodScale,
 };

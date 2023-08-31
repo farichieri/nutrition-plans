@@ -1,10 +1,10 @@
 import { convertDateToDateString, convertDayToUrlDate } from "../../utils";
-import { FC, useEffect, useState } from "react";
-import { fetchDietByDate } from "../../services";
+import { FC, useEffect } from "react";
+import { useGetDietByDateQuery } from "../../services";
 import { ManualMeals } from "..";
-import { selectPlansSlice, setDiet } from "@/features/plans/slice";
-import { useDispatch, useSelector } from "react-redux";
-import { User, selectAuthSlice } from "@/features/authentication";
+import { selectPlansSlice } from "@/features/plans/slice";
+import { useSelector } from "react-redux";
+import { selectAuthSlice } from "@/features/authentication";
 import DayNote from "./DayNote";
 import Link from "next/link";
 import PlanGenerator from "./PlanGenerator";
@@ -16,39 +16,24 @@ interface Props {
 }
 
 const Plan: FC<Props> = ({ date, setPlanBeingEdited }) => {
-  const dispatch = useDispatch();
-  const [isEditing, setIsEditing] = useState(false);
-  const [isLoadingDiet, setIsLoadingDiet] = useState(false);
-  const { diets } = useSelector(selectPlansSlice);
+  const { diets, isEditingDiet } = useSelector(selectPlansSlice);
   const { user } = useSelector(selectAuthSlice);
   const diet = diets[date];
 
-  const getDayDiet = async (date: string, user: User) => {
-    if (!diet) {
-      setIsLoadingDiet(true);
-    }
-    const res = await fetchDietByDate({ date, userID: user.id });
-    if (res.result === "success") {
-      dispatch(setDiet(res.data));
-    }
-    setIsLoadingDiet(false);
-  };
-
   useEffect(() => {
-    if (user) {
-      getDayDiet(date, user);
-    }
-  }, [date]);
-
-  useEffect(() => {
-    if (isEditing) {
+    if (isEditingDiet) {
       setPlanBeingEdited(date);
     } else {
       setPlanBeingEdited(null);
     }
-  }, [isEditing]);
+  }, [isEditingDiet]);
 
   if (!user) return <></>;
+
+  const { isLoading, data } = useGetDietByDateQuery(
+    { date, userID: user.id },
+    { refetchOnMountOrArgChange: true }
+  );
 
   const calories = diet?.nutrients?.calories;
   const urlDate = convertDayToUrlDate(date);
@@ -87,19 +72,17 @@ const Plan: FC<Props> = ({ date, setPlanBeingEdited }) => {
           </span>
         </div>
       )}
-      {diet && <DayNote diet={diet} isEditing={isEditing} />}
+      {diet && <DayNote diet={diet} isEditing={isEditingDiet} />}
       <div className="flex h-full min-h-[10rem] w-full flex-col">
-        {isLoadingDiet ? (
+        {isLoading ? (
           <Spinner customClass="h-10 w-10 m-auto !stroke-green-500" />
         ) : (
           <>
             {diet ? (
               <div className="mb-auto flex h-full w-full flex-col gap-2">
                 <ManualMeals
-                  isEditing={isEditing}
                   diet={diet}
                   date={date}
-                  setIsEditing={setIsEditing}
                   isMultipleDaysView={true}
                 />
               </div>

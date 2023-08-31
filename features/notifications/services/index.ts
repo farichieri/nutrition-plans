@@ -1,6 +1,14 @@
-import { doc, getDocs, query, setDoc, where } from "firebase/firestore";
+import {
+  doc,
+  getDocs,
+  query,
+  setDoc,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import {
   notificationsCollection,
+  userDocRef,
   userNotificationsCollection,
 } from "@/services/firebase";
 import {
@@ -10,27 +18,23 @@ import {
   setNotifications,
   setUnarchiveNotification,
 } from "../slice";
-import {
-  setUpdateUser,
-  updateUser,
-  type User,
-} from "@/features/authentication";
+import { setUpdateUser, type User } from "@/features/authentication";
 import { api } from "@/services/api";
 import { formatISO } from "date-fns";
 import type { Notification, NotificationsGroup } from "../types";
 
 export const notificationsApi = api.injectEndpoints({
   endpoints: (build) => ({
-    fetchNotifications: build.query<NotificationsGroup, unknown>({
-      async queryFn({ user }: { user: User }, { dispatch }) {
-        console.log("Executing: fetchNotifications");
+    getNotifications: build.query<NotificationsGroup, { user: User }>({
+      async queryFn({ user }, { dispatch }) {
+        console.log("Executing: getNotifications");
         try {
           let data: NotificationsGroup = {};
-          const collRef = notificationsCollection;
-          const q = query(collRef, where("isVisible", "==", true));
 
           const promises = Promise.all([
-            getDocs(q),
+            getDocs(
+              query(notificationsCollection, where("isVisible", "==", true))
+            ),
             getDocs(userNotificationsCollection(user.id)),
           ]);
           const [querySnapshot, userQuerySnapshot] = await promises;
@@ -54,22 +58,22 @@ export const notificationsApi = api.injectEndpoints({
       },
       providesTags: ["notifications"],
     }),
-    archiveNotification: build.mutation<User, unknown>({
-      async queryFn(
-        { user, notificationID }: { user: User; notificationID: string },
-        { dispatch }
-      ) {
+
+    archiveNotification: build.mutation<
+      User,
+      { user: User; notificationID: string }
+    >({
+      async queryFn({ user, notificationID }, { dispatch }) {
         console.log("Executing: archiveNotification");
         try {
           const notificationsArchived = [
             ...user.notificationsArchived,
             notificationID,
           ];
-          const res = await updateUser({
-            user,
-            fields: { notificationsArchived },
-          });
-          if (res.result === "error") throw new Error("Error updating user");
+
+          const userRef = userDocRef({ userID: user.id });
+          await updateDoc(userRef, { fields: { notificationsArchived } });
+
           dispatch(setArchiveNotification({ id: notificationID }));
           dispatch(
             setUpdateUser({
@@ -79,30 +83,32 @@ export const notificationsApi = api.injectEndpoints({
               },
             })
           );
-          return { data: res.data };
+          return { data: user };
         } catch (error) {
           console.log({ error });
           return { error };
         }
       },
-      // invalidatesTags: ["notifications"],
+      invalidatesTags: ["notifications"],
     }),
-    archiveAllNotifications: build.mutation<User, unknown>({
-      async queryFn(
-        { user, notificationIDS }: { user: User; notificationIDS: string[] },
-        { dispatch }
-      ) {
+
+    archiveAllNotifications: build.mutation<
+      User,
+      { user: User; notificationIDS: string[] }
+    >({
+      async queryFn({ user, notificationIDS }, { dispatch }) {
         console.log("Executing: archiveAllNotifications");
         try {
           const newArchived = [
             ...user.notificationsArchived,
             ...notificationIDS,
           ];
-          const res = await updateUser({
-            user,
+
+          const userRef = userDocRef({ userID: user.id });
+          await updateDoc(userRef, {
             fields: { notificationsArchived: newArchived },
           });
-          if (res.result === "error") throw new Error("Error updating user");
+
           dispatch(setArchiveAllNotifications());
           dispatch(
             setUpdateUser({
@@ -112,13 +118,13 @@ export const notificationsApi = api.injectEndpoints({
               },
             })
           );
-          return { data: res.data };
+          return { data: user };
         } catch (error) {
           console.log({ error });
           return { error };
         }
       },
-      // invalidatesTags: ["notifications"],
+      invalidatesTags: ["notifications"],
     }),
     unarchiveNotification: build.mutation<User, unknown>({
       async queryFn(
@@ -130,12 +136,10 @@ export const notificationsApi = api.injectEndpoints({
           const notificationsArchived = user.notificationsArchived.filter(
             (id) => id !== notificationID
           );
-          // There should be an updateUser mutation and therefore no need to dispatch
-          const res = await updateUser({
-            user,
-            fields: { notificationsArchived },
-          });
-          if (res.result === "error") throw new Error("Error updating user");
+
+          const userRef = userDocRef({ userID: user.id });
+          await updateDoc(userRef, { fields: { notificationsArchived } });
+
           dispatch(setUnarchiveNotification({ id: notificationID }));
           dispatch(
             setUpdateUser({
@@ -143,13 +147,13 @@ export const notificationsApi = api.injectEndpoints({
               fields: { notificationsArchived },
             })
           );
-          return { data: res.data };
+          return { data: user };
         } catch (error) {
           console.log({ error });
           return { error };
         }
       },
-      // invalidatesTags: ["notifications"],
+      invalidatesTags: ["notifications"],
     }),
     createNotification: build.mutation<Notification, unknown>({
       async queryFn(
@@ -175,7 +179,7 @@ export const notificationsApi = api.injectEndpoints({
           return { error };
         }
       },
-      // invalidatesTags: ["notifications"],
+      invalidatesTags: ["notifications"],
     }),
   }),
   // @ts-ignore
@@ -185,7 +189,7 @@ export const notificationsApi = api.injectEndpoints({
 export const {
   useArchiveNotificationMutation,
   useCreateNotificationMutation,
-  useFetchNotificationsQuery,
+  useGetNotificationsQuery,
   useUnarchiveNotificationMutation,
   useArchiveAllNotificationsMutation,
 } = notificationsApi;

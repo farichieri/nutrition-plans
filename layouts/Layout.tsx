@@ -1,11 +1,8 @@
 import {
-  getUser,
   selectAuthSlice,
-  setIsFirstDataLoaded,
-  setLoginError,
   setSubscription,
-  setUser,
-  updateUser,
+  useUpdateUserMutation,
+  useLoginMutation,
 } from "@/features/authentication";
 import { auth } from "@/services/firebase";
 import { getUserSubscription, usePremiumStatus } from "@/features/stripe";
@@ -13,7 +10,7 @@ import { Inter } from "next/font/google";
 import { isAppVersionCorrect } from "@/utils";
 import { onAuthStateChanged } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Head from "next/head";
 import useTheme from "@/hooks/useTheme";
 
@@ -27,11 +24,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const { user } = useSelector(selectAuthSlice);
   const dispatch = useDispatch();
   const isPremium = usePremiumStatus(user);
-
-  useEffect(() => {
-    // To re-fetch data on refresh if user is logged in.
-    dispatch(setIsFirstDataLoaded(false));
-  }, []);
+  const [login] = useLoginMutation();
+  const [updateUser] = useUpdateUserMutation();
 
   useEffect(() => {
     // Verify Version and then log log in.
@@ -42,16 +36,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     if (!isVerifyingVersion) {
       // Verify User
       const unsubscribe = onAuthStateChanged(auth, async (user) => {
-        if (user) {
-          const [userRes] = await Promise.all([getUser(user.uid)]);
-          if (userRes.result === "success") {
-            dispatch(setUser(userRes.data));
-          } else {
-            dispatch(setLoginError());
-          }
-        } else {
-          dispatch(setLoginError());
-        }
+        await login({ userID: user?.uid });
       });
       return () => unsubscribe();
     }
@@ -61,10 +46,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     if (user) {
       if (isPremium !== user.isPremium) {
         const unsubscribe = async () => {
-          const res = await updateUser({ user, fields: { isPremium } });
-          if (res.result === "success") {
-            dispatch(setUser({ ...user, isPremium }));
-          }
+          await updateUser({ user, fields: { isPremium } });
         };
         unsubscribe();
       }
@@ -92,7 +74,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             translate="no"
             className="min-w-screen flex min-h-screen flex-col items-center justify-between "
           >
-            {children}
+            <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
           </main>
         </div>
       )}

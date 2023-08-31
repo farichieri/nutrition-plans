@@ -9,7 +9,6 @@ import {
   CompatiblePlans,
   FoodType,
   FoodKind,
-  addFood,
   selectFoodsSlice,
   FoodScales,
   GlucemicStatusEnum,
@@ -17,9 +16,9 @@ import {
   DigestionStatusEnum,
   NutrientsEnum,
   Food,
-  addNewFood,
   setNewFoodState,
   updateNewFoodState,
+  usePostFoodMutation,
 } from "@/features/foods";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { generateOptions } from "@/utils";
@@ -96,11 +95,18 @@ const FoodCreate: FC<Props> = () => {
     }
   };
 
+  const [postFood] = usePostFoodMutation();
+
   const onSubmit = async (data: FormValues) => {
     if (!user || isSubmitting || isLoading) return;
     setIsLoading(true);
-    const res = await addFood(data, FoodKind.basic_food, newImageFile, user);
-    if (res.result === "success") {
+    const res = await postFood({
+      food: data,
+      kind: FoodKind.basic_food,
+      newImage: newImageFile,
+      user,
+    });
+    if (!("error" in res)) {
       dispatch(setNewFoodState(NewFood));
       setNewImageFile(undefined);
       router.push(`/app/food/${res.data.id}`);

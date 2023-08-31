@@ -11,7 +11,7 @@ import { selectAuthSlice } from "@/features/authentication";
 import { selectPlansSlice, updateDietNutrition } from "@/features/plans/slice";
 import { StartsOfWeek } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
-import { Suspense, useEffect } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import { useTour } from "@/features/tours";
 import { useWindowWidth } from "@/hooks";
 import PremiumLayout from "@/layouts/PremiumLayout";
@@ -84,22 +84,28 @@ export default function Page({ date }: { date: Props }) {
   });
 
   return (
-    <PremiumLayout>
-      <section className="mt-[calc(1_*_var(--nav-h))] flex w-full select-none flex-col pb-2 sm:mt-[var(--nav-h)]">
-        {realDate && (
-          <>
-            <PremiumNav hideScrolling={true} title="">
-              <RememberGoal />
-            </PremiumNav>
-            <Sidebar hideScrolling={isMobile} />
-            <SubPremiumNav
-              title={""}
-              hideScrolling={true}
-              customClass="top-[var(--subnav-h)]"
-            >
-              <DaySelector date={String(date)} baseURL={"/app/"} />
-            </SubPremiumNav>
-            <Suspense fallback={<div>Loading...</div>}>
+    <Suspense
+      fallback={
+        <div className="absolute inset-0 h-screen w-screen bg-red-500">
+          Loading....
+        </div>
+      }
+    >
+      <PremiumLayout>
+        <section className="mt-[calc(1_*_var(--nav-h))] flex w-full select-none flex-col pb-2 sm:mt-[var(--nav-h)]">
+          {realDate && (
+            <>
+              <PremiumNav hideScrolling={true} title="">
+                <RememberGoal />
+              </PremiumNav>
+              <Sidebar hideScrolling={isMobile} />
+              <SubPremiumNav
+                title={""}
+                hideScrolling={true}
+                customClass="top-[var(--subnav-h)]"
+              >
+                <DaySelector date={String(date)} baseURL={"/app/"} />
+              </SubPremiumNav>
               <div className="px-2 sm:px-4 lg:px-5">
                 {getIsWeek(realDate) ? (
                   <MultipleDaysPlan dateInterval={realDate} />
@@ -107,11 +113,11 @@ export default function Page({ date }: { date: Props }) {
                   <DayPlan date={realDate} />
                 )}
               </div>
-            </Suspense>
-          </>
-        )}
-      </section>
-    </PremiumLayout>
+            </>
+          )}
+        </section>
+      </PremiumLayout>
+    </Suspense>
   );
 }
 

@@ -1,18 +1,16 @@
 import {
   collection,
   doc,
-  documentId,
   getCountFromServer,
   getDoc,
   getDocs,
   query,
-  where,
 } from "firebase/firestore";
 import { db } from "@/services/firebase";
 import { searchClient } from "@/lib/typesense";
 import getSearchParameters from "../utils/getSearchParameters";
 import type { FilterQueries, Result } from "@/types";
-import type { Food, FoodGroup, FoodHitsGroup } from "@/features/foods";
+import type { Food, FoodHitsGroup } from "@/features/foods";
 
 const fetchCuratedFoods = async ({
   queries,
@@ -101,15 +99,6 @@ const fetchFoods = async ({
     ) {
       const resData = { ...curatedFoodsRes.data, ...userFoodsRes.data };
       data = resData;
-      // console.log({resData})
-      // const typesenseIDS = Object.keys(resData);
-      // const firebaseDocs = await fetchFoodsByIDS(typesenseIDS);
-
-      // if (firebaseDocs.result === "success") {
-      //   data = firebaseDocs.data;
-      // } else {
-      //   throw new Error("Error fetching foods.");
-      // }
     } else {
       throw new Error("Error fetching foods.");
     }
@@ -187,10 +176,25 @@ const getFoodsCollectionLength = async (): Promise<Result<number, unknown>> => {
   }
 };
 
+const getAllFoodsIds = async (): Promise<Result<string[], unknown>> => {
+  try {
+    let data: string[] = [];
+    const foodsRef = collection(db, "foods");
+    const querySnapshot = await getDocs(foodsRef);
+    querySnapshot.forEach((food: any) => {
+      data.push(food.id);
+    });
+    return { result: "success", data };
+  } catch (error) {
+    return { result: "error", error };
+  }
+};
+
 export {
   fetchFoods,
   fetchUserFoods,
   fetchFoodByID,
   fetchFoodsByIDS,
   getFoodsCollectionLength,
+  getAllFoodsIds,
 };

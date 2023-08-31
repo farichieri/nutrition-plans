@@ -1,13 +1,12 @@
 import { AiFillFileAdd } from "react-icons/ai";
-import { deleteDiet } from "../../services";
+import { useDeleteDietMutation } from "../../services";
 import { Diet } from "../..";
 import { FC, useState } from "react";
 import { MdContentCopy, MdDelete, MdOutlineMoreHoriz } from "react-icons/md";
 import { ReplaceDietSelector, SaveDiet } from "@/features/library";
 import { selectAuthSlice } from "@/features/authentication";
-import { setDeleteDiet } from "../../slice";
 import { toast } from "react-hot-toast";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import DropDown from "@/components/DropDown/DropDown";
 import Modal from "@/components/Modal/Modal";
 import Spinner from "@/components/Loader/Spinner";
@@ -20,19 +19,13 @@ interface Props {
 }
 
 const MoreDropdown: FC<Props> = ({ diet }) => {
-  const dispatch = useDispatch();
   const [closeDrop, setCloseDrop] = useState(false);
   const { user } = useSelector(selectAuthSlice);
-  const [isLoading, setIsLoading] = useState({
-    favorite: false,
-    replace: false,
-    delete: false,
-  });
   const [isOpen, setIsOpen] = useState({
     save: false,
     replace: false,
   });
-  const [doneGeneratingPlan, setDoneGeneratingPlan] = useState(false);
+  const [deleteDiet, { isLoading: isLoadingDelete }] = useDeleteDietMutation();
 
   if (!user || !diet.id || !diet.date) return <></>;
 
@@ -48,15 +41,12 @@ const MoreDropdown: FC<Props> = ({ diet }) => {
               className="flex items-center gap-1 rounded-md border border-red-500 bg-red-500/20 px-3 py-1 hover:bg-red-500/50 active:bg-red-500"
               onClick={async () => {
                 toast.dismiss(t.id);
-                setIsLoading({ ...isLoading, delete: true });
-                const res = await deleteDiet(diet);
-                if (res.result === "success") {
-                  dispatch(setDeleteDiet({ id: diet.id! }));
+                const res = await deleteDiet({ diet });
+                if (!("error" in res)) {
                   toast.success("Day deleted successfully.");
                 } else {
                   toast.error("Error deleting Day. Please try again.");
                 }
-                setIsLoading({ ...isLoading, delete: false });
               }}
             >
               Confirm
@@ -100,19 +90,19 @@ const MoreDropdown: FC<Props> = ({ diet }) => {
         />
       ),
       onClick: handleSave,
-      isLoading: isLoading.favorite,
+      isLoading: false,
     },
     {
       text: "Load Saved Day",
       icon: <MdContentCopy className="h-5 w-5 text-blue-500" />,
       onClick: handleReplace,
-      isLoading: isLoading.replace,
+      isLoading: false,
     },
     {
       text: "Delete Day",
       icon: <MdDelete className="h-5 w-5 text-red-500" />,
       onClick: handleDelete,
-      isLoading: isLoading.delete,
+      isLoading: isLoadingDelete,
     },
   ];
 
@@ -129,7 +119,7 @@ const MoreDropdown: FC<Props> = ({ diet }) => {
             dates={null}
             date={diet.date}
             handleClose={handleClose}
-            setDoneGeneratingPlan={setDoneGeneratingPlan}
+            setDoneGeneratingPlan={() => {}}
           />
         </Modal>
       )}

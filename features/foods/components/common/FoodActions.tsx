@@ -6,8 +6,10 @@ import {
 import { FC, useState } from "react";
 import { FoodsRating } from "@/features/authentication";
 import { MdThumbDown, MdThumbUp } from "react-icons/md";
-import { selectAuthSlice, setUpdateUser } from "@/features/authentication";
-import { updateUser } from "@/features/authentication/services";
+import {
+  selectAuthSlice,
+  useUpdateUserMutation,
+} from "@/features/authentication";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "@/components/Loader/Spinner";
 
@@ -21,6 +23,8 @@ const FoodActions: FC<Props> = ({ foodID }) => {
   const [isLiking, setIsLiking] = useState(false);
   const [isDisliking, setIsDisliking] = useState(false);
   const { isRating } = useSelector(selectLibrarySlice);
+  const [updateUser] = useUpdateUserMutation();
+
   if (!user) return <></>;
 
   const foodsRating: FoodsRating = user.ratings.foodsRating;
@@ -93,8 +97,8 @@ const FoodActions: FC<Props> = ({ foodID }) => {
       };
       if (JSON.stringify(fields.ratings) !== JSON.stringify(user.ratings)) {
         const res = await updateUser({ user, fields });
-        if (res.result === "success") {
-          dispatch(setUpdateUser({ user, fields }));
+        if ("error" in res) {
+          throw new Error("Error updating user");
         }
       }
     } catch (error) {

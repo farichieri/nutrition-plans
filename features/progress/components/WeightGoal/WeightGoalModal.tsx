@@ -1,8 +1,7 @@
 import {
   WeightGoal,
-  updateUser,
+  useUpdateUserMutation,
   selectAuthSlice,
-  setUpdateUser,
   initialWeightGoal,
 } from "@/features/authentication";
 import { FC, useEffect, useState } from "react";
@@ -23,6 +22,7 @@ const WeightGoalModal: FC<Props> = ({ weightGoal }) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
   const { user } = useSelector(selectAuthSlice);
+  const [updateUser] = useUpdateUserMutation();
 
   if (!user) return <></>;
 
@@ -62,8 +62,7 @@ const WeightGoalModal: FC<Props> = ({ weightGoal }) => {
       },
     };
     const res = await updateUser({ user, fields });
-    if (res.result === "success") {
-      dispatch(setUpdateUser({ user, fields }));
+    if (!("error" in res)) {
       dispatch(setAddWeightGoalOpen(false));
     }
     setIsSaving(false);
@@ -74,8 +73,7 @@ const WeightGoalModal: FC<Props> = ({ weightGoal }) => {
     setIsDeleting(true);
     const fields = { weightGoal: initialWeightGoal };
     const res = await updateUser({ user, fields });
-    if (res.result === "success") {
-      dispatch(setUpdateUser({ user, fields }));
+    if (!("error" in res)) {
       dispatch(setAddWeightGoalOpen(false));
     }
     setIsDeleting(false);

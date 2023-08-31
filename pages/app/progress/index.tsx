@@ -1,16 +1,16 @@
-import RememberGoal from "@/components/Goals/RememberGoal";
-import { selectAuthSlice } from "@/features/authentication";
 import {
   AddProgress,
   DaysLeft,
   Graphic,
   ProgressList,
 } from "@/features/progress";
+import RememberGoal from "@/components/Goals/RememberGoal";
+import { selectAuthSlice } from "@/features/authentication";
 import { PremiumSidebar } from "@/layouts";
-import PremiumLayout from "@/layouts/PremiumLayout";
-import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 import { useSelector } from "react-redux";
 import { useTour } from "@/features/tours";
+import PremiumLayout from "@/layouts/PremiumLayout";
+import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 
 export default function Page() {
   const isMobile = window.innerWidth < 1024;

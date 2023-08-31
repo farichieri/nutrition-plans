@@ -11,26 +11,13 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    // const querySnapshot = await getDocs(collection(db, "users"));
+    // const querySnapshot = await getDocs(collection(db, "foods"));
     // querySnapshot.forEach(async (snapShot) => {
-    //   const data = snapShot.data() as User;
-    //   updateDoc(doc(db, "users", snapShot.id), {
-    //     ratings: {
-    //       foodsRating: {
-    //         favorites: [],
-    //         likes: [],
-    //         dislikes: [],
-    //       },
-    //       mealsRating: {
-    //         favorites: [],
-    //         likes: [],
-    //         dislikes: [],
-    //       },
-    //       plansRating: {
-    //         favorites: [],
-    //         likes: [],
-    //         dislikes: [],
-    //       },
+    //   const data = snapShot.data() as Food;
+    //   updateDoc(doc(db, "foods", snapShot.id), {
+    //     compatiblePlans: {
+    //       ...data.compatiblePlans,
+    //       keto: false,
     //     },
     //   });
     // });

@@ -1,11 +1,9 @@
 import {
   ProgressItem,
-  deleteProgress,
-  updateProgress,
-  setDeleteProgress,
   setProgressOpen,
-  setUpdateProgress,
   newProgressItem,
+  useUpdateProgressMutation,
+  useDeleteProgressMutation,
 } from "@/features/progress";
 import { FC, useEffect, useState } from "react";
 import { formatTwoDecimals } from "@/utils";
@@ -21,11 +19,11 @@ interface Props {
 }
 
 const ProgressItemModal: FC<Props> = ({ progressItem }) => {
-  const [isSaving, setIsSaving] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(false);
   const { user } = useSelector(selectAuthSlice);
   const dispatch = useDispatch();
+  const [updateProgress, { isLoading: isSaving }] = useUpdateProgressMutation();
+  const [deleteProgress, { isLoading: isDeleting }] =
+    useDeleteProgressMutation();
 
   const measurementUnit = user?.measurementUnit;
   const [progressState, setProgressState] =
@@ -63,7 +61,6 @@ const ProgressItemModal: FC<Props> = ({ progressItem }) => {
   };
 
   const handleSave = async () => {
-    setIsSaving(true);
     const progressUpdated = {
       ...progressItem,
       weightInKg: getWeightInKg({
@@ -71,28 +68,23 @@ const ProgressItemModal: FC<Props> = ({ progressItem }) => {
         weight: Number(progressState.weightInKg),
       }),
     };
-    const res = await updateProgress(user, progressUpdated);
-    if (res.result === "success") {
-      dispatch(setUpdateProgress(progressUpdated));
+    const res = await updateProgress({ user, progress: progressUpdated });
+    if (!("error" in res)) {
       dispatch(setProgressOpen(null));
       toast.success("Progress updated successfully");
     } else {
       toast.error("Error updating Progress");
     }
-    setIsSaving(false);
   };
 
   const handleDelete = async () => {
-    setIsDeleting(true);
-    const res = await deleteProgress(user, progressItem);
-    if (res.result === "success") {
-      dispatch(setDeleteProgress(progressItem.date));
+    const res = await deleteProgress({ user, progress: progressItem });
+    if (!("error" in res)) {
       dispatch(setProgressOpen(null));
       toast.success("Progress deleted successfully");
     } else {
       toast.error("Error deleting Progress");
     }
-    setIsDeleting(false);
   };
 
   return (
@@ -122,7 +114,7 @@ const ProgressItemModal: FC<Props> = ({ progressItem }) => {
             loadMessage="Deleting..."
             content="Delete"
             isLoading={isDeleting}
-            isDisabled={isDisabled}
+            isDisabled={isDeleting}
             type={"delete"}
             className="w-full"
             onClick={handleDelete}
@@ -132,7 +124,7 @@ const ProgressItemModal: FC<Props> = ({ progressItem }) => {
             loadMessage="Saving..."
             content="Save"
             isLoading={isSaving}
-            isDisabled={isDisabled}
+            isDisabled={isSaving}
             type={"save"}
             className="w-full"
             onClick={handleSave}

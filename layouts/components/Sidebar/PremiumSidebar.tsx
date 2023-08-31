@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { selectLayoutSlice, setSidebarOpen } from "@/features/layout/slice";
+import { selectPlansSlice } from "@/features/plans/slice";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import CollapsedPages from "./Pages/CollapsedPages";
@@ -21,6 +22,7 @@ const PremiumSidebar: FC<Props> = ({ hideScrolling }) => {
   const { sidebarOpen } = useSelector(selectLayoutSlice);
   const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const { isEditingDiet } = useSelector(selectPlansSlice);
 
   const handleSidebar = () => {
     dispatch(setSidebarOpen(!sidebarOpen));
@@ -64,7 +66,8 @@ const PremiumSidebar: FC<Props> = ({ hideScrolling }) => {
       {isMobile ? (
         <div
           className={`${
-            !show && hideScrolling && "!-bottom-[--mobile-sidenav-h] "
+            ((!show && hideScrolling) || isEditingDiet) &&
+            "!-bottom-[--mobile-sidenav-h] "
           } fixed bottom-0 z-[150] flex h-[var(--mobile-sidenav-h)] w-full items-center border-t border-[#46464623] bg-primary-color transition-all duration-300 dark:border-[#7c7c7c1a]`}
         >
           <MobilePages />

@@ -1,4 +1,12 @@
 import {
+  ProgressItem,
+  Progress,
+  setProgress,
+  setAddProgress,
+  setDeleteProgress,
+  setUpdateProgress,
+} from "@/features/progress";
+import {
   collection,
   deleteDoc,
   doc,
@@ -7,66 +15,98 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { db } from "../../../services/firebase";
-import { Result } from "@/types";
 import { User } from "@/features/authentication";
-import { ProgressItem, Progress } from "@/features/progress";
+import { api } from "@/services/api";
 
-const addProgress = async (
-  user: User,
-  progress: ProgressItem
-): Promise<Result<ProgressItem, unknown>> => {
-  try {
-    const docRef = doc(db, "users", user.id, "progress", progress.date);
-    await setDoc(docRef, progress);
-    return { result: "success", data: progress };
-  } catch (error) {
-    return { result: "error", error };
-  }
-};
+export const progressApi = api.injectEndpoints({
+  endpoints: (build) => ({
+    getProgress: build.query<Progress, { user: User | null }>({
+      async queryFn({ user }, { dispatch }) {
+        console.log("Executing: getProgress");
+        if (!user) return { data: {} };
+        try {
+          const progressRef = query(
+            collection(db, "users", user.id, "progress")
+          );
+          const querySnapshot = await getDocs(progressRef);
+          let data: Progress = {};
+          querySnapshot.forEach((progress: any) => {
+            data[progress.id] = progress.data();
+          });
+          dispatch(setProgress(data));
+          return { data: data };
+        } catch (error) {
+          console.log({ error });
+          return { error: error };
+        }
+      },
+      providesTags: ["progress"],
+    }),
 
-const fetchProgress = async (
-  user: User
-): Promise<Result<Progress, unknown>> => {
-  try {
-    let data: Progress = {};
-    const progressRef = query(collection(db, "users", user.id, "progress"));
-    const querySnapshot = await getDocs(progressRef);
-    querySnapshot.forEach((progress: any) => {
-      data[progress.id] = progress.data();
-    });
-    return { result: "success", data };
-  } catch (error) {
-    console.log(error);
-    return { result: "error", error };
-  }
-};
+    postProgress: build.mutation<
+      ProgressItem,
+      { progress: ProgressItem; user: User }
+    >({
+      async queryFn({ progress, user }, { dispatch }) {
+        console.log("Executing: postProgress");
+        try {
+          const docRef = doc(db, "users", user.id, "progress", progress.date);
+          await setDoc(docRef, progress);
+          dispatch(setAddProgress(progress));
+          return { data: progress };
+        } catch (error) {
+          console.log({ error });
+          return { error: error };
+        }
+      },
+      invalidatesTags: ["progress"],
+    }),
 
-const deleteProgress = async (
-  user: User,
-  progress: ProgressItem
-): Promise<Result<boolean, unknown>> => {
-  try {
-    const docRef = doc(db, "users", user.id, "progress", progress.date);
-    await deleteDoc(docRef);
-    return { result: "success", data: true };
-  } catch (error) {
-    console.log(error);
-    return { result: "error", error };
-  }
-};
+    deleteProgress: build.mutation<
+      boolean,
+      { progress: ProgressItem; user: User }
+    >({
+      async queryFn({ progress, user }, { dispatch }) {
+        console.log("Executing: deleteProgress");
+        try {
+          const docRef = doc(db, "users", user.id, "progress", progress.date);
+          await deleteDoc(docRef);
+          dispatch(setDeleteProgress(progress.date));
+          return { data: true };
+        } catch (error) {
+          console.log({ error });
+          return { error: error };
+        }
+      },
+      invalidatesTags: ["progress"],
+    }),
 
-const updateProgress = async (
-  user: User,
-  progress: ProgressItem
-): Promise<Result<ProgressItem, unknown>> => {
-  try {
-    const docRef = doc(db, "users", user.id, "progress", progress.date);
-    await setDoc(docRef, progress);
-    return { result: "success", data: progress };
-  } catch (error) {
-    console.log(error);
-    return { result: "error", error };
-  }
-};
+    updateProgress: build.mutation<
+      ProgressItem,
+      { progress: ProgressItem; user: User }
+    >({
+      async queryFn({ progress, user }, { dispatch }) {
+        console.log({ progress });
+        console.log("Executing: updateProgress");
+        try {
+          const docRef = doc(db, "users", user.id, "progress", progress.date);
+          await setDoc(docRef, progress);
+          dispatch(setUpdateProgress(progress));
+          return { data: progress };
+        } catch (error) {
+          console.log({ error });
+          return { error: error };
+        }
+      },
+    }),
+  }),
+  // @ts-ignore
+  overrideExisting: module.hot?.status() === "apply",
+});
 
-export { addProgress, fetchProgress, deleteProgress, updateProgress };
+export const {
+  useGetProgressQuery,
+  usePostProgressMutation,
+  useDeleteProgressMutation,
+  useUpdateProgressMutation,
+} = progressApi;

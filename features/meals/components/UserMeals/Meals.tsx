@@ -1,12 +1,16 @@
+import {
+  UserMeals,
+  UserMealsArr,
+  updateMealsOrder,
+  useUpdateUserMealsOrderMutation,
+} from "@/features/meals";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { FC, useEffect, useState } from "react";
 import { MdDelete, MdDragHandle } from "react-icons/md";
 import { reorderArr } from "@/utils/filter";
 import { selectAuthSlice } from "@/features/authentication";
 import { toast } from "react-hot-toast";
-import { updateMealsOrders } from "./utils";
-import { useDispatch, useSelector } from "react-redux";
-import { UserMeals, UserMealsArr, setUserMeals } from "@/features/meals";
+import { useSelector } from "react-redux";
 
 interface Props {
   meals: UserMeals;
@@ -15,9 +19,9 @@ interface Props {
 
 const Meals: FC<Props> = ({ meals, handleConfirmDelete }) => {
   const { user } = useSelector(selectAuthSlice);
-  const dispatch = useDispatch();
   const mealsArrSorted = Object.values(meals).sort((a, b) => a.order - b.order);
   const [mealsState, setmealsState] = useState<UserMealsArr>(mealsArrSorted);
+  const [updateUserMealsOrder] = useUpdateUserMealsOrderMutation();
 
   const onDragEnd = (result: any) => {
     const { source, destination } = result;
@@ -39,9 +43,12 @@ const Meals: FC<Props> = ({ meals, handleConfirmDelete }) => {
 
   const updateMeals = async (mealsReordered: UserMealsArr) => {
     if (user) {
-      const res = await updateMealsOrders(mealsReordered, user);
-      if (res.result === "success") {
-        dispatch(setUserMeals(res.data));
+      const mealsUpdated = updateMealsOrder({ meals: mealsReordered });
+      const res = await updateUserMealsOrder({
+        mealsOrdered: mealsUpdated,
+        user,
+      });
+      if (!("error" in res)) {
         toast.success("Meals order updated successfully");
       } else {
         toast.error("Error updating meals order");

@@ -1,7 +1,7 @@
 import {
   selectProgressSlice,
   setAddProgress,
-  addProgress,
+  usePostProgressMutation,
 } from "@/features/progress";
 import { FC, useEffect, useState } from "react";
 import { formatISO, parse } from "date-fns";
@@ -19,7 +19,6 @@ const AddProgress: FC<Props> = () => {
   const { user } = useSelector(selectAuthSlice);
   const { progress } = useSelector(selectProgressSlice);
   const [isDisabled, setIsDisabled] = useState(false);
-  const [isAdding, setIsAdding] = useState(false);
   const [formOpened, setFormOpened] = useState(false);
   const dispatch = useDispatch();
   const [input, setInput] = useState({
@@ -34,6 +33,8 @@ const AddProgress: FC<Props> = () => {
       setIsDisabled(true);
     }
   }, [input]);
+
+  const [postProgress, { isLoading: isAdding }] = usePostProgressMutation();
 
   if (!user) return <></>;
 
@@ -64,10 +65,8 @@ const AddProgress: FC<Props> = () => {
       toast.error("Progress already exists.\nTry updating it.");
       return;
     } else {
-      setIsAdding(true);
-      const res = await addProgress(user, newProgress);
-      if (res.result === "success") {
-        dispatch(setAddProgress(newProgress));
+      const res = await postProgress({ progress: newProgress, user });
+      if (!("error" in res)) {
         setInput({
           date: "",
           weight: "",
@@ -77,7 +76,6 @@ const AddProgress: FC<Props> = () => {
         toast.error("Error updating your Goal");
       }
     }
-    setIsAdding(false);
   };
 
   const handleOpen = (event: React.MouseEvent) => {

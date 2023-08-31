@@ -6,7 +6,7 @@ import {
   createDiet,
   createDietAutomatically,
 } from "@/features/plans";
-import { postDietToUserDiets } from "@/features/plans/services";
+import { usePostDietToUserDietsMutation } from "@/features/plans/services";
 import { ReplaceDietSelector } from "@/features/library";
 import { setDiet } from "@/features/plans/slice";
 import { toast } from "react-hot-toast";
@@ -39,6 +39,8 @@ const PlanGenerator: FC<Props> = ({ date, dates, setDoneGeneratingPlan }) => {
 
   if (!user) return <></>;
 
+  const [postDietToUserDiets] = usePostDietToUserDietsMutation();
+
   const handleSelect = (event: ChangeEvent<HTMLSelectElement>) => {
     event.preventDefault();
     const value = event.target.value;
@@ -47,9 +49,7 @@ const PlanGenerator: FC<Props> = ({ date, dates, setDoneGeneratingPlan }) => {
     }
   };
 
-  const generateManually = async (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
+  const generate = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const id = (event.target as HTMLButtonElement).id;
     const planType = PlanTypes[id as keyof PlanTypesT];
@@ -73,38 +73,6 @@ const PlanGenerator: FC<Props> = ({ date, dates, setDoneGeneratingPlan }) => {
     }
   };
 
-  const generateAutomatically = async (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault();
-    const id = (event.target as HTMLButtonElement).id;
-    const planType = PlanTypes[id as keyof PlanTypesT];
-    try {
-      setIsGenerating(true);
-      if (date && !dates) {
-        // await createAndSaveDiet(date, planSelected, user, meals, planType);
-        const diet = await createDietAutomatically({
-          meals,
-          planID: planSelected,
-          type: planType,
-          user,
-        });
-      } else if (dates && !date) {
-        // await Promise.all(
-        //   dates.map((d) =>
-        //     createAndSaveDiet(d, planSelected, user, meals, planType)
-        //   )
-        // ).then(() => setDoneGeneratingPlan(true));
-      } else {
-        toast.error("Error generating plan");
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsGenerating(false);
-    }
-  };
-
   const createAndSaveDiet = async (
     date: string,
     planID: PlansEnum,
@@ -113,18 +81,46 @@ const PlanGenerator: FC<Props> = ({ date, dates, setDoneGeneratingPlan }) => {
     type: PlanTypes
   ) => {
     try {
-      const diet: Diet = createDiet({ meals, planID, type, user });
-      const res = await postDietToUserDiets({
-        diet,
-        planID,
-        date,
-        user,
-      });
-      if (res.result === "success") {
-        dispatch(setDiet(res.data));
+      if (type === PlanTypes.automatically) {
+        const createRes = await createDietAutomatically({
+          meals,
+          planID,
+          type,
+          user,
+          date,
+        });
+        if (createRes.result === "error")
+          throw new Error("Error creating diet");
+        const diet: Diet = createRes.data;
+        const res = await postDietToUserDiets({
+          diet,
+          planID,
+          date,
+          user,
+        });
+        if (!("error" in res)) {
+          dispatch(setDiet(res.data));
+        } else {
+          throw new Error("Error saving diet");
+        }
+      } else if (type === PlanTypes.manually) {
+        const diet: Diet = createDiet({ meals, planID, type, user, date });
+        const res = await postDietToUserDiets({
+          diet,
+          planID,
+          date,
+          user,
+        });
+        if (!("error" in res)) {
+          dispatch(setDiet(res.data));
+        } else {
+          throw new Error("Error saving diet");
+        }
+      } else {
+        throw new Error("Invalid plan type");
       }
     } catch (error) {
-      toast.error("Error generating plan");
+      toast.error(`Error generating plan for ${date}`);
       console.log(error);
     }
   };
@@ -173,11 +169,7 @@ const PlanGenerator: FC<Props> = ({ date, dates, setDoneGeneratingPlan }) => {
                 <button
                   id={p}
                   className={`flex flex-col items-center justify-center rounded-md border border-green-500/30 bg-green-500/20 px-3 py-1.5 capitalize duration-100 hover:border-green-500 hover:bg-green-500/30 active:bg-green-500/80 `}
-                  onClick={
-                    p === PlanTypes.automatically
-                      ? generateAutomatically
-                      : generateManually
-                  }
+                  onClick={generate}
                 >
                   {p}
                 </button>

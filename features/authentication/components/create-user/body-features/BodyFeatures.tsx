@@ -1,4 +1,9 @@
 import {
+  calculateBMI,
+  calculateBMR,
+  calculateKCALSRecommended,
+} from "@/features/authentication/utils/calculateBodyData";
+import {
   User,
   UserActivities,
   UserGenders,
@@ -7,8 +12,7 @@ import {
   getWater,
   newBodyData,
   selectAuthSlice,
-  setUpdateUser,
-  updateUser,
+  useUpdateUserMutation,
 } from "@/features/authentication";
 import {
   cmsToFeet,
@@ -22,7 +26,7 @@ import { DevTool } from "@hookform/devtools";
 import { FC, useEffect, useState } from "react";
 import { MeasurementUnitsT, MeasurementUnits } from "@/types";
 import { schema } from "./schema";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -32,13 +36,8 @@ import { toast } from "react-hot-toast";
 import { AppRoutes, formatToUSDate, formatTwoDecimals } from "@/utils";
 import { MdSettingsAccessibility } from "react-icons/md";
 import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
-import {
-  calculateBMI,
-  calculateBMR,
-  calculateKCALSRecommended,
-} from "@/features/authentication/utils/calculateBodyData";
 import { formatISO } from "date-fns";
-import { addProgress, setAddProgress } from "@/features/progress";
+import { usePostProgressMutation } from "@/features/progress";
 
 interface FormValues {
   activity: UserActivities | null;
@@ -58,12 +57,13 @@ interface Props {
 
 const BodyFeatures: FC<Props> = ({ handleContinue }) => {
   const router = useRouter();
-  const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
   const [isDisabled, setIsDisabled] = useState(false);
   const [error, setError] = useState("");
   const bodyData = user?.bodyData || newBodyData;
   const isCreatingRoute = router.asPath === AppRoutes.create_user;
+  const [postProgress] = usePostProgressMutation();
+  const [updateUser] = useUpdateUserMutation();
 
   const {
     control,
@@ -238,8 +238,7 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
       };
 
       const res = await updateUser({ user, fields });
-      if (res.result === "success") {
-        dispatch(setUpdateUser({ user, fields }));
+      if (!("error" in res)) {
         handleContinue();
 
         if (!isCreatingRoute) {
@@ -253,9 +252,8 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
             weightInKg: kilograms,
           };
 
-          const res = await addProgress(user, newProgress);
-          if (res.result === "success") {
-            dispatch(setAddProgress(newProgress));
+          const res = await postProgress({ user, progress: newProgress });
+          if (!("error" in res)) {
             toast.success("Progress updated successfully.");
           }
         }

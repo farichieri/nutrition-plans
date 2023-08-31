@@ -6,12 +6,11 @@ import {
   PlanDateType,
   DietExercise,
 } from "@/features/plans/types";
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Food, FoodGroup, FoodGroupArray } from "@/features/foods/types";
 import { getDietNutrition, getIsWeek, getToday } from "@/utils";
 import { PURGE } from "redux-persist";
 import { RootState } from "@/store";
-import { saveDiet } from "../services/saveDiet";
 
 interface PlansSlice {
   date: string;
@@ -19,6 +18,7 @@ interface PlansSlice {
   isGeneratingMeals: boolean;
   planDateType: PlanDateType;
   planType: PlanTypes;
+  isEditingDiet: boolean;
 }
 
 const initialState: PlansSlice = {
@@ -27,18 +27,8 @@ const initialState: PlansSlice = {
   isGeneratingMeals: false,
   planDateType: PlanDateType.day,
   planType: PlanTypes.automatically,
+  isEditingDiet: false,
 };
-
-export const saveDietThunk = createAsyncThunk(
-  "plans/saveDiet",
-  async ({ diet }: { diet: Diet }) => {
-    console.log("averga", diet);
-    const { id } = diet;
-    if (!id) return;
-    const res = await saveDiet({ diet: diet });
-    console.log({ res, diet });
-  }
-);
 
 export const plansSlice = createSlice({
   name: "plans",
@@ -63,8 +53,12 @@ export const plansSlice = createSlice({
         }
       }
     },
-    setDiet: (state, action: PayloadAction<Diet>) => {
+    setDiet: (
+      state,
+      action: PayloadAction<Diet | { date: string; id: undefined }>
+    ) => {
       const { date, id } = action.payload;
+
       if (date && id) {
         state.diets[date] = action.payload;
       } else if (date && !id) {
@@ -189,6 +183,9 @@ export const plansSlice = createSlice({
       if (!id) return;
       state.diets[id].exercise = exercise;
     },
+    setIsEditingDiet: (state, action: PayloadAction<boolean>) => {
+      state.isEditingDiet = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(PURGE, () => {
@@ -213,6 +210,7 @@ export const {
   updateFoodInDiet,
   updateWaterDrunkInDiet,
   setDietExercise,
+  setIsEditingDiet,
 } = plansSlice.actions;
 
 export const selectPlansSlice = (state: RootState) => state.plans;

@@ -26,7 +26,7 @@ const FoodCard: FC<Props> = ({ food }) => {
           image={{ imageURL: food.imageURL, title: food.name!, id: food.id! }}
         />
       </span>
-      <div className="flex h-full w-full flex-col gap-0.5 overflow-hidden break-words px-2 py-0.5 text-sm">
+      <div className="flex h-full w-full flex-col gap-0.5 overflow-hidden break-words px-2 py-1 text-sm">
         <div className="flex w-full items-center justify-between gap-1">
           <span className="truncate text-ellipsis text-center text-lg font-semibold">
             {food.name}

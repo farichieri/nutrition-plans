@@ -1,5 +1,5 @@
-import { db } from "@/services/firebase";
 import { addDoc, collection } from "firebase/firestore";
+import { db } from "@/services/firebase";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -20,12 +20,11 @@ export default async function handler(
     const docRef = collection(db, "email");
     await addDoc(docRef, {
       to: [emailAddress],
-      from: "frichieri@nutritionplans.co",
       message: {
-        subject: "Welcome to Nutrition Plans!",
+        subject: "Welcome to nutritionplans.co!",
         html: `<p>Hi ${name},</p>
         <p>I'm Fabricio, Founder of <a href="https://www.nutritionplans.co" target="_blank">nutritionplans.co</a>. Just wanted to reach out and introduce myself.</p>
-        <p>Would you like to tell me about your expectations with our platform?</p>
+        <p>Would you like to tell me about your expectations with our website?</p>
         <p>Best regards</p>
         <br>
         <p>Fabricio Richieri</p>

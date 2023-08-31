@@ -10,7 +10,7 @@ import { formatTwoDecimals } from "@/utils";
 import { selectAuthSlice } from "@/features/authentication";
 import { toast } from "react-hot-toast";
 import { toggleDrunkWater, updateWaterDrunkInDiet } from "../../slice";
-import { updateDiet } from "../../services";
+import { useUpdateDietMutation } from "../../services";
 import { useDispatch, useSelector } from "react-redux";
 
 interface Props {
@@ -22,6 +22,7 @@ const Water: FC<Props> = ({ diet, isEditing }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
   const { water } = diet;
+  const [updateDiet] = useUpdateDietMutation();
 
   if (!user || !water) return <></>;
 
@@ -42,9 +43,9 @@ const Water: FC<Props> = ({ diet, isEditing }) => {
           drunk: value,
         },
       };
-      const res = await updateDiet({ diet: dietUpdated });
+      const res = await updateDiet({ diet: dietUpdated, noDispatch: true });
 
-      if (res.result === "error") {
+      if ("error" in res) {
         dispatch(toggleDrunkWater({ diet, value: !value }));
       }
     } catch (error) {

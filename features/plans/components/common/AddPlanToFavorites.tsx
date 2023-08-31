@@ -1,7 +1,6 @@
 import {
   selectAuthSlice,
-  setUpdateUser,
-  updateUser,
+  useUpdateUserMutation,
 } from "@/features/authentication";
 import { MdFavorite } from "react-icons/md";
 import { addDietToLibrary, removeDietFromLibrary } from "@/features/library";
@@ -17,9 +16,9 @@ interface Props {
 
 const AddPlanToFavorites: FC<Props> = ({ diet }) => {
   const dispatch = useDispatch();
-  const [closeDrop, setCloseDrop] = useState(false);
   const { user } = useSelector(selectAuthSlice);
   const [isFavoriting, setIsFavoriting] = useState(false);
+  const [updateUser] = useUpdateUserMutation();
 
   if (!user || !diet.id) return <></>;
 
@@ -55,13 +54,14 @@ const AddPlanToFavorites: FC<Props> = ({ diet }) => {
 
       if (JSON.stringify(fields.ratings) !== JSON.stringify(user.ratings)) {
         const res = await updateUser({ user, fields });
-        if (res.result === "success") {
-          dispatch(setUpdateUser({ user, fields }));
+        if (!("error" in res)) {
           if (isAlreadyFavorite) {
             dispatch(removeDietFromLibrary(diet));
           } else {
             dispatch(addDietToLibrary(diet));
           }
+        } else {
+          throw new Error("Error updating user");
         }
       }
       toast.success(

@@ -1,10 +1,9 @@
+import { useSelector } from "react-redux";
+import { useUpdateDietMutation } from "@/features/plans/services";
 import { DietMeal, Diet, replaceMealInDiet } from "@/features/plans";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { getNutritionMerged } from "@/utils";
 import { selectAuthSlice } from "@/features/authentication";
-import { setDiet } from "@/features/plans/slice";
-import { updateDiet } from "@/features/plans/services";
-import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import Spinner from "@/components/Loader/Spinner";
 
@@ -24,8 +23,7 @@ const SavedMealCard: FC<Props> = ({
   isReplaceable,
 }) => {
   const { user } = useSelector(selectAuthSlice);
-  const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(false);
+  const [updateDiet, { isLoading }] = useUpdateDietMutation();
 
   if (!user) return <></>;
 
@@ -34,7 +32,6 @@ const SavedMealCard: FC<Props> = ({
 
   const handleSelect = async () => {
     try {
-      setIsLoading(true);
       if (!replaceMealID || !diet?.id) throw Error;
       const newDiet = replaceMealInDiet({
         diet,
@@ -44,13 +41,12 @@ const SavedMealCard: FC<Props> = ({
       const res = await updateDiet({
         diet: newDiet,
       });
-      if (res.result === "success") {
-        dispatch(setDiet(res.data));
+      if ("error" in res) {
+        throw Error;
       }
     } catch (error) {
       console.log(error);
     } finally {
-      setIsLoading(false);
       handleClose();
     }
   };

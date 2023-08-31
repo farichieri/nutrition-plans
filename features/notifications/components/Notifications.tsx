@@ -1,11 +1,11 @@
 import {
   useArchiveAllNotificationsMutation,
   useArchiveNotificationMutation,
-  useFetchNotificationsQuery,
+  useGetNotificationsQuery,
   useUnarchiveNotificationMutation,
 } from "../services";
 import { BsFillInboxFill } from "react-icons/bs";
-import { FC, useState } from "react";
+import { FC, useCallback, useState } from "react";
 import { formatToShortDate } from "@/utils";
 import { MdOutlineNotifications } from "react-icons/md";
 import { RoundButton } from "@/components/Buttons";
@@ -25,8 +25,10 @@ const Notifications: FC<Props> = () => {
   const [idsLoading, setIdsLoading] = useState<string[]>([]);
   const notifications = useSelector(selectNotificationsSlice);
 
-  const { isFetching, isLoading } = useFetchNotificationsQuery({ user });
-  const [archiveNotificationMutation] = useArchiveNotificationMutation();
+  if (!user) return <></>;
+
+  useGetNotificationsQuery({ user });
+  const [archiveNotification] = useArchiveNotificationMutation();
   const [unarchiveNotification] = useUnarchiveNotificationMutation();
   const [archiveAllNotifications] = useArchiveAllNotificationsMutation();
 
@@ -43,30 +45,38 @@ const Notifications: FC<Props> = () => {
     },
   ];
 
-  const handleArchive = async (id: string) => {
-    if (!user) return;
-    if (idsLoading.length > 0) return;
-    try {
-      setIdsLoading([...idsLoading, id]);
-      const isArchived = user.notificationsArchived?.includes(id);
+  const handleArchive = useCallback(
+    async (id: string) => {
+      if (!user) return;
+      if (idsLoading.length > 0) return;
+      try {
+        setIdsLoading([...idsLoading, id]);
+        const isArchived = user.notificationsArchived?.includes(id);
 
-      if (!isArchived) {
-        const res = await archiveNotificationMutation({
-          notificationID: id,
-          user,
-        });
-        if ("error" in res) throw new Error("Error archiving notification");
-      } else {
-        const res = await unarchiveNotification({ notificationID: id, user });
-        if ("error" in res) throw new Error("Error unarchiving notification");
+        if (!isArchived) {
+          const res = await archiveNotification({
+            notificationID: id,
+            user,
+          });
+          if ("error" in res) throw new Error("Error archiving notification");
+          toast.success("Notification archived");
+        } else {
+          const res = await unarchiveNotification({
+            notificationID: id,
+            user,
+          });
+          if ("error" in res) throw new Error("Error unarchiving notification");
+          toast.success("Notification unarchived");
+        }
+      } catch (error) {
+        toast.error("Something went wrong");
+        console.log({ error });
+      } finally {
+        setIdsLoading(idsLoading.filter((item) => item !== id));
       }
-    } catch (error) {
-      toast.error("Something went wrong");
-      console.log({ error });
-    } finally {
-      setIdsLoading(idsLoading.filter((item) => item !== id));
-    }
-  };
+    },
+    [idsLoading, user]
+  );
 
   const handleArchiveAll = async () => {
     if (!user) return;

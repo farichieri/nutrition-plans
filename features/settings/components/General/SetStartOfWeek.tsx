@@ -1,39 +1,36 @@
 import {
   selectAuthSlice,
-  setUpdateUser,
-  updateUser,
+  useUpdateUserMutation,
 } from "@/features/authentication";
 import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
 import { FC, useState } from "react";
 import { StartsOfWeek } from "@/types";
 import { SubmitButton } from "@/components/Buttons";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
 
 interface Props {}
 
 const SetStartOfWeek: FC<Props> = () => {
-  const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
-  const [isLoading, setIsLoading] = useState(false);
   const [weekSelected, setWeekSelected] = useState<StartsOfWeek>(
     user?.startOfWeek || StartsOfWeek.Sunday
   );
+  const [updateUser, { isLoading }] = useUpdateUserMutation();
 
   if (!user) return <></>;
 
   const handleSubmit = async () => {
     try {
-      setIsLoading(true);
       const fields = { startOfWeek: weekSelected };
       const res = await updateUser({ user, fields });
-      if (res.result === "success") {
-        dispatch(setUpdateUser({ user, fields }));
+      if (!("error" in res)) {
         toast.success("Start of week updated");
+      } else {
+        throw new Error("Error updating start of week");
       }
-      setIsLoading(false);
     } catch (error) {
-      setIsLoading(false);
+      console.log({ error });
       toast.error("Error updating start of week");
     }
   };

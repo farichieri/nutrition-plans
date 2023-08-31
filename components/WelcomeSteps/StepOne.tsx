@@ -1,11 +1,10 @@
 import {
   User,
   UserSteps,
-  setUpdateUser,
-  updateUser,
+  useUpdateUserMutation,
 } from "@/features/authentication";
-import { FC, useState } from "react";
-import { useDispatch } from "react-redux";
+import { FC } from "react";
+import { toast } from "react-hot-toast";
 import Confetti from "../confetti/Confetti";
 import SubmitButton from "../Buttons/SubmitButton";
 
@@ -14,26 +13,20 @@ interface Props {
 }
 
 const StepOne: FC<Props> = ({ user }) => {
-  const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [updateUser, { isLoading }] = useUpdateUserMutation();
 
   const handleCreateUser = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!user) return;
-    setIsLoading(true);
-    setIsDisabled(true);
     try {
       const fields = { welcomeStep: UserSteps.step_2 };
-      const updateUserRes = await updateUser({ user, fields });
-      if (updateUserRes.result === "success") {
-        dispatch(setUpdateUser({ user, fields }));
-        setIsLoading(false);
-        setIsDisabled(false);
+      const res = await updateUser({ user, fields });
+      if ("error" in res) {
+        throw new Error("Error updating user");
       }
     } catch (error) {
-      setIsLoading(false);
-      setIsDisabled(false);
+      toast.error("Something went wrong");
+      console.log({ error });
     }
   };
   return (
@@ -54,7 +47,7 @@ const StepOne: FC<Props> = ({ user }) => {
               loadMessage={"Loading..."}
               content={`${"Continue"}`}
               isLoading={isLoading}
-              isDisabled={isDisabled}
+              isDisabled={isLoading}
             />
           </div>
         </div>
