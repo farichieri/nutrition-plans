@@ -6,10 +6,10 @@ import remarkGfm from "remark-gfm";
 export default function Page({ data }: { data: any }) {
   return (
     <LandingLayout>
-      <div className="flex w-full max-w-5xl flex-col items-center justify-center gap-4 px-4 py-24">
+      <section className="flex w-full max-w-5xl flex-col items-center justify-center py-24">
         <span className="text-5xl font-bold">Terms of privacy</span>
         <ReactMarkdown
-          className="pb-14"
+          className="w-full pb-14"
           remarkPlugins={[remarkGfm]}
           components={{
             li: (props) => (
@@ -24,7 +24,7 @@ export default function Page({ data }: { data: any }) {
         >
           {data.content}
         </ReactMarkdown>
-      </div>
+      </section>
     </LandingLayout>
   );
 }

@@ -17,7 +17,7 @@ interface Props {
 export default function Page({ planData, restOfPlans }: Props) {
   return (
     <LandingLayout>
-      <section className="flex max-w-5xl flex-col items-center justify-center py-24">
+      <section className="flex w-full max-w-5xl flex-col items-center justify-center py-24">
         <div className="mb-10 flex w-full flex-col items-center justify-center gap-4">
           <span className="mb-10 text-5xl font-bold md:text-6xl lg:text-7xl">
             {planData.title}
@@ -35,7 +35,7 @@ export default function Page({ planData, restOfPlans }: Props) {
           </span>
         </div>
         <ReactMarkdown
-          className="border-b pb-14"
+          className="border-b pb-14 "
           remarkPlugins={[remarkGfm]}
           components={{
             img: (props) => (

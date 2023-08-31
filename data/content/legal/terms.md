@@ -1,3 +1,7 @@
+---
+title: "Terms"
+---
+
 Last updated: 08/31/2023
 
 ### **Introduction**
