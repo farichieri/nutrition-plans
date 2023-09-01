@@ -113,9 +113,11 @@ const Filters: FC<Props> = ({
       name === FiltersEnum.FatsRange ||
       name === FiltersEnum.CarbsRange
     ) {
-      const min = nutrients[name as keyof Nuts].min;
-      const max = nutrients[name as keyof Nuts].max;
+      let min = nutrients[name as keyof Nuts].min;
+      let max = nutrients[name as keyof Nuts].max;
       if (!min && !max) return;
+      if (!min) min = 0;
+      if (!max) max = Infinity;
       query = {
         ...queries,
         [name]: `${min}-${max}`,
