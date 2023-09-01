@@ -47,28 +47,35 @@ const NutrientsGroup = (nutrients: NutrientsClasified) => {
     return getNutrientMeasurementUnit(id);
   };
 
+  // sort nutrients alphabetically
+  const sortedEntries = Object.entries(nutrients).sort((a, b) =>
+    a[0].localeCompare(b[0])
+  );
+
   return (
     <>
-      {Object.keys(nutrients).map((nut) => {
-        const nutrientExtraData = getNutrientData(nut);
-        const value = formatTwoDecimals(
-          Number(nutrients[nut as keyof FoodNutrients])
-        );
+      {sortedEntries.map((nut) => {
+        const name = nut[0];
+        const value = Number(nut[1]);
+
+        const nutrientExtraData = getNutrientData(name);
+        const num = formatTwoDecimals(value);
         const unit = nutrientExtraData?.unit;
         const requirement = nutrientExtraData?.requirement;
         const percentage =
-          requirement && ((Number(value) / requirement) * 100).toFixed(2);
+          requirement && ((value / requirement) * 100).toFixed(2);
+
         return (
-          <div className="flex w-full items-center justify-between" key={nut}>
+          <div className="flex w-full items-center justify-between" key={name}>
             <span className="basis-1/3 capitalize">
-              {nut.replaceAll("_", " ")}
+              {name.replaceAll("_", " ")}
             </span>
             <div className="flex basis-1/3 items-center justify-end gap-1">
-              <span>{value ? value : "-"}</span>
-              <span className="text-xs">{unit && value > 0 && unit}</span>
+              <span>{num ? num : "-"}</span>
+              <span className="text-xs">{unit && num > 0 && unit}</span>
             </div>
             <span className="flex basis-1/3 items-center justify-end gap-1">
-              <span>{value && Number(percentage) > 0 ? percentage : "-"}</span>
+              <span>{num && Number(percentage) > 0 ? percentage : "-"}</span>
               <span className="text-xs">{Number(percentage) > 0 && "%"}</span>
             </span>
           </div>

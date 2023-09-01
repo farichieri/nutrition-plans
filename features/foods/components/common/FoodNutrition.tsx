@@ -89,7 +89,7 @@ const FoodNutrition: FC<Props> = ({ food, amount, scale }) => {
         <div className="flex flex-col">
           <div className="flex w-full justify-between">
             <span>Fiber:</span>
-            <span>{nutrients.fiber || "-"}</span>
+            <span>{formatToFixed(Number(nutrients.fiber)) || "-"}</span>
           </div>
           <div className="flex w-full justify-between">
             <span>Net carbs:</span>
@@ -103,11 +103,11 @@ const FoodNutrition: FC<Props> = ({ food, amount, scale }) => {
         <div className="flex flex-col">
           <div className="flex w-full justify-between">
             <span>Sodium:</span>
-            <span>{nutrients.sodium || "-"}</span>
+            <span>{formatToFixed(Number(nutrients.sodium)) || "-"}</span>
           </div>
           <div className="flex w-full justify-between">
             <span>Cholesterol:</span>
-            <span>{nutrients.cholesterol || "-"}</span>
+            <span>{formatToFixed(Number(nutrients.cholesterol)) || "-"}</span>
           </div>
         </div>
         <FoodNutritionDetail title={food.name!} nutrients={nutrients} />

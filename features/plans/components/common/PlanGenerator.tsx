@@ -168,11 +168,19 @@ const PlanGenerator: FC<Props> = ({ date, dates, setDoneGeneratingPlan }) => {
               <div key={p} className="flex flex-col items-center justify-start">
                 <button
                   id={p}
-                  className={`flex flex-col items-center justify-center rounded-md border border-green-500/30 bg-green-500/20 px-3 py-1.5 capitalize duration-100 hover:border-green-500 hover:bg-green-500/30 active:bg-green-500/80 `}
+                  className={`flex flex-col items-center justify-center rounded-md border border-green-500/30 bg-green-500/20 px-3 py-1.5 capitalize duration-100 hover:border-green-500 hover:bg-green-500/30 active:bg-green-500/80 ${
+                    p === PlanTypes.automatically &&
+                    "pointer-events-none cursor-not-allowed opacity-50"
+                  }`}
                   onClick={generate}
                 >
                   {p}
                 </button>
+                {p === PlanTypes.automatically && (
+                  <span className="mx-auto mt-1 text-xs opacity-70">
+                    Coming soon
+                  </span>
+                )}
               </div>
             ))}
           </div>
