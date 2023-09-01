@@ -205,6 +205,7 @@ export enum FoodCategoriesEnum {
   pork_products = "Pork Products",
   poultry_products = "Poultry Products",
   restaurant_foods = "Restaurant Foods",
+  salad_dressing_and_mayonnaise = "Salad Dressing & Mayonnaise",
   sausages_and_luncheon_meats = "Sausages and Luncheon Meats",
   soups_sauces_and_gravies = "Soups, Sauces, and Gravies",
   spices_and_herbs = "Spices and Herbs",
