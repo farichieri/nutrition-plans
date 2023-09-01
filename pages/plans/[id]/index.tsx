@@ -54,6 +54,7 @@ export default function Page({ planData, restOfPlans }: Props) {
                 {...props}
               />
             ),
+            h2: (props) => <h2 className="mb-5 mt-20 text-3xl" {...props}></h2>,
           }}
         >
           {planData.content!}

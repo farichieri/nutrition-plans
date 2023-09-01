@@ -55,7 +55,7 @@ export default function PremiumLayout({ children }: Props) {
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>NutritionPlans - App</title>
+        <title>Nutrition Plans - App</title>
       </Head>
 
       {isSubscribeModalOpen && <SubscribeModal />}

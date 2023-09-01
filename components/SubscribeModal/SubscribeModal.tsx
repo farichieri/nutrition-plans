@@ -47,7 +47,7 @@ const SubscribeModal: FC<Props> = () => {
   return (
     <Modal isFullScreen onClose={handleClose}>
       <section className=" flex h-auto w-auto min-w-full max-w-[95vw] overflow-hidden rounded-3xl">
-        <div className="m-auto flex h-full w-full flex-col items-center gap-5 overflow-auto px-4 py-10 sm:p-10">
+        <div className="m-auto flex h-full w-full flex-col items-center gap-5 overflow-auto px-4 py-10 ">
           <div className="flex flex-col items-center text-center text-xs md:text-base">
             <span className="text-xl font-semibold sm:text-3xl">
               Level up. Go Premium
@@ -101,7 +101,9 @@ const SubscribeModal: FC<Props> = () => {
                 </div>
               );
             })}
-            <DonateText />
+            <div className="max-w-xs">
+              <DonateText />
+            </div>
           </div>
           <button
             className="bold:border-green-800 group mt-auto flex w-fit items-center justify-center gap-1 rounded-3xl bg-gradient-to-r from-green-700 via-green-500 to-green-400 px-10 py-1.5 font-semibold text-white duration-300 hover:shadow-[0_1px_40px] hover:shadow-green-300 dark:hover:shadow-green-400/50"
