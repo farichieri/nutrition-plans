@@ -1,8 +1,8 @@
 import {
   Food,
-  FoodNutrients,
   orderScales,
   NutritionMeasurements,
+  NutrientsT,
 } from "@/features/foods";
 import { BiSolidPieChartAlt2 } from "react-icons/bi";
 import { formatToFixed } from "@/utils/format";
@@ -20,7 +20,7 @@ interface Props {
 }
 
 const FoodNutrition: FC<Props> = ({ food, amount, scale }) => {
-  const [nutrients, setNutrients] = useState<FoodNutrients | null>(null);
+  const [nutrients, setNutrients] = useState<NutrientsT | null>(null);
   const scalesMerged = orderScales({ scales: food.scales });
 
   const equivalentInGrams = getNewAmount({

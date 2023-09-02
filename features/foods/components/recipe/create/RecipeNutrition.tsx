@@ -1,11 +1,11 @@
-import { FoodNutrients, FoodNutritionDetail } from "@/features/foods";
+import { NutrientsT, FoodNutritionDetail } from "@/features/foods";
 import { FC, useState } from "react";
 import PieGraph from "@/components/PieGraph/PieGraph";
 import Spinner from "@/components/Loader/Spinner";
 import { formatTwoDecimals } from "@/utils";
 
 interface Props {
-  nutrients: FoodNutrients;
+  nutrients: NutrientsT;
 }
 
 const RecipeNutrition: FC<Props> = ({ nutrients }) => {

@@ -3,12 +3,12 @@ import {
   getNutrientsClasified,
 } from "@/utils/helpers";
 import { FC } from "react";
-import { FoodNutrients, NutrientsClasified } from "@/features/foods";
+import { NutrientsClasified, NutrientsT } from "@/features/foods";
 import { formatTwoDecimals } from "@/utils";
 import { VaulDrawer } from "@/components";
 
 interface Props {
-  nutrients: FoodNutrients;
+  nutrients: NutrientsT;
   title?: string;
 }
 

@@ -1,16 +1,16 @@
 import { NutritionTargets } from "@/features/authentication";
-import { FoodNutrients, NutrientsEnum } from "@/features/foods";
+import { Nutrients, NutrientsT } from "@/features/foods";
 
 const getDietNutritionTargets = ({
   nutritionTargets,
   nutrients,
 }: {
   nutritionTargets: NutritionTargets;
-  nutrients: FoodNutrients;
+  nutrients: NutrientsT;
 }) => {
   const NUTRIENT_TARGETS = [
     {
-      nutrient: NutrientsEnum.calories,
+      nutrient: Nutrients.calories,
       min: Number(nutritionTargets?.calories) - 100,
       max: Number(nutritionTargets?.calories) + 100,
       value: nutrients.calories,
@@ -18,7 +18,7 @@ const getDietNutritionTargets = ({
       diff: 0,
     },
     {
-      nutrient: NutrientsEnum.carbohydrates,
+      nutrient: Nutrients.carbohydrates,
       max: nutritionTargets?.carbohydrates.max,
       min: nutritionTargets?.carbohydrates.min,
       value: nutrients.carbohydrates,
@@ -26,7 +26,7 @@ const getDietNutritionTargets = ({
       diff: 0,
     },
     {
-      nutrient: NutrientsEnum.fats,
+      nutrient: Nutrients.fats,
       max: nutritionTargets?.fats.max,
       min: nutritionTargets?.fats.min,
       value: nutrients.fats,
@@ -34,7 +34,7 @@ const getDietNutritionTargets = ({
       diff: 0,
     },
     {
-      nutrient: NutrientsEnum.proteins,
+      nutrient: Nutrients.proteins,
       max: nutritionTargets?.proteins.max,
       min: nutritionTargets?.proteins.min,
       value: nutrients.proteins,

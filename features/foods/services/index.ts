@@ -84,6 +84,18 @@ export const foodsApi = api.injectEndpoints({
         }
       },
     }),
+
+    getUSDAFood: build.mutation<Food, { fdcId: string }>({
+      async queryFn({ fdcId }) {
+        try {
+          const response = await fetch("/api/usda/" + fdcId);
+          const data = await response.json();
+          return { data };
+        } catch (error) {
+          return { error };
+        }
+      },
+    }),
   }),
   // @ts-ignore
   overrideExisting: module.hot?.status() === "apply",
@@ -94,4 +106,5 @@ export const {
   useGetFoodByIdMutation,
   useGetFoodsByIdsMutation,
   usePostFoodMutation,
+  useGetUSDAFoodMutation,
 } = foodsApi;
