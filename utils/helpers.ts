@@ -1,8 +1,9 @@
 import {
-  FoodNutrients,
   NutrientsClasified,
-  NutrientsEnum,
+  Nutrients,
   NutritionMeasurements,
+  NutrientsAny,
+  NutrientsT,
 } from "@/features/foods/types";
 
 const g = NutritionMeasurements.g;
@@ -11,204 +12,208 @@ const mcg = NutritionMeasurements.mcg;
 const mg = NutritionMeasurements.mg;
 
 type Measurements = {
-  [key in NutrientsEnum]?: { unit: string; requirement: number | null };
+  [key in NutrientsAny]?: { unit: string; requirement: number | null };
 };
 
 const getNutrientMeasurementUnit = (nutrient: string) => {
   const nutrients: Measurements = {
-    [NutrientsEnum.betaine]: {
+    [Nutrients.betaine]: {
       unit: mcg,
       requirement: null,
     },
-    [NutrientsEnum.caffeine]: {
+    [Nutrients.biotin]: {
+      unit: mcg,
+      requirement: 30,
+    },
+    [Nutrients.caffeine]: {
       unit: mg,
       requirement: null,
     },
-    [NutrientsEnum.calcium]: {
+    [Nutrients.calcium]: {
       unit: mcg,
       requirement: 1300,
     },
-    [NutrientsEnum.calories]: {
+    [Nutrients.calories]: {
       unit: kcal,
       requirement: null,
     },
-    [NutrientsEnum.carbohydrates]: {
+    [Nutrients.carbohydrates]: {
       unit: g,
       requirement: null,
     },
-    [NutrientsEnum.cholesterol]: {
+    [Nutrients.cholesterol]: {
       unit: mg,
       requirement: null,
     },
-    [NutrientsEnum.choline]: {
+    [Nutrients.choline]: {
       unit: mcg,
       requirement: 550,
     },
-    [NutrientsEnum.copper]: {
+    [Nutrients.copper]: {
       unit: mcg,
       requirement: 0.9,
     },
-    [NutrientsEnum.fats]: {
+    [Nutrients.fats]: {
       unit: g,
       requirement: null, // 78
     },
-    [NutrientsEnum.fiber]: {
+    [Nutrients.fiber]: {
       unit: g,
       requirement: 28,
     },
-    [NutrientsEnum.fluoride]: {
+    [Nutrients.fluoride]: {
       unit: mcg,
       requirement: null,
     },
-    [NutrientsEnum.folate]: {
+    [Nutrients.folate]: {
       unit: mcg,
       requirement: 400,
     },
-    [NutrientsEnum.fructose]: {
+    [Nutrients.fructose]: {
       unit: g,
       requirement: null,
     },
-    [NutrientsEnum.galactose]: {
+    [Nutrients.galactose]: {
       unit: g,
       requirement: null,
     },
-    [NutrientsEnum.glucose]: {
+    [Nutrients.glucose]: {
       unit: g,
       requirement: null,
     },
-    [NutrientsEnum.iron]: {
+    [Nutrients.iron]: {
       unit: mg,
       requirement: 18,
     },
-    [NutrientsEnum.lactose]: {
+    [Nutrients.lactose]: {
       unit: g,
       requirement: null,
     },
-    [NutrientsEnum.lycopene]: {
+    [Nutrients.lycopene]: {
       unit: mcg,
       requirement: null,
     },
-    [NutrientsEnum.magnesium]: {
+    [Nutrients.magnesium]: {
       unit: mg,
       requirement: 420,
     },
-    [NutrientsEnum.maltose]: {
+    [Nutrients.maltose]: {
       unit: g,
       requirement: null,
     },
-    [NutrientsEnum.manganese]: {
+    [Nutrients.manganese]: {
       unit: mg,
       requirement: 2.3,
     },
-    [NutrientsEnum.monounsaturated_fats]: {
+    [Nutrients.monounsaturated_fats]: {
       unit: g,
       requirement: null,
     },
-    [NutrientsEnum.niacin]: {
+    [Nutrients.niacin]: {
       unit: mg,
       requirement: 16,
     },
-    [NutrientsEnum.phosphorus]: {
+    [Nutrients.phosphorus]: {
       unit: mg,
       requirement: 1250,
     },
-    [NutrientsEnum.polyunsaturated_fats]: {
+    [Nutrients.polyunsaturated_fats]: {
       unit: g,
       requirement: null,
     },
-    [NutrientsEnum.potassium]: {
+    [Nutrients.potassium]: {
       unit: mg,
       requirement: 4700,
     },
-    [NutrientsEnum.proteins]: {
+    [Nutrients.proteins]: {
       unit: g,
       requirement: null, // 50
     },
-    [NutrientsEnum.retinol]: {
+    [Nutrients.retinol]: {
       unit: mcg,
       requirement: null,
     },
-    [NutrientsEnum.saturated_fats]: {
+    [Nutrients.saturated_fats]: {
       unit: g,
       requirement: null,
     },
-    [NutrientsEnum.selenium]: {
+    [Nutrients.selenium]: {
       unit: mcg,
       requirement: 55,
     },
-    [NutrientsEnum.sodium]: {
+    [Nutrients.sodium]: {
       unit: mg,
       requirement: 2300,
     },
-    [NutrientsEnum.sucrose]: {
+    [Nutrients.sucrose]: {
       unit: g,
       requirement: null,
     },
-    [NutrientsEnum.sugar]: {
+    [Nutrients.sugar]: {
       unit: g,
       requirement: 50,
     },
-    [NutrientsEnum.thiamine]: {
+    [Nutrients.thiamine]: {
       unit: mcg,
       requirement: 1.2,
     },
-    [NutrientsEnum.trans_fats]: {
+    [Nutrients.trans_fats]: {
       unit: g,
       requirement: null,
     },
-    [NutrientsEnum.vitamin_a]: {
+    [Nutrients.vitamin_a]: {
       unit: mcg,
       requirement: 900,
     },
-    [NutrientsEnum.vitamin_b12]: {
+    [Nutrients.vitamin_b12]: {
       unit: mcg,
       requirement: 2.4,
     },
-    [NutrientsEnum.vitamin_b2_riboflavin]: {
+    [Nutrients.vitamin_b2_riboflavin]: {
       unit: mg,
       requirement: 1.3,
     },
-    [NutrientsEnum.vitamin_b6]: {
+    [Nutrients.vitamin_b6]: {
       unit: mg,
       requirement: 1.7,
     },
-    [NutrientsEnum.vitamin_c]: {
+    [Nutrients.vitamin_c]: {
       unit: mg,
       requirement: 90,
     },
-    [NutrientsEnum.vitamin_d]: {
+    [Nutrients.vitamin_d]: {
       unit: mcg,
       requirement: 20,
     },
-    [NutrientsEnum.vitamin_d2]: {
+    [Nutrients.vitamin_d2]: {
       unit: mcg,
       requirement: null,
     },
-    [NutrientsEnum.vitamin_d3]: {
+    [Nutrients.vitamin_d3]: {
       unit: mcg,
       requirement: null,
     },
-    [NutrientsEnum.vitamin_e]: {
+    [Nutrients.vitamin_e]: {
       unit: mg,
       requirement: 15,
     },
-    [NutrientsEnum.vitamin_k]: {
+    [Nutrients.vitamin_k]: {
       unit: mcg,
       requirement: 120,
     },
-    [NutrientsEnum.water]: {
+    [Nutrients.water]: {
       unit: g,
       requirement: null,
     },
-    [NutrientsEnum.zinc]: {
+    [Nutrients.zinc]: {
       unit: mg,
       requirement: 11,
     },
-    [NutrientsEnum.lodine]: {
+    [Nutrients.iodine]: {
       unit: mcg,
       requirement: 150,
     },
-    [NutrientsEnum.panthotenic_acid]: {
+    [Nutrients.panthotenic_acid]: {
       unit: mg,
       requirement: 5,
     },
@@ -216,7 +221,7 @@ const getNutrientMeasurementUnit = (nutrient: string) => {
   return nutrients[nutrient as keyof Measurements];
 };
 
-const getNutrientsClasified = (nutrients: FoodNutrients) => {
+const getNutrientsClasified = (nutrients: NutrientsT) => {
   let principals: NutrientsClasified = {};
   let sugars: NutrientsClasified = {};
   let fats: NutrientsClasified = {};
@@ -224,62 +229,64 @@ const getNutrientsClasified = (nutrients: FoodNutrients) => {
 
   const clasify = (nutrient: any) => {
     switch (nutrient) {
-      case NutrientsEnum.calories:
-      case NutrientsEnum.carbohydrates:
-      case NutrientsEnum.proteins:
-      case NutrientsEnum.fiber:
-      case NutrientsEnum.potassium:
-      case NutrientsEnum.cholesterol:
-      case NutrientsEnum.fats:
-      case NutrientsEnum.sodium:
+      case Nutrients.caffeine:
+      case Nutrients.calories:
+      case Nutrients.carbohydrates:
+      case Nutrients.cholesterol:
+      case Nutrients.fats:
+      case Nutrients.fiber:
+      case Nutrients.proteins:
+      case Nutrients.sodium:
         principals[nutrient as keyof NutrientsClasified] =
-          nutrients[nutrient as keyof FoodNutrients];
+          nutrients[nutrient as keyof NutrientsT];
         break;
-      case NutrientsEnum.sugar:
-      case NutrientsEnum.sucrose:
-      case NutrientsEnum.glucose:
-      case NutrientsEnum.fructose:
-      case NutrientsEnum.lactose:
-      case NutrientsEnum.maltose:
-      case NutrientsEnum.galactose:
+      case Nutrients.sugar:
+      case Nutrients.sucrose:
+      case Nutrients.glucose:
+      case Nutrients.fructose:
+      case Nutrients.lactose:
+      case Nutrients.maltose:
+      case Nutrients.galactose:
         sugars[nutrient as keyof NutrientsClasified] =
-          nutrients[nutrient as keyof FoodNutrients];
+          nutrients[nutrient as keyof NutrientsT];
         break;
-      case NutrientsEnum.saturated_fats:
-      case NutrientsEnum.monounsaturated_fats:
-      case NutrientsEnum.polyunsaturated_fats:
-      case NutrientsEnum.trans_fats:
+      case Nutrients.saturated_fats:
+      case Nutrients.monounsaturated_fats:
+      case Nutrients.polyunsaturated_fats:
+      case Nutrients.trans_fats:
         fats[nutrient as keyof NutrientsClasified] =
-          nutrients[nutrient as keyof FoodNutrients];
+          nutrients[nutrient as keyof NutrientsT];
         break;
-      case NutrientsEnum.caffeine:
-      case NutrientsEnum.calcium:
-      case NutrientsEnum.lodine:
-      case NutrientsEnum.panthotenic_acid:
-      case NutrientsEnum.choline:
-      case NutrientsEnum.copper:
-      case NutrientsEnum.fluoride:
-      case NutrientsEnum.folate:
-      case NutrientsEnum.iron:
-      case NutrientsEnum.lycopene:
-      case NutrientsEnum.magnesium:
-      case NutrientsEnum.manganese:
-      case NutrientsEnum.niacin:
-      case NutrientsEnum.phosphorus:
-      case NutrientsEnum.retinol:
-      case NutrientsEnum.selenium:
-      case NutrientsEnum.thiamine:
-      case NutrientsEnum.vitamin_a:
-      case NutrientsEnum.vitamin_b6:
-      case NutrientsEnum.vitamin_b12:
-      case NutrientsEnum.vitamin_b2_riboflavin:
-      case NutrientsEnum.vitamin_c:
-      case NutrientsEnum.vitamin_d2:
-      case NutrientsEnum.vitamin_d3:
-      case NutrientsEnum.vitamin_e:
-      case NutrientsEnum.vitamin_k:
+      case Nutrients.calcium:
+      case Nutrients.choline:
+      case Nutrients.copper:
+      case Nutrients.fluoride:
+      case Nutrients.folate:
+      case Nutrients.iodine:
+      case Nutrients.iron:
+      case Nutrients.lycopene:
+      case Nutrients.magnesium:
+      case Nutrients.manganese:
+      case Nutrients.niacin:
+      case Nutrients.panthotenic_acid:
+      case Nutrients.panthotenic_acid:
+      case Nutrients.phosphorus:
+      case Nutrients.potassium:
+      case Nutrients.retinol:
+      case Nutrients.selenium:
+      case Nutrients.thiamine:
+      case Nutrients.vitamin_a:
+      case Nutrients.vitamin_b12:
+      case Nutrients.vitamin_b2_riboflavin:
+      case Nutrients.vitamin_b6:
+      case Nutrients.vitamin_c:
+      case Nutrients.vitamin_d:
+      case Nutrients.vitamin_d2:
+      case Nutrients.vitamin_d3:
+      case Nutrients.vitamin_e:
+      case Nutrients.vitamin_k:
         vitsAndMin[nutrient as keyof NutrientsClasified] =
-          nutrients[nutrient as keyof FoodNutrients];
+          nutrients[nutrient as keyof NutrientsT];
         break;
       default:
         break;

@@ -6,7 +6,7 @@ import {
 import { BiSolidPieChartAlt2 } from "react-icons/bi";
 import { Diet } from "../../types";
 import { FC, useEffect, useState } from "react";
-import { FoodNutrients, FoodNutritionDetail } from "@/features/foods";
+import { NutrientsT, FoodNutritionDetail } from "@/features/foods";
 import { formatToFixed, formatTwoDecimals } from "@/utils/format";
 import { getDietNutritionTargets } from "./utils/getDietNutritionTargets";
 import { getToday } from "@/utils";
@@ -19,7 +19,7 @@ import PieGraph from "@/components/PieGraph/PieGraph";
 import Spinner from "@/components/Loader/Spinner";
 
 interface Props {
-  nutrients: FoodNutrients;
+  nutrients: NutrientsT;
   planID: PlansEnum | null;
   diet: Diet;
   isEditing: boolean;

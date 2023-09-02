@@ -1,9 +1,9 @@
 import { FC } from "react";
-import { FoodNutrients } from "@/features/foods";
+import { NutrientsT } from "@/features/foods";
 import { ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recharts";
 
 interface Props {
-  nutrients: FoodNutrients;
+  nutrients: NutrientsT;
 }
 
 const PieGraph: FC<Props> = ({ nutrients }) => {

@@ -1,24 +1,21 @@
-import { NutrientsEnum } from "@/features/foods/types";
+import { Nutrients } from "@/features/foods/types";
 
-let nutrientKeys: any = {};
-Object.keys(NutrientsEnum).forEach((key) => {
-  nutrientKeys[key] = key;
-});
+// General
+const caffeine = Nutrients.caffeine;
+const cholesterol = Nutrients.cholesterol;
+const fiber = Nutrients.fiber;
+const sodium = Nutrients.sodium;
 
-const cholesterol = nutrientKeys.cholesterol;
-const fiber = nutrientKeys.fiber;
-const potassium = nutrientKeys.potassium;
-const sodium = nutrientKeys.sodium;
+const firstNutritionFields = [caffeine, fiber, sodium, cholesterol];
 
-const firstNutritionFields = [cholesterol, fiber, potassium, sodium];
-
-const sugar = nutrientKeys.sugar;
-const fructose = nutrientKeys.fructose;
-const galactose = nutrientKeys.galactose;
-const glucose = nutrientKeys.glucose;
-const lactose = nutrientKeys.lactose;
-const maltose = nutrientKeys.maltose;
-const sucrose = nutrientKeys.sucrose;
+// Sugars
+const sugar = Nutrients.sugar;
+const fructose = Nutrients.fructose;
+const galactose = Nutrients.galactose;
+const glucose = Nutrients.glucose;
+const lactose = Nutrients.lactose;
+const maltose = Nutrients.maltose;
+const sucrose = Nutrients.sucrose;
 
 const sugarNutritionFields = [
   sugar,
@@ -30,10 +27,11 @@ const sugarNutritionFields = [
   sucrose,
 ];
 
-const saturated_fats = nutrientKeys.saturated_fats;
-const monounsaturated_fats = nutrientKeys.monounsaturated_fats;
-const polyunsaturated_fats = nutrientKeys.polyunsaturated_fats;
-const trans_fats = nutrientKeys.trans_fats;
+// Fats
+const saturated_fats = Nutrients.saturated_fats;
+const monounsaturated_fats = Nutrients.monounsaturated_fats;
+const polyunsaturated_fats = Nutrients.polyunsaturated_fats;
+const trans_fats = Nutrients.trans_fats;
 
 const fatsNutritionFields = [
   saturated_fats,
@@ -42,54 +40,61 @@ const fatsNutritionFields = [
   trans_fats,
 ];
 
-const betaine = nutrientKeys.betaine;
-const caffeine = nutrientKeys.caffeine;
-const calcium = nutrientKeys.calcium;
-const choline = nutrientKeys.choline;
-const copper = nutrientKeys.copper;
-const fluoride = nutrientKeys.fluoride;
-const folate = nutrientKeys.folate;
-const iron = nutrientKeys.iron;
-const lycopene = nutrientKeys.lycopene;
-const magnesium = nutrientKeys.magnesium;
-const manganese = nutrientKeys.manganese;
-const niacin = nutrientKeys.niacin;
-const phosphorus = nutrientKeys.phosphorus;
-const retinol = nutrientKeys.retinol;
-const selenium = nutrientKeys.selenium;
-const thiamine = nutrientKeys.thiamine;
-const vitamin_a = nutrientKeys.vitamin_a;
-const vitamin_b12 = nutrientKeys.vitamin_b12;
-const vitamin_b6 = nutrientKeys.vitamin_b6;
-const vitamin_c = nutrientKeys.vitamin_c;
-const vitamin_d = nutrientKeys.vitamin_d;
-const vitamin_d2 = nutrientKeys.vitamin_d2;
-const vitamin_d3 = nutrientKeys.vitamin_d3;
-const vitamin_e = nutrientKeys.vitamin_e;
-const vitamin_k = nutrientKeys.vitamin_k;
-const zinc = nutrientKeys.zinc;
-const lodine = nutrientKeys.lodine;
+// Vitamins and Minerals
+const betaine = Nutrients.betaine;
+const biotin = Nutrients.biotin;
+const calcium = Nutrients.calcium;
+const choline = Nutrients.choline;
+const copper = Nutrients.copper;
+const fluoride = Nutrients.fluoride;
+const folate = Nutrients.folate;
+const iodine = Nutrients.iodine;
+const iron = Nutrients.iron;
+const lycopene = Nutrients.lycopene;
+const magnesium = Nutrients.magnesium;
+const manganese = Nutrients.manganese;
+const niacin = Nutrients.niacin;
+const panthotenic_acid = Nutrients.panthotenic_acid;
+const phosphorus = Nutrients.phosphorus;
+const potassium = Nutrients.potassium;
+const retinol = Nutrients.retinol;
+const selenium = Nutrients.selenium;
+const thiamine = Nutrients.thiamine;
+const vitamin_a = Nutrients.vitamin_a;
+const vitamin_b12 = Nutrients.vitamin_b12;
+const vitamin_b2_riboflavin = Nutrients.vitamin_b2_riboflavin;
+const vitamin_b6 = Nutrients.vitamin_b6;
+const vitamin_c = Nutrients.vitamin_c;
+const vitamin_d = Nutrients.vitamin_d;
+const vitamin_d2 = Nutrients.vitamin_d2;
+const vitamin_d3 = Nutrients.vitamin_d3;
+const vitamin_e = Nutrients.vitamin_e;
+const vitamin_k = Nutrients.vitamin_k;
+const zinc = Nutrients.zinc;
 
 const vitsAndMinsNutritionFields = [
   betaine,
-  caffeine,
+  biotin,
   calcium,
   choline,
   copper,
   fluoride,
   folate,
+  iodine,
   iron,
-  lodine,
   lycopene,
   magnesium,
   manganese,
   niacin,
+  panthotenic_acid,
   phosphorus,
+  potassium,
   retinol,
   selenium,
   thiamine,
   vitamin_a,
   vitamin_b12,
+  vitamin_b2_riboflavin,
   vitamin_b6,
   vitamin_c,
   vitamin_d,

@@ -1,4 +1,4 @@
-import { FoodGroup, FoodNutrients } from "@/features/foods";
+import { FoodGroup, NutrientsT } from "@/features/foods";
 import { MealComplexities, MealMinutes, MealSizes } from "@/features/meals";
 import { NewFood, NewFoodNutrients } from "@/features/foods/types";
 import {
@@ -31,7 +31,7 @@ export interface Diet {
   meals: DietMealGroup;
   name: string | null;
   note: string | null;
-  nutrients: FoodNutrients;
+  nutrients: NutrientsT;
   planID: PlansEnum | null;
   type: PlanTypes;
   userID: string | null;

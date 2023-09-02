@@ -1,10 +1,11 @@
 import {
   Food,
   FoodGroup,
-  FoodNutrients,
   FoodScales,
   IngredientGroup,
-  NutrientsEnum,
+  Nutrients,
+  NutrientsAny,
+  NutrientsT,
   NutritionMeasurements,
 } from "@/features/foods/types";
 import { DietMealGroup } from "@/features/plans";
@@ -16,8 +17,8 @@ import { NewFoodNutrients } from "@/features/foods";
 const GRAMS = NutritionMeasurements.grams;
 const OZ = NutritionMeasurements.oz;
 
-const formatNutrient = (num: number, nutrient: NutrientsEnum): number => {
-  if (nutrient === NutrientsEnum.calories) {
+const formatNutrient = (num: number, nutrient: NutrientsAny): number => {
+  if (nutrient === Nutrients.calories) {
     return formatToFixed(num);
   } else {
     const numF = formatTwoDecimals(num);
@@ -46,11 +47,11 @@ const getNutritionValues = (
   food: Food,
   scaleAmount: number,
   scaleName: string
-): FoodNutrients => {
+): NutrientsT => {
   let nutrientsUpdated = { ...food.nutrients };
 
   for (let key in food.nutrients) {
-    const keyEv = key as keyof FoodNutrients;
+    const keyEv = key as keyof NutrientsT;
 
     const updateByServing = (servings: number) => {
       nutrientsUpdated[keyEv] =
@@ -79,7 +80,7 @@ const getNutritionValues = (
 
 const getIngredientNutrition = (food: Food) => {
   if (food.nutrients && food.scaleAmount && food.scaleName) {
-    const foodNutrition: FoodNutrients = getNutritionValues(
+    const foodNutrition: NutrientsT = getNutritionValues(
       food,
       food.scaleAmount,
       food.scaleName
@@ -134,7 +135,7 @@ const getRecipeSize = (ingredients: IngredientGroup): number | null => {
   return size;
 };
 
-const getNutritionMerged = (foods: FoodGroup): FoodNutrients => {
+const getNutritionMerged = (foods: FoodGroup): NutrientsT => {
   if (Object.keys(foods).length < 1) {
     return NewFoodNutrients;
   }
@@ -144,15 +145,15 @@ const getNutritionMerged = (foods: FoodGroup): FoodNutrients => {
   Object.keys(foods).forEach((id) => {
     const food = foods[id];
     if (id && food) {
-      const ingredientNutrition: FoodNutrients = getIngredientNutrition(food);
+      const ingredientNutrition: NutrientsT = getIngredientNutrition(food);
       for (let key in ingredientNutrition) {
-        const value = result[key as keyof FoodNutrients];
-        const newValue = ingredientNutrition[key as keyof FoodNutrients];
+        const value = result[key as keyof NutrientsT];
+        const newValue = ingredientNutrition[key as keyof NutrientsT];
         if (key in result) {
-          result[key as keyof FoodNutrients] =
+          result[key as keyof NutrientsT] =
             value + newValue > 0 ? value + newValue : null;
         } else {
-          result[key as keyof FoodNutrients] = newValue;
+          result[key as keyof NutrientsT] = newValue;
         }
       }
     }

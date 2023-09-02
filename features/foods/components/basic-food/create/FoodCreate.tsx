@@ -5,7 +5,7 @@ import {
   vitsAndMinsNutritionFields,
 } from "./formFields";
 import {
-  FoodNutrients,
+  NutrientsT,
   CompatiblePlans,
   FoodType,
   FoodKind,
@@ -14,11 +14,12 @@ import {
   GlucemicStatusEnum,
   FoodCategoriesEnum,
   DigestionStatusEnum,
-  NutrientsEnum,
+  Nutrients,
   Food,
   setNewFoodState,
   updateNewFoodState,
   usePostFoodMutation,
+  NutrientsAny,
 } from "@/features/foods";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { generateOptions } from "@/utils";
@@ -39,6 +40,7 @@ import Image from "next/image";
 import NutritionInput from "@/components/Form/NutritionInput";
 import React, { FC, useEffect, useState } from "react";
 import TranspLoader from "@/components/Loader/TranspLoader";
+import LoadUSDA from "./LoadUSDA";
 
 interface FormValues extends Food {}
 
@@ -75,7 +77,7 @@ const FoodCreate: FC<Props> = () => {
   const handleChangeNutrient = (event: React.ChangeEvent<HTMLInputElement>) => {
     const name = event.target.name;
     const value = event.target.value;
-    setValue(name as keyof FoodNutrients, Number(value));
+    setValue(name as keyof NutrientsT, Number(value));
   };
 
   const handleChangeScales = (newScales: FoodScales) => {
@@ -125,23 +127,23 @@ const FoodCreate: FC<Props> = () => {
   };
 
   let nutrientKeys: any = {};
-  Object.keys(NutrientsEnum).forEach((key) => {
+  Object.keys(Nutrients).forEach((key) => {
     nutrientKeys[key] = key;
   });
 
   const getNutritionInputs = (fields: string[]) => {
     return fields.map((nutrient) => (
       <NutritionInput
-        changed={watch(`nutrients.${nutrient as keyof FoodNutrients}`)}
-        error={errors.nutrients?.[nutrient as keyof FoodNutrients]?.message}
+        changed={watch(`nutrients.${String(nutrient as keyof NutrientsAny)}`)}
+        error={errors.nutrients?.[nutrient as keyof NutrientsT]?.message}
         handleChange={handleChangeNutrient}
         id={nutrient}
         key={nutrient}
         labelText={nutrient}
         title={nutrient}
         type="number"
-        value={values.nutrients[nutrient as keyof FoodNutrients]}
-        {...register(`nutrients.${nutrient as keyof FoodNutrients}`)}
+        value={values.nutrients[nutrient as keyof NutrientsT]}
+        {...register(`nutrients.${nutrient as keyof NutrientsT}`)}
       />
     ));
   };
@@ -169,6 +171,7 @@ const FoodCreate: FC<Props> = () => {
       >
         <div className="flex w-full flex-wrap  xl:divide-x">
           <div className="mb-10 flex w-full max-w-xl flex-col gap-5 sm:px-4">
+            {/* <LoadUSDA /> */}
             <div className="flex flex-col gap-2">
               <FormInput
                 error={errors.name?.message}
