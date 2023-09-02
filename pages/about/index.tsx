@@ -41,9 +41,9 @@ export default function Page() {
           <p className="">
             With a few simple steps - like putting together basic meals, making
             a grocery list, shopping strategically and preparing food
-            methodically - meal planning becomes a useful tool to help you keep
-            your energy up, meet your nutrition goals, reduce food waste and
-            save money.
+            methodically - Nutrition Plans becomes a useful tool to help you
+            keep your energy up, meet your nutrition goals, reduce food waste
+            and save money.
           </p>
           <p className="">
             We help you achieve your goals with the different meal plans you

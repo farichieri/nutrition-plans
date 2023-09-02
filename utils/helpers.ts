@@ -152,14 +152,6 @@ const getNutrientMeasurementUnit = (nutrient: string) => {
       unit: mcg,
       requirement: 1.2,
     },
-    [NutrientsEnum.total_omega_3]: {
-      unit: g,
-      requirement: null,
-    },
-    [NutrientsEnum.total_omega_6]: {
-      unit: g,
-      requirement: null,
-    },
     [NutrientsEnum.trans_fats]: {
       unit: g,
       requirement: null,
@@ -172,7 +164,7 @@ const getNutrientMeasurementUnit = (nutrient: string) => {
       unit: mcg,
       requirement: 2.4,
     },
-    [NutrientsEnum.vitamin_b2]: {
+    [NutrientsEnum.vitamin_b2_riboflavin]: {
       unit: mg,
       requirement: 1.3,
     },
@@ -212,6 +204,14 @@ const getNutrientMeasurementUnit = (nutrient: string) => {
       unit: mg,
       requirement: 11,
     },
+    [NutrientsEnum.lodine]: {
+      unit: mcg,
+      requirement: 150,
+    },
+    [NutrientsEnum.panthotenic_acid]: {
+      unit: mg,
+      requirement: 5,
+    },
   };
   return nutrients[nutrient as keyof Measurements];
 };
@@ -220,7 +220,6 @@ const getNutrientsClasified = (nutrients: FoodNutrients) => {
   let principals: NutrientsClasified = {};
   let sugars: NutrientsClasified = {};
   let fats: NutrientsClasified = {};
-  let fatty_acids: NutrientsClasified = {};
   let vitsAndMin: NutrientsClasified = {};
 
   const clasify = (nutrient: any) => {
@@ -253,13 +252,10 @@ const getNutrientsClasified = (nutrients: FoodNutrients) => {
         fats[nutrient as keyof NutrientsClasified] =
           nutrients[nutrient as keyof FoodNutrients];
         break;
-      case NutrientsEnum.total_omega_3:
-      case NutrientsEnum.total_omega_6:
-        fatty_acids[nutrient as keyof NutrientsClasified] =
-          nutrients[nutrient as keyof FoodNutrients];
-        break;
       case NutrientsEnum.caffeine:
       case NutrientsEnum.calcium:
+      case NutrientsEnum.lodine:
+      case NutrientsEnum.panthotenic_acid:
       case NutrientsEnum.choline:
       case NutrientsEnum.copper:
       case NutrientsEnum.fluoride:
@@ -276,7 +272,7 @@ const getNutrientsClasified = (nutrients: FoodNutrients) => {
       case NutrientsEnum.vitamin_a:
       case NutrientsEnum.vitamin_b6:
       case NutrientsEnum.vitamin_b12:
-      case NutrientsEnum.vitamin_b2:
+      case NutrientsEnum.vitamin_b2_riboflavin:
       case NutrientsEnum.vitamin_c:
       case NutrientsEnum.vitamin_d2:
       case NutrientsEnum.vitamin_d3:
@@ -297,7 +293,6 @@ const getNutrientsClasified = (nutrients: FoodNutrients) => {
     principals,
     sugars,
     fats,
-    fatty_acids,
     vitsAndMin,
   };
 };
