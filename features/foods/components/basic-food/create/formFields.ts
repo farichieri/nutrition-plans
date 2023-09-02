@@ -33,16 +33,12 @@ const sugarNutritionFields = [
 const saturated_fats = nutrientKeys.saturated_fats;
 const monounsaturated_fats = nutrientKeys.monounsaturated_fats;
 const polyunsaturated_fats = nutrientKeys.polyunsaturated_fats;
-const total_omega_3 = nutrientKeys.total_omega_3;
-const total_omega_6 = nutrientKeys.total_omega_6;
 const trans_fats = nutrientKeys.trans_fats;
 
 const fatsNutritionFields = [
   saturated_fats,
   monounsaturated_fats,
   polyunsaturated_fats,
-  total_omega_3,
-  total_omega_6,
   trans_fats,
 ];
 
@@ -72,6 +68,7 @@ const vitamin_d3 = nutrientKeys.vitamin_d3;
 const vitamin_e = nutrientKeys.vitamin_e;
 const vitamin_k = nutrientKeys.vitamin_k;
 const zinc = nutrientKeys.zinc;
+const lodine = nutrientKeys.lodine;
 
 const vitsAndMinsNutritionFields = [
   betaine,
@@ -82,6 +79,7 @@ const vitsAndMinsNutritionFields = [
   fluoride,
   folate,
   iron,
+  lodine,
   lycopene,
   magnesium,
   manganese,

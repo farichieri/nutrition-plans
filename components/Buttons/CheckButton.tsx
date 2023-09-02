@@ -14,7 +14,7 @@ const CheckButton: FC<Props> = ({ onClick, checked }) => {
       onClick={onClick}
     >
       {checked ? (
-        <MdCheckCircle className="h-6 w-6 text-green-500" />
+        <MdCheckCircle className="h-6 w-6 text-green-600 dark:text-green-500" />
       ) : (
         <MdRadioButtonUnchecked className="h-6 w-6 text-gray-500" />
       )}
