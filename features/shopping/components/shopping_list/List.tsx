@@ -1,6 +1,6 @@
 import { CheckButton } from "@/components/Buttons";
 import { FC } from "react";
-import { FoodCategoriesEnum } from "@/features/foods";
+import { FoodCategories } from "@/features/foods";
 import { formatTwoDecimals } from "@/utils";
 import { ShoppingListFood, ShoppingListT } from "@/features/shopping";
 import BlurImage from "@/components/blur-image";
@@ -10,7 +10,7 @@ interface Props {
   selecteds: string[];
   handleSelected: ({ food }: { food: ShoppingListFood }) => void;
 }
-type FoodCategoriesType = Partial<typeof FoodCategoriesEnum>;
+type FoodCategoriesType = Partial<typeof FoodCategories>;
 
 const List: FC<Props> = ({ list, handleSelected, selecteds }) => {
   return (
@@ -29,7 +29,7 @@ const List: FC<Props> = ({ list, handleSelected, selecteds }) => {
               </span>
 
               <span className="opacity-50">
-                {FoodCategoriesEnum[category as keyof FoodCategoriesType]}
+                {FoodCategories[category as keyof FoodCategoriesType]}
               </span>
             </div>
             <div>

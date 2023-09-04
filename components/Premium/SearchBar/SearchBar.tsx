@@ -89,7 +89,7 @@ const SearchBar: FC<Props> = ({ queries }) => {
             windowWidth > 768 ? "relative" : "fixed"
           } left-0 top-0 z-[100] flex h-full w-full items-center justify-center bg-primary-color`}
         >
-          <div className="mr-2 flex cursor-pointer items-center justify-center lg:hidden ">
+          <div className="mx-2 flex cursor-pointer items-center justify-center lg:hidden ">
             <IoMdArrowBack
               onClick={(e) => {
                 e.preventDefault();

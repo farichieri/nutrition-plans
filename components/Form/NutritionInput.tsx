@@ -91,8 +91,7 @@ const NutritionInput: FC<Props> = forwardRef<HTMLInputElement, Props>(
             <label
               htmlFor={id}
               className={
-                ` mr-1 w-full min-w-fit basis-1/2 text-base capitalize` +
-                customClass
+                `w-full min-w-fit basis-1/2 text-base capitalize` + customClass
               }
             >
               {labelText.replaceAll("_", " ")}

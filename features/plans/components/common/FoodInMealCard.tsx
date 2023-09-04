@@ -6,20 +6,20 @@ import {
 } from "@/features/plans/slice";
 import { CheckButton } from "@/components/Buttons";
 import { FC } from "react";
-import { Food, getScaleOptions, orderScales } from "@/features/foods";
+import { Food, getAllScales, getScaleOptions } from "@/features/foods";
 import { FoodKeys } from "@/features/foods";
 import { formatTwoDecimals } from "@/utils";
 import { getDietFoodToggled } from "@/features/plans";
 import { getNewAmount } from "@/utils/nutritionHelpers";
 import { MdDelete, MdDragHandle } from "react-icons/md";
-import { useUpdateDietMutation } from "@/features/plans/services";
+import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
+import { useUpdateDietMutation } from "@/features/plans/services";
 import BlurImage from "@/components/blur-image";
 import FormSelect from "@/components/Form/FormSelect";
 import Input from "@/components/Form/Input";
 import NutritionInput from "@/components/Form/NutritionInput";
 import RoundButton from "@/components/Buttons/RoundButton";
-import { toast } from "react-hot-toast";
 
 interface MealInCardProps {
   food: Food;
@@ -33,8 +33,8 @@ const FoodInMealCard: FC<MealInCardProps> = ({
   isEditable,
 }) => {
   const dispatch = useDispatch();
-  const scalesMerged = orderScales({ scales: food.scales });
-  const options = getScaleOptions(scalesMerged);
+  const scalesMerged = getAllScales({ scales: food.scales });
+  const options = getScaleOptions({ scales: scalesMerged });
   const { diets } = useSelector(selectPlansSlice);
   const [updateDiet, { isLoading }] = useUpdateDietMutation();
 
@@ -47,7 +47,7 @@ const FoodInMealCard: FC<MealInCardProps> = ({
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
-    const scalesMerged = orderScales({ scales: food.scales });
+    const scalesMerged = getAllScales({ scales: food.scales });
     const type = event.target.type;
     const name = event.target.name;
     const value = event.target.value;

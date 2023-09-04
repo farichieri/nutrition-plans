@@ -1,7 +1,11 @@
-import { FoodCategoriesEnum, FoodScales } from "@/features/foods";
+import {
+  FoodCategoriesKeys,
+  FoodCategoriesValues,
+  FoodScales,
+} from "@/features/foods";
 
 export interface ShoppingListFood {
-  category: FoodCategoriesEnum;
+  category: FoodCategoriesValues;
   id: string;
   imageURL: string;
   isCupboard: boolean;

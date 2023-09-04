@@ -1,9 +1,4 @@
-import {
-  DEFAULT_IMAGE,
-  Food,
-  FoodKind,
-  getScalesWithPrimaryScales,
-} from "@/features/foods";
+import { DEFAULT_IMAGE, Food, FoodKind, FoodScales } from "@/features/foods";
 import { collection, doc, setDoc } from "firebase/firestore";
 import { db, storage } from "@/services/firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
@@ -12,6 +7,7 @@ import { Result } from "@/types";
 import { User } from "@/features/authentication";
 import { uuidv4 } from "@firebase/util";
 import { formatISO } from "date-fns";
+import { getNutritionValues } from "@/utils";
 
 const addFood = async (
   food: Food,
@@ -50,18 +46,39 @@ const addFood = async (
       }
     }
 
-    // Add the default scale:
-    const newScales = getScalesWithPrimaryScales({ scales: food.scales });
-    const uuid = uuidv4();
-    const scaleName = food.servingName;
-    const scaleAmount = 1;
-    newScales.unshift({
-      scaleName: scaleName,
-      scaleAmount: scaleAmount,
-      scaleGrams: food.servingGrams,
-      isDefault: true,
-      id: uuid,
+    // update Scales:
+    const scales: FoodScales = [];
+
+    food.scales.forEach((scale, index) => {
+      const uuid = uuidv4();
+      if (index === 0) {
+        scales.push({
+          ...scale,
+          id: uuid,
+          isDefault: true,
+        });
+      } else {
+        scales.push({
+          ...scale,
+          id: uuid,
+          isDefault: false,
+        });
+      }
     });
+
+    // Add Oz and Grams to scales
+
+    const defaultScaleName = scales[0].scaleName;
+    const defaultScaleGrams = scales[0].scaleGrams;
+    const defaultScaleAmount = scales[0].scaleAmount;
+
+    const nutrientsUpdated = getNutritionValues(
+      food,
+      defaultScaleAmount,
+      defaultScaleName
+    );
+
+    console.log({ nutrientsUpdated, food });
 
     const newFood: Food = {
       ...food,
@@ -70,14 +87,16 @@ const addFood = async (
       id: docRef.id,
       imageURL: img,
       index: index,
+      ingredientsAmount: numIngredients,
       ingredientsDescriptions: ingredientsDescriptions,
       ingredientsNames: ingredientsNames,
       kind: kind,
-      ingredientsAmount: numIngredients,
-      nutrients: { ...food.nutrients },
-      scaleAmount: scaleAmount,
-      scaleName: scaleName,
-      scales: newScales,
+      nutrients: { ...nutrientsUpdated },
+      scaleAmount: defaultScaleAmount,
+      scaleName: defaultScaleName,
+      scales: scales,
+      servingGrams: defaultScaleGrams,
+      servingName: defaultScaleName,
       totalTime: food.cookTime + food.prepTime,
       uploaderID: user.id,
     };

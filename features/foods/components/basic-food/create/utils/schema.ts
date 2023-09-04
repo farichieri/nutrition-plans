@@ -4,7 +4,7 @@ import * as yup from "yup";
 
 const schema = yup.object({
   name: yup.string().required("Food Name is required"),
-  description: yup.string().required("Food Description is required"),
+  // description: yup.string().required("Food Description is required"),
   servingName: yup.string().required("Scale Name is required"),
   servingGrams: yup
     .number()

@@ -82,10 +82,22 @@ export const foodsSlice = createSlice({
     },
     updateNewFoodState: (
       state,
-      action: PayloadAction<{ field: string; value: any }>
+      action: PayloadAction<{ field: keyof Food; value: any }>
     ) => {
       const { field, value } = action.payload;
-      if (Array.isArray(value)) {
+      if (field === "servingGrams" || field === "servingName") {
+        // update default scale
+        const defaultScaleIndex = state.newFoodState.scales.findIndex(
+          (scale) => scale.id === "default"
+        );
+        if (field === "servingGrams" && defaultScaleIndex !== -1) {
+          state.newFoodState.scales[defaultScaleIndex].scaleGrams = value;
+          state.newFoodState[field] = value;
+        } else if (field === "servingName" && defaultScaleIndex !== -1) {
+          state.newFoodState.scales[defaultScaleIndex].scaleName = value;
+          state.newFoodState[field] = value;
+        }
+      } else if (Array.isArray(value)) {
         state.newFoodState[field] = [...value];
       } else if (typeof value === "object") {
         state.newFoodState[field] = { ...value };
@@ -93,12 +105,31 @@ export const foodsSlice = createSlice({
         state.newFoodState[field] = value;
       }
     },
+    updateNewFoodStateMultipleFields: (
+      state,
+      action: PayloadAction<{ fields: Partial<Food> }>
+    ) => {
+      const { fields } = action.payload;
+      state.newFoodState = { ...state.newFoodState, ...fields };
+    },
     updateNewRecipeState: (
       state,
       action: PayloadAction<{ field: string; value: any }>
     ) => {
       const { field, value } = action.payload;
-      if (Array.isArray(value)) {
+      if (field === "servingGrams" || field === "servingName") {
+        // update default scale
+        const defaultScaleIndex = state.newRecipeState.scales.findIndex(
+          (scale) => scale.id === "default"
+        );
+        if (field === "servingGrams" && defaultScaleIndex !== -1) {
+          state.newRecipeState.scales[defaultScaleIndex].scaleGrams = value;
+          state.newRecipeState[field] = value;
+        } else if (field === "servingName" && defaultScaleIndex !== -1) {
+          state.newRecipeState.scales[defaultScaleIndex].scaleName = value;
+          state.newRecipeState[field] = value;
+        }
+      } else if (Array.isArray(value)) {
         state.newRecipeState[field] = [...value];
       } else if (typeof value === "object") {
         state.newRecipeState[field] = { ...value };
@@ -152,6 +183,7 @@ export const {
   setNewRecipeState,
   updateNewFoodState,
   updateNewRecipeState,
+  updateNewFoodStateMultipleFields,
 } = foodsSlice.actions;
 
 export const selectFoodsSlice = (state: RootState) => state.foods;

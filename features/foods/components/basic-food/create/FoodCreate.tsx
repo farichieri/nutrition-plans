@@ -5,21 +5,20 @@ import {
   vitsAndMinsNutritionFields,
 } from "./formFields";
 import {
-  NutrientsT,
   CompatiblePlans,
-  FoodType,
-  FoodKind,
-  selectFoodsSlice,
-  FoodScales,
-  GlucemicStatusEnum,
-  FoodCategoriesEnum,
   DigestionStatusEnum,
-  Nutrients,
   Food,
+  FoodCategories,
+  FoodKind,
+  FoodScales,
+  FoodType,
+  GlucemicStatusEnum,
+  NutrientsKeys,
+  NutrientsT,
+  selectFoodsSlice,
   setNewFoodState,
   updateNewFoodState,
   usePostFoodMutation,
-  NutrientsAny,
 } from "@/features/foods";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { generateOptions } from "@/utils";
@@ -32,7 +31,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Checkbox from "@/components/Form/Checkbox";
-import ExtraScales from "../../common/ExtraScales";
+import ExtraScales from "../../common/Scales/ExtraScales";
 import FormAction from "@/components/Form/FormAction";
 import FormInput from "@/components/Form/FormInput";
 import FormSelect from "@/components/Form/FormSelect";
@@ -49,12 +48,13 @@ interface Props {}
 const FoodCreate: FC<Props> = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { user } = useSelector(selectAuthSlice);
-  const { newFoodState } = useSelector(selectFoodsSlice);
-  const [optionalsOpen, setOptionalsOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [optionalsOpen, setOptionalsOpen] = useState<boolean>(false);
+  const [postFood] = usePostFoodMutation();
+  const { newFoodState } = useSelector(selectFoodsSlice);
+  const { user } = useSelector(selectAuthSlice);
 
-  let foodCategoryOptions = Object.keys(FoodCategoriesEnum);
+  let foodCategoryOptions = Object.values(FoodCategories);
   let foodGlucemicStatusOptions = Object.keys(GlucemicStatusEnum);
   let foodDigestionStatusOptions = Object.keys(DigestionStatusEnum);
 
@@ -97,8 +97,6 @@ const FoodCreate: FC<Props> = () => {
     }
   };
 
-  const [postFood] = usePostFoodMutation();
-
   const onSubmit = async (data: FormValues) => {
     if (!user || isSubmitting || isLoading) return;
     setIsLoading(true);
@@ -126,15 +124,10 @@ const FoodCreate: FC<Props> = () => {
     dispatch(setNewFoodState(NewFood));
   };
 
-  let nutrientKeys: any = {};
-  Object.keys(Nutrients).forEach((key) => {
-    nutrientKeys[key] = key;
-  });
-
   const getNutritionInputs = (fields: string[]) => {
     return fields.map((nutrient) => (
       <NutritionInput
-        changed={watch(`nutrients.${String(nutrient as keyof NutrientsAny)}`)}
+        changed={watch(`nutrients.${String(nutrient as keyof NutrientsKeys)}`)}
         error={errors.nutrients?.[nutrient as keyof NutrientsT]?.message}
         handleChange={handleChangeNutrient}
         id={nutrient}
@@ -153,11 +146,37 @@ const FoodCreate: FC<Props> = () => {
       if (name) {
         const objName = name.split(".")[0];
         const value = formState[objName];
+        if (objName === "servingGrams") {
+          const defaultScaleIndex = values.scales.findIndex(
+            (scale) => scale.id === "default"
+          );
+          if (defaultScaleIndex > -1) {
+            const newScales = [...values.scales];
+            newScales[defaultScaleIndex].scaleGrams = value;
+            setValue("scales", newScales);
+          }
+        } else if (objName === "servingName") {
+          const defaultScaleIndex = values.scales.findIndex(
+            (scale) => scale.id === "default"
+          );
+          if (defaultScaleIndex > -1) {
+            const newScales = [...values.scales];
+            newScales[defaultScaleIndex].scaleName = value;
+            setValue("scales", newScales);
+          }
+        }
         dispatch(updateNewFoodState({ field: objName, value: value }));
       }
     });
     return () => subscription.unsubscribe();
   }, [dispatch, watch]);
+
+  // Update form values when nutrients are updated
+  useEffect(() => {
+    if (JSON.stringify(newFoodState) !== JSON.stringify(values)) {
+      reset(newFoodState);
+    }
+  }, [newFoodState]);
 
   return (
     <>
@@ -171,7 +190,7 @@ const FoodCreate: FC<Props> = () => {
       >
         <div className="flex w-full flex-wrap  xl:divide-x">
           <div className="mb-10 flex w-full max-w-xl flex-col gap-5 sm:px-4">
-            {/* <LoadUSDA /> */}
+            <LoadUSDA currentState={values} />
             <div className="flex flex-col gap-2">
               <FormInput
                 error={errors.name?.message}
@@ -351,16 +370,13 @@ const FoodCreate: FC<Props> = () => {
                   type="number"
                   {...register("servingAmountPerPackage")}
                 />
-                <NutritionInput
-                  changed={false}
+                <FormInput
                   error={errors.price?.message}
-                  handleChange={() => {}}
                   id={"price"}
-                  labelText="Price (optional)"
+                  labelText="Price U$D (optional)"
                   title="Price"
                   type="number"
-                  unit={"U$D"}
-                  value={values.price}
+                  placeholder={"U$D"}
                   {...register("price", { valueAsNumber: true })}
                 />
                 <FormInput

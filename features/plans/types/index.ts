@@ -1,6 +1,6 @@
 import { FoodGroup, NutrientsT } from "@/features/foods";
 import { MealComplexities, MealMinutes, MealSizes } from "@/features/meals";
-import { NewFood, NewFoodNutrients } from "@/features/foods/types";
+import { NewFood, NewNutrients } from "@/features/foods/types";
 import {
   NutritionTargets,
   newNutritionTargets,
@@ -98,7 +98,7 @@ export const NewDiet: Diet = {
   meals: {},
   name: null,
   note: null,
-  nutrients: NewFoodNutrients,
+  nutrients: NewNutrients,
   nutritionTargets: newNutritionTargets,
   planID: null,
   type: PlanTypes.manually,

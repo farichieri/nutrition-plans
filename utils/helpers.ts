@@ -2,7 +2,7 @@ import {
   NutrientsClasified,
   Nutrients,
   NutritionMeasurements,
-  NutrientsAny,
+  NutrientsKeys,
   NutrientsT,
 } from "@/features/foods/types";
 
@@ -12,7 +12,7 @@ const mcg = NutritionMeasurements.mcg;
 const mg = NutritionMeasurements.mg;
 
 type Measurements = {
-  [key in NutrientsAny]?: { unit: string; requirement: number | null };
+  [key in NutrientsKeys]?: { unit: string; requirement: number | null };
 };
 
 const getNutrientMeasurementUnit = (nutrient: string) => {
@@ -169,7 +169,7 @@ const getNutrientMeasurementUnit = (nutrient: string) => {
       unit: mcg,
       requirement: 2.4,
     },
-    [Nutrients.vitamin_b2_riboflavin]: {
+    [Nutrients.riboflavin]: {
       unit: mg,
       requirement: 1.3,
     },
@@ -277,7 +277,7 @@ const getNutrientsClasified = (nutrients: NutrientsT) => {
       case Nutrients.thiamine:
       case Nutrients.vitamin_a:
       case Nutrients.vitamin_b12:
-      case Nutrients.vitamin_b2_riboflavin:
+      case Nutrients.riboflavin:
       case Nutrients.vitamin_b6:
       case Nutrients.vitamin_c:
       case Nutrients.vitamin_d:

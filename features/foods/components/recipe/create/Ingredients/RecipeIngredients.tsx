@@ -2,8 +2,8 @@ import {
   Food,
   IngredientGroup,
   IngsGroupArray,
+  getAllScales,
   getScaleOptions,
-  orderScales,
   selectFoodsSlice,
 } from "@/features/foods";
 import { useSelector } from "react-redux";
@@ -33,8 +33,8 @@ const Ingredient: FC<IngredientProps> = ({
 }) => {
   const food = ingredient;
   const { newRecipeState } = useSelector(selectFoodsSlice);
-  const scalesMerged = orderScales({ scales: food.scales });
-  const options = getScaleOptions(scalesMerged);
+  const scalesMerged = getAllScales({ scales: food.scales });
+  const options = getScaleOptions({ scales: scalesMerged });
 
   if (!newRecipeState) return <>No State Provided</>;
 

@@ -1,4 +1,4 @@
-import { FoodCategoriesEnum } from "@/features/foods";
+import { FoodCategories } from "@/features/foods";
 import { ShoppingListFoods, ShoppingListT } from "../types";
 
 const buildCupboardList = ({
@@ -6,7 +6,7 @@ const buildCupboardList = ({
 }: {
   cupboardFoods: ShoppingListFoods;
 }): ShoppingListT => {
-  const foodCategories = Object.keys(FoodCategoriesEnum);
+  const foodCategories = Object.keys(FoodCategories);
   const list: ShoppingListT = {};
 
   foodCategories.forEach((category: string) => {

@@ -25,7 +25,7 @@ import FoodNutrition from "./common/FoodNutrition";
 import FoodNutritionDetail from "./common/FoodNutritionDetail";
 import CompatiblePlansC from "./common/CompatiblePlansC";
 import ScaleSelector from "./common/ScaleSelector";
-import ExtraScales from "./common/ExtraScales";
+import ExtraScales from "./common/Scales/ExtraScales";
 
 export {
   AddFoodIngredient,

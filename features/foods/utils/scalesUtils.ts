@@ -1,19 +1,15 @@
-import { Food, FoodScale, FoodScales, NutritionMeasurements } from "../types";
+import { FoodScale, FoodScales, NutritionMeasurements } from "../types";
 import { GRAMS_IN_ONE_OZ } from "@/constants";
 
 const GRAMS = NutritionMeasurements.grams;
 const OZ = NutritionMeasurements.oz;
-
-const orderScales = ({ scales }: { scales: FoodScales }): FoodScales => {
-  return [...scales].sort((a, b) => Number(a.isDefault) - Number(b.isDefault));
-};
 
 const getScalesWithPrimaryScales = ({
   scales,
 }: {
   scales: FoodScales;
 }): FoodScales => {
-  const foodScales: FoodScales = [
+  const primaryScales: FoodScales = [
     {
       scaleName: OZ,
       scaleAmount: 1,
@@ -29,14 +25,31 @@ const getScalesWithPrimaryScales = ({
       id: GRAMS,
     },
   ];
-  [...scales]
-    .sort((a, b) => Number(a.isDefault) - Number(b.isDefault))
-    .forEach((scale) => foodScales.unshift(scale));
-  return foodScales;
+
+  return [...scales, ...primaryScales];
 };
 
-const getScaleOptions = (scalesMerged: FoodScales) => {
-  const scaleNames = scalesMerged.map((s) => {
+const orderScales = ({ scales }: { scales: FoodScales }): FoodScales => {
+  const result = [...scales];
+  const defaultIndex = result.findIndex((scale) => scale.isDefault === true);
+  const defaultScale = result.splice(defaultIndex, 1)[0];
+  result.unshift(defaultScale);
+
+  return result;
+};
+
+const getAllScales = ({ scales }: { scales: FoodScales }): FoodScales => {
+  const allScales = getScalesWithPrimaryScales({ scales });
+  const scalesOrdered = orderScales({ scales: allScales });
+  return scalesOrdered;
+};
+
+const getScaleOptions = ({ scales }: { scales: FoodScales }) => {
+  const allScales = getScalesWithPrimaryScales({ scales });
+
+  const scalesOrdered = orderScales({ scales: allScales });
+
+  const scaleNames = scalesOrdered.map((s) => {
     if (s.scaleName === GRAMS) return { value: GRAMS, text: GRAMS };
     else if (s.scaleName === OZ) return { value: OZ, text: `${OZ} (28.35 g)` };
     else
@@ -57,4 +70,5 @@ export {
   getScaleOptions,
   getDefaultScale,
   getScalesWithPrimaryScales,
+  getAllScales,
 };
