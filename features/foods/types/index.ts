@@ -20,6 +20,7 @@ export interface Food {
   glucemicStatus: GlucemicStatusEnum | null;
   id: string | null;
   imageURL: string;
+  imageURLs: ImageURLs;
   index: number;
   ingredients: IngredientGroup;
   ingredientsAmount: number;
@@ -52,6 +53,14 @@ export interface Food {
   totalTime: number;
   type: FoodType;
   uploaderID: string | null;
+}
+
+export interface ImageURLs {
+  resized_100x100: string;
+  resized_1200x900: string;
+  resized_190x115: string;
+  resized_200x200: string;
+  resized_400x400: string;
 }
 
 export interface FoodScale {
@@ -381,6 +390,13 @@ export const NewFood: Food = {
   glucemicStatus: null,
   id: null,
   imageURL: DEFAULT_IMAGE,
+  imageURLs: {
+    resized_200x200: DEFAULT_IMAGE,
+    resized_1200x900: DEFAULT_IMAGE,
+    resized_190x115: DEFAULT_IMAGE,
+    resized_100x100: DEFAULT_IMAGE,
+    resized_400x400: DEFAULT_IMAGE,
+  },
   index: -1,
   ingredients: {},
   ingredientsAmount: 0,

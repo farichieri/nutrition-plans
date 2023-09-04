@@ -124,7 +124,7 @@ export default function Page({ food }: { food: Food }) {
                 <span className="m-auto h-full w-full overflow-auto rounded-lg">
                   <BlurImage
                     image={{
-                      imageURL: food.imageURL,
+                      imageURL: food.imageURLs.resized_1200x900,
                       title: food.name!,
                       id: food.id,
                     }}

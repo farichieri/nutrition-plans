@@ -72,7 +72,7 @@ export default function PremiumLayout({ children }: Props) {
           <div className="flex min-h-screen w-full flex-col lg:pb-24">
             <div
               className={`flex flex-col pt-[var(--nav-h)] duration-0 ease-in-out ${
-                sidebarOpen ? "md:pl-20 xl:pl-64 " : "md:pl-20 "
+                sidebarOpen ? "md:pl-20 xl:pl-56 " : "md:pl-20 "
               } ${isMobile ? "pb-[var(--mobile-sidenav-h)]" : ""}`}
             >
               {children}
