@@ -56,8 +56,8 @@ const AddExtraScale: FC<AddExtraScaleProps> = ({
   return (
     <div className="absolute z-[100] w-full rounded-md border ">
       <div onClick={handleOpen} className="fixed inset-0 bg-black/60" />
-      <div className="relative z-[100] rounded-md border bg-white dark:bg-slate-700">
-        <div className="p-4">
+      <div className="relative z-[100] rounded-md border bg-tertiary-color">
+        <div className="flex flex-col justify-center p-10 ">
           <span className="text-xl font-semibold">New Scale:</span>
           <Input
             customClass={""}
@@ -67,8 +67,8 @@ const AddExtraScale: FC<AddExtraScaleProps> = ({
             key={"scaleName"}
             labelFor={"scaleName"}
             labelText={"Scale Name"}
+            placeholder={"Scale Name"}
             name={"scaleName"}
-            placeholder={""}
             title={"Scale Name"}
             type={"text"}
             value={newScaleState["scaleName"] || ""}

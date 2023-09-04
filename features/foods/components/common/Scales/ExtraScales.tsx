@@ -79,7 +79,7 @@ const ExtraScales: FC<Props> = ({ scales, handleChangeScales }) => {
                             <MdDragHandle className="h-6 w-6 opacity-50" />
                             <div
                               className={`my-2 flex w-full justify-between rounded-md border ${
-                                scale.id === "default" &&
+                                scale.isCreationScale &&
                                 "border-green-500 bg-green-500/50"
                               }`}
                               key={index}
@@ -87,11 +87,13 @@ const ExtraScales: FC<Props> = ({ scales, handleChangeScales }) => {
                               <div className="flex w-full flex-col divide-y border-x">
                                 <div className="flex items-baseline justify-between p-2">
                                   <span>1 {scale.scaleName}</span>
-                                  <span>{`(${scale.scaleGrams} grams)`}</span>
+                                  {scale.scaleGrams > 0 && (
+                                    <span>{`(${scale.scaleGrams} grams)`}</span>
+                                  )}
                                 </div>
                               </div>
                               <div className="m-auto flex">
-                                {scale.id !== "default" && (
+                                {!scale.isCreationScale && (
                                   <RoundButton
                                     customClass="w-10 h-10 p-1.5 my-auto ml-auto !rounded-sm"
                                     onClick={() => handleRemove(index)}

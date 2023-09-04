@@ -1,7 +1,7 @@
 import { ChangeEventHandler, FC } from "react";
 
 const fixedInputClass =
-  "rounded-md h-[2rem] sm:h-[2rem] w-full dark:border-gray-500  font-semibold appearance-none dark:bg-slate-500/20 dark:text-white bg-slate-500/20 relative block px-3 py-1 border border-gray-300 placeholder-gray-500 text-gray-900 caret-green-500  focus:outline-none  focus:ring--500 focus:border-green-500 focus:z-10 sm:text-sm";
+  "rounded-md h-[2rem] sm:h-[2rem]  basis-1/2 w-full dark:border-gray-500  font-semibold appearance-none dark:bg-slate-500/20 dark:text-white bg-slate-500/20 relative block px-3 py-1 border border-gray-300 placeholder-gray-500 text-gray-900 caret-green-500  focus:outline-none  focus:ring--500 focus:border-green-500 focus:z-10 sm:text-sm";
 
 const readOnlyClass =
   " outline-none bg-transparent cursor-default select-none appearance-none ";
@@ -44,9 +44,9 @@ const Input: FC<Props> = ({
   readOnly,
 }) => {
   return (
-    <div className="my-1 flex flex-wrap items-center gap-1 sm:flex-nowrap ">
+    <div className="my-1 flex flex-wrap items-center sm:flex-nowrap ">
       {labelText && (
-        <label htmlFor={labelFor} className="not-sr-only w-full">
+        <label htmlFor={labelFor} className="not-sr-only w-full basis-1/2">
           {labelText}
         </label>
       )}

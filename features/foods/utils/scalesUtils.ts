@@ -16,6 +16,7 @@ const getScalesWithPrimaryScales = ({
       scaleGrams: GRAMS_IN_ONE_OZ,
       isDefault: false,
       id: OZ,
+      isCreationScale: false,
     },
     {
       scaleName: GRAMS,
@@ -23,6 +24,7 @@ const getScalesWithPrimaryScales = ({
       scaleGrams: 1,
       isDefault: false,
       id: GRAMS,
+      isCreationScale: false,
     },
   ];
 

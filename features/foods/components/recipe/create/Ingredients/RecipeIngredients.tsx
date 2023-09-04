@@ -34,7 +34,7 @@ const Ingredient: FC<IngredientProps> = ({
   const food = ingredient;
   const { newRecipeState } = useSelector(selectFoodsSlice);
   const scalesMerged = getAllScales({ scales: food.scales });
-  const options = getScaleOptions({ scales: scalesMerged });
+  const options = getScaleOptions({ scales: food.scales });
 
   if (!newRecipeState) return <>No State Provided</>;
 
@@ -142,7 +142,7 @@ const Ingredient: FC<IngredientProps> = ({
           onClick={handleRemove}
           id={food.id}
         >
-          <MdDelete className="h-6 w-6 opacity-50" />
+          <MdDelete className="pointer-events-none h-6 w-6 opacity-50" />
         </RoundButton>
       </div>
     </div>
@@ -195,6 +195,7 @@ const RecipeIngredients: FC<Props> = ({
 
   const handleRemove = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
+    console.log(event.target);
     const id = (event.target as HTMLButtonElement).id;
     const newIngredients = { ...ingredients };
     delete newIngredients[id];
