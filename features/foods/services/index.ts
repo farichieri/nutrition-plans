@@ -80,6 +80,7 @@ export const foodsApi = api.injectEndpoints({
           const data = res.data;
           return { data };
         } catch (error) {
+          console.log({ error });
           return { error };
         }
       },

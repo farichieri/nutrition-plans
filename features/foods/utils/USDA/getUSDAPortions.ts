@@ -5,6 +5,7 @@ type FoodPortions = {
   gramWeight: number;
   modifier: string;
   id: number;
+  measureUnit: { name: string };
 };
 
 const getUSDAPortions = ({
@@ -15,14 +16,15 @@ const getUSDAPortions = ({
   const scales: FoodScales = [];
 
   foodPortions.forEach((portion) => {
-    const { amount, gramWeight, modifier, id } = portion;
+    const { amount, gramWeight, modifier, id, measureUnit } = portion;
 
     scales.push({
       id: id,
       isDefault: false,
       scaleAmount: amount,
       scaleGrams: gramWeight,
-      scaleName: modifier,
+      scaleName: modifier || measureUnit.name,
+      isCreationScale: false,
     });
   });
 

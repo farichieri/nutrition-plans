@@ -33,8 +33,7 @@ const FoodInMealCard: FC<MealInCardProps> = ({
   isEditable,
 }) => {
   const dispatch = useDispatch();
-  const scalesMerged = getAllScales({ scales: food.scales });
-  const options = getScaleOptions({ scales: scalesMerged });
+  const options = getScaleOptions({ scales: food.scales });
   const { diets } = useSelector(selectPlansSlice);
   const [updateDiet, { isLoading }] = useUpdateDietMutation();
 

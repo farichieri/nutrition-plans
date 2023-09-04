@@ -7,7 +7,7 @@ const schema = yup.object({
   // description: yup.string().required("Recipe Description is required"),
   category: yup.string().required("Recipe Category is required"),
   dishType: yup.string().required("Recipe Category is required"),
-  image: yup.string().required("Please choose an image for this food"),
+  imageURL: yup.string().required("Please choose an image for this food"),
   prepTime: yup
     .number()
     .typeError("Amount must be a number")

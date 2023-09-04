@@ -66,8 +66,6 @@ const addFood = async (
       }
     });
 
-    // Add Oz and Grams to scales
-
     const defaultScaleName = scales[0].scaleName;
     const defaultScaleGrams = scales[0].scaleGrams;
     const defaultScaleAmount = scales[0].scaleAmount;

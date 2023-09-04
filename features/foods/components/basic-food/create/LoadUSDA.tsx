@@ -48,7 +48,8 @@ const LoadUSDA: FC<Props> = ({ currentState }) => {
       const foodCategoryFiltered = getUSDAFoodCategory({ foodCategory });
       const scales = [
         {
-          id: "default",
+          id: "creationScale",
+          isCreationScale: true,
           isDefault: true,
           scaleAmount: 1,
           scaleGrams: grams,
@@ -73,7 +74,6 @@ const LoadUSDA: FC<Props> = ({ currentState }) => {
 
       toast.success(`Loaded USDA food: ${description}`, { duration: 5000 });
       setFdcId("");
-      console.log({ nutrientsFiltered });
     } catch (error) {
       toast.error("Error loading USDA food");
       console.log({ error });
@@ -85,12 +85,13 @@ const LoadUSDA: FC<Props> = ({ currentState }) => {
   return (
     <div>
       <button
+        className="ml-auto flex rounded-md border-green-500 bg-green-500/50 px-3 py-1 font-semibold text-white"
         onClick={(e) => {
           e.preventDefault();
           setOpen(!open);
         }}
       >
-        Load Data
+        Load USDA Data
       </button>
       {open && (
         <Modal onClose={() => setOpen(!open)}>

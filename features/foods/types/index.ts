@@ -56,6 +56,7 @@ export interface Food {
 
 export interface FoodScale {
   id: string | number | null;
+  isCreationScale: boolean;
   isDefault: boolean;
   scaleAmount: number;
   scaleGrams: number;
@@ -281,6 +282,7 @@ export interface Recipe extends Food {}
 
 export const InitialScale: FoodScale = {
   id: null,
+  isCreationScale: false,
   isDefault: false,
   scaleAmount: 1,
   scaleGrams: 0,
@@ -404,7 +406,8 @@ export const NewFood: Food = {
   scaleName: "",
   scales: [
     {
-      id: "default",
+      id: "creationScale",
+      isCreationScale: true,
       isDefault: true,
       scaleAmount: 1,
       scaleGrams: 0,

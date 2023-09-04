@@ -6,7 +6,7 @@ import {
   getAllScales,
 } from "@/features/foods";
 import { BiSolidPieChartAlt2 } from "react-icons/bi";
-import { formatToFixed } from "@/utils/format";
+import { formatToFixed, formatTwoDecimals } from "@/utils/format";
 import { getNewAmount, getNutritionValues } from "@/utils/nutritionHelpers";
 import { USDAIcon } from "@/assets";
 import FoodNutritionDetail from "./FoodNutritionDetail";
@@ -37,7 +37,7 @@ const FoodNutrition: FC<Props> = ({ food, amount, scale }) => {
     setNutrients(nutrientsUpdated);
   }, [amount, scale, food]);
 
-  const title = `${amount} ${scale} of ${food.name}`;
+  const title = `${formatTwoDecimals(amount)} ${scale} of ${food.name}`;
 
   if (!nutrients) {
     return <div>Loading...</div>;

@@ -63,7 +63,6 @@ const RecipeCreate: FC<Props> = () => {
   } = form;
   const { errors, isSubmitting } = formState;
   const values = getValues();
-  console.log({ values });
 
   const handleChangeScales = (newScales: FoodScales) => {
     setValue("scales", [...newScales], { shouldDirty: true });
@@ -97,13 +96,20 @@ const RecipeCreate: FC<Props> = () => {
     const recipeGrams = getRecipeSize(data.ingredients);
     if (!recipeGrams) return;
     setIsLoading(true);
-    const newFood: Recipe = {
+    const newFood = {
       ...data,
       servingGrams: recipeGrams,
     };
+
+    // update creationScale with recipeGrams
+    const creationScale = newFood.scales.find((scale) => scale.isCreationScale);
+    if (creationScale) {
+      creationScale.scaleGrams = recipeGrams;
+    }
+
     const res = await postFood({
-      food: data,
-      kind: FoodKind.basic_food,
+      food: newFood,
+      kind: FoodKind.recipe,
       newImage: newImageFile,
       user,
     });
@@ -267,7 +273,7 @@ const RecipeCreate: FC<Props> = () => {
                       <Checkbox
                         id={type}
                         key={type}
-                        labelText={type}
+                        labelText={type.split("is")[1]}
                         placeholder="Food Type"
                         title="Food Type"
                         {...register(`type.${type as keyof FoodType}`)}
