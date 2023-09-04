@@ -62,7 +62,7 @@ const selenium = Nutrients.selenium;
 const thiamine = Nutrients.thiamine;
 const vitamin_a = Nutrients.vitamin_a;
 const vitamin_b12 = Nutrients.vitamin_b12;
-const vitamin_b2_riboflavin = Nutrients.vitamin_b2_riboflavin;
+const riboflavin = Nutrients.riboflavin;
 const vitamin_b6 = Nutrients.vitamin_b6;
 const vitamin_c = Nutrients.vitamin_c;
 const vitamin_d = Nutrients.vitamin_d;
@@ -94,7 +94,7 @@ const vitsAndMinsNutritionFields = [
   thiamine,
   vitamin_a,
   vitamin_b12,
-  vitamin_b2_riboflavin,
+  riboflavin,
   vitamin_b6,
   vitamin_c,
   vitamin_d,

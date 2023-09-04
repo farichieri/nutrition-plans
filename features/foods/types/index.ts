@@ -3,19 +3,20 @@ import { PlansEnum } from "@/types";
 export interface Food {
   [id: string]: any;
   brand: string | null;
-  category: FoodCategoriesEnum | null;
+  category: FoodCategoriesValues | null;
   compatiblePlans: CompatiblePlans;
   complexity: number;
   cookTime: number;
   dateCreated: any | null;
   dateUpdated: string | null;
-  description: string | null;
+  description: string;
   dietID: string | null;
   dietMealID: string | null;
   digestionStatus: DigestionStatusEnum | null;
   dishType: DishTypesEnum | null;
   dislikes: number;
   favorites: number;
+  fdcId: number | null;
   glucemicStatus: GlucemicStatusEnum | null;
   id: string | null;
   imageURL: string;
@@ -54,7 +55,7 @@ export interface Food {
 }
 
 export interface FoodScale {
-  id: string | null;
+  id: string | number | null;
   isDefault: boolean;
   scaleAmount: number;
   scaleGrams: number;
@@ -158,6 +159,7 @@ export const Nutrients = {
   potassium: "potassium",
   proteins: "proteins",
   retinol: "retinol",
+  riboflavin: "riboflavin",
   saturated_fats: "saturated_fats",
   selenium: "selenium",
   sodium: "sodium",
@@ -167,7 +169,6 @@ export const Nutrients = {
   trans_fats: "trans_fats",
   vitamin_a: "vitamin_a",
   vitamin_b12: "vitamin_b12",
-  vitamin_b2_riboflavin: "vitamin_b2_riboflavin",
   vitamin_b6: "vitamin_b6",
   vitamin_c: "vitamin_c",
   vitamin_d: "vitamin_d",
@@ -179,10 +180,10 @@ export const Nutrients = {
   zinc: "zinc",
 } as const;
 
-export type NutrientsAny = keyof typeof Nutrients;
+export type NutrientsKeys = keyof typeof Nutrients;
 
 export type NutrientsT = {
-  [key in NutrientsAny]: number | null;
+  [key in NutrientsKeys]: number | null;
 };
 
 export enum NutritionMeasurements {
@@ -194,27 +195,40 @@ export enum NutritionMeasurements {
   oz = "Oz",
 }
 
-export enum FoodCategoriesEnum {
-  baked_products = "Baked Products",
-  beef_products = "Beef Products",
-  beverages = "Beverages",
-  cereal_grains_and_pasta = "Cereal Grains and Pasta",
-  dairy_and_eggs_products = "Dairy and Eggs Products",
-  fats_and_oils = "Fats and Oils",
-  finfish_and_shellfish_products = "Finfish and Shellfish Products",
-  fruits_and_fruit_juices = "Fruits and Fruit Juices",
-  legumes_and_legume_products = "Legumes and Legume Products",
-  nut_and_seed_products = "Nut and Seed Products",
-  pork_products = "Pork Products",
-  poultry_products = "Poultry Products",
-  restaurant_foods = "Restaurant Foods",
-  salad_dressing_and_mayonnaise = "Salad Dressing & Mayonnaise",
-  sausages_and_luncheon_meats = "Sausages and Luncheon Meats",
-  soups_sauces_and_gravies = "Soups, Sauces, and Gravies",
-  spices_and_herbs = "Spices and Herbs",
-  sweets = "Sweets",
-  vegetables_and_vegetable_products = "Vegetables and Vegetable Products",
-}
+export const FoodCategories = {
+  alcoholic_beverages: "Alcoholic Beverages",
+  american_indian_alaska_native_foods: "American Indian/Alaska Native Foods",
+  baby_foods: "Baby Foods",
+  baked_products: "Baked Products",
+  beef_products: "Beef Products",
+  beverages: "Beverages",
+  branded_food_products_database: "Branded Food Products Database",
+  breakfast_cereals: "Breakfast Cereals",
+  cereal_grains_and_pasta: "Cereal Grains and Pasta",
+  dairy_and_eggs_products: "Dairy and Eggs Products",
+  fast_foods: "Fast Foods",
+  fats_and_oils: "Fats and Oils",
+  finfish_and_shellfish_products: "Finfish and Shellfish Products",
+  fruits_and_fruit_juices: "Fruits and Fruit Juices",
+  lamb_veal_and_game_products: "Lamb, Veal, and Game Products",
+  legumes_and_legume_products: "Legumes and Legume Products",
+  meals_entrees_and_side_dishes: "Meals, Entrees, and Side Dishes",
+  nut_and_seed_products: "Nut and Seed Products",
+  pork_products: "Pork Products",
+  poultry_products: "Poultry Products",
+  restaurant_foods: "Restaurant Foods",
+  salad_dressing_and_mayonnaise: "Salad Dressing & Mayonnaise",
+  sausages_and_luncheon_meats: "Sausages and Luncheon Meats",
+  snacks: "Snacks",
+  soups_sauces_and_gravies: "Soups, Sauces, and Gravies",
+  spices_and_herbs: "Spices and Herbs",
+  sweets: "Sweets",
+  vegetables_and_vegetable_products: "Vegetables and Vegetable Products",
+} as const;
+
+export type FoodCategoriesKeys = keyof typeof FoodCategories;
+
+export type FoodCategoriesValues = (typeof FoodCategories)[FoodCategoriesKeys];
 
 export enum RecipeCategoriesEnum {
   appetizers = "Appetizers",
@@ -254,7 +268,7 @@ export enum DigestionStatusEnum {
 }
 
 export type NutrientsClasified = {
-  [key in NutrientsAny]?: number | null;
+  [key in NutrientsKeys]?: number | null;
 };
 
 export enum Macronutrients {
@@ -293,7 +307,7 @@ export const NewFoodCompatiblePlans: CompatiblePlans = {
   keto: false,
 };
 
-export const NewFoodNutrients: NutrientsT = {
+export const NewNutrients: NutrientsT = {
   betaine: null,
   biotin: null,
   caffeine: null,
@@ -334,7 +348,7 @@ export const NewFoodNutrients: NutrientsT = {
   trans_fats: null,
   vitamin_a: null,
   vitamin_b12: null,
-  vitamin_b2_riboflavin: null,
+  riboflavin: null,
   vitamin_b6: null,
   vitamin_c: null,
   vitamin_d: null,
@@ -354,13 +368,14 @@ export const NewFood: Food = {
   cookTime: 0,
   dateCreated: null,
   dateUpdated: null,
-  description: null,
+  description: "",
   dietID: null,
   dietMealID: null,
   digestionStatus: null,
   dishType: null,
   dislikes: 0,
   favorites: 0,
+  fdcId: null,
   glucemicStatus: null,
   id: null,
   imageURL: DEFAULT_IMAGE,
@@ -380,14 +395,22 @@ export const NewFood: Food = {
   makesLeftovers: false,
   name: null,
   note: "",
-  nutrients: NewFoodNutrients,
+  nutrients: NewNutrients,
   order: -1,
   prepTime: 0,
   price: null,
   recipeCategory: null,
   scaleAmount: 0,
   scaleName: "",
-  scales: [],
+  scales: [
+    {
+      id: "default",
+      isDefault: true,
+      scaleAmount: 1,
+      scaleGrams: 0,
+      scaleName: "Serving",
+    },
+  ],
   servingAmount: 1,
   servingAmountPerPackage: null,
   servingGrams: 0,

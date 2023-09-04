@@ -12,6 +12,9 @@ import getSearchParameters from "../utils/getSearchParameters";
 import type { FilterQueries, Result } from "@/types";
 import type { Food, FoodHitsGroup } from "@/features/foods";
 
+const typesenseFoodsCollection =
+  process.env.NEXT_PUBLIC_TYPESENSE_FOODS_COLLECTION_NAME!;
+
 const fetchCuratedFoods = async ({
   queries,
 }: {
@@ -23,7 +26,7 @@ const fetchCuratedFoods = async ({
     const searchParameters = getSearchParameters({ queries, isCurated: true });
 
     const res = await searchClient
-      .collections("foods")
+      .collections(typesenseFoodsCollection)
       .documents()
       .search(searchParameters, {});
 
@@ -57,7 +60,7 @@ const fetchUserFoods = async ({
     const searchParameters = getSearchParameters({ queries, uploaderID });
 
     const res = await searchClient
-      .collections("foods")
+      .collections(typesenseFoodsCollection)
       .documents()
       .search(searchParameters, {});
 
@@ -131,7 +134,7 @@ const fetchFoodsByIDS = async (
     let data: FoodHitsGroup = {};
 
     const res = await searchClient
-      .collections("foods")
+      .collections(typesenseFoodsCollection)
       .documents()
       .search(
         {

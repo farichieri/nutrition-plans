@@ -1,8 +1,8 @@
 import {
   Food,
+  getAllScales,
   getDefaultScale,
   getScaleOptions,
-  orderScales,
 } from "@/features/foods";
 import { FC, useEffect, useState } from "react";
 import { getNewAmount } from "@/utils";
@@ -27,8 +27,8 @@ const ScaleSelector: FC<Props> = ({
 }) => {
   const [isNotOriginal, setIsNotOriginal] = useState(false);
   const router = useRouter();
-  const scalesMerged = orderScales({ scales: food.scales });
-  const options = getScaleOptions(scalesMerged);
+  const scalesMerged = getAllScales({ scales: food.scales });
+  const options = getScaleOptions({ scales: food.scales });
   const defaultScale = getDefaultScale(food.scales);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,14 +54,18 @@ const ScaleSelector: FC<Props> = ({
       newScale = value;
     }
     if (updateRoute) {
-      router.replace({
-        pathname: router.pathname,
-        query: {
-          id: router.query.id,
-          amount: newAmount,
-          scale: newScale,
+      router.replace(
+        {
+          pathname: router.pathname,
+          query: {
+            id: router.query.id,
+            amount: newAmount,
+            scale: newScale,
+          },
         },
-      });
+        undefined,
+        { scroll: false }
+      );
     } else {
       setLocalScale(newAmount, newScale);
     }
@@ -72,12 +76,16 @@ const ScaleSelector: FC<Props> = ({
     if (!food) return;
 
     if (updateRoute) {
-      router.replace({
-        pathname: router.pathname,
-        query: {
-          id: router.query.id,
+      router.replace(
+        {
+          pathname: router.pathname,
+          query: {
+            id: router.query.id,
+          },
         },
-      });
+        undefined,
+        { scroll: false }
+      );
     } else {
       const { scaleAmount, scaleName } = defaultScale;
       setLocalScale(scaleAmount, scaleName);

@@ -2,6 +2,7 @@ import {
   Food,
   Ingredient,
   NutritionMeasurements,
+  getAllScales,
   orderScales,
 } from "@/features/foods";
 import { FC } from "react";
@@ -33,8 +34,10 @@ const Ingredient: FC<IngredientProps> = ({
     );
   }
 
-  const ingredientScalesMerged = orderScales({ scales: foodIngredient.scales });
-  const recipeScalesMerged = orderScales({ scales: recipe.scales });
+  const ingredientScalesMerged = getAllScales({
+    scales: foodIngredient.scales,
+  });
+  const recipeScalesMerged = getAllScales({ scales: recipe.scales });
 
   const ingGrams =
     foodIngredient &&

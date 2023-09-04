@@ -2,7 +2,6 @@ import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
 import { db } from "@/services/firebase";
 import { Food } from "@/features/foods";
 import { NextApiRequest, NextApiResponse } from "next";
-import { getScalesWithPrimaryScales } from "@/features/foods/utils/scalesUtils";
 import { User } from "@/features/authentication";
 
 // Custom function to make changes to the database

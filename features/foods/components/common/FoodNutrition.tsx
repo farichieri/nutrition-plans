@@ -3,6 +3,7 @@ import {
   orderScales,
   NutritionMeasurements,
   NutrientsT,
+  getAllScales,
 } from "@/features/foods";
 import { BiSolidPieChartAlt2 } from "react-icons/bi";
 import { formatToFixed } from "@/utils/format";
@@ -21,7 +22,7 @@ interface Props {
 
 const FoodNutrition: FC<Props> = ({ food, amount, scale }) => {
   const [nutrients, setNutrients] = useState<NutrientsT | null>(null);
-  const scalesMerged = orderScales({ scales: food.scales });
+  const scalesMerged = getAllScales({ scales: food.scales });
 
   const equivalentInGrams = getNewAmount({
     scales: scalesMerged,
@@ -35,6 +36,8 @@ const FoodNutrition: FC<Props> = ({ food, amount, scale }) => {
     const nutrientsUpdated = getNutritionValues(food, amount, scale);
     setNutrients(nutrientsUpdated);
   }, [amount, scale, food]);
+
+  const title = `${amount} ${scale} of ${food.name}`;
 
   if (!nutrients) {
     return <div>Loading...</div>;
@@ -110,7 +113,7 @@ const FoodNutrition: FC<Props> = ({ food, amount, scale }) => {
             <span>{formatToFixed(Number(nutrients.cholesterol)) || "-"}</span>
           </div>
         </div>
-        <FoodNutritionDetail title={food.name!} nutrients={nutrients} />
+        <FoodNutritionDetail title={title} nutrients={nutrients} />
       </div>
     </div>
   );

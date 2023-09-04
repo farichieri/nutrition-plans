@@ -4,7 +4,7 @@ import * as yup from "yup";
 
 const schema = yup.object({
   name: yup.string().required("Recipe Name is required"),
-  description: yup.string().required("Recipe Description is required"),
+  // description: yup.string().required("Recipe Description is required"),
   category: yup.string().required("Recipe Category is required"),
   dishType: yup.string().required("Recipe Category is required"),
   image: yup.string().required("Please choose an image for this food"),

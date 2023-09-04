@@ -3,7 +3,7 @@ import {
   ShoppingListFoods,
   ShoppingListT,
 } from "@/features/shopping";
-import { FoodCategoriesEnum } from "@/features/foods";
+import { FoodCategories } from "@/features/foods";
 import { getNewAmount } from "@/utils";
 
 // Get difference between shopping list food and cupboard food
@@ -34,7 +34,7 @@ const buildShoppingList = ({
   shoppingListFoods: ShoppingListFoods;
   cupboardFoods: ShoppingListFoods;
 }): ShoppingListT => {
-  const foodCategories = Object.keys(FoodCategoriesEnum);
+  const foodCategories = Object.keys(FoodCategories);
   const list: ShoppingListT = {};
 
   console.log({ foods: shoppingListFoods });

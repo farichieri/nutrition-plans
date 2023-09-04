@@ -4,20 +4,20 @@ import {
   FoodScales,
   IngredientGroup,
   Nutrients,
-  NutrientsAny,
+  NutrientsKeys,
   NutrientsT,
   NutritionMeasurements,
 } from "@/features/foods/types";
 import { DietMealGroup } from "@/features/plans";
 import { formatToFixed, formatTwoDecimals } from "@/utils/format";
 import { GRAMS_IN_ONE_OZ } from "@/constants";
-import { orderScales } from "@/features/foods";
-import { NewFoodNutrients } from "@/features/foods";
+import { getAllScales, orderScales } from "@/features/foods";
+import { NewNutrients } from "@/features/foods";
 
 const GRAMS = NutritionMeasurements.grams;
 const OZ = NutritionMeasurements.oz;
 
-const formatNutrient = (num: number, nutrient: NutrientsAny): number => {
+const formatNutrient = (num: number, nutrient: NutrientsKeys): number => {
   if (nutrient === Nutrients.calories) {
     return formatToFixed(num);
   } else {
@@ -87,7 +87,7 @@ const getIngredientNutrition = (food: Food) => {
     );
     return foodNutrition;
   } else {
-    return NewFoodNutrients;
+    return NewNutrients;
   }
 };
 
@@ -121,7 +121,7 @@ const getRecipeSize = (ingredients: IngredientGroup): number | null => {
   let size = 0;
   Object.keys(ingredients).map((ing) => {
     const food = ingredients[ing];
-    const scalesMerged = orderScales({ scales: food.scales });
+    const scalesMerged = getAllScales({ scales: food.scales });
     if (food.scaleName && food.scaleAmount) {
       const equivalentInGrams = getNewAmount({
         scales: scalesMerged,
@@ -137,7 +137,7 @@ const getRecipeSize = (ingredients: IngredientGroup): number | null => {
 
 const getNutritionMerged = (foods: FoodGroup): NutrientsT => {
   if (Object.keys(foods).length < 1) {
-    return NewFoodNutrients;
+    return NewNutrients;
   }
 
   let result: any = Object.create({});

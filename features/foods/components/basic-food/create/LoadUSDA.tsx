@@ -1,34 +1,85 @@
 import { FC, useState } from "react";
+import { Food } from "@/features/foods/types";
+import { getUSDAFoodCategory } from "@/features/foods/utils/USDA/getUSDAFoodCategory";
+import { getUSDANutrients } from "@/features/foods/utils/USDA/getUSDANutrients";
+import { getUSDAPortions } from "@/features/foods/utils/USDA/getUSDAPortions";
+import { toast } from "react-hot-toast";
+import { updateNewFoodStateMultipleFields } from "@/features/foods/slice";
+import { useDispatch } from "react-redux";
 import { useGetUSDAFoodMutation } from "@/features/foods/services";
 import InfoMessage from "@/components/Layout/InfoMessage";
 import Modal from "@/components/Modal/Modal";
+import Spinner from "@/components/Loader/Spinner";
 
-interface Props {}
+interface Props {
+  currentState: Food;
+}
 
-const LoadUSDA: FC<Props> = () => {
+const LoadUSDA: FC<Props> = ({ currentState }) => {
+  const dispatch = useDispatch();
   const [fdcId, setFdcId] = useState("");
   const [open, setOpen] = useState(false);
 
-  const [getUSDAFood] = useGetUSDAFoodMutation();
+  const [getUSDAFood, { isLoading }] = useGetUSDAFoodMutation();
 
   const handleLoad = async (e: React.MouseEvent) => {
     e.preventDefault();
-    const res: any = await getUSDAFood({ fdcId });
-    const data = res.data;
-    const { foodNutrients } = data.data;
-    console.log({ data });
+    if (!fdcId) {
+      toast.error("Please enter an FDC ID");
+      return;
+    }
+    try {
+      const res: any = await getUSDAFood({ fdcId });
+      if ("error" in res) throw new Error(res.error);
+      const data = res.data;
+      console.log({ data });
 
-    const nutrients = foodNutrients.map((item: any) => {
-      const { nutrient } = item;
-      const { number, name } = nutrient;
+      const {
+        foodNutrients,
+        foodPortions,
+        description,
+        foodCategory,
+        fdcId: id,
+      } = data.data;
+      const grams = 100;
+      const servingName = "Serving";
 
-      return {
-        number,
-        name,
-      };
-    });
+      const nutrientsFiltered = getUSDANutrients({ foodNutrients });
+      const foodCategoryFiltered = getUSDAFoodCategory({ foodCategory });
+      const scales = [
+        {
+          id: "default",
+          isDefault: true,
+          scaleAmount: 1,
+          scaleGrams: grams,
+          scaleName: servingName,
+        },
+        ...getUSDAPortions({ foodPortions }),
+      ];
 
-    console.log({ nutrients });
+      dispatch(
+        updateNewFoodStateMultipleFields({
+          fields: {
+            name: description,
+            category: foodCategoryFiltered,
+            fdcId: id,
+            servingGrams: grams,
+            servingName,
+            scales,
+            nutrients: nutrientsFiltered,
+          },
+        })
+      );
+
+      toast.success(`Loaded USDA food: ${description}`, { duration: 5000 });
+      setFdcId("");
+      console.log({ nutrientsFiltered });
+    } catch (error) {
+      toast.error("Error loading USDA food");
+      console.log({ error });
+    } finally {
+      setOpen(false);
+    }
   };
 
   return (
@@ -58,10 +109,11 @@ const LoadUSDA: FC<Props> = () => {
               />
             </div>
             <button
-              className="rounded-md border border-green-500 bg-green-400 px-3 py-1 hover:bg-green-500 active:bg-green-600"
+              className="flex items-center justify-center gap-2 rounded-md border border-green-500 bg-green-400 px-3 py-1 hover:bg-green-500 active:bg-green-600"
               onClick={handleLoad}
             >
               Load Data
+              {isLoading && <Spinner customClass="h-5 w-5" />}
             </button>
           </div>
         </Modal>
