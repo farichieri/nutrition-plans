@@ -1,8 +1,10 @@
 import {
+  aminoacidsFields,
   fatsNutritionFields,
   firstNutritionFields,
   sugarNutritionFields,
-  vitsAndMinsNutritionFields,
+  VitsAndOtherComponents,
+  mineralsFields,
 } from "./formFields";
 import {
   CompatiblePlans,
@@ -13,6 +15,7 @@ import {
   FoodScales,
   FoodType,
   GlucemicStatusEnum,
+  NutrientsAbbreviations,
   NutrientsKeys,
   NutrientsT,
   selectFoodsSlice,
@@ -49,7 +52,7 @@ const FoodCreate: FC<Props> = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [optionalsOpen, setOptionalsOpen] = useState<boolean>(false);
+  const [optionalsOpen, setOptionalsOpen] = useState<boolean>(true);
   const [postFood] = usePostFoodMutation();
   const { newFoodState } = useSelector(selectFoodsSlice);
   const { user } = useSelector(selectAuthSlice);
@@ -125,20 +128,25 @@ const FoodCreate: FC<Props> = () => {
   };
 
   const getNutritionInputs = (fields: string[]) => {
-    return fields.map((nutrient) => (
-      <NutritionInput
-        changed={watch(`nutrients.${String(nutrient as keyof NutrientsKeys)}`)}
-        error={errors.nutrients?.[nutrient as keyof NutrientsT]?.message}
-        handleChange={handleChangeNutrient}
-        id={nutrient}
-        key={nutrient}
-        labelText={nutrient}
-        title={nutrient}
-        type="number"
-        value={values.nutrients[nutrient as keyof NutrientsT]}
-        {...register(`nutrients.${nutrient as keyof NutrientsT}`)}
-      />
-    ));
+    return fields.map((nutrient) => {
+      const abbreviation = NutrientsAbbreviations[nutrient as keyof NutrientsT];
+      return (
+        <NutritionInput
+          changed={watch(
+            `nutrients.${String(nutrient as keyof NutrientsKeys)}`
+          )}
+          error={errors.nutrients?.[nutrient as keyof NutrientsT]?.message}
+          handleChange={handleChangeNutrient}
+          id={nutrient}
+          key={nutrient}
+          labelText={`${nutrient} ${abbreviation && `- ${abbreviation}`}`}
+          title={nutrient}
+          type="number"
+          value={values.nutrients[nutrient as keyof NutrientsT]}
+          {...register(`nutrients.${nutrient as keyof NutrientsT}`)}
+        />
+      );
+    });
   };
 
   useEffect(() => {
@@ -461,9 +469,21 @@ const FoodCreate: FC<Props> = () => {
                     </div>
                   </div>
                   <div>
-                    <h1 className="text-xl">Vitamines and Minerals</h1>
+                    <h1 className="text-xl">Minerals</h1>
                     <div className="flex flex-col gap-1">
-                      {getNutritionInputs(vitsAndMinsNutritionFields)}
+                      {getNutritionInputs(mineralsFields)}
+                    </div>
+                  </div>
+                  <div>
+                    <h1 className="text-xl">Vitamins and Other Components</h1>
+                    <div className="flex flex-col gap-1">
+                      {getNutritionInputs(VitsAndOtherComponents)}
+                    </div>
+                  </div>
+                  <div>
+                    <h1 className="text-xl">Aminoacids</h1>
+                    <div className="flex flex-col gap-1">
+                      {getNutritionInputs(aminoacidsFields)}
                     </div>
                   </div>
                 </div>

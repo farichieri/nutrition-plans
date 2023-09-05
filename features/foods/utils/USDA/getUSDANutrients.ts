@@ -170,7 +170,33 @@ const getUSDANutrients = ({
       case 1095:
         data.zinc = amount;
         break;
-
+      case 1210:
+        data.trypthophan = amount;
+        break;
+      case 1211:
+        data.threonine = amount;
+        break;
+      case 1212:
+        data.isoleucine = amount;
+        break;
+      case 1213:
+        data.leucine = amount;
+        break;
+      case 1214:
+        data.lysine = amount;
+        break;
+      case 1215:
+        data.methionine = amount;
+        break;
+      case 1217:
+        data.phenylalanine = amount;
+        break;
+      case 1219:
+        data.valine = amount;
+        break;
+      case 1224:
+        data.glutamic_acid = amount;
+        break;
       default:
         break;
     }
