@@ -217,6 +217,42 @@ const getNutrientMeasurementUnit = (nutrient: string) => {
       unit: mg,
       requirement: 5,
     },
+    [Nutrients.phenylalanine]: {
+      unit: g,
+      requirement: null,
+    },
+    [Nutrients.threonine]: {
+      unit: g,
+      requirement: null,
+    },
+    [Nutrients.isoleucine]: {
+      unit: g,
+      requirement: null,
+    },
+    [Nutrients.leucine]: {
+      unit: g,
+      requirement: null,
+    },
+    [Nutrients.lysine]: {
+      unit: g,
+      requirement: null,
+    },
+    [Nutrients.methionine]: {
+      unit: g,
+      requirement: null,
+    },
+    [Nutrients.valine]: {
+      unit: g,
+      requirement: null,
+    },
+    [Nutrients.glutamic_acid]: {
+      unit: g,
+      requirement: null,
+    },
+    [Nutrients.trypthophan]: {
+      unit: g,
+      requirement: null,
+    },
   };
   return nutrients[nutrient as keyof Measurements];
 };
@@ -225,7 +261,9 @@ const getNutrientsClasified = (nutrients: NutrientsT) => {
   let principals: NutrientsClasified = {};
   let sugars: NutrientsClasified = {};
   let fats: NutrientsClasified = {};
-  let vitsAndMin: NutrientsClasified = {};
+  let vitsAndOther: NutrientsClasified = {};
+  let aminoacids: NutrientsClasified = {};
+  let minerals: NutrientsClasified = {};
 
   const clasify = (nutrient: any) => {
     switch (nutrient) {
@@ -257,27 +295,20 @@ const getNutrientsClasified = (nutrients: NutrientsT) => {
         fats[nutrient as keyof NutrientsClasified] =
           nutrients[nutrient as keyof NutrientsT];
         break;
-      case Nutrients.calcium:
+
+      case Nutrients.betaine:
+      case Nutrients.biotin:
       case Nutrients.choline:
-      case Nutrients.copper:
       case Nutrients.fluoride:
       case Nutrients.folate:
-      case Nutrients.iodine:
-      case Nutrients.iron:
       case Nutrients.lycopene:
-      case Nutrients.magnesium:
-      case Nutrients.manganese:
       case Nutrients.niacin:
       case Nutrients.panthotenic_acid:
-      case Nutrients.panthotenic_acid:
-      case Nutrients.phosphorus:
-      case Nutrients.potassium:
       case Nutrients.retinol:
-      case Nutrients.selenium:
+      case Nutrients.riboflavin:
       case Nutrients.thiamine:
       case Nutrients.vitamin_a:
       case Nutrients.vitamin_b12:
-      case Nutrients.riboflavin:
       case Nutrients.vitamin_b6:
       case Nutrients.vitamin_c:
       case Nutrients.vitamin_d:
@@ -285,9 +316,36 @@ const getNutrientsClasified = (nutrients: NutrientsT) => {
       case Nutrients.vitamin_d3:
       case Nutrients.vitamin_e:
       case Nutrients.vitamin_k:
-        vitsAndMin[nutrient as keyof NutrientsClasified] =
+      case Nutrients.zinc:
+        vitsAndOther[nutrient as keyof NutrientsClasified] =
           nutrients[nutrient as keyof NutrientsT];
         break;
+
+      case Nutrients.calcium:
+      case Nutrients.iron:
+      case Nutrients.magnesium:
+      case Nutrients.phosphorus:
+      case Nutrients.potassium:
+      case Nutrients.zinc:
+      case Nutrients.copper:
+      case Nutrients.manganese:
+      case Nutrients.iodine:
+      case Nutrients.selenium:
+        minerals[nutrient as keyof NutrientsClasified] =
+          nutrients[nutrient as keyof NutrientsT];
+        break;
+
+      case Nutrients.glutamic_acid:
+      case Nutrients.isoleucine:
+      case Nutrients.leucine:
+      case Nutrients.lysine:
+      case Nutrients.methionine:
+      case Nutrients.phenylalanine:
+      case Nutrients.threonine:
+      case Nutrients.trypthophan:
+      case Nutrients.valine:
+        aminoacids[nutrient as keyof NutrientsClasified] =
+          nutrients[nutrient as keyof NutrientsT];
       default:
         break;
     }
@@ -297,10 +355,12 @@ const getNutrientsClasified = (nutrients: NutrientsT) => {
   });
 
   return {
+    aminoacids,
+    fats,
+    minerals,
     principals,
     sugars,
-    fats,
-    vitsAndMin,
+    vitsAndOther,
   };
 };
 

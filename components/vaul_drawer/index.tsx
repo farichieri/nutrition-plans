@@ -68,7 +68,7 @@ const VaulDrawer: FC<Props> = ({ children, title, btnText }) => {
           {open && (
             <Modal onClose={handleClose}>
               <section className="!z-[999] flex h-auto max-h-[80vh] w-auto min-w-full max-w-[95vw] flex-col overflow-hidden px-2 py-4">
-                <span className="px-2 py-4 text-xl font-semibold text-green-500 ">
+                <span className="break-normal break-words px-2 py-4 text-xl font-semibold text-green-500 ">
                   {title}
                 </span>
                 {children}

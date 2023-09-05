@@ -62,7 +62,7 @@ const FoodModal: FC<Props> = ({ food, handleClose, handleAdd }) => {
           <div className="flex w-full gap-2">
             <div className="relative flex h-40 w-full basis-1/2 sm:h-60 ">
               <Image
-                src={food.imageURL}
+                src={food.imageURLs.resized_680x680}
                 fill
                 className="rounded-md object-cover"
                 alt={food.name || ""}

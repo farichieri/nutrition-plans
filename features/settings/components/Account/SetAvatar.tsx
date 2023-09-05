@@ -19,6 +19,8 @@ const SetAvatar: FC<Props> = () => {
   const fisrtNameWord = user?.displayName[0]?.toLowerCase();
   const [isLoading, setIsLoading] = useState(false);
 
+  // Todo resize...
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = (event.target as HTMLInputElement).files;
     if (files && user) {

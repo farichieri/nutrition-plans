@@ -3,7 +3,11 @@ import {
   getNutrientsClasified,
 } from "@/utils/helpers";
 import { FC } from "react";
-import { NutrientsClasified, NutrientsT } from "@/features/foods";
+import {
+  NutrientsAbbreviations,
+  NutrientsClasified,
+  NutrientsT,
+} from "@/features/foods";
 import { formatTwoDecimals } from "@/utils";
 import { VaulDrawer } from "@/components";
 
@@ -28,7 +32,7 @@ const FoodNutritionDetail: FC<Props> = ({ title, nutrients }) => {
         <span className="flex basis-1/3 justify-end">Amount</span>
         <span className="flex basis-1/3 justify-end">Daily Value</span>
       </div>
-      <div className="flex w-[40rem] max-w-full flex-col divide-y overflow-y-auto overflow-x-hidden px-2 py-2 text-xs s:text-sm sm:px-4">
+      <div className="flex max-w-full flex-col divide-y overflow-y-auto overflow-x-hidden px-2 py-2 text-xs s:text-sm sm:px-4 lg:min-w-[40rem]">
         <div>
           <span className={titleClass}>General</span>
           {NutrientsGroup(nutrientsClasified.principals)}
@@ -42,8 +46,16 @@ const FoodNutritionDetail: FC<Props> = ({ title, nutrients }) => {
           {NutrientsGroup(nutrientsClasified.fats)}
         </div>
         <div className="my-2 py-2">
-          <span className={titleClass}>Vitamins and Minerals</span>
-          {NutrientsGroup(nutrientsClasified.vitsAndMin)}
+          <span className={titleClass}>Minerals</span>
+          {NutrientsGroup(nutrientsClasified.minerals)}
+        </div>
+        <div className="my-2 py-2">
+          <span className={titleClass}>Vitamins and Other Components</span>
+          {NutrientsGroup(nutrientsClasified.vitsAndOther)}
+        </div>
+        <div className="my-2 py-2">
+          <span className={titleClass}>Aminoacids</span>
+          {NutrientsGroup(nutrientsClasified.aminoacids)}
         </div>
       </div>
     </VaulDrawer>
@@ -75,10 +87,12 @@ const NutrientsGroup = (nutrients: NutrientsClasified) => {
         const percentage =
           requirement && ((value / requirement) * 100).toFixed(2);
 
+        const abbreviation = NutrientsAbbreviations[name as keyof NutrientsT];
+
         return (
           <div className="flex w-full items-center justify-between" key={name}>
             <span className="basis-1/3 capitalize">
-              {name.replaceAll("_", " ")}
+              {name.replaceAll("_", " ")} {abbreviation && `- ${abbreviation}`}
             </span>
             <div className="flex basis-1/3 items-center justify-end gap-1">
               <span>{num ? num : "-"}</span>

@@ -72,29 +72,20 @@ const vitamin_e = Nutrients.vitamin_e;
 const vitamin_k = Nutrients.vitamin_k;
 const zinc = Nutrients.zinc;
 
-const vitsAndMinsNutritionFields = [
+const VitsAndOtherComponents = [
   betaine,
   biotin,
-  calcium,
   choline,
-  copper,
   fluoride,
   folate,
-  iodine,
-  iron,
   lycopene,
-  magnesium,
-  manganese,
   niacin,
   panthotenic_acid,
-  phosphorus,
-  potassium,
   retinol,
-  selenium,
+  riboflavin,
   thiamine,
   vitamin_a,
   vitamin_b12,
-  riboflavin,
   vitamin_b6,
   vitamin_c,
   vitamin_d,
@@ -105,9 +96,47 @@ const vitsAndMinsNutritionFields = [
   zinc,
 ];
 
+const mineralsFields = [
+  calcium,
+  iron,
+  magnesium,
+  phosphorus,
+  potassium,
+  zinc,
+  copper,
+  manganese,
+  iodine,
+  selenium,
+];
+
+// Aminoacids
+const isoleucine = Nutrients.isoleucine;
+const leucine = Nutrients.leucine;
+const lysine = Nutrients.lysine;
+const methionine = Nutrients.methionine;
+const phenylalanine = Nutrients.phenylalanine;
+const threonine = Nutrients.threonine;
+const trypthophan = Nutrients.trypthophan;
+const valine = Nutrients.valine;
+const glutamic_acid = Nutrients.glutamic_acid;
+
+const aminoacidsFields = [
+  isoleucine,
+  leucine,
+  lysine,
+  methionine,
+  phenylalanine,
+  threonine,
+  trypthophan,
+  valine,
+  glutamic_acid,
+];
+
 export {
+  aminoacidsFields,
   fatsNutritionFields,
   firstNutritionFields,
   sugarNutritionFields,
-  vitsAndMinsNutritionFields,
+  VitsAndOtherComponents,
+  mineralsFields,
 };

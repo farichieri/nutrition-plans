@@ -124,9 +124,9 @@ const getImageURLs = async ({
     const imageURLs = {
       resized_100x100: publicURL + "resized_100x100",
       resized_1200x900: publicURL + "resized_1200x900",
-      resized_190x115: publicURL + "resized_190x115",
       resized_200x200: publicURL + "resized_200x200",
       resized_400x400: publicURL + "resized_400x400",
+      resized_680x680: publicURL + "resized_680x680",
     };
 
     let image = file || DEFAULT_IMAGE;
