@@ -58,7 +58,20 @@ const AddExtraScale: FC<AddExtraScaleProps> = ({
       <div onClick={handleOpen} className="fixed inset-0 bg-black/60" />
       <div className="relative z-[100] rounded-md border bg-tertiary-color">
         <div className="flex flex-col justify-center p-10 ">
-          <span className="text-xl font-semibold">New Scale:</span>
+          <span className="mb-4 text-xl font-semibold">New Scale:</span>
+          <NutritionInput
+            customClass={""}
+            handleChange={handleChange}
+            id={"scaleAmount"}
+            key={"scaleAmount"}
+            labelText={"Scale Amount"}
+            placeholder={"Scale Amount"}
+            name={"scaleAmount"}
+            title={"Scale Amount"}
+            type={"number"}
+            min={"0"}
+            value={newScaleState["scaleAmount"] || ""}
+          />
           <Input
             customClass={""}
             handleChange={handleChange}

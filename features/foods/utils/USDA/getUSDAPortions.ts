@@ -23,9 +23,9 @@ const getUSDAPortions = ({
     scales.push({
       id: id,
       isDefault: false,
-      scaleAmount: amount,
+      scaleAmount: 1,
       scaleGrams: gramWeight,
-      scaleName: modifier || measureUnit.name,
+      scaleName: `${amount > 1 ? amount : ""} ${modifier || measureUnit.name}`,
       isCreationScale: false,
     });
   });
