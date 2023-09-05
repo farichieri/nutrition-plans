@@ -15,7 +15,7 @@ const getUSDAPortions = ({
 }) => {
   const scales: FoodScales = [];
 
-  if (!foodPortions) return scales;
+  if (!foodPortions || foodPortions.length < 1) return scales;
 
   foodPortions.forEach((portion) => {
     const { amount, gramWeight, modifier, id, measureUnit } = portion;

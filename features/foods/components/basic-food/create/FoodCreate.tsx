@@ -43,6 +43,7 @@ import NutritionInput from "@/components/Form/NutritionInput";
 import React, { FC, useEffect, useState } from "react";
 import TranspLoader from "@/components/Loader/TranspLoader";
 import LoadUSDA from "./LoadUSDA";
+import { TextArea } from "@/components";
 
 interface FormValues extends Food {}
 
@@ -424,6 +425,18 @@ const FoodCreate: FC<Props> = () => {
                   placeholder="Digestion Status"
                   title="Digestion Status"
                   {...register("digestionStatus")}
+                />
+                <TextArea
+                  customClass=""
+                  error={errors.note?.message}
+                  handleChange={() => {}}
+                  id={"note"}
+                  isRequired={false}
+                  labelText="Note"
+                  placeholder="Note..."
+                  readOnly={false}
+                  value={values.note}
+                  {...register("note")}
                 />
               </div>
             </div>

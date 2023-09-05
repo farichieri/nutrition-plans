@@ -14,6 +14,7 @@ import {
   IngredientGroup,
   Instruction,
   usePostFoodMutation,
+  GlucemicStatusEnum,
 } from "@/features/foods";
 import { BiSolidPieChartAlt2 } from "react-icons/bi";
 import { FC, useEffect, useState } from "react";
@@ -37,6 +38,7 @@ import Instructions from "./Instructions";
 import NutritionInput from "@/components/Form/NutritionInput";
 import RecipeNutrition from "./RecipeNutrition";
 import TranspLoader from "@/components/Loader/TranspLoader";
+import { TextArea } from "@/components";
 
 interface FormValues extends Recipe {}
 
@@ -339,6 +341,16 @@ const RecipeCreate: FC<Props> = () => {
             <div className="flex flex-col gap-1">
               <h1 className="text-xl">Optional Fields</h1>
               <FormSelect
+                error={errors.glucemicStatus?.message}
+                handleChange={() => {}}
+                id={"glucemicStatus"}
+                labelText="Glucemic Statis"
+                options={generateOptions(Object.keys(GlucemicStatusEnum))}
+                placeholder="Glucemic Statis"
+                title="Glucemic Statis"
+                {...register("glucemicStatus")}
+              />
+              <FormSelect
                 error={errors.digestionStatus?.message}
                 handleChange={() => {}}
                 id={"digestionStatus"}
@@ -351,16 +363,28 @@ const RecipeCreate: FC<Props> = () => {
               <Checkbox
                 id={"isEasilySingleServing"}
                 key={"isEasilySingleServing"}
-                labelText={"isEasilySingleServing"}
+                labelText={"Is Easily Single Serving?"}
                 title="Easily Single Serving"
                 {...register(`isEasilySingleServing`)}
               />
               <Checkbox
                 id={"makesLeftovers"}
                 key={"makesLeftovers"}
-                labelText={"makesLeftovers"}
+                labelText={"Makes Good Leftovers?"}
                 title="Makes good leftovers"
                 {...register(`makesLeftovers`)}
+              />
+              <TextArea
+                customClass=""
+                error={errors.note?.message}
+                handleChange={() => {}}
+                id={"note"}
+                isRequired={false}
+                labelText="Note"
+                placeholder="Note..."
+                readOnly={false}
+                value={values.note}
+                {...register("note")}
               />
             </div>
           </div>

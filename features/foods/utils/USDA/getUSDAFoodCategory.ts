@@ -10,6 +10,7 @@ const getUSDAFoodCategory = ({
 }: {
   foodCategory: USDAFoodCategory;
 }): FoodCategoriesValues | null => {
+  if (!foodCategory) return null;
   const { id } = foodCategory;
   switch (id) {
     case 1:

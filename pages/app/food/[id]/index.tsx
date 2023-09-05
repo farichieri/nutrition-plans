@@ -152,6 +152,12 @@ export default function Page({ food }: { food: Food }) {
                   </div>
                 )}
               </div>
+              {food.note && (
+                <div className="flex flex-col divide-y rounded-md border">
+                  <span className="px-2 py-1 text-sm">Good to know:</span>
+                  <span className="p-2 text-sm text-gray-500">{food.note}</span>
+                </div>
+              )}
               <CompatiblePlansC compatiblePlans={food.compatiblePlans} />
               <div className="m-auto flex w-full max-w-lg">
                 <ScaleSelector

@@ -112,7 +112,7 @@ const FoodInMealCard: FC<MealInCardProps> = ({
       <span className="relative h-16 w-16 min-w-[64px] sm:h-16 sm:w-16">
         <BlurImage
           image={{
-            imageURL: food.imageURLs.resized_200x200,
+            imageURL: food.imageURLs?.resized_200x200,
             title: food.name!,
             id: food.id!,
           }}
