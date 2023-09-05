@@ -88,7 +88,7 @@ export const foodsSlice = createSlice({
       if (field === "servingGrams" || field === "servingName") {
         // update default scale
         const defaultScaleIndex = state.newFoodState.scales.findIndex(
-          (scale) => scale.id === "default"
+          (scale) => scale.id === "creationScale"
         );
         if (field === "servingGrams" && defaultScaleIndex !== -1) {
           state.newFoodState.scales[defaultScaleIndex].scaleGrams = value;
@@ -120,7 +120,7 @@ export const foodsSlice = createSlice({
       if (field === "servingGrams" || field === "servingName") {
         // update default scale
         const defaultScaleIndex = state.newRecipeState.scales.findIndex(
-          (scale) => scale.id === "default"
+          (scale) => scale.id === "creationScale"
         );
         if (field === "servingGrams" && defaultScaleIndex !== -1) {
           state.newRecipeState.scales[defaultScaleIndex].scaleGrams = value;
