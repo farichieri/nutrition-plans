@@ -20,18 +20,12 @@ const getUSDAPortions = ({
   foodPortions.forEach((portion) => {
     const { amount, gramWeight, modifier, id, measureUnit } = portion;
 
-    let realGrams = gramWeight;
-
-    if (amount !== 1) {
-      realGrams = gramWeight / amount;
-    }
-
     scales.push({
       id: id,
       isDefault: false,
       scaleAmount: 1,
-      scaleGrams: realGrams,
-      scaleName: `${modifier || measureUnit.name}`,
+      scaleGrams: gramWeight,
+      scaleName: `${amount > 1 ? amount : ""} ${modifier || measureUnit.name}`,
       isCreationScale: false,
     });
   });
