@@ -86,7 +86,7 @@ const ExtraScales: FC<Props> = ({ scales, handleChangeScales }) => {
                             >
                               <div className="flex w-full flex-col divide-y border-x">
                                 <div className="flex items-baseline justify-between p-2">
-                                  <span>1 {scale.scaleName}</span>
+                                  <span>{scale.scaleName}</span>
                                   {scale.scaleGrams > 0 && (
                                     <span>{`(${scale.scaleGrams} grams)`}</span>
                                   )}
