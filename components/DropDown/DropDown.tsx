@@ -5,7 +5,7 @@ interface Props {
   btnText: any;
   closeDrop: boolean;
   setCloseDrop: Function;
-  customClass: string;
+  customClass?: string;
 }
 
 const DropDown: FC<Props> = ({
