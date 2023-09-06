@@ -75,14 +75,14 @@ export default function Page({ date }: { date: Props }) {
         <SubPremiumNav title={""} customClass="top-[var(--nav-h)]">
           <DaySelector date={String(date)} baseURL={"/app/shopping/"} />
         </SubPremiumNav>
-        <section className="pointer-events-none flex h-screen w-full flex-col gap-2 p-2 pb-20 blur-md sm:px-4">
+        {/* <section className="pointer-events-none flex h-screen w-full flex-col gap-2 p-2 pb-20 blur-md sm:px-4">
           {isAddingFood && <AddFoodModalShopping />}
           <span className="font-semibold ">
             Products that I should buy for my planned days
           </span>
           <ShoppingDistributor />
           <ShoppingList />
-        </section>
+        </section> */}
       </div>
     </PremiumLayout>
   );

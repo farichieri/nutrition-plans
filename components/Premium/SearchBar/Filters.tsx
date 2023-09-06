@@ -1,8 +1,8 @@
 import {
   FilterQueries,
   FiltersEnum,
-  PlansEnum,
   FilterSortTypes,
+  PlansEnum,
 } from "@/types";
 import { FC, useState } from "react";
 import { FoodKind } from "@/features/foods";
@@ -10,6 +10,9 @@ import { MdArrowRight, MdClose, MdTune } from "react-icons/md";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
 import RoundButton from "@/components/Buttons/RoundButton";
+import { FoodCategories } from "@/features/foods";
+import FormSelect from "@/components/Form/FormSelect";
+import { generateOptions } from "@/utils";
 
 interface Props {
   queries: FilterQueries;
@@ -96,10 +99,14 @@ const Filters: FC<Props> = ({
     setOpenFilters(!openFilters);
   };
 
-  const handleSelect = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSelect = (
+    event: React.ChangeEvent<HTMLSelectElement> | React.MouseEvent
+  ) => {
     event.preventDefault();
     const name = (event.target as HTMLButtonElement).name;
     const value = (event.target as HTMLButtonElement).value;
+
+    console.log({ name, value });
 
     if (fixedQueries && fixedQueries[name as keyof FilterQueries]) {
       toast.error("You can't change this filter here.");
@@ -134,6 +141,7 @@ const Filters: FC<Props> = ({
         query,
       });
     } else {
+      console.log({ query });
       setLocalQueries(query);
     }
   };
@@ -203,6 +211,22 @@ const Filters: FC<Props> = ({
       </RoundButton>
       {openFilters && (
         <div className="flex w-full flex-wrap justify-between ">
+          <div className="flex w-full flex-col items-start gap-2 p-2 sm:w-auto">
+            <span className="font-semibold">Category</span>
+            <FormSelect
+              options={generateOptions([
+                "all",
+                ...Object.values(FoodCategories),
+              ])}
+              name={FiltersEnum.Category}
+              labelText=""
+              value={queries.category}
+              handleChange={handleSelect}
+              customClass="w-full"
+              id=""
+              title=""
+            />
+          </div>
           <div className="flex w-1/2 flex-col items-start gap-2 p-2 sm:w-auto">
             <span className="font-semibold">Plan</span>
             <div className="flex flex-col items-start gap-1">
@@ -359,7 +383,11 @@ const Filters: FC<Props> = ({
                       "text-green-500"
                     }`}
                   >
-                    {sort.replaceAll("_", " ")}
+                    {sort === FilterSortTypes.higherCalories
+                      ? "Higher Calories"
+                      : sort === FilterSortTypes.lowerCalories
+                      ? "Lower Calories"
+                      : sort}
                   </button>
                 </div>
               ))}

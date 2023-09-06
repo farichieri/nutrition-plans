@@ -7,13 +7,13 @@ import {
 } from "@/features/foods";
 import { FC, useEffect, useState } from "react";
 import { FilterQueries } from "@/types";
+import { MdClose, MdCloseFullscreen, MdOpenInFull } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import Filters from "@/components/Premium/SearchBar/Filters";
 import FoodModal from "../../../common/FoodModal";
 import RoundButton from "@/components/Buttons/RoundButton";
 import SearchBarCreate from "@/components/Premium/SearchBar/SearchBarCreate";
 import SearchedResults from "@/components/Premium/SearchBar/SearchedResults";
-import { MdClose, MdCloseFullscreen, MdOpenInFull } from "react-icons/md";
 
 interface Props {
   handleUpdateIngredients: Function;
@@ -61,6 +61,7 @@ const IngredientsSelector: FC<Props> = ({ handleUpdateIngredients }) => {
     <>
       <div className="flex w-full flex-col">
         <SearchBarCreate
+          queries={queries}
           onFocus={() => setOpenIngredients(true)}
           preFetch={false}
         />

@@ -6,19 +6,19 @@ import {
   getScaleOptions,
   selectFoodsSlice,
 } from "@/features/foods";
-import { useSelector } from "react-redux";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { FC, MouseEventHandler, useEffect, useState } from "react";
 import { FoodKeys } from "@/features/foods";
 import { getNewAmount } from "@/utils/nutritionHelpers";
+import { MdDelete, MdDragHandle } from "react-icons/md";
 import { reorderArr } from "@/utils/filter";
+import { useSelector } from "react-redux";
 import Image from "next/image";
 import Input from "@/components/Form/Input";
 import NutritionInput from "@/components/Form/NutritionInput";
 import RoundButton from "@/components/Buttons/RoundButton";
 import Select from "@/components/Form/FormSelect";
 import Spinner from "@/components/Loader/Spinner";
-import { MdDelete, MdDragHandle } from "react-icons/md";
 
 interface IngredientProps {
   ingredient: Food;
@@ -38,7 +38,11 @@ const Ingredient: FC<IngredientProps> = ({
 
   if (!newRecipeState) return <>No State Provided</>;
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    event:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>
+  ) => {
     event.preventDefault();
     const type = event.target.type;
     const name = event.target.name;

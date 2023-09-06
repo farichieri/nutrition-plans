@@ -17,8 +17,6 @@ const getUSDAFoodCategory = ({
       return FoodCategories.dairy_and_eggs_products;
     case 2:
       return FoodCategories.spices_and_herbs;
-    case 3:
-      return FoodCategories.baby_foods;
     case 4:
       return FoodCategories.fats_and_oils;
     case 5:
@@ -59,8 +57,6 @@ const getUSDAFoodCategory = ({
       return FoodCategories.meals_entrees_and_side_dishes;
     case 23:
       return FoodCategories.snacks;
-    case 24:
-      return FoodCategories.american_indian_alaska_native_foods;
     case 25:
       return FoodCategories.restaurant_foods;
     case 26:

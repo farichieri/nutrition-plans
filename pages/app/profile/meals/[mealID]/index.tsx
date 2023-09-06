@@ -49,7 +49,9 @@ export default function Page({ mealID }: Props) {
   const [deleteMealSetting, { isLoading: isDeleting }] =
     useDeleteMealSettingMutation();
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     event.preventDefault();
     const type = event.target.type;
     const id = event.target.id;
