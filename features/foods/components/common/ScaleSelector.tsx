@@ -47,12 +47,13 @@ const ScaleSelector: FC<Props> = ({
       newScale = scaleName;
     }
     if (id === "scaleName") {
-      newAmount = getNewAmount({
-        scales: scalesMerged,
-        prev_scale_name: scaleName,
-        new_scale_name: value,
-        scaleAmount,
-      });
+      // newAmount = getNewAmount({
+      //   scales: scalesMerged,
+      //   prev_scale_name: scaleName,
+      //   new_scale_name: value,
+      //   scaleAmount,
+      // });
+      newAmount = 1;
       newScale = value;
     }
     if (updateRoute) {
@@ -107,32 +108,36 @@ const ScaleSelector: FC<Props> = ({
   }, [scaleAmount, scaleName]);
 
   return (
-    <div className="flex w-full flex-col gap-2">
+    <div className="flex w-full flex-col items-center justify-center gap-2 ">
       <div
         id="tour-food-1"
-        className="flex w-full items-center justify-between gap-4"
+        className="flex w-full flex-wrap items-center justify-between"
       >
-        <NutritionInput
-          changed={false}
-          handleChange={handleChange}
-          id={"scaleAmount"}
-          key={"scaleAmount"}
-          labelText={"Scale Amount"}
-          name={"scaleAmount"}
-          min={"0"}
-          title={""}
-          type={"number"}
-          value={Number(scaleAmount)}
-        />
-        <FormSelect
-          customClass={""}
-          handleChange={handleChange}
-          id={"scaleName"}
-          labelText={"Scale name"}
-          title={"Scale name"}
-          options={options}
-          value={scaleName}
-        />
+        <div className="flex w-auto max-w-[50%] ">
+          <NutritionInput
+            changed={false}
+            handleChange={handleChange}
+            id={"scaleAmount"}
+            key={"scaleAmount"}
+            labelText={"Scale Amount"}
+            name={"scaleAmount"}
+            min={"0"}
+            title={""}
+            type={"number"}
+            value={Number(scaleAmount)}
+          />
+        </div>
+        <div className="flex w-auto max-w-[50%]">
+          <FormSelect
+            customClass={""}
+            handleChange={handleChange}
+            id={"scaleName"}
+            labelText={"Scale name"}
+            title={"Scale name"}
+            options={options}
+            value={scaleName}
+          />
+        </div>
       </div>
       <div className="m-2 flex justify-center">
         {isNotOriginal && (

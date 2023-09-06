@@ -57,12 +57,13 @@ const FoodInMealCard: FC<MealInCardProps> = ({
     let foodUpdated = { ...food };
 
     if (name === "scaleName") {
-      const newAmount = getNewAmount({
-        scales: scalesMerged,
-        prev_scale_name: food.scaleName,
-        new_scale_name: value,
-        scaleAmount: food.scaleAmount,
-      });
+      // const newAmount = getNewAmount({
+      //   scales: scalesMerged,
+      //   prev_scale_name: food.scaleName,
+      //   new_scale_name: value,
+      //   scaleAmount: food.scaleAmount,
+      // });
+      const newAmount = 1;
       foodUpdated = {
         ...food,
         scaleName: value,
@@ -86,6 +87,10 @@ const FoodInMealCard: FC<MealInCardProps> = ({
       const value = !food.isEaten;
 
       dispatch(toggleEatenFood({ food, value: value }));
+
+      if (value === true) {
+        toast.success(`Food eaten`);
+      }
 
       const dietUpdated = getDietFoodToggled({ diet, food, value: value });
 

@@ -5,14 +5,14 @@ import {
   PlansEnum,
 } from "@/types";
 import { FC, useState } from "react";
+import { FoodCategories } from "@/features/foods";
 import { FoodKind } from "@/features/foods";
+import { generateOptions } from "@/utils";
 import { MdArrowRight, MdClose, MdTune } from "react-icons/md";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
-import RoundButton from "@/components/Buttons/RoundButton";
-import { FoodCategories } from "@/features/foods";
 import FormSelect from "@/components/Form/FormSelect";
-import { generateOptions } from "@/utils";
+import RoundButton from "@/components/Buttons/RoundButton";
 
 interface Props {
   queries: FilterQueries;
@@ -211,7 +211,7 @@ const Filters: FC<Props> = ({
       </RoundButton>
       {openFilters && (
         <div className="flex w-full flex-wrap justify-between ">
-          <div className="flex w-full flex-col items-start gap-2 p-2 sm:w-auto">
+          <div className="flex w-full flex-col items-start gap-2 p-2 sm:w-48">
             <span className="font-semibold">Category</span>
             <FormSelect
               options={generateOptions([
@@ -222,7 +222,7 @@ const Filters: FC<Props> = ({
               labelText=""
               value={queries.category}
               handleChange={handleSelect}
-              customClass="w-full"
+              customClass=""
               id=""
               title=""
             />

@@ -101,6 +101,7 @@ const Notifications: FC<Props> = () => {
 
   return (
     <DropDown
+      customClass={"right-[-40px]"}
       closeDrop={closeDrop}
       setCloseDrop={setCloseDrop}
       btnText={
@@ -115,7 +116,7 @@ const Notifications: FC<Props> = () => {
       }
     >
       <div
-        className={`w-64 overflow-hidden s:w-80 sm:w-96 ${
+        className={`w-72 overflow-hidden s:w-80 sm:w-96 ${
           activeTab === "inbox" && "pb-8 "
         }`}
       >
@@ -151,7 +152,7 @@ const Notifications: FC<Props> = () => {
                 const dateCreated = formatToShortDate(item.dateCreated);
                 return (
                   <div
-                    className="flex items-center justify-between gap-4 border-b px-3 py-2"
+                    className="flex items-center justify-between gap-3 border-b px-3 py-2"
                     key={index}
                   >
                     <div className="flex w-1/12 items-center justify-center">
@@ -182,7 +183,7 @@ const Notifications: FC<Props> = () => {
                     </div>
                     <div className="flex w-2/12 items-center justify-center">
                       <button
-                        className="flex items-center text-xs text-gray-500"
+                        className="flex items-center text-[11px] text-gray-500"
                         onClick={() => handleArchive(item.id)}
                       >
                         {idsLoading.includes(item.id) ? (
