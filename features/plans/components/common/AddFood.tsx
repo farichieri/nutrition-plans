@@ -6,7 +6,7 @@ import {
 } from "@/features/foods";
 import { DietMeal } from "@/features/plans";
 import { addFoodToDiet } from "@/features/plans/slice";
-import { FC, MouseEvent, useState } from "react";
+import { FC, MouseEvent, useEffect, useState } from "react";
 import { FilterQueries } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
 import Filters from "@/components/Premium/SearchBar/Filters";
@@ -41,6 +41,10 @@ const AddFood: FC<Props> = ({ dietMeal }) => {
     event.preventDefault();
     setIsOpen(true);
   };
+
+  useEffect(() => {
+    setLocalQueries({ plan: dietMeal.planID! });
+  }, [isOpen]);
 
   return (
     <div className="p-2">

@@ -159,7 +159,7 @@ export default function Page({ food }: { food: Food }) {
                 </div>
               )}
               <CompatiblePlansC compatiblePlans={food.compatiblePlans} />
-              <div className="m-auto flex w-full max-w-lg">
+              <div className="m-auto flex w-full ">
                 <ScaleSelector
                   setLocalScale={() => {}}
                   updateRoute={true}

@@ -20,14 +20,18 @@ html {
   word-wrap: break-word;
 }
 
-/* @layer base {
+@layer base {
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
+    -webkit-appearance: true;
     margin: 0;
+    opacity: 1 !important;
   }
-} */
-
+}
+::selection {
+  color: white;
+  background-color: #22c55e;
+}
 :root {
   --primary-color: #fff;
   --primary-color-light: #ffffff55;
