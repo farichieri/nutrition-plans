@@ -31,7 +31,9 @@ const ScaleSelector: FC<Props> = ({
   const options = getScaleOptions({ scales: food.scales });
   const defaultScale = getDefaultScale(food.scales);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     event.preventDefault();
     if (!food) return;
     const id = event.target.id;

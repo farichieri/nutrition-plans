@@ -1,5 +1,5 @@
 import { Options } from "@/types";
-import { ChangeEventHandler, FC, forwardRef } from "react";
+import { ChangeEventHandler, FC, MouseEventHandler, forwardRef } from "react";
 
 const fixedInputClass =
   " capitalize rounded-md min-w-fit h-[2rem] sm:h-[2rem] dark:border-gray-500 w-full font-semibold dark:bg-slate-500/20 dark:text-white bg-slate-500/20 relative block px-2 sm:py-1 py-1 border border-gray-300 placeholder-gray-500 text-gray-900 caret-green-500  focus:outline-none  focus:ring--500 focus:border-green-500 focus:z-10 sm:text-sm ";
@@ -10,7 +10,7 @@ const readOnlyClass =
 export type Props = {
   customClass?: string;
   error?: string;
-  handleChange: ChangeEventHandler;
+  handleChange: ChangeEventHandler<HTMLSelectElement>;
   id: string;
   labelText?: string;
   name?: string;

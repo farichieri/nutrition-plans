@@ -27,14 +27,15 @@ export enum PlansEnum {
   keto = "keto",
 }
 export enum FiltersEnum {
-  Q = "q",
+  CaloriesRange = "caloriesRange",
+  CarbsRange = "carbsRange",
+  Category = "category",
+  FatsRange = "fatsRange",
   Kind = "kind",
   Plan = "plan",
-  Sort = "sort",
-  CaloriesRange = "caloriesRange",
   ProteinsRange = "proteinsRange",
-  CarbsRange = "carbsRange",
-  FatsRange = "fatsRange",
+  Q = "q",
+  Sort = "sort",
 }
 export enum FilterSortTypes {
   rating = "rating",
@@ -107,6 +108,7 @@ export interface FilterQueries {
   carbsRange?: string;
   fatsRange?: string;
   sort?: string;
+  category?: string;
 }
 
 export interface ImageI {

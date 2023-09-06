@@ -44,7 +44,9 @@ const FoodInMealCard: FC<MealInCardProps> = ({
     dispatch(removeFoodInDiet(food));
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     event.preventDefault();
     const scalesMerged = getAllScales({ scales: food.scales });
     const type = event.target.type;
@@ -165,7 +167,7 @@ const FoodInMealCard: FC<MealInCardProps> = ({
                 </span>
               )}
             </div>
-            {food.note && (
+            {/* {food.note && (
               <Input
                 handleChange={handleChange}
                 id={food.id}
@@ -179,7 +181,7 @@ const FoodInMealCard: FC<MealInCardProps> = ({
                 placeholder="Aditional Note"
                 readOnly={!isEditing}
               />
-            )}
+            )} */}
           </div>
         </div>
         {isEditable && (

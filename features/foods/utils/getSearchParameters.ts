@@ -23,12 +23,15 @@ const getSearchParameters = ({
     fatsRange,
     proteinsRange,
     sort,
+    category,
   } = queries;
 
   let curatedQ = isCurated ? `isCurated:true` : "";
   let uploader_idQ = uploaderID ? `uploaderID:${uploaderID}` : "";
   let kindQ = kind ? ` && kind:${kind}` : "";
   let planQ = plan ? ` && compatiblePlans.${plan}:true` : "";
+  let categoryQ =
+    category === "all" ? "" : category ? ` && category:${category}` : "";
   caloriesRange = caloriesRange
     ? ` && nutrients.calories:${getRange({ nutrientRange: caloriesRange })}`
     : "";
@@ -51,11 +54,13 @@ const getSearchParameters = ({
   const searchParameters = {
     q: q || "",
     query_by: "name, description, ingredientsNames, ingredientsDescriptions",
-    filter_by: `${uploader_idQ}${curatedQ}${kindQ}${planQ}${caloriesRange}${carbsRange}${fatsRange}${proteinsRange}`,
+    filter_by: `${uploader_idQ}${curatedQ}${kindQ}${planQ}${caloriesRange}${carbsRange}${fatsRange}${proteinsRange}${categoryQ}`,
     sort_by: sort,
     page: 1,
     per_page: 40,
   };
+
+  console.log({ searchParameters });
 
   return searchParameters;
 };

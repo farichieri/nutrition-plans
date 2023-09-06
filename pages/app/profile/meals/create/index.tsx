@@ -44,7 +44,9 @@ export default function Page() {
 
   if (!user) return;
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     event.preventDefault();
     const type = event.target.type;
     const id = event.target.id;

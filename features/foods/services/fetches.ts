@@ -23,6 +23,7 @@ const fetchCuratedFoods = async ({
   try {
     let data: FoodHitsGroup = {};
 
+    console.log("searching...");
     const searchParameters = getSearchParameters({ queries, isCurated: true });
 
     const res = await searchClient

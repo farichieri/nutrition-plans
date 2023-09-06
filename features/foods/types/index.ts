@@ -278,8 +278,6 @@ export enum NutritionMeasurements {
 
 export const FoodCategories = {
   alcoholic_beverages: "Alcoholic Beverages",
-  american_indian_alaska_native_foods: "American Indian/Alaska Native Foods",
-  baby_foods: "Baby Foods",
   baked_products: "Baked Products",
   beef_products: "Beef Products",
   beverages: "Beverages",

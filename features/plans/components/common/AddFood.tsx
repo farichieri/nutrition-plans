@@ -60,7 +60,7 @@ const AddFood: FC<Props> = ({ dietMeal }) => {
               <span>Add new food to</span> <b>{dietMeal.name}</b>
             </div>
             <div className="h-[85vh] min-h-[20rem] overflow-auto p-1">
-              <SearchBarCreate preFetch={false} />
+              <SearchBarCreate queries={queries} preFetch={false} />
               <Filters
                 updateRoute={false}
                 queries={queries}

@@ -108,7 +108,7 @@ const AddFoodModalCupboard: FC<Props> = () => {
             <span>Add new food to</span> <b>Cupboard</b>
           </div>
           <div className="h-[85vh] min-h-[20rem] overflow-auto p-4">
-            <SearchBarCreate preFetch={false} />
+            <SearchBarCreate queries={queries} preFetch={false} />
             <Filters
               updateRoute={false}
               queries={queries}

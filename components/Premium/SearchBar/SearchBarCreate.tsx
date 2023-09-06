@@ -3,6 +3,7 @@ import {
   useGetFoodsByIdsMutation,
   useGetFoodsMutation,
 } from "@/features/foods";
+import { FilterQueries } from "@/types";
 import { MdClose, MdFavorite, MdSearch } from "react-icons/md";
 import { RoundButton } from "@/components/Buttons";
 import { selectAuthSlice } from "@/features/authentication";
@@ -13,9 +14,10 @@ import Spinner from "@/components/Loader/Spinner";
 interface Props {
   onFocus?: Function;
   preFetch: boolean;
+  queries: FilterQueries;
 }
 
-const SearchBarCreate: FC<Props> = ({ onFocus, preFetch }) => {
+const SearchBarCreate: FC<Props> = ({ onFocus, preFetch, queries }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
   const { foodsSearched } = useSelector(selectFoodsSlice);
@@ -31,13 +33,13 @@ const SearchBarCreate: FC<Props> = ({ onFocus, preFetch }) => {
     async (input: string) => {
       if (!user?.id) return;
       await getFoods({
-        queries: { q: input },
+        queries: { ...queries, q: input },
         uploaderID: user?.id,
         user,
       });
       setIsFavorites(false);
     },
-    [dispatch, user?.id]
+    [dispatch, user?.id, queries, searchInput]
   );
 
   useEffect(() => {
