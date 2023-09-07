@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Suspense, useEffect, useState } from "react";
 import Head from "next/head";
 import useTheme from "@/hooks/useTheme";
+import { Analytics } from "@vercel/analytics/react";
 
 const font = Inter({
   subsets: ["latin"],
@@ -77,6 +78,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             className="min-w-screen flex min-h-screen flex-col items-center justify-between "
           >
             <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+            <Analytics />
           </main>
         </div>
       )}
