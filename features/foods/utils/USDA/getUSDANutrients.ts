@@ -33,6 +33,7 @@ const getUSDANutrients = ({
         data.calcium = amount;
         break;
       case 1008:
+      case 2048:
         data.calories = amount;
         break;
       case 1005:
