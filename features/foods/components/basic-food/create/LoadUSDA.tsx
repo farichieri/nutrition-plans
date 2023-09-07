@@ -58,6 +58,8 @@ const LoadUSDA: FC<Props> = ({ currentState }) => {
         ...getUSDAPortions({ foodPortions }),
       ];
 
+      console.log({ nutrientsFiltered, foodCategoryFiltered, scales });
+
       dispatch(
         updateNewFoodStateMultipleFields({
           fields: {
