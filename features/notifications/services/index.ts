@@ -72,7 +72,7 @@ export const notificationsApi = api.injectEndpoints({
           ];
 
           const userRef = userDocRef({ userID: user.id });
-          await updateDoc(userRef, { fields: { notificationsArchived } });
+          await updateDoc(userRef, { notificationsArchived });
 
           dispatch(setArchiveNotification({ id: notificationID }));
           dispatch(

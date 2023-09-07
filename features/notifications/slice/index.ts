@@ -50,18 +50,17 @@ export const notificationsSlice = createSlice({
       }>
     ) => {
       const { notifications, archivedIds } = action.payload;
-      state.archived = Object.keys(notifications).reduce((acc, id) => {
+      let archived = {} as NotificationsGroup;
+      let inbox = {} as NotificationsGroup;
+      Object.keys(notifications).forEach((id) => {
         if (archivedIds.includes(id)) {
-          acc[id] = notifications[id];
+          archived[id] = notifications[id];
+        } else {
+          inbox[id] = notifications[id];
         }
-        return acc;
-      }, {} as NotificationsGroup);
-      state.inbox = Object.keys(notifications).reduce((acc, id) => {
-        if (!archivedIds.includes(id)) {
-          acc[id] = notifications[id];
-        }
-        return acc;
-      }, {} as NotificationsGroup);
+      });
+      state.archived = archived;
+      state.inbox = inbox;
     },
   },
   extraReducers: (builder) => {

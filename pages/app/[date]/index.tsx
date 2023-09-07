@@ -19,14 +19,15 @@ import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 import RememberGoal from "@/components/Goals/RememberGoal";
 import Sidebar from "@/layouts/components/Sidebar/PremiumSidebar";
 import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
+import { useRouter } from "next/router";
 
-interface Props {
-  date: string;
-}
-export default function Page({ date }: { date: Props }) {
+interface Props {}
+export default function Page() {
   const dispatch = useDispatch();
   const { diets } = useSelector(selectPlansSlice);
   const { user } = useSelector(selectAuthSlice);
+  const router = useRouter();
+  const date = router.query.date;
   const realDate = getRealDate({
     date: String(date),
     userStartOfWeek: user?.startOfWeek || StartsOfWeek.Sunday,
@@ -110,7 +111,9 @@ export default function Page({ date }: { date: Props }) {
                 {getIsWeek(realDate) ? (
                   <MultipleDaysPlan dateInterval={realDate} />
                 ) : (
-                  <DayPlan date={realDate} />
+                  <Suspense fallback={<div>Loading...</div>}>
+                    <DayPlan date={realDate} />
+                  </Suspense>
                 )}
               </div>
             </>
@@ -121,7 +124,7 @@ export default function Page({ date }: { date: Props }) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const date = context?.params?.date;
-  return { props: { date } };
-};
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+//   const date = context?.params?.date;
+//   return { props: { date } };
+// };
