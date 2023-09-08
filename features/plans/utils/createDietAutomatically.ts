@@ -41,10 +41,9 @@ const getPlanFoods = async ({
 
     const res = await fetchFoods({
       queries: { q: "", plan: planID },
-      uploaderID: user.id,
     });
     if (res.result === "error") throw new Error("Error fetching foods");
-    return { result: "success", data: res.data };
+    return { result: "success", data: res.data.hits };
   } catch (error) {
     console.log({ error });
     return { result: "error", error };

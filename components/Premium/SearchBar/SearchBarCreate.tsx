@@ -34,7 +34,6 @@ const SearchBarCreate: FC<Props> = ({ onFocus, preFetch, queries }) => {
       if (!user?.id) return;
       await getFoods({
         queries: { ...queries, q: input },
-        uploaderID: user?.id,
         user,
       });
       setIsFavorites(false);

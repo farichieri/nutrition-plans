@@ -14,6 +14,7 @@ import FoodModal from "../../../common/FoodModal";
 import RoundButton from "@/components/Buttons/RoundButton";
 import SearchBarCreate from "@/components/Premium/SearchBar/SearchBarCreate";
 import SearchedResults from "@/components/Premium/SearchBar/SearchedResults";
+import Pagination from "@/components/Pagination/Pagination";
 
 interface Props {
   handleUpdateIngredients: Function;
@@ -21,7 +22,7 @@ interface Props {
 
 const IngredientsSelector: FC<Props> = ({ handleUpdateIngredients }) => {
   const dispatch = useDispatch();
-  const { foodsSearched, foodModal } = useSelector(selectFoodsSlice);
+  const { foodsSearched, foodModal, pages } = useSelector(selectFoodsSlice);
   const [searchResult, setSearchResult] = useState(foodsSearched);
   const [openIngredients, setOpenIngredients] = useState(false);
   const noData = Object.keys(searchResult).length < 1;
@@ -113,11 +114,19 @@ const IngredientsSelector: FC<Props> = ({ handleUpdateIngredients }) => {
               </div>
             </div>
           )}
-          <div className="flex max-h-[50vh] w-full flex-col gap-1 overflow-auto border-y py-2">
+          <div className="flex max-h-[80vh] w-full flex-col gap-1 overflow-auto border-y py-2">
             <SearchedResults
               searchResult={searchResult}
               handleClick={handleOpenIngredient}
               queries={queries}
+            />
+          </div>
+          <div>
+            <Pagination
+              pages={pages}
+              queries={queries}
+              setLocalQueries={setLocalQueries}
+              updateRoute={false}
             />
           </div>
         </div>

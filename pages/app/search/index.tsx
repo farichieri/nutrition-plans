@@ -1,16 +1,22 @@
 import { FilterQueries } from "@/types";
-import { GetServerSideProps } from "next";
 import { selectAuthSlice } from "@/features/authentication";
+import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { useTour } from "@/features/tours";
 import SearchLayout from "@/layouts/SearchLayout";
 
-interface Props {
-  queries: FilterQueries;
-}
-
-export default function Page({ queries }: Props) {
+export default function Page() {
   const { user } = useSelector(selectAuthSlice);
+  const router = useRouter();
+
+  const queries: FilterQueries = {};
+
+  Object.entries(router?.query).forEach((query) => {
+    if (query) {
+      queries[query[0] as keyof FilterQueries] = String(query[1]);
+    }
+  });
+
   useTour({
     name: "search",
     user: user,
@@ -57,15 +63,3 @@ export default function Page({ queries }: Props) {
 
   return <SearchLayout queries={queries}>{}</SearchLayout>;
 }
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const queries: FilterQueries = {};
-
-  Object.entries(context?.query).forEach((query) => {
-    if (query) {
-      queries[query[0] as keyof FilterQueries] = String(query[1]);
-    }
-  });
-
-  return { props: { queries } };
-};

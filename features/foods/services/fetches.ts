@@ -7,6 +7,7 @@ import {
   query,
 } from "firebase/firestore";
 import { db } from "@/services/firebase";
+import { HITS_PER_PAGE } from "@/constants/search";
 import { searchClient } from "@/lib/typesense";
 import getSearchParameters from "../utils/getSearchParameters";
 import type { FilterQueries, Result } from "@/types";
@@ -15,46 +16,13 @@ import type { Food, FoodHitsGroup } from "@/features/foods";
 const typesenseFoodsCollection =
   process.env.NEXT_PUBLIC_TYPESENSE_FOODS_COLLECTION_NAME!;
 
-const fetchCuratedFoods = async ({
-  queries,
-}: {
-  queries: FilterQueries;
-}): Promise<Result<FoodHitsGroup, unknown>> => {
-  try {
-    let data: FoodHitsGroup = {};
-
-    console.log("searching...");
-    const searchParameters = getSearchParameters({ queries, isCurated: true });
-
-    const res = await searchClient
-      .collections(typesenseFoodsCollection)
-      .documents()
-      .search(searchParameters, {});
-
-    const { hits } = res;
-    if (!hits) {
-      throw new Error("Error fetching foods.");
-    }
-
-    hits.forEach((hit: any) => {
-      const { document } = hit;
-      data[document.id] = document;
-    });
-
-    return { result: "success", data };
-  } catch (error) {
-    console.log({ error: `Error fetching Food: ${error}` });
-    return { result: "error", error };
-  }
-};
-
-const fetchUserFoods = async ({
+const fetchFoodsHits = async ({
   queries,
   uploaderID,
 }: {
   queries: FilterQueries;
   uploaderID?: string;
-}): Promise<Result<FoodHitsGroup, unknown>> => {
+}): Promise<Result<{ hits: FoodHitsGroup; pages: number }, unknown>> => {
   try {
     let data: FoodHitsGroup = {};
 
@@ -65,6 +33,10 @@ const fetchUserFoods = async ({
       .documents()
       .search(searchParameters, {});
 
+    console.log({ res });
+
+    const pages = Math.ceil(res.found / HITS_PER_PAGE);
+
     const { hits } = res;
     if (!hits) {
       throw new Error("Error fetching foods.");
@@ -75,7 +47,34 @@ const fetchUserFoods = async ({
       data[document.id] = document;
     });
 
-    return { result: "success", data };
+    return { result: "success", data: { hits: data, pages } };
+  } catch (error) {
+    console.log({ error: `Error fetching Food: ${error}` });
+    return { result: "error", error };
+  }
+};
+
+const fetchFoodsCreatedByUser = async ({
+  queries,
+  uploaderID,
+}: {
+  queries: FilterQueries;
+  uploaderID?: string;
+}): Promise<Result<{ hits: FoodHitsGroup; pages: number }, unknown>> => {
+  try {
+    let data: FoodHitsGroup = {};
+    let pages: number = 0;
+
+    const res = await fetchFoodsHits({ queries, uploaderID });
+
+    if (res.result === "success") {
+      const { hits } = res.data;
+      data = hits;
+      pages = res.data.pages;
+    } else {
+      throw new Error("Error fetching foods.");
+    }
+    return { result: "success", data: { hits: data, pages } };
   } catch (error) {
     console.log({ error: `Error fetching Food: ${error}` });
     return { result: "error", error };
@@ -84,29 +83,23 @@ const fetchUserFoods = async ({
 
 const fetchFoods = async ({
   queries,
-  uploaderID,
 }: {
   queries: FilterQueries;
-  uploaderID?: string;
-}): Promise<Result<FoodHitsGroup, unknown>> => {
+}): Promise<Result<{ hits: FoodHitsGroup; pages: number }, unknown>> => {
   try {
     let data: FoodHitsGroup = {};
+    let pages: number = 0;
 
-    const [curatedFoodsRes, userFoodsRes] = await Promise.all([
-      fetchCuratedFoods({ queries }),
-      fetchUserFoods({ queries, uploaderID }),
-    ]);
+    const res = await fetchFoodsHits({ queries });
 
-    if (
-      curatedFoodsRes.result === "success" &&
-      userFoodsRes.result === "success"
-    ) {
-      const resData = { ...curatedFoodsRes.data, ...userFoodsRes.data };
-      data = resData;
+    if (res.result === "success") {
+      const hits = res.data.hits;
+      data = hits;
+      pages = res.data.pages;
     } else {
       throw new Error("Error fetching foods.");
     }
-    return { result: "success", data };
+    return { result: "success", data: { hits: data, pages } };
   } catch (error) {
     console.log({ error: `Error fetching Food: ${error}` });
     return { result: "error", error };
@@ -196,9 +189,9 @@ const getAllFoodsIds = async (): Promise<Result<string[], unknown>> => {
 
 export {
   fetchFoods,
-  fetchUserFoods,
   fetchFoodByID,
   fetchFoodsByIDS,
   getFoodsCollectionLength,
   getAllFoodsIds,
+  fetchFoodsCreatedByUser,
 };

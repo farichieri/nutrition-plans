@@ -1,8 +1,4 @@
-import {
-  setFoodsSearched,
-  setIsSearchingFoods,
-  useGetFoodsMutation,
-} from "@/features/foods";
+import { setIsSearchingFoods, useGetFoodsMutation } from "@/features/foods";
 import { FC, useCallback, useEffect, useState } from "react";
 import { FilterQueries } from "@/types";
 import { IoMdArrowBack } from "react-icons/io";
@@ -30,14 +26,14 @@ const SearchBar: FC<Props> = ({ queries }) => {
   const fetchData = useCallback(
     async ({ queries }: { queries: FilterQueries }) => {
       if (!user?.id) return;
-      await getFoods({
-        queries: queries,
-        uploaderID: user?.id,
-        user,
-      });
+      if (router.asPath.includes("my-creations")) {
+        await getFoods({ queries, user, createdByUser: true });
+      } else {
+        await getFoods({ queries, user });
+      }
       dispatch(setIsSearchingFoods(false));
     },
-    [dispatch, user?.id]
+    [dispatch, user?.id, queries]
   );
 
   useEffect(() => {

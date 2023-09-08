@@ -109,6 +109,7 @@ export interface FilterQueries {
   fatsRange?: string;
   sort?: string;
   category?: string;
+  page?: string;
 }
 
 export interface ImageI {
