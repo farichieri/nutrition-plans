@@ -15,10 +15,10 @@ import FormSelect from "@/components/Form/FormSelect";
 import RoundButton from "@/components/Buttons/RoundButton";
 
 interface Props {
-  queries: FilterQueries;
-  updateRoute: boolean;
-  setLocalQueries: Function;
   fixedQueries?: FilterQueries;
+  queries: FilterQueries;
+  setLocalQueries: Function;
+  updateRoute: boolean;
 }
 
 interface Nuts {
@@ -113,7 +113,10 @@ const Filters: FC<Props> = ({
       return;
     }
 
-    let query;
+    let query = {
+      ...queries,
+      page: "1",
+    };
     if (
       name === FiltersEnum.CaloriesRange ||
       name === FiltersEnum.ProteinsRange ||
@@ -126,12 +129,12 @@ const Filters: FC<Props> = ({
       if (!min) min = 0;
       if (!max) max = Infinity;
       query = {
-        ...queries,
+        ...query,
         [name]: `${min}-${max}`,
       };
     } else {
       query = {
-        ...queries,
+        ...query,
         [name]: value,
       };
     }
@@ -141,7 +144,6 @@ const Filters: FC<Props> = ({
         query,
       });
     } else {
-      console.log({ query });
       setLocalQueries(query);
     }
   };

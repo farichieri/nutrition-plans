@@ -1,3 +1,4 @@
+import { HITS_PER_PAGE } from "@/constants/search";
 import { FilterQueries } from "@/types";
 
 const getRange = ({ nutrientRange }: { nutrientRange: string }): string => {
@@ -24,25 +25,26 @@ const getSearchParameters = ({
     proteinsRange,
     sort,
     category,
+    page,
   } = queries;
 
   let curatedQ = isCurated ? `isCurated:true` : "";
   let uploader_idQ = uploaderID ? `uploaderID:${uploaderID}` : "";
-  let kindQ = kind ? ` && kind:${kind}` : "";
-  let planQ = plan ? ` && compatiblePlans.${plan}:true` : "";
+  let kindQ = kind ? `kind:${kind} ` : "";
+  let planQ = plan ? `compatiblePlans.${plan}:true` : "";
   let categoryQ =
-    category === "all" ? "" : category ? ` && category:${category}` : "";
+    category === "all" ? "" : category ? `category:${category}` : "";
   caloriesRange = caloriesRange
-    ? ` && nutrients.calories:${getRange({ nutrientRange: caloriesRange })}`
+    ? `nutrients.calories:${getRange({ nutrientRange: caloriesRange })}`
     : "";
   carbsRange = carbsRange
-    ? ` && nutrients.carbohydrates:${getRange({ nutrientRange: carbsRange })}`
+    ? `nutrients.carbohydrates:${getRange({ nutrientRange: carbsRange })}`
     : "";
   fatsRange = fatsRange
-    ? ` && nutrients.fats:${getRange({ nutrientRange: fatsRange })}`
+    ? `nutrients.fats:${getRange({ nutrientRange: fatsRange })}`
     : "";
   proteinsRange = proteinsRange
-    ? ` && nutrients.proteins:${getRange({ nutrientRange: proteinsRange })}`
+    ? `nutrients.proteins:${getRange({ nutrientRange: proteinsRange })}`
     : "";
   sort =
     !sort || sort === "rating"
@@ -51,16 +53,29 @@ const getSearchParameters = ({
       ? "nutrients.calories:desc"
       : "nutrients.calories:asc";
 
+  const filterQueries = [
+    uploader_idQ,
+    curatedQ,
+    kindQ,
+    planQ,
+    categoryQ,
+    caloriesRange,
+    carbsRange,
+    fatsRange,
+    proteinsRange,
+  ]
+    .filter((q) => q)
+    .join(" && ");
+
   const searchParameters = {
     q: q || "",
     query_by: "name, description, ingredientsNames, ingredientsDescriptions",
-    filter_by: `${uploader_idQ}${curatedQ}${kindQ}${planQ}${caloriesRange}${carbsRange}${fatsRange}${proteinsRange}${categoryQ}`,
+    filter_by: filterQueries,
     sort_by: sort,
-    page: 1,
-    per_page: 40,
+    page: page ? Number(page) : 1,
+    per_page: HITS_PER_PAGE,
+    preset: "",
   };
-
-  console.log({ searchParameters });
 
   return searchParameters;
 };

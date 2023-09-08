@@ -1,11 +1,13 @@
 import {
+  addFood,
   fetchFoods,
   fetchFoodsByIDS,
+  FoodKind,
   setFoodsSearched,
+  setPages,
   type Food,
   type FoodHitsGroup,
-  addFood,
-  FoodKind,
+  fetchFoodsCreatedByUser,
 } from "@/features/foods";
 import { api } from "@/services/api";
 import { db } from "@/services/firebase";
@@ -20,14 +22,30 @@ export const foodsApi = api.injectEndpoints({
   endpoints: (build) => ({
     getFoods: build.mutation<
       FoodHitsGroup,
-      { queries: FilterQueries; uploaderID?: string; user: User }
+      { queries: FilterQueries; user: User; createdByUser?: boolean }
     >({
-      async queryFn({ queries, uploaderID, user }, { dispatch }) {
+      async queryFn({ queries, user, createdByUser }, { dispatch }) {
         try {
-          const res = await fetchFoods({ queries, uploaderID });
-          if (res.result === "error") throw new Error("Error fetching foods");
-          dispatch(setFoodsSearched({ foods: res.data, userID: user.id }));
-          return { data: res.data };
+          if (createdByUser) {
+            const res = await fetchFoodsCreatedByUser({
+              queries,
+              uploaderID: user?.id,
+            });
+            if (res.result === "error") throw new Error("Error fetching foods");
+            dispatch(
+              setFoodsSearched({ foods: res.data.hits, userID: user.id })
+            );
+            dispatch(setPages(res.data.pages));
+            return { data: res.data.hits };
+          } else {
+            const res = await fetchFoods({ queries });
+            if (res.result === "error") throw new Error("Error fetching foods");
+            dispatch(
+              setFoodsSearched({ foods: res.data.hits, userID: user.id })
+            );
+            dispatch(setPages(res.data.pages));
+            return { data: res.data.hits };
+          }
         } catch (error) {
           dispatch(setFoodsSearched({ foods: {}, userID: user.id }));
           return { error };

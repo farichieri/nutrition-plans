@@ -6,7 +6,7 @@ import { RootState } from "@/store";
 
 interface FoodsSlice {
   foodsSearched: FoodHitsGroup;
-  myFoodsSearched: FoodHitsGroup;
+  pages: number;
   isSearchingFoods: boolean;
   foodOpened: {
     food: Food | null;
@@ -24,7 +24,7 @@ interface FoodsSlice {
 
 const initialState: FoodsSlice = {
   foodsSearched: {},
-  myFoodsSearched: {},
+  pages: 0,
   isSearchingFoods: true,
   foodOpened: {
     food: null,
@@ -50,23 +50,12 @@ export const foodsSlice = createSlice({
   initialState,
   reducers: {
     setFoodsSearched: (state, action: PayloadAction<SearchedFoods>) => {
-      const { foods, userID } = action.payload;
-      const myFoodsSearched: FoodHitsGroup = {};
-      const allFoodsSearched: FoodHitsGroup = {};
-      for (const key in foods) {
-        allFoodsSearched[key] = foods[key];
-        if (foods[key].uploaderID === userID) {
-          myFoodsSearched[key] = foods[key];
-        }
-      }
-      state.foodsSearched = allFoodsSearched;
-      state.myFoodsSearched = myFoodsSearched;
+      state.foodsSearched = action.payload.foods;
     },
     addNewFood: (state, action: PayloadAction<FoodHit>) => {
       const { id } = action.payload;
       if (!id) return;
       state.foodsSearched[id] = action.payload;
-      state.myFoodsSearched[id] = action.payload;
     },
     setFoodOpened: (state, action: PayloadAction<Food | null>) => {
       state.foodOpened.food = action.payload;
@@ -161,6 +150,9 @@ export const foodsSlice = createSlice({
       state.foodModal.scaleAmount = Number(scaleAmount);
       state.foodModal.scaleName = scaleName;
     },
+    setPages: (state, action: PayloadAction<number>) => {
+      state.pages = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(PURGE, () => {
@@ -184,6 +176,7 @@ export const {
   updateNewFoodState,
   updateNewRecipeState,
   updateNewFoodStateMultipleFields,
+  setPages,
 } = foodsSlice.actions;
 
 export const selectFoodsSlice = (state: RootState) => state.foods;

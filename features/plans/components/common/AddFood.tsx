@@ -4,13 +4,14 @@ import {
   selectFoodsSlice,
   setFoodModal,
 } from "@/features/foods";
-import { DietMeal } from "@/features/plans";
 import { addFoodToDiet } from "@/features/plans/slice";
+import { DietMeal } from "@/features/plans";
 import { FC, MouseEvent, useEffect, useState } from "react";
 import { FilterQueries } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
 import Filters from "@/components/Premium/SearchBar/Filters";
 import Modal from "@/components/Modal/Modal";
+import Pagination from "@/components/Pagination/Pagination";
 import SearchBarCreate from "@/components/Premium/SearchBar/SearchBarCreate";
 import SearchedResults from "@/components/Premium/SearchBar/SearchedResults";
 
@@ -20,7 +21,7 @@ interface Props {
 
 const AddFood: FC<Props> = ({ dietMeal }) => {
   const dispatch = useDispatch();
-  const { foodsSearched, foodModal } = useSelector(selectFoodsSlice);
+  const { foodsSearched, foodModal, pages } = useSelector(selectFoodsSlice);
   const [isOpen, setIsOpen] = useState(false);
   const [queries, setLocalQueries] = useState<FilterQueries>({
     plan: dietMeal.planID!,
@@ -61,7 +62,8 @@ const AddFood: FC<Props> = ({ dietMeal }) => {
           )}
           <div className="w-4xl max-w-[95vw]">
             <div className="flex h-14 items-center justify-center gap-1 border-b text-sm font-semibold sm:text-xl">
-              <span>Add new food to</span> <b>{dietMeal.name}</b>
+              <span>Add new food to</span>{" "}
+              <b className="text-green-500">{dietMeal.name}</b>
             </div>
             <div className="h-[85vh] min-h-[20rem] overflow-auto p-1">
               <SearchBarCreate queries={queries} preFetch={false} />
@@ -75,6 +77,14 @@ const AddFood: FC<Props> = ({ dietMeal }) => {
                   searchResult={foodsSearched}
                   handleClick={handleOpenFood}
                   queries={queries}
+                />
+              </div>
+              <div className="my-2">
+                <Pagination
+                  pages={pages}
+                  queries={queries}
+                  setLocalQueries={setLocalQueries}
+                  updateRoute={false}
                 />
               </div>
             </div>

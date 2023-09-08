@@ -1,9 +1,11 @@
 import { FilterQueries } from "@/types";
-import { FoodsSearched } from "@/features/foods";
+import { FoodsSearched, selectFoodsSlice } from "@/features/foods";
 import { PremiumSidebar } from "@/layouts";
+import { useSelector } from "react-redux";
 import CreateButton from "@/features/foods/components/common/CreateButton";
 import DatabaseSelector from "@/components/Premium/SearchBar/DatabaseSelector";
 import Filters from "@/components/Premium/SearchBar/Filters";
+import Pagination from "@/components/Pagination/Pagination";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "./components/Nav/PremiumNav";
 import SearchBar from "@/components/Premium/SearchBar/SearchBar";
@@ -15,6 +17,7 @@ interface Props {
 
 export default function SearchLayout({ queries }: Props) {
   const isMobile = window.innerWidth < 1024;
+  const { pages } = useSelector(selectFoodsSlice);
   return (
     <PremiumLayout>
       <PremiumNav hideScrolling={false} title="">
@@ -28,10 +31,16 @@ export default function SearchLayout({ queries }: Props) {
         </div>
         <Filters
           queries={queries}
-          updateRoute={true}
           setLocalQueries={() => {}}
+          updateRoute={true}
         />
         <FoodsSearched queries={queries} />
+        <Pagination
+          pages={pages}
+          queries={queries}
+          setLocalQueries={() => {}}
+          updateRoute={true}
+        />
       </section>
     </PremiumLayout>
   );
