@@ -8,10 +8,12 @@ interface AuthState {
   isCreatingUser: boolean;
   isSelectingPlan: boolean;
   isSigningUser: boolean;
+  isTrialOver: boolean;
   isVerifyingUser: boolean;
   showInstallModal: boolean;
-  user: User | null;
   subscription: any;
+  trialDaysLeft: number;
+  user: User | null;
 }
 
 const initialState: AuthState = {
@@ -19,10 +21,12 @@ const initialState: AuthState = {
   isCreatingUser: false,
   isSelectingPlan: false,
   isSigningUser: false,
+  isTrialOver: false,
   isVerifyingUser: false,
   showInstallModal: true,
-  user: null,
   subscription: null,
+  trialDaysLeft: 0,
+  user: null,
 };
 
 export const authSlice = createSlice({
@@ -38,6 +42,12 @@ export const authSlice = createSlice({
       state.isVerifyingUser = false;
       if (user) {
         state.isSigningUser = false;
+        const daysFromCreation = Math.floor(
+          (Date.now() - new Date(user.completedAt!).getTime()) / 86400000
+        );
+        const daysLeft = Math.max(7 - daysFromCreation);
+        state.trialDaysLeft = daysLeft;
+        state.isTrialOver = daysLeft <= 0;
       }
     },
     setIsCreatingUser: (state, action: PayloadAction<boolean>) => {

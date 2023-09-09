@@ -83,7 +83,7 @@ const NutritionTarget: FC<Props> = ({ planSelected }) => {
         </div>
         <div className="w-full py-2">
           <span id="tour-profile_nutrition_values-4">
-            We recommend you to drink{" "}
+            We recommend you to drink at least{" "}
             <b className="text-blue-300">
               {water} {waterUnit}
             </b>{" "}

@@ -3,6 +3,7 @@ import {
   eachDayOfInterval,
   format,
   isValid,
+  parseISO,
   startOfMonth,
   startOfWeek,
 } from "date-fns";
@@ -48,7 +49,7 @@ const formatToUSDate = (date: Date): string => {
 };
 
 const formatToShortDate = (date: string): string => {
-  const result = format(new Date(date), "eee, LLLL dd");
+  const result = format(new Date(date), "eee, LLL dd");
   return result;
 };
 
@@ -59,7 +60,7 @@ const formatDateToShortDate = (date: Date): string => {
 };
 
 const formatToMonthDay = (date: string): string => {
-  const result = format(new Date(date), "LLLL dd");
+  const result = format(new Date(date), "LLL dd");
   return result;
 };
 
@@ -234,12 +235,14 @@ const getDaysLeft = ({ date }: { date: Date | null }): number => {
 export {
   addOneWeek,
   convertToWeekDate,
+  formatDateToShortDate,
   formatToInputDate,
   formatToMonthDay,
   formatToShortDate,
   formatToUSDate,
   getDatePlusDays,
   getDayAndMonth,
+  getDaysLeft,
   getDaysOfWeek,
   getIsToday,
   getIsWeek,
@@ -256,6 +259,4 @@ export {
   getYesterday,
   isValidDate,
   restOneWeek,
-  getDaysLeft,
-  formatDateToShortDate,
 };

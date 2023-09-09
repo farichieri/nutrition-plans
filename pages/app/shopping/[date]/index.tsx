@@ -1,15 +1,11 @@
 import {
-  AddFoodModalShopping,
   getDietShoppingFoods,
   selectShoppingSlice,
   setShoppingListFoods,
-  ShoppingDistributor,
-  ShoppingList,
   ShoppingNav,
 } from "@/features/shopping";
 import { DaySelector, getRealDate, useRedirectToday } from "@/features/plans";
 import { getDaysOfWeek, getIsWeek } from "@/utils";
-import { GetServerSidePropsContext } from "next";
 import { PremiumSidebar } from "@/layouts";
 import { selectAuthSlice } from "@/features/authentication";
 import { StartsOfWeek } from "@/types";
@@ -18,16 +14,17 @@ import { useEffect } from "react";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
+import { useRouter } from "next/router";
 
-interface Props {
-  date?: string;
-}
+interface Props {}
 
-export default function Page({ date }: { date: Props }) {
+export default function Page() {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
   const { cupboard } = useSelector(selectShoppingSlice);
+  const router = useRouter();
   const { isAddingFood } = cupboard;
+  const date = router.query.date;
   useRedirectToday(String(date));
   const realDate = getRealDate({
     date: String(date),
@@ -86,13 +83,4 @@ export default function Page({ date }: { date: Props }) {
       </div>
     </PremiumLayout>
   );
-}
-
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const date = context.params?.date;
-  return {
-    props: {
-      date,
-    },
-  };
 }

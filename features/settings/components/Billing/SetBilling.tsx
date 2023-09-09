@@ -1,10 +1,10 @@
 import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
 import { FC, useState } from "react";
 import { selectAuthSlice } from "@/features/authentication/slice";
-import { useDispatch, useSelector } from "react-redux";
 import { sendCustomerToPortal } from "@/features/stripe";
-import Spinner from "@/components/Loader/Spinner";
 import { SubscribeButton } from "@/components/Buttons";
+import { useSelector } from "react-redux";
+import Spinner from "@/components/Loader/Spinner";
 
 interface Props {}
 

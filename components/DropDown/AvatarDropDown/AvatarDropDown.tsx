@@ -13,6 +13,7 @@ import DropDown from "../DropDown";
 import Link from "next/link";
 import SubscribeButton from "@/components/Buttons/Subscribe";
 import ThemeSwitcher from "@/components/theme-switcher";
+import TrialDaysLeft from "@/components/TrialDaysLeft/TrialDaysLeft";
 
 interface Props {
   isApp: boolean;
@@ -99,8 +100,9 @@ const AvatarDropDown: FC<Props> = ({ isApp }) => {
           </button>
         </div>
         <div className="mx-4 my-2 h-0 border-b border-slate-500/30 duration-300"></div>
-        <div className="flex items-center justify-center px-4 py-2 ">
+        <div className="flex flex-col items-center justify-center px-4 py-2 ">
           <SubscribeButton />
+          <TrialDaysLeft />
         </div>
       </div>
     </DropDown>

@@ -18,6 +18,7 @@ import Head from "next/head";
 import InstallModal from "@/components/InstallApp/InstallModal";
 import Loader from "@/components/Loader/Loader";
 import WelcomeSteps from "@/components/WelcomeSteps/WelcomeSteps";
+import TrialEnded from "@/components/TrialDaysLeft/TrialEnded";
 
 interface Props {
   children: React.ReactNode;
@@ -27,7 +28,7 @@ export default function PremiumLayout({ children }: Props) {
   const router = useRouter();
   const dispatch = useDispatch();
   const { sidebarOpen, isSubscribeModalOpen } = useSelector(selectLayoutSlice);
-  const { user, isCreatingUser, isSigningUser, showInstallModal } =
+  const { user, isCreatingUser, isSigningUser, showInstallModal, isTrialOver } =
     useSelector(selectAuthSlice);
   const isOnline = useOnlineStatus();
   const windowWidth = useWindowWidth();
@@ -67,8 +68,11 @@ export default function PremiumLayout({ children }: Props) {
           <InstallModal />
         </div>
       )}
+
+      {!user?.isPremium && isTrialOver && <TrialEnded />}
+
       {user && user.isProfileCompleted ? (
-        <div className="flex w-full flex-col">
+        <div className="flex w-full flex-col ">
           <div className="flex min-h-screen w-full flex-col lg:pb-24">
             <div
               className={`flex flex-col pt-[var(--nav-h)] duration-0 ease-in-out ${
