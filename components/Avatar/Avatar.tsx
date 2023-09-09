@@ -20,7 +20,7 @@ const Avatar: FC<Props> = ({ width, height }) => {
         <div
           className={`flex items-center justify-center rounded-full bg-red-700 text-white`}
         >
-          <span className="block h-full w-full items-center justify-center text-center opacity-80">
+          <span className="flex h-full w-full items-center justify-center text-center opacity-80">
             {fisrtNameWord}
           </span>
         </div>

@@ -177,7 +177,11 @@ export const MEAL_PLANS = [
 export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
   {
     buttonContent: "Get started with Free",
-    checklist: ["Plan Calculator", "Weekly Newsletter", "Foods Database"],
+    checklist: [
+      "Nutrients Calculator",
+      "Weekly Newsletter",
+      "7 days Premium trial",
+    ],
     checklistTitle: "",
     checkoutLink: "/app/settings/billing",
     discount: "",
@@ -191,10 +195,11 @@ export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
     buttonContent: "Get started with Premium",
     checklist: [
       "All nutrition plans",
-      "Shopping List",
-      "Recipes",
-      "Progress tools",
-      "Print and email your plans",
+      "Custom foods and recipes",
+      "Meal planner",
+      "Progress Tracker",
+      "Shopping list (soon)",
+      "Foods Database",
     ],
     checklistTitle: "Everything in Free, plus...",
     checkoutLink: "/app/settings/billing",

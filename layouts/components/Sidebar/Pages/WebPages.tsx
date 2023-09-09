@@ -22,6 +22,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { useWindowWidth } from "@/hooks";
 import Link from "next/link";
+import TrialDaysLeft from "@/components/TrialDaysLeft/TrialDaysLeft";
+import { SubscribeButton } from "@/components/Buttons";
 
 interface Props {}
 
@@ -195,6 +197,10 @@ const WebPages: FC<Props> = () => {
           <MdSettings className="h-6 w-6 text-green-500" />
           <span>Settings</span>
         </Link>
+      </div>
+      <div className="flex flex-col items-center justify-center">
+        <SubscribeButton />
+        <TrialDaysLeft />
       </div>
     </>
   );

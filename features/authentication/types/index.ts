@@ -8,6 +8,7 @@ import {
 export interface User {
   bodyData: UserBodyData;
   createdAt: string | undefined;
+  completedAt: string;
   displayName: string;
   emailAddress: string | null;
   firstData: UserCreatedData;
@@ -198,6 +199,7 @@ export const initialWeightGoal: WeightGoal = {
 export const newAccount: User = {
   bodyData: newBodyData,
   createdAt: "",
+  completedAt: "",
   displayName: "",
   emailAddress: "",
   firstData: {

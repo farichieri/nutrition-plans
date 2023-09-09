@@ -98,6 +98,7 @@ const Results: FC<Props> = ({ handleSubmit }) => {
         BMR: BMR,
       };
       const fields = {
+        completedAt: formatISO(new Date()),
         bodyData: bodyDataUpdated,
         isProfileCompleted: true,
         nutritionTargets: nutritionTargets,

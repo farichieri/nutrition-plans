@@ -10,6 +10,7 @@ import Avatar from "@/components/Avatar/Avatar";
 import Link from "next/link";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import ThemeSwitcher from "@/components/theme-switcher";
+import TrialDaysLeft from "@/components/TrialDaysLeft/TrialDaysLeft";
 
 export default function Page() {
   const router = useRouter();
@@ -81,8 +82,9 @@ export default function Page() {
             </button>
           </div>
           <div className="mx-4 my-2 h-0 border-b border-slate-500/30 duration-300"></div>
-          <div className="flex items-center justify-center px-4 py-2 ">
+          <div className="flex flex-col items-center justify-center px-4 py-2 ">
             <SubscribeButton />
+            <TrialDaysLeft />
           </div>
         </div>
       </section>

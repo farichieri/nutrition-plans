@@ -10,9 +10,15 @@ import { useDispatch, useSelector } from "react-redux";
 import Modal from "@/components/Modal/Modal";
 import Spinner from "@/components/Loader/Spinner";
 
-interface Props {}
+interface Props {
+  isCloseable?: boolean;
+  isTrialOver?: boolean;
+}
 
-const SubscribeModal: FC<Props> = () => {
+const SubscribeModal: FC<Props> = ({
+  isCloseable = true,
+  isTrialOver = false,
+}) => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
   const [priceSelected, setPriceSelected] = useState(PRICES.yearly.id);
@@ -45,14 +51,22 @@ const SubscribeModal: FC<Props> = () => {
   };
 
   return (
-    <Modal isFullScreen onClose={handleClose}>
+    <Modal isCloseable={isCloseable} isFullScreen onClose={handleClose}>
       <section className=" flex h-auto w-auto min-w-full max-w-[95vw] overflow-hidden rounded-3xl">
         <div className="m-auto flex h-full w-full flex-col items-center gap-5 overflow-auto px-4 py-10 ">
           <div className="flex flex-col items-center text-center text-xs md:text-base">
             <span className="text-xl font-semibold sm:text-3xl">
               Level up. Go Premium
             </span>
-            <span>Upgrade to get full access to all the features</span>
+            {isTrialOver ? (
+              <span className="opacity-70">
+                Your free trial is over, upgrade to get Full Access
+              </span>
+            ) : (
+              <span className="opacity-70">
+                Upgrade to get full access to all the features
+              </span>
+            )}
           </div>
           <div className="m-auto flex w-full min-w-fit max-w-md flex-wrap items-center justify-center gap-3 sm:gap-4">
             {Object.values(PRICES).map((opt) => {
@@ -112,12 +126,14 @@ const SubscribeModal: FC<Props> = () => {
             <span>Continue</span>
             {isLoading && <Spinner customClass="h-5 w-5" />}
           </button>
-          <button
-            className="text-sm duration-300 hover:text-green-500"
-            onClick={handleClose}
-          >
-            NO, THANKS
-          </button>
+          {isCloseable && (
+            <button
+              className="text-sm duration-300 hover:text-green-500"
+              onClick={handleClose}
+            >
+              NO, THANKS
+            </button>
+          )}
         </div>
       </section>
     </Modal>

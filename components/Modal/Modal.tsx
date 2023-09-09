@@ -8,12 +8,14 @@ const Modal = ({
   customClass = "",
   isMobileFullScreen = false,
   isFullScreen = false,
+  isCloseable = false,
 }: {
   children: ReactNode;
   onClose: Function;
   customClass?: string;
   isMobileFullScreen?: boolean;
   isFullScreen?: boolean;
+  isCloseable?: boolean;
 }) => {
   const handleCloseModal = () => {
     if (onClose) {
@@ -39,12 +41,14 @@ const Modal = ({
           } ` + customClass
         }
       >
-        <RoundButton
-          onClick={handleCloseModal}
-          customClass="p-1.5 h-10 w-10 absolute right-1 lg:right-5 top-1 z-[100]"
-        >
-          <MdClose className="h-6 w-6" />
-        </RoundButton>
+        {isCloseable && (
+          <RoundButton
+            onClick={handleCloseModal}
+            customClass="p-1.5 h-10 w-10 absolute right-1 lg:right-5 top-1 z-[100]"
+          >
+            <MdClose className="h-6 w-6" />
+          </RoundButton>
+        )}
         {children}
       </div>
     </div>

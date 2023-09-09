@@ -57,13 +57,25 @@ export default function Home({ plans }: Props) {
       <div className="my-20">
         <Goals />
       </div>
-      <div className="my-10">
-        <>
-          <span className="mx-auto flex w-fit text-4xl font-bold">
-            Plans Available
-          </span>
-          <Plans plans={plans} />
-        </>
+      <div className="my-10 w-full">
+        <Reveal width="w-full">
+          <div className="flex flex-col gap-5">
+            <span className="mx-auto flex w-fit text-4xl font-bold">
+              Adapt your diet
+            </span>
+            <span className="relative flex h-full w-full overflow-hidden rounded-xl border duration-300">
+              <BlurImage
+                image={{
+                  imageURL: "/images/general/search-img.png",
+                  title: "Search",
+                  id: "Search",
+                }}
+                customClass="!object-fill"
+                customContainerClass="!aspect-h-4 !aspect-w-8"
+              />
+            </span>
+          </div>
+        </Reveal>
       </div>
       <div className="my-10 w-full">
         <Reveal width="w-full">
@@ -83,6 +95,16 @@ export default function Home({ plans }: Props) {
               />
             </span>
           </div>
+        </Reveal>
+      </div>
+      <div className="my-10">
+        <Reveal width="w-full">
+          <>
+            <span className="mx-auto flex w-fit text-4xl font-bold">
+              Plans Available
+            </span>
+            <Plans plans={plans} />
+          </>
         </Reveal>
       </div>
       <div className="my-10 flex w-full items-center justify-center">
