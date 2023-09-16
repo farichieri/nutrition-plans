@@ -10,6 +10,7 @@ export const api = createApi({
     "notifications",
     "plans",
     "progress",
+    "emails",
   ],
   endpoints: () => ({}),
 });

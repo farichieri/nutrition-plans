@@ -42,8 +42,9 @@ export const authSlice = createSlice({
       state.isVerifyingUser = false;
       if (user) {
         state.isSigningUser = false;
+        // if no user.completedAt, then userTrial is over
         const daysFromCreation = Math.floor(
-          (Date.now() - new Date(user.completedAt!).getTime()) / 86400000
+          (Date.now() - new Date(user.completedAt).getTime()) / 86400000
         );
         const daysLeft = Math.max(7 - daysFromCreation);
         state.trialDaysLeft = daysLeft;
