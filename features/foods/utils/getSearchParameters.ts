@@ -28,8 +28,11 @@ const getSearchParameters = ({
     page,
   } = queries;
 
-  let curatedQ = isCurated ? `isCurated:true` : "";
-  let uploader_idQ = uploaderID ? `uploaderID:${uploaderID}` : "";
+  let curated_uploader_Q = isCurated
+    ? `isCurated:true || uploaderID:${uploaderID}`
+    : uploaderID
+    ? `uploaderID:${uploaderID}`
+    : "";
   let kindQ = kind ? `kind:${kind} ` : "";
   let planQ = plan ? `compatiblePlans.${plan}:true` : "";
   let categoryQ =
@@ -54,8 +57,7 @@ const getSearchParameters = ({
       : "nutrients.calories:asc";
 
   const filterQueries = [
-    uploader_idQ,
-    curatedQ,
+    curated_uploader_Q,
     kindQ,
     planQ,
     categoryQ,

@@ -1,6 +1,7 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { FilterQueries } from "@/types";
 import { FoodHit, getFoodsSorted, selectFoodsSlice } from "@/features/foods";
+import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import FoodCard from "./FoodCard";
 import Spinner from "@/components/Loader/Spinner";
@@ -10,13 +11,24 @@ interface Props {
 }
 
 const FoodsSearched: FC<Props> = ({ queries }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const { foodsSearched, isSearchingFoods } = useSelector(selectFoodsSlice);
+  const router = useRouter();
 
   const foodsToSort = foodsSearched;
 
   const noData = Object.values(foodsToSort).length === 0;
 
-  if (isSearchingFoods) {
+  useEffect(() => {
+    console.log(router);
+    if (isSearchingFoods) {
+      setIsLoading(true);
+    } else {
+      setIsLoading(false);
+    }
+  }, [router.pathname]);
+
+  if (isLoading && isSearchingFoods) {
     return <Spinner customClass="h-6 w-6 m-auto" />;
   }
   if (noData) {

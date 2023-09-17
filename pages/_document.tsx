@@ -22,13 +22,14 @@ export default function Document() {
           href="/images/pwa/favicon-16x16.png"
         />
         <link rel="manifest" href="/site.webmanifest" />
-        <meta name="description" content="Nutrition Plans" />
+        <meta name="description" content="Nutrition Plans website" />
         <meta name="twitter:card" content="Nutrition Plans website" />
         <meta name="twitter:description" content="Nutrition Plans" />
         <meta name="twitter:title" content="Nutrition Plans" />
         <meta property="og:description" content="Nutrition Plans" />
         <meta property="og:site_name" content="nutritionplans.co" />
         <meta property="og:title" content="Nutrition Plans" />
+        <meta property="og:url" content="https://nutritionplans.co" />
         <meta
           name="theme-color"
           content="#fff"

@@ -4,12 +4,16 @@
   "dictionaryDefinitions": [],
   "dictionaries": [],
   "words": [
+    "Aldana",
     "Fabricio",
     "firestore",
+    "notranslate",
     "nutritionplans",
+    "persistor",
     "reduxjs",
     "Richieri",
-    "signup"
+    "signup",
+    "typesense"
   ],
   "ignoreWords": [],
   "import": []

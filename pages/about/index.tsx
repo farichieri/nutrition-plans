@@ -1,7 +1,6 @@
 import BlurImage from "@/components/blur-image";
-import LandingLayout from "@/layouts/LandingLayout";
 import Head from "next/head";
-import Image from "next/image";
+import LandingLayout from "@/layouts/LandingLayout";
 import Link from "next/link";
 
 export default function Page() {
@@ -26,10 +25,10 @@ export default function Page() {
         <title>About | Nutrition Plans</title>
         <meta property="og:title" content="Nutrition Plans About" key="title" />
       </Head>
-      <section className="flex w-full max-w-5xl flex-col items-center pb-24 pt-16">
-        <span className="mb-8 text-5xl font-bold md:text-6xl lg:text-7xl">
+      <section className="flex w-full max-w-5xl flex-col items-center pb-24 pt-14">
+        <h1 className="mb-8 text-5xl font-bold md:text-6xl lg:text-7xl">
           About
-        </span>
+        </h1>
         <div>
           <p className="">
             We&apos;re a meal planning platform that allows you to discover

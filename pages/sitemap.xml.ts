@@ -12,7 +12,7 @@ function generateSiteMap(posts: Posts, plans: PlansType) {
          (route) =>
            `<url>
           <loc>${url}${route}</loc>
-          <lastmod>${new Date().toISOString().split("T")[0]}</lastmod>
+          <lastmod>${new Date().toISOString()}</lastmod>
         </url>`
        )
        .join("")}

@@ -1,8 +1,8 @@
+import { getPlansAvailable } from "@/utils";
 import { PlansType } from "@/types";
+import Head from "next/head";
 import LandingLayout from "@/layouts/LandingLayout";
 import Plans from "@/components/Plans/Plans";
-import Head from "next/head";
-import { getPlansAvailable } from "@/utils";
 
 interface Props {
   plans: PlansType;
@@ -20,9 +20,9 @@ export default function Page({ plans }: Props) {
         />
       </Head>
       <section className="flex w-full max-w-5xl flex-col items-center pb-24 pt-16">
-        <span className="mb-8 text-5xl font-bold md:text-6xl lg:text-7xl">
+        <h1 className="mb-8 text-5xl font-bold md:text-6xl lg:text-7xl">
           Plans
-        </span>
+        </h1>
         <div>
           <p>
             Nutrition plans are essential for a healthy diet. That&apos;s why we
@@ -33,7 +33,7 @@ export default function Page({ plans }: Props) {
           </p>
           <p>
             We have created simple, effective and unique plans to plan your
-            meals. Each plan includes the macronutrients needed for your chosen
+            meals. Each plan includes the macro-nutrients needed for your chosen
             goal, daily energy requirements, and additional tools to help you
             complete your weekly meals. They are designed to provide you with
             the carbohydrates, proteins and fats your body needs each day to

@@ -3,7 +3,7 @@ import PrimaryButton from "../Buttons/PrimaryButton";
 
 const CallToAction = () => {
   return (
-    <div className="flex flex-col items-center justify-center gap-4 text-center">
+    <section className="flex flex-col items-center justify-center gap-4 text-center">
       <span className="mx-auto flex w-fit text-4xl font-bold sm:text-5xl">
         Try Nutrition Plans today
       </span>
@@ -15,7 +15,7 @@ const CallToAction = () => {
           <PrimaryButton onClick={() => {}} content="Try it for free" />
         </Link>
       </div>
-    </div>
+    </section>
   );
 };
 

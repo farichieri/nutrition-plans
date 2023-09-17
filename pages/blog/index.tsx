@@ -16,14 +16,14 @@ export default function Blog({ posts }: Props) {
         <title>Blog | Nutrition Plans</title>
         <meta property="og:title" content="Nutrition Plans Blog" key="title" />
       </Head>
-      <section className="flex w-full max-w-5xl flex-col items-center gap-10 pb-24 pt-16">
-        <span className="mb-8 text-5xl font-bold md:text-6xl lg:text-7xl">
+      <section className="flex w-full max-w-5xl flex-col items-center gap-10 pb-24 pt-14">
+        <h1 className="mb-8 text-5xl font-bold md:text-6xl lg:text-7xl">
           Blog
-        </span>
+        </h1>
         <BlogPosts posts={posts} />
         <div className="my-24 flex w-full items-center justify-center">
           <CallToAction />
-        </div>{" "}
+        </div>
       </section>
     </LandingLayout>
   );

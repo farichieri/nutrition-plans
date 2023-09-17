@@ -17,11 +17,11 @@ interface Props {
 export default function Page({ planData, restOfPlans }: Props) {
   return (
     <LandingLayout>
-      <section className="flex w-full max-w-5xl flex-col items-center justify-center py-24">
-        <div className="mb-10 flex w-full flex-col items-center justify-center gap-4">
-          <span className="mb-10 text-5xl font-bold md:text-6xl lg:text-7xl">
+      <article className="flex w-full max-w-5xl flex-col items-center justify-center">
+        <div className="mb-10 mt-14 flex w-full flex-col items-center justify-center gap-4">
+          <h1 className="mb-8 text-5xl font-bold md:text-6xl lg:text-7xl">
             {planData.title}
-          </span>
+          </h1>
 
           <span className="h-full w-full max-w-[500px] overflow-hidden rounded-3xl shadow-[0_1px_5px_gray] dark:shadow-[0px_1px_5px_#4040408c]">
             <BlurImage
@@ -59,11 +59,11 @@ export default function Page({ planData, restOfPlans }: Props) {
         >
           {planData.content!}
         </ReactMarkdown>
-        <RestOfPlans plans={restOfPlans} />
-        <div className="my-24">
-          <CallToAction />
-        </div>
-      </section>
+      </article>
+      <RestOfPlans plans={restOfPlans} />
+      <div className="my-24">
+        <CallToAction />
+      </div>
     </LandingLayout>
   );
 }
