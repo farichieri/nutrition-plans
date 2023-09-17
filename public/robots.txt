@@ -1,5 +1,3 @@
-# www.nutritionplans.co robots.txt
-
 User-agent: *
 
 Sitemap: https://nutritionplans.co/sitemap.xml

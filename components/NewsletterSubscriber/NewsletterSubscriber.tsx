@@ -33,6 +33,8 @@ const NewsletterSubscriber: FC<Props> = () => {
       if (!("error" in res)) {
         toast.success("You have been subscribed successfully");
         setEmail("");
+      } else {
+        throw Error("Error subscribing to newsletter");
       }
     } catch (error) {
       toast.error("Something went wrong, please try again later");
@@ -45,7 +47,7 @@ const NewsletterSubscriber: FC<Props> = () => {
     <section className="flex w-fit flex-col items-center justify-center gap-5 rounded-lg border border-green-500/50 bg-green-200 px-4 py-8 dark:bg-green-900 ">
       <h2 className="my-0 max-w-2xl py-0 text-center text-3xl font-bold sm:text-4xl">
         🥦 Start receiving the{" "}
-        <span className="underline decoration-green-500 decoration-8 underline-offset-0">
+        <span className="underline decoration-green-500 decoration-8 underline-offset-2">
           BEST
         </span>{" "}
         tips to succeed in your nutrition every week!

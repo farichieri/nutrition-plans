@@ -8,7 +8,7 @@ const Modal = ({
   customClass = "",
   isMobileFullScreen = false,
   isFullScreen = false,
-  isCloseable = false,
+  isCloseable = true,
 }: {
   children: ReactNode;
   onClose: Function;

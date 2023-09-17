@@ -19,14 +19,20 @@ const typesenseFoodsCollection =
 const fetchFoodsHits = async ({
   queries,
   uploaderID,
+  isCurated,
 }: {
   queries: FilterQueries;
   uploaderID?: string;
+  isCurated?: boolean;
 }): Promise<Result<{ hits: FoodHitsGroup; pages: number }, unknown>> => {
   try {
     let data: FoodHitsGroup = {};
 
-    const searchParameters = getSearchParameters({ queries, uploaderID });
+    const searchParameters = getSearchParameters({
+      queries,
+      uploaderID,
+      isCurated,
+    });
 
     const res = await searchClient
       .collections(typesenseFoodsCollection)
@@ -83,14 +89,16 @@ const fetchFoodsCreatedByUser = async ({
 
 const fetchFoods = async ({
   queries,
+  uploaderID,
 }: {
   queries: FilterQueries;
+  uploaderID?: string;
 }): Promise<Result<{ hits: FoodHitsGroup; pages: number }, unknown>> => {
   try {
     let data: FoodHitsGroup = {};
     let pages: number = 0;
 
-    const res = await fetchFoodsHits({ queries });
+    const res = await fetchFoodsHits({ queries, uploaderID, isCurated: true });
 
     if (res.result === "success") {
       const hits = res.data.hits;

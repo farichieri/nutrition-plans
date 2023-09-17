@@ -8,6 +8,7 @@ import {
   type Food,
   type FoodHitsGroup,
   fetchFoodsCreatedByUser,
+  setIsSearchingFoods,
 } from "@/features/foods";
 import { api } from "@/services/api";
 import { db } from "@/services/firebase";
@@ -26,6 +27,7 @@ export const foodsApi = api.injectEndpoints({
     >({
       async queryFn({ queries, user, createdByUser }, { dispatch }) {
         try {
+          dispatch(setIsSearchingFoods(true));
           if (createdByUser) {
             const res = await fetchFoodsCreatedByUser({
               queries,
@@ -38,7 +40,7 @@ export const foodsApi = api.injectEndpoints({
             dispatch(setPages(res.data.pages));
             return { data: res.data.hits };
           } else {
-            const res = await fetchFoods({ queries });
+            const res = await fetchFoods({ queries, uploaderID: user?.id });
             if (res.result === "error") throw new Error("Error fetching foods");
             dispatch(
               setFoodsSearched({ foods: res.data.hits, userID: user.id })
@@ -49,6 +51,8 @@ export const foodsApi = api.injectEndpoints({
         } catch (error) {
           dispatch(setFoodsSearched({ foods: {}, userID: user.id }));
           return { error };
+        } finally {
+          dispatch(setIsSearchingFoods(false));
         }
       },
     }),

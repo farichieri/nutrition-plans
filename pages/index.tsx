@@ -33,9 +33,10 @@ export default function Home({ plans }: Props) {
               <p className="my-0 max-w-md py-0 text-sm font-semibold opacity-50 md:text-lg">
                 Reach the exact amount of nutrients you need
                 <br />
-                Create your diets manually or automatically <br />
+                every day to make real physique changes
+                <br />
                 Choose from a variety of diet plans <br />
-                Follow your progress <br />
+                and follow your progress <br />
               </p>
             </div>
           </div>
