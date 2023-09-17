@@ -21,7 +21,9 @@ export default function Blog({ posts }: Props) {
           Blog
         </span>
         <BlogPosts posts={posts} />
-        <CallToAction />
+        <div className="my-24 flex w-full items-center justify-center">
+          <CallToAction />
+        </div>{" "}
       </section>
     </LandingLayout>
   );

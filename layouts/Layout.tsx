@@ -72,15 +72,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <title>Nutrition Plans</title>
       </Head>
       {_theme && (
-        <div className={font.className}>
-          <main
-            translate="no"
-            className="min-w-screen flex min-h-screen flex-col items-center justify-between "
-          >
-            <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
-            <Analytics />
-          </main>
-        </div>
+        <main
+          translate="no"
+          className={`min-w-screen flex min-h-screen flex-col items-center justify-between ${font.className}`}
+        >
+          <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+          <Analytics />
+        </main>
       )}
     </>
   );

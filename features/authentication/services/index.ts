@@ -1,7 +1,3 @@
-import { api } from "@/services/api";
-import { userDocRef } from "@/services/firebase";
-import { getDoc, setDoc, updateDoc } from "firebase/firestore";
-import { User as FirebaseUser, deleteUser } from "firebase/auth";
 import {
   User,
   newAccount,
@@ -9,6 +5,10 @@ import {
   setUpdateUser,
   setUser,
 } from "@/features/authentication";
+import { api } from "@/services/api";
+import { userDocRef } from "@/services/firebase";
+import { getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { User as FirebaseUser, deleteUser } from "firebase/auth";
 
 export const authApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -86,7 +86,7 @@ export const authApi = api.injectEndpoints({
             id: uid,
           };
           await setDoc(userRef, newUser);
-          await fetch("/api/welcome/email", {
+          await fetch("/api/email/welcome", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

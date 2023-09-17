@@ -9,20 +9,20 @@ interface Props {
 
 const Plans: FC<Props> = ({ plans }) => {
   return (
-    <section className="flex w-full max-w-2xl flex-col items-center justify-center gap-10 py-10">
+    <section className="m-auto flex w-full max-w-3xl flex-col items-center justify-center gap-10 py-10">
       <div className="mx-auto flex flex-wrap justify-center gap-5 sm:gap-10">
         {plans.map((plan) => (
           <Link
             href={`/plans/${plan.id}`}
             key={plan.id}
-            className="relative flex h-[auto] w-[auto] max-w-xs flex-col items-center justify-center overflow-hidden duration-300 hover:scale-105"
+            className="relative flex h-auto w-full max-w-xs flex-col items-center justify-center overflow-hidden duration-300 hover:scale-105 xs:w-auto"
           >
-            <span className="flex w-full items-center justify-center text-center text-xl font-bold">
+            <span className="flex w-full items-center justify-center py-1 text-center text-xl font-bold sm:text-2xl">
               {plan.title}
             </span>
             <span
               aria-hidden="true"
-              className="h-[150px] w-[150px] min-w-[150px] overflow-auto rounded-3xl"
+              className="h-auto w-full min-w-[150px] overflow-auto rounded-3xl sm:h-[200px] sm:w-[200px] "
             >
               <BlurImage
                 image={{

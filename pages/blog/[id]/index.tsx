@@ -9,6 +9,7 @@ import Head from "next/head";
 import LandingLayout from "@/layouts/LandingLayout";
 import Link from "next/link";
 import remarkGfm from "remark-gfm";
+import { NewsletterSubscriber } from "@/components";
 
 interface Props {
   postData: Post;
@@ -78,7 +79,9 @@ export default function Page({ postData }: Props) {
         >
           {postData.content}
         </ReactMarkdown>
-        <CallToAction />
+        <div className="my-24 flex w-full items-center justify-center">
+          <CallToAction />
+        </div>
       </section>
     </LandingLayout>
   );

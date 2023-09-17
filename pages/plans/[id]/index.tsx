@@ -60,7 +60,9 @@ export default function Page({ planData, restOfPlans }: Props) {
           {planData.content!}
         </ReactMarkdown>
         <RestOfPlans plans={restOfPlans} />
-        <CallToAction />
+        <div className="my-24">
+          <CallToAction />
+        </div>
       </section>
     </LandingLayout>
   );

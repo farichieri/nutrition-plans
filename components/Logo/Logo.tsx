@@ -25,7 +25,7 @@ const Logo: FC<Props> = ({ hideText, showPremiumText }) => {
         </span>
       )}
       {showPremiumText && user?.isPremium && (
-        <span className="letter min-w-fit bg-gradient-to-b from-green-300 via-green-500 to-green-900 bg-clip-text text-lg font-bold tracking-tighter text-transparent">
+        <span className="letter hidden min-w-fit bg-gradient-to-b from-green-300 via-green-500 to-green-900 bg-clip-text text-lg font-bold tracking-tighter text-transparent lg:flex">
           Premium
         </span>
       )}

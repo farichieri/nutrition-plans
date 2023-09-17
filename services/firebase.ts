@@ -54,3 +54,9 @@ export const userMealDoc = ({
   userID: string;
   mealID: string;
 }) => doc(db, "users", userID, "meals", mealID);
+
+// Emails
+export const newsletterEmailsCollection = collection(
+  db,
+  "newsletter_subscribers"
+);
