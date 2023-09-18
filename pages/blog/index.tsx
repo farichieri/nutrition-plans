@@ -13,7 +13,7 @@ export default function Blog({ posts }: Props) {
   return (
     <LandingLayout>
       <Head>
-        <title>Blog | Nutrition Plans</title>
+        <title>Blog | Nutrition Plans CO</title>
         <meta property="og:title" content="Nutrition Plans Blog" key="title" />
       </Head>
       <section className="flex w-full max-w-5xl flex-col items-center gap-10 pb-24 pt-14">

@@ -11,7 +11,7 @@ export default function LandingLayout({
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Nutrition Plans</title>
+        <title>Nutrition Plans CO</title>
       </Head>
       <>
         <NavBar />
