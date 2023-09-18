@@ -28,11 +28,15 @@ export default function Page({ planData, restOfPlans }: Props) {
   return (
     <LandingLayout>
       <Head>
-        <title>Nutrition Plans CO | {planData.title}</title>
-        <meta property="title" content={`${planData.title}`} key="title" />
+        <title>{`${planData.title} | Nutrition Plans CO`}</title>
+        <meta
+          property="title"
+          content={`${planData.title} | Nutrition Plans CO`}
+          key="title"
+        />
         <meta
           property="og:title"
-          content={`Nutrition Plans CO | ${planData.title}`}
+          content={`${planData.title} | Nutrition Plans CO`}
           key="og:title"
         />
         <meta name="description" content={planData.description} />

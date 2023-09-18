@@ -12,7 +12,7 @@ export default function Page({ plans }: Props) {
   return (
     <LandingLayout>
       <Head>
-        <title>Plans | Nutrition Plans</title>
+        <title>Plans | Nutrition Plans CO</title>
         <meta
           property="og:title"
           content="Nutrition Plans | Plans Available"

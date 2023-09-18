@@ -9,7 +9,7 @@ export default function Pricing() {
   return (
     <LandingLayout>
       <Head>
-        <title>Pricing | Nutrition Plans</title>
+        <title>Pricing | Nutrition Plans CO</title>
         <meta
           property="og:title"
           content="Nutrition Plans Pricing"

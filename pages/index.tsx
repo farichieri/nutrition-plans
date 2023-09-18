@@ -1,7 +1,7 @@
 import { FAQS_INDEX } from "@/data/content";
 import { getPlansAvailable } from "@/utils/getPlansAvailable";
-import { PlansType } from "@/types";
 import { NewsletterSubscriber, Reveal } from "@/components";
+import { PlansType } from "@/types";
 import { useEffect } from "react";
 import BlurImage from "@/components/blur-image";
 import CallToAction from "@/components/call-to-action/CallToAction";
@@ -26,17 +26,13 @@ export default function Home({ plans }: Props) {
       <section className="flex w-full flex-col items-center gap-10 pb-20 pt-10">
         <div className="flex w-full flex-col items-center gap-10">
           <div className="flex w-full flex-col items-center justify-center gap-4 text-center text-2xl">
-            <h1 className="max-w-5xl bg-gradient-to-br from-green-300 to-green-800 bg-clip-text pb-2 text-4xl font-extrabold text-transparent dark:from-green-300 dark:to-green-800 md:text-6xl lg:text-7xl">
-              Achieve your desired physique
+            <h1 className="max-w-6xl bg-gradient-to-br from-green-300 to-green-800 bg-clip-text pb-2 text-4xl font-extrabold text-transparent dark:from-green-300 dark:to-green-800 md:text-6xl lg:text-7xl">
+              Achieve Your Desired Physique with Our Meal Planner Platform
             </h1>
             <div className="flex flex-col">
-              <p className="my-0 max-w-md py-0 text-sm font-semibold opacity-50 md:text-lg">
-                Reach the exact amount of nutrients you need
-                <br />
-                every day to make real physique changes
-                <br />
-                Choose from a variety of diet plans <br />
-                and follow your progress <br />
+              <p className="my-0 max-w-2xl py-0 text-sm font-semibold opacity-50 md:text-lg">
+                Reach your daily nutrient goals and transform your physique with
+                our meal planner, while following your preferred type of diet!
               </p>
             </div>
           </div>
