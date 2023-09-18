@@ -2,6 +2,7 @@ import { getAllMDIDS, getAllMDData, MDDirectories } from "@/utils/mds";
 import { MdTrendingFlat } from "react-icons/md";
 import { Post } from "@/types";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
+import { useRouter } from "next/router";
 import BlurImage from "@/components/blur-image";
 import CallToAction from "@/components/call-to-action/CallToAction";
 import Date from "@/components/Posts/Post/Date/Date";
@@ -15,15 +16,47 @@ interface Props {
 }
 
 export default function Page({ postData }: Props) {
+  const { asPath } = useRouter();
+  const origin =
+    typeof window !== "undefined" && window.location.origin
+      ? window.location.origin
+      : "";
+
+  const URL = `${origin}${asPath}`;
+
   return (
     <LandingLayout>
       <Head>
-        <title>Nutrition Plans | {postData.title}</title>
+        <title>{postData.title}</title>
+        <meta property="title" content={`${postData.title}`} key="title" />
         <meta
           property="og:title"
-          content={`Nutrition Plans | ${postData.title}`}
-          key="title"
+          content={`${postData.title}`}
+          key="og:title"
         />
+        <meta name="description" content={postData.description} />
+        <meta
+          property="og:description"
+          content={postData.description}
+          key="description"
+        />
+        <meta property="og:image" content={postData.image} key="image" />
+        <meta
+          property="og:image:secure_url"
+          content={postData.image}
+          key="image:secure_url"
+        />
+        <meta property="article:author" content="Nutrition Plans CO" />
+        <meta property="article:published_time" content={postData.date} />
+        <meta property="article:section" content="Blog" />
+        <meta property="og:locale" content="en_US" key="locale" />
+        <meta
+          property="og:site_name"
+          content="Nutrition Plans CO"
+          key="site_name"
+        />
+        <meta property="og:type" content="article" key="type" />
+        <meta property="og:url" content={URL} key="url" />
       </Head>
       <article className="flex max-w-4xl flex-col pt-14">
         <aside>

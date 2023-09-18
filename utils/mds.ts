@@ -26,13 +26,14 @@ const getSortedData = (directory: MDDirectories): Posts | PlansType => {
       authorName: matterResult.data.authorName,
       content: matterResult.content,
       date: matterResult.data.date,
+      description: matterResult.data.description,
       id,
       image: matterResult.data.image,
+      isAvailable: matterResult.data.isAvailable,
       summary: matterResult.data.summary,
       timeReading,
       title: matterResult.data.title,
       topic: matterResult.data.topic,
-      isAvailable: matterResult.data.isAvailable,
     };
   });
 

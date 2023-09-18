@@ -1,5 +1,6 @@
 ---
 title: "Gluten Free"
+description: "Discover the benefits of following the Gluten Free Nutrition Plan!"
 isAvailable: true
 image: "/images/plans/gluten_free.png"
 date: "2023-07-30"

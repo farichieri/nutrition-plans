@@ -5,7 +5,7 @@
   "lang": "en",
   "name": "nutritionplans.co",
   "scope": "/app",
-  "short_name": "nutritionplans.co",
+  "short_name": "NP",
   "start_url": "/app/today",
   "theme_color": "#fff",
   "icons": [

@@ -1,5 +1,6 @@
 ---
 title: "Balanced"
+description: "Discover the benefits of following the Balanced Nutrition Plan!"
 isAvailable: true
 image: "/images/plans/balanced.png"
 date: "2023-07-30"

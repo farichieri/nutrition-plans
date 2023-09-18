@@ -1,12 +1,13 @@
 ---
-title: "Mediterranean"
-isAvailable: true
-image: "/images/plans/mediterranean.png"
-date: "2023-07-30"
 author: "aldana-richieri"
 authorName: "Aldana Richieri"
+date: "2023-07-30"
+description: "Discover the benefits of following the Mediterranean Nutrition Plan!"
+image: "/images/plans/mediterranean.png"
+isAvailable: true
 premium: false
 summary: "Mediterranean Plan"
+title: "Mediterranean"
 topic: "Plan"
 ---
 

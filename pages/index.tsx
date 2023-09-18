@@ -41,7 +41,7 @@ export default function Home({ plans }: Props) {
             </div>
           </div>
           <div className="h-10">
-            <Link href="/signup">
+            <Link aria-label="button" href="/signup" tabIndex={0}>
               <PrimaryButton onClick={() => {}} content={`Get Started`} />
             </Link>
           </div>
