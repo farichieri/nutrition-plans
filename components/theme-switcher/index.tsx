@@ -12,7 +12,7 @@ const ThemeSwitcher: FC<Props> = ({ withText }) => {
   const dispatch = useDispatch();
   const { theme } = useSelector(selectLayoutSlice);
 
-  const toogleTheme = () => {
+  const toggleTheme = () => {
     if (
       theme === "dark" ||
       (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)
@@ -35,8 +35,9 @@ const ThemeSwitcher: FC<Props> = ({ withText }) => {
 
   return (
     <button
-      onClick={toogleTheme}
+      onClick={toggleTheme}
       className="flex w-full items-center justify-between gap-1 transition-all"
+      aria-label="Toggle theme"
     >
       {withText && <span>Theme</span>}
       {theme === Theme.Dark ? (

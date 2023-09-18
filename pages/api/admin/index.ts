@@ -10,17 +10,14 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    // const querySnapshot = await getDocs(collection(db, "foods"));
-    // querySnapshot.forEach(async (snapShot) => {
-    //   const data = snapShot.data() as Food;
-    //   updateDoc(doc(db, "foods", snapShot.id), {
-    //     compatiblePlans: {
-    //       ...data.compatiblePlans,
-    //       keto: false,
-    //     },
-    //   });
-    // });
-    // return res.status(200).json({ message: "success" });
+    const querySnapshot = await getDocs(collection(db, "foods"));
+    querySnapshot.forEach(async (snapShot) => {
+      // const data = snapShot.data() as Food;
+      updateDoc(doc(db, "foods", snapShot.id), {
+        isCurated: true,
+      });
+    });
+    return res.status(200).json({ message: "success" });
     return res.redirect(307, "/app");
   } catch (error) {
     if (error instanceof Error) {
