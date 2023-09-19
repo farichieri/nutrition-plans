@@ -8,7 +8,7 @@ const CallToAction = () => {
         Try Nutrition Plans today
       </h2>
       <p className="my-0 py-0">
-        Access to your first nutrition plan today and start your transformation
+        Access to our meal planner today and start your transformation
       </p>
       <div className="my-2 h-10">
         <Link href="/signup">

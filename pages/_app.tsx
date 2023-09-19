@@ -12,6 +12,7 @@ import { Layout } from "@/layouts";
 import NProgress from "nprogress";
 import type { AppProps } from "next/app";
 import ErrorBoundary from "@/components/Errors/ErrorBoundary";
+import Head from "next/head";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -63,6 +64,12 @@ export default function App({ Component, pageProps }: AppProps) {
         <PersistGate loading={null} persistor={persistor}>
           <Toaster />
           <Layout>
+            <Head>
+              <meta
+                name="viewport"
+                content="width=device-width, initial-scale=1"
+              />
+            </Head>
             <Component {...pageProps} />
           </Layout>
         </PersistGate>

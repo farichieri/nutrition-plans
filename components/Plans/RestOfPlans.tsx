@@ -10,9 +10,9 @@ interface Props {
 const RestOfPlans: FC<Props> = ({ plans }) => {
   return (
     <section className="flex w-full max-w-5xl flex-col items-center justify-center gap-10 py-10">
-      <span className="text-center text-4xl font-bold">
+      <h2 className="mx-auto my-0 flex w-fit py-0 text-4xl font-extrabold sm:text-5xl">
         Other plans Available
-      </span>
+      </h2>
       <div className="mx-auto flex flex-wrap justify-center gap-5 sm:gap-10">
         {plans.map((plan) => (
           <Link

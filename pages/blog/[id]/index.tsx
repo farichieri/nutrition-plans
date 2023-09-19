@@ -2,14 +2,15 @@ import { getAllMDIDS, getAllMDData, MDDirectories } from "@/utils/mds";
 import { MdTrendingFlat } from "react-icons/md";
 import { Post } from "@/types";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
+import { StructuredData } from "@/components";
 import { useCanonicalURL } from "@/hooks";
 import BlurImage from "@/components/blur-image";
 import CallToAction from "@/components/call-to-action/CallToAction";
 import Date from "@/components/Posts/Post/Date/Date";
-import Head from "next/head";
 import LandingLayout from "@/layouts/LandingLayout";
 import Link from "next/link";
 import remarkGfm from "remark-gfm";
+import type { BlogPosting, WithContext } from "schema-dts";
 
 interface Props {
   postData: Post;
@@ -18,37 +19,51 @@ interface Props {
 export default function Page({ postData }: Props) {
   const canonicalURL = useCanonicalURL();
 
+  const structuredData: WithContext<BlogPosting> = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": canonicalURL,
+    },
+    headline: postData.title,
+    description: postData.description,
+    isFamilyFriendly: true,
+    image: [postData.image],
+    author: {
+      "@type": "Person",
+      name: "Nutrition Plans CO",
+    },
+    url: canonicalURL,
+    publisher: {
+      "@type": "Organization",
+      name: "Nutrition Plans CO",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://nutritionplans.co/images/logo.png",
+      },
+    },
+    datePublished: postData.date,
+    dateModified: postData.date,
+  };
+
   return (
     <LandingLayout>
-      <Head>
+      <StructuredData data={structuredData}>
         <title>{postData.title}</title>
         <link rel="canonical" href={canonicalURL} />
-        <meta property="title" content={postData.title} key="title" />
-        <meta property="og:title" content={postData.title} key="og:title" />
         <meta name="description" content={postData.description} />
-        <meta
-          property="og:description"
-          content={postData.description}
-          key="description"
-        />
-        <meta property="og:image" content={postData.image} key="image" />
-        <meta
-          property="og:image:secure_url"
-          content={postData.image}
-          key="image:secure_url"
-        />
         <meta property="article:author" content="Nutrition Plans CO" />
         <meta property="article:published_time" content={postData.date} />
         <meta property="article:section" content="Blog" />
-        <meta property="og:locale" content="en_US" key="locale" />
-        <meta
-          property="og:site_name"
-          content="Nutrition Plans CO"
-          key="site_name"
-        />
+        <meta property="og:description" content={postData.description} />
+        <meta property="og:image:secure_url" content={postData.image} />
+        <meta property="og:image" content={postData.image} key="image" />
+        <meta property="og:title" content={postData.title} key="og:title" />
         <meta property="og:type" content="article" key="type" />
         <meta property="og:url" content={canonicalURL} key="url" />
-      </Head>
+        <meta property="title" content={postData.title} key="title" />
+      </StructuredData>
       <article className="flex max-w-4xl flex-col pt-14">
         <aside>
           <Link
@@ -69,7 +84,7 @@ export default function Page({ postData }: Props) {
             <span>{postData.timeReading}</span>
           </div>
 
-          <span className="relative h-[80vh] w-full overflow-auto rounded-lg">
+          <figure className="relative h-[80vh] w-full overflow-auto rounded-lg">
             <BlurImage
               image={{
                 imageURL: postData.image,
@@ -77,7 +92,7 @@ export default function Page({ postData }: Props) {
                 id: postData.id,
               }}
             />
-          </span>
+          </figure>
         </div>
         <ReactMarkdown
           className="border-b pb-14"

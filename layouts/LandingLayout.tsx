@@ -10,7 +10,6 @@ export default function LandingLayout({
   return (
     <>
       <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Nutrition Plans CO</title>
       </Head>
       <>

@@ -46,6 +46,7 @@ export default function PremiumLayout({ children }: Props) {
     if (isSubscribeModalOpen && user?.isPremium) {
       dispatch(setIsSubscribeModalOpen(false));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, isCreatingUser]);
 
   if (!user && !isSigningUser) {
@@ -55,7 +56,7 @@ export default function PremiumLayout({ children }: Props) {
   return (
     <>
       <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="robots" content="noindex" />
         <title>App - Nutrition Plans CO</title>
       </Head>
 
