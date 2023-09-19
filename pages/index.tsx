@@ -26,6 +26,21 @@ export default function Home({ plans }: Props) {
     window.history.scrollRestoration = "manual";
   }, []);
 
+  const KEYWORDS = [
+    "nutrition plans",
+    "diet plan",
+    "healthy eating",
+    "meal planning",
+    "calorie counting",
+    "weight loss",
+    "balanced diet",
+    "vegetarian diet",
+    "keto diet",
+    "low carb diet",
+    "gluten free diet",
+    "mediterranean diet",
+  ];
+
   const structuredData: WithContext<WebPage> = {
     "@context": "https://schema.org",
     "@type": "WebPage",
@@ -49,20 +64,7 @@ export default function Home({ plans }: Props) {
     url: canonicalURL,
     datePublished: "2021-08-01",
     dateModified: "2021-08-01",
-    keywords: [
-      "nutrition plans",
-      "diet plan",
-      "healthy eating",
-      "meal planning",
-      "calorie counting",
-      "weight loss",
-      "balanced diet",
-      "vegetarian diet",
-      "keto diet",
-      "low carb diet",
-      "gluten free diet",
-      "mediterranean diet",
-    ],
+    keywords: KEYWORDS,
   };
 
   return (
@@ -71,15 +73,29 @@ export default function Home({ plans }: Props) {
         <title>Nutrition Plans CO</title>
         <link rel="canonical" href={canonicalURL} />
         <meta name="description" content={METADATA.DESCRIPTION} />
+        {KEYWORDS.map((keyword, index) => (
+          <meta property="article:tag" content={keyword} key={index} />
+        ))}
+        {/* twitter Meta Tags*/}
+        <meta name="twitter:creator" content="@nutritionplans_" />
+        <meta name="twitter:site" content="@nutritionplans_" />
+        <meta property="twitter:domain" content="nutritionplans.co" />
+        <meta property="twitter:url" content={canonicalURL} />
+        <meta name="twitter:title" content={METADATA.TITLE} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:description" content={METADATA.DESCRIPTION} />
+        <meta name="twitter:image" content={IMAGES.LANDING} />
+        {/* Facebook Meta Tags */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={canonicalURL} />
+        <meta property="og:title" content={METADATA.TITLE} />
         <meta property="og:description" content={METADATA.DESCRIPTION} />
-        <meta property="og:image:height" content="630" />
+        <meta property="og:image" content={IMAGES.LANDING} />
+        <meta property="og:image:height" content="1280" />
         <meta property="og:image:secure_url" content={IMAGES.LANDING} />
-        <meta property="og:image:width" content="1280" />
-        <meta property="og:image" content={IMAGES.LANDING} key="image" />
-        <meta property="og:title" content={METADATA.TITLE} key="og:title" />
-        <meta property="og:type" content="website" key="type" />
-        <meta property="og:url" content={canonicalURL} key="url" />
-        <meta property="title" content={METADATA.TITLE} key="title" />
+        <meta property="og:image:width" content="630" />
+        <meta property="og:locale" content="en_US" key="locale" />
+        <meta property="og:site_name" content="Nutrition Plans CO" />
       </StructuredData>
       <section className="flex w-full flex-col items-center gap-10 pb-20 pt-10">
         <div className="flex w-full flex-col items-center gap-10">

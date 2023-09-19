@@ -66,6 +66,7 @@ export interface Post {
   timeReading: string;
   title: string;
   topic: string;
+  keywords: string[];
 }
 export interface Posts extends Array<Post> {}
 export interface PlanType {
@@ -82,6 +83,7 @@ export interface PlanType {
   timeReading: string;
   title: string;
   topic: string;
+  keywords: string[];
 }
 export interface PlansType extends Array<PlanType> {}
 

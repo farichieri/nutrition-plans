@@ -10,6 +10,19 @@ authorName: "Aldana Richieri"
 premium: false
 summary: "Keto Plan"
 topic: "Keto"
+keywords:
+  [
+    "Keto Diet",
+    "Ketogenic Diet",
+    "Keto Diet Plan",
+    "Keto Recipes",
+    "Ketosis",
+    "Low-Carb Diet",
+    "Keto Meal Plan",
+    "Keto Foods",
+    "Keto Weight Loss",
+    "Keto Lifestyle",
+  ]
 ---
 
 The first question we should ask ourselves before starting the ketogenic eating plan is how it works in our body to achieve one of the objectives sought, which is the burning of adipose tissue.

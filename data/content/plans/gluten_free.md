@@ -10,6 +10,19 @@ authorName: "Aldana Richieri"
 premium: false
 summary: "Gluten Free Plan"
 topic: "Plan"
+keywords:
+  [
+    "Gluten-Free Diet",
+    "Celiac Disease Diet",
+    "Gluten-Free Recipes",
+    "Gluten-Free Foods",
+    "Gluten-Free Meal Plan",
+    "Gluten Sensitivity",
+    "Gluten-Free Lifestyle",
+    "Gluten-Free Products",
+    "Gluten-Free Cooking",
+    "Eating Gluten-Free",
+  ]
 ---
 
 The gluten-free diet consists of a diet in which gluten is avoided, a protein present in wheat, oats, barley and rye and which can also be found in other products such as medicines, vitamins or supplements. Adaptation to this diet usually occurs for medical reasons, such as celiac disease, non-celiac gluten sensitivity, or wheat allergy. You can also follow a gluten-free diet as a measure to lose weight or even as an option for intestinal pathologies, autoimmune diseases, even for those who choose an anti-inflammatory diet as a lifestyle.
