@@ -21,20 +21,20 @@ const FAQ: FC<Props> = ({ content, setOpen, open, index }) => {
       onClick={() => setOpen(index === open ? null : index)}
     >
       <div className="relative flex w-full items-center justify-between ">
-        <span className="text-xl font-semibold">{content.title}</span>
+        <h3 className="text-xl font-semibold">{content.title}</h3>
         <MdExpandMore
           className={`h-6 w-6 duration-200 ease-in-out ${
             open === index && "-rotate-180 transform text-green-500"
           }`}
         />
       </div>
-      <span
-        className={`overflow-hidden pt-2 text-base transition-[max-height] duration-300  ${
+      <p
+        className={`my-0 overflow-hidden pb-0 pt-2 text-base transition-[max-height] duration-300  ${
           open === index ? " max-h-96" : "max-h-0"
         }`}
       >
         {content.answer}
-      </span>
+      </p>
     </div>
   );
 };

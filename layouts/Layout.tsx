@@ -70,7 +70,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Nutrition Plans CO: Personalized Meal Planner</title>
+        {/* <title>Nutrition Plans COAA</title> */}
       </Head>
       {_theme && (
         <main

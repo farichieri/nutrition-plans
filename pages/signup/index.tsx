@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import Link from "next/link";
 import Loader from "@/components/Loader/Loader";
 import SignLayout from "@/layouts/SignLayout";
+import Head from "next/head";
 
 export default function Page() {
   const router = useRouter();
@@ -22,6 +23,9 @@ export default function Page() {
 
   return (
     <SignLayout>
+      <Head>
+        <title>Sign up | Nutrition Plans CO</title>
+      </Head>
       {(isLoading || isSigningUser || user) && <Loader />}
       <Signup />
       <div className="text-center text-base">

@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import Loader from "@/components/Loader/Loader";
 import SignLayout from "@/layouts/SignLayout";
+import Head from "next/head";
 
 export default function Page() {
   const router = useRouter();
@@ -20,6 +21,9 @@ export default function Page() {
 
   return (
     <SignLayout>
+      <Head>
+        <title>Log in | Nutrition Plans CO</title>
+      </Head>
       {(isLoading || isSigningUser || user) && <Loader />}
       <Login />
     </SignLayout>

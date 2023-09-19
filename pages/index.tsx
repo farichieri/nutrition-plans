@@ -27,9 +27,7 @@ export default function Home({ plans }: Props) {
   return (
     <LandingLayout>
       <Head>
-        <title>
-          Meal Planner | Personalized Nutrition Plans | Nutrition Plans CO
-        </title>
+        <title>Nutrition Plans CO</title>
         <link rel="canonical" href={canonicalURL} />
       </Head>
       <section className="flex w-full flex-col items-center gap-10 pb-20 pt-10">

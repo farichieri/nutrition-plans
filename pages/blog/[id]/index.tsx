@@ -23,12 +23,8 @@ export default function Page({ postData }: Props) {
       <Head>
         <title>{postData.title}</title>
         <link rel="canonical" href={canonicalURL} />
-        <meta property="title" content={`${postData.title}`} key="title" />
-        <meta
-          property="og:title"
-          content={`${postData.title}`}
-          key="og:title"
-        />
+        <meta property="title" content={postData.title} key="title" />
+        <meta property="og:title" content={postData.title} key="og:title" />
         <meta name="description" content={postData.description} />
         <meta
           property="og:description"
