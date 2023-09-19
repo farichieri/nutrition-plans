@@ -28,7 +28,7 @@ export default function Document() {
         />
         <meta
           name="title"
-          content="Personalized Meal Planner | Nutrition Plans CO"
+          content="Meal Planner | Personalized Nutrition Plans | Nutrition Plans CO"
         />
         <meta name="twitter:card" content="Nutrition Plans website" />
         <meta
@@ -37,8 +37,9 @@ export default function Document() {
         />
         <meta
           name="twitter:title"
-          content="Personalized Meal Planner | Nutrition Plans CO"
+          content="Meal Planner | Personalized Nutrition Plans | Nutrition Plans CO"
         />
+        <meta name="twitter:site" content="@nutritionplans_" />
         <meta
           property="og:description"
           content="Transform your health with personalized meal plans - your path to a better you! Discover:  Balanced, Keto, Low Carb, Gluten Free, Mediterranean, Vegetarian."
@@ -46,7 +47,7 @@ export default function Document() {
         <meta property="og:site_name" content="Nutrition Plans CO" />
         <meta
           property="og:title"
-          content="Personalized Meal Planner | Nutrition Plans CO"
+          content="Meal Planner | Personalized Nutrition Plans | Nutrition Plans CO"
         />
         <meta property="og:url" content="https://nutritionplans.co" />
         <meta property="og:type" content="website" />

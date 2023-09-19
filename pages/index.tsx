@@ -2,11 +2,13 @@ import { FAQS_INDEX } from "@/data/content";
 import { getPlansAvailable } from "@/utils/getPlansAvailable";
 import { NewsletterSubscriber, Reveal } from "@/components";
 import { PlansType } from "@/types";
+import { useCanonicalURL } from "@/hooks";
 import { useEffect } from "react";
 import BlurImage from "@/components/blur-image";
 import CallToAction from "@/components/call-to-action/CallToAction";
 import FAQS from "@/components/FAQS/FAQS";
 import Goals from "@/components/Goals/Goals";
+import Head from "next/head";
 import LandingLayout from "@/layouts/LandingLayout";
 import Link from "next/link";
 import Plans from "@/components/Plans/Plans";
@@ -17,12 +19,19 @@ interface Props {
 }
 
 export default function Home({ plans }: Props) {
+  const canonicalURL = useCanonicalURL();
   useEffect(() => {
     window.history.scrollRestoration = "manual";
   }, []);
 
   return (
     <LandingLayout>
+      <Head>
+        <title>
+          Meal Planner | Personalized Nutrition Plans | Nutrition Plans CO
+        </title>
+        <link rel="canonical" href={canonicalURL} />
+      </Head>
       <section className="flex w-full flex-col items-center gap-10 pb-20 pt-10">
         <div className="flex w-full flex-col items-center gap-10">
           <div className="flex w-full flex-col items-center justify-center gap-4 text-center text-2xl">
@@ -61,9 +70,9 @@ export default function Home({ plans }: Props) {
         <div className="my-10 w-full">
           <Reveal width="w-full">
             <div className="flex flex-col gap-5">
-              <span className="mx-auto flex w-fit text-4xl font-bold sm:text-5xl">
+              <h2 className="mx-auto my-0 flex w-fit py-0 text-4xl font-extrabold sm:text-5xl">
                 Adapt your diet
-              </span>
+              </h2>
               <span className="relative flex h-full w-full overflow-hidden rounded-xl border duration-300">
                 <BlurImage
                   image={{
@@ -81,9 +90,9 @@ export default function Home({ plans }: Props) {
         <div className="my-10 w-full">
           <Reveal width="w-full">
             <div className="flex flex-col gap-5">
-              <span className="mx-auto flex w-fit text-center text-4xl font-bold sm:text-5xl">
+              <h2 className="mx-auto my-0 flex w-fit py-0 text-4xl font-extrabold sm:text-5xl">
                 Follow your Progress
-              </span>
+              </h2>
               <span className="relative flex h-full w-full overflow-hidden rounded-xl border duration-300">
                 <BlurImage
                   image={{
@@ -101,9 +110,9 @@ export default function Home({ plans }: Props) {
         <div className="my-10">
           <Reveal width="w-full">
             <>
-              <span className="mx-auto flex w-fit text-4xl font-bold sm:text-5xl">
+              <h2 className="mx-auto my-0 flex w-fit py-0 text-4xl font-extrabold sm:text-5xl">
                 Plans included
-              </span>
+              </h2>
               <Plans plans={plans} />
             </>
           </Reveal>

@@ -4,6 +4,7 @@ import useTheme from "./useTheme";
 import useWindowHeight from "./useWindowHeight";
 import useWindowWidth from "./useWindowWidth";
 import usePagination from "./usePagination";
+import useCanonicalURL from "./useCanonicalURL";
 
 export {
   useBeforeInstallPrompt,
@@ -12,4 +13,5 @@ export {
   useTheme,
   useWindowHeight,
   useWindowWidth,
+  useCanonicalURL,
 };
