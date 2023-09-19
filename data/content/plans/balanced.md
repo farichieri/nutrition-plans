@@ -3,6 +3,7 @@ title: "Balanced"
 description: "Discover the benefits of following the Balanced Nutrition Plan!"
 isAvailable: true
 image: "/images/plans/balanced.png"
+imageURL: "https://nutritionplans.co/images/plans/balanced.png"
 date: "2023-07-30"
 author: "aldana-richieri"
 authorName: "Aldana Richieri"

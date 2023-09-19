@@ -2,6 +2,7 @@
 title: "Why is it important to follow a healthy diet?"
 description: "Discover why is it important to follow a healthy diet, the benefits of it and how to follow one properly."
 image: "/images/posts/why-is-it-important-to-follow-a-healthy-diet/0.jpg"
+imageURL: "https://nutritionplans.co/images/posts/why-is-it-important-to-follow-a-healthy-diet/0.jpg"
 summary: "What should we consider"
 date: "2022-05-29"
 author: "aldana-richieri"

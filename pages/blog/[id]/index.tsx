@@ -29,7 +29,7 @@ export default function Page({ postData }: Props) {
     headline: postData.title,
     description: postData.description,
     isFamilyFriendly: true,
-    image: [postData.image],
+    image: [postData.imageURL],
     author: {
       "@type": "Person",
       name: "Nutrition Plans CO",
@@ -57,8 +57,8 @@ export default function Page({ postData }: Props) {
         <meta property="article:published_time" content={postData.date} />
         <meta property="article:section" content="Blog" />
         <meta property="og:description" content={postData.description} />
-        <meta property="og:image:secure_url" content={postData.image} />
-        <meta property="og:image" content={postData.image} key="image" />
+        <meta property="og:image:secure_url" content={postData.imageURL} />
+        <meta property="og:image" content={postData.imageURL} key="image" />
         <meta property="og:title" content={postData.title} key="og:title" />
         <meta property="og:type" content="article" key="type" />
         <meta property="og:url" content={canonicalURL} key="url" />

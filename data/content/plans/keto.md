@@ -3,6 +3,7 @@ title: "Keto"
 description: "Discover the benefits of following the Keto Nutrition Plan!"
 isAvailable: true
 image: "/images/plans/keto.png"
+imageURL: "https://nutritionplans.co/images/plans/keto.png"
 date: "2023-07-30"
 author: "aldana-richieri"
 authorName: "Aldana Richieri"
