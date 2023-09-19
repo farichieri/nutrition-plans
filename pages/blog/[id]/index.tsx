@@ -45,6 +45,7 @@ export default function Page({ postData }: Props) {
     },
     datePublished: postData.date,
     dateModified: postData.date,
+    keywords: postData.keywords,
   };
 
   return (
@@ -56,13 +57,30 @@ export default function Page({ postData }: Props) {
         <meta property="article:author" content="Nutrition Plans CO" />
         <meta property="article:published_time" content={postData.date} />
         <meta property="article:section" content="Blog" />
+        <meta property="title" content={postData.title} key="title" />
+        {postData.keywords.map((keyword, index) => (
+          <meta property="article:tag" content={keyword} key={index} />
+        ))}
+        {/* twitter Meta Tags*/}
+        <meta name="twitter:creator" content="@nutritionplans_" />
+        <meta name="twitter:site" content="@nutritionplans_" />
+        <meta property="twitter:domain" content="nutritionplans.co" />
+        <meta property="twitter:url" content={canonicalURL} />
+        <meta name="twitter:title" content={postData.title} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:description" content={postData.description} />
+        <meta name="twitter:image" content={postData.imageURL} />
+        {/* Facebook Meta Tags */}
+        {/* <meta property="og:image:height" content="1280" /> */}
+        {/* <meta property="og:image:width" content="630" /> */}
         <meta property="og:description" content={postData.description} />
         <meta property="og:image:secure_url" content={postData.imageURL} />
-        <meta property="og:image" content={postData.imageURL} key="image" />
-        <meta property="og:title" content={postData.title} key="og:title" />
-        <meta property="og:type" content="article" key="type" />
-        <meta property="og:url" content={canonicalURL} key="url" />
-        <meta property="title" content={postData.title} key="title" />
+        <meta property="og:image" content={postData.imageURL} />
+        <meta property="og:locale" content="en_US" key="locale" />
+        <meta property="og:site_name" content="Nutrition Plans CO" />
+        <meta property="og:title" content={postData.title} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={canonicalURL} />
       </StructuredData>
       <article className="flex max-w-4xl flex-col pt-14">
         <aside>

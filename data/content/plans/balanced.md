@@ -10,6 +10,19 @@ authorName: "Aldana Richieri"
 premium: false
 summary: "Balanced Plan"
 topic: "Plan"
+keywords:
+  [
+    "Balanced Diet",
+    "Balanced Nutrition",
+    "Daily Nutritional Intake",
+    "Dietary Guidelines",
+    "Healthy Eating",
+    "Meal Planning",
+    "Nutrient-Dense Foods",
+    "Nutrient-Rich Foods",
+    "Nutrition Plan",
+    "Weight Management",
+  ]
 ---
 
 It is an eating plan that includes all the macro and micronutrients necessary for daily requirements, in adequate and balanced amounts and in which it will consist of a variety of foods from different groups so that the body obtains enough energy and nutrition to grow and develop properly.

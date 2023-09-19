@@ -10,6 +10,19 @@ premium: false
 summary: "Vegetarian Plan"
 title: "Vegetarian"
 topic: "Plan"
+keywords:
+  [
+    "Vegetarian Diet",
+    "Plant-Based Diet",
+    "Vegetarian Recipes",
+    "Vegetarian Meal Plan",
+    "Vegan Diet",
+    "Meatless Diet",
+    "Vegetarian Nutrition",
+    "Vegetarian Protein Sources",
+    "Vegetarian Lifestyle",
+    "Healthy Vegetarian Eating",
+  ]
 ---
 
 The vegetarian diet has gained great popularity in recent years and has generated some controversy regarding this diet choice after eliminating meat and its nutrients. However, there are more and more studies that show that a "Plant Based" diet could be cardioprotective, unlike a carnivorous eating plan. A well-planned plan can reduce your risk of chronic disease, support weight loss, and improve the quality of your diet. In addition to the benefits of eliminating meat from your diet, it also has ethical and environmental benefits.

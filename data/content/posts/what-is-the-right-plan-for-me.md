@@ -10,6 +10,19 @@ authorName: "Aldana Richieri"
 topic: "Nutrition"
 premium: false
 isAvailable: true
+keywords:
+  [
+    "Choosing an Eating Plan",
+    "Diet Selection",
+    "Healthy Eating",
+    "Weight Loss Diet",
+    "Nutritional Requirements",
+    "Macronutrients",
+    "Physical Activity",
+    "Nutrition Plan",
+    "Health and Wellness",
+    "Eating Plan Selection",
+  ]
 ---
 
 Choosing an appropriate eating plan is not something to be done lightly. There are some important factors when making this decision that should be kept in mind so as not to put our health at risk.

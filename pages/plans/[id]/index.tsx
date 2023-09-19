@@ -1,6 +1,7 @@
 import { BlogPosting, WithContext } from "schema-dts";
 import { getAllMDIDS, getAllMDData, MDDirectories } from "@/utils/mds";
 import { getPlansAvailable } from "@/utils";
+import { IMAGES } from "@/constants";
 import { PlanType, PlansType } from "@/types";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import { StructuredData } from "@/components";
@@ -11,7 +12,6 @@ import Image from "next/image";
 import LandingLayout from "@/layouts/LandingLayout";
 import remarkGfm from "remark-gfm";
 import RestOfPlans from "@/components/Plans/RestOfPlans";
-import { IMAGES } from "@/constants";
 
 interface Props {
   planData: PlanType;
@@ -43,30 +43,47 @@ export default function Page({ planData, restOfPlans }: Props) {
     },
     datePublished: planData.date,
     dateModified: planData.date,
+    keywords: planData.keywords,
   };
+
+  const title = `${planData.title} | Nutrition Plans CO`;
 
   return (
     <LandingLayout>
       <StructuredData data={structuredData}>
-        <title>{`${planData.title} | Nutrition Plans CO`}</title>{" "}
+        <title>{title}</title>
         <link rel="canonical" href={canonicalURL} />
         <meta name="description" content={planData.description} />
         <meta property="article:author" content="Nutrition Plans CO" />
         <meta property="article:published_time" content={planData.date} />
-        <meta property="article:section" content="Blog" />
-        <meta property="og:description" content={planData.description} />
-        <meta property="og:image:secure_url" content={planData.imageURL} />
-        <meta property="og:image" content={planData.imageURL} key="image" />
-        <meta
-          property="og:title"
-          content={`${planData.title} | Nutrition Plans CO`}
-        />
+        <meta property="article:section" content="Nutrition" />
+        <meta property="og:title" content={title} />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={canonicalURL} />
-        <meta
-          property="title"
-          content={`${planData.title} | Nutrition Plans CO`}
-        />
+        <meta property="title" content={title} />
+        {planData.keywords.map((keyword, index) => (
+          <meta property="article:tag" content={keyword} key={index} />
+        ))}
+        {/* twitter Meta Tags*/}
+        <meta name="twitter:creator" content="@nutritionplans_" />
+        <meta name="twitter:site" content="@nutritionplans_" />
+        <meta property="twitter:domain" content="nutritionplans.co" />
+        <meta property="twitter:url" content={canonicalURL} />
+        <meta name="twitter:title" content={planData.title} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:description" content={planData.description} />
+        <meta name="twitter:image" content={planData.imageURL} />
+        {/* Facebook Meta Tags */}
+        {/* <meta property="og:image:height" content="1280" /> */}
+        {/* <meta property="og:image:width" content="630" /> */}
+        <meta property="og:description" content={planData.description} />
+        <meta property="og:image:secure_url" content={planData.imageURL} />
+        <meta property="og:image" content={planData.imageURL} />
+        <meta property="og:locale" content="en_US" key="locale" />
+        <meta property="og:site_name" content="Nutrition Plans CO" />
+        <meta property="og:title" content={planData.title} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={canonicalURL} />
       </StructuredData>
       <article className="flex w-full max-w-5xl flex-col items-center justify-center">
         <div className="mb-10 mt-14 flex w-full flex-col items-center justify-center gap-4">

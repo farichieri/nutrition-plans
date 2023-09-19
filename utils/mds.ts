@@ -31,6 +31,7 @@ const getSortedData = (directory: MDDirectories): Posts | PlansType => {
       image: matterResult.data.image,
       imageURL: matterResult.data.imageURL,
       isAvailable: matterResult.data.isAvailable,
+      keywords: matterResult.data.keywords,
       summary: matterResult.data.summary,
       timeReading,
       title: matterResult.data.title,

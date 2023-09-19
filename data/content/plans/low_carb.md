@@ -10,6 +10,19 @@ premium: false
 summary: "Low Carb Plan"
 title: "Low Carb"
 topic: "Plan"
+keywords:
+  [
+    "Low-Carb Diet",
+    "Low-Carb Recipes",
+    "Benefits of a Low-Carb Diet",
+    "Low-Carb Meal Plan",
+    "Low-Carbohydrate Diet",
+    "Low-Carb Foods",
+    "Healthy Low-Carb Diet",
+    "Low-Carb Weight Loss",
+    "Low-Carb Lifestyle",
+    "Reduced Carbohydrate Diet",
+  ]
 ---
 
 The low carb diet or low carbohydrate diet is a diet that involves reducing carbohydrates to give preference to proteins and fats.

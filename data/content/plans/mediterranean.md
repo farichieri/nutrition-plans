@@ -10,6 +10,19 @@ premium: false
 summary: "Mediterranean Plan"
 title: "Mediterranean"
 topic: "Plan"
+keywords:
+  [
+    "Mediterranean Diet",
+    "Mediterranean Diet Plan",
+    "Mediterranean Recipes",
+    "Healthy Mediterranean Diet",
+    "Benefits of the Mediterranean Diet",
+    "Mediterranean Diet Food List",
+    "Mediterranean Diet Weight Loss",
+    "Mediterranean Diet for Heart Health",
+    "Mediterranean Diet Meal Prep",
+    "Mediterranean Lifestyle",
+  ]
 ---
 
 The traditional Mediterranean diet is a rich source of macro- and micronutrients and is considered a balanced and varied diet. When the term "Mediterranean diet" is used, it refers to the conscious adoption of dietary patterns (diets) that are typical of the Mediterranean region, but which can be practiced anywhere in the world and by anyone.
