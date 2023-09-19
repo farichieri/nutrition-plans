@@ -9,6 +9,7 @@ export default function Page({ data }: { data: any }) {
     <LandingLayout>
       <Head>
         <title>Terms of service | Nutrition Plans CO</title>
+        <meta name="robots" content="noindex" />
       </Head>
       <section className="flex w-full max-w-5xl flex-col items-center justify-center py-24">
         <span className="text-5xl font-bold">Terms of service</span>

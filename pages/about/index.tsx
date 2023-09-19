@@ -22,8 +22,9 @@ export default function Page() {
   return (
     <LandingLayout>
       <Head>
-        <title>About | Nutrition Plans CO</title>
+        <meta name="robots" content="noindex" />
         <meta property="og:title" content="Nutrition Plans About" key="title" />
+        <title>About | Nutrition Plans CO</title>
       </Head>
       <section className="flex w-full max-w-5xl flex-col items-center pb-24 pt-14">
         <h1 className="mb-8 text-5xl font-bold md:text-6xl lg:text-7xl">

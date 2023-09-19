@@ -1,14 +1,14 @@
 import { FAQS_INDEX } from "@/data/content";
 import { getPlansAvailable } from "@/utils/getPlansAvailable";
-import { NewsletterSubscriber, Reveal } from "@/components";
+import { NewsletterSubscriber, Reveal, StructuredData } from "@/components";
 import { PlansType } from "@/types";
 import { useCanonicalURL } from "@/hooks";
 import { useEffect } from "react";
+import { WebPage, WithContext } from "schema-dts";
 import BlurImage from "@/components/blur-image";
 import CallToAction from "@/components/call-to-action/CallToAction";
 import FAQS from "@/components/FAQS/FAQS";
 import Goals from "@/components/Goals/Goals";
-import Head from "next/head";
 import LandingLayout from "@/layouts/LandingLayout";
 import Link from "next/link";
 import Plans from "@/components/Plans/Plans";
@@ -24,12 +24,83 @@ export default function Home({ plans }: Props) {
     window.history.scrollRestoration = "manual";
   }, []);
 
+  const description =
+    "Meal Planner | Personalized Nutrition Plans | Nutrition Plans CTransform your health with personalized meal plans - your path to a better you! Discover: Balanced, Keto, Low Carb, Gluten Free, Mediterranean, Vegetarian.";
+  const title =
+    "Meal Planner | Personalized Nutrition Plans | Nutrition Plans CO";
+  const logo = "https://nutritionplans.co/images/logo.png";
+
+  const structuredData: WithContext<WebPage> = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": canonicalURL,
+    },
+    name: title,
+    headline: "Nutrition Plans CO",
+    description: description,
+    image: ["/images/general/landing-img.png"],
+    isFamilyFriendly: true,
+    publisher: {
+      "@type": "Organization",
+      name: "Nutrition Plans CO",
+      logo: {
+        "@type": "ImageObject",
+        url: logo,
+      },
+    },
+    url: canonicalURL,
+    datePublished: "2021-08-01",
+    dateModified: "2021-08-01",
+    keywords: [
+      "nutrition plans",
+      "diet plan",
+      "healthy eating",
+      "meal planning",
+      "calorie counting",
+      "weight loss",
+      "balanced diet",
+      "vegetarian diet",
+      "keto diet",
+      "low carb diet",
+      "gluten free diet",
+      "mediterranean diet",
+    ],
+
+    // potentialAction: {
+    //   "@type": "SearchAction",
+    //   target: "https://nutritionplans.co/search?q={search_term_string}",
+    //   "query-input": "required name=search_term_string",
+    // },
+
+    // breadcrumb: {
+    //   "@type": "BreadcrumbList",
+    //   itemListElement: [
+    //     {
+    //       "@type": "ListItem",
+    //       position: 1,
+    //       name: "Home",
+    //       item: "https://nutritionplans.co",
+    //     },
+    //   ],
+    // },
+  };
+
   return (
     <LandingLayout>
-      <Head>
+      <StructuredData data={structuredData}>
         <title>Nutrition Plans CO</title>
         <link rel="canonical" href={canonicalURL} />
-      </Head>
+        <meta name="description" content={description} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image:secure_url" content={logo} />
+        <meta property="og:image" content={logo} key="image" />
+        <meta property="og:title" content={title} key="og:title" />
+        <meta property="og:type" content="website" key="type" />
+        <meta property="og:url" content={canonicalURL} key="url" />
+        <meta property="title" content={title} key="title" />
+      </StructuredData>
       <section className="flex w-full flex-col items-center gap-10 pb-20 pt-10">
         <div className="flex w-full flex-col items-center gap-10">
           <div className="flex w-full flex-col items-center justify-center gap-4 text-center text-2xl">

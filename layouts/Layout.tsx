@@ -5,17 +5,15 @@ import {
   useLoginMutation,
   useGetUserQuery,
 } from "@/features/authentication";
+import { Analytics } from "@vercel/analytics/react";
 import { auth } from "@/services/firebase";
 import { getUserSubscription, usePremiumStatus } from "@/features/stripe";
 import { Inter } from "next/font/google";
 import { isAppVersionCorrect } from "@/utils";
 import { onAuthStateChanged } from "firebase/auth";
-import { useDispatch, useSelector } from "react-redux";
 import { Suspense, useEffect, useState } from "react";
-import Head from "next/head";
+import { useDispatch, useSelector } from "react-redux";
 import useTheme from "@/hooks/useTheme";
-import { Analytics } from "@vercel/analytics/react";
-import { useCanonicalURL } from "@/hooks";
 
 const font = Inter({
   subsets: ["latin"],
@@ -29,7 +27,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const isPremium = usePremiumStatus(user);
   const [login] = useLoginMutation();
   const [updateUser] = useUpdateUserMutation();
-  const {} = useGetUserQuery({ userID: user?.id });
+  useGetUserQuery({ userID: user?.id });
 
   useEffect(() => {
     // Verify Version and then log log in.
@@ -44,7 +42,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       });
       return () => unsubscribe();
     }
-  }, [isVerifyingVersion]);
+  }, [isVerifyingVersion, login]);
 
   useEffect(() => {
     if (user) {
@@ -64,14 +62,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         unsubscribe();
       }
     }
-  }, [isPremium]);
+  }, [isPremium, dispatch, user, updateUser]);
 
   return (
     <>
-      <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        {/* <title>Nutrition Plans COAA</title> */}
-      </Head>
       {_theme && (
         <main
           translate="no"

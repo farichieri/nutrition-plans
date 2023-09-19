@@ -23,6 +23,7 @@ export default function Page() {
     <SignLayout>
       <Head>
         <title>Log in | Nutrition Plans CO</title>
+        <meta name="robots" content="noindex" />
       </Head>
       {(isLoading || isSigningUser || user) && <Loader />}
       <Login />

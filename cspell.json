@@ -14,7 +14,8 @@
     "reduxjs",
     "Richieri",
     "signup",
-    "typesense"
+    "typesense",
+    "vaul"
   ],
   "ignoreWords": [],
   "import": []

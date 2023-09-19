@@ -1,11 +1,12 @@
+import { BlogPosting, WithContext } from "schema-dts";
 import { getAllMDIDS, getAllMDData, MDDirectories } from "@/utils/mds";
 import { getPlansAvailable } from "@/utils";
 import { PlanType, PlansType } from "@/types";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
+import { StructuredData } from "@/components";
 import { useCanonicalURL } from "@/hooks";
 import BlurImage from "@/components/blur-image";
 import CallToAction from "@/components/call-to-action/CallToAction";
-import Head from "next/head";
 import Image from "next/image";
 import LandingLayout from "@/layouts/LandingLayout";
 import remarkGfm from "remark-gfm";
@@ -19,52 +20,62 @@ interface Props {
 export default function Page({ planData, restOfPlans }: Props) {
   const canonicalURL = useCanonicalURL();
 
+  const structuredData: WithContext<BlogPosting> = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: planData.title,
+    description: planData.description,
+    isFamilyFriendly: true,
+    image: [planData.image],
+    author: {
+      "@type": "Person",
+      name: "Nutrition Plans CO",
+    },
+    url: canonicalURL,
+    publisher: {
+      "@type": "Organization",
+      name: "Nutrition Plans CO",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://nutritionplans.co/images/logo.png",
+      },
+    },
+    datePublished: planData.date,
+    dateModified: planData.date,
+  };
+
   return (
     <LandingLayout>
-      <Head>
-        <title>{`${planData.title} | Nutrition Plans CO`}</title>
+      <StructuredData data={structuredData}>
+        <title>{`${planData.title} | Nutrition Plans CO`}</title>{" "}
         <link rel="canonical" href={canonicalURL} />
-        <meta
-          property="title"
-          content={`${planData.title} | Nutrition Plans CO`}
-          key="title"
-        />
+        <meta name="description" content={planData.description} />
+        <meta property="article:author" content="Nutrition Plans CO" />
+        <meta property="article:published_time" content={planData.date} />
+        <meta property="article:section" content="Blog" />
+        <meta property="og:description" content={planData.description} />
+        <meta property="og:image:secure_url" content={planData.image} />
+        <meta property="og:image" content={planData.image} key="image" />
         <meta
           property="og:title"
           content={`${planData.title} | Nutrition Plans CO`}
           key="og:title"
         />
-        <meta name="description" content={planData.description} />
-        <meta
-          property="og:description"
-          content={planData.description}
-          key="description"
-        />
-        <meta property="og:image" content={planData.image} key="image" />
-        <meta
-          property="og:image:secure_url"
-          content={planData.image}
-          key="image:secure_url"
-        />
-        <meta property="article:author" content="Nutrition Plans CO" />
-        {/* <meta property="article:published_time" content={planData.date} /> */}
-        <meta property="article:section" content="Blog" />
-        <meta property="og:locale" content="en_US" key="locale" />
-        <meta
-          property="og:site_name"
-          content="Nutrition Plans CO"
-          key="site_name"
-        />
         <meta property="og:type" content="article" key="type" />
         <meta property="og:url" content={canonicalURL} key="url" />
-      </Head>
+        <meta
+          property="title"
+          content={`${planData.title} | Nutrition Plans CO`}
+          key="title"
+        />
+      </StructuredData>
       <article className="flex w-full max-w-5xl flex-col items-center justify-center">
         <div className="mb-10 mt-14 flex w-full flex-col items-center justify-center gap-4">
-          <h1 className="mb-8 text-5xl font-bold md:text-6xl lg:text-7xl">
+          <h1 className="mb-8 text-5xl font-extrabold md:text-6xl lg:text-7xl">
             {planData.title}
           </h1>
 
-          <span className="h-full w-full max-w-[500px] overflow-hidden rounded-3xl shadow-[0_1px_5px_gray] dark:shadow-[0px_1px_5px_#4040408c]">
+          <figure className="h-full w-full max-w-[500px] overflow-hidden rounded-3xl shadow-[0_1px_5px_gray] dark:shadow-[0px_1px_5px_#4040408c]">
             <BlurImage
               image={{
                 imageURL: planData.image!,
@@ -73,7 +84,7 @@ export default function Page({ planData, restOfPlans }: Props) {
               }}
               customContainerClass="!aspect-h-1 !aspect-w-1"
             />
-          </span>
+          </figure>
         </div>
         <ReactMarkdown
           className="border-b pb-14 "

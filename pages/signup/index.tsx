@@ -25,6 +25,7 @@ export default function Page() {
     <SignLayout>
       <Head>
         <title>Sign up | Nutrition Plans CO</title>
+        <meta name="robots" content="noindex" />
       </Head>
       {(isLoading || isSigningUser || user) && <Loader />}
       <Signup />

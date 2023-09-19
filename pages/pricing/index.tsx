@@ -15,6 +15,7 @@ export default function Pricing() {
           content="Nutrition Plans Pricing"
           key="title"
         />
+        <meta name="robots" content="noindex" />
       </Head>
       <section className="flex w-full max-w-5xl flex-col items-center pb-24 pt-16">
         <span className="mb-8 text-5xl font-bold md:text-6xl lg:text-7xl">

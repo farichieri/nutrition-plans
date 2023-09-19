@@ -7,6 +7,7 @@ import SubscribeModal from "./SubscribeModal/SubscribeModal";
 import NewsletterSubscriber from "./NewsletterSubscriber/NewsletterSubscriber";
 
 import Reveal from "./Reveal/Reveal";
+import StructuredData from "./StructuredData/StructuredData";
 
 export {
   NewsletterSubscriber,
@@ -16,4 +17,5 @@ export {
   SubscribeModal,
   TextArea,
   VaulDrawer,
+  StructuredData,
 };
