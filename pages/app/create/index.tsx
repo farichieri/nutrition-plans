@@ -15,6 +15,7 @@ import PlanSelector from "@/features/authentication/components/create-user/selec
 import Results from "@/features/authentication/components/create-user/results/Results";
 import ThemeSwitcher from "@/components/theme-switcher";
 import { AppRoutes } from "@/utils";
+import Head from "next/head";
 
 export default function Page() {
   const { user } = useSelector(selectAuthSlice);
@@ -66,6 +67,9 @@ export default function Page() {
 
   return (
     <section className="min-w-screen flex min-h-screen w-full flex-col items-center justify-start px-4 py-4">
+      <Head>
+        <title>Create Account | Nutrition Plans CO</title>
+      </Head>
       <div className="mb-5 flex w-full items-center justify-between">
         <div className=""></div>
         <span className="text-4xl font-bold">Nutrition Plans</span>

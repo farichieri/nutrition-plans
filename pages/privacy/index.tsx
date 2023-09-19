@@ -1,11 +1,15 @@
-import LandingLayout from "@/layouts/LandingLayout";
 import { MDDirectories, getAllMDData } from "@/utils/mds";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
+import Head from "next/head";
+import LandingLayout from "@/layouts/LandingLayout";
 import remarkGfm from "remark-gfm";
 
 export default function Page({ data }: { data: any }) {
   return (
     <LandingLayout>
+      <Head>
+        <title>Terms of privacy | Nutrition Plans CO</title>
+      </Head>
       <section className="flex w-full max-w-5xl flex-col items-center justify-center py-24">
         <span className="text-5xl font-bold">Terms of privacy</span>
         <ReactMarkdown
@@ -19,7 +23,11 @@ export default function Page({ data }: { data: any }) {
               />
             ),
             p: (props) => <p className="m-0 py-1" {...props} />,
-            h3: (props) => <h3 className="mt-10 " {...props} />,
+            h3: (props) => (
+              <h3 className="mt-10 " {...props}>
+                {}
+              </h3>
+            ),
           }}
         >
           {data.content}
