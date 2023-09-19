@@ -13,8 +13,6 @@ export default function Footer() {
     { name: "Pricing", href: "/pricing" },
   ];
 
-  console.log({ router });
-
   const LEGAL_LINKS = [
     { name: "Privacy", href: "/privacy" },
     { name: "Terms", href: "/terms" },
@@ -42,7 +40,7 @@ export default function Footer() {
               aria-label="Twitter"
               href="https://www.twitter.com/nutritionplans_"
               target="_blank"
-              rel="noopener"
+              rel="noreferrer"
             >
               <TwitterIcon customClass="h-4 w-4 opacity-50 hover:opacity-100 duration-300" />
             </a>
@@ -51,7 +49,7 @@ export default function Footer() {
               aria-label="Instagram"
               href="https://www.instagram.com/nutritionplans_"
               target="_blank"
-              rel="noopener"
+              rel="noreferrer"
             >
               <InstagramIcon customClass="h-4 w-4 opacity-50 hover:opacity-100 duration-300" />
             </a>
