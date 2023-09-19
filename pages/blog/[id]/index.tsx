@@ -2,7 +2,7 @@ import { getAllMDIDS, getAllMDData, MDDirectories } from "@/utils/mds";
 import { MdTrendingFlat } from "react-icons/md";
 import { Post } from "@/types";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
-import { useRouter } from "next/router";
+import { useCanonicalURL } from "@/hooks";
 import BlurImage from "@/components/blur-image";
 import CallToAction from "@/components/call-to-action/CallToAction";
 import Date from "@/components/Posts/Post/Date/Date";
@@ -16,18 +16,13 @@ interface Props {
 }
 
 export default function Page({ postData }: Props) {
-  const { asPath } = useRouter();
-  const origin =
-    typeof window !== "undefined" && window.location.origin
-      ? window.location.origin
-      : "";
-
-  const URL = `${origin}${asPath}`;
+  const canonicalURL = useCanonicalURL();
 
   return (
     <LandingLayout>
       <Head>
         <title>{postData.title}</title>
+        <link rel="canonical" href={canonicalURL} />
         <meta property="title" content={`${postData.title}`} key="title" />
         <meta
           property="og:title"
@@ -56,7 +51,7 @@ export default function Page({ postData }: Props) {
           key="site_name"
         />
         <meta property="og:type" content="article" key="type" />
-        <meta property="og:url" content={URL} key="url" />
+        <meta property="og:url" content={canonicalURL} key="url" />
       </Head>
       <article className="flex max-w-4xl flex-col pt-14">
         <aside>

@@ -8,9 +8,9 @@ Last updated: 08/31/2023
 
 Welcome to Nutrition Plans LLC (“Company”, “we”, “our”, “us”)! As you have just clicked our Terms of Service, please pause, grab a cup of coffee and carefully read the following pages. It will take you approximately 20 minutes.
 
-These Terms of Service (“Terms”, “Terms of Service”) govern your use of our web pages located at https://www.nutritionplans.co/ and our mobile application Nutrition Plans (together or individually “Service”) operated by Nutrition Plans LLC.
+These Terms of Service (“Terms”, “Terms of Service”) govern your use of our web pages located at https://nutritionplans.co/ and our mobile application Nutrition Plans (together or individually “Service”) operated by Nutrition Plans LLC.
 
-Our Privacy Policy also governs your use of our Service and explains how we collect, safeguard and disclose information that results from your use of our web pages. Please read it here https://www.nutritionplans.co/privacy.
+Our Privacy Policy also governs your use of our Service and explains how we collect, safeguard and disclose information that results from your use of our web pages. Please read it here https://nutritionplans.co/privacy.
 
 Your agreement with us includes these Terms and our Privacy Policy (“Agreements”). You acknowledge that you have read and understood Agreements, and agree to be bound of them.
 

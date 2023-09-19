@@ -2,14 +2,14 @@ import { getAllMDIDS, getAllMDData, MDDirectories } from "@/utils/mds";
 import { getPlansAvailable } from "@/utils";
 import { PlanType, PlansType } from "@/types";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
+import { useCanonicalURL } from "@/hooks";
 import BlurImage from "@/components/blur-image";
 import CallToAction from "@/components/call-to-action/CallToAction";
+import Head from "next/head";
 import Image from "next/image";
 import LandingLayout from "@/layouts/LandingLayout";
 import remarkGfm from "remark-gfm";
 import RestOfPlans from "@/components/Plans/RestOfPlans";
-import Head from "next/head";
-import { useRouter } from "next/router";
 
 interface Props {
   planData: PlanType;
@@ -17,18 +17,13 @@ interface Props {
 }
 
 export default function Page({ planData, restOfPlans }: Props) {
-  const { asPath } = useRouter();
-  const origin =
-    typeof window !== "undefined" && window.location.origin
-      ? window.location.origin
-      : "";
-
-  const URL = `${origin}${asPath}`;
+  const canonicalURL = useCanonicalURL();
 
   return (
     <LandingLayout>
       <Head>
         <title>{`${planData.title} | Nutrition Plans CO`}</title>
+        <link rel="canonical" href={canonicalURL} />
         <meta
           property="title"
           content={`${planData.title} | Nutrition Plans CO`}
@@ -61,7 +56,7 @@ export default function Page({ planData, restOfPlans }: Props) {
           key="site_name"
         />
         <meta property="og:type" content="article" key="type" />
-        <meta property="og:url" content={URL} key="url" />
+        <meta property="og:url" content={canonicalURL} key="url" />
       </Head>
       <article className="flex w-full max-w-5xl flex-col items-center justify-center">
         <div className="mb-10 mt-14 flex w-full flex-col items-center justify-center gap-4">

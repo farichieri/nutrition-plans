@@ -15,6 +15,7 @@ import { Suspense, useEffect, useState } from "react";
 import Head from "next/head";
 import useTheme from "@/hooks/useTheme";
 import { Analytics } from "@vercel/analytics/react";
+import { useCanonicalURL } from "@/hooks";
 
 const font = Inter({
   subsets: ["latin"],
@@ -69,7 +70,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Nutrition Plans CO</title>
+        <title>Nutrition Plans CO: Personalized Meal Planner</title>
       </Head>
       {_theme && (
         <main

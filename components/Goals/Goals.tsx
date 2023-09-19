@@ -12,9 +12,9 @@ const Goals: FC<Props> = () => {
 
   return (
     <div className="flex w-full flex-col justify-center gap-5  text-center">
-      <span className="mx-auto flex w-fit text-4xl font-bold sm:text-5xl">
+      <h2 className="mx-auto my-0 flex w-fit py-0 text-4xl font-extrabold sm:text-5xl">
         Choose your Goal
-      </span>
+      </h2>
       <div className="flex w-full justify-center gap-1 xs:gap-2 sm:gap-10">
         {GOALS_OPTIONS.map((goal) => (
           <Link
