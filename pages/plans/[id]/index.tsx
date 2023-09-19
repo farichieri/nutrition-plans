@@ -59,14 +59,12 @@ export default function Page({ planData, restOfPlans }: Props) {
         <meta
           property="og:title"
           content={`${planData.title} | Nutrition Plans CO`}
-          key="og:title"
         />
-        <meta property="og:type" content="article" key="type" />
-        <meta property="og:url" content={canonicalURL} key="url" />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={canonicalURL} />
         <meta
           property="title"
           content={`${planData.title} | Nutrition Plans CO`}
-          key="title"
         />
       </StructuredData>
       <article className="flex w-full max-w-5xl flex-col items-center justify-center">

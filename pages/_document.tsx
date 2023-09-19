@@ -1,6 +1,8 @@
 import { Html, Head, Main, NextScript } from "next/document";
+import { IMAGES, METADATA } from "@/constants";
 
 export default function Document() {
+  const landingImage = IMAGES.LANDING;
   return (
     <Html lang="en">
       <Head>
@@ -22,14 +24,6 @@ export default function Document() {
           href="/images/pwa/favicon-16x16.png"
         />
         <meta
-          property="og:image"
-          content="/images/pwa/android-chrome-512x512.png"
-        />
-        <meta
-          property="og:image:secure_url"
-          content="/images/pwa/android-chrome-512x512.png"
-        />
-        <meta
           name="theme-color"
           content="#fff"
           media="(prefers-color-scheme: light)"
@@ -43,22 +37,38 @@ export default function Document() {
           name="keywords"
           content="nutrition plans, diet plan, healthy eating, meal planning, calorie counting, weight loss, balanced diet, vegetarian diet, keto diet, low carb diet, gluten free diet, mediterranean diet"
         />
+
         <link rel="alternate" hrefLang="en" href="https://nutritionplans.co" />
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="author" content="Nutrition Plans CO" />
         <meta name="google" content="notranslate" key="notranslate" />
         <meta name="robots" content="all" />
         <meta name="robots" content="max-image-preview:large" />
-        <meta name="twitter:card" content="Nutrition Plans website" />
+
+        {/* twitter Meta Tags*/}
         <meta name="twitter:creator" content="@nutritionplans_" />
         <meta name="twitter:site" content="@nutritionplans_" />
-        <meta property="og:image:height" content="512" />
-        <meta property="og:image:width" content="512" />
+        <meta property="twitter:domain" content="nutritionplans.co" />
+        <meta property="twitter:url" content="https://nutritionplans.co" />
+        <meta name="twitter:title" content={METADATA.TITLE} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:description" content={METADATA.DESCRIPTION} />
+        <meta
+          name="twitter:image"
+          content="https://nutritionplans.co/images/pwa/android-chrome-512x512.png"
+        />
+
+        {/* Facebook Meta Tags */}
+        <meta property="og:url" content="https://nutritionplans.co" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={METADATA.TITLE} />
+        <meta property="og:description" content={METADATA.DESCRIPTION} />
+        <meta property="og:image" content={landingImage} />
+        <meta property="og:image:height" content="1280" />
+        <meta property="og:image:secure_url" content={landingImage} />
+        <meta property="og:image:width" content="630" />
         <meta property="og:locale" content="en_US" key="locale" />
         <meta property="og:site_name" content="Nutrition Plans CO" />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://nutritionplans.co" />
-        <meta property="type" content="website" />
       </Head>
       <body>
         <Main />

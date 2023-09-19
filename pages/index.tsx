@@ -1,5 +1,6 @@
 import { FAQS_INDEX } from "@/data/content";
 import { getPlansAvailable } from "@/utils/getPlansAvailable";
+import { IMAGES, METADATA } from "@/constants";
 import { NewsletterSubscriber, Reveal, StructuredData } from "@/components";
 import { PlansType } from "@/types";
 import { useCanonicalURL } from "@/hooks";
@@ -20,15 +21,10 @@ interface Props {
 
 export default function Home({ plans }: Props) {
   const canonicalURL = useCanonicalURL();
+
   useEffect(() => {
     window.history.scrollRestoration = "manual";
   }, []);
-
-  const description =
-    "Meal Planner | Personalized Nutrition Plans | Nutrition Plans CTransform your health with personalized meal plans - your path to a better you! Discover: Balanced, Keto, Low Carb, Gluten Free, Mediterranean, Vegetarian.";
-  const title =
-    "Meal Planner | Personalized Nutrition Plans | Nutrition Plans CO";
-  const logo = "https://nutritionplans.co/images/logo.png";
 
   const structuredData: WithContext<WebPage> = {
     "@context": "https://schema.org",
@@ -37,17 +33,17 @@ export default function Home({ plans }: Props) {
       "@type": "WebPage",
       "@id": canonicalURL,
     },
-    name: title,
+    name: METADATA.TITLE,
     headline: "Nutrition Plans CO",
-    description: description,
-    image: ["/images/general/landing-img.png"],
+    description: METADATA.DESCRIPTION,
+    image: [IMAGES.LANDING],
     isFamilyFriendly: true,
     publisher: {
       "@type": "Organization",
       name: "Nutrition Plans CO",
       logo: {
         "@type": "ImageObject",
-        url: logo,
+        url: IMAGES.LOGO,
       },
     },
     url: canonicalURL,
@@ -67,24 +63,6 @@ export default function Home({ plans }: Props) {
       "gluten free diet",
       "mediterranean diet",
     ],
-
-    // potentialAction: {
-    //   "@type": "SearchAction",
-    //   target: "https://nutritionplans.co/search?q={search_term_string}",
-    //   "query-input": "required name=search_term_string",
-    // },
-
-    // breadcrumb: {
-    //   "@type": "BreadcrumbList",
-    //   itemListElement: [
-    //     {
-    //       "@type": "ListItem",
-    //       position: 1,
-    //       name: "Home",
-    //       item: "https://nutritionplans.co",
-    //     },
-    //   ],
-    // },
   };
 
   return (
@@ -92,14 +70,16 @@ export default function Home({ plans }: Props) {
       <StructuredData data={structuredData}>
         <title>Nutrition Plans CO</title>
         <link rel="canonical" href={canonicalURL} />
-        <meta name="description" content={description} />
-        <meta property="og:description" content={description} />
-        <meta property="og:image:secure_url" content={logo} />
-        <meta property="og:image" content={logo} key="image" />
-        <meta property="og:title" content={title} key="og:title" />
+        <meta name="description" content={METADATA.DESCRIPTION} />
+        <meta property="og:description" content={METADATA.DESCRIPTION} />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:secure_url" content={IMAGES.LANDING} />
+        <meta property="og:image:width" content="1280" />
+        <meta property="og:image" content={IMAGES.LANDING} key="image" />
+        <meta property="og:title" content={METADATA.TITLE} key="og:title" />
         <meta property="og:type" content="website" key="type" />
         <meta property="og:url" content={canonicalURL} key="url" />
-        <meta property="title" content={title} key="title" />
+        <meta property="title" content={METADATA.TITLE} key="title" />
       </StructuredData>
       <section className="flex w-full flex-col items-center gap-10 pb-20 pt-10">
         <div className="flex w-full flex-col items-center gap-10">
