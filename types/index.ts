@@ -60,6 +60,7 @@ export interface Post {
   description: string;
   id: string;
   image: string;
+  imageURL: string;
   isAvailable: boolean;
   summary: string;
   timeReading: string;
@@ -75,6 +76,7 @@ export interface PlanType {
   description: string;
   id: string;
   image: string;
+  imageURL: string;
   isAvailable: boolean;
   summary: string;
   timeReading: string;

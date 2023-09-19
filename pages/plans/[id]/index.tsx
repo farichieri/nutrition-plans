@@ -11,6 +11,7 @@ import Image from "next/image";
 import LandingLayout from "@/layouts/LandingLayout";
 import remarkGfm from "remark-gfm";
 import RestOfPlans from "@/components/Plans/RestOfPlans";
+import { IMAGES } from "@/constants";
 
 interface Props {
   planData: PlanType;
@@ -26,7 +27,7 @@ export default function Page({ planData, restOfPlans }: Props) {
     headline: planData.title,
     description: planData.description,
     isFamilyFriendly: true,
-    image: [planData.image],
+    image: [planData.imageURL],
     author: {
       "@type": "Person",
       name: "Nutrition Plans CO",
@@ -37,7 +38,7 @@ export default function Page({ planData, restOfPlans }: Props) {
       name: "Nutrition Plans CO",
       logo: {
         "@type": "ImageObject",
-        url: "https://nutritionplans.co/images/logo.png",
+        url: IMAGES.LOGO,
       },
     },
     datePublished: planData.date,
@@ -54,8 +55,8 @@ export default function Page({ planData, restOfPlans }: Props) {
         <meta property="article:published_time" content={planData.date} />
         <meta property="article:section" content="Blog" />
         <meta property="og:description" content={planData.description} />
-        <meta property="og:image:secure_url" content={planData.image} />
-        <meta property="og:image" content={planData.image} key="image" />
+        <meta property="og:image:secure_url" content={planData.imageURL} />
+        <meta property="og:image" content={planData.imageURL} key="image" />
         <meta
           property="og:title"
           content={`${planData.title} | Nutrition Plans CO`}

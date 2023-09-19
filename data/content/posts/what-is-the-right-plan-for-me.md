@@ -2,6 +2,7 @@
 title: "What is the right nutrition plan for me? How to choose it and what should I take into account?"
 description: "Discover how to decide what is the right nutrition plan for you"
 image: "/images/posts/what-is-the-right-nutrition-plan-for-me/0.jpg"
+imageURL: "https://nutritionplans.co/images/posts/what-is-the-right-nutrition-plan-for-me/0.jpg"
 summary: "What should we consider"
 date: "2022-05-29"
 author: "aldana-richieri"

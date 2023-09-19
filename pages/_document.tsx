@@ -2,7 +2,6 @@ import { Html, Head, Main, NextScript } from "next/document";
 import { IMAGES, METADATA } from "@/constants";
 
 export default function Document() {
-  const landingImage = IMAGES.LANDING;
   return (
     <Html lang="en">
       <Head>
@@ -53,19 +52,16 @@ export default function Document() {
         <meta name="twitter:title" content={METADATA.TITLE} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:description" content={METADATA.DESCRIPTION} />
-        <meta
-          name="twitter:image"
-          content="https://nutritionplans.co/images/pwa/android-chrome-512x512.png"
-        />
+        <meta name="twitter:image" content={IMAGES.LANDING} />
 
         {/* Facebook Meta Tags */}
         <meta property="og:url" content="https://nutritionplans.co" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content={METADATA.TITLE} />
         <meta property="og:description" content={METADATA.DESCRIPTION} />
-        <meta property="og:image" content={landingImage} />
+        <meta property="og:image" content={IMAGES.LANDING} />
         <meta property="og:image:height" content="1280" />
-        <meta property="og:image:secure_url" content={landingImage} />
+        <meta property="og:image:secure_url" content={IMAGES.LANDING} />
         <meta property="og:image:width" content="630" />
         <meta property="og:locale" content="en_US" key="locale" />
         <meta property="og:site_name" content="Nutrition Plans CO" />
