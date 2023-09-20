@@ -3,51 +3,30 @@ import { getPlansAvailable } from "@/utils/getPlansAvailable";
 import { IMAGES, METADATA } from "@/constants";
 import { NewsletterSubscriber, Reveal, StructuredData } from "@/components";
 import { PlansType } from "@/types";
-import { useCanonicalURL } from "@/hooks";
-import { useEffect } from "react";
 import { WebPage, WithContext } from "schema-dts";
 import BlurImage from "@/components/blur-image";
 import CallToAction from "@/components/call-to-action/CallToAction";
 import FAQS from "@/components/FAQS/FAQS";
 import Goals from "@/components/Goals/Goals";
+import Head from "next/head";
 import LandingLayout from "@/layouts/LandingLayout";
 import Link from "next/link";
 import Plans from "@/components/Plans/Plans";
 import PrimaryButton from "@/components/Buttons/PrimaryButton";
-import Head from "next/head";
 
 interface Props {
   plans: PlansType;
 }
 
 export default function Home({ plans }: Props) {
-  const canonicalURL = useCanonicalURL();
-
-  useEffect(() => {
-    window.history.scrollRestoration = "manual";
-  }, []);
-
-  const KEYWORDS = [
-    "nutrition plans",
-    "diet plan",
-    "healthy eating",
-    "meal planning",
-    "calorie counting",
-    "weight loss",
-    "balanced diet",
-    "vegetarian diet",
-    "keto diet",
-    "low carb diet",
-    "gluten free diet",
-    "mediterranean diet",
-  ];
+  window.history.scrollRestoration = "manual";
 
   const structuredData: WithContext<WebPage> = {
     "@context": "https://schema.org",
     "@type": "WebPage",
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": canonicalURL,
+      "@id": METADATA.URL,
     },
     name: METADATA.TITLE,
     headline: "Nutrition Plans CO",
@@ -62,10 +41,10 @@ export default function Home({ plans }: Props) {
         url: IMAGES.LOGO,
       },
     },
-    url: canonicalURL,
+    url: METADATA.URL,
     datePublished: "2021-08-01",
     dateModified: "2021-08-01",
-    keywords: KEYWORDS,
+    keywords: METADATA.KEYWORDS_DEFAULT,
   };
 
   return (
@@ -73,21 +52,21 @@ export default function Home({ plans }: Props) {
       <StructuredData data={structuredData} />
       <Head>
         <title>Nutrition Plans CO</title>
-        <link rel="canonical" href={canonicalURL} />
+        <link rel="canonical" href={METADATA.URL} />
         <meta name="description" content={METADATA.DESCRIPTION} />
-        {KEYWORDS.map((keyword, index) => (
+        {METADATA.KEYWORDS_DEFAULT.map((keyword, index) => (
           <meta property="article:tag" content={keyword} key={index} />
         ))}
         <meta name="twitter:creator" content="@nutritionplans_" />
         <meta name="twitter:site" content="@nutritionplans_" />
         <meta property="twitter:domain" content="nutritionplans.co" />
-        <meta property="twitter:url" content={canonicalURL} />
+        <meta property="twitter:url" content={METADATA.URL} />
         <meta name="twitter:title" content={METADATA.TITLE} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:description" content={METADATA.DESCRIPTION} />
         <meta name="twitter:image" content={IMAGES.LANDING} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={canonicalURL} />
+        <meta property="og:url" content={METADATA.URL} />
         <meta property="og:title" content={METADATA.TITLE} />
         <meta property="og:description" content={METADATA.DESCRIPTION} />
         <meta property="og:image" content={IMAGES.LANDING} />

@@ -67,6 +67,7 @@ export interface Post {
   title: string;
   topic: string;
   keywords: string[];
+  URL: string;
 }
 export interface Posts extends Array<Post> {}
 export interface PlanType {
@@ -84,6 +85,7 @@ export interface PlanType {
   title: string;
   topic: string;
   keywords: string[];
+  URL: string;
 }
 export interface PlansType extends Array<PlanType> {}
 

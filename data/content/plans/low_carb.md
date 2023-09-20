@@ -3,6 +3,7 @@ author: "aldana-richieri"
 authorName: "Aldana Richieri"
 date: "2023-07-30"
 description: "Discover the benefits of following the Low Carb Nutrition Plan!"
+URL: "https://nutritionplans.co/plans/low_carb"
 image: "/images/plans/low_carb.png"
 imageURL: "https://nutritionplans.co/images/plans/low_carb.png"
 isAvailable: true

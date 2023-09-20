@@ -1,6 +1,7 @@
 ---
 title: "Gluten Free"
 description: "Discover the benefits of following the Gluten Free Nutrition Plan!"
+URL: "https://nutritionplans.co/plans/gluten_free"
 isAvailable: true
 image: "/images/plans/gluten_free.png"
 imageURL: "https://nutritionplans.co/images/plans/gluten_free.png"
