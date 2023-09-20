@@ -11,6 +11,7 @@ import LandingLayout from "@/layouts/LandingLayout";
 import Link from "next/link";
 import remarkGfm from "remark-gfm";
 import type { BlogPosting, WithContext } from "schema-dts";
+import Head from "next/head";
 
 interface Props {
   postData: Post;
@@ -50,7 +51,8 @@ export default function Page({ postData }: Props) {
 
   return (
     <LandingLayout>
-      <StructuredData data={structuredData}>
+      <StructuredData data={structuredData} />
+      <Head>
         <title>{postData.title}</title>
         <link rel="canonical" href={canonicalURL} />
         <meta name="description" content={postData.description} />
@@ -81,7 +83,8 @@ export default function Page({ postData }: Props) {
         <meta property="og:title" content={postData.title} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={canonicalURL} />
-      </StructuredData>
+        <meta property="og:image:alt" content="Nutrition Plans CO" />
+      </Head>
       <article className="flex max-w-4xl flex-col pt-14">
         <aside>
           <Link

@@ -11,7 +11,7 @@ import { getUserSubscription, usePremiumStatus } from "@/features/stripe";
 import { Inter } from "next/font/google";
 import { isAppVersionCorrect } from "@/utils";
 import { onAuthStateChanged } from "firebase/auth";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useTheme from "@/hooks/useTheme";
 
@@ -71,7 +71,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           translate="no"
           className={`min-w-screen flex min-h-screen flex-col items-center justify-between ${font.className}`}
         >
-          <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+          {children}
           <Analytics />
         </main>
       )}

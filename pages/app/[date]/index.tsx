@@ -6,12 +6,11 @@ import {
 } from "@/features/plans";
 import { getIsWeek } from "@/utils/dateFormat";
 import { getRealDate } from "@/features/plans/utils/dates";
-import { GetServerSideProps } from "next";
 import { selectAuthSlice } from "@/features/authentication";
 import { selectPlansSlice, updateDietNutrition } from "@/features/plans/slice";
 import { StartsOfWeek } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
-import { Suspense, useEffect, useRef } from "react";
+import { Suspense, useEffect } from "react";
 import { useTour } from "@/features/tours";
 import { useWindowWidth } from "@/hooks";
 import PremiumLayout from "@/layouts/PremiumLayout";
@@ -21,7 +20,6 @@ import Sidebar from "@/layouts/components/Sidebar/PremiumSidebar";
 import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
 import { useRouter } from "next/router";
 
-interface Props {}
 export default function Page() {
   const dispatch = useDispatch();
   const { diets } = useSelector(selectPlansSlice);

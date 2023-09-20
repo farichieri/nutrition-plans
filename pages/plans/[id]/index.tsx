@@ -12,6 +12,7 @@ import Image from "next/image";
 import LandingLayout from "@/layouts/LandingLayout";
 import remarkGfm from "remark-gfm";
 import RestOfPlans from "@/components/Plans/RestOfPlans";
+import Head from "next/head";
 
 interface Props {
   planData: PlanType;
@@ -50,7 +51,8 @@ export default function Page({ planData, restOfPlans }: Props) {
 
   return (
     <LandingLayout>
-      <StructuredData data={structuredData}>
+      <StructuredData data={structuredData} />
+      <Head>
         <title>{title}</title>
         <link rel="canonical" href={canonicalURL} />
         <meta name="description" content={planData.description} />
@@ -84,7 +86,8 @@ export default function Page({ planData, restOfPlans }: Props) {
         <meta property="og:title" content={planData.title} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={canonicalURL} />
-      </StructuredData>
+        <meta property="og:image:alt" content="Nutrition Plans CO" />
+      </Head>
       <article className="flex w-full max-w-5xl flex-col items-center justify-center">
         <div className="mb-10 mt-14 flex w-full flex-col items-center justify-center gap-4">
           <h1 className="mb-8 text-5xl font-extrabold md:text-6xl lg:text-7xl">

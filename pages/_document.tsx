@@ -35,7 +35,6 @@ export default function Document() {
           name="keywords"
           content="nutrition plans, diet plan, healthy eating, meal planning, calorie counting, weight loss, balanced diet, vegetarian diet, keto diet, low carb diet, gluten free diet, mediterranean diet"
         />
-
         <link rel="alternate" hrefLang="en" href="https://nutritionplans.co" />
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="author" content="Nutrition Plans CO" />
