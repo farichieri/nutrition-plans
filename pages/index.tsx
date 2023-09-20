@@ -14,6 +14,7 @@ import LandingLayout from "@/layouts/LandingLayout";
 import Link from "next/link";
 import Plans from "@/components/Plans/Plans";
 import PrimaryButton from "@/components/Buttons/PrimaryButton";
+import Head from "next/head";
 
 interface Props {
   plans: PlansType;
@@ -69,7 +70,8 @@ export default function Home({ plans }: Props) {
 
   return (
     <LandingLayout>
-      <StructuredData data={structuredData}>
+      <StructuredData data={structuredData} />
+      <Head>
         <title>Nutrition Plans CO</title>
         <link rel="canonical" href={canonicalURL} />
         <meta name="description" content={METADATA.DESCRIPTION} />
@@ -96,7 +98,8 @@ export default function Home({ plans }: Props) {
         <meta property="og:image:width" content="630" />
         <meta property="og:locale" content="en_US" key="locale" />
         <meta property="og:site_name" content="Nutrition Plans CO" />
-      </StructuredData>
+        <meta property="og:image:alt" content="Nutrition Plans CO" />
+      </Head>
       <section className="flex w-full flex-col items-center gap-10 pb-20 pt-10">
         <div className="flex w-full flex-col items-center gap-10">
           <div className="flex w-full flex-col items-center justify-center gap-4 text-center text-2xl">
