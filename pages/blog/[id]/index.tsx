@@ -63,7 +63,6 @@ export default function Page({ postData }: Props) {
         {postData.keywords.map((keyword, index) => (
           <meta property="article:tag" content={keyword} key={index} />
         ))}
-        {/* twitter Meta Tags*/}
         <meta name="twitter:creator" content="@nutritionplans_" />
         <meta name="twitter:site" content="@nutritionplans_" />
         <meta property="twitter:domain" content="nutritionplans.co" />
@@ -72,11 +71,7 @@ export default function Page({ postData }: Props) {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:description" content={postData.description} />
         <meta name="twitter:image" content={postData.imageURL} />
-        {/* Facebook Meta Tags */}
-        {/* <meta property="og:image:height" content="1280" /> */}
-        {/* <meta property="og:image:width" content="630" /> */}
         <meta property="og:description" content={postData.description} />
-        <meta property="og:image:secure_url" content={postData.imageURL} />
         <meta property="og:image" content={postData.imageURL} />
         <meta property="og:locale" content="en_US" key="locale" />
         <meta property="og:site_name" content="Nutrition Plans CO" />
