@@ -3,6 +3,7 @@ author: "aldana-richieri"
 authorName: "Aldana Richieri"
 date: "2023-07-30"
 description: "Discover the benefits of following the Vegetarian Nutrition Plan!"
+URL: "https://nutritionplans.co/plans/vegetarian"
 image: "/images/plans/vegetarian.png"
 imageURL: "https://nutritionplans.co/images/plans/vegetarian.png"
 isAvailable: true

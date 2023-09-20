@@ -3,6 +3,7 @@ author: "aldana-richieri"
 authorName: "Aldana Richieri"
 date: "2023-07-30"
 description: "Discover the benefits of following the Mediterranean Nutrition Plan!"
+URL: "https://nutritionplans.co/plans/mediterranean"
 image: "/images/plans/mediterranean.png"
 imageURL: "https://nutritionplans.co/images/plans/mediterranean.png"
 isAvailable: true

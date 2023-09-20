@@ -1,6 +1,7 @@
 ---
 title: "Balanced"
 description: "Discover the benefits of following the Balanced Nutrition Plan!"
+URL: "https://nutritionplans.co/plans/balanced"
 isAvailable: true
 image: "/images/plans/balanced.png"
 imageURL: "https://nutritionplans.co/images/plans/balanced.png"

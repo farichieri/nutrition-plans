@@ -3,29 +3,26 @@ import { MdTrendingFlat } from "react-icons/md";
 import { Post } from "@/types";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import { StructuredData } from "@/components";
-import { useCanonicalURL } from "@/hooks";
 import BlurImage from "@/components/blur-image";
 import CallToAction from "@/components/call-to-action/CallToAction";
 import Date from "@/components/Posts/Post/Date/Date";
+import Head from "next/head";
 import LandingLayout from "@/layouts/LandingLayout";
 import Link from "next/link";
 import remarkGfm from "remark-gfm";
 import type { BlogPosting, WithContext } from "schema-dts";
-import Head from "next/head";
 
 interface Props {
   postData: Post;
 }
 
 export default function Page({ postData }: Props) {
-  const canonicalURL = useCanonicalURL();
-
   const structuredData: WithContext<BlogPosting> = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": canonicalURL,
+      "@id": postData.URL,
     },
     headline: postData.title,
     description: postData.description,
@@ -35,7 +32,7 @@ export default function Page({ postData }: Props) {
       "@type": "Person",
       name: "Nutrition Plans CO",
     },
-    url: canonicalURL,
+    url: postData.URL,
     publisher: {
       "@type": "Organization",
       name: "Nutrition Plans CO",
@@ -54,7 +51,7 @@ export default function Page({ postData }: Props) {
       <StructuredData data={structuredData} />
       <Head>
         <title>{postData.title}</title>
-        <link rel="canonical" href={canonicalURL} />
+        <link rel="canonical" href={postData.URL} />
         <meta name="description" content={postData.description} />
         <meta property="article:author" content="Nutrition Plans CO" />
         <meta property="article:published_time" content={postData.date} />
@@ -66,7 +63,7 @@ export default function Page({ postData }: Props) {
         <meta name="twitter:creator" content="@nutritionplans_" />
         <meta name="twitter:site" content="@nutritionplans_" />
         <meta property="twitter:domain" content="nutritionplans.co" />
-        <meta property="twitter:url" content={canonicalURL} />
+        <meta property="twitter:url" content={postData.URL} />
         <meta name="twitter:title" content={postData.title} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:description" content={postData.description} />
@@ -77,7 +74,7 @@ export default function Page({ postData }: Props) {
         <meta property="og:site_name" content="Nutrition Plans CO" />
         <meta property="og:title" content={postData.title} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={canonicalURL} />
+        <meta property="og:url" content={postData.URL} />
         <meta property="og:image:alt" content="Nutrition Plans CO" />
       </Head>
       <article className="flex max-w-4xl flex-col pt-14">

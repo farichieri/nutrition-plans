@@ -1,8 +1,8 @@
-import path from "path";
+import { PlansType, Posts } from "@/types";
 import fs from "fs";
 import matter from "gray-matter";
+import path from "path";
 import readingTime from "reading-time";
-import { PlansType, Posts } from "@/types";
 
 export enum MDDirectories {
   plans = "/data/content/plans",
@@ -36,6 +36,7 @@ const getSortedData = (directory: MDDirectories): Posts | PlansType => {
       timeReading,
       title: matterResult.data.title,
       topic: matterResult.data.topic,
+      URL: matterResult.data.URL,
     };
   });
 

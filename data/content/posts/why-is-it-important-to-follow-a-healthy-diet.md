@@ -1,6 +1,7 @@
 ---
 title: "Why is it important to follow a healthy diet?"
 description: "Discover why is it important to follow a healthy diet, the benefits of it and how to follow one properly."
+URL: "https://nutritionplans.co/blog/why-is-it-important-to-follow-a-healthy-diet"
 image: "/images/posts/why-is-it-important-to-follow-a-healthy-diet/0.jpg"
 imageURL: "https://nutritionplans.co/images/posts/why-is-it-important-to-follow-a-healthy-diet/0.jpg"
 summary: "What should we consider"

@@ -1,6 +1,7 @@
 ---
 title: "Keto"
 description: "Discover the benefits of following the Keto Nutrition Plan!"
+URL: "https://nutritionplans.co/plans/keto"
 isAvailable: true
 image: "/images/plans/keto.png"
 imageURL: "https://nutritionplans.co/images/plans/keto.png"
