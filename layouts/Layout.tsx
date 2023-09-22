@@ -5,7 +5,6 @@ import {
   useLoginMutation,
   useGetUserQuery,
 } from "@/features/authentication";
-import { Analytics } from "@vercel/analytics/react";
 import { auth } from "@/services/firebase";
 import { getUserSubscription, usePremiumStatus } from "@/features/stripe";
 import { Inter } from "next/font/google";
@@ -13,14 +12,14 @@ import { isAppVersionCorrect } from "@/utils";
 import { onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import useTheme from "@/hooks/useTheme";
+// import useTheme from "@/hooks/useTheme";
 
 const font = Inter({
   subsets: ["latin"],
 });
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const _theme = useTheme();
+  // const _theme = useTheme();
   const [isVerifyingVersion, setIsVerifyingVersion] = useState(true);
   const { user } = useSelector(selectAuthSlice);
   const dispatch = useDispatch();
@@ -66,15 +65,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      {_theme && (
-        <main
-          translate="no"
-          className={`min-w-screen flex min-h-screen flex-col items-center justify-between ${font.className}`}
-        >
-          {children}
-          <Analytics />
-        </main>
-      )}
+      <main
+        translate="no"
+        className={`min-w-screen flex min-h-screen flex-col items-center justify-between ${font.className}`}
+      >
+        {children}
+      </main>
     </>
   );
 }

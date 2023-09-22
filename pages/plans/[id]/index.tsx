@@ -1,5 +1,5 @@
 import { BlogPosting, WithContext } from "schema-dts";
-import { getAllMDIDS, getAllMDData, MDDirectories } from "@/utils/mds";
+import { getAllMdIds, getAllMDData, MDDirectories } from "@/utils/mds";
 import { getPlansAvailable } from "@/utils";
 import { IMAGES } from "@/constants";
 import { PlanType, PlansType } from "@/types";
@@ -122,6 +122,13 @@ export default function Page({ planData, restOfPlans }: Props) {
                 {}
               </h2>
             ),
+            p: ({ node, children }: { node: any; children: any }) => {
+              if (node.children[0].tagName === "img") {
+                return children;
+              } else {
+                return <p>{children}</p>;
+              }
+            },
           }}
         >
           {planData.content!}
@@ -136,7 +143,7 @@ export default function Page({ planData, restOfPlans }: Props) {
 }
 
 export const getStaticPaths = async () => {
-  const paths = getAllMDIDS(MDDirectories.plans);
+  const paths = getAllMdIds(MDDirectories.plans);
   return {
     paths,
     fallback: false,

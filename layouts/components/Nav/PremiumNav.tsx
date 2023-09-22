@@ -1,6 +1,7 @@
 import { AppRoutes } from "@/utils";
 import { FC, ReactNode, useEffect, useState } from "react";
 import { MdLibraryBooks } from "react-icons/md";
+import { Notifications } from "@/features/notifications";
 import { useRouter } from "next/router";
 import Avatar from "@/components/Avatar/Avatar";
 import AvatarDropDown from "@/components/DropDown/AvatarDropDown/AvatarDropDown";
@@ -9,7 +10,6 @@ import Link from "next/link";
 import Logo from "@/components/Logo/Logo";
 import ToggleSidebar from "@/layouts/components/Sidebar/ToggleSidebar";
 import useWindowWidth from "@/hooks/useWindowWidth";
-import { Notifications } from "@/features/notifications";
 
 interface Props {
   children?: ReactNode;
@@ -48,6 +48,7 @@ const PremiumNav: FC<Props> = ({
         window.removeEventListener("scroll", controlNavbar);
       };
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lastScrollY]);
 
   return (

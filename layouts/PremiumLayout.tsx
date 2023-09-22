@@ -19,12 +19,13 @@ import InstallModal from "@/components/InstallApp/InstallModal";
 import Loader from "@/components/Loader/Loader";
 import WelcomeSteps from "@/components/WelcomeSteps/WelcomeSteps";
 import TrialEnded from "@/components/TrialDaysLeft/TrialEnded";
+import dynamic from "next/dynamic";
 
 interface Props {
   children: React.ReactNode;
 }
 
-export default function PremiumLayout({ children }: Props) {
+function PremiumLayout({ children }: Props) {
   const router = useRouter();
   const dispatch = useDispatch();
   const { sidebarOpen, isSubscribeModalOpen } = useSelector(selectLayoutSlice);
@@ -91,3 +92,8 @@ export default function PremiumLayout({ children }: Props) {
     </>
   );
 }
+
+// no ssr for this layout
+export default dynamic(() => Promise.resolve(PremiumLayout), {
+  ssr: false,
+});

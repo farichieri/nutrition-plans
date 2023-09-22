@@ -1,18 +1,20 @@
 import "nprogress/nprogress.css";
 import "@/styles/globals.css";
+import { Analytics } from "@vercel/analytics/react";
 import { auth } from "@/services/firebase";
 import { getAnalytics, logEvent, setUserId } from "firebase/analytics";
+import { Layout } from "@/layouts";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "@/store";
 import { Provider } from "react-redux";
+import { ThemeProvider } from "next-themes";
+import { Toaster } from "react-hot-toast";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { Toaster } from "react-hot-toast";
-import { Layout } from "@/layouts";
-import NProgress from "nprogress";
-import type { AppProps } from "next/app";
 import ErrorBoundary from "@/components/Errors/ErrorBoundary";
 import Head from "next/head";
+import NProgress from "nprogress";
+import type { AppProps } from "next/app";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -60,20 +62,28 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <ErrorBoundary>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <Toaster />
-          <Layout>
-            <Head>
-              <meta
-                name="viewport"
-                content="width=device-width, initial-scale=1"
-              />
-            </Head>
-            <Component {...pageProps} />
-          </Layout>
-        </PersistGate>
-      </Provider>
+      <ThemeProvider attribute="class">
+        <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            {() => (
+              <>
+                <Toaster />
+                <Layout>
+                  <Head>
+                    <meta
+                      name="viewport"
+                      content="width=device-width, initial-scale=1"
+                    />
+                  </Head>
+
+                  <Component {...pageProps} />
+                  <Analytics />
+                </Layout>
+              </>
+            )}
+          </PersistGate>
+        </Provider>
+      </ThemeProvider>
     </ErrorBoundary>
   );
 }

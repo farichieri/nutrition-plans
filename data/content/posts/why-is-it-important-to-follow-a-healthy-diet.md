@@ -60,17 +60,17 @@ For all these reasons, we must emphasize the **importance of healthy eating** an
 
 To have a healthy diet and guarantee its benefits, it is important to take into account certain simple attitudes, such as the following:
 
-- Drink at least 2 liters of water daily;
-- Have a varied diet, alternating fruits and vegetables that are consumed daily, and varying between meat, fish, chicken and eggs as the main sources of protein in the case of omnivores and legumes, eggs and dairy products for vegetarians;
-- Eat at least 2 whole units of fruit a day, preferably with the peel and seeds, for a greater fiber intake;
-- Consume vegetables 2 or more times a day, mainly at lunch and dinner;
-- Include proteins such as cheese and eggs at breakfast and in the afternoon snack;
-- The consumption of dairy products must be low in fat or as a substitute, fortified vegetable drinks such as almond, oat or coconut milk, for example, can be included;
+- Drink at least 2 liters of water daily.
+- Have a varied diet, alternating fruits and vegetables that are consumed daily, and varying between meat, fish, chicken and eggs as the main sources of protein in the case of omnivores and legumes, eggs and dairy products for vegetarians.
+- Eat at least 2 whole units of fruit a day, preferably with the peel and seeds, for a greater fiber intake.
+- Consume vegetables 2 or more times a day, mainly at lunch and dinner.
+- Include proteins such as cheese and eggs at breakfast and in the afternoon snack.
+- The consumption of dairy products must be low in fat or as a substitute, fortified vegetable drinks such as almond, oat or coconut milk, for example, can be included.
 - Reduce salt intake to a maximum of 2.5 g per day, opting for natural seasonings such as oregano, rosemary, garlic, onion, pepper, basil, parsley or other aromatic plants, and avoiding using high industrialized seasonings. in sodiums
-- Opt for foods in their integral version, such as whole wheat bread and pasta, being important to read the nutritional labeling of the products, because in some cases, even though they are integral, they may have unhealthy ingredients;
-- Include portions of polyunsaturated and monounsaturated fats, such as olive oil, avocado, nuts, flax or chia seeds, for example;
-- Avoid the consumption of foods rich in sugar, artificial sweeteners and fats (mainly saturated and trans) which are found in industrialized foods, mostly bakery, soft drinks, sweets, sausages and snack foods;
-- Avoid the consumption of alcoholic drinks;
+- Opt for foods in their integral version, such as whole wheat bread and pasta, being important to read the nutritional labeling of the products, because in some cases, even though they are integral, they may have unhealthy ingredients.
+- Include portions of polyunsaturated and monounsaturated fats, such as olive oil, avocado, nuts, flax or chia seeds, for example.
+- Avoid the consumption of foods rich in sugar, artificial sweeteners and fats (mainly saturated and trans) which are found in industrialized foods, mostly bakery, soft drinks, sweets, sausages and snack foods.
+- Avoid the consumption of alcoholic drinks.
 - Avoid eating processed meat, such as sausage, sausage, serrano ham, bacon, salami and its derivatives.
 
 Now that you know the importance of healthy eating and how to carry it out with these recommendations, don't forget to implement them to lead a healthy lifestyle. Your nutritional plan must include foods from all nutritional groups and, in addition, it is important to perform physical activity to adapt them to your health on a daily basis.

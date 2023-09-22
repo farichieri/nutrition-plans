@@ -9,8 +9,12 @@ import { useSelector } from "react-redux";
 import Avatar from "@/components/Avatar/Avatar";
 import Link from "next/link";
 import PremiumLayout from "@/layouts/PremiumLayout";
-import ThemeSwitcher from "@/components/theme-switcher";
 import TrialDaysLeft from "@/components/TrialDaysLeft/TrialDaysLeft";
+import dynamic from "next/dynamic";
+
+const ThemeSwitcher = dynamic(() => import("@/components/theme-switcher"), {
+  ssr: false,
+});
 
 export default function Page() {
   const router = useRouter();

@@ -21,6 +21,7 @@ const BlurImage = ({
       }
     >
       <Image
+        priority={true}
         alt={image.title}
         src={image.imageURL}
         fill

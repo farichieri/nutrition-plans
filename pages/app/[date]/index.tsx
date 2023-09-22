@@ -9,8 +9,9 @@ import { getRealDate } from "@/features/plans/utils/dates";
 import { selectAuthSlice } from "@/features/authentication";
 import { selectPlansSlice, updateDietNutrition } from "@/features/plans/slice";
 import { StartsOfWeek } from "@/types";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Suspense, useEffect } from "react";
+import { useRouter } from "next/router";
 import { useTour } from "@/features/tours";
 import { useWindowWidth } from "@/hooks";
 import PremiumLayout from "@/layouts/PremiumLayout";
@@ -18,9 +19,9 @@ import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 import RememberGoal from "@/components/Goals/RememberGoal";
 import Sidebar from "@/layouts/components/Sidebar/PremiumSidebar";
 import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
-import { useRouter } from "next/router";
 
 export default function Page() {
+  console.log("app/date");
   const dispatch = useDispatch();
   const { diets } = useSelector(selectPlansSlice);
   const { user } = useSelector(selectAuthSlice);
@@ -42,6 +43,7 @@ export default function Page() {
         dispatch(updateDietNutrition({ dietID: id }));
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, diet?.meals]);
 
   useTour({
@@ -83,13 +85,7 @@ export default function Page() {
   });
 
   return (
-    <Suspense
-      fallback={
-        <div className="absolute inset-0 h-screen w-screen bg-red-500">
-          Loading....
-        </div>
-      }
-    >
+    <>
       <PremiumLayout>
         <section className="mt-[calc(1_*_var(--nav-h))] flex w-full select-none flex-col pb-2 sm:mt-[var(--nav-h)]">
           {realDate && (
@@ -109,16 +105,16 @@ export default function Page() {
                 {getIsWeek(realDate) ? (
                   <MultipleDaysPlan dateInterval={realDate} />
                 ) : (
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <>
                     <DayPlan date={realDate} />
-                  </Suspense>
+                  </>
                 )}
               </div>
             </>
           )}
         </section>
       </PremiumLayout>
-    </Suspense>
+    </>
   );
 }
 

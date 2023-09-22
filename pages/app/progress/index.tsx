@@ -11,8 +11,9 @@ import { useSelector } from "react-redux";
 import { useTour } from "@/features/tours";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "@/layouts/components/Nav/PremiumNav";
+import dynamic from "next/dynamic";
 
-export default function Page() {
+function Page() {
   const isMobile = window.innerWidth < 1024;
   const { user } = useSelector(selectAuthSlice);
 
@@ -79,3 +80,5 @@ export default function Page() {
     </PremiumLayout>
   );
 }
+
+export default dynamic(() => Promise.resolve(Page), { ssr: false });

@@ -8,7 +8,8 @@ import {
 } from "@/features/plans/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Food, FoodGroup, FoodGroupArray } from "@/features/foods/types";
-import { getDietNutrition, getIsWeek, getToday } from "@/utils";
+import { getDietNutrition } from "@/utils";
+import { getIsWeek, getToday } from "@/utils/dateFormat";
 import { PURGE } from "redux-persist";
 import { RootState } from "@/store";
 

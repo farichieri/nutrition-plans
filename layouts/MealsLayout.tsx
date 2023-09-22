@@ -7,12 +7,13 @@ import { selectAuthSlice } from "@/features/authentication";
 import { useSelector } from "react-redux";
 import ProfileLayout from "./ProfileLayout";
 import Spinner from "@/components/Loader/Spinner";
+import dynamic from "next/dynamic";
 
 interface Props {
   children: React.ReactNode;
 }
 
-export default function MealsLayout({ children }: Props) {
+function MealsLayout({ children }: Props) {
   const { user } = useSelector(selectAuthSlice);
   const { meals, mealsSettings, isLoadingMealsSettings } =
     useSelector(selectMealsSlice);
@@ -36,3 +37,5 @@ export default function MealsLayout({ children }: Props) {
     </ProfileLayout>
   );
 }
+
+export default dynamic(() => Promise.resolve(MealsLayout), { ssr: false });

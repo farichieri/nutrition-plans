@@ -14,16 +14,16 @@ import {
 import { AddFoodToLibrary } from "@/features/library";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { PremiumSidebar } from "@/layouts";
+import { selectAuthSlice } from "@/features/authentication";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import { useTour } from "@/features/tours";
 import { useWindowWidth } from "@/hooks";
 import BackButton from "@/components/Buttons/BackButton";
 import BlurImage from "@/components/blur-image";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
-import { useSelector } from "react-redux";
-import { selectAuthSlice } from "@/features/authentication";
-import { useTour } from "@/features/tours";
 
 export default function Page({ food }: { food: Food }) {
   const router = useRouter();
@@ -130,7 +130,6 @@ export default function Page({ food }: { food: Food }) {
                     }}
                   />
                 </span>
-
                 <span className="text-center opacity-50">
                   {food.description}
                 </span>
@@ -199,20 +198,30 @@ export default function Page({ food }: { food: Food }) {
   );
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await getAllFoodsIds();
-  if (res.result === "success") {
-    const ids = res.data;
-    const paths = ids.map((id) => ({
-      params: { id },
-    }));
+// export const getStaticPaths: GetStaticPaths = async () => {
+//   const res = await getAllFoodsIds();
+//   if (res.result === "success") {
+//     const ids = res.data;
+//     const paths = ids.map((id) => ({
+//       params: { id },
+//     }));
 
-    return { paths, fallback: true };
-  }
-  return { paths: [], fallback: true };
-};
+//     return { paths, fallback: true };
+//   }
+//   return { paths: [], fallback: true };
+// };
 
-export const getStaticProps: GetStaticProps = async (context) => {
+// export const getStaticProps: GetStaticProps = async (context) => {
+//   const id = context.params?.id;
+//   const res = await fetchFoodByID(String(id));
+//   if (res.result === "success") {
+//     const food = res.data;
+//     return { props: { food } };
+//   }
+//   return { props: {} };
+// };
+
+export const getServerSideProps: GetStaticProps = async (context) => {
   const id = context.params?.id;
   const res = await fetchFoodByID(String(id));
   if (res.result === "success") {

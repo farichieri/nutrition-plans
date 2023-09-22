@@ -1,37 +1,33 @@
 import { FC } from "react";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
-import { selectLayoutSlice, setTheme } from "@/features/layout/slice";
 import { Theme } from "@/types";
-import { useDispatch, useSelector } from "react-redux";
+import { useTheme } from "next-themes";
 
 interface Props {
   withText: boolean;
 }
 
 const ThemeSwitcher: FC<Props> = ({ withText }) => {
-  const dispatch = useDispatch();
-  const { theme } = useSelector(selectLayoutSlice);
+  const { theme, setTheme } = useTheme();
 
   const toggleTheme = () => {
     if (
       theme === "dark" ||
       (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)
     ) {
-      document.documentElement.classList.remove("dark");
-      document.documentElement.classList.add("light");
       document.documentElement
         .querySelector('meta[name="theme-color"]')
         ?.setAttribute("content", "#fff");
-      dispatch(setTheme(Theme.Light));
+      setTheme(Theme.Light);
     } else {
-      document.documentElement.classList.remove("light");
-      document.documentElement.classList.add("dark");
       document.documentElement
         .querySelector('meta[name="theme-color"]')
         ?.setAttribute("content", "#000");
-      dispatch(setTheme(Theme.Dark));
+      setTheme(Theme.Dark);
     }
   };
+
+  if (!theme) return <></>;
 
   return (
     <button

@@ -12,8 +12,12 @@ import Avatar from "@/components/Avatar/Avatar";
 import DropDown from "../DropDown";
 import Link from "next/link";
 import SubscribeButton from "@/components/Buttons/Subscribe";
-import ThemeSwitcher from "@/components/theme-switcher";
 import TrialDaysLeft from "@/components/TrialDaysLeft/TrialDaysLeft";
+import dynamic from "next/dynamic";
+
+const ThemeSwitcher = dynamic(() => import("@/components/theme-switcher"), {
+  ssr: false,
+});
 
 interface Props {
   isApp: boolean;
