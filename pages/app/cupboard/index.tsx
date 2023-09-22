@@ -11,10 +11,9 @@ import CupboardList from "@/features/shopping/components/cupboard_list";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 import Spinner from "@/components/Loader/Spinner";
+import dynamic from "next/dynamic";
 
-interface Props {}
-
-export default function Page(): Props {
+function Page() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { cupboard } = useSelector(selectShoppingSlice);
   const { isAddingFood } = cupboard;
@@ -38,8 +37,4 @@ export default function Page(): Props {
   );
 }
 
-export async function getServerSideProps() {
-  return {
-    props: {},
-  };
-}
+export default dynamic(() => Promise.resolve(Page), { ssr: false });

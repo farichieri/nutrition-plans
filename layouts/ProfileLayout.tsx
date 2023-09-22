@@ -5,12 +5,13 @@ import { useWindowWidth } from "@/hooks";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "./components/Nav/PremiumNav";
 import BackNav from "@/components/Layout/BackNav";
+import dynamic from "next/dynamic";
 
 interface Props {
   children: React.ReactNode;
 }
 
-export default function ProfileLayout({ children }: Props) {
+function ProfileLayout({ children }: Props) {
   const router = useRouter();
   const windowWidth = useWindowWidth();
   const isMobile = windowWidth < 1024;
@@ -39,3 +40,5 @@ export default function ProfileLayout({ children }: Props) {
     </PremiumLayout>
   );
 }
+
+export default dynamic(() => Promise.resolve(ProfileLayout), { ssr: false });

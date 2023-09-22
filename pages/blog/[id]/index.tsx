@@ -1,4 +1,4 @@
-import { getAllMDIDS, getAllMDData, MDDirectories } from "@/utils/mds";
+import { getAllMdIds, getAllMDData, MDDirectories } from "@/utils/mds";
 import { MdTrendingFlat } from "react-icons/md";
 import { Post } from "@/types";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
@@ -128,6 +128,13 @@ export default function Page({ postData }: Props) {
                 {...props}
               />
             ),
+            p: ({ node, children }: { node: any; children: any }) => {
+              if (node.children[0].tagName === "img") {
+                return children;
+              } else {
+                return <p>{children}</p>;
+              }
+            },
           }}
         >
           {postData.content}
@@ -141,7 +148,7 @@ export default function Page({ postData }: Props) {
 }
 
 export const getStaticPaths = async () => {
-  const paths = getAllMDIDS(MDDirectories.posts);
+  const paths = getAllMdIds(MDDirectories.posts);
   return {
     paths,
     fallback: false,

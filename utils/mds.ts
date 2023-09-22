@@ -49,7 +49,7 @@ const getSortedData = (directory: MDDirectories): Posts | PlansType => {
   });
 };
 
-const getAllMDIDS = (directory: MDDirectories) => {
+const getAllMdIds = (directory: MDDirectories) => {
   const dir = path.join(process.cwd(), directory);
   const fileNames = fs.readdirSync(dir);
   return fileNames.map((fileName) => {
@@ -77,4 +77,4 @@ const getAllMDData = async (directory: MDDirectories, id: any) => {
   };
 };
 
-export { getSortedData, getAllMDData, getAllMDIDS };
+export { getSortedData, getAllMDData, getAllMdIds };

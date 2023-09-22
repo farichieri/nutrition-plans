@@ -11,14 +11,15 @@ import { selectAuthSlice } from "@/features/authentication";
 import { StartsOfWeek } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import { useRouter } from "next/router";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
-import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
 
 interface Props {}
 
-export default function Page() {
+function Page() {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
   const { cupboard } = useSelector(selectShoppingSlice);
@@ -84,3 +85,5 @@ export default function Page() {
     </PremiumLayout>
   );
 }
+
+export default dynamic(() => Promise.resolve(Page), { ssr: false });

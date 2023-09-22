@@ -1,6 +1,6 @@
 {
   "name": "nutrition-plans",
-  "version": "0.2.14",
+  "version": "0.2.15",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -37,11 +37,12 @@
     "intro.js": "^7.2.0",
     "intro.js-react": "^1.0.0",
     "next": "13.3.0",
+    "next-themes": "^0.2.1",
     "nprogress": "^0.2.0",
-    "react": "18.2.0",
+    "react": "^18.2.0",
     "react-canvas-confetti": "^1.4.0",
     "react-datepicker": "^4.14.1",
-    "react-dom": "18.2.0",
+    "react-dom": "^18.2.0",
     "react-hook-form": "^7.44.3",
     "react-hot-toast": "^2.4.1",
     "react-icons": "^4.10.1",

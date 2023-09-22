@@ -13,9 +13,13 @@ import BodyFeatures from "@/features/authentication/components/create-user/body-
 import Goal from "@/features/authentication/components/create-user/goal/Goal";
 import PlanSelector from "@/features/authentication/components/create-user/select-plan/PlanSelector";
 import Results from "@/features/authentication/components/create-user/results/Results";
-import ThemeSwitcher from "@/components/theme-switcher";
 import { AppRoutes } from "@/utils";
 import Head from "next/head";
+import dynamic from "next/dynamic";
+
+const ThemeSwitcher = dynamic(() => import("@/components/theme-switcher"), {
+  ssr: false,
+});
 
 export default function Page() {
   const { user } = useSelector(selectAuthSlice);

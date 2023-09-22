@@ -9,13 +9,14 @@ import Pagination from "@/components/Pagination/Pagination";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "./components/Nav/PremiumNav";
 import SearchBar from "@/components/Premium/SearchBar/SearchBar";
+import dynamic from "next/dynamic";
 
 interface Props {
   queries: FilterQueries;
   children: React.ReactNode;
 }
 
-export default function SearchLayout({ queries }: Props) {
+function SearchLayout({ queries }: Props) {
   const isMobile = window.innerWidth < 1024;
   const { pages } = useSelector(selectFoodsSlice);
   return (
@@ -45,3 +46,5 @@ export default function SearchLayout({ queries }: Props) {
     </PremiumLayout>
   );
 }
+
+export default dynamic(() => Promise.resolve(SearchLayout), { ssr: false });

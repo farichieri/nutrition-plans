@@ -19,7 +19,9 @@ interface Props {
 }
 
 export default function Home({ plans }: Props) {
-  window.history.scrollRestoration = "manual";
+  if (typeof window !== "undefined") {
+    window.history.scrollRestoration = "manual";
+  }
 
   const structuredData: WithContext<WebPage> = {
     "@context": "https://schema.org",
@@ -94,19 +96,17 @@ export default function Home({ plans }: Props) {
               <PrimaryButton onClick={() => {}} content={`Get Started`} />
             </Link>
           </div>
-          <Reveal width="w-full">
-            <span className="relative flex h-full w-full overflow-hidden rounded-xl border duration-300">
-              <BlurImage
-                image={{
-                  imageURL: "/images/general/landing-img.png",
-                  title: "Demo",
-                  id: "Demo",
-                }}
-                customClass="!object-fill"
-                customContainerClass="!aspect-h-4 !aspect-w-8"
-              />
-            </span>
-          </Reveal>
+          <span className="relative flex h-full w-full overflow-hidden rounded-xl border duration-300">
+            <BlurImage
+              image={{
+                imageURL: "/images/general/landing-img.png",
+                title: "Demo",
+                id: "Demo",
+              }}
+              customClass="!object-fill"
+              customContainerClass="!aspect-h-4 !aspect-w-8"
+            />
+          </span>
         </div>
         <div className="my-20">
           <Goals />

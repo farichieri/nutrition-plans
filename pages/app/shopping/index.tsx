@@ -14,10 +14,11 @@ import DateSelector from "@/components/date-selector";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
+import dynamic from "next/dynamic";
 
 interface Props {}
 
-export default function Page() {
+function Page() {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
   const { cupboard, shopping } = useSelector(selectShoppingSlice);
@@ -56,3 +57,5 @@ export default function Page() {
     </PremiumLayout>
   );
 }
+
+export default dynamic(() => Promise.resolve(Page), { ssr: false });
