@@ -89,17 +89,10 @@ a {
 
 /* p */
 p {
-  font-size: 1rem;
-  line-height: 1.5rem;
+  font-size: 20px;
+  line-height: 1.75;
   margin: 20px 0;
   letter-spacing: -0.01rem;
-}
-@media screen and (min-width: 950px) {
-  p {
-    padding: 0.5rem 0;
-    font-size: 1.125rem;
-    line-height: 1.75rem;
-  }
 }
 
 /* h2 */
@@ -120,21 +113,13 @@ h1 {
 }
 /* h2 */
 h2 {
-  margin-top: 52px;
-  margin-bottom: 24px;
-  letter-spacing: -0.03rem;
-  line-height: 1.75rem;
-}
-@media screen and (min-width: 950px) {
-  h2 {
-    margin-top: 60px;
-    font-size: 2rem;
-    line-height: 2.25rem;
-  }
+  margin-top: 60px;
+  font-size: 2rem;
+  line-height: 2.25rem;
 }
 
 h3 {
-  font-size: 1.75rem;
+  font-size: 1.5rem;
 }
 
 h4 {
@@ -161,7 +146,7 @@ ul {
 
 /* ol */
 ol > li::before {
-  content: "–";
+  /* content: "–"; */
   display: inline-block;
   position: absolute;
   margin-left: -15px;
@@ -170,16 +155,9 @@ ol > li::before {
 
 /* li */
 li {
-  font-size: 1em;
-  line-height: 1.625em;
+  font-size: 18px;
+  line-height: 1.45em;
   margin-bottom: 10px;
-}
-
-@media screen and (min-width: 950px) {
-  li {
-    font-size: 1.125rem;
-    line-height: 1.75rem;
-  }
 }
 
 #nprogress .bar {
@@ -197,6 +175,11 @@ th {
   border: 1px solid #777;
   padding: 1rem;
   vertical-align: top;
+}
+
+ol {
+  list-style-type: decimal;
+  margin-left: 1.5rem;
 }
 
 @media screen and (max-width: 680px) {

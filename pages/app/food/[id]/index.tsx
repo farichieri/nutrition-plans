@@ -198,30 +198,20 @@ export default function Page({ food }: { food: Food }) {
   );
 }
 
-// export const getStaticPaths: GetStaticPaths = async () => {
-//   const res = await getAllFoodsIds();
-//   if (res.result === "success") {
-//     const ids = res.data;
-//     const paths = ids.map((id) => ({
-//       params: { id },
-//     }));
+export const getStaticPaths: GetStaticPaths = async () => {
+  const res = await getAllFoodsIds();
+  if (res.result === "success") {
+    const ids = res.data;
+    const paths = ids.map((id) => ({
+      params: { id },
+    }));
 
-//     return { paths, fallback: true };
-//   }
-//   return { paths: [], fallback: true };
-// };
+    return { paths, fallback: true };
+  }
+  return { paths: [], fallback: true };
+};
 
-// export const getStaticProps: GetStaticProps = async (context) => {
-//   const id = context.params?.id;
-//   const res = await fetchFoodByID(String(id));
-//   if (res.result === "success") {
-//     const food = res.data;
-//     return { props: { food } };
-//   }
-//   return { props: {} };
-// };
-
-export const getServerSideProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps = async (context) => {
   const id = context.params?.id;
   const res = await fetchFoodByID(String(id));
   if (res.result === "success") {
@@ -230,3 +220,13 @@ export const getServerSideProps: GetStaticProps = async (context) => {
   }
   return { props: {} };
 };
+
+// export const getServerSideProps: GetStaticProps = async (context) => {
+//   const id = context.params?.id;
+//   const res = await fetchFoodByID(String(id));
+//   if (res.result === "success") {
+//     const food = res.data;
+//     return { props: { food } };
+//   }
+//   return { props: {} };
+// };

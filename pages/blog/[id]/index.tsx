@@ -87,7 +87,7 @@ export default function Page({ postData }: Props) {
             <span>Back to Blog</span>
           </Link>
         </aside>
-        <div className="mb-10 flex flex-col items-center justify-center gap-6 border-b pb-4 ">
+        <div className="flex flex-col items-center justify-center gap-6 ">
           <h1 className="text-left text-3xl font-bold uppercase sm:text-4xl md:text-5xl lg:text-6xl">
             {postData.title}
           </h1>
@@ -97,7 +97,7 @@ export default function Page({ postData }: Props) {
             <span>{postData.timeReading}</span>
           </div>
 
-          <figure className="relative h-[80vh] w-full overflow-auto rounded-lg">
+          <figure className="relative h-[80vh] w-full overflow-auto rounded-lg border shadow-lg">
             <BlurImage
               image={{
                 imageURL: postData.image,
@@ -112,7 +112,7 @@ export default function Page({ postData }: Props) {
           remarkPlugins={[remarkGfm]}
           components={{
             img: (props) => (
-              <div className="relative mx-auto my-5 h-[50vh] w-full overflow-hidden rounded-md">
+              <div className="relative mx-auto my-10 h-[50vh] w-full overflow-hidden rounded-md border shadow-lg">
                 <BlurImage
                   image={{
                     imageURL: props.src!,
@@ -124,7 +124,7 @@ export default function Page({ postData }: Props) {
             ),
             li: (props) => (
               <li
-                className=" before:absolute before:-ml-4 before:inline-block before:text-gray-500 before:content-['–']"
+                className=" before:absolute before:-ml-4 before:inline-block before:text-gray-500 "
                 {...props}
               />
             ),
@@ -132,7 +132,7 @@ export default function Page({ postData }: Props) {
               if (node.children[0].tagName === "img") {
                 return children;
               } else {
-                return <p>{children}</p>;
+                return <p className="">{children}</p>;
               }
             },
           }}
