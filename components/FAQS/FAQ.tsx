@@ -29,7 +29,7 @@ const FAQ: FC<Props> = ({ content, setOpen, open, index }) => {
         />
       </div>
       <p
-        className={`my-0 overflow-hidden pb-0 pt-2 text-base transition-[max-height] duration-300  ${
+        className={`my-0 overflow-hidden pb-0 pt-2 text-lg transition-[max-height] duration-300  ${
           open === index ? " max-h-96" : "max-h-0"
         }`}
       >

@@ -43,7 +43,7 @@ A vegetarian diet does not include any kind of meat, poultry, or shellfish. It i
 
 Vegetarians also do not eat products that contain gelatin or rennin (an enzyme found in the calf's stomach that is used to make many cheeses).
 
-**There are different types of vegetarian diets:**
+### **There are different types of vegetarian diets:**
 
 - Lacto-ovo-vegetarian diet: eliminates meat, fish and poultry, but allows eggs and dairy products.
 - Lacto-vegetarian diet: eliminates meat, fish, poultry and eggs, but allows dairy products.

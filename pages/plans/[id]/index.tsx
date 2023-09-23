@@ -81,12 +81,12 @@ export default function Page({ planData, restOfPlans }: Props) {
         <meta property="og:image:alt" content="Nutrition Plans CO" />
       </Head>
       <article className="flex w-full max-w-5xl flex-col items-center justify-center">
-        <div className="mb-10 mt-14 flex w-full flex-col items-center justify-center gap-4">
+        <div className="mt-14 flex w-full flex-col items-center justify-center gap-4">
           <h1 className="mb-8 text-5xl font-extrabold md:text-6xl lg:text-7xl">
             {planData.title}
           </h1>
 
-          <figure className="h-full w-full max-w-[500px] overflow-hidden rounded-3xl shadow-[0_1px_5px_gray] dark:shadow-[0px_1px_5px_#4040408c]">
+          <figure className="h-full w-full max-w-[500px] overflow-hidden rounded-3xl border shadow-[0_1px_5px_gray] dark:shadow-[0px_1px_5px_#4040408c]">
             <BlurImage
               image={{
                 imageURL: planData.image!,
@@ -102,7 +102,7 @@ export default function Page({ planData, restOfPlans }: Props) {
           remarkPlugins={[remarkGfm]}
           components={{
             img: (props) => (
-              <div className="relative mx-auto my-5 h-[50vh] w-full">
+              <div className="relative mx-auto my-10 h-[50vh] w-full border shadow-lg">
                 <Image
                   src={props.src || ""}
                   alt={props.alt || ""}
