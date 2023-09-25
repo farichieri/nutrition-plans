@@ -62,7 +62,6 @@ export interface Post {
   image: string;
   imageURL: string;
   isAvailable: boolean;
-  summary: string;
   timeReading: string;
   title: string;
   topic: string;
@@ -80,7 +79,6 @@ export interface PlanType {
   image: string;
   imageURL: string;
   isAvailable: boolean;
-  summary: string;
   timeReading: string;
   title: string;
   topic: string;

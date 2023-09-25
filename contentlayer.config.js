@@ -1,0 +1,168 @@
+import { defineDocumentType, makeSource } from "contentlayer/source-files";
+import remarkGfm from "remark-gfm";
+import rehypePrettyCode from "rehype-pretty-code";
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import readingTime from "reading-time";
+
+/** @type {import('contentlayer/source-files').ComputedFields} */
+const computedFields = {
+  slug: {
+    type: "string",
+    resolve: (doc) => doc._raw.flattenedPath,
+  },
+  slugAsParams: {
+    type: "string",
+    resolve: (doc) => doc._raw.flattenedPath.split("/").slice(1).join("/"),
+  },
+  id: {
+    type: "string",
+    resolve: (doc) => doc._raw.sourceFileName.split(".mdx")[0],
+  },
+  timeReading: {
+    type: "number",
+    resolve: (doc) => readingTime(doc.body.raw).text,
+  },
+};
+
+export const Plan = defineDocumentType(() => ({
+  name: "Plan",
+  filePathPattern: `plans/**/*.mdx`,
+  contentType: "mdx",
+  fields: {
+    title: {
+      type: "string",
+      required: true,
+    },
+    description: {
+      type: "string",
+      required: true,
+    },
+    image: {
+      type: "string",
+      required: true,
+    },
+    imageURL: {
+      type: "string",
+      required: true,
+    },
+    URL: {
+      type: "string",
+      required: true,
+    },
+    date: {
+      type: "date",
+      required: true,
+    },
+    keywords: {
+      type: "list",
+      of: { type: "string" },
+      required: true,
+    },
+    isAvailable: {
+      type: "boolean",
+      required: true,
+    },
+    // TODO: add more fields
+  },
+  computedFields,
+}));
+
+export const Post = defineDocumentType(() => ({
+  name: "Post",
+  filePathPattern: `posts/**/*.mdx`,
+  contentType: "mdx",
+  fields: {
+    title: {
+      type: "string",
+      required: true,
+    },
+    description: {
+      type: "string",
+      required: true,
+    },
+    image: {
+      type: "string",
+      required: true,
+    },
+    imageURL: {
+      type: "string",
+      required: true,
+    },
+    URL: {
+      type: "string",
+      required: true,
+    },
+    date: {
+      type: "date",
+      required: true,
+    },
+    keywords: {
+      type: "list",
+      of: { type: "string" },
+      required: true,
+    },
+    topic: {
+      type: "string",
+      required: true,
+    },
+    // TODO: add more fields
+  },
+  computedFields,
+}));
+
+export const Legal = defineDocumentType(() => ({
+  name: "Legal",
+  filePathPattern: `legal/**/*.mdx`,
+  contentType: "mdx",
+  fields: {
+    title: {
+      type: "string",
+      required: true,
+    },
+    // "dev": "contentlayer dev & next dev",
+
+    // TODO: add more fields
+  },
+  computedFields,
+}));
+
+export default makeSource({
+  contentDirPath: "data/content",
+  documentTypes: [Plan, Post, Legal],
+  mdx: {
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [
+      rehypeSlug,
+      [
+        rehypePrettyCode,
+        {
+          theme: "github-dark",
+          onVisitLine(node) {
+            // Prevent lines from collapsing in `display: grid` mode, and allow empty
+            // lines to be copy/pasted
+            if (node.children.length === 0) {
+              node.children = [{ type: "text", value: " " }];
+            }
+          },
+          onVisitHighlightedLine(node) {
+            node.properties.className.push("line--highlighted");
+          },
+          onVisitHighlightedWord(node) {
+            node.properties.className = ["word--highlighted"];
+          },
+        },
+      ],
+      [
+        rehypeAutolinkHeadings,
+        {
+          properties: {
+            className: ["anchor"],
+          },
+        },
+      ],
+    ],
+  },
+});
+
+// "dev": "contentlayer dev & next dev",
