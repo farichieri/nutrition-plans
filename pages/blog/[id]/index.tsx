@@ -1,7 +1,6 @@
-import { getAllMdIds, getAllMDData, MDDirectories } from "@/utils/mds";
 import { MdTrendingFlat } from "react-icons/md";
-import { Post } from "@/types";
-import { ReactMarkdown } from "react-markdown/lib/react-markdown";
+import { Mdx } from "@/components/MDX-Components/MDX-Components";
+import { Post, allPosts } from "@/.contentlayer/generated";
 import { StructuredData } from "@/components";
 import BlurImage from "@/components/blur-image";
 import CallToAction from "@/components/call-to-action/CallToAction";
@@ -9,30 +8,29 @@ import Date from "@/components/Posts/Post/Date/Date";
 import Head from "next/head";
 import LandingLayout from "@/layouts/LandingLayout";
 import Link from "next/link";
-import remarkGfm from "remark-gfm";
 import type { BlogPosting, WithContext } from "schema-dts";
 
 interface Props {
-  postData: Post;
+  data: Post;
 }
 
-export default function Page({ postData }: Props) {
+export default function Page({ data }: Props) {
   const structuredData: WithContext<BlogPosting> = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": postData.URL,
+      "@id": data.URL,
     },
-    headline: postData.title,
-    description: postData.description,
+    headline: data.title,
+    description: data.description,
     isFamilyFriendly: true,
-    image: [postData.imageURL],
+    image: [data.imageURL],
     author: {
       "@type": "Person",
       name: "Nutrition Plans CO",
     },
-    url: postData.URL,
+    url: data.URL,
     publisher: {
       "@type": "Organization",
       name: "Nutrition Plans CO",
@@ -41,43 +39,43 @@ export default function Page({ postData }: Props) {
         url: "https://nutritionplans.co/images/logo.png",
       },
     },
-    datePublished: postData.date,
-    dateModified: postData.date,
-    keywords: postData.keywords,
+    datePublished: data.date,
+    dateModified: data.date,
+    keywords: data.keywords,
   };
 
   return (
     <LandingLayout>
       <StructuredData data={structuredData} />
       <Head>
-        <title>{postData.title}</title>
-        <link rel="canonical" href={postData.URL} />
-        <meta name="description" content={postData.description} />
+        <title>{data.title}</title>
+        <link rel="canonical" href={data.URL} />
+        <meta name="description" content={data.description} />
         <meta property="article:author" content="Nutrition Plans CO" />
-        <meta property="article:published_time" content={postData.date} />
+        <meta property="article:published_time" content={data.date} />
         <meta property="article:section" content="Blog" />
-        <meta property="title" content={postData.title} key="title" />
-        {postData.keywords.map((keyword, index) => (
+        <meta property="title" content={data.title} key="title" />
+        {data.keywords.map((keyword, index) => (
           <meta property="article:tag" content={keyword} key={index} />
         ))}
         <meta name="twitter:creator" content="@nutritionplans_" />
         <meta name="twitter:site" content="@nutritionplans_" />
         <meta property="twitter:domain" content="nutritionplans.co" />
-        <meta property="twitter:url" content={postData.URL} />
-        <meta name="twitter:title" content={postData.title} />
+        <meta property="twitter:url" content={data.URL} />
+        <meta name="twitter:title" content={data.title} />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:description" content={postData.description} />
-        <meta name="twitter:image" content={postData.imageURL} />
-        <meta property="og:description" content={postData.description} />
-        <meta property="og:image" content={postData.imageURL} />
+        <meta name="twitter:description" content={data.description} />
+        <meta name="twitter:image" content={data.imageURL} />
+        <meta property="og:description" content={data.description} />
+        <meta property="og:image" content={data.imageURL} />
         <meta property="og:locale" content="en_US" key="locale" />
         <meta property="og:site_name" content="Nutrition Plans CO" />
-        <meta property="og:title" content={postData.title} />
+        <meta property="og:title" content={data.title} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={postData.URL} />
+        <meta property="og:url" content={data.URL} />
         <meta property="og:image:alt" content="Nutrition Plans CO" />
       </Head>
-      <article className="flex max-w-4xl flex-col pt-14">
+      <article className="mb-10 flex w-full max-w-3xl flex-col justify-center border-b pb-5 pt-14">
         <aside>
           <Link
             href={"/blog"}
@@ -87,58 +85,27 @@ export default function Page({ postData }: Props) {
             <span>Back to Blog</span>
           </Link>
         </aside>
-        <div className="flex flex-col items-center justify-center gap-6 ">
+        <div className="flex flex-col items-center justify-center gap-6 pb-6">
           <h1 className="text-left text-3xl font-bold uppercase sm:text-4xl md:text-5xl lg:text-6xl">
-            {postData.title}
+            {data.title}
           </h1>
           <div className="flex items-center gap-1 opacity-50">
-            <Date dateString={postData.date} />
+            <Date dateString={data.date} />
             &#8226;
-            <span>{postData.timeReading}</span>
+            <span>{data.timeReading}</span>
           </div>
 
           <figure className="relative h-[80vh] w-full overflow-auto rounded-lg border shadow-lg">
             <BlurImage
               image={{
-                imageURL: postData.image,
-                title: postData.title,
-                id: postData.id,
+                imageURL: data.image,
+                title: data.title,
+                id: data._id,
               }}
             />
           </figure>
         </div>
-        <ReactMarkdown
-          className="border-b pb-14"
-          remarkPlugins={[remarkGfm]}
-          components={{
-            img: (props) => (
-              <div className="relative mx-auto my-10 h-[50vh] w-full overflow-hidden rounded-md border shadow-lg">
-                <BlurImage
-                  image={{
-                    imageURL: props.src!,
-                    title: props.alt!,
-                    id: props.alt!,
-                  }}
-                />
-              </div>
-            ),
-            li: (props) => (
-              <li
-                className=" before:absolute before:-ml-4 before:inline-block before:text-gray-500 "
-                {...props}
-              />
-            ),
-            p: ({ node, children }: { node: any; children: any }) => {
-              if (node.children[0].tagName === "img") {
-                return children;
-              } else {
-                return <p className="">{children}</p>;
-              }
-            },
-          }}
-        >
-          {postData.content}
-        </ReactMarkdown>
+        <Mdx code={data.body.code} />
       </article>
       <div className="my-24 flex w-full items-center justify-center">
         <CallToAction />
@@ -148,7 +115,12 @@ export default function Page({ postData }: Props) {
 }
 
 export const getStaticPaths = async () => {
-  const paths = getAllMdIds(MDDirectories.posts);
+  const paths = allPosts.map((doc) => ({
+    params: {
+      id: doc.slugAsParams,
+    },
+  }));
+
   return {
     paths,
     fallback: false,
@@ -156,10 +128,10 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }: { params: any }) => {
-  const postData = await getAllMDData(MDDirectories.posts, params.id);
+  const data = allPosts.find((doc) => doc.slugAsParams === params.id);
   return {
     props: {
-      postData,
+      data,
     },
   };
 };

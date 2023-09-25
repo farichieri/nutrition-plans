@@ -1,36 +1,32 @@
 import { BlogPosting, WithContext } from "schema-dts";
-import { getAllMdIds, getAllMDData, MDDirectories } from "@/utils/mds";
-import { getPlansAvailable } from "@/utils";
 import { IMAGES } from "@/constants";
-import { PlanType, PlansType } from "@/types";
-import { ReactMarkdown } from "react-markdown/lib/react-markdown";
+import { Mdx } from "@/components/MDX-Components/MDX-Components";
+import { Plan, allPlans } from "contentlayer/generated";
 import { StructuredData } from "@/components";
 import BlurImage from "@/components/blur-image";
 import CallToAction from "@/components/call-to-action/CallToAction";
 import Head from "next/head";
-import Image from "next/image";
 import LandingLayout from "@/layouts/LandingLayout";
-import remarkGfm from "remark-gfm";
 import RestOfPlans from "@/components/Plans/RestOfPlans";
 
 interface Props {
-  planData: PlanType;
-  restOfPlans: PlansType;
+  restOfPlans: Plan[];
+  data: Plan;
 }
 
-export default function Page({ planData, restOfPlans }: Props) {
+export default function Page({ data, restOfPlans }: Props) {
   const structuredData: WithContext<BlogPosting> = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    headline: planData.title,
-    description: planData.description,
+    headline: data.title,
+    description: data.description,
     isFamilyFriendly: true,
-    image: [planData.imageURL],
+    image: [data.imageURL],
     author: {
       "@type": "Person",
       name: "Nutrition Plans CO",
     },
-    url: planData.URL,
+    url: data.URL,
     publisher: {
       "@type": "Organization",
       name: "Nutrition Plans CO",
@@ -39,100 +35,65 @@ export default function Page({ planData, restOfPlans }: Props) {
         url: IMAGES.LOGO,
       },
     },
-    datePublished: planData.date,
-    dateModified: planData.date,
-    keywords: planData.keywords,
+    datePublished: data.date,
+    dateModified: data.date,
+    keywords: data.keywords,
   };
 
-  const title = `${planData.title} | Nutrition Plans CO`;
+  const title = `${data.title} | Nutrition Plans CO`;
 
   return (
     <LandingLayout>
       <StructuredData data={structuredData} />
       <Head>
         <title>{title}</title>
-        <link rel="canonical" href={planData.URL} />
-        <meta name="description" content={planData.description} />
+        <link rel="canonical" href={data.URL} />
+        <meta name="description" content={data.description} />
         <meta property="article:author" content="Nutrition Plans CO" />
-        <meta property="article:published_time" content={planData.date} />
+        <meta property="article:published_time" content={data.date} />
         <meta property="article:section" content="Nutrition" />
         <meta property="og:title" content={title} />
         <meta property="og:type" content="article" />
-        <meta property="og:url" content={planData.URL} />
+        <meta property="og:url" content={data.URL} />
         <meta property="title" content={title} />
-        {planData.keywords.map((keyword, index) => (
+        {data.keywords.map((keyword: string, index: number) => (
           <meta property="article:tag" content={keyword} key={index} />
         ))}
         <meta name="twitter:creator" content="@nutritionplans_" />
         <meta name="twitter:site" content="@nutritionplans_" />
         <meta property="twitter:domain" content="nutritionplans.co" />
-        <meta property="twitter:url" content={planData.URL} />
-        <meta name="twitter:title" content={planData.title} />
+        <meta property="twitter:url" content={data.URL} />
+        <meta name="twitter:title" content={data.title} />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:description" content={planData.description} />
-        <meta name="twitter:image" content={planData.imageURL} />
-        <meta property="og:description" content={planData.description} />
-        <meta property="og:image" content={planData.imageURL} />
+        <meta name="twitter:description" content={data.description} />
+        <meta name="twitter:image" content={data.imageURL} />
+        <meta property="og:description" content={data.description} />
+        <meta property="og:image" content={data.imageURL} />
         <meta property="og:locale" content="en_US" key="locale" />
         <meta property="og:site_name" content="Nutrition Plans CO" />
-        <meta property="og:title" content={planData.title} />
+        <meta property="og:title" content={data.title} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={planData.URL} />
+        <meta property="og:url" content={data.URL} />
         <meta property="og:image:alt" content="Nutrition Plans CO" />
       </Head>
-      <article className="flex w-full max-w-5xl flex-col items-center justify-center">
-        <div className="mt-14 flex w-full flex-col items-center justify-center gap-4">
+      <article className="mb-10 flex w-full max-w-3xl flex-col items-center justify-center border-b pb-5">
+        <div className="mt-14 flex w-full flex-col items-center justify-center gap-4 pb-10">
           <h1 className="mb-8 text-5xl font-extrabold md:text-6xl lg:text-7xl">
-            {planData.title}
+            {data.title}
           </h1>
 
           <figure className="h-full w-full max-w-[500px] overflow-hidden rounded-3xl border shadow-[0_1px_5px_gray] dark:shadow-[0px_1px_5px_#4040408c]">
             <BlurImage
               image={{
-                imageURL: planData.image!,
-                title: planData.title!,
-                id: planData.id,
+                imageURL: data.image!,
+                title: data.title!,
+                id: data._id,
               }}
               customContainerClass="!aspect-h-1 !aspect-w-1"
             />
           </figure>
         </div>
-        <ReactMarkdown
-          className="border-b pb-14 "
-          remarkPlugins={[remarkGfm]}
-          components={{
-            img: (props) => (
-              <div className="relative mx-auto my-10 h-[50vh] w-full border shadow-lg">
-                <Image
-                  src={props.src || ""}
-                  alt={props.alt || ""}
-                  fill
-                  className="rounded-lg object-cover"
-                />
-              </div>
-            ),
-            li: (props) => (
-              <li
-                className=" before:absolute before:-ml-4 before:inline-block before:text-gray-500 before:content-['–']"
-                {...props}
-              />
-            ),
-            h2: (props) => (
-              <h2 className="mb-5 mt-20 text-3xl" {...props}>
-                {}
-              </h2>
-            ),
-            p: ({ node, children }: { node: any; children: any }) => {
-              if (node.children[0].tagName === "img") {
-                return children;
-              } else {
-                return <p>{children}</p>;
-              }
-            },
-          }}
-        >
-          {planData.content!}
-        </ReactMarkdown>
+        <Mdx code={data.body.code} />
       </article>
       <RestOfPlans plans={restOfPlans} />
       <div className="my-24">
@@ -143,7 +104,12 @@ export default function Page({ planData, restOfPlans }: Props) {
 }
 
 export const getStaticPaths = async () => {
-  const paths = getAllMdIds(MDDirectories.plans);
+  const paths = allPlans.map((doc) => ({
+    params: {
+      id: doc.slugAsParams,
+    },
+  }));
+
   return {
     paths,
     fallback: false,
@@ -151,13 +117,12 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }: { params: any }) => {
-  const planData = await getAllMDData(MDDirectories.plans, params.id);
-  const plansAvailable = getPlansAvailable();
-  const restOfPlans = plansAvailable.filter((plan) => plan.id !== params.id);
+  const data = allPlans.find((doc) => doc.slugAsParams === params.id);
+  const restOfPlans = allPlans.filter((doc) => doc.slugAsParams !== params.id);
 
   return {
     props: {
-      planData,
+      data,
       restOfPlans,
     },
   };

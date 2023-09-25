@@ -1,11 +1,11 @@
 import { getPlansAvailable } from "@/utils";
-import { PlansType } from "@/types";
+import { Plan } from "@/.contentlayer/generated";
 import Head from "next/head";
 import LandingLayout from "@/layouts/LandingLayout";
 import Plans from "@/components/Plans/Plans";
 
 interface Props {
-  plans: PlansType;
+  plans: Plan[];
 }
 
 export default function Page({ plans }: Props) {

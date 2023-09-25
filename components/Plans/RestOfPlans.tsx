@@ -1,10 +1,10 @@
 import { FC } from "react";
-import { PlansType } from "@/types";
 import Link from "next/link";
 import BlurImage from "../blur-image";
+import { Plan } from "@/.contentlayer/generated";
 
 interface Props {
-  plans: PlansType;
+  plans: Plan[];
 }
 
 const RestOfPlans: FC<Props> = ({ plans }) => {
@@ -26,9 +26,9 @@ const RestOfPlans: FC<Props> = ({ plans }) => {
             <span className="h-[150px] w-[150px] min-w-[150px] overflow-auto rounded-3xl">
               <BlurImage
                 image={{
-                  imageURL: `/images/plans/${plan.id}.png`,
+                  imageURL: plan.image,
                   title: plan.title!,
-                  id: plan.id!,
+                  id: plan.id,
                 }}
                 customClass=""
               />

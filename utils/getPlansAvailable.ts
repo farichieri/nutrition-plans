@@ -1,9 +1,7 @@
-import { PlansType } from "@/types";
-import { MDDirectories, getSortedData } from "@/utils/mds";
+import { Plan, allPlans } from "@/.contentlayer/generated";
 
-const getPlansAvailable = (): PlansType => {
-  const allPlansData: PlansType = getSortedData(MDDirectories.plans);
-  const plansAvailable: PlansType = allPlansData.filter(
+const getPlansAvailable = (): Plan[] => {
+  const plansAvailable: Plan[] = allPlans.filter(
     (plan: any) => plan.isAvailable
   );
   return plansAvailable;

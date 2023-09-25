@@ -15,7 +15,7 @@ const getSortedData = (directory: MDDirectories): Posts | PlansType => {
 
   const filesNames = fs.readdirSync(dir);
   const allPostsData = filesNames.map((fileName) => {
-    const id = fileName.replace(/\.md$/, "");
+    const id = fileName.replace(/\.mdx$/, "");
     const fullPath = path.join(dir, fileName);
     const fileContents = fs.readFileSync(fullPath, "utf8");
     const matterResult = matter(fileContents);
@@ -32,7 +32,6 @@ const getSortedData = (directory: MDDirectories): Posts | PlansType => {
       imageURL: matterResult.data.imageURL,
       isAvailable: matterResult.data.isAvailable,
       keywords: matterResult.data.keywords,
-      summary: matterResult.data.summary,
       timeReading,
       title: matterResult.data.title,
       topic: matterResult.data.topic,
@@ -55,7 +54,7 @@ const getAllMdIds = (directory: MDDirectories) => {
   return fileNames.map((fileName) => {
     return {
       params: {
-        id: fileName.replace(/\.md$/, ""),
+        id: fileName.replace(/\.mdx$/, ""),
       },
     };
   });
@@ -64,7 +63,7 @@ const getAllMdIds = (directory: MDDirectories) => {
 const getAllMDData = async (directory: MDDirectories, id: any) => {
   const dir = path.join(process.cwd(), directory);
 
-  const fullPath = path.join(dir, `${id}.md`);
+  const fullPath = path.join(dir, `${id}.mdx`);
   const fileContents = fs.readFileSync(fullPath, "utf8");
   const timeReading = readingTime(fileContents).text;
   const { data, content } = matter(fileContents);

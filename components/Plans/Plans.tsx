@@ -1,10 +1,10 @@
 import { FC } from "react";
-import { PlansType } from "@/types";
-import Link from "next/link";
+import { Plan } from "@/.contentlayer/generated";
 import BlurImage from "../blur-image";
+import Link from "next/link";
 
 interface Props {
-  plans: PlansType;
+  plans: Plan[];
 }
 
 const Plans: FC<Props> = ({ plans }) => {
@@ -26,9 +26,9 @@ const Plans: FC<Props> = ({ plans }) => {
             >
               <BlurImage
                 image={{
-                  imageURL: `/images/plans/${plan.id}.png`,
-                  title: plan.title!,
-                  id: plan.id!,
+                  imageURL: plan.image,
+                  title: plan.title,
+                  id: plan.id,
                 }}
                 customClass=""
               />

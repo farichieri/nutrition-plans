@@ -1,10 +1,9 @@
 import { getPlansAvailable } from "@/utils";
-import { MDDirectories, getSortedData } from "@/utils/mds";
-import { Posts, PlansType } from "@/types";
+import { Plan, Post, allPosts } from "@/.contentlayer/generated";
 
 const url = "https://nutritionplans.co";
 
-function generateSiteMap(posts: Posts, plans: PlansType) {
+function generateSiteMap(posts: Post[], plans: Plan[]) {
   return `<?xml version="1.0" encoding="UTF-8"?>
    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
      ${["", "/blog", "/plans", "/about", "/pricing"]
@@ -45,7 +44,7 @@ function SiteMap() {
 }
 
 export async function getServerSideProps({ res }: { res: any }) {
-  const posts = getSortedData(MDDirectories.posts);
+  const posts = allPosts;
   const plans = getPlansAvailable();
 
   // We generate the XML sitemap with the posts data

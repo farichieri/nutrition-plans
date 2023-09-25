@@ -1,8 +1,7 @@
 import { FAQS_INDEX } from "@/data/content";
 import { getPlansAvailable } from "@/utils/getPlansAvailable";
 import { IMAGES, METADATA } from "@/constants";
-import { NewsletterSubscriber, Reveal, StructuredData } from "@/components";
-import { PlansType } from "@/types";
+import { NewsletterSubscriber, StructuredData } from "@/components";
 import { WebPage, WithContext } from "schema-dts";
 import BlurImage from "@/components/blur-image";
 import CallToAction from "@/components/call-to-action/CallToAction";
@@ -13,9 +12,10 @@ import LandingLayout from "@/layouts/LandingLayout";
 import Link from "next/link";
 import Plans from "@/components/Plans/Plans";
 import PrimaryButton from "@/components/Buttons/PrimaryButton";
+import { Plan } from "@/.contentlayer/generated";
 
 interface Props {
-  plans: PlansType;
+  plans: Plan[];
 }
 
 export default function Home({ plans }: Props) {
@@ -112,54 +112,54 @@ export default function Home({ plans }: Props) {
           <Goals />
         </div>
         <div className="my-10 w-full">
-          <Reveal width="w-full">
-            <div className="flex flex-col gap-5">
-              <h2 className="mx-auto my-0 flex w-fit py-0 text-4xl font-extrabold sm:text-5xl">
-                Adapt your diet
-              </h2>
-              <span className="relative flex h-full w-full overflow-hidden rounded-xl border duration-300">
-                <BlurImage
-                  image={{
-                    imageURL: "/images/general/search-img.png",
-                    title: "Search",
-                    id: "Search",
-                  }}
-                  customClass="!object-fill"
-                  customContainerClass="!aspect-h-4 !aspect-w-8"
-                />
-              </span>
-            </div>
-          </Reveal>
+          {/* <Reveal width="w-full"> */}
+          <div className="flex flex-col gap-5">
+            <h2 className="mx-auto my-0 flex w-fit py-0 text-4xl font-extrabold sm:text-5xl">
+              Adapt your diet
+            </h2>
+            <span className="relative flex h-full w-full overflow-hidden rounded-xl border duration-300">
+              <BlurImage
+                image={{
+                  imageURL: "/images/general/search-img.png",
+                  title: "Search",
+                  id: "Search",
+                }}
+                customClass="!object-fill"
+                customContainerClass="!aspect-h-4 !aspect-w-8"
+              />
+            </span>
+          </div>
+          {/* </Reveal> */}
         </div>
         <div className="my-10 w-full">
-          <Reveal width="w-full">
-            <div className="flex flex-col gap-5">
-              <h2 className="mx-auto my-0 flex w-fit py-0 text-4xl font-extrabold sm:text-5xl">
-                Follow your Progress
-              </h2>
-              <span className="relative flex h-full w-full overflow-hidden rounded-xl border duration-300">
-                <BlurImage
-                  image={{
-                    imageURL: "/images/general/landing-progress.png",
-                    title: "Progress",
-                    id: "Progress",
-                  }}
-                  customClass="!object-fill"
-                  customContainerClass="!aspect-h-4 !aspect-w-8"
-                />
-              </span>
-            </div>
-          </Reveal>
+          {/* <Reveal width="w-full"> */}
+          <div className="flex flex-col gap-5">
+            <h2 className="mx-auto my-0 flex w-fit py-0 text-4xl font-extrabold sm:text-5xl">
+              Follow your Progress
+            </h2>
+            <span className="relative flex h-full w-full overflow-hidden rounded-xl border duration-300">
+              <BlurImage
+                image={{
+                  imageURL: "/images/general/landing-progress.png",
+                  title: "Progress",
+                  id: "Progress",
+                }}
+                customClass="!object-fill"
+                customContainerClass="!aspect-h-4 !aspect-w-8"
+              />
+            </span>
+          </div>
+          {/* </Reveal> */}
         </div>
         <div className="my-10">
-          <Reveal width="w-full">
-            <>
-              <h2 className="mx-auto my-0 flex w-fit py-0 text-4xl font-extrabold sm:text-5xl">
-                Plans included
-              </h2>
-              <Plans plans={plans} />
-            </>
-          </Reveal>
+          {/* <Reveal width="w-full"> */}
+          <>
+            <h2 className="mx-auto my-0 flex w-fit py-0 text-4xl font-extrabold sm:text-5xl">
+              Plans included
+            </h2>
+            <Plans plans={plans} />
+          </>
+          {/* </Reveal> */}
         </div>
         <div className="my-10 flex w-full items-center justify-center">
           <FAQS content={FAQS_INDEX} />

@@ -1,12 +1,11 @@
-import { MDDirectories, getSortedData } from "@/utils/mds";
-import { Posts as PostsType } from "@/types";
+import { Post, allPosts } from "@/.contentlayer/generated";
 import BlogPosts from "@/components/Posts/BlogPosts";
 import CallToAction from "@/components/call-to-action/CallToAction";
 import Head from "next/head";
 import LandingLayout from "@/layouts/LandingLayout";
 
 interface Props {
-  posts: PostsType;
+  posts: Post[];
 }
 
 export default function Blog({ posts }: Props) {
@@ -30,8 +29,7 @@ export default function Blog({ posts }: Props) {
 }
 
 export const getStaticProps = async () => {
-  const allPostData = getSortedData(MDDirectories.posts);
   return {
-    props: { posts: allPostData },
+    props: { posts: allPosts },
   };
 };
