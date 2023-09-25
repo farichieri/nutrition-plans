@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Post } from "@/.contentlayer/generated";
 import BlurImage from "../blur-image";
-import Date from "./Post/Date/Date";
+import Date from "./Post/DateC/DateC";
 import Link from "next/link";
 
 interface Props {

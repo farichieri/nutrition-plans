@@ -44,7 +44,7 @@ const NewsletterSubscriber: FC<Props> = () => {
   };
 
   return (
-    <section className="flex w-fit flex-col items-center justify-center gap-5 rounded-lg border border-green-500/50 bg-green-200 px-4 py-8 dark:bg-green-900 ">
+    <section className="flex w-fit flex-col items-center justify-center gap-5 rounded-2xl border border-green-500/50 bg-green-200 px-4 py-8 dark:bg-green-900 ">
       <h2 className="my-0 max-w-2xl py-0 text-center text-3xl font-bold sm:text-4xl">
         🥦 Start receiving the{" "}
         <span className="underline decoration-green-500 decoration-8 underline-offset-2">
