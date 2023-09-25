@@ -4,7 +4,7 @@ import { Post, allPosts } from "@/.contentlayer/generated";
 import { StructuredData } from "@/components";
 import BlurImage from "@/components/blur-image";
 import CallToAction from "@/components/call-to-action/CallToAction";
-import Date from "@/components/Posts/Post/Date/Date";
+import DateC from "@/components/Posts/Post/DateC/DateC";
 import Head from "next/head";
 import LandingLayout from "@/layouts/LandingLayout";
 import Link from "next/link";
@@ -90,7 +90,7 @@ export default function Page({ data }: Props) {
             {data.title}
           </h1>
           <div className="flex items-center gap-1 opacity-50">
-            <Date dateString={data.date} />
+            <DateC dateString={data.date} />
             &#8226;
             <span>{data.timeReading}</span>
           </div>

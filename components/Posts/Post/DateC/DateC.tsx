@@ -1,6 +1,6 @@
 import { parseISO, format } from "date-fns";
 
-const Date = ({ dateString }: { dateString: any }) => {
+const DateC = ({ dateString }: { dateString: string }) => {
   const date = parseISO(dateString);
   return (
     <time className="" dateTime={dateString}>
@@ -8,5 +8,4 @@ const Date = ({ dateString }: { dateString: any }) => {
     </time>
   );
 };
-
-export default Date;
+export default DateC;
