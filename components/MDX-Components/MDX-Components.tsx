@@ -3,8 +3,35 @@ import Image from "next/image";
 import { useMDXComponent } from "next-contentlayer/hooks";
 
 import { cn } from "@/utils/cn";
+// import Link from "next/link";
 // import { Callout } from "@/components/callout"
 // import { MdxCard } from "@/components/mdx-card"
+
+// const CustomLink = (props: any) => {
+//   const href = props.href;
+
+//   if (href.startsWith("/")) {
+//     return (
+//       <Link href={href} {...props}>
+//         {props.children}
+//       </Link>
+//     );
+//   }
+
+//   if (href.startsWith("#")) {
+//     return (
+//       <a className="" {...props}>
+//         {}
+//       </a>
+//     );
+//   }
+
+//   return (
+//     <a target="_blank" rel="noopener noreferrer" {...props}>
+//       {}
+//     </a>
+//   );
+// };
 
 const components = {
   h1: ({ className, ...props }: { className: string }) => (
@@ -81,6 +108,7 @@ const components = {
       {}
     </a>
   ),
+  // a: CustomLink,
   p: ({ className, ...props }: { className: string }) => (
     <p
       className={cn("text-lg leading-7 [&:not(:first-child)]:mt-6", className)}

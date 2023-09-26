@@ -64,13 +64,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }, [isPremium, dispatch, user, updateUser]);
 
   return (
-    <>
-      <main
-        translate="no"
-        className={`min-w-screen flex min-h-screen flex-col items-center justify-between ${font.className}`}
-      >
-        {children}
-      </main>
-    </>
+    <div
+      translate="no"
+      className={`min-w-screen flex min-h-screen flex-col items-center justify-between ${font.className}`}
+    >
+      {children}
+    </div>
   );
 }

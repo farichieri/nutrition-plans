@@ -19,9 +19,38 @@
   }
 }
 
+article .anchor {
+  @apply invisible absolute no-underline;
+
+  margin-left: -0.6em;
+  padding-right: 0.5em;
+  width: 80%;
+  max-width: 700px;
+  cursor: pointer;
+}
+
+.anchor:hover {
+  @apply visible;
+}
+
+article a {
+  @apply decoration-green-400 decoration-[0.1em] underline-offset-2 transition-all dark:decoration-green-600;
+}
+
+article .anchor:after {
+  @apply text-green-300 dark:text-green-700;
+  content: "#";
+  font-size: 0.8em;
+}
+
+article *:hover > .anchor {
+  @apply visible;
+}
+
 html {
   min-width: 320px;
   word-wrap: break-word;
+  scroll-behavior: smooth;
 }
 
 @layer base {

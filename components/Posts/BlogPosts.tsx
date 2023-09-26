@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Post } from "@/.contentlayer/generated";
 import BlurImage from "../blur-image";
-import Date from "./Post/DateC/DateC";
+import DateC from "./Post/DateC/DateC";
 import Link from "next/link";
 
 interface Props {
@@ -9,12 +9,16 @@ interface Props {
 }
 
 const BlogPosts: FC<Props> = ({ posts }) => {
+  const postsSortedByDate = posts.sort((a, b) => {
+    return new Date(b.date).getTime() - new Date(a.date).getTime();
+  });
+
   return (
     <div className="flex w-full flex-col gap-10 ">
-      {posts.map((post) => (
+      {postsSortedByDate.map((post) => (
         <Link
-          key={post.id}
-          href={`/blog/${post.id}`}
+          key={post._id}
+          href={`/blog/${post.slug}`}
           className="flex h-full flex-wrap gap-2 overflow-auto sm:flex-nowrap sm:gap-4"
         >
           <span className="relative h-64 w-full overflow-hidden rounded-lg sm:h-56 sm:w-56 sm:min-w-[14rem]">
@@ -22,7 +26,7 @@ const BlogPosts: FC<Props> = ({ posts }) => {
               image={{
                 imageURL: post.image,
                 title: post.title,
-                id: post.id,
+                id: post._id,
               }}
             />
           </span>
@@ -32,7 +36,7 @@ const BlogPosts: FC<Props> = ({ posts }) => {
             </span>
             <span className="text-green-500">{post.topic}</span>
             <div className="flex items-center gap-1 opacity-70">
-              <Date dateString={post.date} />
+              <DateC dateString={post.date} />
               &#8226;
               <span>{post.timeReading}</span>
             </div>

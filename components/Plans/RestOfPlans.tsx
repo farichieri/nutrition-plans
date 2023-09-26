@@ -16,8 +16,8 @@ const RestOfPlans: FC<Props> = ({ plans }) => {
       <div className="mx-auto flex flex-wrap justify-center gap-5 sm:gap-10">
         {plans.map((plan) => (
           <Link
-            href={`/plans/${plan.id}`}
-            key={plan.id}
+            href={`/plans/${plan.slug}`}
+            key={plan._id}
             className="relative flex h-[auto] w-[auto] max-w-xs flex-col items-center justify-center overflow-hidden duration-300 hover:scale-105"
           >
             <span className="flex w-full items-center justify-center text-center text-xl font-bold">
@@ -28,7 +28,7 @@ const RestOfPlans: FC<Props> = ({ plans }) => {
                 image={{
                   imageURL: plan.image,
                   title: plan.title!,
-                  id: plan.id,
+                  id: plan._id,
                 }}
                 customClass=""
               />

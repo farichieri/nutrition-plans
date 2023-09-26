@@ -1,27 +1,42 @@
 import { defineDocumentType, makeSource } from "contentlayer/source-files";
-import remarkGfm from "remark-gfm";
+import readingTime from "reading-time";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import readingTime from "reading-time";
+import remarkGfm from "remark-gfm";
 
 /** @type {import('contentlayer/source-files').ComputedFields} */
 const computedFields = {
   slug: {
     type: "string",
-    resolve: (doc) => doc._raw.flattenedPath,
+    resolve: (doc) => doc._raw.sourceFileName.replace(/\.mdx$/, ""),
   },
   slugAsParams: {
     type: "string",
     resolve: (doc) => doc._raw.flattenedPath.split("/").slice(1).join("/"),
   },
-  id: {
-    type: "string",
-    resolve: (doc) => doc._raw.sourceFileName.split(".mdx")[0],
-  },
   timeReading: {
     type: "number",
     resolve: (doc) => readingTime(doc.body.raw).text,
+  },
+  headings: {
+    type: "list",
+    of: {
+      type: "object",
+      properties: {
+        level: { type: "number" },
+        title: { type: "string" },
+        slug: { type: "string" },
+      },
+    },
+    resolve: (doc) => {
+      const headings = [];
+      doc.body.raw.replace(/^(#+)\s+(.*)$/gm, (match, level, title) => {
+        const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+        headings.push({ level: level.length, title, slug });
+      });
+      return headings;
+    },
   },
 };
 
@@ -137,7 +152,8 @@ export default makeSource({
       [
         rehypePrettyCode,
         {
-          theme: "github-dark",
+          theme: "one-dark-pro",
+          keepBackground: true,
           onVisitLine(node) {
             // Prevent lines from collapsing in `display: grid` mode, and allow empty
             // lines to be copy/pasted
