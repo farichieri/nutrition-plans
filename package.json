@@ -16,6 +16,7 @@
     "@hello-pangea/dnd": "^16.2.0",
     "@heroicons/react": "^2.0.17",
     "@hookform/resolvers": "^3.1.0",
+    "@jsdevtools/rehype-toc": "^3.0.2",
     "@mdx-js/loader": "^2.3.0",
     "@mdx-js/react": "^2.3.0",
     "@next/mdx": "^13.5.2",
@@ -42,6 +43,7 @@
     "gray-matter": "^4.0.3",
     "intro.js": "^7.2.0",
     "intro.js-react": "^1.0.0",
+    "mdast-util-toc": "^7.0.0",
     "next": "13.3.0",
     "next-contentlayer": "^0.3.4",
     "next-themes": "^0.2.1",
@@ -73,6 +75,7 @@
     "tailwind-merge": "^1.14.0",
     "typescript": "5.0.3",
     "typesense": "^1.5.4",
+    "unist-util-visit": "^5.0.0",
     "uuid": "^9.0.0",
     "vaul": "^0.0.7",
     "yup": "^1.2.0"

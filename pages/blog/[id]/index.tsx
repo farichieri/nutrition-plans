@@ -1,3 +1,5 @@
+import { DashboardTableOfContents } from "@/components/Toc/Toc";
+import { getTableOfContents } from "@/lib/toc";
 import { MdTrendingFlat } from "react-icons/md";
 import { Mdx } from "@/components/MDX-Components/MDX-Components";
 import { Post, allPosts } from "@/.contentlayer/generated";
@@ -12,9 +14,10 @@ import type { BlogPosting, WithContext } from "schema-dts";
 
 interface Props {
   data: Post;
+  toc: any;
 }
 
-export default function Page({ data }: Props) {
+export default function Page({ data, toc }: Props) {
   const structuredData: WithContext<BlogPosting> = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -75,40 +78,48 @@ export default function Page({ data }: Props) {
         <meta property="og:url" content={data.URL} />
         <meta property="og:image:alt" content="Nutrition Plans CO" />
       </Head>
-      <article className="mb-10 flex w-full max-w-3xl flex-col justify-center border-b pb-5 pt-14">
-        <aside>
-          <Link
-            href={"/blog"}
-            className="flex items-center gap-1 opacity-50 duration-100 hover:opacity-100"
-          >
-            <MdTrendingFlat className="h-5 w-5 -rotate-180 transform" />
-            <span>Back to Blog</span>
-          </Link>
-        </aside>
-        <div className="flex flex-col items-center justify-center gap-6 pb-6">
-          <h1 className="text-left text-3xl font-bold uppercase sm:text-4xl md:text-5xl lg:text-6xl">
-            {data.title}
-          </h1>
-          <div className="flex items-center gap-1 opacity-50">
-            <DateC dateString={data.date} />
-            &#8226;
-            <span>{data.timeReading}</span>
-          </div>
+      <div className="relative flex h-full w-full items-start justify-center gap-8">
+        <div className="max-w-3xl">
+          <article className="z-10 mx-auto mb-10 flex w-full flex-col justify-center bg-white px-2 pb-5 pt-10 dark:bg-black">
+            <aside>
+              <Link
+                href={"/blog"}
+                className="flex items-center gap-1 opacity-50 duration-100 hover:opacity-100"
+              >
+                <MdTrendingFlat className="h-5 w-5 -rotate-180 transform" />
+                <span>All posts</span>
+              </Link>
+            </aside>
+            <div className="flex flex-col items-center justify-center gap-6 pb-6">
+              <h1 className="text-left text-3xl font-bold uppercase sm:text-4xl md:text-5xl lg:text-6xl">
+                {data.title}
+              </h1>
+              <div className="flex items-center gap-1 opacity-50">
+                <DateC dateString={data.date} />
+                &#8226;
+                <span>{data.timeReading}</span>
+              </div>
 
-          <figure className="relative h-[80vh] w-full overflow-auto rounded-lg border shadow-lg">
-            <BlurImage
-              image={{
-                imageURL: data.image,
-                title: data.title,
-                id: data._id,
-              }}
-            />
-          </figure>
+              <figure className="relative h-[80vh] w-full overflow-auto rounded-lg border shadow-lg">
+                <BlurImage
+                  image={{
+                    imageURL: data.image,
+                    title: data.title,
+                    id: data._id,
+                  }}
+                />
+              </figure>
+            </div>
+            <Mdx code={data.body.code} />
+          </article>
+          <hr />
+          <aside className="my-24 flex w-full items-center justify-center">
+            <CallToAction />
+          </aside>
         </div>
-        <Mdx code={data.body.code} />
-      </article>
-      <div className="my-24 flex w-full items-center justify-center">
-        <CallToAction />
+        <aside className="sticky top-16 hidden w-xxs overflow-y-auto pt-10 lg:flex">
+          <DashboardTableOfContents toc={toc} />
+        </aside>
       </div>
     </LandingLayout>
   );
@@ -129,9 +140,13 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params }: { params: any }) => {
   const data = allPosts.find((doc) => doc.slugAsParams === params.id);
+
+  const toc = data && (await getTableOfContents(data.body.raw));
+
   return {
     props: {
       data,
+      toc,
     },
   };
 };

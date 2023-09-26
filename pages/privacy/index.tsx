@@ -12,7 +12,9 @@ export default function Page({ data }: { data: any }) {
       </Head>
       <section className="flex w-full max-w-5xl flex-col items-center justify-center py-24">
         <span className="text-5xl font-bold">{data.title}</span>
-        <Mdx code={data.body.code} />
+        <div className="w-full">
+          <Mdx code={data.body.code} />
+        </div>
       </section>
     </LandingLayout>
   );

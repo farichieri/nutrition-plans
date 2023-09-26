@@ -19,7 +19,7 @@ function generateSiteMap(posts: Post[], plans: Plan[]) {
        .map((post) => {
          return `
        <url>
-           <loc>${`${url}/blog/${post.id}`}</loc>
+           <loc>${`${url}/blog/${post.slug}`}</loc>
            <lastmod>${post.date}</lastmod>
        </url>
      `;
@@ -29,7 +29,7 @@ function generateSiteMap(posts: Post[], plans: Plan[]) {
        .map((plan) => {
          return `
           <url>
-           <loc>${`${url}/plans/${plan.id}`}</loc>
+           <loc>${`${url}/plans/${plan.slug}`}</loc>
            <lastmod>${plan.date}</lastmod>
        </url>
        `;
