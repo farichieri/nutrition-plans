@@ -22,7 +22,7 @@
 article .anchor {
   @apply invisible absolute no-underline;
 
-  margin-left: -0.6em;
+  margin-left: -0.75em;
   padding-right: 0.5em;
   width: 80%;
   max-width: 700px;
@@ -40,7 +40,6 @@ article a {
 article .anchor:after {
   @apply text-green-300 dark:text-green-700;
   content: "#";
-  font-size: 0.8em;
 }
 
 article *:hover > .anchor {
