@@ -15,6 +15,7 @@
     "heroicons",
     "introjs",
     "jsdevtools",
+    "lastmod",
     "Macronutrients",
     "notranslate",
     "nprogress",
@@ -27,6 +28,7 @@
     "signup",
     "subnav",
     "typesense",
+    "urlset",
     "vaul"
   ],
   "ignoreWords": [],

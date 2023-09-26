@@ -48,7 +48,7 @@ const components = {
   h2: ({ className, ...props }: { className: string }) => (
     <h2
       className={cn(
-        "mt-10 scroll-m-20 border-b pb-1 text-3xl font-semibold tracking-tight first:mt-0",
+        "mt-10 scroll-m-20 border-b pb-1 text-4xl font-semibold tracking-tight first:mt-0",
         className
       )}
       {...props}
@@ -59,7 +59,7 @@ const components = {
   h3: ({ className, ...props }: { className: string }) => (
     <h3
       className={cn(
-        "mt-8 scroll-m-20 text-2xl font-semibold tracking-tight",
+        "mt-10 scroll-m-20 text-3xl font-semibold tracking-tight ",
         className
       )}
       {...props}
@@ -70,7 +70,7 @@ const components = {
   h4: ({ className, ...props }: { className: string }) => (
     <h4
       className={cn(
-        "mt-8 scroll-m-20 text-xl font-semibold tracking-tight",
+        "mt-8 scroll-m-20 text-2xl font-semibold tracking-tight",
         className
       )}
       {...props}
@@ -81,7 +81,7 @@ const components = {
   h5: ({ className, ...props }: { className: string }) => (
     <h5
       className={cn(
-        "mt-8 scroll-m-20 text-lg font-semibold tracking-tight",
+        "mt-8 scroll-m-20 text-xl font-semibold tracking-tight",
         className
       )}
       {...props}
@@ -92,7 +92,7 @@ const components = {
   h6: ({ className, ...props }: { className: string }) => (
     <h6
       className={cn(
-        "mt-8 scroll-m-20 text-base font-semibold tracking-tight",
+        "mt-8 scroll-m-20 text-lg font-semibold tracking-tight",
         className
       )}
       {...props}
@@ -111,7 +111,7 @@ const components = {
   // a: CustomLink,
   p: ({ className, ...props }: { className: string }) => (
     <p
-      className={cn("text-lg leading-7 [&:not(:first-child)]:mt-6", className)}
+      className={cn("text-lg leading-7 [&:not(:first-child)]:mt-5", className)}
       {...props}
     />
   ),
