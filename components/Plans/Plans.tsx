@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Plan } from "@/.contentlayer/generated";
-import BlurImage from "../blur-image";
+import Image from "next/image";
 import Link from "next/link";
 
 interface Props {
@@ -15,24 +15,18 @@ const Plans: FC<Props> = ({ plans }) => {
           <Link
             key={plan._id}
             href={`/plans/${plan.slug}`}
-            className="relative flex h-auto w-full max-w-xs flex-col items-center justify-center overflow-hidden duration-300 hover:scale-105 xs:w-auto"
+            className="relative flex h-auto w-full flex-col items-center justify-center overflow-hidden duration-300 hover:scale-105 xs:w-auto"
           >
-            <span className="flex w-full items-center justify-center py-1 text-center text-xl font-bold sm:text-2xl">
+            <span className="flex w-full items-center justify-center py-1 text-center text-xl font-bold sm:text-xl">
               {plan.title}
             </span>
-            <span
-              aria-hidden="true"
-              className="h-auto w-full min-w-[150px] overflow-auto rounded-3xl sm:h-[200px] sm:w-[200px] "
-            >
-              <BlurImage
-                image={{
-                  imageURL: plan.image,
-                  title: plan.title,
-                  id: plan._id,
-                }}
-                customClass=""
-              />
-            </span>
+            <Image
+              src={plan.image}
+              alt={plan.title}
+              width={175}
+              height={175}
+              className="rounded-3xl"
+            />
           </Link>
         ))}
       </div>

@@ -103,6 +103,8 @@ export interface SubscriptionPlan {
   name: string;
   yearlyPrice: number;
   semestryPrice: number;
+  beta: boolean;
+  betaDiscount: number;
 }
 
 export interface FilterQueries {

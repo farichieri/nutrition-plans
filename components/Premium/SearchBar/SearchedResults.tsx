@@ -3,7 +3,7 @@ import { FC } from "react";
 import { FilterQueries } from "@/types";
 import { FoodHitsGroup, getFoodsFiltered } from "@/features/foods";
 import { formatTwoDecimals } from "@/utils";
-import BlurImage from "@/components/blur-image";
+import Image from "next/image";
 
 interface Props {
   searchResult: FoodHitsGroup;
@@ -22,15 +22,13 @@ const SearchedResults: FC<Props> = ({ searchResult, handleClick, queries }) => {
             key={food.id}
             className="group flex w-full cursor-pointer flex-row items-center overflow-auto rounded-xl border bg-white shadow-sm shadow-[#00000028] duration-300 hover:border-black/20 hover:shadow-xl active:bg-slate-200 dark:bg-slate-400/10 dark:hover:border-white/50 dark:active:bg-slate-500/50 sm:max-h-[25rem] sm:max-w-[20rem] sm:flex-col "
           >
-            <span className="flex h-full  max-h-[105px] w-full max-w-[105px] sm:max-h-full sm:max-w-full">
-              <BlurImage
-                image={{
-                  imageURL: food.imageURL,
-                  title: food.name!,
-                  id: food.id!,
-                }}
-              />
-            </span>
+            <Image
+              src={food.imageURL}
+              alt={food.name!}
+              width={400}
+              height={400}
+              className="flex h-24 max-h-[96px] w-full max-w-[96px] object-cover sm:h-36 sm:max-h-full sm:max-w-full"
+            />
             <div className="flex h-full w-full flex-col gap-0.5 overflow-hidden break-words px-2 py-0.5 text-sm">
               <div className="flex w-full items-center justify-between gap-1">
                 <span className="truncate text-ellipsis text-center text-lg font-semibold">
