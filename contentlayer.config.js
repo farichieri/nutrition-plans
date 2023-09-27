@@ -117,8 +117,13 @@ export const Post = defineDocumentType(() => ({
       of: { type: "string" },
       required: true,
     },
-    topic: {
+    mainTopic: {
       type: "string",
+      required: true,
+    },
+    topics: {
+      type: "list",
+      of: { type: "string" },
       required: true,
     },
     // TODO: add more fields

@@ -34,7 +34,7 @@ const BlogPosts: FC<Props> = ({ posts }) => {
             <span className="text-xl font-semibold uppercase md:text-2xl lg:text-3xl xl:text-4xl">
               {post.title}
             </span>
-            <span className="text-green-500">{post.topic}</span>
+            <span className="text-green-500">{post.mainTopic}</span>
             <div className="flex items-center gap-1 opacity-70">
               <DateC dateString={post.date} />
               &#8226;

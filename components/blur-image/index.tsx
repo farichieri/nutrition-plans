@@ -1,3 +1,4 @@
+import { cn } from "@/utils/cn";
 import { ImageI } from "@/types";
 import { useState } from "react";
 import Image from "next/image";
@@ -16,7 +17,7 @@ const BlurImage = ({
   return (
     <div
       className={
-        `aspect-h-1 aspect-w-1 h-full w-full overflow-hidden bg-[var(--blur-color)] sm:aspect-h-3 sm:aspect-w-5 ` +
+        `h-full w-full overflow-hidden bg-[var(--blur-color)] sm:aspect-h-3 sm:aspect-w-5 ` +
         customContainerClass
       }
     >
@@ -25,14 +26,15 @@ const BlurImage = ({
         alt={image.title}
         src={image.imageURL}
         fill
-        className={
+        className={cn(
           ` h-full object-cover object-center duration-700 ease-in-out
-              ${
-                isLoading
-                  ? "scale-110 blur-2xl grayscale "
-                  : "scale-100 blur-0 grayscale-0 "
-              }) ` + customClass
-        }
+                ${
+                  isLoading
+                    ? "scale-110 blur-2xl grayscale "
+                    : "scale-100 blur-0 grayscale-0 "
+                }) `,
+          customClass
+        )}
         onLoadingComplete={() => setLoading(false)}
       />
     </div>

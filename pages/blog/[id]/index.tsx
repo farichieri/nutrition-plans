@@ -11,13 +11,15 @@ import Head from "next/head";
 import LandingLayout from "@/layouts/LandingLayout";
 import Link from "next/link";
 import type { BlogPosting, WithContext } from "schema-dts";
+import OtherPosts from "@/components/OtherPosts/OtherPosts";
 
 interface Props {
   data: Post;
   toc: any;
+  otherPosts: Post[];
 }
 
-export default function Page({ data, toc }: Props) {
+export default function Page({ data, toc, otherPosts }: Props) {
   const structuredData: WithContext<BlogPosting> = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -113,7 +115,8 @@ export default function Page({ data, toc }: Props) {
             <Mdx code={data.body.code} />
           </article>
           <hr />
-          <aside className="my-24 flex w-full items-center justify-center">
+          <aside className="flex w-full flex-col items-center justify-center gap-20 pb-24">
+            <OtherPosts posts={otherPosts} />
             <CallToAction />
           </aside>
         </div>
@@ -140,13 +143,17 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params }: { params: any }) => {
   const data = allPosts.find((doc) => doc.slugAsParams === params.id);
-
   const toc = data && (await getTableOfContents(data.body.raw));
+
+  const otherPosts =
+    data &&
+    allPosts.filter((doc) => doc.mainTopic === data.mainTopic).slice(0, 3);
 
   return {
     props: {
       data,
       toc,
+      otherPosts,
     },
   };
 };
