@@ -55,7 +55,6 @@ const SaveAndEditButton: FC<Props> = ({ diet, date, user }) => {
   // Save diet when user leaves the page
   useEffect(() => {
     const handleRouteChange = async () => {
-      console.log({ diet });
       if (isEditingDiet) {
         await saveDietOpened();
       }

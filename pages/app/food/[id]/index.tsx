@@ -92,20 +92,6 @@ export default function Page({ food }: { food: Food }) {
     );
   }
 
-  const keyStr =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
-
-  const triplet = (e1: number, e2: number, e3: number) =>
-    keyStr.charAt(e1 >> 2) +
-    keyStr.charAt(((e1 & 3) << 4) | (e2 >> 4)) +
-    keyStr.charAt(((e2 & 15) << 2) | (e3 >> 6)) +
-    keyStr.charAt(e3 & 63);
-
-  const rgbDataURL = (r: number, g: number, b: number) =>
-    `data:image/gif;base64,R0lGODlhAQABAPAA${
-      triplet(0, r, g) + triplet(b, 255, 255)
-    }/yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==`;
-
   return (
     <PremiumLayout>
       {!isMobile && (
@@ -135,18 +121,14 @@ export default function Page({ food }: { food: Food }) {
           <div className="divide grid w-full gap-10 sm:grid-cols-fluid_lg sm:gap-20">
             <div className="flex w-full flex-col gap-5 ">
               <div className="flex w-full flex-col gap-5">
-                <span className="m-auto h-full w-full overflow-auto rounded-lg">
-                  <Image
-                    src={food.imageURLs.resized_1200x900}
-                    alt={food.name!}
-                    width={1200}
-                    height={900}
-                    className="max-h-[500px] rounded-lg object-cover shadow-md"
-                    priority
-                    placeholder="blur"
-                    blurDataURL="data:image/webp;base64,UklGRowDAABXRUJQVlA4WAoAAAAgAAAAiAAAiAAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggngEAABANAJ0BKokAiQA+nUqeS7CvqaGl9ErqEBOJZ27fhe41691KIsVYKupMSwSGcjt2Dmv8VRMZDrmBBqVTkaWaooZEjD3/at8lEvzTxCKn7+fvuFbGZgYw79C2sdXkSDrNVkyJaQCUFvvW4xLiSrJ8p+gAAP738IAAE4CR11dXuYb1PhGp+KDOup0q2ppADR1QUW0tEHlI2nb6o27Ti8Hr85t/N7UyERiN+lH2ttLRlbhKgdXXT2U6NpMgi6CDt0IKSaknGyskVCwJF3KTpSCkqQCxTTH7X4xMKZKLBbh1vNeozkqvRxUyz8U3X4Uvj/oVWnjpFOABhGonH+YXQe2+7lgDxnclfBovH159lWFDd6qKzpGFGVv+SlLuM685q82EKInFvSy/jBTu6yheN3OE87XT8OtRJ1mhXDzySJVhrL8oTbk65hHNNRT+73SLtTfLwSaPAOuVQwjYL60lKgaqrjFJYzbHmEuEGDSiHKbtUZ1AgMSup9X2uGXyajgxPofH1wCypVCTKsD/T29b7B0rO94F8WG26iQCvcxhzwAAAA=="
-                  />
-                </span>
+                <Image
+                  src={food.imageURLs.resized_1200x900}
+                  alt={food.name!}
+                  width={1200}
+                  height={900}
+                  className="m-auto h-[50vh]  rounded-lg object-cover shadow-md"
+                  priority
+                />
 
                 <span className="text-center opacity-50">
                   {food.description}

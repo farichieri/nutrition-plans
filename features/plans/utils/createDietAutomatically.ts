@@ -45,7 +45,7 @@ const getPlanFoods = async ({
     if (res.result === "error") throw new Error("Error fetching foods");
     return { result: "success", data: res.data.hits };
   } catch (error) {
-    console.log({ error });
+    console.error(error);
     return { result: "error", error };
   }
 };
@@ -128,7 +128,7 @@ const buildMealFoods = async ({
     console.log({ newFoods });
     return { result: "success", data: newFoods };
   } catch (error) {
-    console.log({ error });
+    console.error(error);
     return { result: "error", error };
   }
 };
@@ -184,7 +184,7 @@ const createDietAutomatically = async ({
     console.log({ newDiet });
     return { result: "success", data: newDiet };
   } catch (error) {
-    console.log({ error });
+    console.error(error);
     return { result: "error", error };
   }
 };

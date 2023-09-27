@@ -102,7 +102,7 @@ const FoodActions: FC<Props> = ({ foodID }) => {
         }
       }
     } catch (error) {
-      console.log({ error });
+      console.error(error);
     }
     setIsLiking(false);
     setIsDisliking(false);

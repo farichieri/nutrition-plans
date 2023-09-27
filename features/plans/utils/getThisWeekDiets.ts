@@ -18,7 +18,7 @@ const getThisWeekDiets = async ({
 
     return { result: "success", data: res.data };
   } catch (error) {
-    console.log({ error });
+    console.error(error);
     return { result: "error", error };
   }
 };

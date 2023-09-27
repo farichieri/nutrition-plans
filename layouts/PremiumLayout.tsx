@@ -20,6 +20,7 @@ import Loader from "@/components/Loader/Loader";
 import WelcomeSteps from "@/components/WelcomeSteps/WelcomeSteps";
 import TrialEnded from "@/components/TrialDaysLeft/TrialEnded";
 import dynamic from "next/dynamic";
+import { usePremiumStatus } from "@/features/stripe";
 
 interface Props {
   children: React.ReactNode;
@@ -35,6 +36,7 @@ function PremiumLayout({ children }: Props) {
   const windowWidth = useWindowWidth();
   const isMobile = windowWidth < 1024;
   const isProfileCompleted = user?.isProfileCompleted;
+  const isPremium = usePremiumStatus(user);
 
   useGetProgressQuery({ user });
   useGetMealsQuery({ user });
@@ -53,14 +55,14 @@ function PremiumLayout({ children }: Props) {
   if (!user && !isSigningUser) {
     return <Login />;
   }
-
+  //  TODO: Lower the amount of renders
+  // console.log({ user });
   return (
     <>
       <Head>
         <meta name="robots" content="noindex" />
-        <title>App - Nutrition Plans CO</title>
+        <title>App - Nutrition Plans</title>
       </Head>
-
       {isSubscribeModalOpen && <SubscribeModal />}
       {(isCreatingUser || isSigningUser) && <Loader />}
       {user && user.isProfileCompleted && <WelcomeSteps />}
@@ -71,7 +73,7 @@ function PremiumLayout({ children }: Props) {
         </div>
       )}
 
-      {!user?.isPremium && isTrialOver && <TrialEnded />}
+      {!user?.isPremium && !isPremium && isTrialOver && <TrialEnded />}
 
       {user && user.isProfileCompleted ? (
         <div className="flex w-full flex-col ">

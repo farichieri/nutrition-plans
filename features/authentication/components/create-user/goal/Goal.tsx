@@ -72,8 +72,6 @@ const Goal: FC<Props> = ({ handleContinue }) => {
     weightInKg: Number(weightInKg),
   });
 
-  console.log({ weight });
-
   const dateParsed = dueDate && parse(dueDate, "MM-dd-yyyy", new Date());
   const dueDateFormatted =
     dateParsed && format(new Date(dateParsed), "yyyy-MM-dd");
@@ -190,7 +188,7 @@ const Goal: FC<Props> = ({ handleContinue }) => {
         throw new Error("Error updating your Goal");
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error("Unexpected Error");
     } finally {
     }

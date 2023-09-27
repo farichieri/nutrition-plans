@@ -46,14 +46,6 @@ const WeightGoalInfo: FC<Props> = ({
     }
   };
 
-  console.log({
-    weightGoalDiff,
-    daysLeft,
-    weeksLeft,
-    weightDiffPerWeek,
-    maxWeightDiffRecommended,
-  });
-
   if (!daysLeft || weightDiffPerWeek === 0) return <></>;
 
   if (weightDiffPerWeek > maxWeightDiffRecommended) {

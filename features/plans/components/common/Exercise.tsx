@@ -48,7 +48,7 @@ const Exercise: FC<Props> = ({ diet, isEditing }) => {
       }
     } catch (error) {
       toast.error("Error checking Exercise.");
-      console.log(error);
+      console.error(error);
     } finally {
     }
   };

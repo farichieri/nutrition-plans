@@ -30,7 +30,7 @@ const SetStartOfWeek: FC<Props> = () => {
         throw new Error("Error updating start of week");
       }
     } catch (error) {
-      console.log({ error });
+      console.error(error);
       toast.error("Error updating start of week");
     }
   };

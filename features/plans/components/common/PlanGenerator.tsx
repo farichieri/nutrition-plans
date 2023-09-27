@@ -67,7 +67,7 @@ const PlanGenerator: FC<Props> = ({ date, dates, setDoneGeneratingPlan }) => {
         toast.error("Error generating plan");
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setIsGenerating(false);
     }
@@ -121,7 +121,7 @@ const PlanGenerator: FC<Props> = ({ date, dates, setDoneGeneratingPlan }) => {
       }
     } catch (error) {
       toast.error(`Error generating plan for ${date}`);
-      console.log(error);
+      console.error(error);
     }
   };
 

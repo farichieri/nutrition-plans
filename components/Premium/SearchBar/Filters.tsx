@@ -106,8 +106,6 @@ const Filters: FC<Props> = ({
     const name = (event.target as HTMLButtonElement).name;
     const value = (event.target as HTMLButtonElement).value;
 
-    console.log({ name, value });
-
     if (fixedQueries && fixedQueries[name as keyof FilterQueries]) {
       toast.error("You can't change this filter here.");
       return;

@@ -133,7 +133,7 @@ const Results: FC<Props> = ({ handleSubmit }) => {
         throw Error;
       }
     } catch (error) {
-      console.log({ error });
+      console.error(error);
       toast.error("Something happened!");
     } finally {
       if (!isCreatingRoute) {

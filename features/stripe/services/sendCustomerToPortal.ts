@@ -15,13 +15,12 @@ export default async function sendCustomerToPortal() {
     });
     await functionRef({ returnUrl: window.location.origin });
 
-    console.log({ data });
     const { url } = data as { url: string };
 
     if (url) {
       window.location.assign(url);
     }
   } catch (error) {
-    console.log({ error });
+    console.error(error);
   }
 }

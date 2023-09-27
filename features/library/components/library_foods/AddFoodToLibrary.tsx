@@ -89,7 +89,7 @@ const AddFoodToLibrary: FC<Props> = ({ food }) => {
         }
       }
     } catch (error) {
-      console.log({ error });
+      console.error(error);
     }
     setIsFavoriting(false);
     dispatch(setIsRating(false));

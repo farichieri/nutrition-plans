@@ -27,7 +27,7 @@ const SetMeasurementUnits: FC<Props> = () => {
         throw new Error("Error updating measurement units");
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error("Failed to update measurement units");
     }
   };

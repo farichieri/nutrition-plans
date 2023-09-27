@@ -128,7 +128,7 @@ export default function Page({ mealID }: Props) {
       setIsSaving(false);
     } catch (error) {
       setIsSaving(false);
-      console.log({ error });
+      console.error(error);
     }
   };
 
@@ -144,7 +144,7 @@ export default function Page({ mealID }: Props) {
         toast.error("Error deleting Meal Template.");
       }
     } catch (error) {
-      console.log({ error });
+      console.error(error);
     }
   };
 

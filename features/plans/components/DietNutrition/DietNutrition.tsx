@@ -109,7 +109,7 @@ const DietNutrition: FC<Props> = ({ nutrients, diet, isEditing }) => {
         toast.success("Targets updated successfully.");
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setLoading({ ...loading, updateWithUserTargets: false });
     }
@@ -130,7 +130,7 @@ const DietNutrition: FC<Props> = ({ nutrients, diet, isEditing }) => {
       }
     } catch (error) {
       toast.error("Error updating targets. Please try again.");
-      console.log(error);
+      console.error(error);
     } finally {
       setLoading({ ...loading, hideNutritionDiff: false });
     }

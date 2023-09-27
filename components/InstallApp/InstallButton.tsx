@@ -15,7 +15,6 @@ const InstallButton: FC<Props> = ({ deferredPrompt }) => {
     if (deferredPrompt) {
       deferredPrompt.prompt();
       const { outcome, platform } = await deferredPrompt.userChoice;
-      console.log({ platform });
       if (outcome === "accepted") {
         dispatch(setBeforeInstallState(false));
       }

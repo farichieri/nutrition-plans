@@ -64,7 +64,6 @@ const Pagination: FC<Props> = ({
         { shallow: false }
       );
     } else {
-      console.log({ query });
       setLocalQueries(query);
     }
   };

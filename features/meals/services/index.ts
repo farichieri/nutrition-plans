@@ -34,7 +34,7 @@ export const mealsApi = api.injectEndpoints({
           dispatch(setUserMeals(data));
           return { data: data };
         } catch (error) {
-          console.log({ error });
+          console.error(error);
           return { error: error };
         }
       },
@@ -54,7 +54,7 @@ export const mealsApi = api.injectEndpoints({
           dispatch(setAddNewUserMeal(newMeal));
           return { data: newMeal };
         } catch (error) {
-          console.log({ error });
+          console.error(error);
           return { error: error };
         }
       },
@@ -95,7 +95,7 @@ export const mealsApi = api.injectEndpoints({
 
           return { data: userMeal };
         } catch (error) {
-          console.log({ error });
+          console.error(error);
           return { error: error };
         }
       },
@@ -115,7 +115,7 @@ export const mealsApi = api.injectEndpoints({
           dispatch(setAddNewUserMeal(userMeal));
           return { data: userMeal };
         } catch (error) {
-          console.log({ error });
+          console.error(error);
           return { error: error };
         }
       },
@@ -141,7 +141,7 @@ export const mealsApi = api.injectEndpoints({
 
           return { data: mealsOrdered };
         } catch (error) {
-          console.log({ error });
+          console.error(error);
           return { error: error };
         }
       },
@@ -172,7 +172,7 @@ export const mealsApi = api.injectEndpoints({
 
           return { data: data };
         } catch (error) {
-          console.log({ error });
+          console.error(error);
           return { error: error };
         }
       },
@@ -194,7 +194,7 @@ export const mealsApi = api.injectEndpoints({
           dispatch(setUserMealsSettings(data));
           return { data: data };
         } catch (error) {
-          console.log({ error });
+          console.error(error);
           return { error: error };
         }
       },
@@ -218,7 +218,7 @@ export const mealsApi = api.injectEndpoints({
 
           return { data: newMealSetting };
         } catch (error) {
-          console.log({ error });
+          console.error(error);
           return { error: error };
         }
       },
@@ -241,7 +241,7 @@ export const mealsApi = api.injectEndpoints({
           dispatch(setAddNewMealSetting(mealSetting));
           return { data: mealSetting };
         } catch (error) {
-          console.log({ error });
+          console.error(error);
           return { error: error };
         }
       },
@@ -265,7 +265,7 @@ export const mealsApi = api.injectEndpoints({
           dispatch(setDeleteMealSetting(mealSetting));
           return { data: mealSetting };
         } catch (error) {
-          console.log({ error });
+          console.error(error);
           return { error: error };
         }
       },
@@ -289,7 +289,7 @@ export const mealsApi = api.injectEndpoints({
 
           return { data: data };
         } catch (error) {
-          console.log({ error });
+          console.error(error);
           return { error: error };
         }
       },

@@ -6,7 +6,6 @@ interface Props {
 }
 
 const ExternalLink: FC<Props> = ({ href, children }) => {
-  console.log({ href });
   return (
     <a href={href} target="_blank" rel="noopener noreferrer">
       {children}

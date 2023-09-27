@@ -104,7 +104,7 @@ const PlanSelector: FC<Props> = ({ handleContinue }) => {
         throw new Error("Error updating your Preferred Plan");
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error("Unexpected Error.");
     }
   };

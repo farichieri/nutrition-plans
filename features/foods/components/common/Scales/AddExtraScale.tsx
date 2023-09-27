@@ -21,8 +21,6 @@ const AddExtraScale: FC<AddExtraScaleProps> = ({
 }) => {
   const [newScaleState, setNewScaleState] = useState<FoodScale>(InitialScale);
 
-  console.log({ scales });
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const name = event.target.name;
     const value = event.target.value;

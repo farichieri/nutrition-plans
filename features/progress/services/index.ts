@@ -36,7 +36,7 @@ export const progressApi = api.injectEndpoints({
           dispatch(setProgress(data));
           return { data: data };
         } catch (error) {
-          console.log({ error });
+          console.error(error);
           return { error: error };
         }
       },
@@ -55,7 +55,7 @@ export const progressApi = api.injectEndpoints({
           dispatch(setAddProgress(progress));
           return { data: progress };
         } catch (error) {
-          console.log({ error });
+          console.error(error);
           return { error: error };
         }
       },
@@ -74,7 +74,7 @@ export const progressApi = api.injectEndpoints({
           dispatch(setDeleteProgress(progress.date));
           return { data: true };
         } catch (error) {
-          console.log({ error });
+          console.error(error);
           return { error: error };
         }
       },
@@ -94,7 +94,7 @@ export const progressApi = api.injectEndpoints({
           dispatch(setUpdateProgress(progress));
           return { data: progress };
         } catch (error) {
-          console.log({ error });
+          console.error(error);
           return { error: error };
         }
       },

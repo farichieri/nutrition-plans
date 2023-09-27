@@ -199,7 +199,6 @@ const RecipeIngredients: FC<Props> = ({
 
   const handleRemove = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    console.log(event.target);
     const id = (event.target as HTMLButtonElement).id;
     const newIngredients = { ...ingredients };
     delete newIngredients[id];
