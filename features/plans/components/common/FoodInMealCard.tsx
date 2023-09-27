@@ -10,16 +10,14 @@ import { Food, getAllScales, getScaleOptions } from "@/features/foods";
 import { FoodKeys } from "@/features/foods";
 import { formatTwoDecimals } from "@/utils";
 import { getDietFoodToggled } from "@/features/plans";
-import { getNewAmount } from "@/utils/nutritionHelpers";
 import { MdDelete, MdDragHandle } from "react-icons/md";
 import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { useUpdateDietMutation } from "@/features/plans/services";
-import BlurImage from "@/components/blur-image";
 import FormSelect from "@/components/Form/FormSelect";
-import Input from "@/components/Form/Input";
 import NutritionInput from "@/components/Form/NutritionInput";
 import RoundButton from "@/components/Buttons/RoundButton";
+import Image from "next/image";
 
 interface MealInCardProps {
   food: Food;
@@ -116,15 +114,13 @@ const FoodInMealCard: FC<MealInCardProps> = ({
       {isEditing && (
         <MdDragHandle className="m-auto h-6 w-6 min-w-fit opacity-50" />
       )}
-      <span className="relative h-16 w-16 min-w-[64px] sm:h-16 sm:w-16">
-        <BlurImage
-          image={{
-            imageURL: food.imageURLs?.resized_200x200,
-            title: food.name!,
-            id: food.id!,
-          }}
-        />
-      </span>
+      <Image
+        src={food.imageURLs?.resized_200x200}
+        alt={food.name!}
+        width={200}
+        height={200}
+        className="h-16 w-16 min-w-[64px] object-cover sm:h-16 sm:w-16"
+      />
       <div className="flex h-auto w-full pr-2">
         <div className="flex h-full w-full flex-col justify-center gap-1 py-1">
           <div className="flex w-full max-w-max flex-col ">

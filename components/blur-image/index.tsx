@@ -17,7 +17,7 @@ const BlurImage = ({
   return (
     <div
       className={
-        `h-full w-full overflow-hidden bg-[var(--blur-color)] sm:aspect-h-3 sm:aspect-w-5 ` +
+        `aspect-h-1 aspect-w-1 h-full w-full overflow-hidden bg-[var(--blur-color)] sm:aspect-h-3 sm:aspect-w-5 ` +
         customContainerClass
       }
     >

@@ -11,7 +11,7 @@ interface Props {
 
 const PricingPlan: FC<Props> = ({ pricingPlan }) => {
   const { user } = useSelector(selectAuthSlice);
-  const [yearly, setYearly] = useState(false);
+  const [yearly, setYearly] = useState(true);
 
   const currentPlan =
     (pricingPlan.id === "free" && user?.isPremium === false) ||
@@ -24,11 +24,17 @@ const PricingPlan: FC<Props> = ({ pricingPlan }) => {
   return (
     <div
       key={pricingPlan.name}
-      className="flex min-h-[27rem] w-full max-w-xs select-none flex-col items-center gap-5 rounded-3xl border bg-white px-5 py-10 shadow-[0_3px_20px] shadow-green-800/40 duration-300 dark:bg-primary-color  dark:shadow-white/10 dark:hover:shadow-white/50"
+      className="relative flex min-h-[27rem] w-full max-w-xs select-none flex-col items-center gap-5 rounded-3xl border bg-white px-5 py-10 shadow-[0_3px_20px] shadow-green-800/40 duration-300 dark:bg-primary-color  dark:shadow-white/10 dark:hover:shadow-white/50"
     >
+      {/* {pricingPlan.beta && (
+        <span className="absolute right-0 top-0 rounded-bl-3xl rounded-tr-3xl bg-gradient-to-r from-red-300 via-red-400 to-red-500 px-4 py-1 text-sm font-semibold text-white">
+          Beta 50% off
+        </span>
+      )} */}
       <span className="text-2xl font-medium">{pricingPlan.name}</span>
       {yearly && pricingPlan.yearlyPrice > 0 ? (
-        <div className="flex items-center gap-2">
+        <div className="flex w-fit items-center gap-2 overflow-auto">
+          {/* <div className="absolute h-0.5 w-36 bg-red-500" /> */}
           <span className="text-xl font-semibold">
             ${pricingPlan.yearlyPrice}
           </span>
@@ -38,7 +44,8 @@ const PricingPlan: FC<Props> = ({ pricingPlan }) => {
           </span>
         </div>
       ) : (
-        <div>
+        <div className="flex w-fit items-center gap-2 overflow-auto">
+          {/* <div className="absolute h-0.5 w-36 bg-red-500" /> */}
           <span className="text-xl font-semibold">
             ${pricingPlan.monthlyPrice}
           </span>

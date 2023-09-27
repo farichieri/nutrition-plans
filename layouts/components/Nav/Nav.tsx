@@ -4,7 +4,6 @@ import { FC, useEffect, useState } from "react";
 import { selectAuthSlice } from "@/features/authentication/slice";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import { useWindowWidth } from "@/hooks";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 
@@ -28,8 +27,6 @@ const NavBar: FC<Props> = () => {
   const isSignup = router.asPath === AppRoutes.signup;
   const [show, setShow] = useState(false);
   const [lastYPos, setLastYPos] = useState(0);
-  const windowWidth = useWindowWidth();
-  const isMobile = windowWidth < 1024;
 
   const controlNavbar = () => {
     if (typeof window !== "undefined") {
@@ -70,7 +67,7 @@ const NavBar: FC<Props> = () => {
       >
         <div className="flex w-fit min-w-fit basis-1/3 justify-start font-bold xxs:text-sm xs:text-base sm:text-2xl">
           <Link href={"/"}>
-            <Logo hideText={isMobile} />
+            <Logo hideText={true} />
           </Link>
         </div>
         <div className="hidden basis-1/3 items-center justify-center gap-4 text-xs font-medium sm:text-base md:flex md:gap-10">

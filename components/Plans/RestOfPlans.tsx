@@ -1,7 +1,7 @@
 import { FC } from "react";
 import Link from "next/link";
-import BlurImage from "../blur-image";
 import { Plan } from "@/.contentlayer/generated";
+import Image from "next/image";
 
 interface Props {
   plans: Plan[];
@@ -23,16 +23,13 @@ const RestOfPlans: FC<Props> = ({ plans }) => {
             <span className="flex w-full items-center justify-center text-center text-xl font-bold">
               {plan.title}
             </span>
-            <span className="h-[150px] w-[150px] min-w-[150px] overflow-auto rounded-3xl">
-              <BlurImage
-                image={{
-                  imageURL: plan.image,
-                  title: plan.title!,
-                  id: plan._id,
-                }}
-                customClass=""
-              />
-            </span>
+            <Image
+              src={plan.image}
+              alt={plan.title}
+              width={150}
+              height={150}
+              className="rounded-3xl"
+            />
           </Link>
         ))}
       </div>

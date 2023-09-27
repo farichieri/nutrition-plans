@@ -2,17 +2,16 @@ import { FAQS_INDEX } from "@/data/content";
 import { getPlansAvailable } from "@/utils/getPlansAvailable";
 import { IMAGES, METADATA } from "@/constants";
 import { NewsletterSubscriber, StructuredData } from "@/components";
+import { Plan } from "@/.contentlayer/generated";
 import { WebPage, WithContext } from "schema-dts";
-import BlurImage from "@/components/blur-image";
 import CallToAction from "@/components/call-to-action/CallToAction";
 import FAQS from "@/components/FAQS/FAQS";
-import Goals from "@/components/Goals/Goals";
 import Head from "next/head";
+import Image from "next/image";
 import LandingLayout from "@/layouts/LandingLayout";
 import Link from "next/link";
 import Plans from "@/components/Plans/Plans";
 import PrimaryButton from "@/components/Buttons/PrimaryButton";
-import { Plan } from "@/.contentlayer/generated";
 
 interface Props {
   plans: Plan[];
@@ -96,70 +95,21 @@ export default function Home({ plans }: Props) {
               <PrimaryButton onClick={() => {}} content={`Get Started`} />
             </Link>
           </div>
-          <span className="relative flex h-full w-full overflow-hidden rounded-xl border duration-300">
-            <BlurImage
-              image={{
-                imageURL: "/images/general/landing-img.png",
-                title: "Demo",
-                id: "Demo",
-              }}
-              customClass="!object-fill"
-              customContainerClass="!aspect-h-4 !aspect-w-8"
-            />
-          </span>
-        </div>
-        <div className="my-20">
-          <Goals />
-        </div>
-        <div className="my-10 w-full">
-          {/* <Reveal width="w-full"> */}
-          <div className="flex flex-col gap-5">
-            <h2 className="mx-auto my-0 flex w-fit py-0 text-4xl font-extrabold sm:text-5xl">
-              Adapt your diet
-            </h2>
-            <span className="relative flex h-full w-full overflow-hidden rounded-xl border duration-300">
-              <BlurImage
-                image={{
-                  imageURL: "/images/general/search-img.png",
-                  title: "Search",
-                  id: "Search",
-                }}
-                customClass="!object-fill"
-                customContainerClass="!aspect-h-4 !aspect-w-8"
-              />
-            </span>
-          </div>
-          {/* </Reveal> */}
-        </div>
-        <div className="my-10 w-full">
-          {/* <Reveal width="w-full"> */}
-          <div className="flex flex-col gap-5">
-            <h2 className="mx-auto my-0 flex w-fit py-0 text-4xl font-extrabold sm:text-5xl">
-              Follow your Progress
-            </h2>
-            <span className="relative flex h-full w-full overflow-hidden rounded-xl border duration-300">
-              <BlurImage
-                image={{
-                  imageURL: "/images/general/landing-progress.png",
-                  title: "Progress",
-                  id: "Progress",
-                }}
-                customClass="!object-fill"
-                customContainerClass="!aspect-h-4 !aspect-w-8"
-              />
-            </span>
-          </div>
-          {/* </Reveal> */}
+          <Image
+            src="/images/general/landing-img.png"
+            alt="Demo"
+            width={1347}
+            height={686}
+            className="rounded-xl border shadow-md"
+            blurDataURL="data:image/webp;base64,UklGRqQEAABXRUJQVlA4WAoAAAAgAAAAEQEAmQAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggtgIAALAZAJ0BKhIBmgA+MRiLRKIhoRAUACADBLS3cB10kzZWh7N2oa8dXPzc3cj+UX//9dWYdXDup6OjvoArBW1c0jpsiVnMhsoNEdatcrOyzLEdWkh2AesXA5RqLepkGycicJoCw+1X3suHnyP6EKSWZCDwPj9fPMD+UGJlbIrP91V1nlGnpKf3hE1y4XRvu4qfvV9ch0qnPgosiI9yG71f/vtmJyBDCMhXcZDyftfq80qz7p/BmRqbiSlu89U6D6UaBnuZIWZk+sNI+bvQsi2JOfcSt2tpBHAA/vnoTlKI/XFzcjE25/Fpl8as/PRJKTsDMBfQpXo+GdHaC2XqWWN992jQK761Kd90r7Ei7AqyNK+7EKOp6gm6ADKNO4uBPOcGHuj1rbL6zxtnLxvSip2szGB+Tf8u4lnH3kwdiXUbXtPktXgx4WegzrdZE/c3LGWS3SieY2iqf9RGZ3JpaPScuZ3pLOHENX5TYFVKG9m5m8b6DwKMdjy/rMM1N/FZgBROpvaKTqCg7rZHNDmJnHkkX8FKVdVgTlOv6hknNKELaNOdOzc2jeUJnXf4dwy45bWOtMgHI43JPiMAzN2Boy+fYLxKPHuSUwko/40JEJouzqu0FaYWYL8RrlZDA2xLsSr2Jvu6BswG3h0IUXugx9GUfEUxjo5TkjgG5zCUylODX97wb/4qqrPT7R+83zLtsil71Bp4jwAU2ocrcOgV0o1JGG9Ho0iO3rkeoJlKHxKq3IeICtlguJqmq3bXF0NVDOHVyvstH6F1FQ7cDRUEB+ocL8HqpkbcOzjcKEeFya8qdZ/x1/BVUNi8cpBc0GHlR1kM/k37KPF6dKfjF8zFjYyHbtl6HxaFVoKbLdKjarS4U35/RJMgjCanQH20E94ipMB1kNJYJeDqrJf8srCRjz4WZ0M34AAAAAA="
+            placeholder="blur"
+          />
         </div>
         <div className="my-10">
-          {/* <Reveal width="w-full"> */}
-          <>
-            <h2 className="mx-auto my-0 flex w-fit py-0 text-4xl font-extrabold sm:text-5xl">
-              Plans included
-            </h2>
-            <Plans plans={plans} />
-          </>
-          {/* </Reveal> */}
+          <h2 className="mx-auto my-0 flex w-fit py-0 text-4xl font-extrabold sm:text-5xl">
+            Plans included
+          </h2>
+          <Plans plans={plans} />
         </div>
         <div className="my-10 flex w-full items-center justify-center">
           <FAQS content={FAQS_INDEX} />
