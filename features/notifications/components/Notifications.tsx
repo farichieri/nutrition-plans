@@ -70,7 +70,7 @@ const Notifications: FC<Props> = () => {
         }
       } catch (error) {
         toast.error("Something went wrong");
-        console.log({ error });
+        console.error(error);
       } finally {
         setIdsLoading(idsLoading.filter((item) => item !== id));
       }
@@ -93,7 +93,7 @@ const Notifications: FC<Props> = () => {
       if ("error" in res) throw new Error("Error archiving notifications");
     } catch (error) {
       toast.error("Something went wrong");
-      console.log({ error });
+      console.error(error);
     } finally {
       setIdsLoading(idsLoading.filter((item) => item !== "all"));
     }

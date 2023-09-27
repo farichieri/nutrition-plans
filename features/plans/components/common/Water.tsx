@@ -50,7 +50,7 @@ const Water: FC<Props> = ({ diet, isEditing }) => {
       }
     } catch (error) {
       toast.error("Error saving water drunk.");
-      console.log(error);
+      console.error(error);
     } finally {
     }
   };

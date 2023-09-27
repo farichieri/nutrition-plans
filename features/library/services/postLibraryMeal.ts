@@ -36,7 +36,7 @@ const postLibraryMeal = async ({
 
     return { result: "success", data: newMeal };
   } catch (error) {
-    console.log({ error });
+    console.error(error);
     return { result: "error", error };
   }
 };

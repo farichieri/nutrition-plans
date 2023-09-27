@@ -52,7 +52,7 @@ const SetAvatar: FC<Props> = () => {
             throw new Error(error);
           });
       } catch (error) {
-        console.log({ error });
+        console.error(error);
         setIsLoading(false);
         toast.error("Error updating avatar");
       }

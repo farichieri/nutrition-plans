@@ -45,7 +45,7 @@ const SavedMealCard: FC<Props> = ({
         throw Error;
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       handleClose();
     }

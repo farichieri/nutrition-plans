@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { selectAuthSlice } from "@/features/authentication";
-import { useSelector } from "react-redux";
+// import { selectAuthSlice } from "@/features/authentication";
+// import { useSelector } from "react-redux";
 import Image from "next/image";
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 }
 
 const Logo: FC<Props> = ({ hideText, showPremiumText }) => {
-  const { user } = useSelector(selectAuthSlice);
+  // const { user } = useSelector(selectAuthSlice);
 
   return (
     <div className="flex items-center gap-0.5 sm:gap-1">
@@ -24,11 +24,11 @@ const Logo: FC<Props> = ({ hideText, showPremiumText }) => {
           Nutrition Plans CO
         </span>
       )}
-      {showPremiumText && user?.isPremium && (
+      {/* {showPremiumText && user?.isPremium && (
         <span className="letter hidden min-w-fit bg-gradient-to-b from-green-300 via-green-500 to-green-900 bg-clip-text text-lg font-bold tracking-tighter text-transparent lg:flex">
           Premium
         </span>
-      )}
+      )} */}
     </div>
   );
 };

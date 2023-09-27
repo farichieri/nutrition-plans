@@ -60,7 +60,7 @@ const getUserWithNewWeight = ({
 
     return { result: "success", data: newUser };
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return { result: "error", error };
   }
 };

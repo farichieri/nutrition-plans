@@ -52,7 +52,7 @@ export const notificationsApi = api.injectEndpoints({
           dispatch(setNotifications({ notifications: data, archivedIds }));
           return { data: data };
         } catch (error) {
-          console.log({ error });
+          console.error(error);
           return { error: error };
         }
       },
@@ -85,7 +85,7 @@ export const notificationsApi = api.injectEndpoints({
           );
           return { data: user };
         } catch (error) {
-          console.log({ error });
+          console.error(error);
           return { error };
         }
       },
@@ -120,7 +120,7 @@ export const notificationsApi = api.injectEndpoints({
           );
           return { data: user };
         } catch (error) {
-          console.log({ error });
+          console.error(error);
           return { error };
         }
       },
@@ -149,7 +149,7 @@ export const notificationsApi = api.injectEndpoints({
           );
           return { data: user };
         } catch (error) {
-          console.log({ error });
+          console.error(error);
           return { error };
         }
       },
@@ -175,7 +175,7 @@ export const notificationsApi = api.injectEndpoints({
 
           return { data: notification };
         } catch (error) {
-          console.log({ error });
+          console.error(error);
           return { error };
         }
       },

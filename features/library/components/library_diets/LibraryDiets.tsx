@@ -32,7 +32,7 @@ const LibraryDiets: FC<Props> = () => {
         dispatch(setLibraryDiets({}));
       }
     } catch (error) {
-      console.log({ error });
+      console.error(error);
     } finally {
       dispatch(setIsSearching({ target: "diets", value: false }));
     }

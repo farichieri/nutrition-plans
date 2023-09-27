@@ -29,7 +29,7 @@ const updateFoodRating = async ({
 
     return { result: "success", data: foodID };
   } catch (error) {
-    console.log({ error });
+    console.error(error);
     return { result: "error", error };
   }
 };

@@ -9,6 +9,7 @@ import { api } from "@/services/api";
 import { userDocRef } from "@/services/firebase";
 import { getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { User as FirebaseUser, deleteUser } from "firebase/auth";
+import { isUserPremium } from "@/features/stripe";
 
 export const authApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -22,6 +23,11 @@ export const authApi = api.injectEndpoints({
           const userData = querySnapshot.data() as User;
           if (!userData) throw new Error("Error fetching user Data");
 
+          const isPremium = await isUserPremium();
+          if (isPremium !== userData.isPremium) {
+            await updateDoc(userRef, { isPremium });
+            userData.isPremium = isPremium;
+          }
           dispatch(setUser(userData));
 
           return { data: userData };

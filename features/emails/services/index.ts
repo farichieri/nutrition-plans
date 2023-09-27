@@ -15,8 +15,6 @@ export const emailsApi = api.injectEndpoints({
             createdAt: timestamp,
           });
 
-          console.log({ postRes });
-
           // If not, add email to newsletter collection
           return { data: { email } };
         } catch (error) {

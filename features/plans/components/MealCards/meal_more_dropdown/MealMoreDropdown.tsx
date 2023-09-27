@@ -48,7 +48,7 @@ const MealMoreDropdown: FC<Props> = ({ diet, mealID }) => {
       const res = await updateDiet({ diet: dietUpdated });
       if ("error" in res) throw Error;
     } catch (error) {
-      console.log({ error });
+      console.error(error);
       toast.error("Error clearing Meal");
     } finally {
       setIsLoading({ ...isLoading, clear: false });

@@ -68,7 +68,7 @@ const AddPlanToFavorites: FC<Props> = ({ diet }) => {
         `Diet ${isAlreadyFavorite ? "removed from" : "added to"} favorites.`
       );
     } catch (error) {
-      console.log({ error });
+      console.error(error);
       toast.error(
         `
         Error ${isAlreadyFavorite ? "removing from" : "adding to"} favorites.`

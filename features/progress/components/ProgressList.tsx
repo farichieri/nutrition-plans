@@ -61,7 +61,7 @@ const ProgressList: FC<Props> = () => {
           throw new Error("Error updating user weight");
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
   };

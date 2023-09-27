@@ -21,7 +21,6 @@ import Sidebar from "@/layouts/components/Sidebar/PremiumSidebar";
 import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
 
 export default function Page() {
-  console.log("app/date");
   const dispatch = useDispatch();
   const { diets } = useSelector(selectPlansSlice);
   const { user } = useSelector(selectAuthSlice);

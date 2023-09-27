@@ -1,6 +1,6 @@
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/services/firebase";
-import { DietGroup, DietMealGroup } from "@/features/plans";
+import { DietMealGroup } from "@/features/plans";
 import { Result } from "@/types";
 
 const getSavedMeals = async ({
@@ -23,7 +23,6 @@ const getSavedMeals = async ({
     querySnapshot.forEach((doc: any) => {
       data[doc.id] = doc.data();
     });
-    console.log({ data });
     return { result: "success", data };
   } catch (error) {
     console.log({ error: `Error fetching Meals: ${error}` });

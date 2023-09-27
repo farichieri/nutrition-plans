@@ -39,8 +39,6 @@ const fetchFoodsHits = async ({
       .documents()
       .search(searchParameters, {});
 
-    console.log({ res });
-
     const pages = Math.ceil(res.found / HITS_PER_PAGE);
 
     const { hits } = res;

@@ -265,7 +265,7 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
         }
       }
     } catch (error) {
-      console.log({ error });
+      console.error(error);
       toast.error("Error updating your Body Features");
     } finally {
     }

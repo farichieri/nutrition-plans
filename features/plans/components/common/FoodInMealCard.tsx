@@ -99,7 +99,7 @@ const FoodInMealCard: FC<MealInCardProps> = ({
         throw Error;
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error("Error Toggling Food");
     }
   };

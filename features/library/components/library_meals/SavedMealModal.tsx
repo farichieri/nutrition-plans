@@ -54,7 +54,7 @@ const SavedMealModal: FC<Props> = () => {
       router.push("/app/library/meals");
       toast.success("Day deleted");
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error("Error deleting day");
     } finally {
       setIsLoading({ ...isLoading, delete: false });

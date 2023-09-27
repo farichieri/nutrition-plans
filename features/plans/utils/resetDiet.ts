@@ -42,7 +42,7 @@ const resetDiet = ({
 
     return { result: "success", data: newDiet };
   } catch (error) {
-    console.log({ error });
+    console.error(error);
     return { result: "error", error };
   }
 };

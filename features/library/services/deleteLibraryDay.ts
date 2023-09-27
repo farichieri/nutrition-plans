@@ -28,7 +28,7 @@ const deleteLibraryDay = async ({
 
     return { result: "success", data: diet };
   } catch (error) {
-    console.log({ error });
+    console.error(error);
     return { result: "error", error };
   }
 };

@@ -38,7 +38,7 @@ const LibraryFoods: FC<Props> = () => {
         dispatch(setLibraryFoods({}));
       }
     } catch (error) {
-      console.log({ error });
+      console.error(error);
     } finally {
       dispatch(setIsSearching({ target: "foods", value: false }));
     }

@@ -26,7 +26,7 @@ export const plansApi = api.injectEndpoints({
           }
           return { data: data };
         } catch (error) {
-          console.log({ error });
+          console.error(error);
           return { error: error };
         }
       },
@@ -47,7 +47,7 @@ export const plansApi = api.injectEndpoints({
           }
           return { data: data };
         } catch (error) {
-          console.log({ error });
+          console.error(error);
           return { error: error };
         }
       },
@@ -87,7 +87,7 @@ export const plansApi = api.injectEndpoints({
 
           return { data: newDiet };
         } catch (error) {
-          console.log({ error });
+          console.error(error);
           return { error: error };
         }
       },
@@ -112,7 +112,7 @@ export const plansApi = api.injectEndpoints({
 
           return { data: diet };
         } catch (error) {
-          console.log({ error });
+          console.error(error);
           return { error: error };
         }
       },
@@ -141,7 +141,7 @@ export const plansApi = api.injectEndpoints({
 
           return { data: diet };
         } catch (error) {
-          console.log({ error });
+          console.error(error);
           return { error: error };
         }
       },
@@ -183,7 +183,7 @@ export const plansApi = api.injectEndpoints({
 
           return { data: diet };
         } catch (error) {
-          console.log({ error });
+          console.error(error);
           return { error: error };
         }
       },

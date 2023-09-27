@@ -28,7 +28,7 @@ const deleteLibraryMeal = async ({
 
     return { result: "success", data: meal };
   } catch (error) {
-    console.log({ error });
+    console.error(error);
     return { result: "error", error };
   }
 };

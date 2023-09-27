@@ -71,7 +71,7 @@ const Login = () => {
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
         dispatch(setLoginError());
         persistor.purge();
         const errorCode = error.code;
@@ -95,7 +95,7 @@ const Login = () => {
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
         persistor.purge();
         const errorCode = error.code;
         setErrorMessage(AUTH_ERRORS[errorCode]);

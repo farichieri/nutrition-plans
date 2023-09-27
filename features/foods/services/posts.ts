@@ -78,8 +78,6 @@ const addFood = async (
       defaultScaleName
     );
 
-    console.log({ nutrientsUpdated, food });
-
     const newFood: Food = {
       ...food,
       complexity: complexity,
@@ -105,7 +103,7 @@ const addFood = async (
     await setDoc(docRef, newFood);
     return { result: "success", data: newFood };
   } catch (error) {
-    console.log({ error });
+    console.error(error);
     return { result: "error", error };
   }
 };
@@ -136,7 +134,7 @@ const getImageURLs = async ({
 
     return { result: "success", data: imageURLs };
   } catch (error) {
-    console.log({ error });
+    console.error(error);
     return { result: "error", error };
   }
 };

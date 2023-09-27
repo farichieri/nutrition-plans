@@ -22,7 +22,7 @@ const SetBilling: FC<Props> = () => {
       setIsLoading({ ...isLoading, redirectManage: true });
       sendCustomerToPortal();
     } catch (error) {
-      console.log(error);
+      console.error(error);
       setIsLoading({ ...isLoading, redirectManage: false });
     }
   };

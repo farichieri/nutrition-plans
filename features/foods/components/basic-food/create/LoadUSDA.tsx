@@ -78,7 +78,7 @@ const LoadUSDA: FC<Props> = ({ currentState }) => {
       setFdcId("");
     } catch (error) {
       toast.error("Error loading USDA food");
-      console.log({ error });
+      console.error(error);
     } finally {
       setOpen(false);
     }

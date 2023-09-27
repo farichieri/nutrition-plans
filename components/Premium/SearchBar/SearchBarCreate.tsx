@@ -83,7 +83,7 @@ const SearchBarCreate: FC<Props> = ({ onFocus, preFetch, queries }) => {
         setIsFavorites(false);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
