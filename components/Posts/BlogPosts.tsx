@@ -24,9 +24,9 @@ const BlogPosts: FC<Props> = ({ posts }) => {
           <Image
             src={post.image}
             alt={post.title}
-            width={400}
+            width={532}
             height={400}
-            className="relative h-64 w-full overflow-hidden rounded-lg object-cover sm:h-56 sm:w-56 sm:min-w-[14rem]"
+            className="relative h-64 w-full overflow-hidden rounded-3xl border object-cover shadow-md sm:h-56 sm:w-56 sm:min-w-[14rem]"
           />
           <div className="flex flex-col justify-start gap-2 sm:gap-4">
             <span className="text-xl font-semibold uppercase md:text-2xl lg:text-3xl xl:text-4xl">

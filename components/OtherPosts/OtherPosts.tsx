@@ -1,6 +1,5 @@
 import { Post } from "@/.contentlayer/generated";
 import Link from "next/link";
-import BlurImage from "../blur-image";
 import DateC from "../Posts/Post/DateC/DateC";
 import Image from "next/image";
 
@@ -20,21 +19,13 @@ const OtherPosts: React.FC<Props> = ({ posts }) => {
               href={`/blog/${post.slug}`}
               className="flex h-full flex-wrap gap-2 overflow-auto sm:flex-nowrap sm:gap-4"
             >
-              <span className="relative h-56 w-full overflow-hidden rounded-lg sm:h-56 sm:w-56 sm:min-w-[14rem]">
-                {/* <Image
-                  src={post.image}
-                  alt={post.title}
-                  className="rounded-lg object-cover"
-                  fill
-                /> */}
-                <BlurImage
-                  image={{
-                    imageURL: post.image,
-                    title: post.title,
-                    id: post._id,
-                  }}
-                />
-              </span>
+              <Image
+                src={post.image}
+                alt={post.title}
+                width={532}
+                height={400}
+                className="relative h-64 w-full overflow-hidden rounded-3xl border object-cover shadow-md sm:h-56 sm:w-56 sm:min-w-[14rem]"
+              />
               <div className="flex flex-col justify-start gap-2 sm:gap-4">
                 <span className="text-xl font-semibold uppercase">
                   {post.title}

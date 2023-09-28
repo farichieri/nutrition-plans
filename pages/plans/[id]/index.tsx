@@ -9,7 +9,13 @@ import Head from "next/head";
 import LandingLayout from "@/layouts/LandingLayout";
 import RestOfPlans from "@/components/Plans/RestOfPlans";
 import { getTableOfContents } from "@/lib/toc";
-import { DashboardTableOfContents } from "@/components/Toc/Toc";
+import dynamic from "next/dynamic";
+
+const DashboardTableOfContents = dynamic(
+  () =>
+    import("@/components/Toc/Toc").then((mod) => mod.DashboardTableOfContents),
+  { ssr: false }
+);
 
 interface Props {
   restOfPlans: Plan[];

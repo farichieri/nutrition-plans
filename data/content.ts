@@ -63,6 +63,7 @@ export const MEAL_PLANS = [
   {
     name: "Balanced",
     id: "balanced",
+    image: "/images/plans/balanced.png",
     excludes: "nothing",
     macros: {
       carbs: {
@@ -82,6 +83,7 @@ export const MEAL_PLANS = [
   {
     name: "Gluten Free",
     id: "gluten_free",
+    image: "/images/plans/gluten-free.png",
     excludes: "any foods that contain gluten",
     macros: {
       carbs: {
@@ -101,6 +103,7 @@ export const MEAL_PLANS = [
   {
     name: "Mediterranean",
     id: "mediterranean",
+    image: "/images/plans/mediterranean.png",
     macros: {
       carbs: {
         min: 20,
@@ -119,6 +122,7 @@ export const MEAL_PLANS = [
   {
     name: "Vegetarian",
     id: "vegetarian",
+    image: "/images/plans/vegetarian.png",
     excludes:
       "animal foods such as red beef, white meat such as chicken, pork, turkey and fish.",
     macros: {
@@ -139,6 +143,7 @@ export const MEAL_PLANS = [
   {
     name: "Low Carb",
     id: "low_carb",
+    image: "/images/plans/low-carb.png",
     macros: {
       carbs: {
         min: 10,
@@ -157,6 +162,7 @@ export const MEAL_PLANS = [
   {
     name: "Keto",
     id: "keto",
+    image: "/images/plans/keto.png",
     macros: {
       carbs: {
         min: 5,
