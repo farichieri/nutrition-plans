@@ -25,7 +25,7 @@ const Plans: FC<Props> = ({ plans }) => {
               alt={plan.title}
               width={175}
               height={175}
-              className="rounded-3xl"
+              className="rounded-3xl border shadow-md"
             />
           </Link>
         ))}

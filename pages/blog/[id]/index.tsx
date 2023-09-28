@@ -1,10 +1,8 @@
-import { DashboardTableOfContents } from "@/components/Toc/Toc";
 import { getTableOfContents } from "@/lib/toc";
 import { MdTrendingFlat } from "react-icons/md";
 import { Mdx } from "@/components/MDX-Components/MDX-Components";
 import { Post, allPosts } from "@/.contentlayer/generated";
 import { StructuredData } from "@/components";
-import BlurImage from "@/components/blur-image";
 import CallToAction from "@/components/call-to-action/CallToAction";
 import DateC from "@/components/Posts/Post/DateC/DateC";
 import Head from "next/head";
@@ -12,6 +10,14 @@ import LandingLayout from "@/layouts/LandingLayout";
 import Link from "next/link";
 import type { BlogPosting, WithContext } from "schema-dts";
 import OtherPosts from "@/components/OtherPosts/OtherPosts";
+import Image from "next/image";
+import dynamic from "next/dynamic";
+
+const DashboardTableOfContents = dynamic(
+  () =>
+    import("@/components/Toc/Toc").then((mod) => mod.DashboardTableOfContents),
+  { ssr: false }
+);
 
 interface Props {
   data: Post;
@@ -102,13 +108,12 @@ export default function Page({ data, toc, otherPosts }: Props) {
                 <span>{data.timeReading}</span>
               </div>
 
-              <figure className="relative h-[80vh] w-full overflow-auto rounded-lg border shadow-lg">
-                <BlurImage
-                  image={{
-                    imageURL: data.image,
-                    title: data.title,
-                    id: data._id,
-                  }}
+              <figure className="relative w-full overflow-auto rounded-3xl border shadow-lg">
+                <Image
+                  src={data.image}
+                  alt={data.title}
+                  width={1200}
+                  height={900}
                 />
               </figure>
             </div>
