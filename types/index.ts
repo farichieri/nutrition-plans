@@ -97,14 +97,22 @@ export interface SubscriptionPlan {
   checklist: string[];
   checklistTitle: string;
   checkoutLink: string;
-  discount: string;
   id: string;
-  monthlyPrice: number;
   name: string;
-  yearlyPrice: number;
-  semestryPrice: number;
   beta: boolean;
-  betaDiscount: number;
+  prices: {
+    monthly: Price;
+    yearly: Price;
+    semestry: Price;
+  };
+}
+
+export interface Price {
+  id: string;
+  name: string;
+  price: number;
+  discount: string;
+  discountPrice: number;
 }
 
 export interface FilterQueries {

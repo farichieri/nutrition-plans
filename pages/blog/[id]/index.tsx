@@ -152,7 +152,13 @@ export const getStaticProps = async ({ params }: { params: any }) => {
 
   const otherPosts =
     data &&
-    allPosts.filter((doc) => doc.mainTopic === data.mainTopic).slice(0, 3);
+    allPosts
+      .filter(
+        (doc) =>
+          doc.mainTopic === data.mainTopic &&
+          doc.slugAsParams !== data.slugAsParams
+      )
+      .slice(0, 3);
 
   return {
     props: {

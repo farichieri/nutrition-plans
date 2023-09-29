@@ -52,7 +52,10 @@ const SubscribeModal: FC<Props> = ({
 
   return (
     <Modal isCloseable={isCloseable} isFullScreen onClose={handleClose}>
-      <section className=" flex h-auto w-auto min-w-full max-w-[95vw] overflow-hidden rounded-3xl">
+      <section className="relative flex h-auto w-auto min-w-full max-w-[95vw] overflow-hidden">
+        <span className="absolute right-0 top-0 rounded-bl-3xl  bg-gradient-to-r from-red-300 via-red-400 to-red-500 px-4 py-1 text-sm font-semibold text-white">
+          Beta Discounts
+        </span>
         <div className="m-auto flex h-full w-full flex-col items-center gap-5 overflow-auto px-4 py-10 ">
           <div className="flex flex-col items-center text-center text-xs md:text-base">
             <span className="text-xl font-semibold sm:text-3xl">
@@ -94,14 +97,20 @@ const SubscribeModal: FC<Props> = ({
                         <CheckCircleIcon className="h-5 w-5 fill-green-500" />
                       )}
                     </div>
-                    <div className="flex flex-col items-center justify-center">
+                    <div className="flex w-full flex-col items-center justify-center">
                       <span className="text-xl font-semibold">{opt.title}</span>
-                      <div>
-                        <span className="text-md">${opt.monthlyPrice}</span>
+                      <div className="relative flex items-baseline gap-1">
+                        <div className="relative flex w-fit">
+                          <div className="absolute top-1/2 h-0.5 w-full bg-red-500" />
+                          <span className="text-md">${opt.monthlyPrice}</span>
+                        </div>
+                        <span className="text-base font-semibold text-red-500">
+                          {opt.discountPrice}
+                        </span>
                         <span>/mo</span>
                         {opt.discount && (
                           <span
-                            className={`text-sm ${
+                            className={`text-sm font-semibold ${
                               isSelected && "text-red-600"
                             }`}
                           >
