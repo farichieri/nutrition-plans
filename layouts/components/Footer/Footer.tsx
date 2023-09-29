@@ -19,7 +19,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="flex min-h-[12rem] w-full flex-col items-center justify-center border-t border-gray-300 dark:border-gray-400/10">
+    <footer className="flex min-h-[12rem] w-full flex-col items-center justify-center border-t border-gray-300 bg-green-700 text-white dark:border-gray-400/10 dark:bg-green-800">
       <div className="m-auto flex w-full max-w-5xl flex-wrap-reverse justify-between gap-10 px-9 py-14 md:flex-nowrap ">
         <div className="flex h-full w-full flex-col items-center justify-center gap-4 text-center md:items-start md:text-left">
           <span className=" flex text-2xl font-bold ">Nutrition Plans</span>
