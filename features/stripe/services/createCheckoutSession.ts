@@ -2,6 +2,7 @@ import { collection, doc, onSnapshot, setDoc } from "firebase/firestore";
 import { db } from "@/services/firebase";
 import { ensureError } from "@/utils";
 import { Result } from "@/types";
+import { DISCOUNTS, PRICES } from "@/constants";
 
 export default async function createCheckoutSession({
   uid,
@@ -11,10 +12,23 @@ export default async function createCheckoutSession({
   priceId: string;
 }): Promise<Result<undefined, unknown>> {
   try {
-    // Create a new checkout session in the subollection inside this users document
+    // Create a new checkout session in the sub collection inside this users document
     const checkoutSessionRef = doc(
       collection(db, "users", uid, "checkout_sessions")
     );
+
+    const promotionCode = () => {
+      if (priceId === PRICES.monthly.id) {
+        return DISCOUNTS.monthly.id;
+      } else if (priceId === PRICES.yearly.id) {
+        return DISCOUNTS.yearly.id;
+      } else if (priceId === PRICES.semestry.id) {
+        return DISCOUNTS.semestry.id;
+      } else {
+        return undefined;
+      }
+    };
+
     await setDoc(checkoutSessionRef, {
       price: priceId,
       billing_address_collection: "auto",
@@ -23,6 +37,7 @@ export default async function createCheckoutSession({
       tax_id_collection: false,
       success_url: `${window.location.origin}/app/today`,
       cancel_url: `${window.location.origin}/app/today`,
+      promotion_code: promotionCode(),
     });
 
     // Wait for the CheckoutSession to get attached by the extension
@@ -33,7 +48,7 @@ export default async function createCheckoutSession({
       if (error) {
         // Show an error to your customer and
         // inspect your Cloud Function logs in the Firebase console.
-        alert(`An error occured: ${error.message}`);
+        alert(`An error happened: ${error.message}`);
         return;
       }
       if (url) {

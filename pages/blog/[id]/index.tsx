@@ -12,6 +12,7 @@ import type { BlogPosting, WithContext } from "schema-dts";
 import OtherPosts from "@/components/OtherPosts/OtherPosts";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import BlurImage from "@/components/blur-image";
 
 const DashboardTableOfContents = dynamic(
   () =>
@@ -109,11 +110,11 @@ export default function Page({ data, toc, otherPosts }: Props) {
               </div>
 
               <figure className="relative w-full overflow-auto rounded-3xl border shadow-lg">
-                <Image
-                  src={data.image}
-                  alt={data.title}
+                <BlurImage
                   width={1200}
                   height={900}
+                  src={data.image}
+                  alt={data.title}
                 />
               </figure>
             </div>

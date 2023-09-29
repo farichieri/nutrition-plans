@@ -27,3 +27,15 @@ export const PRICES = {
     discountPrice: 6,
   },
 };
+
+export const DISCOUNTS = {
+  monthly: {
+    id: process.env.NEXT_PUBLIC_STRIPE_BETA_OFF_50_PERCENT!,
+  },
+  semestry: {
+    id: process.env.NEXT_PUBLIC_STRIPE_BETA_OFF_60_PERCENT!,
+  },
+  yearly: {
+    id: process.env.NEXT_PUBLIC_STRIPE_BETA_OFF_70_PERCENT!,
+  },
+};

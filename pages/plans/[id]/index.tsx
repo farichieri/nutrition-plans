@@ -94,12 +94,10 @@ export default function Page({ data, restOfPlans, toc }: Props) {
               </h1>
               <figure className="h-full w-full max-w-[500px] overflow-hidden rounded-3xl border shadow-[0_1px_5px_gray] dark:shadow-[0px_1px_5px_#4040408c]">
                 <BlurImage
-                  image={{
-                    imageURL: data.image!,
-                    title: data.title!,
-                    id: data._id,
-                  }}
-                  customContainerClass="!aspect-h-1 !aspect-w-1"
+                  width={470}
+                  height={470}
+                  src={data.image}
+                  alt={data.title}
                 />
               </figure>
             </div>
