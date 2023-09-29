@@ -59,11 +59,13 @@ const NavBar: FC<Props> = () => {
   ];
 
   return (
-    <nav className="dark: fixed top-0 z-50 flex w-full select-none items-center justify-center bg-white/80 px-4 backdrop-blur-md dark:bg-black/50 ">
+    <nav
+      className={`fixed top-0 z-50 flex w-full select-none items-center justify-center border-gray-500/20 bg-white/80 px-2 backdrop-blur-md dark:border-gray-400/10 dark:bg-black/50  ${
+        show ? "border-b shadow-md" : "border-none"
+      }`}
+    >
       <div
-        className={`z-50 flex h-[var(--nav-h)] w-full max-w-7xl  items-center justify-between gap-4 border-gray-500/20 px-2 dark:border-gray-400/10 ${
-          show ? "border-b" : "border-none"
-        }`}
+        className={`z-50 flex h-[var(--nav-h)] w-full max-w-7xl items-center justify-between gap-4 border-gray-500/20 px-2 dark:border-gray-400/10`}
       >
         <div className="flex w-fit min-w-fit basis-1/3 justify-start font-bold xxs:text-sm xs:text-base sm:text-2xl">
           <Link href={"/"}>

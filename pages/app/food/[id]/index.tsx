@@ -24,6 +24,7 @@ import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
 import Image from "next/image";
+import BlurImage from "@/components/blur-image";
 
 export default function Page({ food }: { food: Food }) {
   const router = useRouter();
@@ -121,14 +122,14 @@ export default function Page({ food }: { food: Food }) {
           <div className="divide grid w-full gap-10 sm:grid-cols-fluid_lg sm:gap-20">
             <div className="flex w-full flex-col gap-5 ">
               <div className="flex w-full flex-col gap-5">
-                <Image
-                  src={food.imageURLs.resized_1200x900}
-                  alt={food.name!}
-                  width={1200}
-                  height={900}
-                  className="m-auto h-[50vh]  rounded-lg object-cover shadow-md"
-                  priority
-                />
+                <div className="max-h-[50vh] overflow-auto rounded-lg object-cover shadow-md">
+                  <BlurImage
+                    src={food.imageURLs.resized_1200x900}
+                    alt={food.name!}
+                    width={1200}
+                    height={900}
+                  />
+                </div>
 
                 <span className="text-center opacity-50">
                   {food.description}
