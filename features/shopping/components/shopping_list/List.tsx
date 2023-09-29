@@ -51,11 +51,10 @@ const List: FC<Props> = ({ list, handleSelected, selecteds }) => {
                       </div>
                       <span className="relative h-[50px] min-h-[50px] w-[50px] min-w-[50px] overflow-auto rounded-md">
                         <BlurImage
-                          image={{
-                            imageURL: food.imageURL,
-                            title: food.name!,
-                            id: food.id!,
-                          }}
+                          src={food.imageURL}
+                          alt={food.name}
+                          width={200}
+                          height={200}
                         />
                       </span>
                       <div className="flex flex-col">
