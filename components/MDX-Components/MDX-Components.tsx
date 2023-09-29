@@ -1,5 +1,5 @@
 import * as React from "react";
-import Image from "next/image";
+import Image, { ImageProps } from "next/image";
 import { useMDXComponent } from "next-contentlayer/hooks";
 
 import { cn } from "@/utils/cn";
@@ -189,7 +189,9 @@ const components = {
       {...props}
     />
   ),
-  Image,
+  Image: (props: ImageProps) => (
+    <Image className={cn("rounded-md border")} {...props} alt={props.alt} />
+  ),
   // Callout,
   // Card: MdxCard,
 };

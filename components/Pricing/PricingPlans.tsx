@@ -7,8 +7,8 @@ const Plan = dynamic(() => import("./PricingPlan"), { ssr: false });
 const PricingPlans = () => {
   return (
     <div className="flex w-full flex-wrap justify-center gap-5 ">
-      {SUBSCRIPTION_PLANS.map((plan: SubscriptionPlan) => (
-        <Plan pricingPlan={plan} key={plan.name} />
+      {SUBSCRIPTION_PLANS.map((price: SubscriptionPlan) => (
+        <Plan price={price} key={price.name} />
       ))}
     </div>
   );
