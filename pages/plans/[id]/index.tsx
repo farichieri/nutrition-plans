@@ -1,15 +1,15 @@
 import { BlogPosting, WithContext } from "schema-dts";
+import { getTableOfContents } from "@/lib/toc";
 import { IMAGES } from "@/constants";
 import { Mdx } from "@/components/MDX-Components/MDX-Components";
 import { Plan, allPlans } from "contentlayer/generated";
 import { StructuredData } from "@/components";
 import BlurImage from "@/components/blur-image";
 import CallToAction from "@/components/call-to-action/CallToAction";
+import dynamic from "next/dynamic";
 import Head from "next/head";
 import LandingLayout from "@/layouts/LandingLayout";
 import RestOfPlans from "@/components/Plans/RestOfPlans";
-import { getTableOfContents } from "@/lib/toc";
-import dynamic from "next/dynamic";
 
 const DashboardTableOfContents = dynamic(
   () =>
@@ -94,12 +94,10 @@ export default function Page({ data, restOfPlans, toc }: Props) {
               </h1>
               <figure className="h-full w-full max-w-[500px] overflow-hidden rounded-3xl border shadow-[0_1px_5px_gray] dark:shadow-[0px_1px_5px_#4040408c]">
                 <BlurImage
-                  image={{
-                    imageURL: data.image!,
-                    title: data.title!,
-                    id: data._id,
-                  }}
-                  customContainerClass="!aspect-h-1 !aspect-w-1"
+                  width={470}
+                  height={470}
+                  src={data.image}
+                  alt={data.title}
                 />
               </figure>
             </div>

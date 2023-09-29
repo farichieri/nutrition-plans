@@ -1,5 +1,5 @@
 import { DOTS } from "@/hooks/usePagination";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { FilterQueries } from "@/types";
 import { HITS_PER_PAGE } from "@/constants/search";
 import { usePagination } from "@/hooks";
@@ -93,7 +93,7 @@ const Pagination: FC<Props> = ({
         if (pageNumber === DOTS) {
           return (
             <li key={index} className="dots">
-              &#9230;
+              ...
             </li>
           );
         }

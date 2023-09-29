@@ -31,7 +31,7 @@ const PricingPlan: FC<Props> = ({ price }) => {
     >
       {price.beta && (
         <span className="absolute right-0 top-0 rounded-bl-3xl rounded-tr-3xl bg-gradient-to-r from-red-300 via-red-400 to-red-500 px-4 py-1 text-sm font-semibold text-white">
-          Beta Discounts
+          Discounts for a limited time only!
         </span>
       )}
       <span className="text-2xl font-medium">{price.name}</span>
