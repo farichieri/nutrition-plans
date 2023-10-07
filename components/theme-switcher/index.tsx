@@ -10,11 +10,10 @@ interface Props {
 const ThemeSwitcher: FC<Props> = ({ withText }) => {
   const { theme, setTheme } = useTheme();
 
+  console.log({ theme });
+
   const toggleTheme = () => {
-    if (
-      theme === "dark" ||
-      (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
+    if (theme === Theme.Dark || theme === Theme.System) {
       document.documentElement
         .querySelector('meta[name="theme-color"]')
         ?.setAttribute("content", "#fff");
@@ -27,8 +26,6 @@ const ThemeSwitcher: FC<Props> = ({ withText }) => {
     }
   };
 
-  if (!theme) return <></>;
-
   return (
     <button
       onClick={toggleTheme}
@@ -36,7 +33,7 @@ const ThemeSwitcher: FC<Props> = ({ withText }) => {
       aria-label="Toggle theme"
     >
       {withText && <span>Theme</span>}
-      {theme === Theme.Dark ? (
+      {theme === Theme.Dark || theme === Theme.System ? (
         <div className="flex items-center gap-2">
           {withText && <span>Dark</span>}
           <MdDarkMode className="h-5 w-5 text-yellow-500" />
