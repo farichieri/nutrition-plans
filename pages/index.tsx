@@ -90,20 +90,23 @@ export default function Home({ plans }: Props) {
               </p>
             </div>
           </div>
-          <div className="h-10">
+          <div className="h-11">
             <Link aria-label="button" href="/signup" tabIndex={0}>
               <PrimaryButton onClick={() => {}} content={`Get Started`} />
             </Link>
           </div>
-          <Image
-            src="/images/general/landing-img.png"
-            alt="Demo"
-            width={1347}
-            height={686}
-            className="rounded-3xl box-shadow-full"
-            blurDataURL="data:image/webp;base64,UklGRqQEAABXRUJQVlA4WAoAAAAgAAAAEQEAmQAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggtgIAALAZAJ0BKhIBmgA+MRiLRKIhoRAUACADBLS3cB10kzZWh7N2oa8dXPzc3cj+UX//9dWYdXDup6OjvoArBW1c0jpsiVnMhsoNEdatcrOyzLEdWkh2AesXA5RqLepkGycicJoCw+1X3suHnyP6EKSWZCDwPj9fPMD+UGJlbIrP91V1nlGnpKf3hE1y4XRvu4qfvV9ch0qnPgosiI9yG71f/vtmJyBDCMhXcZDyftfq80qz7p/BmRqbiSlu89U6D6UaBnuZIWZk+sNI+bvQsi2JOfcSt2tpBHAA/vnoTlKI/XFzcjE25/Fpl8as/PRJKTsDMBfQpXo+GdHaC2XqWWN992jQK761Kd90r7Ei7AqyNK+7EKOp6gm6ADKNO4uBPOcGHuj1rbL6zxtnLxvSip2szGB+Tf8u4lnH3kwdiXUbXtPktXgx4WegzrdZE/c3LGWS3SieY2iqf9RGZ3JpaPScuZ3pLOHENX5TYFVKG9m5m8b6DwKMdjy/rMM1N/FZgBROpvaKTqCg7rZHNDmJnHkkX8FKVdVgTlOv6hknNKELaNOdOzc2jeUJnXf4dwy45bWOtMgHI43JPiMAzN2Boy+fYLxKPHuSUwko/40JEJouzqu0FaYWYL8RrlZDA2xLsSr2Jvu6BswG3h0IUXugx9GUfEUxjo5TkjgG5zCUylODX97wb/4qqrPT7R+83zLtsil71Bp4jwAU2ocrcOgV0o1JGG9Ho0iO3rkeoJlKHxKq3IeICtlguJqmq3bXF0NVDOHVyvstH6F1FQ7cDRUEB+ocL8HqpkbcOzjcKEeFya8qdZ/x1/BVUNi8cpBc0GHlR1kM/k37KPF6dKfjF8zFjYyHbtl6HxaFVoKbLdKjarS4U35/RJMgjCanQH20E94ipMB1kNJYJeDqrJf8srCRjz4WZ0M34AAAAAA="
-            placeholder="blur"
-          />
+          <div className="w-full flex items-center justify-center relative ">
+            <div className="absolute rounded-full min-w-[2000px] max-w-[2000px] h-full bg-gradient-to-r dark:from-green-900/10 dark:via-green-500/20 dark:to-green-900/10 dark:opacity-100 from-green-500/20 via-green-500/50 to-green-500/20 opacity-100 -z-50 w-full blur-3xl filter"></div>
+            <Image
+              src="/images/general/landing-img.png"
+              alt="Demo"
+              width={1347}
+              height={686}
+              className="sm:rounded-3xl duration-300 rounded-lg box-shadow-full my-8 sm:my-14 mx-auto"
+              blurDataURL="data:image/webp;base64,UklGRqQEAABXRUJQVlA4WAoAAAAgAAAAEQEAmQAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggtgIAALAZAJ0BKhIBmgA+MRiLRKIhoRAUACADBLS3cB10kzZWh7N2oa8dXPzc3cj+UX//9dWYdXDup6OjvoArBW1c0jpsiVnMhsoNEdatcrOyzLEdWkh2AesXA5RqLepkGycicJoCw+1X3suHnyP6EKSWZCDwPj9fPMD+UGJlbIrP91V1nlGnpKf3hE1y4XRvu4qfvV9ch0qnPgosiI9yG71f/vtmJyBDCMhXcZDyftfq80qz7p/BmRqbiSlu89U6D6UaBnuZIWZk+sNI+bvQsi2JOfcSt2tpBHAA/vnoTlKI/XFzcjE25/Fpl8as/PRJKTsDMBfQpXo+GdHaC2XqWWN992jQK761Kd90r7Ei7AqyNK+7EKOp6gm6ADKNO4uBPOcGHuj1rbL6zxtnLxvSip2szGB+Tf8u4lnH3kwdiXUbXtPktXgx4WegzrdZE/c3LGWS3SieY2iqf9RGZ3JpaPScuZ3pLOHENX5TYFVKG9m5m8b6DwKMdjy/rMM1N/FZgBROpvaKTqCg7rZHNDmJnHkkX8FKVdVgTlOv6hknNKELaNOdOzc2jeUJnXf4dwy45bWOtMgHI43JPiMAzN2Boy+fYLxKPHuSUwko/40JEJouzqu0FaYWYL8RrlZDA2xLsSr2Jvu6BswG3h0IUXugx9GUfEUxjo5TkjgG5zCUylODX97wb/4qqrPT7R+83zLtsil71Bp4jwAU2ocrcOgV0o1JGG9Ho0iO3rkeoJlKHxKq3IeICtlguJqmq3bXF0NVDOHVyvstH6F1FQ7cDRUEB+ocL8HqpkbcOzjcKEeFya8qdZ/x1/BVUNi8cpBc0GHlR1kM/k37KPF6dKfjF8zFjYyHbtl6HxaFVoKbLdKjarS4U35/RJMgjCanQH20E94ipMB1kNJYJeDqrJf8srCRjz4WZ0M34AAAAAA="
+              placeholder="blur"
+            />
+          </div>
         </div>
         <div className="my-10">
           <h2 className="mx-auto my-0 flex w-fit py-0 text-4xl font-extrabold sm:text-5xl">

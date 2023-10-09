@@ -10,7 +10,7 @@ const CallToAction = () => {
       <p className="my-0 py-0 leading-6 ">
         Access to our meal planner today and start your transformation
       </p>
-      <div className="mt-2 h-10">
+      <div className="mt-2 h-11">
         <Link href="/signup">
           <PrimaryButton onClick={() => {}} content="Try it for free" />
         </Link>
