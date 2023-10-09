@@ -1,8 +1,8 @@
-import { FC } from "react";
 import { Post } from "@/.contentlayer/generated";
+import Link from "next/link";
+import { FC } from "react";
 import BlurImage from "../blur-image";
 import DateC from "./Post/DateC/DateC";
-import Link from "next/link";
 
 interface Props {
   posts: Post[];
@@ -19,9 +19,9 @@ const BlogPosts: FC<Props> = ({ posts }) => {
         <Link
           key={post._id}
           href={`/blog/${post.slug}`}
-          className="flex h-auto flex-wrap gap-2 overflow-auto sm:flex-nowrap sm:gap-4"
+          className="flex h-auto flex-wrap gap-2 sm:flex-nowrap sm:gap-4"
         >
-          <div className="relative h-64 w-full overflow-hidden rounded-3xl border object-cover shadow-md sm:h-56 sm:w-72 sm:min-w-[18rem]">
+          <div className="relative h-64 w-full overflow-hidden rounded-3xl border object-cover box-shadow-full sm:h-56 sm:w-72 sm:min-w-[18rem]">
             <BlurImage
               src={post.image}
               alt={post.title}

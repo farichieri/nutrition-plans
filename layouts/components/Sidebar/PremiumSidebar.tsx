@@ -1,14 +1,14 @@
-import { FC, useEffect, useState } from "react";
+import Logo from "@/components/Logo/Logo";
 import { selectLayoutSlice, setSidebarOpen } from "@/features/layout/slice";
 import { selectPlansSlice } from "@/features/plans/slice";
-import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/router";
-import CollapsedPages from "./Pages/CollapsedPages";
-import Logo from "@/components/Logo/Logo";
-import MobilePages from "./Pages/MobilePages";
-import ToggleSidebar from "./ToggleSidebar";
 import useWindowWidth from "@/hooks/useWindowWidth";
+import { useRouter } from "next/router";
+import { FC, useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import CollapsedPages from "./Pages/CollapsedPages";
+import MobilePages from "./Pages/MobilePages";
 import WebPages from "./Pages/WebPages";
+import ToggleSidebar from "./ToggleSidebar";
 
 interface Props {
   hideScrolling?: boolean;
@@ -29,12 +29,19 @@ const PremiumSidebar: FC<Props> = ({ hideScrolling }) => {
   };
 
   useEffect(() => {
-    if (sidebarOpen && window.innerWidth < 768) {
-      dispatch(setSidebarOpen(false));
+    let used = false;
+    if (!used) {
+      if (sidebarOpen && window.innerWidth < 768) {
+        console.log("dispatched");
+        dispatch(setSidebarOpen(false));
+      }
     }
-  }, [router.asPath]);
+    return () => {
+      used = true;
+    };
+  }, [router.asPath, dispatch, sidebarOpen]);
 
-  const controlNavbar = () => {
+  const controlNavbar = useCallback(() => {
     if (typeof window !== "undefined") {
       if (window.scrollY > lastScrollY && window.scrollY > 40) {
         setShow(false);
@@ -50,7 +57,7 @@ const PremiumSidebar: FC<Props> = ({ hideScrolling }) => {
       }
       setLastScrollY(window.scrollY);
     }
-  };
+  }, [lastScrollY]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -59,7 +66,7 @@ const PremiumSidebar: FC<Props> = ({ hideScrolling }) => {
         window.removeEventListener("scroll", controlNavbar);
       };
     }
-  }, [lastScrollY]);
+  }, [lastScrollY, controlNavbar]);
 
   return (
     <>

@@ -1,15 +1,14 @@
+import { AppRoutes } from "@/utils";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { FC } from "react";
 import {
   MdAutoGraph,
   MdLibraryBooks,
-  MdLocalGroceryStore,
   MdOutlineCalendarMonth,
   MdPerson,
 } from "react-icons/md";
-import { AppRoutes } from "@/utils";
-import { FC } from "react";
 import { RiSearchLine } from "react-icons/ri";
-import { useRouter } from "next/router";
-import Link from "next/link";
 
 interface Props {}
 
@@ -38,13 +37,13 @@ const CollapsedPages: FC<Props> = () => {
       pathname: ["/app/progress"],
       icon: <MdAutoGraph className="h-6 w-6 text-green-500" />,
     },
-    {
-      id: "",
-      name: "Groceries",
-      url: "/app/shopping/today",
-      pathname: ["/app/shopping/[date]", "/app/cupboard"],
-      icon: <MdLocalGroceryStore className="h-6 w-6 text-green-500" />,
-    },
+    // {
+    //   id: "",
+    //   name: "Groceries",
+    //   url: "/app/shopping/today",
+    //   pathname: ["/app/shopping/[date]", "/app/cupboard"],
+    //   icon: <MdLocalGroceryStore className="h-6 w-6 text-green-500" />,
+    // },
     {
       id: "tour-library-0",
       name: "Library",

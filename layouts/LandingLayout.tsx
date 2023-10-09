@@ -1,5 +1,5 @@
-import Footer from "./components/Footer/Footer";
 import Head from "next/head";
+import Footer from "./components/Footer/Footer";
 import NavBar from "./components/Nav/Nav";
 
 export default function LandingLayout({
@@ -14,7 +14,7 @@ export default function LandingLayout({
       </Head>
       <>
         <NavBar />
-        <main className="flex h-full min-h-screen w-full max-w-7xl flex-col items-center px-4 pt-[var(--nav-h)]">
+        <main className="flex z-10 h-full min-h-screen w-full max-w-7xl flex-col items-center px-4 pt-[var(--nav-h)]">
           {children}
         </main>
         <Footer />

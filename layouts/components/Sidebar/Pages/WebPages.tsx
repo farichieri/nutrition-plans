@@ -1,29 +1,28 @@
-import {
-  MdAutoGraph,
-  MdCreate,
-  MdExpandMore,
-  MdPerson,
-  MdSettings,
-  MdLocalGroceryStore,
-  MdOutlineCalendarMonth,
-  MdLibraryBooks,
-} from "react-icons/md";
+import { SubscribeButton } from "@/components/Buttons";
+import TrialDaysLeft from "@/components/TrialDaysLeft/TrialDaysLeft";
 import {
   selectLayoutSlice,
   setSidebarAdminOpen,
   setSidebarOpen,
 } from "@/features/layout/slice";
+import { useWindowWidth } from "@/hooks";
 import { AppRoutes } from "@/utils";
-import { BiFoodMenu } from "react-icons/bi";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { FC } from "react";
+import { BiFoodMenu } from "react-icons/bi";
+import {
+  MdAutoGraph,
+  MdCreate,
+  MdExpandMore,
+  MdLibraryBooks,
+  MdOutlineCalendarMonth,
+  MdPerson,
+  MdSettings,
+} from "react-icons/md";
 import { PiBowlFoodFill } from "react-icons/pi";
 import { RiSearchLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/router";
-import { useWindowWidth } from "@/hooks";
-import Link from "next/link";
-import TrialDaysLeft from "@/components/TrialDaysLeft/TrialDaysLeft";
-import { SubscribeButton } from "@/components/Buttons";
 
 interface Props {}
 
@@ -83,13 +82,13 @@ const WebPages: FC<Props> = () => {
       pathname: ["/app/progress"],
       icon: <MdAutoGraph className="h-6 w-6 text-green-500" />,
     },
-    {
-      id: "",
-      name: "Groceries",
-      url: "/app/shopping/today",
-      pathname: ["/app/shopping/[date]", "/app/cupboard"],
-      icon: <MdLocalGroceryStore className="h-6 w-6 text-green-500" />,
-    },
+    // {
+    //   id: "",
+    //   name: "Groceries",
+    //   url: "/app/shopping/today",
+    //   pathname: ["/app/shopping/[date]", "/app/cupboard"],
+    //   icon: <MdLocalGroceryStore className="h-6 w-6 text-green-500" />,
+    // },
     {
       id: "tour-library-0",
       name: "Library",
