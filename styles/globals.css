@@ -17,6 +17,10 @@
   .custom-grid {
     @apply grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6;
   }
+
+  .box-shadow-full {
+    @apply shadow-[0px_1px_12px_6px_rgba(10,0,31,0.1)] dark:shadow-[0px_1px_10px_1px_rgba(255,255,255,0.1)];
+  }
 }
 
 article .anchor {
@@ -189,7 +193,7 @@ li {
 }
 
 #nprogress .bar {
-  background: #22c55e;
+  background: #22c55e !important;
 }
 
 table {

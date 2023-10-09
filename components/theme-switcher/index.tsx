@@ -1,7 +1,7 @@
-import { FC } from "react";
-import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { Theme } from "@/types";
 import { useTheme } from "next-themes";
+import { FC } from "react";
+import { MdDarkMode, MdLightMode } from "react-icons/md";
 
 interface Props {
   withText: boolean;
@@ -9,8 +9,6 @@ interface Props {
 
 const ThemeSwitcher: FC<Props> = ({ withText }) => {
   const { theme, setTheme } = useTheme();
-
-  console.log({ theme });
 
   const toggleTheme = () => {
     if (theme === Theme.Dark || theme === Theme.System) {

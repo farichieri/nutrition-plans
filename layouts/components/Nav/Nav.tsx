@@ -1,32 +1,29 @@
+import { selectAuthSlice } from "@/features/authentication/slice";
 import { AppRoutes } from "@/utils";
 import { Bars2Icon, XMarkIcon } from "@heroicons/react/24/solid";
-import { FC, useEffect, useState } from "react";
-import { selectAuthSlice } from "@/features/authentication/slice";
-import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { FC, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const ThemeSwitcher = dynamic(() => import("@/components/theme-switcher"), {
   ssr: false,
 });
-
 const SignOrAvatar = dynamic(() => import("./SignOrAvatar"), { ssr: false });
-
 const SideNav = dynamic(() => import("./SideNav"), { ssr: false });
-
 const Logo = dynamic(() => import("@/components/Logo/Logo"), { ssr: false });
 
 interface Props {}
 
 const NavBar: FC<Props> = () => {
   const router = useRouter();
-  const { user } = useSelector(selectAuthSlice);
+  const [lastYPos, setLastYPos] = useState(0);
   const [openMenu, setOpenMenu] = useState(false);
+  const [show, setShow] = useState(false);
+  const { user } = useSelector(selectAuthSlice);
   const isLogin = router.asPath === AppRoutes.login;
   const isSignup = router.asPath === AppRoutes.signup;
-  const [show, setShow] = useState(false);
-  const [lastYPos, setLastYPos] = useState(0);
 
   const controlNavbar = () => {
     if (typeof window !== "undefined") {
@@ -51,6 +48,7 @@ const NavBar: FC<Props> = () => {
   const handleMenu = () => {
     setOpenMenu(!openMenu);
   };
+
   const PAGES = [
     { name: "Plans", url: "/plans" },
     { name: "Blog", url: "/blog" },

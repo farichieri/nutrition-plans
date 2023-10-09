@@ -1,7 +1,7 @@
-import { FC } from "react";
 import { Plan } from "@/.contentlayer/generated";
 import Image from "next/image";
 import Link from "next/link";
+import { FC } from "react";
 
 interface Props {
   plans: Plan[];
@@ -15,7 +15,7 @@ const Plans: FC<Props> = ({ plans }) => {
           <Link
             key={plan._id}
             href={`/plans/${plan.slug}`}
-            className="relative flex h-auto w-full flex-col items-center justify-center overflow-hidden duration-300 hover:scale-105 xs:w-auto"
+            className="relative flex h-auto w-full flex-col items-center justify-center  duration-300 hover:scale-105 xs:w-auto"
           >
             <span className="flex w-full items-center justify-center py-1 text-center text-xl font-bold sm:text-xl">
               {plan.title}
@@ -25,7 +25,7 @@ const Plans: FC<Props> = ({ plans }) => {
               alt={plan.title}
               width={175}
               height={175}
-              className="rounded-3xl border shadow-md"
+              className="rounded-3xl border  box-shadow-full"
             />
           </Link>
         ))}

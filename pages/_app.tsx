@@ -1,20 +1,20 @@
-import "nprogress/nprogress.css";
+import ErrorBoundary from "@/components/Errors/ErrorBoundary";
+import { Layout } from "@/layouts";
+import { auth } from "@/services/firebase";
+import { persistor, store } from "@/store";
 import "@/styles/globals.css";
 import { Analytics } from "@vercel/analytics/react";
-import { auth } from "@/services/firebase";
 import { getAnalytics, logEvent, setUserId } from "firebase/analytics";
-import { Layout } from "@/layouts";
-import { PersistGate } from "redux-persist/integration/react";
-import { persistor, store } from "@/store";
-import { Provider } from "react-redux";
 import { ThemeProvider } from "next-themes";
-import { Toaster } from "react-hot-toast";
-import { useEffect } from "react";
-import { useRouter } from "next/router";
-import ErrorBoundary from "@/components/Errors/ErrorBoundary";
-import Head from "next/head";
-import NProgress from "nprogress";
 import type { AppProps } from "next/app";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import NProgress from "nprogress";
+import "nprogress/nprogress.css";
+import { useEffect } from "react";
+import { Toaster } from "react-hot-toast";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
