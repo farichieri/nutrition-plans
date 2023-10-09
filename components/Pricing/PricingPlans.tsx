@@ -1,8 +1,6 @@
 import { SUBSCRIPTION_PLANS } from "@/data/content";
 import { SubscriptionPlan } from "@/types";
-import dynamic from "next/dynamic";
-
-const Plan = dynamic(() => import("./PricingPlan"), { ssr: false });
+import Plan from "./PricingPlan";
 
 const PricingPlans = () => {
   return (

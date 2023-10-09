@@ -1,25 +1,16 @@
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import { FC, useState } from "react";
-import { selectAuthSlice } from "@/features/authentication/slice";
 import { SubscriptionPlan } from "@/types";
-import { useSelector } from "react-redux";
-import Link from "next/link";
+import dynamic from "next/dynamic";
+
+const IsCurrentPlan = dynamic(() => import("./IsCurrentPlan"), { ssr: false });
 
 interface Props {
   price: SubscriptionPlan;
 }
 
 const PricingPlan: FC<Props> = ({ price }) => {
-  const { user } = useSelector(selectAuthSlice);
   const [isYearly, setIsYearly] = useState(true);
-
-  const currentPlan =
-    (price.id === "free" && user?.isPremium === false) ||
-    (price.id === "premium" && user?.isPremium === true);
-
-  const getStarted =
-    (price.id === "free" && !user?.isPremium) ||
-    (price.id === "premium" && !user?.isPremium);
 
   const prices = price.prices;
   const { monthly, yearly } = prices;
@@ -87,22 +78,9 @@ const PricingPlan: FC<Props> = ({ price }) => {
           </li>
         ))}
       </ul>
-      {currentPlan ? (
-        <span className="mt-auto flex rounded-md border border-gray-400 px-3 py-2 text-xs dark:border-gray-700">
-          Current plan
-        </span>
-      ) : (
-        <>
-          {getStarted && (
-            <Link
-              href={price.checkoutLink}
-              className="mt-auto flex rounded-3xl border border-green-500 bg-gradient-to-r from-green-500 via-green-500 to-green-500 px-3 py-2 text-xs text-white duration-300 hover:shadow-[0_1px_10px] hover:shadow-green-300 hover:brightness-110 dark:hover:shadow-green-400/50"
-            >
-              {price.buttonContent}
-            </Link>
-          )}
-        </>
-      )}
+      <div className="h-8">
+        <IsCurrentPlan price={price} />
+      </div>
     </div>
   );
 };

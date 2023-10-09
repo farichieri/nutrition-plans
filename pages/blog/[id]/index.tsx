@@ -3,16 +3,15 @@ import { MdTrendingFlat } from "react-icons/md";
 import { Mdx } from "@/components/MDX-Components/MDX-Components";
 import { Post, allPosts } from "@/.contentlayer/generated";
 import { StructuredData } from "@/components";
+import BlurImage from "@/components/blur-image";
 import CallToAction from "@/components/call-to-action/CallToAction";
 import DateC from "@/components/Posts/Post/DateC/DateC";
+import dynamic from "next/dynamic";
 import Head from "next/head";
 import LandingLayout from "@/layouts/LandingLayout";
 import Link from "next/link";
-import type { BlogPosting, WithContext } from "schema-dts";
 import OtherPosts from "@/components/OtherPosts/OtherPosts";
-import Image from "next/image";
-import dynamic from "next/dynamic";
-import BlurImage from "@/components/blur-image";
+import type { BlogPosting, WithContext } from "schema-dts";
 
 const DashboardTableOfContents = dynamic(
   () =>
