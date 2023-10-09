@@ -1,10 +1,10 @@
+import { PrimaryButton } from "@/components/Buttons";
+import AvatarDropDown from "@/components/DropDown/AvatarDropDown/AvatarDropDown";
+import { User } from "@/features/authentication";
 import { AppRoutes } from "@/utils";
+import Link from "next/link";
 import { FC } from "react";
 import { MdArrowForwardIos } from "react-icons/md";
-import { PrimaryButton } from "@/components/Buttons";
-import { User } from "@/features/authentication";
-import AvatarDropDown from "@/components/DropDown/AvatarDropDown/AvatarDropDown";
-import Link from "next/link";
 
 interface Props {
   user: User | null;
@@ -19,7 +19,7 @@ const SignOrAvatar: FC<Props> = ({ user, isSignup, isLogin }) => {
         <>
           <Link
             href={AppRoutes.today}
-            className="flex items-center justify-center gap-1 rounded-3xl border border-green-500 bg-green-500/70 px-3 py-1.5 text-sm font-semibold duration-300 hover:bg-green-500 active:bg-green-600"
+            className="flex items-center justify-center gap-1 rounded-3xl border border-green-500 bg-green-500/70 px-3 h-10 text-sm font-semibold duration-300 hover:bg-green-500 active:bg-green-600"
           >
             <span className="text-white">Planner</span>
             <MdArrowForwardIos className="h-4 w-4 text-white" />
@@ -39,11 +39,12 @@ const SignOrAvatar: FC<Props> = ({ user, isSignup, isLogin }) => {
                   </button>
                 </Link>
               )}
-              <div className="flex h-7 items-center text-xs xs:text-sm">
-                <Link href="/signup">
-                  <PrimaryButton onClick={() => {}} content="Sign up" />
-                </Link>
-              </div>
+              <Link
+                href="/signup"
+                className="flex h-8 items-center text-xs xs:text-sm"
+              >
+                <PrimaryButton onClick={() => {}} content="Sign up" />
+              </Link>
             </>
           )}
         </>

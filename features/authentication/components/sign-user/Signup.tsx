@@ -1,31 +1,30 @@
+import { GoogleLoginButton, SubmitButton } from "@/components/Buttons";
+import FormError from "@/components/Errors/FormError";
+import { emailRegex } from "@/constants";
 import {
+  AUTH_ERRORS,
   setIsCreatingUser,
   setIsSigningUser,
-  AUTH_ERRORS,
   setLoginError,
   usePostUserMutation,
-  useLoginMutation,
 } from "@/features/authentication";
+import { auth, provider } from "@/services/firebase";
+import { persistor } from "@/store";
+import { DevTool } from "@hookform/devtools";
+import { yupResolver } from "@hookform/resolvers/yup";
 import {
   createUserWithEmailAndPassword,
   getAdditionalUserInfo,
   signInWithPopup,
   updateProfile,
 } from "firebase/auth";
-import { auth, provider } from "@/services/firebase";
-import { DevTool } from "@hookform/devtools";
-import { emailRegex } from "@/constants";
-import { GoogleLoginButton, SubmitButton } from "@/components/Buttons";
-import { MdOutlineEmail, MdTrendingFlat } from "react-icons/md";
-import { persistor } from "@/store";
-import { useDispatch } from "react-redux";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import FormError from "@/components/Errors/FormError";
 import Link from "next/link";
-import React, { FormEvent, useState } from "react";
+import { FormEvent, useState } from "react";
+import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import { MdOutlineEmail, MdTrendingFlat } from "react-icons/md";
+import { useDispatch } from "react-redux";
+import * as yup from "yup";
 
 const schema = yup.object({
   email: yup
@@ -89,8 +88,8 @@ const Signup = () => {
         await updateProfile(user, {
           displayName: data.displayName,
         });
-        const additinalInfo = getAdditionalUserInfo(result);
-        if (additinalInfo?.isNewUser) {
+        const additional = getAdditionalUserInfo(result);
+        if (additional?.isNewUser) {
           dispatch(setIsCreatingUser(true));
           await postUser({ user });
         }
@@ -118,7 +117,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="m-auto flex w-full max-w-sm select-none flex-col items-center justify-center gap-4 rounded-md p-4 py-10 sm:border sm:px-10">
+    <div className="m-auto flex w-full max-w-sm select-none flex-col items-center justify-center gap-4 rounded-md p-4 py-10 sm:box-shadow-full  sm:px-10">
       <DevTool control={control} />
       <div>
         <h1 className="text-center text-4xl font-bold">
