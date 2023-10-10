@@ -1,3 +1,4 @@
+import { StartsOfWeek } from "@/types";
 import {
   addDays,
   eachDayOfInterval,
@@ -6,7 +7,6 @@ import {
   startOfMonth,
   startOfWeek,
 } from "date-fns";
-import { StartsOfWeek } from "@/types";
 
 // in date-fns
 const SUNDAY = 0;
