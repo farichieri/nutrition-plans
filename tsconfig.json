@@ -18,6 +18,7 @@
       "@/*": ["./*"],
       "contentlayer/generated": ["./.contentlayer/generated"]
     },
+    "baseUrl": "./",
     "plugins": [
       {
         "name": "next"

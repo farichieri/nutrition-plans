@@ -1,37 +1,38 @@
-import {
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Line,
-  ReferenceLine,
-} from "recharts";
+import { selectAuthSlice } from "@/features/authentication";
+import { selectProgressSlice } from "@/features/progress";
 import {
   formatToUSDate,
   formatTwoDecimals,
   getDayAndMonth,
   getMonthMMM,
 } from "@/utils";
-import { format, formatISO, parse } from "date-fns";
 import { getWeight, getWeightText, getWeightUnit } from "@/utils/calculations";
-import { selectAuthSlice } from "@/features/authentication";
-import { selectProgressSlice } from "@/features/progress";
+import { format, formatISO, parse } from "date-fns";
+import { FC } from "react";
 import { useSelector } from "react-redux";
+import {
+  Area,
+  AreaChart,
+  CartesianGrid,
+  Line,
+  ReferenceLine,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 import CustomLabel from "./CustomLabel";
 import CustomTooltip from "./CustomTooltip";
-import React, { FC } from "react";
 
 interface Props {}
 
 const Graphic: FC<Props> = () => {
   const { user } = useSelector(selectAuthSlice);
+  const { progress } = useSelector(selectProgressSlice);
+
   if (!user) return <>No user found.</>;
 
   const { weightGoal, createdAt, measurementUnit } = user;
-  const { progress } = useSelector(selectProgressSlice);
   const { bodyData } = user.firstData;
 
   if (!createdAt) return <></>;
@@ -65,16 +66,16 @@ const Graphic: FC<Props> = () => {
         isMonthRepresentation: true,
       },
     ];
-    Object.keys(progress).map((p) => {
-      const finded = data.find((d) => d.date === progress[p].date);
+    Object.keys(progress).forEach((p) => {
+      const found = data.find((d) => d.date === progress[p].date);
       const weight = formatTwoDecimals(
         getWeight({
           to: measurementUnit,
           weight: Number(progress[p].weightInKg),
         })
       );
-      if (finded) {
-        finded.weight = weight;
+      if (found) {
+        found.weight = weight;
       } else {
         data.push({
           date: progress[p].date,
@@ -122,11 +123,13 @@ const Graphic: FC<Props> = () => {
 
   const formatXAxis = (value: any) => {
     if (verifyRepresentation(value)) {
-      return getMonthMMM(value);
+      const date = parse(value, "MM-dd-yyyy", new Date());
+      return getMonthMMM(formatISO(date));
     } else if (value === startDateF || value.slice(0, 2) === "01") {
       return value;
     } else {
-      return getDayAndMonth(value);
+      const date = parse(value, "MM-dd-yyyy", new Date());
+      return getDayAndMonth(formatISO(date));
     }
   };
 
