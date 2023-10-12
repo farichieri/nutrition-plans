@@ -1,17 +1,17 @@
+import { CheckButton } from "@/components/Buttons";
+import { selectAuthSlice } from "@/features/authentication";
+import { formatTwoDecimals } from "@/utils";
 import {
   convertWater,
   getWaterInLts,
   getWaterUnit,
 } from "@/utils/calculations";
-import { CheckButton } from "@/components/Buttons";
-import { Diet } from "../../types";
 import { FC } from "react";
-import { formatTwoDecimals } from "@/utils";
-import { selectAuthSlice } from "@/features/authentication";
 import { toast } from "react-hot-toast";
-import { toggleDrunkWater, updateWaterDrunkInDiet } from "../../slice";
-import { useUpdateDietMutation } from "../../services";
 import { useDispatch, useSelector } from "react-redux";
+import { useUpdateDietMutation } from "../../services";
+import { toggleDrunkWater, updateWaterDrunkInDiet } from "../../slice";
+import { Diet } from "../../types";
 
 interface Props {
   diet: Diet;
@@ -80,7 +80,7 @@ const Water: FC<Props> = ({ diet, isEditing }) => {
     <div
       className={`flex items-center gap-1 rounded-xl border-b py-1 shadow-md dark:shadow-slate-500/20  ${
         drunk
-          ? "border-blue-300 bg-blue-300/30 "
+          ? "bg-green-300 dark:bg-green-800"
           : "bg-white dark:bg-gray-500/20"
       }`}
     >

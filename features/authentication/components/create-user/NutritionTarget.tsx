@@ -1,8 +1,8 @@
+import { MEAL_PLANS } from "@/data/content";
+import { selectAuthSlice } from "@/features/authentication/slice";
+import { PlansEnum } from "@/types";
 import { convertWater, getWaterUnit } from "@/utils/calculations";
 import { FC } from "react";
-import { MEAL_PLANS } from "@/data/content";
-import { PlansEnum } from "@/types";
-import { selectAuthSlice } from "@/features/authentication/slice";
 import { useSelector } from "react-redux";
 
 interface Props {
@@ -28,6 +28,8 @@ const NutritionTarget: FC<Props> = ({ planSelected }) => {
     lts: waterRecommendedInLts || 0,
   });
   const waterUnit = getWaterUnit({ from: measurementUnit });
+
+  console.log({ water, waterUnit });
 
   return (
     <div id="tour-profile_nutrition_values-2" className="flex flex-col gap-1">
