@@ -1,8 +1,8 @@
-import { collection, doc, onSnapshot, setDoc } from "firebase/firestore";
-import { db } from "@/services/firebase";
-import { ensureError } from "@/utils";
-import { Result } from "@/types";
 import { DISCOUNTS, PRICES } from "@/constants";
+import { db } from "@/services/firebase";
+import { Result } from "@/types";
+import { ensureError } from "@/utils";
+import { collection, doc, onSnapshot, setDoc } from "firebase/firestore";
 
 export default async function createCheckoutSession({
   uid,

@@ -4,7 +4,7 @@ import {
   LIB_TO_KG,
   L_TO_FO,
 } from "@/constants/measurements";
-import { WaterUnits, WeightUnits, MeasurementUnitsT } from "@/types";
+import { MeasurementUnitsT, WaterUnits, WeightUnits } from "@/types";
 import { formatTwoDecimals } from "./format";
 
 const cmsToFeet = ({ cms }: { cms: number }) => {
@@ -31,7 +31,7 @@ const lbsToKgs = ({ pounds }: { pounds: number }): number => {
 };
 
 const ltsToFluidOnces = ({ lts }: { lts: number }): number => {
-  let fluidOnces = lts * L_TO_FO;
+  let fluidOnces = lts / L_TO_FO;
   return formatTwoDecimals(fluidOnces);
 };
 

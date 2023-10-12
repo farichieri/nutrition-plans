@@ -1,12 +1,12 @@
-import { CheckButton } from "@/components/Buttons";
-import { Diet } from "../../types";
-import { FC } from "react";
-import { MdClose } from "react-icons/md";
-import { setDietExercise } from "../../slice";
 import { TextArea } from "@/components";
+import { CheckButton } from "@/components/Buttons";
+import { FC } from "react";
 import { toast } from "react-hot-toast";
+import { MdClose } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { useUpdateDietMutation } from "../../services";
+import { setDietExercise } from "../../slice";
+import { Diet } from "../../types";
 
 interface Props {
   diet: Diet;
@@ -16,10 +16,9 @@ interface Props {
 const Exercise: FC<Props> = ({ diet, isEditing }) => {
   const dispatch = useDispatch();
   const { exercise } = diet;
+  const [updateDiet] = useUpdateDietMutation();
 
   if (!exercise) return <></>;
-
-  const [updateDiet] = useUpdateDietMutation();
 
   const { exercised, note, isPlanned } = exercise;
 
@@ -87,7 +86,7 @@ const Exercise: FC<Props> = ({ diet, isEditing }) => {
       <div
         className={`flex items-center gap-1 rounded-xl border-b py-1 shadow-md dark:shadow-slate-500/20 ${
           exercised
-            ? "border-red-300 bg-red-300/30 "
+            ? "bg-green-300 dark:bg-green-800"
             : "bg-white dark:bg-gray-500/20"
         }`}
       >
