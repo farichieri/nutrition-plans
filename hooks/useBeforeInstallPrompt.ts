@@ -7,10 +7,12 @@ const useBeforeInstallPrompt = () => {
 
   useEffect(() => {
     window.addEventListener("beforeinstallprompt", (event) => {
+      event.preventDefault();
       setDeferredPrompt(event);
     });
     return () => {
       window.addEventListener("beforeinstallprompt", (event) => {
+        event.preventDefault();
         setDeferredPrompt(event);
       });
     };

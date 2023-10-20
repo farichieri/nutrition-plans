@@ -1,8 +1,7 @@
-import { FC } from "react";
-import { formatTwoDecimals, getDaysLeft } from "@/utils";
-import { getWeight, getWeightText } from "@/utils/calculations";
 import { MeasurementUnitsT } from "@/types";
-import { UserGoalsT } from "@/features/authentication/types";
+import { formatTwoDecimals, getDaysLeft } from "@/utils";
+import { getWeightText } from "@/utils/calculations";
+import { FC } from "react";
 
 interface Props {
   currentWeight: number;
@@ -52,7 +51,7 @@ const WeightGoalInfo: FC<Props> = ({
     return (
       <div className="flex flex-col gap-1 rounded-md border border-red-500 bg-red-500/20 p-2 text-sm">
         <span>
-          We don't recommend weight changes greater than <b>1%</b> of your
+          We don&apos;t recommend weight changes greater than <b>1%</b> of your
           current weight per week.
         </span>
         <span>

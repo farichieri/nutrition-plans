@@ -2,28 +2,28 @@ import {
   getUserWithNewWeight,
   useUpdateUserMutation,
 } from "@/features/authentication";
+import { selectAuthSlice } from "@/features/authentication/slice";
 import {
   ProgressItem,
   selectProgressSlice,
   setProgressOpen,
 } from "@/features/progress";
-import { FC, useEffect } from "react";
+import { WeightUnitsT } from "@/types";
 import { getWeight, getWeightText } from "@/utils/calculations";
 import { PencilIcon } from "@heroicons/react/24/outline";
-import { selectAuthSlice } from "@/features/authentication/slice";
-import { sortProgress } from "../utils/sortProgress";
+import { FC, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { sortProgress } from "../utils/sortProgress";
 import ProgressItemModal from "./ProgressItemModal";
 
-interface Props {}
-const ProgressList: FC<Props> = () => {
+interface Props {
+  unitSelected: WeightUnitsT;
+}
+
+const ProgressList: FC<Props> = ({ unitSelected }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuthSlice);
   const [updateUser] = useUpdateUserMutation();
-
-  if (!user) return <></>;
-
-  const { measurementUnit } = user;
 
   const { progress, progressOpen } = useSelector(selectProgressSlice);
 
@@ -34,7 +34,8 @@ const ProgressList: FC<Props> = () => {
   const progressSorted = sortProgress(Object.values(progress));
   const lastProgress = progressSorted[progressSorted.length - 1];
 
-  const updateUserWeight = async () => {
+  const updateUserWeight = useCallback(async () => {
+    if (!user) return;
     if (lastProgress.weightInKg !== user.bodyData.weightInKg) {
       try {
         if (!lastProgress.weightInKg) throw new Error("Missing data");
@@ -64,11 +65,11 @@ const ProgressList: FC<Props> = () => {
         console.error(error);
       }
     }
-  };
+  }, [lastProgress, updateUser, user]);
 
   useEffect(() => {
     updateUserWeight();
-  }, [lastProgress]);
+  }, [lastProgress, updateUserWeight]);
 
   return (
     <>
@@ -84,10 +85,9 @@ const ProgressList: FC<Props> = () => {
         </div>
         {progressSorted.map((p) => {
           const progressWeight = p.weightInKg;
-          if (!progressWeight) return;
           const weight = getWeight({
-            to: measurementUnit,
-            weight: progressWeight,
+            to: unitSelected,
+            weight: progressWeight!,
           });
           return (
             <div
@@ -97,7 +97,10 @@ const ProgressList: FC<Props> = () => {
             >
               <span>{p.date}</span>
               <span>
-                {getWeightText({ from: measurementUnit, weight: weight })}
+                {getWeightText({
+                  from: unitSelected === "lbs" ? "imperial" : "metric",
+                  weight: weight,
+                })}
               </span>
               <span>
                 <PencilIcon className="h-4 w-4" onClick={() => handleOpen(p)} />

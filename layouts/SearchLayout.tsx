@@ -1,15 +1,15 @@
-import { FilterQueries } from "@/types";
-import { FoodsSearched, selectFoodsSlice } from "@/features/foods";
-import { PremiumSidebar } from "@/layouts";
-import { useSelector } from "react-redux";
-import CreateButton from "@/features/foods/components/common/CreateButton";
+import Pagination from "@/components/Pagination/Pagination";
 import DatabaseSelector from "@/components/Premium/SearchBar/DatabaseSelector";
 import Filters from "@/components/Premium/SearchBar/Filters";
-import Pagination from "@/components/Pagination/Pagination";
-import PremiumLayout from "@/layouts/PremiumLayout";
-import PremiumNav from "./components/Nav/PremiumNav";
 import SearchBar from "@/components/Premium/SearchBar/SearchBar";
+import { FoodsSearched, selectFoodsSlice } from "@/features/foods";
+import CreateButton from "@/features/foods/components/common/CreateButton";
+import { PremiumSidebar } from "@/layouts";
+import PremiumLayout from "@/layouts/PremiumLayout";
+import { FilterQueries } from "@/types";
 import dynamic from "next/dynamic";
+import { useSelector } from "react-redux";
+import PremiumNav from "./components/Nav/PremiumNav";
 
 interface Props {
   queries: FilterQueries;

@@ -1,18 +1,18 @@
-import {
-  ProgressItem,
-  setProgressOpen,
-  newProgressItem,
-  useUpdateProgressMutation,
-  useDeleteProgressMutation,
-} from "@/features/progress";
-import { FC, useEffect, useState } from "react";
-import { formatTwoDecimals } from "@/utils";
-import { getWeight, getWeightInKg, getWeightUnit } from "@/utils/calculations";
-import { selectAuthSlice } from "@/features/authentication/slice";
-import { toast } from "react-hot-toast";
-import { useDispatch, useSelector } from "react-redux";
 import ActionButton from "@/components/Buttons/ActionButton";
 import Modal from "@/components/Modal/Modal";
+import { selectAuthSlice } from "@/features/authentication/slice";
+import {
+  ProgressItem,
+  newProgressItem,
+  setProgressOpen,
+  useDeleteProgressMutation,
+  useUpdateProgressMutation,
+} from "@/features/progress";
+import { formatTwoDecimals } from "@/utils";
+import { getWeight, getWeightInKg, getWeightUnit } from "@/utils/calculations";
+import { FC, useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
 
 interface Props {
   progressItem: ProgressItem;
@@ -26,23 +26,23 @@ const ProgressItemModal: FC<Props> = ({ progressItem }) => {
     useDeleteProgressMutation();
 
   const measurementUnit = user?.measurementUnit;
+  const unitSelected = measurementUnit === "imperial" ? "lbs" : "kgs";
+
   const [progressState, setProgressState] =
     useState<ProgressItem>(newProgressItem);
 
   useEffect(() => {
     let weightFormatted = 0;
-    if (measurementUnit) {
-      weightFormatted = getWeight({
-        to: measurementUnit,
-        weight: Number(progressItem.weightInKg),
-      });
-    }
+    weightFormatted = getWeight({
+      to: unitSelected,
+      weight: Number(progressItem.weightInKg),
+    });
     let progressItemF = {
       ...progressItem,
       weightInKg: weightFormatted,
     };
     setProgressState(progressItemF);
-  }, [measurementUnit, setProgressState]);
+  }, [unitSelected, setProgressState, progressItem]);
 
   if (!user || !measurementUnit) return <></>;
 
@@ -64,7 +64,7 @@ const ProgressItemModal: FC<Props> = ({ progressItem }) => {
     const progressUpdated = {
       ...progressItem,
       weightInKg: getWeightInKg({
-        from: measurementUnit,
+        from: unitSelected,
         weight: Number(progressState.weightInKg),
       }),
     };
@@ -98,7 +98,7 @@ const ProgressItemModal: FC<Props> = ({ progressItem }) => {
         <div className="relative flex w-full items-center gap-1">
           <span className="basis-1/3">Weight:</span>
           <span className="absolute right-2 select-none">
-            {getWeightUnit({ from: measurementUnit })}
+            {getWeightUnit({ from: unitSelected })}
           </span>
           <input
             className="flex w-full basis-2/3 rounded-md border bg-transparent px-1.5 py-2"

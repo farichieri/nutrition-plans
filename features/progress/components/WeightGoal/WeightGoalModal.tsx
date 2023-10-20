@@ -1,16 +1,17 @@
-import {
-  WeightGoal,
-  useUpdateUserMutation,
-  selectAuthSlice,
-  initialWeightGoal,
-} from "@/features/authentication";
-import { FC, useEffect, useState } from "react";
-import { formatISO } from "date-fns";
-import { getWeight, getWeightInKg, getWeightUnit } from "@/utils/calculations";
-import { setAddWeightGoalOpen } from "@/features/progress";
-import { useDispatch, useSelector } from "react-redux";
 import ActionButton from "@/components/Buttons/ActionButton";
 import Modal from "@/components/Modal/Modal";
+import {
+  WeightGoal,
+  initialWeightGoal,
+  selectAuthSlice,
+  useUpdateUserMutation,
+} from "@/features/authentication";
+import { setAddWeightGoalOpen } from "@/features/progress";
+import { WeightUnitsT } from "@/types";
+import { getWeight, getWeightInKg, getWeightUnit } from "@/utils/calculations";
+import { formatISO } from "date-fns";
+import { FC, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 interface Props {
   weightGoal: WeightGoal;
@@ -24,9 +25,11 @@ const WeightGoalModal: FC<Props> = ({ weightGoal }) => {
   const { user } = useSelector(selectAuthSlice);
   const [updateUser] = useUpdateUserMutation();
 
-  if (!user) return <></>;
+  const measurementUnit = user?.measurementUnit;
 
-  const { measurementUnit } = user;
+  const unitSelected: WeightUnitsT =
+    measurementUnit === "imperial" ? "lbs" : "kgs";
+
   const [weightGoalState, setWeightGoalState] = useState<WeightGoal>({
     createdAt: weightGoal?.createdAt || null,
     dueDate: weightGoal?.dueDate || null,
@@ -55,7 +58,7 @@ const WeightGoalModal: FC<Props> = ({ weightGoal }) => {
       weightGoal: {
         ...weightGoalState,
         weightGoalInKg: getWeightInKg({
-          from: measurementUnit,
+          from: unitSelected,
           weight: Number(weightGoalState.weightGoalInKg),
         }),
         createdAt: formatISO(new Date()),
@@ -83,7 +86,7 @@ const WeightGoalModal: FC<Props> = ({ weightGoal }) => {
     let weightFormatted = 0;
     if (measurementUnit) {
       weightFormatted = getWeight({
-        to: measurementUnit,
+        to: unitSelected,
         weight: Number(weightGoalState.weightGoalInKg),
       });
     }
@@ -92,7 +95,7 @@ const WeightGoalModal: FC<Props> = ({ weightGoal }) => {
       weightGoalInKg: weightFormatted,
     };
     setWeightGoalState(weightGoalF);
-  }, [measurementUnit]);
+  }, [measurementUnit, weightGoalState, unitSelected]);
 
   useEffect(() => {
     if (JSON.stringify(weightGoal) !== JSON.stringify(weightGoalState)) {
@@ -122,7 +125,7 @@ const WeightGoalModal: FC<Props> = ({ weightGoal }) => {
         <div className="relative flex items-center gap-1">
           <span className="basis-1/3">Weight:</span>
           <span className="absolute right-2 select-none">
-            {getWeightUnit({ from: measurementUnit })}
+            {getWeightUnit({ from: unitSelected })}
           </span>
           <input
             className="flex w-full basis-3/4 rounded-md border bg-transparent px-2 py-2"

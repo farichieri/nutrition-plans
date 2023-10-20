@@ -4,7 +4,7 @@ import {
   LIB_TO_KG,
   L_TO_FO,
 } from "@/constants/measurements";
-import { MeasurementUnitsT, WaterUnits, WeightUnits } from "@/types";
+import { MeasurementUnitsT, WaterUnits, WeightUnitsT } from "@/types";
 import { formatTwoDecimals } from "./format";
 
 const cmsToFeet = ({ cms }: { cms: number }) => {
@@ -49,13 +49,13 @@ const getWeight = ({
   to,
   weight,
 }: {
-  to: MeasurementUnitsT;
+  to: WeightUnitsT;
   weight: number;
 }): number => {
   switch (to) {
-    case "imperial":
+    case "lbs":
       return kgsToLbs({ kgs: weight });
-    case "metric":
+    case "kgs":
       return weight;
     default:
       return weight;
@@ -66,22 +66,22 @@ const getWeightInKg = ({
   from,
   weight,
 }: {
-  from: MeasurementUnitsT;
+  from: WeightUnitsT;
   weight: number;
 }): number => {
   switch (from) {
-    case "imperial":
+    case "lbs":
       return lbsToKgs({ pounds: weight });
-    case "metric":
+    case "kgs":
       return weight;
     default:
       return weight;
   }
 };
 
-const getWeightUnit = ({ from }: { from: MeasurementUnitsT }): string => {
-  if (from === "imperial") return WeightUnits.Lbs;
-  else if (from === "metric") return WeightUnits.Kgs;
+const getWeightUnit = ({ from }: { from: WeightUnitsT }): string => {
+  if (from === "lbs") return "lbs";
+  else if (from === "kgs") return "kgs";
   else return "";
 };
 
@@ -89,7 +89,7 @@ const getWeightAndText = ({
   to,
   weightInKg,
 }: {
-  to: MeasurementUnitsT;
+  to: WeightUnitsT;
   weightInKg: number;
 }): { weight: number; weightText: string } => {
   const weight = getWeight({ to, weight: weightInKg });
@@ -104,12 +104,11 @@ const getWeightText = ({
   weight: number;
   from: MeasurementUnitsT;
 }): string => {
-  const { Lbs, Kgs } = WeightUnits;
   switch (from) {
     case "metric":
-      return `${formatTwoDecimals(weight)} ${Kgs}`;
+      return `${formatTwoDecimals(weight)} ${"kgs"}`;
     case "imperial":
-      return `${formatTwoDecimals(weight)} ${Lbs}`;
+      return `${formatTwoDecimals(weight)} ${"lbs"}`;
     default:
       return `${formatTwoDecimals(weight)}`;
   }

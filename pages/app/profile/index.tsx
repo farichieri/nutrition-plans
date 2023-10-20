@@ -1,10 +1,10 @@
-import { ProfileNav } from "@/features/profile";
+import Avatar from "@/components/Avatar/Avatar";
 import { Results, selectAuthSlice } from "@/features/authentication";
-import { useSelector } from "react-redux";
+import { ProfileNav } from "@/features/profile";
 import { useTour } from "@/features/tours";
 import { useWindowWidth } from "@/hooks";
-import Avatar from "@/components/Avatar/Avatar";
 import ProfileLayout from "@/layouts/ProfileLayout";
+import { useSelector } from "react-redux";
 
 export default function Page() {
   const { user } = useSelector(selectAuthSlice);

@@ -1,10 +1,8 @@
+import SubmitButton from "@/components/Buttons/SubmitButton";
+import FormError from "@/components/Errors/FormError";
+import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
+import { ACTIVITY_OPTIONS } from "@/constants";
 import {
-  calculateBMI,
-  calculateBMR,
-  calculateKCALSRecommended,
-} from "@/features/authentication/utils/calculateBodyData";
-import {
-  User,
   UserActivities,
   UserGenders,
   UserGendersT,
@@ -15,29 +13,30 @@ import {
   useUpdateUserMutation,
 } from "@/features/authentication";
 import {
+  calculateBMI,
+  calculateBMR,
+  calculateKCALSRecommended,
+} from "@/features/authentication/utils/calculateBodyData";
+import { usePostProgressMutation } from "@/features/progress";
+import { MeasurementUnits, MeasurementUnitsT } from "@/types";
+import { AppRoutes, formatToUSDate, formatTwoDecimals } from "@/utils";
+import {
   cmsToFeet,
   cmsToInches,
   feetAndInchesToCMS,
   kgsToLbs,
   lbsToKgs,
 } from "@/utils/calculations";
-import { ACTIVITY_OPTIONS } from "@/constants";
 import { DevTool } from "@hookform/devtools";
-import { FC, useEffect, useState } from "react";
-import { MeasurementUnitsT, MeasurementUnits } from "@/types";
-import { schema } from "./schema";
-import { useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
-import { useRouter } from "next/router";
 import { yupResolver } from "@hookform/resolvers/yup";
-import FormError from "@/components/Errors/FormError";
-import SubmitButton from "@/components/Buttons/SubmitButton";
-import { toast } from "react-hot-toast";
-import { AppRoutes, formatToUSDate, formatTwoDecimals } from "@/utils";
-import { MdSettingsAccessibility } from "react-icons/md";
-import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
 import { formatISO } from "date-fns";
-import { usePostProgressMutation } from "@/features/progress";
+import { useRouter } from "next/router";
+import { FC, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
+import { MdSettingsAccessibility } from "react-icons/md";
+import { useSelector } from "react-redux";
+import { schema } from "./schema";
 
 interface FormValues {
   activity: UserActivities | null;
@@ -184,7 +183,7 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
     register("inches");
     register("centimeters");
     register("kilograms");
-  }, []);
+  }, [register]);
 
   const onSubmit = async (data: FormValues) => {
     if (!user || isSubmitting) return;
@@ -197,7 +196,7 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
 
       const lts = getWater({
         weightInKg: kilograms,
-        measurement: measurementUnit,
+        measurement: "metric",
       });
 
       const BMI = calculateBMI({ kgs: kilograms, cms: centimeters });
@@ -221,6 +220,8 @@ const BodyFeatures: FC<Props> = ({ handleContinue }) => {
           planSelected,
         });
       }
+
+      console.log(formatTwoDecimals(lts));
 
       const fields = {
         measurementUnit: measurementUnit,

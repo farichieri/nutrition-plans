@@ -1,9 +1,9 @@
-import { FC } from "react";
-import { getWeight, getWeightText } from "@/utils/calculations";
-import { selectAuthSlice } from "@/features/authentication";
-import { setAddWeightGoalOpen, selectProgressSlice } from "@/features/progress";
-import { useDispatch, useSelector } from "react-redux";
 import Collapsable from "@/components/Layout/Collapsable";
+import { selectAuthSlice } from "@/features/authentication";
+import { selectProgressSlice, setAddWeightGoalOpen } from "@/features/progress";
+import { getWeight, getWeightText } from "@/utils/calculations";
+import { FC } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import WeightGoalModal from "./WeightGoalModal";
 
 interface Props {}
@@ -22,7 +22,7 @@ const WeightGoal: FC<Props> = () => {
   };
 
   const realWeightGoal = getWeight({
-    to: measurementUnit,
+    to: measurementUnit === "metric" ? "kgs" : "lbs",
     weight: weightGoal.weightGoalInKg || 0,
   });
 
