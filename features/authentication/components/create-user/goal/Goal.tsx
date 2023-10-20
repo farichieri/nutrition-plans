@@ -1,3 +1,7 @@
+import SubmitButton from "@/components/Buttons/SubmitButton";
+import FormError from "@/components/Errors/FormError";
+import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
+import InfoMessage from "@/components/Layout/InfoMessage";
 import {
   UserGoals,
   UserGoalsT,
@@ -6,29 +10,25 @@ import {
   selectAuthSlice,
   useUpdateUserMutation,
 } from "@/features/authentication";
+import { calculateKCALSRecommended } from "@/features/authentication/utils/calculateBodyData";
+import { AppRoutes, formatToInputDate, formatToUSDate } from "@/utils";
 import {
   getWeight,
   getWeightAndText,
   getWeightInKg,
   getWeightUnit,
 } from "@/utils/calculations";
-import { AppRoutes, formatToInputDate, formatToUSDate } from "@/utils";
-import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
-import { calculateKCALSRecommended } from "@/features/authentication/utils/calculateBodyData";
 import { DevTool } from "@hookform/devtools";
-import { FC, useEffect, useState } from "react";
-import { format, formatISO, parse } from "date-fns";
-import { MdEmojiEvents } from "react-icons/md";
-import { schema } from "./schema";
-import { toast } from "react-hot-toast";
-import { useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
-import { useRouter } from "next/router";
 import { yupResolver } from "@hookform/resolvers/yup";
-import FormError from "@/components/Errors/FormError";
-import InfoMessage from "@/components/Layout/InfoMessage";
-import SubmitButton from "@/components/Buttons/SubmitButton";
+import { format, formatISO, parse } from "date-fns";
+import { useRouter } from "next/router";
+import { FC, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
+import { MdEmojiEvents } from "react-icons/md";
+import { useSelector } from "react-redux";
 import WeightGoalInfo from "./WeightGoalInfo";
+import { schema } from "./schema";
 
 interface FormValues {
   goalSelected: UserGoalsT | null;
@@ -63,12 +63,14 @@ const Goal: FC<Props> = ({ handleContinue }) => {
   const { weightGoalInKg, dueDate } = weightGoal;
   const { BMR, activity, weightInKg } = bodyData;
 
+  const unitSelected = measurementUnit === "metric" ? "kgs" : "lbs";
+
   const weightGoalFormatted = getWeight({
-    to: measurementUnit,
+    to: unitSelected,
     weight: Number(weightGoalInKg),
   });
   const { weight, weightText } = getWeightAndText({
-    to: measurementUnit,
+    to: unitSelected,
     weightInKg: Number(weightInKg),
   });
 
@@ -134,8 +136,8 @@ const Goal: FC<Props> = ({ handleContinue }) => {
 
   const onSubmit = async (data: FormValues) => {
     if (isSubmitting) return;
-    const { weightGoal: weightGoal, goalSelected } = data;
-    const { weightGoalInKg: weightGoalInKg } = weightGoal;
+    const { weightGoal, goalSelected } = data;
+    const { weightGoalInKg } = weightGoal;
 
     try {
       if (!activity || !BMR || !goalSelected) throw new Error("Missing data");
@@ -148,7 +150,7 @@ const Goal: FC<Props> = ({ handleContinue }) => {
       }
 
       const weightInKg = getWeightInKg({
-        from: measurementUnit,
+        from: unitSelected,
         weight: Number(weightGoalInKg),
       });
 
@@ -257,7 +259,7 @@ const Goal: FC<Props> = ({ handleContinue }) => {
                   <label>Weight Goal: </label>
                   <>
                     <span className="absolute right-2 select-none">
-                      {getWeightUnit({ from: measurementUnit })}
+                      {getWeightUnit({ from: unitSelected })}
                     </span>
                     <input
                       className="w-24 rounded-md border bg-transparent px-3 py-1.5"
@@ -274,7 +276,7 @@ const Goal: FC<Props> = ({ handleContinue }) => {
                       }
                       step={0.1}
                       placeholder={getWeightUnit({
-                        from: measurementUnit,
+                        from: unitSelected,
                       })}
                       {...register("weightGoal.weightGoalInKg", {
                         valueAsNumber: true,

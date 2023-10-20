@@ -11,10 +11,13 @@ export const MeasurementUnits = {
 
 export type MeasurementUnitsT = keyof typeof MeasurementUnits;
 
-export enum WeightUnits {
-  Lbs = "lbs",
-  Kgs = "kgs",
-}
+export const WeightUnits = {
+  lbs: "lbs",
+  kgs: "kgs",
+} as const;
+
+export type WeightUnitsT = keyof typeof WeightUnits;
+
 export enum WaterUnits {
   Lts = "lts",
   FlOz = "fl oz",

@@ -1,11 +1,11 @@
+import { selectAuthSlice } from "@/features/authentication";
 import { selectLayoutSlice } from "@/features/layout/slice";
-import { FC } from "react";
+import { useWindowWidth } from "@/hooks";
 import { getDaysLeft, getToday } from "@/utils";
 import { getWeightAndText } from "@/utils/calculations";
-import { selectAuthSlice } from "@/features/authentication";
-import { useSelector } from "react-redux";
-import { useWindowWidth } from "@/hooks";
 import Link from "next/link";
+import { FC } from "react";
+import { useSelector } from "react-redux";
 
 interface Props {}
 
@@ -22,7 +22,7 @@ const RememberGoal: FC<Props> = () => {
   const { dueDate, weightGoalInKg } = weightGoal;
   const { weight, weightText } = getWeightAndText({
     weightInKg: weightGoalInKg!,
-    to: measurementUnit,
+    to: measurementUnit === "metric" ? "kgs" : "lbs",
   });
   const daysLeft = dueDate && getDaysLeft({ date: new Date(dueDate) });
 

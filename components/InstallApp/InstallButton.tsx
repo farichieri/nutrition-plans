@@ -1,20 +1,23 @@
 import { setBeforeInstallState } from "@/features/authentication";
-import { BeforeInstallPromptEvent } from "@/types";
+import { useBeforeInstallPrompt } from "@/hooks";
 import { FC } from "react";
 import { useDispatch } from "react-redux";
 
 interface Props {
-  deferredPrompt: BeforeInstallPromptEvent;
+  // deferredPrompt: BeforeInstallPromptEvent | undefined;
 }
 
-const InstallButton: FC<Props> = ({ deferredPrompt }) => {
+const InstallButton: FC<Props> = () => {
   const dispatch = useDispatch();
+  const deferredPrompt = useBeforeInstallPrompt();
 
   const handlePrompt = async (event: React.MouseEvent) => {
     event.preventDefault();
+    console.log({ deferredPrompt });
     if (deferredPrompt) {
       deferredPrompt.prompt();
       const { outcome, platform } = await deferredPrompt.userChoice;
+      console.log({ platform });
       if (outcome === "accepted") {
         dispatch(setBeforeInstallState(false));
       }
@@ -28,7 +31,7 @@ const InstallButton: FC<Props> = ({ deferredPrompt }) => {
       onClick={handlePrompt}
       className="rounded-md border border-green-500 bg-green-500/50 px-3 py-1.5 text-white hover:bg-green-500"
     >
-      <span>Install</span>
+      <span>Install App</span>
     </button>
   );
 };

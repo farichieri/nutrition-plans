@@ -1,14 +1,14 @@
-import { AppRoutes } from "@/utils";
 import { BackButton } from "@/components/Buttons";
+import { useWindowWidth } from "@/hooks";
+import { AppRoutes } from "@/utils";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { FC } from "react";
 import { MdManageAccounts, MdPayment, MdSettingsCell } from "react-icons/md";
-import { useRouter } from "next/router";
-import { useWindowWidth } from "@/hooks";
-import Link from "next/link";
 
 interface Props {}
 
-const SettingsNav: FC<Props> = ({}) => {
+const SettingsNav: FC<Props> = () => {
   const router = useRouter();
   const windowWidth = useWindowWidth();
   const isMobile = windowWidth < 1024;

@@ -23,6 +23,7 @@ const NutritionTarget: FC<Props> = ({ planSelected }) => {
   const { waterRecommendedInLts } = user.bodyData;
   const { measurementUnit } = user;
 
+  console.log({ waterRecommendedInLts });
   const water = convertWater({
     to: measurementUnit,
     lts: waterRecommendedInLts || 0,
@@ -40,7 +41,7 @@ const NutritionTarget: FC<Props> = ({ planSelected }) => {
         </span>
         plan:
       </span>
-      <div className="max-w-md divide-y px-2 xs:text-[10px] s:text-xs sm:text-base">
+      <div className=" divide-y px-2 xs:text-[10px] s:text-xs sm:text-base">
         <div
           id="tour-profile_nutrition_values-3"
           className="flex items-center justify-between  py-2 font-semibold text-[var(--carbs-color)]"

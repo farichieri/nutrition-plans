@@ -1,21 +1,24 @@
-import { FC } from "react";
+import { UserGoalsT, selectAuthSlice } from "@/features/authentication";
+import { WeightUnitsT } from "@/types";
 import { getDaysLeft } from "@/utils";
 import { getWeightAndText } from "@/utils/calculations";
-import { UserGoalsT, selectAuthSlice } from "@/features/authentication";
+import { FC } from "react";
 import { useSelector } from "react-redux";
 
-interface Props {}
+interface Props {
+  unitSelected: WeightUnitsT;
+}
 
-const DaysLeft: FC<Props> = () => {
+const DaysLeft: FC<Props> = ({ unitSelected }) => {
   const { user } = useSelector(selectAuthSlice);
 
   if (!user) return <></>;
 
-  const { weightGoal, measurementUnit, goal } = user;
+  const { weightGoal, goal } = user;
   const { dueDate, weightGoalInKg } = weightGoal;
   const { weight, weightText } = getWeightAndText({
     weightInKg: weightGoalInKg!,
-    to: measurementUnit,
+    to: unitSelected,
   });
   const daysLeft = getDaysLeft({ date: new Date(dueDate!) });
 

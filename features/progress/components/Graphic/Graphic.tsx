@@ -1,5 +1,6 @@
 import { selectAuthSlice } from "@/features/authentication";
 import { selectProgressSlice } from "@/features/progress";
+import { WeightUnitsT } from "@/types";
 import {
   formatToUSDate,
   formatTwoDecimals,
@@ -8,6 +9,7 @@ import {
 } from "@/utils";
 import { getWeight, getWeightText, getWeightUnit } from "@/utils/calculations";
 import { format, formatISO, parse } from "date-fns";
+import { useTheme } from "next-themes";
 import { FC } from "react";
 import { useSelector } from "react-redux";
 import {
@@ -24,31 +26,34 @@ import {
 import CustomLabel from "./CustomLabel";
 import CustomTooltip from "./CustomTooltip";
 
-interface Props {}
+interface Props {
+  unitSelected: WeightUnitsT;
+}
 
-const Graphic: FC<Props> = () => {
+const Graphic: FC<Props> = ({ unitSelected }) => {
   const { user } = useSelector(selectAuthSlice);
   const { progress } = useSelector(selectProgressSlice);
+  const { theme } = useTheme();
 
   if (!user) return <>No user found.</>;
 
-  const { weightGoal, createdAt, measurementUnit } = user;
+  const { weightGoal, createdAt } = user;
   const { bodyData } = user.firstData;
 
   if (!createdAt) return <></>;
 
-  const weightUnit = getWeightUnit({ from: measurementUnit });
+  const weightUnit = getWeightUnit({ from: unitSelected });
 
   const startDate = format(new Date(createdAt), "MM-dd-yyyy");
   const startDateF = formatToUSDate(new Date(startDate));
 
   const userStartWeight = getWeight({
-    to: measurementUnit,
+    to: unitSelected,
     weight: formatTwoDecimals(Number(bodyData.weightInKg)),
   });
 
   const realWeightGoal = getWeight({
-    to: measurementUnit,
+    to: unitSelected,
     weight: Number(weightGoal.weightGoalInKg),
   });
   const dueDateGoal = weightGoal.dueDate;
@@ -70,7 +75,7 @@ const Graphic: FC<Props> = () => {
       const found = data.find((d) => d.date === progress[p].date);
       const weight = formatTwoDecimals(
         getWeight({
-          to: measurementUnit,
+          to: unitSelected,
           weight: Number(progress[p].weightInKg),
         })
       );
@@ -108,9 +113,8 @@ const Graphic: FC<Props> = () => {
     weights.push(realWeightGoal);
     const maxWeightInData = Math.max(...weights);
     const minWeightInData = Math.min(...weights);
-    const domainDiff = measurementUnit === "metric" ? 5 : 10;
-    const min =
-      minWeightInData - domainDiff > 45 ? maxWeightInData + domainDiff : 45;
+    const domainDiff = unitSelected === "kgs" ? 5 : 10;
+    const min = minWeightInData - domainDiff;
     const max = maxWeightInData + domainDiff;
     return [min, max];
   };
@@ -173,7 +177,7 @@ const Graphic: FC<Props> = () => {
             type="monotone"
             dataKey="weight"
             stroke="#44a10569"
-            fill="#61eb0569"
+            fill="#22c55e"
           />
           <Line type="monotone" dataKey="value" stroke="red" dot={false} />
           {weightGoal && (
@@ -182,9 +186,10 @@ const Graphic: FC<Props> = () => {
               label={(props) => (
                 <CustomLabel
                   props={props}
+                  textColor={theme === "dark" ? "dark" : "light"}
                   text={`Goal ${getWeightText({
                     weight: realWeightGoal,
-                    from: measurementUnit,
+                    from: unitSelected === "lbs" ? "imperial" : "metric",
                   })}`}
                 />
               )}

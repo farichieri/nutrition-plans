@@ -1,6 +1,13 @@
+import { BackButton } from "@/components/Buttons";
+import { useWindowWidth } from "@/hooks";
+import { AppRoutes } from "@/utils";
+import dynamic from "next/dynamic";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { FC } from "react";
+import { BiSolidPieChartAlt2 } from "react-icons/bi";
 import {
   MdArrowBackIosNew,
-  MdArrowForward,
   MdArrowForwardIos,
   MdEmojiEvents,
   MdLibraryBooks,
@@ -9,13 +16,10 @@ import {
   MdSettingsAccessibility,
   MdVerified,
 } from "react-icons/md";
-import { AppRoutes } from "@/utils";
-import { BackButton } from "@/components/Buttons";
-import { BiSolidPieChartAlt2 } from "react-icons/bi";
-import { FC } from "react";
-import { useRouter } from "next/router";
-import { useWindowWidth } from "@/hooks";
-import Link from "next/link";
+const InstallButton = dynamic(
+  () => import("@/components/InstallApp/InstallButton"),
+  { ssr: false }
+);
 
 const ProfileNav: FC = () => {
   const router = useRouter();
@@ -142,6 +146,9 @@ const ProfileNav: FC = () => {
             isOutside
           />
         ))}
+      </div>
+      <div className="my-10">
+        <InstallButton />
       </div>
     </nav>
   );

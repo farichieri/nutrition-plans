@@ -1,32 +1,32 @@
-import {
-  getWelcomeNotification,
-  useCreateNotificationMutation,
-} from "@/features/notifications";
-import {
-  calculateKCALSRecommended,
-  BMISignificance,
-} from "@/features/authentication/utils/calculateBodyData";
+import SubmitButton from "@/components/Buttons/SubmitButton";
+import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
+import InfoTooltip from "@/components/Tooltip/InfoTooltip";
 import {
   selectAuthSlice,
   setIsCreatingUser,
   useUpdateUserMutation,
 } from "@/features/authentication";
 import {
+  BMISignificance,
+  calculateKCALSRecommended,
+} from "@/features/authentication/utils/calculateBodyData";
+import {
   usePostDefaultMealsSettingsMutation,
   usePostDefaultUserMealsMutation,
 } from "@/features/meals";
+import {
+  getWelcomeNotification,
+  useCreateNotificationMutation,
+} from "@/features/notifications";
 import { ProgressItem, usePostProgressMutation } from "@/features/progress";
-import { BiSolidPieChartAlt2 } from "react-icons/bi";
-import { Box, BoxBottomBar, BoxMainContent } from "@/components/Layout";
-import { FC, useState } from "react";
-import { formatISO } from "date-fns";
 import { formatToUSDate } from "@/utils";
-import { toast } from "react-hot-toast";
-import { useDispatch, useSelector } from "react-redux";
+import { formatISO } from "date-fns";
 import { useRouter } from "next/router";
-import InfoTooltip from "@/components/Tooltip/InfoTooltip";
+import { FC, useState } from "react";
+import { toast } from "react-hot-toast";
+import { BiSolidPieChartAlt2 } from "react-icons/bi";
+import { useDispatch, useSelector } from "react-redux";
 import NutritionTarget from "../NutritionTarget";
-import SubmitButton from "@/components/Buttons/SubmitButton";
 
 interface Props {
   handleSubmit: Function;
@@ -41,28 +41,8 @@ const Results: FC<Props> = ({ handleSubmit }) => {
   const isCreatingRoute = router.asPath === "/app/create";
   const [updateUser] = useUpdateUserMutation();
 
-  if (!user) return <>No user found</>;
-
-  const { bodyData, goal, planSelected, nutritionTargets } = user;
-  const { weightInKg, heightInCm, age, gender, activity, BMR, BMI } = bodyData;
-  if (
-    !weightInKg ||
-    !heightInCm ||
-    !age ||
-    !gender ||
-    !activity ||
-    !goal ||
-    !planSelected ||
-    !BMR ||
-    !BMI
-  )
-    return <>There's missing data to calculate Nutrition Targets</>;
-
-  const caloriesRecommended = calculateKCALSRecommended({
-    BMR: BMR,
-    goal: goal,
-    activity: activity,
-  });
+  const { bodyData, goal, planSelected, nutritionTargets } = user!;
+  const { weightInKg, activity, BMR, BMI } = bodyData;
 
   const [postProgress] = usePostProgressMutation();
 
@@ -72,14 +52,20 @@ const Results: FC<Props> = ({ handleSubmit }) => {
       date: formatToUSDate(new Date()),
       weightInKg: weightInKg,
     };
-    const res = await postProgress({ user, progress: newProgress });
-    if ("error" in res) {
+    try {
+      if (!user) throw Error;
+      const res = await postProgress({ user, progress: newProgress });
+      if ("error" in res) {
+        return { result: "error" };
+      }
+      return {
+        result: "success",
+        data: res.data,
+      };
+    } catch (error) {
+      console.error(error);
       return { result: "error" };
     }
-    return {
-      result: "success",
-      data: res.data,
-    };
   };
 
   const [createNotification] = useCreateNotificationMutation();
@@ -87,6 +73,7 @@ const Results: FC<Props> = ({ handleSubmit }) => {
   const [postDefaultUserMeals] = usePostDefaultUserMealsMutation();
 
   const handleCreateUser = async (event: React.FormEvent) => {
+    if (!user) return;
     event.preventDefault();
     try {
       setIsLoading(true);
@@ -143,6 +130,14 @@ const Results: FC<Props> = ({ handleSubmit }) => {
     }
   };
 
+  if (!user) return <></>;
+
+  const caloriesRecommended = calculateKCALSRecommended({
+    BMR: BMR!,
+    goal: goal!,
+    activity: activity!,
+  });
+
   return (
     <Box id="tour-profile_nutrition_values-0">
       <BoxMainContent>
@@ -180,7 +175,7 @@ const Results: FC<Props> = ({ handleSubmit }) => {
                 />
                 <div>
                   <span>Your BMR (Basal Metabolic Rate) is: </span>
-                  <span className="text-green-500">{Math.round(BMR)} </span>
+                  <span className="text-green-500">{Math.round(BMR!)} </span>
                   <span>calories</span>
                 </div>
               </div>
@@ -209,7 +204,7 @@ const Results: FC<Props> = ({ handleSubmit }) => {
             </div>
           </div>
           <div className="">
-            <NutritionTarget planSelected={planSelected} />
+            <NutritionTarget planSelected={planSelected!} />
           </div>
         </div>
       </BoxMainContent>

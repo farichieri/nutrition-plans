@@ -1,17 +1,18 @@
+import ActionButton from "@/components/Buttons/ActionButton";
+import WeightSelector from "@/components/WeightSelector/WeightSelector";
+import { selectAuthSlice } from "@/features/authentication/slice";
 import {
   selectProgressSlice,
-  setAddProgress,
   usePostProgressMutation,
 } from "@/features/progress";
-import { FC, useEffect, useState } from "react";
-import { formatISO, parse } from "date-fns";
+import { WeightUnitsT } from "@/types";
 import { formatToInputDate, formatToUSDate } from "@/utils";
-import { getWeightInKg, getWeightUnit } from "@/utils/calculations";
-import { selectAuthSlice } from "@/features/authentication/slice";
-import { toast } from "react-hot-toast";
-import { useDispatch, useSelector } from "react-redux";
+import { getWeightInKg } from "@/utils/calculations";
 import { XCircleIcon } from "@heroicons/react/24/solid";
-import ActionButton from "@/components/Buttons/ActionButton";
+import { formatISO, parse } from "date-fns";
+import { FC, useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 interface Props {}
 
@@ -20,11 +21,11 @@ const AddProgress: FC<Props> = () => {
   const { progress } = useSelector(selectProgressSlice);
   const [isDisabled, setIsDisabled] = useState(false);
   const [formOpened, setFormOpened] = useState(false);
-  const dispatch = useDispatch();
   const [input, setInput] = useState({
     date: "",
     weight: "",
   });
+  const [weightSelected, setWeightSelected] = useState<WeightUnitsT>("kgs");
 
   useEffect(() => {
     if (input.date.length > 0 && input.weight.length > 0) {
@@ -37,8 +38,6 @@ const AddProgress: FC<Props> = () => {
   const [postProgress, { isLoading: isAdding }] = usePostProgressMutation();
 
   if (!user) return <></>;
-
-  const { measurementUnit } = user;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -57,7 +56,7 @@ const AddProgress: FC<Props> = () => {
       createdAt: formatISO(new Date()),
       date: date,
       weightInKg: getWeightInKg({
-        from: measurementUnit,
+        from: weightSelected,
         weight: Number(input.weight),
       }),
     };
@@ -92,6 +91,12 @@ const AddProgress: FC<Props> = () => {
     });
   };
 
+  const handleChangeUnit = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    const unit = event.currentTarget.value as WeightUnitsT;
+    setWeightSelected(unit);
+  };
+
   // today in input date format
   const today = formatToInputDate(new Date());
 
@@ -99,13 +104,14 @@ const AddProgress: FC<Props> = () => {
     <>
       {formOpened ? (
         <form
-          className="relative m-auto flex w-full max-w-xs flex-col items-center gap-2 rounded-xl border border-green-500 bg-black/10 p-6 dark:bg-black/50"
+          className="relative m-auto flex w-full max-w-xs flex-col items-center gap-2 rounded-xl border shadow-md bg-white p-6 dark:bg-black/50"
           onSubmit={handleSubmit}
         >
           <XCircleIcon
             onClick={handleClose}
             className="absolute right-2 top-2 h-5 w-5 cursor-pointer fill-gray-500"
           />
+          <span className="font-semibold mb-2 text-xl">Add new progress</span>
           <div className="flex w-full gap-2">
             <label htmlFor="date" className="w-full basis-1/3">
               Date:
@@ -124,9 +130,6 @@ const AddProgress: FC<Props> = () => {
             <label htmlFor="weight" className="w-full basis-1/3">
               Weight
             </label>
-            <span className="absolute right-2 select-none">
-              {getWeightUnit({ from: measurementUnit })}
-            </span>
             <input
               value={input.weight}
               onChange={handleChange}
@@ -136,13 +139,17 @@ const AddProgress: FC<Props> = () => {
               className="w-full basis-2/3 rounded-md border bg-transparent px-2 py-1"
             />
           </div>
+          <WeightSelector
+            onChange={handleChangeUnit}
+            unitSelected={weightSelected}
+          />
           <ActionButton
             loadMessage="Adding..."
             content="Add"
             isLoading={isAdding}
             isDisabled={isDisabled}
             type={"save"}
-            className="w-40 py-1.5"
+            className="w-40 py-1.5 mt-4"
             onClick={handleSubmit}
             action={undefined}
           />

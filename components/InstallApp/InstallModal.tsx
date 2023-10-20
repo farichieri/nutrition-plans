@@ -1,18 +1,16 @@
+import { setBeforeInstallState } from "@/features/authentication";
 import { FC, useState } from "react";
 import { useDispatch } from "react-redux";
-import InstallButton from "./InstallButton";
 import Modal from "../Modal/Modal";
-import useBeforeInstallPrompt from "@/hooks/useBeforeInstallPrompt";
-import { setBeforeInstallState } from "@/features/authentication";
+import InstallButton from "./InstallButton";
 
 interface Props {}
 
 const InstallModal: FC<Props> = () => {
   const dispatch = useDispatch();
-  const deferredPrompt = useBeforeInstallPrompt();
   const [openModal, setCloseModal] = useState(true);
 
-  if (!deferredPrompt || !openModal) return <></>;
+  if (!openModal) return <></>;
 
   const handleCancel = () => {
     dispatch(setBeforeInstallState(false));
@@ -32,7 +30,7 @@ const InstallModal: FC<Props> = () => {
           >
             Discard
           </button>
-          <InstallButton deferredPrompt={deferredPrompt} />
+          <InstallButton />
         </div>
       </div>
     </Modal>

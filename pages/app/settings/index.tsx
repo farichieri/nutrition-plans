@@ -1,3 +1,4 @@
+import BackNav from "@/components/Layout/BackNav";
 import {
   SetAvatar,
   SetCurrentSubscription,
@@ -5,13 +6,18 @@ import {
   SetName,
   SettingsNav,
 } from "@/features/settings";
-import BackNav from "@/components/Layout/BackNav";
-import SettingsLayout from "@/layouts/SettingsLayout";
 import { useWindowWidth } from "@/hooks";
+import SettingsLayout from "@/layouts/SettingsLayout";
+import dynamic from "next/dynamic";
 
-export default function Page() {
+const InstallButton = dynamic(
+  () => import("@/components/InstallApp/InstallButton")
+);
+
+function Page() {
   const windowWidth = useWindowWidth();
   const isMobile = windowWidth < 1024;
+
   return (
     <SettingsLayout>
       <BackNav
@@ -36,12 +42,9 @@ export default function Page() {
           <SetCurrentSubscription />
         </div>
       )}
+      <InstallButton />
     </SettingsLayout>
   );
 }
 
-export const getStaticProps = () => {
-  return {
-    props: {},
-  };
-};
+export default dynamic(() => Promise.resolve(Page), { ssr: false });
