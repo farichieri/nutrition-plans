@@ -75,7 +75,7 @@ const PremiumSidebar: FC<Props> = ({ hideScrolling }) => {
           className={`${
             ((!show && hideScrolling) || isEditingDiet) &&
             "!-bottom-[--mobile-sidenav-h] "
-          } fixed bottom-0 z-[150] flex h-[var(--mobile-sidenav-h)] w-full items-center border-t border-[#46464623] bg-primary-color transition-all duration-300 dark:border-[#7c7c7c1a]`}
+          } fixed bottom-0 z-[150] flex h-[var(--mobile-sidenav-h)] w-full items-center border-t border-[#46464623] bg-primary transition-all duration-300 dark:border-[#7c7c7c1a]`}
         >
           <MobilePages />
         </div>
@@ -90,7 +90,7 @@ const PremiumSidebar: FC<Props> = ({ hideScrolling }) => {
           <div
             className={`${
               !sidebarOpen ? "md:left-0" : "left-[-5rem]"
-            } fixed left-0 top-0 z-[70] hidden h-screen min-h-screen w-20 select-none flex-col gap-2 overflow-auto bg-primary-color px-2 pb-5 backdrop-blur-sm transition-all duration-0 dark:border-slate-400/20 sm:gap-4 md:flex`}
+            } fixed left-0 top-0 z-[70] hidden h-screen min-h-screen w-20 select-none flex-col gap-2 overflow-auto bg-primary px-2 pb-5 backdrop-blur-sm transition-all duration-0 dark:border-slate-400/20 sm:gap-4 md:flex`}
           >
             <div className="flex w-full items-center justify-center py-1">
               <ToggleSidebar />
@@ -107,7 +107,7 @@ const PremiumSidebar: FC<Props> = ({ hideScrolling }) => {
           <div
             className={`${
               sidebarOpen ? "left-0" : "left-[-16rem]"
-            } fixed left-0 top-0 z-[70] flex h-screen min-h-screen w-56 select-none flex-col gap-1 overflow-auto bg-primary-color px-2 pb-5 font-semibold backdrop-blur-sm transition-all duration-300 dark:border-slate-400/20 sm:gap-2 md:w-56 md:duration-300 xl:duration-0`}
+            } fixed left-0 top-0 z-[70] flex h-screen min-h-screen w-56 select-none flex-col gap-1 overflow-auto bg-primary px-2 pb-5 font-semibold backdrop-blur-sm transition-all duration-300 dark:border-slate-400/20 sm:gap-2 md:w-56 md:duration-300 xl:duration-0`}
           >
             <div className="flex w-full items-center py-1 pl-1">
               <div className="hidden md:flex">

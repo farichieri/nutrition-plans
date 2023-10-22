@@ -1,15 +1,15 @@
-import { AppRoutes } from "@/utils";
+import Avatar from "@/components/Avatar/Avatar";
+import ThemeSwitcher from "@/components/theme-switcher";
+import { User } from "@/features/authentication";
+import { setProgress } from "@/features/progress";
 import { auth } from "@/services/firebase";
+import { persistor } from "@/store";
+import { AppRoutes } from "@/utils";
+import { signOut } from "firebase/auth";
+import Link from "next/link";
 import { FC } from "react";
 import { MdArrowForwardIos } from "react-icons/md";
-import { persistor } from "@/store";
-import { setProgress } from "@/features/progress";
-import { signOut } from "firebase/auth";
 import { useDispatch } from "react-redux";
-import { User } from "@/features/authentication";
-import Avatar from "@/components/Avatar/Avatar";
-import Link from "next/link";
-import ThemeSwitcher from "@/components/theme-switcher";
 
 interface Props {
   user: User | null;
@@ -45,7 +45,7 @@ const SideNav: FC<Props> = ({ user, handleMenu, openMenu }) => {
     <div
       className={`${
         openMenu ? "left-0" : "left-full"
-      } absolute top-[var(--nav-h)] flex h-screen w-full flex-col items-center bg-primary-color px-4 shadow-sm transition-all duration-300 dark:shadow-cyan-100/20 md:hidden `}
+      } absolute top-[var(--nav-h)] flex h-screen w-full flex-col items-center bg-primary px-4 shadow-sm transition-all duration-300 dark:shadow-cyan-100/20 md:hidden `}
     >
       <div className="flex w-full flex-col items-center justify-center gap-10 border-b text-base font-semibold">
         {user && (

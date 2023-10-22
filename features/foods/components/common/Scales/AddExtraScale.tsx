@@ -1,8 +1,8 @@
-import { FoodScale, FoodScales, InitialScale } from "../../../types";
-import { uuidv4 } from "@firebase/util";
 import Input from "@/components/Form/Input";
 import NutritionInput from "@/components/Form/NutritionInput";
+import { uuidv4 } from "@firebase/util";
 import React, { FC, MouseEventHandler, useState } from "react";
+import { FoodScale, FoodScales, InitialScale } from "../../../types";
 
 interface AddExtraScaleProps {
   handleChangeScales: Function;
@@ -54,7 +54,7 @@ const AddExtraScale: FC<AddExtraScaleProps> = ({
   return (
     <div className="absolute z-[100] w-full rounded-md border ">
       <div onClick={handleOpen} className="fixed inset-0 bg-black/60" />
-      <div className="relative z-[100] rounded-md border bg-tertiary-color">
+      <div className="relative z-[100] rounded-md border bg-tertiary">
         <div className="flex flex-col justify-center p-10 ">
           <span className="mb-4 text-xl font-semibold">New Scale:</span>
           <NutritionInput

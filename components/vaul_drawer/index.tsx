@@ -1,8 +1,8 @@
 import { useWindowWidth } from "@/hooks";
 import { FC, useState } from "react";
+import { BsChevronDown } from "react-icons/bs";
 import { Drawer } from "vaul";
 import Modal from "../Modal/Modal";
-import { BsChevronDown } from "react-icons/bs";
 
 interface Props {
   children: React.ReactNode;
@@ -37,7 +37,7 @@ const VaulDrawer: FC<Props> = ({ children, title, btnText }) => {
           </Drawer.Trigger>
           <Drawer.Overlay className="fixed inset-0 z-[9999] bg-black/40" />
           <Drawer.Portal>
-            <Drawer.Content className="fixed bottom-0 left-0 right-0 z-[9999] mt-36 flex h-[100%] flex-col bg-tertiary-color">
+            <Drawer.Content className="fixed bottom-0 left-0 right-0 z-[9999] mt-36 flex h-[100%] flex-col bg-tertiary">
               <div className="flex items-center px-4 py-2">
                 <BsChevronDown
                   onClick={() => setOpen(false)}

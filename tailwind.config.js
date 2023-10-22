@@ -9,10 +9,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "primary-color": "var(--primary-color)",
-        "primary-color-light": "var(--primary-color-light)",
-        "secondary-color": "var(--secondary-color)",
-        "tertiary-color": "var(--tertiary-color)",
+        primary: "var(--primary)",
+        "primary-light": "var(--primary-light)",
+        secondary: "var(--secondary)",
+        tertiary: "var(--tertiary)",
+        fourth: "var(--fourth)",
       },
       width: {
         xxs: "16rem",

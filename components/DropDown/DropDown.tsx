@@ -37,13 +37,13 @@ const DropDown: FC<Props> = ({
       >
         {btnText}
         {open && (
-          <div className="absolute -bottom-3 right-1/2 -mt-1 h-2 w-2 translate-x-1/2 rotate-45 border bg-primary-color shadow shadow-gray-500/60"></div>
+          <div className="absolute -bottom-3 right-1/2 -mt-1 h-2 w-2 translate-x-1/2 rotate-45 border bg-primary shadow shadow-gray-500/60"></div>
         )}
       </div>
       {open && (
         <div className={`absolute -bottom-2 right-0 gap-2`}>
           <div
-            className={`absolute right-0 top-auto z-[72] overflow-auto rounded-xl border bg-tertiary-color text-base shadow-[0_1px_5px] shadow-gray-500/60 dark:shadow-cyan-200/10 ${customClass}`}
+            className={`absolute right-0 top-auto z-[72] overflow-auto rounded-xl border bg-tertiary text-base shadow-[0_1px_5px] shadow-gray-500/60 dark:shadow-cyan-200/10 ${customClass}`}
             onClick={(e) => {
               e.stopPropagation();
               e.preventDefault();

@@ -173,13 +173,22 @@ const Graphic: FC<Props> = ({ unitSelected }) => {
             )}
             cursor={{ fill: "transparent" }}
           />
+
           <Area
             type="monotone"
             dataKey="weight"
-            stroke="#44a10569"
-            fill="#22c55e"
+            stroke="green"
+            fill="fff"
+            strokeWidth={4}
+            fillOpacity={0}
           />
-          <Line type="monotone" dataKey="value" stroke="red" dot={false} />
+          <Line
+            type="monotone"
+            dataKey="value"
+            stroke="red"
+            fill=""
+            dot={false}
+          />
           {weightGoal && (
             <ReferenceLine
               y={realWeightGoal}

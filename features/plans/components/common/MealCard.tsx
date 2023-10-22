@@ -1,19 +1,19 @@
+import { CheckButton } from "@/components/Buttons";
+import { FoodGroupArray } from "@/features/foods";
 import {
-  isAllEaten,
-  DietMeal,
   AddFood,
+  DietMeal,
   FoodInMealCard,
   getDietFoodToggled,
+  isAllEaten,
   useSaveDietMutation,
 } from "@/features/plans";
-import { CheckButton } from "@/components/Buttons";
 import { Draggable, Droppable } from "@hello-pangea/dnd";
+import Link from "next/link";
 import { FC } from "react";
-import { FoodGroupArray } from "@/features/foods";
-import { selectPlansSlice, toggleEatenFood } from "../../slice";
 import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import Link from "next/link";
+import { selectPlansSlice, toggleEatenFood } from "../../slice";
 import MealMoreDropdown from "../MealCards/meal_more_dropdown/MealMoreDropdown";
 
 interface Props {
@@ -61,7 +61,7 @@ const MealCard: FC<Props> = ({ tourId, dietMeal, mealKcals, isEditing }) => {
       className={`min-h-20 flex w-full flex-col rounded-xl shadow-md dark:shadow-slate-500/20`}
     >
       <div
-        className={`min-h-20 flex h-fit w-full flex-col rounded-xl border ${
+        className={`min-h-20 flex h-fit w-full flex-col rounded-xl overflow-auto border ${
           allEaten
             ? "border-green-400 bg-green-500 dark:border-green-900 dark:bg-green-900"
             : "bg-white dark:bg-gray-500/20"
