@@ -1,5 +1,5 @@
-import { FC, ReactNode, useEffect, useState } from "react";
 import { selectLayoutSlice } from "@/features/layout/slice";
+import { FC, ReactNode, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 interface Props {
@@ -50,7 +50,7 @@ const SubPremiumNav: FC<Props> = ({
       className={
         ` ${
           !show && hideScrolling && "!top-0"
-        } fixed right-0 z-[60] flex h-[var(--subnav-h)] w-full items-center gap-4 bg-primary-color-light px-1 backdrop-blur-lg transition-all duration-300 xs:px-2 s:px-3 sm:gap-10 sm:px-4 ` +
+        } fixed right-0 z-[60] flex h-[var(--subnav-h)] w-full items-center gap-4 bg-primary-light px-1 backdrop-blur-lg transition-all duration-300 xs:px-2 s:px-3 sm:gap-10 sm:px-4 ` +
         customClass +
         ` ${sidebarOpen ? "md:pl-24 xl:pl-[17rem] " : "md:pl-24"} `
       }

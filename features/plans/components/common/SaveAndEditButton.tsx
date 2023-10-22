@@ -72,7 +72,7 @@ const SaveAndEditButton: FC<Props> = ({ diet, date, user }) => {
   return (
     <>
       {isEditingDiet && (
-        <div className="text-xl fixed bottom-[4px] left-1/2 z-[150] flex -translate-x-1/2 items-center justify-center gap-1 rounded-3xl bg-tertiary-color backdrop-blur-sm p-1 shadow-md">
+        <div className="text-xl fixed bottom-[4px] left-1/2 z-[150] flex -translate-x-1/2 items-center justify-center gap-1 rounded-3xl bg-tertiary backdrop-blur-sm p-1 shadow-md">
           <button
             className="flex h-11 items-center justify-center gap-1 rounded-3xl border border-gray-500 bg-gray-200 px-4 py-2 text-gray-800 hover:bg-gray-400 active:bg-gray-300"
             onClick={cancelChanges}

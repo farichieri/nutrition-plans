@@ -1,20 +1,20 @@
+import { RoundButton } from "@/components/Buttons";
+import DropDown from "@/components/DropDown/DropDown";
+import Spinner from "@/components/Loader/Spinner";
+import { selectAuthSlice } from "@/features/authentication";
+import { formatToShortDate } from "@/utils";
+import { FC, useCallback, useState } from "react";
+import { toast } from "react-hot-toast";
+import { BsFillInboxFill } from "react-icons/bs";
+import { MdOutlineNotifications } from "react-icons/md";
+import { useSelector } from "react-redux";
 import {
   useArchiveAllNotificationsMutation,
   useArchiveNotificationMutation,
   useGetNotificationsQuery,
   useUnarchiveNotificationMutation,
 } from "../services";
-import { BsFillInboxFill } from "react-icons/bs";
-import { FC, useCallback, useState } from "react";
-import { formatToShortDate } from "@/utils";
-import { MdOutlineNotifications } from "react-icons/md";
-import { RoundButton } from "@/components/Buttons";
-import { selectAuthSlice } from "@/features/authentication";
 import { selectNotificationsSlice } from "../slice";
-import { toast } from "react-hot-toast";
-import { useSelector } from "react-redux";
-import DropDown from "@/components/DropDown/DropDown";
-import Spinner from "@/components/Loader/Spinner";
 
 interface Props {}
 
@@ -203,7 +203,7 @@ const Notifications: FC<Props> = () => {
         </div>
         {activeTab === "inbox" &&
           Object.values(notifications.inbox).length > 0 && (
-            <div className="absolute bottom-0 flex h-8 w-full items-center justify-center border-t bg-tertiary-color">
+            <div className="absolute bottom-0 flex h-8 w-full items-center justify-center border-t bg-tertiary">
               <button
                 className="text-xs text-gray-500"
                 onClick={handleArchiveAll}

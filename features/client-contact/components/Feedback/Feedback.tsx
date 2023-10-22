@@ -1,10 +1,10 @@
+import FormError from "@/components/Errors/FormError";
+import { selectAuthSlice } from "@/features/authentication/slice";
+import { postFeedback } from "@/features/client-contact";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import { FC, useState } from "react";
-import { postFeedback } from "@/features/client-contact";
-import { selectAuthSlice } from "@/features/authentication/slice";
 import { useSelector } from "react-redux";
 import SubmitButton from "../../../../components/Buttons/SubmitButton";
-import FormError from "@/components/Errors/FormError";
 
 interface Props {}
 
@@ -62,7 +62,7 @@ const Feedback: FC<Props> = () => {
       </button>
       {feedbackOpen && (
         <>
-          <div className="absolute right-0 top-[var(--nav-h)] z-[100] -mt-1 flex h-48 w-full max-w-xs flex-col rounded-md border bg-tertiary-color xs:right-5 md:right-10 lg:right-20">
+          <div className="absolute right-0 top-[var(--nav-h)] z-[100] -mt-1 flex h-48 w-full max-w-xs flex-col rounded-md border bg-tertiary xs:right-5 md:right-10 lg:right-20">
             {resSuccess ? (
               <div className="flex h-full w-full flex-col items-center justify-center gap-0.5">
                 <CheckCircleIcon className="h-7 w-7 fill-green-500" />
@@ -108,7 +108,6 @@ const Feedback: FC<Props> = () => {
             onClick={handleFeedback}
             className="absolute inset-0 z-[90] h-screen w-screen"
           ></div>
-
         </>
       )}
     </div>

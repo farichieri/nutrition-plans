@@ -1,16 +1,16 @@
-import { auth } from "@/services/firebase";
-import { MdClose, MdOpenInNew, MdPerson, MdSettings } from "react-icons/md";
-import { persistor } from "@/store";
-import { selectAuthSlice } from "@/features/authentication";
-import { signOut } from "firebase/auth";
-import { SubscribeButton } from "@/components/Buttons";
-import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
 import Avatar from "@/components/Avatar/Avatar";
-import Link from "next/link";
-import PremiumLayout from "@/layouts/PremiumLayout";
+import { SubscribeButton } from "@/components/Buttons";
 import TrialDaysLeft from "@/components/TrialDaysLeft/TrialDaysLeft";
+import { selectAuthSlice } from "@/features/authentication";
+import PremiumLayout from "@/layouts/PremiumLayout";
+import { auth } from "@/services/firebase";
+import { persistor } from "@/store";
+import { signOut } from "firebase/auth";
 import dynamic from "next/dynamic";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { MdClose, MdOpenInNew, MdPerson, MdSettings } from "react-icons/md";
+import { useSelector } from "react-redux";
 
 const ThemeSwitcher = dynamic(() => import("@/components/theme-switcher"), {
   ssr: false,
@@ -35,7 +35,7 @@ export default function Page() {
 
   return (
     <PremiumLayout>
-      <section className="fixed inset-0 z-[300] bg-primary-color">
+      <section className="fixed inset-0 z-[300] bg-primary">
         <span onClick={() => router.back()}>
           <MdClose className="absolute left-3 top-3 h-6 w-6" />
         </span>

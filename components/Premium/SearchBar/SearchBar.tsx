@@ -1,14 +1,14 @@
-import { setIsSearchingFoods, useGetFoodsMutation } from "@/features/foods";
-import { FC, useCallback, useEffect, useState } from "react";
-import { FilterQueries } from "@/types";
-import { IoMdArrowBack } from "react-icons/io";
-import { MdClose, MdSearch } from "react-icons/md";
-import { selectAuthSlice } from "@/features/authentication";
-import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/router";
 import RoundButton from "@/components/Buttons/RoundButton";
 import Spinner from "@/components/Loader/Spinner";
+import { selectAuthSlice } from "@/features/authentication";
+import { setIsSearchingFoods, useGetFoodsMutation } from "@/features/foods";
 import useWindowWidth from "@/hooks/useWindowWidth";
+import { FilterQueries } from "@/types";
+import { useRouter } from "next/router";
+import { FC, useCallback, useEffect, useState } from "react";
+import { IoMdArrowBack } from "react-icons/io";
+import { MdClose, MdSearch } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
 
 interface Props {
   queries: FilterQueries;
@@ -83,7 +83,7 @@ const SearchBar: FC<Props> = ({ queries }) => {
         <div
           className={`${
             windowWidth > 768 ? "relative" : "fixed"
-          } left-0 top-0 z-[100] flex h-full w-full items-center justify-center bg-primary-color`}
+          } left-0 top-0 z-[100] flex h-full w-full items-center justify-center bg-primary`}
         >
           <div className="mx-2 flex cursor-pointer items-center justify-center lg:hidden ">
             <IoMdArrowBack

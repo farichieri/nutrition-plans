@@ -1,5 +1,5 @@
-import { MdClose } from "react-icons/md";
 import { ReactNode } from "react";
+import { MdClose } from "react-icons/md";
 import RoundButton from "../Buttons/RoundButton";
 
 const Modal = ({
@@ -36,7 +36,7 @@ const Modal = ({
       ></div>
       <div
         className={
-          ` relative z-[100] m-auto max-w-[100vw] overflow-hidden border bg-tertiary-color ${
+          ` relative z-[100] m-auto max-w-[100vw] overflow-hidden border bg-tertiary ${
             isMobileFullScreen ? "rounded-none sm:rounded-xl" : "rounded-xl"
           } ` + customClass
         }

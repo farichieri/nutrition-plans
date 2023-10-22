@@ -1,19 +1,19 @@
+import Modal from "@/components/Modal/Modal";
+import Pagination from "@/components/Pagination/Pagination";
+import Filters from "@/components/Premium/SearchBar/Filters";
+import SearchBarCreate from "@/components/Premium/SearchBar/SearchBarCreate";
+import SearchedResults from "@/components/Premium/SearchBar/SearchedResults";
 import {
   Food,
   FoodModal,
   selectFoodsSlice,
   setFoodModal,
 } from "@/features/foods";
-import { addFoodToDiet } from "@/features/plans/slice";
 import { DietMeal } from "@/features/plans";
-import { FC, MouseEvent, useEffect, useState } from "react";
+import { addFoodToDiet } from "@/features/plans/slice";
 import { FilterQueries } from "@/types";
+import { FC, MouseEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Filters from "@/components/Premium/SearchBar/Filters";
-import Modal from "@/components/Modal/Modal";
-import Pagination from "@/components/Pagination/Pagination";
-import SearchBarCreate from "@/components/Premium/SearchBar/SearchBarCreate";
-import SearchedResults from "@/components/Premium/SearchBar/SearchedResults";
 
 interface Props {
   dietMeal: DietMeal;
@@ -48,7 +48,7 @@ const AddFood: FC<Props> = ({ dietMeal }) => {
   }, [isOpen]);
 
   return (
-    <div className="p-2">
+    <div className="p-2 bg-fourth border-t">
       {isOpen && (
         <Modal onClose={() => setIsOpen(false)}>
           {foodModal && (
@@ -93,7 +93,7 @@ const AddFood: FC<Props> = ({ dietMeal }) => {
       )}
       <button
         onClick={handleOpen}
-        className="mr-auto flex rounded-md border border-green-500 bg-green-500/50 px-4 py-1 duration-100 hover:border-green-500 hover:bg-green-800 active:bg-green-600"
+        className="mr-auto flex rounded-md border border-green-500 shadow-md bg-green-500/50 px-4 py-1 duration-100 hover:border-green-500 hover:bg-green-800 active:bg-green-600"
       >
         Add Food
       </button>

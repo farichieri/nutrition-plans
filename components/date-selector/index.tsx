@@ -1,14 +1,14 @@
+import React, { FC, useEffect, useState } from "react";
+import DatePicker from "react-datepicker";
 import {
   MdCalendarMonth,
   MdClose,
   MdOutlineCalendarMonth,
 } from "react-icons/md";
-import DatePicker from "react-datepicker";
-import React, { FC, useEffect, useState } from "react";
 
-import "react-datepicker/dist/react-datepicker.css";
-import { addMonths } from "date-fns";
 import { convertToWeekDate } from "@/utils";
+import { addMonths } from "date-fns";
+import "react-datepicker/dist/react-datepicker.css";
 import { RoundButton } from "../Buttons";
 
 interface Props {
@@ -52,7 +52,7 @@ const DateSelector: FC<Props> = ({
       </div>
       {isDateRangeOpen && (
         <div
-          className={`fixed left-4 flex h-10 w-screen items-center gap-1 bg-primary-color sm:absolute sm:left-12`}
+          className={`fixed left-4 flex h-10 w-screen items-center gap-1 bg-primary sm:absolute sm:left-12`}
           onClick={(event) => {
             event.stopPropagation();
           }}

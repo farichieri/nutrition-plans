@@ -36,7 +36,7 @@ const SettingsNav: FC<Props> = () => {
 
   return (
     <nav
-      className={`z-[60] m-auto flex w-full flex-col items-center bg-primary-color ${
+      className={`z-[60] m-auto flex w-full flex-col items-center bg-primary ${
         isMobile && "border-y"
       }`}
     >

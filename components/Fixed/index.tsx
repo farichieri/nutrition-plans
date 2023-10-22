@@ -7,9 +7,7 @@ interface Props {
 
 const Fixed: FC<Props> = ({ children, customClass }) => {
   return (
-    <div className={`fixed z-100 bg-primary-color ${customClass}`}>
-      {children}
-    </div>
+    <div className={`fixed z-100 bg-primary ${customClass}`}>{children}</div>
   );
 };
 

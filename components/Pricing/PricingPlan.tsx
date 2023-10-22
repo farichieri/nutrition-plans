@@ -1,7 +1,7 @@
-import { CheckCircleIcon } from "@heroicons/react/24/solid";
-import { FC, useState } from "react";
 import { SubscriptionPlan } from "@/types";
+import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import dynamic from "next/dynamic";
+import { FC, useState } from "react";
 
 const IsCurrentPlan = dynamic(() => import("./IsCurrentPlan"), { ssr: false });
 
@@ -18,7 +18,7 @@ const PricingPlan: FC<Props> = ({ price }) => {
   return (
     <div
       key={price.name}
-      className="relative flex min-h-[27rem] w-full max-w-xs select-none flex-col items-center gap-5 rounded-3xl border bg-white px-5 py-10 shadow-[0_3px_20px] shadow-green-800/40 duration-300 dark:bg-primary-color  dark:shadow-white/10 dark:hover:shadow-white/50"
+      className="relative flex min-h-[27rem] w-full max-w-xs select-none flex-col items-center gap-5 rounded-3xl border bg-white px-5 py-10 shadow-[0_3px_20px] shadow-green-800/40 duration-300 dark:bg-primary  dark:shadow-white/10 dark:hover:shadow-white/50"
     >
       {price.beta && (
         <span className="absolute right-0 top-0 rounded-bl-3xl rounded-tr-3xl bg-gradient-to-r from-red-300 via-red-400 to-red-500 px-4 py-1 text-sm font-semibold text-white">
