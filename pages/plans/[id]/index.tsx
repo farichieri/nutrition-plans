@@ -1,15 +1,15 @@
-import { BlogPosting, WithContext } from "schema-dts";
-import { getTableOfContents } from "@/lib/toc";
-import { IMAGES } from "@/constants";
-import { Mdx } from "@/components/MDX-Components/MDX-Components";
-import { Plan, allPlans } from "contentlayer/generated";
 import { StructuredData } from "@/components";
+import { Mdx } from "@/components/MDX-Components/MDX-Components";
+import RestOfPlans from "@/components/Plans/RestOfPlans";
 import BlurImage from "@/components/blur-image";
 import CallToAction from "@/components/call-to-action/CallToAction";
+import { IMAGES } from "@/constants";
+import LandingLayout from "@/layouts/LandingLayout";
+import { getTableOfContents } from "@/lib/toc";
+import { Plan, allPlans } from "contentlayer/generated";
 import dynamic from "next/dynamic";
 import Head from "next/head";
-import LandingLayout from "@/layouts/LandingLayout";
-import RestOfPlans from "@/components/Plans/RestOfPlans";
+import { BlogPosting, WithContext } from "schema-dts";
 
 const DashboardTableOfContents = dynamic(
   () =>
@@ -92,7 +92,10 @@ export default function Page({ data, restOfPlans, toc }: Props) {
               <h1 className="mb-8 text-5xl font-extrabold md:text-6xl lg:text-7xl">
                 {data.title}
               </h1>
-              <figure className="h-full w-full max-w-[500px] overflow-hidden rounded-3xl border shadow-[0_1px_5px_gray] dark:shadow-[0px_1px_5px_#4040408c]">
+              <figure
+                key={data._id}
+                className="h-full w-auto overflow-hidden rounded-3xl border shadow-[0_1px_5px_gray] dark:shadow-[0px_1px_5px_#4040408c]"
+              >
                 <BlurImage
                   width={470}
                   height={470}

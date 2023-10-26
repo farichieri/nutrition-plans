@@ -77,7 +77,7 @@ export default function Home({ plans }: Props) {
         <meta property="og:site_name" content="Nutrition Plans CO" />
         <meta property="og:image:alt" content="Nutrition Plans CO" />
       </Head>
-      <section className="flex w-full flex-col items-center gap-10 pb-20 pt-10">
+      <section className="flex w-full flex-col items-center gap-10 pb-20 pt-10 overflow-hidden">
         <div className="flex w-full flex-col items-center gap-10">
           <div className="flex w-full flex-col items-center justify-center gap-4 text-center text-2xl">
             <h1 className="max-w-6xl bg-gradient-to-br from-green-300 to-green-800 bg-clip-text pb-2 text-4xl font-extrabold text-transparent dark:from-green-300 dark:to-green-800 md:text-6xl lg:text-7xl">
