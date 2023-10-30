@@ -1,5 +1,4 @@
 import { SubscribeButton } from "@/components/Buttons";
-import TrialDaysLeft from "@/components/TrialDaysLeft/TrialDaysLeft";
 import {
   selectLayoutSlice,
   setSidebarAdminOpen,
@@ -199,7 +198,6 @@ const WebPages: FC<Props> = () => {
       </div>
       <div className="flex flex-col items-center justify-center">
         <SubscribeButton />
-        <TrialDaysLeft />
       </div>
     </>
   );

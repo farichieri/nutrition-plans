@@ -1,14 +1,14 @@
-import { CheckCircleIcon } from "@heroicons/react/24/solid";
-import { DonateText, createCheckoutSession } from "@/features/stripe";
-import { ensureError } from "@/utils";
-import { FC, useState } from "react";
+import Spinner from "@/components/Loader/Spinner";
+import Modal from "@/components/Modal/Modal";
 import { PRICES } from "@/constants";
 import { selectAuthSlice } from "@/features/authentication/slice";
 import { setIsSubscribeModalOpen } from "@/features/layout/slice";
+import { DonateText, createCheckoutSession } from "@/features/stripe";
+import { ensureError } from "@/utils";
+import { CheckCircleIcon } from "@heroicons/react/24/solid";
+import { FC, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import Modal from "@/components/Modal/Modal";
-import Spinner from "@/components/Loader/Spinner";
 
 interface Props {
   isCloseable?: boolean;
@@ -53,9 +53,6 @@ const SubscribeModal: FC<Props> = ({
   return (
     <Modal isCloseable={isCloseable} isFullScreen onClose={handleClose}>
       <section className="relative flex h-auto w-auto min-w-full max-w-[95vw] overflow-hidden">
-        <span className="absolute right-0 top-0 rounded-bl-3xl  bg-gradient-to-r from-red-300 via-red-400 to-red-500 px-4 py-1 text-sm font-semibold text-white">
-          Discounts for a limited time only!
-        </span>
         <div className="m-auto flex h-full w-full flex-col items-center gap-5 overflow-auto px-4 py-10 ">
           <div className="flex flex-col items-center text-center text-xs md:text-base">
             <span className="text-xl font-semibold sm:text-3xl">

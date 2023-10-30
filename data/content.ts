@@ -181,24 +181,8 @@ export const MEAL_PLANS = [
 ];
 
 export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
-  // {
-  //   buttonContent: "Get started with Free",
-  //   checklist: [
-  //     "Nutrients Calculator",
-  //     "Weekly Newsletter",
-  //     "7 days Premium trial",
-  //   ],
-  //   checklistTitle: "",
-  //   checkoutLink: "/app/settings/billing",
-  //   discount: "",
-  //   id: "free",
-  //   monthlyPrice: 0,
-  //   name: "Free",
-  //   yearlyPrice: 0,
-  //   semestryPrice: 0,
-  // },
   {
-    buttonContent: "Start Free Trial",
+    buttonContent: "Start for free",
     checklist: [
       "Meal planner",
       "Progress Tracker",
@@ -206,7 +190,17 @@ export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
       "Custom foods and recipes",
       "All nutrition plans",
     ],
-    beta: true,
+    beta: false,
+    checklistTitle: "No card required",
+    checkoutLink: "/signup",
+    id: "free",
+    name: "Free",
+    prices: null,
+  },
+  {
+    buttonContent: "Upgrade",
+    checklist: ["Personalized support"],
+    beta: false,
     checklistTitle: "Everything in Free, plus...",
     checkoutLink: "/app/settings/billing",
     id: "premium",
@@ -216,25 +210,49 @@ export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
         id: "monthly",
         name: "Monthly",
         price: 15,
-        discount: "50%",
-        discountPrice: 7.5,
+        discount: "",
+        discountPrice: 15,
       },
       yearly: {
         id: "yearly",
         name: "Yearly",
-        price: 15,
-        discount: "-70%",
-        discountPrice: 4.5,
+        price: 12,
+        discount: "-20%",
+        discountPrice: 12,
       },
       semestry: {
         id: "semestry",
         name: "Semestry",
-        price: 15,
-        discount: "-60%",
-        discountPrice: 6,
+        price: 13.5,
+        discount: "-10%",
+        discountPrice: 13.5,
       },
     },
   },
 ];
 
 export const CONTACT_EMAIL = "frichieri.dev@gmail.com";
+
+// prices: {
+//   monthly: {
+//     id: "monthly",
+//     name: "Monthly",
+//     price: 15,
+//     discount: "50%",
+//     discountPrice: 7.5,
+//   },
+//   yearly: {
+//     id: "yearly",
+//     name: "Yearly",
+//     price: 15,
+//     discount: "-70%",
+//     discountPrice: 4.5,
+//   },
+//   semestry: {
+//     id: "semestry",
+//     name: "Semestry",
+//     price: 15,
+//     discount: "-60%",
+//     discountPrice: 6,
+//   },
+// },

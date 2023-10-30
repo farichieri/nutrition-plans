@@ -1,26 +1,21 @@
-import {
-  selectLayoutSlice,
-  setIsSubscribeModalOpen,
-} from "@/features/layout/slice";
-import { AppRoutes } from "@/utils";
-import { Login } from "@/features/authentication";
-import { PremiumFooter } from "./components";
-import { selectAuthSlice } from "@/features/authentication/slice";
 import { SubscribeModal } from "@/components";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import InstallModal from "@/components/InstallApp/InstallModal";
+import ConnectionError from "@/components/Layout/ConnectionError";
+import Loader from "@/components/Loader/Loader";
+import WelcomeSteps from "@/components/WelcomeSteps/WelcomeSteps";
+import { Login } from "@/features/authentication";
+import { selectAuthSlice } from "@/features/authentication/slice";
+import { selectLayoutSlice } from "@/features/layout/slice";
 import { useGetMealsQuery, useGetMealsSettingsQuery } from "@/features/meals";
 import { useGetProgressQuery } from "@/features/progress";
 import { useOnlineStatus, useWindowWidth } from "@/hooks";
-import { useRouter } from "next/router";
-import ConnectionError from "@/components/Layout/ConnectionError";
-import Head from "next/head";
-import InstallModal from "@/components/InstallApp/InstallModal";
-import Loader from "@/components/Loader/Loader";
-import WelcomeSteps from "@/components/WelcomeSteps/WelcomeSteps";
-import TrialEnded from "@/components/TrialDaysLeft/TrialEnded";
+import { AppRoutes } from "@/utils";
 import dynamic from "next/dynamic";
-import { usePremiumStatus } from "@/features/stripe";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { PremiumFooter } from "./components";
 
 interface Props {
   children: React.ReactNode;
@@ -28,15 +23,14 @@ interface Props {
 
 function PremiumLayout({ children }: Props) {
   const router = useRouter();
-  const dispatch = useDispatch();
   const { sidebarOpen, isSubscribeModalOpen } = useSelector(selectLayoutSlice);
-  const { user, isCreatingUser, isSigningUser, showInstallModal, isTrialOver } =
+  const { user, isCreatingUser, isSigningUser, showInstallModal } =
     useSelector(selectAuthSlice);
   const isOnline = useOnlineStatus();
   const windowWidth = useWindowWidth();
   const isMobile = windowWidth < 1024;
   const isProfileCompleted = user?.isProfileCompleted;
-  const isPremium = usePremiumStatus(user);
+  // const isPremium = usePremiumStatus(user);
 
   useGetProgressQuery({ user });
   useGetMealsQuery({ user });
@@ -46,17 +40,12 @@ function PremiumLayout({ children }: Props) {
     if (isCreatingUser || (user && !isProfileCompleted)) {
       router.push(AppRoutes.create_user);
     }
-    if (isSubscribeModalOpen && user?.isPremium) {
-      dispatch(setIsSubscribeModalOpen(false));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, isCreatingUser]);
+  }, [user, isCreatingUser, isProfileCompleted, router]);
 
   if (!user && !isSigningUser) {
     return <Login />;
   }
   //  TODO: Lower the amount of renders
-  // console.log({ user });
   return (
     <>
       <Head>
@@ -72,9 +61,6 @@ function PremiumLayout({ children }: Props) {
           <InstallModal />
         </div>
       )}
-
-      {!user?.isPremium && !isPremium && isTrialOver && <TrialEnded />}
-
       {user && user.isProfileCompleted ? (
         <div className="flex w-full flex-col ">
           <div className="flex min-h-screen w-full flex-col lg:pb-24">

@@ -26,7 +26,7 @@ export default function Page() {
         <meta property="og:title" content="Nutrition Plans About" key="title" />
         <title>About | Nutrition Plans CO</title>
       </Head>
-      <section className="flex w-full max-w-5xl flex-col items-center pb-24 pt-14">
+      <section className="flex px-4 w-full max-w-5xl flex-col items-center pb-24 pt-14">
         <h1 className="mb-8 text-5xl font-bold md:text-6xl lg:text-7xl">
           About
         </h1>

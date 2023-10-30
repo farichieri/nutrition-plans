@@ -1,6 +1,5 @@
 import Avatar from "@/components/Avatar/Avatar";
 import { SubscribeButton } from "@/components/Buttons";
-import TrialDaysLeft from "@/components/TrialDaysLeft/TrialDaysLeft";
 import { selectAuthSlice } from "@/features/authentication";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import { auth } from "@/services/firebase";
@@ -88,7 +87,6 @@ export default function Page() {
           <div className="mx-4 my-2 h-0 border-b border-slate-500/30 duration-300"></div>
           <div className="flex flex-col items-center justify-center px-4 py-2 ">
             <SubscribeButton />
-            <TrialDaysLeft />
           </div>
         </div>
       </section>
