@@ -1,5 +1,5 @@
 import { Plan } from "@/.contentlayer/generated";
-import { NewsletterSubscriber, StructuredData } from "@/components";
+import { StructuredData } from "@/components";
 import PrimaryButton from "@/components/Buttons/PrimaryButton";
 import FAQS from "@/components/FAQS/FAQS";
 import Plans from "@/components/Plans/Plans";
@@ -79,7 +79,7 @@ export default function Home({ plans }: Props) {
       </Head>
       <section className="flex w-full flex-col items-center gap-10 pb-20 pt-10 overflow-hidden">
         <div className="flex w-full flex-col items-center gap-10">
-          <div className="flex w-full flex-col items-center justify-center gap-4 text-center text-2xl">
+          <div className="flex w-full flex-col px-4 items-center justify-center gap-4 text-center text-2xl">
             <h1 className="max-w-6xl bg-gradient-to-br from-green-300 to-green-800 bg-clip-text pb-2 text-4xl font-extrabold text-transparent dark:from-green-300 dark:to-green-800 md:text-6xl lg:text-7xl">
               Achieve Your Desired Physique with Our Meal Planner Platform
             </h1>
@@ -95,7 +95,7 @@ export default function Home({ plans }: Props) {
               <PrimaryButton onClick={() => {}} content={`Get Started`} />
             </Link>
           </div>
-          <div className="w-full flex items-center justify-center relative ">
+          <div className="w-full px-2 flex items-center justify-center relative ">
             <div className="absolute rounded-full min-w-[2000px] max-w-[2000px] h-full bg-gradient-to-r dark:from-green-900/10 dark:via-green-500/20 dark:to-green-900/10 dark:opacity-100 from-green-500/20 via-green-500/50 to-green-500/20 opacity-100 -z-50 w-full blur-3xl filter"></div>
             <Image
               src="/images/general/landing-img.png"
@@ -116,9 +116,6 @@ export default function Home({ plans }: Props) {
         </div>
         <div className="my-10 flex w-full items-center justify-center">
           <FAQS content={FAQS_INDEX} />
-        </div>
-        <div className="my-10 flex w-full items-center justify-center">
-          <NewsletterSubscriber />
         </div>
         <div className="my-10 flex w-full items-center justify-center">
           <CallToAction />

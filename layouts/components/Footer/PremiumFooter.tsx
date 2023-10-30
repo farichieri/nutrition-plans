@@ -4,7 +4,7 @@ import { FC } from "react";
 
 interface Props {}
 
-const PremiumFooter: FC<Props> = ({}) => {
+const PremiumFooter: FC<Props> = () => {
   const PAGES = [
     {
       title: "Home",
@@ -32,7 +32,7 @@ const PremiumFooter: FC<Props> = ({}) => {
     },
   ];
   return (
-    <div className="mx-auto flex min-h-[var(--footer-h)] w-full max-w-7xl flex-col items-center justify-center border-t border-gray-500/20 p-4">
+    <div className="mx-auto flex min-h-[var(--footer-h)] w-full max-w-7xl flex-col items-center justify-center border-t border-gray-500/20 py-8 px-4">
       <div className="w-full max-w-3xl">
         <div className="flex items-center gap-2">
           <Logo hideText={true} />

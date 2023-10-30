@@ -1,8 +1,8 @@
 import { Post, allPosts } from "@/.contentlayer/generated";
 import BlogPosts from "@/components/Posts/BlogPosts";
 import CallToAction from "@/components/call-to-action/CallToAction";
-import Head from "next/head";
 import LandingLayout from "@/layouts/LandingLayout";
+import Head from "next/head";
 
 interface Props {
   posts: Post[];
@@ -15,7 +15,7 @@ export default function Blog({ posts }: Props) {
         <title>Blog | Nutrition Plans CO</title>
         <meta property="og:title" content="Nutrition Plans Blog" key="title" />
       </Head>
-      <section className="flex w-full max-w-5xl flex-col items-center gap-10 pb-24 pt-14">
+      <section className="flex px-4 w-full max-w-5xl flex-col items-center gap-10 pb-24 pt-14">
         <h1 className="mb-8 text-5xl font-bold md:text-6xl lg:text-7xl">
           Blog
         </h1>

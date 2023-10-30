@@ -1,8 +1,8 @@
-import { getPlansAvailable } from "@/utils";
 import { Plan } from "@/.contentlayer/generated";
-import Head from "next/head";
-import LandingLayout from "@/layouts/LandingLayout";
 import Plans from "@/components/Plans/Plans";
+import LandingLayout from "@/layouts/LandingLayout";
+import { getPlansAvailable } from "@/utils";
+import Head from "next/head";
 
 interface Props {
   plans: Plan[];
@@ -19,7 +19,7 @@ export default function Page({ plans }: Props) {
           key="title"
         />
       </Head>
-      <section className="flex w-full max-w-5xl flex-col items-center pb-24 pt-16">
+      <section className="flex w-full max-w-5xl flex-col items-center px-4 pb-24 pt-16">
         <h1 className="mb-8 text-5xl font-bold md:text-6xl lg:text-7xl">
           Plans
         </h1>

@@ -1,7 +1,7 @@
+import { User } from "@/features/authentication";
+import { RootState } from "@/store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { PURGE } from "redux-persist";
-import { RootState } from "@/store";
-import { User } from "@/features/authentication";
 
 interface AuthState {
   error: string | null;
@@ -43,12 +43,12 @@ export const authSlice = createSlice({
       if (user) {
         state.isSigningUser = false;
         // if no user.completedAt, then userTrial is over
-        const daysFromCreation = Math.floor(
-          (Date.now() - new Date(user.completedAt).getTime()) / 86400000
-        );
-        const daysLeft = Math.max(7 - daysFromCreation);
-        state.trialDaysLeft = daysLeft;
-        state.isTrialOver = daysLeft <= 0;
+        // const daysFromCreation = Math.floor(
+        //   (Date.now() - new Date(user.completedAt).getTime()) / 86400000
+        // );
+        // const daysLeft = Math.max(7 - daysFromCreation);
+        // state.trialDaysLeft = daysLeft;
+        // state.isTrialOver = daysLeft <= 0;
       }
     },
     setIsCreatingUser: (state, action: PayloadAction<boolean>) => {

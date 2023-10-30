@@ -1,16 +1,16 @@
-import { getTableOfContents } from "@/lib/toc";
-import { MdTrendingFlat } from "react-icons/md";
-import { Mdx } from "@/components/MDX-Components/MDX-Components";
 import { Post, allPosts } from "@/.contentlayer/generated";
 import { StructuredData } from "@/components";
+import { Mdx } from "@/components/MDX-Components/MDX-Components";
+import OtherPosts from "@/components/OtherPosts/OtherPosts";
+import DateC from "@/components/Posts/Post/DateC/DateC";
 import BlurImage from "@/components/blur-image";
 import CallToAction from "@/components/call-to-action/CallToAction";
-import DateC from "@/components/Posts/Post/DateC/DateC";
+import LandingLayout from "@/layouts/LandingLayout";
+import { getTableOfContents } from "@/lib/toc";
 import dynamic from "next/dynamic";
 import Head from "next/head";
-import LandingLayout from "@/layouts/LandingLayout";
 import Link from "next/link";
-import OtherPosts from "@/components/OtherPosts/OtherPosts";
+import { MdTrendingFlat } from "react-icons/md";
 import type { BlogPosting, WithContext } from "schema-dts";
 
 const DashboardTableOfContents = dynamic(
@@ -86,7 +86,7 @@ export default function Page({ data, toc, otherPosts }: Props) {
         <meta property="og:url" content={data.URL} />
         <meta property="og:image:alt" content="Nutrition Plans CO" />
       </Head>
-      <div className="relative flex h-full w-full items-start justify-center gap-8">
+      <div className="relative px-4 flex h-full w-full items-start justify-center gap-8">
         <div className="max-w-3xl">
           <article className="z-10 mx-auto mb-10 flex w-full flex-col justify-center bg-white px-2 pb-5 pt-10 dark:bg-black">
             <aside>

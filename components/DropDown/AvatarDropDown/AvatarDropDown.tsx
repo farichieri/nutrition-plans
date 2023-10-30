@@ -1,19 +1,18 @@
-import { AppRoutes } from "@/utils";
-import { auth } from "@/services/firebase";
-import { FC, useState } from "react";
-import { MdFavorite, MdOpenInNew, MdPerson, MdSettings } from "react-icons/md";
-import { persistor } from "@/store";
+import Avatar from "@/components/Avatar/Avatar";
+import SubscribeButton from "@/components/Buttons/Subscribe";
 import { selectAuthSlice } from "@/features/authentication";
 import { setProgress } from "@/features/progress";
+import { auth } from "@/services/firebase";
+import { persistor } from "@/store";
+import { AppRoutes } from "@/utils";
 import { signOut } from "firebase/auth";
-import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/router";
-import Avatar from "@/components/Avatar/Avatar";
-import DropDown from "../DropDown";
-import Link from "next/link";
-import SubscribeButton from "@/components/Buttons/Subscribe";
-import TrialDaysLeft from "@/components/TrialDaysLeft/TrialDaysLeft";
 import dynamic from "next/dynamic";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { FC, useState } from "react";
+import { MdFavorite, MdOpenInNew, MdPerson, MdSettings } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
+import DropDown from "../DropDown";
 
 const ThemeSwitcher = dynamic(() => import("@/components/theme-switcher"), {
   ssr: false,
@@ -106,7 +105,6 @@ const AvatarDropDown: FC<Props> = ({ isApp }) => {
         <div className="mx-4 my-2 h-0 border-b border-slate-500/30 duration-300"></div>
         <div className="flex flex-col items-center justify-center px-4 py-2 ">
           <SubscribeButton />
-          <TrialDaysLeft />
         </div>
       </div>
     </DropDown>

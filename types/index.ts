@@ -108,7 +108,7 @@ export interface SubscriptionPlan {
     monthly: Price;
     yearly: Price;
     semestry: Price;
-  };
+  } | null;
 }
 
 export interface Price {

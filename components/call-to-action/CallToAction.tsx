@@ -12,7 +12,7 @@ const CallToAction = () => {
       </p>
       <div className="mt-2 h-11">
         <Link href="/signup">
-          <PrimaryButton onClick={() => {}} content="Try it for free" />
+          <PrimaryButton onClick={() => {}} content="Start for free" />
         </Link>
       </div>
     </section>

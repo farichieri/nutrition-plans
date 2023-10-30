@@ -43,7 +43,6 @@ const useTour = ({
 
     const refreshTourSteps = () => {
       const timeout = setTimeout(() => {
-        console.log("tour", tour);
         tour.setOptions({
           steps: steps().filter((step) => stepIsDisplayable(step)),
         });
@@ -92,8 +91,8 @@ const useTour = ({
       })
       .start();
 
-    window.addEventListener("resize", () => refreshTourSteps());
-    return () => window.removeEventListener("resize", () => refreshTourSteps());
+    window.addEventListener("resize", refreshTourSteps);
+    return () => window.removeEventListener("resize", refreshTourSteps);
   }, [name, options, pushWhenFinished, router, steps, user]);
 };
 

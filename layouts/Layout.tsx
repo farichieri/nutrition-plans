@@ -1,14 +1,14 @@
 import {
   selectAuthSlice,
   setSubscription,
-  useLoginMutation,
   useGetUserQuery,
+  useLoginMutation,
 } from "@/features/authentication";
-import { auth } from "@/services/firebase";
 import { getUserSubscription } from "@/features/stripe";
-import { Inter } from "next/font/google";
+import { auth } from "@/services/firebase";
 import { isAppVersionCorrect } from "@/utils";
 import { onAuthStateChanged } from "firebase/auth";
+import { Inter } from "next/font/google";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -39,7 +39,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }, [isVerifyingVersion, login]);
 
   useEffect(() => {
-    console.log("executed");
     if (user) {
       const unsubscribe = async () => {
         const res = await getUserSubscription({ userID: user.id });

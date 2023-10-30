@@ -87,7 +87,7 @@ export default function Page({ data, restOfPlans, toc }: Props) {
       </Head>
       <div className="relative flex h-full w-full items-start justify-center gap-8">
         <div className="max-w-3xl">
-          <article className="mb-10 flex w-full flex-col items-center justify-center px-2 pb-5">
+          <article className="mb-10 flex w-full flex-col items-center justify-center px-4 pb-5">
             <div className="mt-14 flex w-full flex-col items-center justify-center gap-4 pb-10">
               <h1 className="mb-8 text-5xl font-extrabold md:text-6xl lg:text-7xl">
                 {data.title}
