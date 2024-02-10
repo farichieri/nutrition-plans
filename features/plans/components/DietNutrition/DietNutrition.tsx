@@ -1,22 +1,22 @@
+import Spinner from "@/components/Loader/Spinner";
+import PieGraph from "@/components/PieGraph/PieGraph";
+import { selectAuthSlice } from "@/features/authentication";
+import { FoodNutritionDetail, NutrientsT } from "@/features/foods";
+import { PlansEnum, StartsOfWeek } from "@/types";
+import { getToday } from "@/utils";
+import { formatToFixed, formatTwoDecimals } from "@/utils/format";
+import { FC, useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+import { BiSolidPieChartAlt2 } from "react-icons/bi";
+import { useSelector } from "react-redux";
+import { useUpdateDietMutation } from "../../services";
+import { Diet } from "../../types";
 import {
   checkTargetsEquality,
   convertDateToDateString,
   getRealDate,
 } from "../../utils";
-import { BiSolidPieChartAlt2 } from "react-icons/bi";
-import { Diet } from "../../types";
-import { FC, useEffect, useState } from "react";
-import { NutrientsT, FoodNutritionDetail } from "@/features/foods";
-import { formatToFixed, formatTwoDecimals } from "@/utils/format";
 import { getDietNutritionTargets } from "./utils/getDietNutritionTargets";
-import { getToday } from "@/utils";
-import { PlansEnum, StartsOfWeek } from "@/types";
-import { selectAuthSlice } from "@/features/authentication";
-import { toast } from "react-hot-toast";
-import { useSelector } from "react-redux";
-import { useUpdateDietMutation } from "../../services";
-import PieGraph from "@/components/PieGraph/PieGraph";
-import Spinner from "@/components/Loader/Spinner";
 
 interface Props {
   nutrients: NutrientsT;
@@ -155,6 +155,8 @@ const DietNutrition: FC<Props> = ({ nutrients, diet, isEditing }) => {
     setTitle(newTitle);
   }, [diet.date]);
 
+  console.log({ NUTRIENT_TARGETS });
+
   return (
     <div className="w-full ">
       <div className="mb-1 flex h-9 w-full items-center gap-2">
@@ -163,7 +165,7 @@ const DietNutrition: FC<Props> = ({ nutrients, diet, isEditing }) => {
       </div>
       <div
         className={`relative flex w-full flex-col rounded-xl border p-4 shadow-md dark:shadow-slate-500/20 ${
-          !isAllInRange
+          !NUTRIENT_TARGETS[0].isInRange
             ? "bg-white dark:bg-gray-500/20"
             : "border-green-500 bg-green-500/20 "
         }`}
@@ -294,7 +296,7 @@ const DietNutrition: FC<Props> = ({ nutrients, diet, isEditing }) => {
             </span>
           ) : (
             <span className="my-4 flex w-full justify-center text-red-500 ">
-              You are out of target.
+              You are out of target in some nutrients. Try to adjust your diet
             </span>
           )}
         </div>
