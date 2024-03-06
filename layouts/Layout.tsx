@@ -1,3 +1,8 @@
+import { onAuthStateChanged } from "firebase/auth";
+import { Inter } from "next/font/google";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import {
   selectAuthSlice,
   setSubscription,
@@ -7,10 +12,6 @@ import {
 import { getUserSubscription } from "@/features/stripe";
 import { auth } from "@/services/firebase";
 import { isAppVersionCorrect } from "@/utils";
-import { onAuthStateChanged } from "firebase/auth";
-import { Inter } from "next/font/google";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 
 const font = Inter({
   subsets: ["latin"],
@@ -19,8 +20,8 @@ const font = Inter({
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [isVerifyingVersion, setIsVerifyingVersion] = useState(true);
   const { user } = useSelector(selectAuthSlice);
-  const dispatch = useDispatch();
   const [login] = useLoginMutation();
+  const dispatch = useDispatch();
   useGetUserQuery({ userID: user?.id });
 
   useEffect(() => {
