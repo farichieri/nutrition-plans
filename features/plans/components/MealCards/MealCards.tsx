@@ -1,9 +1,5 @@
-import {
-  addToList,
-  removeFromList,
-  reorderArr,
-  getNutritionMerged,
-} from "@/utils";
+import { selectAuthSlice } from "@/features/authentication";
+import { FoodGroupArray } from "@/features/foods";
 import {
   Diet,
   DietMeal,
@@ -11,17 +7,20 @@ import {
   SaveAndEditButton,
   Water,
 } from "@/features/plans";
-import { DragDropContext } from "@hello-pangea/dnd";
-import { FC } from "react";
-import { FoodGroupArray } from "@/features/foods";
-import { MdRestaurant } from "react-icons/md";
-import { selectAuthSlice } from "@/features/authentication";
 import {
   selectPlansSlice,
   updateDietMealFoodsOrder,
 } from "@/features/plans/slice";
+import {
+  addToList,
+  getNutritionMerged,
+  removeFromList,
+  reorderArr,
+} from "@/utils";
+import { DragDropContext } from "@hello-pangea/dnd";
+import { FC } from "react";
+import { MdRestaurant } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { useTour } from "@/features/tours";
 import Exercise from "../common/Exercise";
 import MoreDropdown from "../common/MoreDropdown";
 
@@ -89,51 +88,6 @@ const MealCards: FC<Props> = ({ diet, date, isMultipleDaysView }) => {
   ) => {
     dispatch(updateDietMealFoodsOrder({ dietMeal, foodsArrayOrdered }));
   };
-
-  useTour({
-    name: "dayPlan",
-    user: user,
-    steps: () => [
-      {
-        title: "Your First Day Plan!",
-        intro: "Let's learn how to use the Day Planner!",
-      },
-      {
-        element: document.querySelector("#tour-dayPlan-0"),
-        title: "Meals",
-        intro:
-          "Here you can see all your meals for the day. If you usually eat different meals (Breakfast, Lunch, Dinner, Snack, etc.), you can configure them in your Profile later.",
-        position: "right",
-      },
-      {
-        element: document.querySelector("#tour-dayPlan-1"),
-        title: "Meals",
-        intro:
-          "Every meal will be compouned of different foods. You can add or remove foods from your meals by clicking on the 'Edit Day' button.",
-        position: "right",
-      },
-      {
-        element: document.querySelector("#tour-dayPlan-2"),
-        title: "Meals",
-        intro:
-          "You can open a Drop Down Menu by clicking on the three dots. There you can Save the meal to your Library, or Load another one or clear it.",
-        position: "right",
-      },
-      {
-        element: document.querySelector("#tour-dayPlan-3"),
-        title: "Day Nutrition",
-        intro:
-          "Here you can see the total nutrition for the day. The targets are based on your profile and the plan selected. and the values are based on the foods you have added to your meals. ",
-        position: "left",
-      },
-      {
-        element: document.querySelector("#tour-dayPlan-4"),
-        title: "Edit Day",
-        intro: "Click here to edit your meals for the day once finished!",
-        position: "left",
-      },
-    ],
-  });
 
   const classDependingView = isMultipleDaysView
     ? "grid gap-2 sm:grid-cols-fluid_m"
