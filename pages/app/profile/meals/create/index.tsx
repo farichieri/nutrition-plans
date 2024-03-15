@@ -1,3 +1,9 @@
+import FormAction from "@/components/Form/FormAction";
+import FormSelect from "@/components/Form/FormSelect";
+import Input from "@/components/Form/Input";
+import Modal from "@/components/Modal/Modal";
+import { selectAuthSlice } from "@/features/authentication";
+import { FoodTypesEnum } from "@/features/foods";
 import {
   MealComplexities,
   MealComplexitiesType,
@@ -12,18 +18,11 @@ import {
   usePostMealSettingMutation,
   UserMeal,
 } from "@/features/meals";
-import { FoodTypesEnum } from "@/features/foods";
+import MealsLayout from "@/layouts/MealsLayout";
 import { generateOptions } from "@/utils";
-import { selectAuthSlice } from "@/features/authentication";
+import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/router";
-import { useState } from "react";
-import FormAction from "@/components/Form/FormAction";
-import FormSelect from "@/components/Form/FormSelect";
-import Input from "@/components/Form/Input";
-import MealsLayout from "@/layouts/MealsLayout";
-import Modal from "@/components/Modal/Modal";
 
 export default function Page() {
   const dispatch = useDispatch();

@@ -1,5 +1,18 @@
+"use client";
+
+import { GetServerSideProps } from "next";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { toast } from "react-hot-toast";
+import { useSelector } from "react-redux";
+
+import ActionButton from "@/components/Buttons/ActionButton";
+import FormAction from "@/components/Form/FormAction";
+import FormSelect from "@/components/Form/FormSelect";
+import Input from "@/components/Form/Input";
+import Modal from "@/components/Modal/Modal";
+import { selectAuthSlice } from "@/features/authentication";
 import {
-  selectMealsSlice,
   MealComplexities,
   MealComplexitiesType,
   MealCook,
@@ -8,24 +21,13 @@ import {
   MealSizes,
   MealSizesType,
   UserMeal,
+  selectMealsSlice,
+  useDeleteMealSettingMutation,
   useUpdateMealSettingMutation,
   useUpdateUserMealMutation,
-  useDeleteMealSettingMutation,
 } from "@/features/meals";
-import { generateOptions } from "@/utils";
-import { GetServerSideProps } from "next";
-import { selectAuthSlice } from "@/features/authentication";
-import { toast } from "react-hot-toast";
-import { useSelector } from "react-redux";
-import { useRouter } from "next/router";
-import { useState } from "react";
-import ActionButton from "@/components/Buttons/ActionButton";
-import FormAction from "@/components/Form/FormAction";
-import FormSelect from "@/components/Form/FormSelect";
-import Input from "@/components/Form/Input";
 import MealsLayout from "@/layouts/MealsLayout";
-import Modal from "@/components/Modal/Modal";
-
+import { generateOptions } from "@/utils";
 interface Props {
   mealID: string;
 }
@@ -42,10 +44,8 @@ export default function Page({ mealID }: Props) {
   );
   const cookOptions = Object.values(MealCook);
   const [isSaving, setIsSaving] = useState(false);
-  const [updateMealSetting, { isLoading: isUpdating }] =
-    useUpdateMealSettingMutation();
-  const [updateUserMeal, { isLoading: isUpdatingUserMeal }] =
-    useUpdateUserMealMutation();
+  const [updateMealSetting] = useUpdateMealSettingMutation();
+  const [updateUserMeal] = useUpdateUserMealMutation();
   const [deleteMealSetting, { isLoading: isDeleting }] =
     useDeleteMealSettingMutation();
 

@@ -20,7 +20,7 @@ import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
 import PremiumLayout from "@/layouts/PremiumLayout";
 import { GetStaticPaths, GetStaticProps } from "next";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function Page({ food }: { food: Food }) {
   const router = useRouter();

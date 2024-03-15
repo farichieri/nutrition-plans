@@ -1,21 +1,21 @@
+import { selectAuthSlice } from "@/features/authentication";
+import { DaySelector, getRealDate, useRedirectToday } from "@/features/plans";
 import {
   getDietShoppingFoods,
   selectShoppingSlice,
   setShoppingListFoods,
   ShoppingNav,
 } from "@/features/shopping";
-import { DaySelector, getRealDate, useRedirectToday } from "@/features/plans";
-import { getDaysOfWeek, getIsWeek } from "@/utils";
 import { PremiumSidebar } from "@/layouts";
-import { selectAuthSlice } from "@/features/authentication";
-import { StartsOfWeek } from "@/types";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { useRouter } from "next/router";
-import PremiumLayout from "@/layouts/PremiumLayout";
 import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
+import PremiumLayout from "@/layouts/PremiumLayout";
+import { StartsOfWeek } from "@/types";
+import { getDaysOfWeek, getIsWeek } from "@/utils";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 interface Props {}
 

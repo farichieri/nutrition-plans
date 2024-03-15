@@ -2,12 +2,12 @@ import Avatar from "@/components/Avatar/Avatar";
 import { SubscribeButton } from "@/components/Buttons";
 import { selectAuthSlice } from "@/features/authentication";
 import PremiumLayout from "@/layouts/PremiumLayout";
+import { persistor } from "@/lib/store";
 import { auth } from "@/services/firebase";
-import { persistor } from "@/store";
 import { signOut } from "firebase/auth";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { MdClose, MdOpenInNew, MdPerson, MdSettings } from "react-icons/md";
 import { useSelector } from "react-redux";
 

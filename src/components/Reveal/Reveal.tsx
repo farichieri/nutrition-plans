@@ -1,0 +1,40 @@
+"use client";
+
+import { motion, useAnimation, useInView } from "framer-motion";
+import { FC, useEffect, useRef } from "react";
+
+interface Props {
+  children: JSX.Element;
+  width?: "w-fit" | "w-full";
+}
+
+const Reveal: FC<Props> = ({ children, width }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+
+  const mainControls = useAnimation();
+
+  useEffect(() => {
+    if (isInView) {
+      mainControls.start("visible");
+    }
+  }, [isInView]);
+
+  return (
+    <div ref={ref} className={`h-auto  ${width}`}>
+      <motion.div
+        variants={{
+          hidden: { opacity: 0, y: 1000 },
+          visible: { opacity: 1, y: 0 },
+        }}
+        initial="hidden"
+        animate={mainControls}
+        transition={{ duration: 0.5 }}
+      >
+        {children}
+      </motion.div>
+    </div>
+  );
+};
+
+export default Reveal;

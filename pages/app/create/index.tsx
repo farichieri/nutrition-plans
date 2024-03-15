@@ -1,21 +1,24 @@
+"use client";
+
+import dynamic from "next/dynamic";
+import Head from "next/head";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import {
   MdDescription,
   MdEmojiEvents,
   MdFlag,
   MdSettingsAccessibility,
 } from "react-icons/md";
-import { NewUserSteps } from "@/features/authentication";
-import { selectAuthSlice } from "@/features/authentication/slice";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
+
+import { NewUserSteps } from "@/features/authentication";
 import BodyFeatures from "@/features/authentication/components/create-user/body-features/BodyFeatures";
 import Goal from "@/features/authentication/components/create-user/goal/Goal";
-import PlanSelector from "@/features/authentication/components/create-user/select-plan/PlanSelector";
 import Results from "@/features/authentication/components/create-user/results/Results";
+import PlanSelector from "@/features/authentication/components/create-user/select-plan/PlanSelector";
+import { selectAuthSlice } from "@/features/authentication/slice";
 import { AppRoutes } from "@/utils";
-import Head from "next/head";
-import dynamic from "next/dynamic";
 
 const ThemeSwitcher = dynamic(() => import("@/components/theme-switcher"), {
   ssr: false,

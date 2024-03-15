@@ -1,6 +1,6 @@
-import { FilterQueries } from "@/types";
-import { useRouter } from "next/router";
 import SearchLayout from "@/layouts/SearchLayout";
+import { FilterQueries } from "@/types";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function Page() {

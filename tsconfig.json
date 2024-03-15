@@ -15,8 +15,7 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@/*": ["./*"],
-      "contentlayer/generated": ["./.contentlayer/generated"]
+      "@/*": ["./src/*"]
     },
     "baseUrl": "./",
     "plugins": [

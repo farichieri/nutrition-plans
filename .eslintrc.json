@@ -3,7 +3,6 @@
   "extends": ["next/core-web-vitals", "react-app"],
   "plugins": ["testing-library"],
   "overrides": [
-    // Only uses Testing Library lint rules in test files
     {
       "files": [
         "**/__tests__/**/*.[jt]s?(x)",
@@ -11,5 +10,41 @@
       ],
       "extends": ["plugin:testing-library/react"]
     }
-  ]
+  ],
+  "rules": {
+    "import/order": [
+      "error",
+      {
+        "newlines-between": "always",
+        "groups": [
+          "external",
+          "builtin",
+          "internal",
+          "sibling",
+          "parent",
+          "index"
+        ],
+        "pathGroups": [
+          {
+            "pattern": "components",
+            "group": "internal"
+          },
+          {
+            "pattern": "common",
+            "group": "internal"
+          },
+          {
+            "pattern": "routes/**",
+            "group": "internal"
+          },
+          {
+            "pattern": "assets/**",
+            "group": "internal",
+            "position": "after"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["internal"]
+      }
+    ]
+  }
 }

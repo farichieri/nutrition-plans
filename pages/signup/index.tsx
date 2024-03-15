@@ -1,13 +1,16 @@
-import { AppRoutes } from "@/utils";
-import { selectAuthSlice } from "@/features/authentication/slice";
-import { Signup } from "@/features/authentication";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
-import Link from "next/link";
-import Loader from "@/components/Loader/Loader";
-import SignLayout from "@/layouts/SignLayout";
+"use client";
+
 import Head from "next/head";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+
+import Loader from "@/components/Loader/Loader";
+import { Signup } from "@/features/authentication";
+import { selectAuthSlice } from "@/features/authentication/slice";
+import SignLayout from "@/layouts/SignLayout";
+import { AppRoutes } from "@/utils";
 
 export default function Page() {
   const router = useRouter();

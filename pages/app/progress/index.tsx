@@ -1,4 +1,11 @@
+"use client";
+
+import dynamic from "next/dynamic";
+import { useState } from "react";
+
+import { PremiumNav } from "@/components";
 import RememberGoal from "@/components/Goals/RememberGoal";
+import { PremiumSidebar } from "@/components/Sidebar";
 import WeightSelector from "@/components/WeightSelector/WeightSelector";
 import {
   AddProgress,
@@ -6,12 +13,8 @@ import {
   Graphic,
   ProgressList,
 } from "@/features/progress";
-import { PremiumSidebar } from "@/layouts";
 import PremiumLayout from "@/layouts/PremiumLayout";
-import PremiumNav from "@/layouts/components/Nav/PremiumNav";
 import { WeightUnitsT } from "@/types";
-import dynamic from "next/dynamic";
-import { useState } from "react";
 
 function Page() {
   const isMobile = window.innerWidth < 1024;

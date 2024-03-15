@@ -1,17 +1,20 @@
+"use client";
+
+import dynamic from "next/dynamic";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+
+import { PremiumNav } from "@/components";
+import Spinner from "@/components/Loader/Spinner";
+import { PremiumSidebar } from "@/components/Sidebar";
 import {
   AddFoodModalCupboard,
   CupboardDistributor,
   ShoppingNav,
   selectShoppingSlice,
 } from "@/features/shopping";
-import { PremiumSidebar } from "@/layouts";
-import { useSelector } from "react-redux";
-import { useState } from "react";
 import CupboardList from "@/features/shopping/components/cupboard_list";
 import PremiumLayout from "@/layouts/PremiumLayout";
-import PremiumNav from "@/layouts/components/Nav/PremiumNav";
-import Spinner from "@/components/Loader/Spinner";
-import dynamic from "next/dynamic";
 
 function Page() {
   const [isLoading, setIsLoading] = useState<boolean>(false);

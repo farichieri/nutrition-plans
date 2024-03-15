@@ -1,27 +1,25 @@
+"use client";
+
+import dynamic from "next/dynamic";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { PremiumNav, SubPremiumNav } from "@/components";
+import { RoundButton } from "@/components/Buttons";
+import DateSelector from "@/components/date-selector";
 import {
   AddFoodModalShopping,
-  selectShoppingSlice,
-  setShoppingDateRange,
   ShoppingDistributor,
   ShoppingList,
   ShoppingNav,
+  selectShoppingSlice,
+  setShoppingDateRange,
 } from "@/features/shopping";
-import { RoundButton } from "@/components/Buttons";
-import { selectAuthSlice } from "@/features/authentication";
-import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
-import DateSelector from "@/components/date-selector";
 import PremiumLayout from "@/layouts/PremiumLayout";
-import PremiumNav from "@/layouts/components/Nav/PremiumNav";
-import SubPremiumNav from "@/layouts/components/Nav/SubPremiumNav";
-import dynamic from "next/dynamic";
-
-interface Props {}
 
 function Page() {
   const dispatch = useDispatch();
-  const { user } = useSelector(selectAuthSlice);
-  const { cupboard, shopping } = useSelector(selectShoppingSlice);
+  const { cupboard } = useSelector(selectShoppingSlice);
   const { isAddingFood } = cupboard;
   const [isDateRangeOpen, setIsDateRangeOpen] = useState(false);
   const handleSelectRange = ({ date }: { date: string }): void => {

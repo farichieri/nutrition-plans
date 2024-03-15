@@ -1,9 +1,9 @@
+import Home from "@/pages/index";
 import { getPlansAvailable } from "@/utils";
 import { renderWithProviders } from "@/utils/test-utils";
 import { screen } from "@testing-library/react";
-import Home from "@/pages/index";
 
-jest.mock("next/router", () => require("next-router-mock"));
+jest.mock("next/navigation", () => require("next-router-mock"));
 
 describe("Home test suite", () => {
   // every test (it) should be independent of each other
