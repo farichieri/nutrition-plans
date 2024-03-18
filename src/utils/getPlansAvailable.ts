@@ -1,10 +1,11 @@
+import { ArticlePlan } from "@/types";
+
 import { getPlansContent } from "./mds";
 
 const getPlansAvailable = (): any[] => {
-  const allPlans = getPlansContent();
-  console.log(JSON.stringify(allPlans, null, 2));
-  const plansAvailable: any[] = allPlans.filter(
-    (plan: any) => plan.isAvailable
+  const allPlans: ArticlePlan[] = getPlansContent();
+  const plansAvailable: ArticlePlan[] = allPlans.filter(
+    (plan: ArticlePlan) => plan.metadata.isAvailable
   );
   return plansAvailable;
 };

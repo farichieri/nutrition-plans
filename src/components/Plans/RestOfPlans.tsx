@@ -1,10 +1,11 @@
-import { FC } from "react";
-import Link from "next/link";
-import { Plan } from "@/.contentlayer/generated";
 import Image from "next/image";
+import Link from "next/link";
+import { FC } from "react";
+
+import { ArticlePlan } from "@/types";
 
 interface Props {
-  plans: Plan[];
+  plans: ArticlePlan[];
 }
 
 const RestOfPlans: FC<Props> = ({ plans }) => {
@@ -17,15 +18,15 @@ const RestOfPlans: FC<Props> = ({ plans }) => {
         {plans.map((plan) => (
           <Link
             href={`/plans/${plan.slug}`}
-            key={plan._id}
+            key={plan.slug}
             className="relative flex h-[auto] w-[auto] max-w-xs flex-col items-center justify-center overflow-hidden duration-300 hover:scale-105"
           >
             <span className="flex w-full items-center justify-center text-center text-xl font-bold">
-              {plan.title}
+              {plan.metadata.title}
             </span>
             <Image
-              src={plan.image}
-              alt={plan.title}
+              src={plan.metadata.image}
+              alt={plan.metadata.title}
               width={150}
               height={150}
               className="rounded-3xl"

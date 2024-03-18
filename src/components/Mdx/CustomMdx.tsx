@@ -2,166 +2,169 @@
 
 import { MDXRemote } from "next-mdx-remote/rsc";
 import Image, { ImageProps } from "next/image";
-import Link from "next/link";
 import React from "react";
-import { highlight } from "sugar-high";
 
-function Table({ data }: { data: { headers: string[]; rows: string[][] } }) {
-  let headers = data.headers.map((header, index) => (
-    <th key={index}>{header}</th>
-  ));
-  let rows = data.rows.map((row, index) => (
-    <tr key={index}>
-      {row.map((cell, cellIndex) => (
-        <td key={cellIndex}>{cell}</td>
-      ))}
-    </tr>
-  ));
+import { cn } from "@/utils";
 
-  return (
-    <table>
-      <thead>
-        <tr>{headers}</tr>
-      </thead>
-      <tbody>{rows}</tbody>
-    </table>
-  );
-}
-
-function CustomLink(props: any) {
-  let href = props.href;
-
-  if (href.startsWith("/")) {
-    return (
-      <Link href={href} {...props}>
-        {props.children}
-      </Link>
-    );
-  }
-
-  if (href.startsWith("#")) {
-    return <a {...props} />;
-  }
-
-  return <a target="_blank" rel="noopener noreferrer" {...props} />;
-}
-
-function RoundedImage(props: ImageProps) {
-  return <Image className="rounded-lg" {...props} />;
-}
-
-function Callout(props: { emoji: string; children: React.ReactNode }) {
-  return (
-    <div className="px-4 py-3 border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 rounded p-1 text-sm flex items-center text-neutral-900 dark:text-neutral-100 mb-8">
-      <div className="flex items-center w-4 mr-4">{props.emoji}</div>
-      <div className="w-full callout">{props.children}</div>
+const components = {
+  h1: ({ className, ...props }: { className: string }) => (
+    <h1
+      className={cn(
+        "mt-2 scroll-m-20 text-4xl font-bold tracking-tight",
+        className
+      )}
+      {...props}
+    >
+      {}
+    </h1>
+  ),
+  h2: ({ className, ...props }: { className: string }) => (
+    <h2
+      className={cn(
+        "mt-10 scroll-m-20 border-b pb-1 text-4xl font-semibold tracking-tight first:mt-0",
+        className
+      )}
+      {...props}
+    >
+      {}
+    </h2>
+  ),
+  h3: ({ className, ...props }: { className: string }) => (
+    <h3
+      className={cn(
+        "mt-10 scroll-m-20 text-3xl font-semibold tracking-tight ",
+        className
+      )}
+      {...props}
+    >
+      {}
+    </h3>
+  ),
+  h4: ({ className, ...props }: { className: string }) => (
+    <h4
+      className={cn(
+        "mt-8 scroll-m-20 text-2xl font-semibold tracking-tight",
+        className
+      )}
+      {...props}
+    >
+      {}
+    </h4>
+  ),
+  h5: ({ className, ...props }: { className: string }) => (
+    <h5
+      className={cn(
+        "mt-8 scroll-m-20 text-xl font-semibold tracking-tight",
+        className
+      )}
+      {...props}
+    >
+      {}
+    </h5>
+  ),
+  h6: ({ className, ...props }: { className: string }) => (
+    <h6
+      className={cn(
+        "mt-8 scroll-m-20 text-lg font-semibold tracking-tight",
+        className
+      )}
+      {...props}
+    >
+      {}
+    </h6>
+  ),
+  a: ({ className, ...props }: { className: string }) => (
+    <a
+      className={cn("font-medium underline underline-offset-4", className)}
+      {...props}
+    >
+      {}
+    </a>
+  ),
+  // a: CustomLink,
+  p: ({ className, ...props }: { className: string }) => (
+    <p
+      className={cn("text-lg leading-7 [&:not(:first-child)]:mt-5", className)}
+      {...props}
+    />
+  ),
+  ul: ({ className, ...props }: { className: string }) => (
+    <ul className={cn("my-6 ml-6 list-disc", className)} {...props} />
+  ),
+  ol: ({ className, ...props }: { className: string }) => (
+    <ol className={cn("my-6 ml-6 list-decimal", className)} {...props} />
+  ),
+  li: ({ className, ...props }: { className: string }) => (
+    <li className={cn("mt-2", className)} {...props} />
+  ),
+  blockquote: ({ className, ...props }: { className: string }) => (
+    <blockquote
+      className={cn(
+        "[&>*]:text-muted-foreground mt-6 border-l-2 pl-6 italic",
+        className
+      )}
+      {...props}
+    />
+  ),
+  img: ({
+    className,
+    alt,
+    ...props
+  }: React.ImgHTMLAttributes<HTMLImageElement>) => (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img className={cn("rounded-md border", className)} alt={alt} {...props} />
+  ),
+  hr: ({ ...props }) => <hr className="my-4 md:my-8" {...props} />,
+  table: ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
+    <div className="my-6 w-full overflow-y-auto">
+      <table className={cn("w-full", className)} {...props} />
     </div>
-  );
-}
-
-function ProsCard({ title, pros }: { title: string; pros: string[] }) {
-  return (
-    <div className="border border-emerald-200 dark:border-emerald-900 bg-neutral-50 dark:bg-neutral-900 rounded-xl p-6 my-4 w-full">
-      <span>{`You might use ${title} if...`}</span>
-      <div className="mt-4">
-        {pros.map((pro) => (
-          <div key={pro} className="flex font-medium items-baseline mb-2">
-            <div className="h-4 w-4 mr-2">
-              <svg className="h-4 w-4 text-emerald-500" viewBox="0 0 24 24">
-                <g
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
-                  <path d="M22 4L12 14.01l-3-3" />
-                </g>
-              </svg>
-            </div>
-            <span>{pro}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function ConsCard({ title, cons }: { title: string; cons: string[] }) {
-  return (
-    <div className="border border-red-200 dark:border-red-900 bg-neutral-50 dark:bg-neutral-900 rounded-xl p-6 my-6 w-full">
-      <span>{`You might not use ${title} if...`}</span>
-      <div className="mt-4">
-        {cons.map((con) => (
-          <div key={con} className="flex font-medium items-baseline mb-2">
-            <div className="h-4 w-4 mr-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                className="h-4 w-4 text-red-500"
-              >
-                <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
-              </svg>
-            </div>
-            <span>{con}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function Code({ children, ...props }: { children: string }) {
-  let codeHTML = highlight(children);
-  return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />;
-}
-
-function slugify(str: string) {
-  return str
-    .toString()
-    .toLowerCase()
-    .trim() // Remove whitespace from both ends of a string
-    .replace(/\s+/g, "-") // Replace spaces with -
-    .replace(/&/g, "-and-") // Replace & with 'and'
-    .replace(/[^\w\-]+/g, "") // Remove all non-word characters except for -
-    .replace(/\-\-+/g, "-"); // Replace multiple - with single -
-}
-
-function createHeading(level: number) {
-  // eslint-disable-next-line react/display-name
-  return ({ children }) => {
-    let slug = slugify(children);
-    return React.createElement(
-      `h${level}`,
-      { id: slug },
-      [
-        React.createElement("a", {
-          href: `#${slug}`,
-          key: `link-${slug}`,
-          className: "anchor",
-        }),
-      ],
-      children
-    );
-  };
-}
-
-let components = {
-  h1: createHeading(1),
-  h2: createHeading(2),
-  h3: createHeading(3),
-  h4: createHeading(4),
-  h5: createHeading(5),
-  h6: createHeading(6),
-  Image: RoundedImage,
-  a: CustomLink,
-  Callout,
-  ProsCard,
-  ConsCard,
-  code: Code,
-  Table,
+  ),
+  tr: ({ className, ...props }: React.HTMLAttributes<HTMLTableRowElement>) => (
+    <tr
+      className={cn("even:bg-muted m-0 border-t p-0", className)}
+      {...props}
+    />
+  ),
+  th: ({ className, ...props }: { className: string }) => (
+    <th
+      className={cn(
+        "border px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right",
+        className
+      )}
+      {...props}
+    />
+  ),
+  td: ({ className, ...props }: { className: string }) => (
+    <td
+      className={cn(
+        "border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right",
+        className
+      )}
+      {...props}
+    />
+  ),
+  pre: ({ className, ...props }: { className: string }) => (
+    <pre
+      className={cn(
+        "mb-4 mt-6 overflow-x-auto rounded-lg border bg-black py-4",
+        className
+      )}
+      {...props}
+    />
+  ),
+  code: ({ className, ...props }: { className: string }) => (
+    <code
+      className={cn(
+        "relative rounded border px-[0.3rem] py-[0.2rem] font-mono text-sm",
+        className
+      )}
+      {...props}
+    />
+  ),
+  Image: (props: ImageProps) => (
+    <Image className={cn("rounded-md border")} {...props} alt={props.alt} />
+  ),
 };
 
 export function CustomMDX(source: any) {

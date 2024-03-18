@@ -6,8 +6,6 @@ import { getPlansAvailable } from "@/utils";
 export default function Page() {
   const plans = getPlansAvailable();
 
-  console.log({ plans });
-
   return (
     <>
       <Head>

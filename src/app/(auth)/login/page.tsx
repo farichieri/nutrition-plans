@@ -1,15 +1,12 @@
 "use client";
 
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 import Loader from "@/components/Loader/Loader";
-import { Signup } from "@/features/authentication";
-import { selectAuthSlice } from "@/features/authentication/slice";
-import SignLayout from "@/layouts/SignLayout";
+import { Login, selectAuthSlice } from "@/features/authentication";
 import { AppRoutes } from "@/utils";
 
 export default function Page() {
@@ -25,21 +22,13 @@ export default function Page() {
   }, [user, isVerifyingUser, isCreatingUser, router]);
 
   return (
-    <SignLayout>
+    <>
       <Head>
-        <title>Sign up | Nutrition Plans CO</title>
+        <title>Log in | Nutrition Plans CO</title>
         <meta name="robots" content="noindex" />
       </Head>
       {(isLoading || isSigningUser || user) && <Loader />}
-      <Signup />
-      <div className="text-center text-base">
-        <p>
-          <span className="opacity-50">By joining, you agree to our </span>
-          <Link href={"/terms"}>Terms of Service</Link>{" "}
-          <span className="opacity-50">and </span>
-          <Link href={"/privacy"}>Privacy Policy</Link>
-        </p>
-      </div>
-    </SignLayout>
+      <Login />
+    </>
   );
 }

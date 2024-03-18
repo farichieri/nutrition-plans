@@ -1,6 +1,5 @@
 "use client";
 
-import { DevTool } from "@hookform/devtools";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
   createUserWithEmailAndPassword,
@@ -47,7 +46,7 @@ type FormValues = {
 
 const Signup = () => {
   const dispatch = useDispatch();
-  const { register, handleSubmit, formState, control, getValues, setError } =
+  const { register, handleSubmit, formState, getValues, setError } =
     useForm<FormValues>({
       defaultValues: { email: "", password: "", displayName: "" },
       resolver: yupResolver(schema),
@@ -121,7 +120,6 @@ const Signup = () => {
 
   return (
     <div className="m-auto flex w-full max-w-sm select-none flex-col items-center justify-center gap-4 rounded-md p-4 py-10 sm:box-shadow-full  sm:px-10">
-      <DevTool control={control} />
       <div>
         <h1 className="text-center text-4xl font-bold">
           Create Your Nutrition&nbsp;Plans Account

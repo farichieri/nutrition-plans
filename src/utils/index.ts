@@ -4,6 +4,7 @@ import parseTimestamp from "./parseTimestamp";
 
 export * from "../constants/formRegex";
 export * from "./appVersion";
+export * from "./cn";
 export * from "./dateFormat";
 export * from "./filter";
 export * from "./foodsHelpers";

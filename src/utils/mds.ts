@@ -1,12 +1,7 @@
 import fs from "fs";
 import path from "path";
 
-type Metadata = {
-  title: string;
-  publishedAt: string;
-  summary: string;
-  image?: string;
-};
+import { ArticlePost, Metadata } from "@/types";
 
 function parseFrontmatter(fileContent: string) {
   let frontmatterRegex = /---\s*([\s\S]*?)\s*---/;
@@ -48,7 +43,7 @@ function getMDXData(dir: any) {
   });
 }
 
-export function getBlogPosts() {
+export function getBlogPosts(): ArticlePost[] {
   return getMDXData(path.join(process.cwd(), "src/data/content/posts"));
 }
 

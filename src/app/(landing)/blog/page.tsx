@@ -1,17 +1,15 @@
-import { Post } from "@/.contentlayer/generated";
-import BlogPosts from "@/components/Posts/BlogPosts";
-import CallToAction from "@/components/call-to-action/CallToAction";
-import LandingLayout from "@/layouts/LandingLayout";
-import { getBlogPosts } from "@/utils/mds";
 import Head from "next/head";
 
-interface Props {
-  posts: Post[];
-}
+import BlogPosts from "@/components/Posts/BlogPosts";
+import CallToAction from "@/components/call-to-action/CallToAction";
+import { getBlogPosts } from "@/utils/mds";
 
-export default function Blog({ posts }: Props) {
+export default function Blog() {
+  const posts = getBlogPosts();
+  console.log(JSON.stringify(posts, null, 2));
+
   return (
-    <LandingLayout>
+    <>
       <Head>
         <title>Blog | Nutrition Plans CO</title>
         <meta property="og:title" content="Nutrition Plans Blog" key="title" />
@@ -25,16 +23,6 @@ export default function Blog({ posts }: Props) {
           <CallToAction />
         </div>
       </section>
-    </LandingLayout>
+    </>
   );
 }
-
-export const getStaticProps = async () => {
-  let allBlogs = getBlogPosts();
-
-  console.log(JSON.stringify(allBlogs, null, 2));
-
-  return {
-    props: { posts: allBlogs },
-  };
-};

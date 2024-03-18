@@ -1,6 +1,5 @@
 "use client";
 
-import { DevTool } from "@hookform/devtools";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
   getAdditionalUserInfo,
@@ -25,8 +24,8 @@ import {
   useLoginMutation,
   usePostUserMutation,
 } from "@/features/authentication";
-import { auth, provider } from "@/services/firebase";
 import { persistor } from "@/lib/store";
+import { auth, provider } from "@/services/firebase";
 
 const schema = yup.object({
   email: yup
@@ -48,7 +47,7 @@ const Login = () => {
     defaultValues: { email: "", password: "" },
     resolver: yupResolver(schema),
   });
-  const { register, handleSubmit, control, formState } = form;
+  const { register, handleSubmit, formState } = form;
   const { errors, isSubmitting } = formState;
 
   const [errorMessage, setErrorMessage] = useState("");
@@ -108,7 +107,6 @@ const Login = () => {
 
   return (
     <>
-      <DevTool control={control} />
       <div className="m-auto flex w-full max-w-sm select-none flex-col items-center justify-center gap-4 rounded-md p-4 py-10 sm:px-10">
         <div>
           <h1 className="mb-4 text-center text-4xl font-bold">

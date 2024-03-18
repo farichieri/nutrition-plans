@@ -1,14 +1,13 @@
-import Footer from "../components/Footer/Footer";
-import NavBar from "./components/Nav/Nav";
+import { Footer, Nav } from "@/components";
 
-export default function SignLayout({
+export default function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
     <>
-      <NavBar />
+      <Nav />
       <div className="flex h-full min-h-screen w-full flex-col items-center bg-primary px-4 ">
         {children}
       </div>
